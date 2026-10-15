@@ -1,0 +1,70 @@
+@model NextSkill_205_247_261.Models.Course
+@{
+    ViewData["Title"] = Model?.Title ?? "Course details";
+}
+
+<div class="container py-4">
+    <div class="mb-3">
+        <a asp-action="Courses" class="btn btn-link">&larr; Back to courses</a>
+    </div>
+
+    <div class="card p-4 course-detail">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h2>@Model.Title</h2>
+                <div class="text-muted">@Model.Category · @Model.Level · @Model.Units units · Instructor: @Model.Instructor</div>
+            </div>
+            @if (Model.Featured)
+            {
+                <div class="badge bg-secondary">FEATURED</div>
+            }
+        </div>
+
+        <div class="my-3">
+            <p>@Model.Description</p>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Progress</label>
+            <div class="progress">
+                <div id="detailProgressBar" class="progress-bar" role="progressbar" style="width:0%">0%</div>
+            </div>
+            <div id="detailStatus" class="small text-muted mt-1">Not started</div>
+        </div>
+
+        <div>
+            <h5>Lessons</h5>
+            @if (Model.Lessons == null || !Model.Lessons.Any())
+            {
+                <div class="alert alert-light">No lessons in this course.</div>
+            }
+            else
+            {
+                <ul class="list-group">
+                    @foreach (var lesson in Model.Lessons)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center" data-lesson-id="@lesson.Id">
+                            <div>
+                                <strong>@lesson.Title</strong>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-outline-success mark-complete" data-lesson-id="@lesson.Id">Mark as complete</button>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+
+        <div class="mt-3">
+            <button id="startLearning" class="btn btn-primary">Start learning</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var COURSE_ID = @Model.Id;
+    </script>
+    <script src="~/js/catalog.js"></script>
+}
