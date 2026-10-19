@@ -21,3 +21,9 @@ A beautiful polished painterly anime adventure-game illustration used as a cours
 ## Design-thumbnail prompt
 
 A premium painterly anime adventure game environment illustration used as course thumbnail for a refined ocean fantasy learning platform. Wide horizontal 3:2. An airy artist's studio with elegant pale blue window arches open to turquoise ocean and magical floating islands. On a simple wooden worktable are an open sketchbook with abstract geometric design diagrams, a few colored paper shapes, a small beautiful wooden architectural model of a fantasy castle, and one pencil cup. Small sleepy black cat on the right side of desk. Soft golden sunlight, rich ocean blues balanced with warm wood, clean restrained composition with few objects and ample breathing room, refined hand painted game concept art. No readable text, no lettering, no UI, no badges, no watermarks.
+
+## Game compass emblem
+
+Built-in image generation with a true transparent background. Final project asset: `NextSkill_205_247_261/wwwroot/images/sea-compass-emblem.webp`, 256 x 256 RGBA, optimized from the original generated PNG.
+
+Prompt: A single isolated premium cozy fantasy adventure video game UI emblem icon: a beautifully crafted eight point silver and warm pale-gold nautical compass medal with a luminous cyan-blue faceted crystal center, small gold star inset. Stylized polished 3D game inventory icon with painterly hand finished surfaces, clear chunky silhouette, subtle beveled metal edges, soft highlights, elegant and friendly like a high quality anime RPG menu reward. Front facing symmetrical icon, not tilted. Centered, fills 85% of a square canvas. NO background, genuine transparent alpha background, no drop shadow outside silhouette, no text, no letters, no UI panel, no border enclosing canvas, one single emblem only.

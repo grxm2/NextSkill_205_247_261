@@ -7,12 +7,12 @@
         <img src="~/images/@thumbnail" alt="" width="768" height="512" loading="lazy" />
     </a>
     <div class="sea-course-info">
-        <span class="sea-category">@Model.Category</span>
+        <div class="sea-course-tags"><span class="sea-category"><span class="icon @(Model.Category == "Technology" ? "icon-lightning" : "icon-star")" aria-hidden="true"></span>@Model.Category</span><span class="sea-difficulty">@Model.Level</span></div>
         <h3><a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id">@Model.Title</a></h3>
         <p>@Model.Description</p>
         <div class="sea-course-bottom">
             <span><span class="icon icon-book" aria-hidden="true"></span>@Model.Lessons.Count บทเรียน</span>
-            <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id" aria-label="ดูรายละเอียด @Model.Title"><span class="icon icon-arrow-right" aria-hidden="true"></span></a>
+            <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id" aria-label="ดูรายละเอียด @Model.Title">เลือกด่าน <span class="icon icon-arrow-right" aria-hidden="true"></span></a>
         </div>
     </div>
 </article>

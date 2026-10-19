@@ -1,0 +1,249 @@
+/* Game menu presentation. All progress and unlock states still come from the MVC model. */
+#nextskill-home.sea-game {
+    --game-gold: #ffd57b;
+    --game-gold-edge: #b68635;
+    --game-navy: #083859;
+    --game-blue: #17638c;
+}
+#nextskill-home.sea-game .sea-nav nav {
+    padding: 5px;
+    border-radius: 18px;
+    border-color: #b8eaff70;
+    background: linear-gradient(#145a86eb, #063555ef);
+    box-shadow: inset 0 1px 0 #d7f6ff35, 0 4px 0 #032d4ab3;
+}
+#nextskill-home.sea-game .sea-nav nav > a,
+#nextskill-home.sea-game .sea-more summary { border-radius: 12px; }
+#nextskill-home.sea-game .sea-nav nav > a[aria-current] {
+    color: #fff1c6;
+    background: linear-gradient(#3086b2, #146188);
+    box-shadow: inset 0 0 0 1px #ffdc8eaa, inset 0 -3px 0 #07466b;
+}
+#nextskill-home.sea-game .sea-brand-symbol {
+    text-shadow: 0 3px 0 #075587;
+    filter: drop-shadow(0 0 8px #68e1ff33);
+}
+#nextskill-home.sea-game .sea-hero-inner { min-height: 650px; padding-top: 145px; }
+#nextskill-home.sea-game .sea-hero { min-height: 650px; }
+#nextskill-home.sea-game .sea-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    margin-bottom: 18px;
+    border-left: 3px solid var(--game-gold);
+    color: #ffe3a0;
+    background: linear-gradient(90deg,#063759cc,#06375905);
+    font-size: 10px;
+    letter-spacing: .4px;
+}
+#nextskill-home.sea-game .sea-kicker .icon { width: 15px; height: 15px; }
+#nextskill-home.sea-game .sea-kicker-divider { width: 1px; height: 12px; background: #fff2b95c; }
+#nextskill-home.sea-game .sea-hero h1 {
+    font-size: clamp(37px,3.5vw,51px);
+    text-shadow: 0 3px 0 #063c6b, 0 6px 22px #032d4a55;
+}
+#nextskill-home.sea-game .sea-hero h1 > span { color: #c8f6ff; }
+#nextskill-home.sea-game .sea-button {
+    position: relative;
+    border-radius: 14px;
+    border-width: 1px;
+    min-height: 49px;
+    transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+}
+#nextskill-home.sea-game .sea-primary {
+    padding-inline: 25px;
+    color: #4c320b;
+    background: linear-gradient(#ffe9a5, #ffd06b 65%, #efb54d);
+    border-color: #fff2bf;
+    box-shadow: inset 0 2px 0 #fff5d9, inset 0 -2px 0 #da9f37, 0 5px 0 #946121, 0 8px 18px #06314b55;
+    text-shadow: 0 1px 0 #fff2ba;
+}
+#nextskill-home.sea-game .sea-primary:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+    color: #4c320b;
+    box-shadow: inset 0 2px 0 #fff5d9, inset 0 -2px 0 #da9f37, 0 7px 0 #946121, 0 10px 22px #06314b66;
+}
+#nextskill-home.sea-game .sea-primary:active { transform: translateY(3px); box-shadow: inset 0 2px 0 #fff5d9, 0 2px 0 #946121; }
+#nextskill-home.sea-game .sea-secondary {
+    color: #e8f9ff;
+    background: linear-gradient(#327da4d9,#135278e8);
+    border-color: #a1d9f3ab;
+    box-shadow: inset 0 1px 0 #e2faff55, 0 4px 0 #07314e;
+}
+#nextskill-home.sea-game .sea-secondary:hover { box-shadow: inset 0 1px 0 #e2faff55, 0 6px 0 #07314e; }
+#nextskill-home.sea-game .sea-play { font-size: 14px; filter: drop-shadow(0 1px 0 #ffebaa); }
+#nextskill-home.sea-game .sea-active-quest {
+    max-width: 350px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 29px;
+    padding: 12px 14px;
+    border: 1px solid #a4deff55;
+    border-left: 3px solid #ffdc86;
+    border-radius: 5px 16px 16px 5px;
+    background: linear-gradient(100deg,#073c66ed,#134f6db8);
+    box-shadow: inset 0 1px 0 #e2f6ff22, 0 8px 24px #04375222;
+}
+#nextskill-home.sea-game .sea-quest-mark {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 42px;
+    flex-shrink: 0;
+    border: 1px solid #ffe3a47a;
+    border-radius: 10px;
+    background: #c299411a;
+    color: #ffe3a4;
+}
+#nextskill-home.sea-game .sea-active-quest p { margin: 0 0 3px; font-size: 9px; color: #ffe3a4; }
+#nextskill-home.sea-game .sea-active-quest strong { display: block; font: 800 15px/1.5 Manrope,sans-serif; color: #fff; }
+#nextskill-home.sea-game .sea-active-quest div > span { display: block; margin-top: 4px; font-size: 9px; color: #c7e4f6; }
+#nextskill-home.sea-game .sea-quest-direction { margin-left: auto; font-size: 28px; color: #ffda8a; }
+#nextskill-home.sea-game .sea-progress {
+    position: relative;
+    padding: 23px 22px 18px;
+    background: linear-gradient(145deg,#155b81eb,#062d4cf2);
+    border: 1px solid #e1bf78;
+    border-radius: 16px;
+    box-shadow: inset 0 0 0 4px #06324e, inset 0 0 0 5px #99d3ed40, 0 5px 0 #042b47, 0 15px 35px #00335140;
+}
+#nextskill-home.sea-game .sea-progress::before,
+#nextskill-home.sea-game .sea-progress::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(135deg,#fff0bb,#b98431);
+    border: 2px solid #ffe7a7;
+    transform: rotate(45deg);
+    top: -5px;
+    pointer-events: none;
+}
+#nextskill-home.sea-game .sea-progress::before { left: 15px; }
+#nextskill-home.sea-game .sea-progress::after { right: 15px; }
+#nextskill-home.sea-game .sea-panel-heading { padding-bottom: 14px; border-bottom: 1px solid #9ccbe933; }
+#nextskill-home.sea-game .sea-panel-heading h2 { font-size: 14px; color: #ffdf9a; }
+#nextskill-home.sea-game .sea-level { padding: 5px 8px; border: 1px solid #eed08d; color: #ffe4a4; background: #7e612622; box-shadow: inset 0 -2px 0 #052840; }
+#nextskill-home.sea-game .sea-player { display: flex; align-items: center; gap: 10px; padding-top: 14px; }
+#nextskill-home.sea-game .sea-player img { width: 54px; height: 54px; object-fit: contain; flex-shrink: 0; }
+#nextskill-home.sea-game .sea-player > div { min-width: 0; }
+#nextskill-home.sea-game .sea-player strong { color: #fff; font-size: 13px; display: block; overflow-wrap: anywhere; }
+#nextskill-home.sea-game .sea-player > div > span { display: block; margin-top: 2px; font: 600 9px/1.5 Manrope,sans-serif; color: #a9d5ec; }
+#nextskill-home.sea-game .sea-player-hearts { margin-left: auto; display: flex; align-items: center; gap: 3px; color: #ffd2d2; font: 800 10px Manrope,sans-serif; white-space: nowrap; }
+#nextskill-home.sea-game .sea-player-hearts .icon { width: 15px; height: 15px; color: #ffb4b1; }
+#nextskill-home.sea-game .sea-progress-main { padding: 16px 0; }
+#nextskill-home.sea-game .sea-ring { width: 73px; height: 73px; background: conic-gradient(#ffe19a calc(var(--sea-progress)*1%),#c5e8f026 0); box-shadow: 0 0 0 1px #ffe39c44, 0 0 0 4px #052d4a; }
+#nextskill-home.sea-game .sea-ring::before { background: #104567; }
+#nextskill-home.sea-game .sea-ring strong { font-size: 23px; }
+#nextskill-home.sea-game .sea-rewards { padding-top: 12px; }
+#nextskill-home.sea-game .sea-mini-map {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    margin-top: 17px;
+    padding: 15px 4px 5px;
+    border-top: 1px solid #8bc7e333;
+}
+#nextskill-home.sea-game .sea-mini-map::before { content: ''; position: absolute; left: 24px; right: 24px; top: 30px; border-top: 2px dashed #83b6cd66; z-index: -1; }
+#nextskill-home.sea-game .sea-map-stop { display: flex; flex-direction: column; align-items: center; gap: 6px; color: #bce3f5; }
+#nextskill-home.sea-game .sea-map-stop > .icon { width: 33px; height: 33px; padding: 8px; mask-origin: content-box; mask-clip: content-box; background: #d4f2ff; }
+#nextskill-home.sea-game .sea-map-stop { position: relative; }
+#nextskill-home.sea-game .sea-map-stop::before { content: ''; position: absolute; width: 34px; height: 34px; top: 0; background: #1d698a; border: 1px solid #8cd7ee; border-radius: 50%; z-index: -1; box-shadow: 0 3px 0 #032d48; }
+#nextskill-home.sea-game .sea-map-stop small { font-size: 9px; }
+#nextskill-home.sea-game .sea-map-stop.is-current::before { background: #e4b658; border-color: #ffe8a3; box-shadow: 0 3px 0 #7b5c27, 0 0 0 4px #ffdd8b24; }
+#nextskill-home.sea-game .sea-map-stop.is-current > .icon { background: #573b14; }
+#nextskill-home.sea-game .sea-map-stop.is-current small { color: #ffe29b; }
+#nextskill-home.sea-game .sea-map-stop.is-locked { color: #a0bacb; }
+#nextskill-home.sea-game .sea-map-stop.is-locked::before { background: #173e56; border-color: #638299; }
+#nextskill-home.sea-game .sea-map-stop.is-locked > .icon { background: #a0bacb; }
+#nextskill-home.sea-game .sea-preview { margin-top: 13px; font-size: 9px; color: #a7c9df; }
+#nextskill-home.sea-game .sea-shortcuts { gap: 10px; border: 0; background: transparent; border-radius: 0; overflow: visible; }
+#nextskill-home.sea-game .sea-shortcuts > a {
+    padding: 16px 13px;
+    border: 1px solid #8fcae6a8;
+    border-radius: 13px;
+    background: linear-gradient(#2b7da1dd,#12496ce8);
+    box-shadow: inset 0 1px 0 #d8f7ff55, 0 4px 0 #042f50;
+}
+#nextskill-home.sea-game .sea-shortcuts > a:last-child { border: 1px solid #8fcae6a8; }
+#nextskill-home.sea-game .sea-shortcuts > a:hover { transform: translateY(-2px); background: linear-gradient(#328aaddd,#155677); }
+#nextskill-home.sea-game .sea-shortcuts .icon { color: #ffe1a0; }
+#nextskill-home.sea-game .sea-selection-label { color: #b8d9ed; font: 800 9px Manrope,sans-serif; letter-spacing: 2px; margin: 0 0 6px; }
+#nextskill-home.sea-game .sea-section-top h2 { color: #fff0c8; font-size: 24px; text-shadow: 0 2px 0 #063657; }
+#nextskill-home.sea-game .sea-course {
+    position: relative;
+    padding: 5px;
+    border: 1px solid #8fc7e3;
+    border-radius: 15px;
+    background: linear-gradient(145deg,#286888,#072d4a);
+    box-shadow: inset 0 0 0 2px #062d49, 0 5px 0 #042941, 0 10px 25px #032d4c3b;
+}
+#nextskill-home.sea-game .sea-course:hover { border-color: #ffe1a0; transform: translateY(-5px); box-shadow: inset 0 0 0 2px #062d49, 0 8px 0 #042941, 0 15px 30px #032d4c55; }
+#nextskill-home.sea-game .sea-course-art { border-radius: 10px 10px 4px 4px; border: 1px solid #95d6f755; }
+#nextskill-home.sea-game .sea-course-info { padding: 13px 12px 9px; }
+#nextskill-home.sea-game .sea-course-tags { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+#nextskill-home.sea-game .sea-category { display: flex; align-items: center; gap: 5px; color: #ffdc8f; font-size: 9px; }
+#nextskill-home.sea-game .sea-category .icon { width: 13px; height: 13px; }
+#nextskill-home.sea-game .sea-difficulty { color: #b5d8e9; font: 600 9px Manrope,sans-serif; }
+#nextskill-home.sea-game .sea-course-info h3 { color: #f2faff; font-size: 18px; margin-top: 10px; }
+#nextskill-home.sea-game .sea-course-info > p { color: #c2dce9; font-size: 11px; }
+#nextskill-home.sea-game .sea-course-bottom { padding-top: 10px; margin-top: 8px; border-top: 1px solid #a1cee033; }
+#nextskill-home.sea-game .sea-course-bottom > span { color: #c9e4f2; font-size: 10px; }
+#nextskill-home.sea-game .sea-course-bottom > a { width: auto; min-height: 40px; padding: 8px 10px; display: flex; gap: 7px; border-radius: 9px; border-color: #e0c07e; color: #ffe1a0; background: #133e57; font-size: 10px; box-shadow: inset 0 1px 0 #ffe2a02b, 0 2px 0 #03263e; }
+#nextskill-home.sea-game .sea-adventure { border-radius: 16px; border-color: #d8c48a99; box-shadow: inset 0 0 0 4px #064364, 0 5px 0 #032b46; }
+#nextskill-home.sea-game .sea-adventure .sea-button { background: linear-gradient(#fff0bb,#ffd782); color: #4c320b; border-color: #ffedb7; box-shadow: 0 4px 0 #9c7335; }
+#nextskill-home.sea-game .sea-workspace > summary > span:first-child::before { content: '◆'; margin-right: 10px; color: #ad7e29; }
+@media (max-width:1240px) {
+    #nextskill-home.sea-game .sea-course-tags { gap: 5px; }
+    #nextskill-home.sea-game .sea-course-bottom > a { padding-inline: 7px; font-size: 9px; }
+    #nextskill-home.sea-game .sea-course-bottom > span { font-size: 9px; }
+}
+@media (max-width:1023px) {
+    #nextskill-home.sea-game .sea-nav nav { background: #0d466af7; }
+    #nextskill-home.sea-game .sea-hero-inner { min-height: 690px; padding-top: 175px; gap: 24px; }
+    #nextskill-home.sea-game .sea-hero { min-height: 690px; }
+    #nextskill-home.sea-game .sea-progress { padding: 22px 18px 17px; }
+    #nextskill-home.sea-game .sea-player img { width: 43px; height: 43px; }
+    #nextskill-home.sea-game .sea-player strong { font-size: 12px; }
+    #nextskill-home.sea-game .sea-player-hearts { font-size: 9px; }
+    #nextskill-home.sea-game .sea-active-quest { padding: 11px; gap: 10px; }
+    #nextskill-home.sea-game .sea-course-bottom > a { padding-inline: 12px; font-size: 10px; }
+}
+@media (max-width:767px) {
+    #nextskill-home.sea-game .sea-hero, #nextskill-home.sea-game .sea-hero-inner { min-height: 0; }
+    #nextskill-home.sea-game .sea-hero-inner { padding: 165px 22px 65px; gap: 32px; }
+    #nextskill-home.sea-game .sea-kicker { font-size: 8px; padding-inline: 9px; gap: 7px; }
+    #nextskill-home.sea-game .sea-kicker .icon { width: 13px; height: 13px; }
+    #nextskill-home.sea-game .sea-hero h1 { font-size: clamp(31px,8vw,42px); }
+    #nextskill-home.sea-game .sea-primary { padding-inline: 19px; }
+    #nextskill-home.sea-game .sea-button { min-height: 48px; font-size: 11px; }
+    #nextskill-home.sea-game .sea-active-quest { max-width: 420px; margin-top: 25px; }
+    #nextskill-home.sea-game .sea-progress { padding: 22px 20px 18px; }
+    #nextskill-home.sea-game .sea-player img { width: 54px; height: 54px; }
+    #nextskill-home.sea-game .sea-player strong { font-size: 14px; }
+    #nextskill-home.sea-game .sea-shortcuts { gap: 9px; }
+    #nextskill-home.sea-game .sea-shortcuts > a { border-bottom: 1px solid #8fcae6a8; border-right: 1px solid #8fcae6a8; padding: 15px 11px; }
+    #nextskill-home.sea-game .sea-shortcuts > a:nth-child(2n) { border-right: 1px solid #8fcae6a8; }
+    #nextskill-home.sea-game .sea-shortcuts strong { font-size: 10px; }
+    #nextskill-home.sea-game .sea-selection-label { font-size: 8px; letter-spacing: 1.4px; }
+    #nextskill-home.sea-game .sea-section-top h2 { font-size: 21px; }
+    #nextskill-home.sea-game .sea-course-info { padding: 12px 7px 8px; }
+    #nextskill-home.sea-game .sea-course-info h3 { font-size: 15px; }
+    #nextskill-home.sea-game .sea-difficulty { display: none; }
+    #nextskill-home.sea-game .sea-course-bottom { flex-direction: column; align-items: stretch; gap: 10px; }
+    #nextskill-home.sea-game .sea-course-bottom > a { justify-content: center; min-height: 42px; }
+}
+@media (prefers-reduced-motion:reduce) {
+    #nextskill-home.sea-game .sea-button:hover,
+    #nextskill-home.sea-game .sea-button:active,
+    #nextskill-home.sea-game .sea-course:hover,
+    #nextskill-home.sea-game .sea-shortcuts > a:hover { transform: none !important; filter: none; }
+}
+@media (prefers-reduced-transparency:reduce) {
+    #nextskill-home.sea-game .sea-progress,
+    #nextskill-home.sea-game .sea-active-quest { background: #104b70; backdrop-filter: none; -webkit-backdrop-filter: none; }
+}

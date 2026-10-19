@@ -1,5 +1,6 @@
 @model HomeDashboardViewModel
 @{
+    var currentLesson = Model.Lessons.FirstOrDefault(lesson => lesson.Status == "current");
     var accountAction = User.Identity?.IsAuthenticated == true
         ? (User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard") : "Login";
 }
@@ -47,18 +48,28 @@
         </div>
         <div class="sea-hero-inner">
             <div class="sea-hero-copy">
-                <p class="sea-kicker">ออกเดินทางสู่โลกของความรู้</p>
+                <p class="sea-kicker"><span class="icon icon-star" aria-hidden="true"></span> SEA OF SKILLS <span class="sea-kicker-divider" aria-hidden="true"></span> โลกแห่งการผจญภัย</p>
                 <h1 id="sea-title">เรียนรู้วันนี้<br /><span>เพื่อเวอร์ชันที่ดีกว่าในอนาคต</span></h1>
                 <p class="sea-subtitle">เปลี่ยนการเรียนรู้ให้เป็นการผจญภัย<br />ค้นพบสกิลใหม่ ในจังหวะของคุณ</p>
                 <div class="sea-actions">
-                    <a class="sea-button sea-primary" asp-controller="Courses" asp-action="Enrollment">เริ่มเรียนเลย <span class="icon icon-arrow-right" aria-hidden="true"></span></a>
-                    <a class="sea-button sea-secondary" href="#learning-path">ดูเส้นทางการเรียนรู้</a>
+                    <button type="button" class="sea-button sea-primary" data-sea-practice aria-haspopup="dialog"><span class="sea-play" aria-hidden="true">▶</span> <span data-sea-practice-label>เริ่มภารกิจ</span> <span class="icon icon-arrow-right" aria-hidden="true"></span></button>
+                    <a class="sea-button sea-secondary" href="#learning-path"><span class="icon icon-grid" aria-hidden="true"></span> แผนที่การผจญภัย</a>
+                </div>
+                <div class="sea-active-quest">
+                    <span class="sea-quest-mark"><span class="icon icon-book" aria-hidden="true"></span></span>
+                    <div><p>ภารกิจปัจจุบัน · แบบฝึกกับ Niko</p><strong>@currentLesson?.Title</strong><span>3 สถานการณ์ · ไม่ใช้หัวใจ · ไม่คิด XP</span></div>
+                    <span class="sea-quest-direction" aria-hidden="true">›</span>
                 </div>
             </div>
             <aside class="sea-progress sea-glass" aria-labelledby="sea-progress-title">
                 <div class="sea-panel-heading">
-                    <h2 id="sea-progress-title">การเดินทางของคุณ</h2>
+                    <h2 id="sea-progress-title">บันทึกนักผจญภัย</h2>
                     <span class="sea-level">LV. @Model.CurrentLevel</span>
+                </div>
+                <div class="sea-player">
+                    <img src="~/images/sea-compass-emblem.webp" alt="" width="128" height="128" />
+                    <div><strong>@Model.LearnerName</strong><span>English for Business</span></div>
+                    <span class="sea-player-hearts"><span class="icon icon-heart" aria-hidden="true"></span>@Model.Hearts/@Model.MaxHearts</span>
                 </div>
                 <div class="sea-progress-main">
                     <div class="sea-ring" style="--sea-progress: @Model.CourseProgress" role="img" aria-label="ความคืบหน้าตัวอย่าง @Model.CourseProgress เปอร์เซ็นต์">
@@ -70,6 +81,19 @@
                     <span><span class="icon icon-lightning" aria-hidden="true"></span><strong>@Model.TotalXp.ToString("N0")</strong> XP</span>
                     <span><span class="icon icon-grid" aria-hidden="true"></span>ปลดล็อก @Model.UnlockedIslands เกาะ</span>
                 </div>
+                <nav class="sea-mini-map" aria-label="ด่านเรียนใกล้คุณ">
+                    @foreach (var lesson in Model.Lessons.Take(4))
+                    {
+                        @if (lesson.Status == "locked")
+                        {
+                            <span class="sea-map-stop is-locked"><span class="icon icon-lock" aria-hidden="true"></span><small>ด่าน @lesson.Number</small><span class="sr-only">ยังไม่ปลดล็อก</span></span>
+                        }
+                        else
+                        {
+                            <a class="sea-map-stop is-@lesson.Status" href="#lesson-@lesson.Number" aria-label="@(lesson.Status == "completed" ? "ทบทวน" : "ไปยัง") ด่าน @lesson.Number @lesson.Title"><span class="icon @(lesson.Status == "completed" ? "icon-check" : "icon-book")" aria-hidden="true"></span><small>ด่าน @lesson.Number</small></a>
+                        }
+                    }
+                </nav>
                 @if (Model.IsProgressPreview)
                 {
                     <p class="sea-preview">ข้อมูลตัวอย่าง · ยังไม่บันทึกผลการเรียน</p>
@@ -87,7 +111,7 @@
             <a href="#sea-community"><span class="icon icon-heart" aria-hidden="true"></span><strong>ชุมชน</strong><span aria-hidden="true">↗</span></a>
         </nav>
         <section class="sea-courses" id="sea-courses" aria-labelledby="sea-courses-title">
-            <div class="sea-section-top"><h2 id="sea-courses-title">คอร์สเรียนยอดนิยม</h2><a asp-controller="Home" asp-action="Courses">ดูทั้งหมด <span aria-hidden="true">→</span></a></div>
+            <div class="sea-section-top"><div><p class="sea-selection-label">CHOOSE YOUR NEXT ADVENTURE</p><h2 id="sea-courses-title">เลือกด่าน อัปสกิลใหม่</h2></div><a asp-controller="Home" asp-action="Courses">ดูทั้งหมด <span aria-hidden="true">→</span></a></div>
             <div class="sea-course-grid">
                 @foreach (var course in Model.PopularCourses)
                 {

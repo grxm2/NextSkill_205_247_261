@@ -77,6 +77,9 @@
         counter.textContent = `${total} / 3`;
         counter.setAttribute('aria-label', `ฝึกแล้ว ${total} จาก 3 สถานการณ์`);
         start.firstChild.textContent = total === 3 ? 'ทบทวน 3 ประโยค ' : total ? 'ฝึกต่ออีกนิด ' : 'ฝึก 1 นาที ';
+        document.querySelectorAll('[data-sea-practice-label]').forEach(label => {
+            label.textContent = total === 3 ? 'ทบทวนภารกิจ' : total ? 'ทำภารกิจต่อ' : 'เริ่มภารกิจ';
+        });
         document.getElementById('buddy-greeting').textContent = [
             'ลองเริ่มฟีดแบ็กจากจุดที่ทำได้ดี ฝึกกับฉันสักข้อไหม?',
             'เริ่มคุยได้แล้ว ต่อไปลองเสนอทางเลือกอย่างสุภาพกัน',
@@ -165,7 +168,9 @@
         if (summary.hidden) { heading.focus({ preventScroll: true }); pose('read', event); }
         else document.getElementById('niko-summary-title').focus({ preventScroll: true });
     }
-    start.addEventListener('click', openPractice);
+    [start, ...document.querySelectorAll('[data-sea-practice]')].forEach(button => {
+        button.addEventListener('click', openPractice);
+    });
     document.getElementById('niko-show-hint').addEventListener('click', event => {
         hint.textContent = questions[index].hint; hint.hidden = false;
         pose('think', event);

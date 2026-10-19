@@ -1,6 +1,16 @@
 # SeaLearn Home on Theme-gram
 
-The revised Home at `/Home/Index` follows the user's supplied ocean-adventure reference while reducing visual density. A full-width illustrated scene with an adventurer and corgi now supports white/cyan headings, a separate glass navigation capsule, header search, a smaller progress panel, a single compact shortcut strip, and image-led course cards. The lower course area uses a calm blue surface instead of another busy scene.
+The Home at `/Home/Index` is now a compact ocean-adventure game menu. It retains the supplied fantasy reference scene and adds a gold start button, beveled controls, a framed player HUD, transparent compass emblem, mini stage map, current practice quest, and dark-blue course selection panels. The actual Niko feedback practice is playable directly from the hero, with the original app routes and learning tools retained.
+
+## Game-menu revision
+
+- Added `wwwroot/css/sea-game.css` as an isolated Home-only game skin. Reduced-motion and opaque fallbacks remain supported.
+- Added `wwwroot/images/sea-compass-emblem.webp`: a 256 x 256 transparent game emblem generated with the built-in image tool. Its prompt is in `docs/SEALEARN-ART.md`.
+- Updated `Views/Home/Index.cshtml`, `_SeaLearnHome.cshtml`, and `_SeaCourseCard.cshtml` for the current-quest preview, player level/hearts, model-derived mini map, real course difficulty, and stage selection controls.
+- Extended the existing `wwwroot/js/niko-coach.js` entry point to accept the hero's practice button. It uses the same practice state, retry feedback, three scenarios, summary, browser storage, and focus return. The label changes to continue or review when appropriate.
+- Completed and locked stage states are derived from the existing model. Available mini-map nodes open the retained journey; locked stages are non-interactive. Practice does not award invented XP or consume hearts.
+- Updated `scripts/verify-sealearn.cjs` to play all three scenarios, check incorrect-answer retry behavior, summary, focus return, updated start label, unchanged preview XP, and mini-map states.
+
 
 ## What changed in the reference revision
 
@@ -39,7 +49,7 @@ Removed:
 
 ## Validation (19 October 2026)
 
-Build and Release publish passed with zero errors. Browser regression checks against the published Production application cover widths 320, 375, 768, 1024, 1440, and 1920 px, no horizontal overflow, loaded images, menu/Escape focus return, pointer parallax/pause/reduced motion, all 14 unique new navigation destinations, community disclosure, league/studio, expandable workspace, current journey/lesson, Niko practice, direct quest deep links, existing JavaScript course search, course details, enrollment, account pages, privacy, and application entry. No runtime JavaScript errors or failed HTTP responses were observed.
+Build and Release publish passed with zero errors. Browser regression checks against the published Production application cover widths 320, 375, 768, 1024, 1440, and 1920 px, no horizontal overflow, loaded images, menu/Escape focus return, pointer parallax/pause/reduced motion, all 17 unique new navigation destinations, community disclosure, league/studio, expandable workspace, current journey/lesson, Niko practice, direct quest deep links, existing JavaScript course search, course details, enrollment, account pages, privacy, and application entry. The hero entry was also tested through an incorrect answer, all three correct answers, the completion summary, and keyboard focus return; preview XP remains unchanged. No runtime JavaScript errors or failed HTTP responses were observed.
 
 Existing nullable-reference warnings remain in original Course/Lesson models and catalog views. NU1900 occurs when this environment cannot reach NuGet vulnerability metadata. Real authenticated SQL operations were not tested with credentials; no database or authentication code was changed.
 

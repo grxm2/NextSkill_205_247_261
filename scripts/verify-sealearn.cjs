@@ -31,6 +31,25 @@ fs.mkdirSync(output, { recursive: true });
  await page.emulateMedia({reducedMotion:'reduce'}); await page.waitForTimeout(100);
  assert.equal(await page.locator('.sea-landscape').evaluate(e=>e.style.transform),''); assert.ok(await page.locator('#sea-motion').isDisabled()); checks.push({test:'Parallax pointer, pause, OS reduced motion',result:'PASS'});
  await page.emulateMedia({reducedMotion:'no-preference'});
+ const previewXp = await page.locator('.sea-rewards strong').innerText();
+ await page.locator('[data-sea-practice]').click();
+ assert.ok(await page.locator('#niko-practice-dialog').evaluate(e=>e.open));
+ await page.locator('.niko-answer-option[data-choice="0"]').click();
+ assert.equal(await page.locator('#niko-practice-feedback').getAttribute('data-kind'),'retry');
+ assert.ok(await page.locator('#niko-next-question').isHidden());
+ for(const correct of [1,0,2]) {
+  await page.locator(`.niko-answer-option[data-choice="${correct}"]`).click();
+  assert.equal(await page.locator('#niko-practice-feedback').getAttribute('data-kind'),'correct');
+  await page.locator('#niko-next-question').click();
+ }
+ assert.ok(await page.locator('#niko-practice-summary').isVisible());
+ await page.keyboard.press('Escape');
+ assert.ok(await page.locator('[data-sea-practice]').evaluate(e=>e===document.activeElement));
+ assert.equal(await page.locator('[data-sea-practice-label]').innerText(),'ทบทวนภารกิจ');
+ assert.equal(await page.locator('.sea-rewards strong').innerText(),previewXp);
+ assert.equal(await page.locator('.sea-mini-map .is-current').getAttribute('href'),'#lesson-3');
+ assert.equal(await page.locator('.sea-mini-map .is-locked a').count(),0);
+ checks.push({test:'Game start, retry feedback, three scenarios, summary, focus return, no fake XP, real map state',result:'PASS'});
  const links = await page.locator('.sea-landing a[href],.sea-nav a[href]').evaluateAll(nodes=>[...new Set(nodes.map(n=>n.getAttribute('href')))]);
  for(const href of links) {
   if(href.startsWith('#')) assert.ok(await page.locator(href).count(),`missing anchor ${href}`);

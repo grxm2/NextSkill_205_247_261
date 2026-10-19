@@ -1,7 +1,7 @@
 @model HomeDashboardViewModel
 @{
     ViewData["Title"] = "SeaLearn | โลกแห่งการเรียนรู้";
-    ViewData["PageClass"] = "sealearn-home";
+    ViewData["PageClass"] = "sealearn-home sea-game";
     Layout = "_HomeLayout";
     var currentLesson = Model.Lessons.FirstOrDefault(lesson => lesson.Status == "current");
     var completedCount = Model.Lessons.Count(lesson => lesson.Status == "completed");
@@ -9,6 +9,7 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/journey-path.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/sealearn.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sea-game.css" asp-append-version="true" />
 }
 @section Scripts {
     <script src="~/js/journey-path.js" asp-append-version="true" defer></script>
