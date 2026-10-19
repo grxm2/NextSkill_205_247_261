@@ -1,0 +1,23 @@
+.skill-buddy { width: 200px; height: 230px; position: relative; transform: rotate(-7deg); }
+.buddy-body { position: absolute; width: 150px; height: 157px; left: 25px; top: 42px; background: #6fc952; border: 3px solid #5bb640; border-radius: 47px 47px 48px 48px; box-shadow: inset 0 -10px #56b643, inset 5px 5px #8ed76c; z-index: 2; }
+.buddy-face { position: absolute; left: 14px; right: 14px; top: 20px; height: 81px; border-radius: 29px; background: #ecf8db; border: 3px solid #54af3f; display: flex; justify-content: center; gap: 27px; padding-top: 23px; }
+.buddy-eye { width: 12px; height: 18px; background: #34704a; border-radius: 9px; }
+.buddy-eye::after { content: ''; display: block; width: 4px; height: 4px; background: white; border-radius: 50%; margin: 3px 0 0 2px; }
+.buddy-smile { position: absolute; width: 19px; height: 11px; bottom: 13px; left: calc(50% - 9px); border: 3px solid #34704a; border-top: 0; border-radius: 0 0 15px 15px; }
+.buddy-cheek { position: absolute; top: 45px; width: 14px; height: 6px; background: #d8eab2; border-radius: 50%; }
+.cheek-left { left: 11px; }.cheek-right { right: 11px; }
+.buddy-badge { position: absolute; bottom: 16px; left: 57px; color: #e7f7d5; font-size: 31px; font-weight: 800; letter-spacing: -2px; line-height: 1; }
+.buddy-badge>span { position: absolute; right: -7px; top: -2px; font-size: 17px; }
+.buddy-antenna { position: absolute; width: 7px; height: 29px; left: 97px; top: 16px; background: #59a746; transform: rotate(10deg); }
+.buddy-antenna>span { position: absolute; width: 20px; height: 20px; left: -6px; top: -10px; border: 3px solid #dfae3c; border-radius: 50%; background: #f3cb5c; box-shadow: inset 2px 2px #ffe08c; }
+.buddy-ear { position: absolute; width: 20px; height: 38px; top: 91px; background: #56ac43; border-radius: 10px; }
+.ear-left { left: 13px; }.ear-right { right: 13px; }
+.buddy-arm { width: 27px; height: 67px; background: #80cd5b; border: 3px solid #62b547; position: absolute; z-index: 1; border-radius: 20px; }
+.arm-left { top: 124px; left: 8px; transform: rotate(29deg); }
+.arm-right { top: 65px; right: 4px; transform: rotate(33deg); }
+.buddy-foot { position: absolute; bottom: 14px; width: 39px; height: 25px; border: 3px solid #5ca748; border-bottom: 7px solid #4a963e; border-radius: 12px 12px 14px 14px; background: #6cbd50; z-index: 1; }
+.foot-left { left: 46px; transform: rotate(-8deg); }.foot-right { right: 38px; transform: rotate(8deg); }
+.buddy-shadow { position: absolute; width: 125px; height: 17px; left: 40px; bottom: -2px; background: #a0cc7d5c; border-radius: 50%; }
+
+.buddy-arm { transform-origin:50% 80%; }
+.buddy-body,.buddy-face,.buddy-eye { transform-origin:center; }

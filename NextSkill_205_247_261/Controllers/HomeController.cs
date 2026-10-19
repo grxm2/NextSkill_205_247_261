@@ -11,7 +11,7 @@ namespace NextSkill_205_247_261.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View(new HomeDashboardViewModel());
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="NextSkill — follow your learning path and make a little progress every day." />
+    <title>@ViewData["Title"] — NextSkill</title>
+    <meta name="theme-color" content="#f77945" />
+    <link rel="icon" href="~/club-favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="~/fonts/Prompt-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/buddy-character.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/companion.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/buddy-motion.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/buddy-guide.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/buddy-agent.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/buddy-expressions.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/dashboard-polish.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/home-design.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/niko-coach.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body id="nextskill-home" class="game-theme course-home dashboard-refined home-redesign @ViewData["PageClass"]" data-companion-theme="learning-club">
+    @RenderBody()
+    <partial name="_FloatingBuddy" />
+    <script src="~/js/buddy-agent.js" asp-append-version="true" defer></script>
+    <script src="~/js/buddy-motion.js" asp-append-version="true" defer></script>
+    <script src="~/js/home.js" asp-append-version="true" defer></script>
+    <script src="~/js/companion.js" asp-append-version="true" defer></script>
+    <script src="~/js/buddy-guide.js" asp-append-version="true" defer></script>
+    <script src="~/js/home-design.js" asp-append-version="true" defer></script>
+    <script src="~/js/niko-coach.js" asp-append-version="true" defer></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
