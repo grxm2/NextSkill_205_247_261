@@ -31,6 +31,7 @@
             <div class="check-row"><input asp-for="RememberMe" /><label asp-for="RememberMe">Remember me</label></div>
             <button type="submit" class="primary-button">Log in</button>
         </form>
+        <a class="secondary-button guest-entry" asp-controller="Home" asp-action="Index" lang="th">ข้ามไปก่อน</a>
         <p class="switch-form">Don't have an account? <a asp-action="@(admin ? "AdminRegister" : "Register")">Create account</a></p>
     </section>
 </div>
