@@ -319,8 +319,8 @@
     #nextskill-home .quest-icon { width: 32px; flex-basis: 32px; height: 37px; border-radius: 9px; }
     #nextskill-home .freeze-card { flex-wrap: wrap; }
     #nextskill-home .freeze-button { flex: 1 0 100%; }
-    #nextskill-home .mobile-nav { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); position: fixed; inset: auto 0 0; z-index: 60; width: 100%; margin: 0; padding: 7px 12px calc(7px + env(safe-area-inset-bottom,0px)); border: 0; border-top: 1px solid #e8dfd0; border-radius: 18px 18px 0 0; background: #fffdf8; box-shadow: 0 -4px 20px #55402c08; }
-    #nextskill-home .mobile-nav :is(a,button) { display: flex; flex-direction: column; gap: 5px; align-items: center; justify-content: center; min-height: 57px; padding: 4px 8px; border: 0; background: transparent; color: #9a846d; font-size: 11px; font-weight: 400; }
+    #nextskill-home .mobile-nav { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); position: fixed; inset: auto 0 0; z-index: 60; width: 100%; margin: 0; padding: 7px 12px calc(7px + env(safe-area-inset-bottom,0px)); border: 0; border-top: 1px solid #e8dfd0; border-radius: 18px 18px 0 0; background: #fffdf8; box-shadow: 0 -4px 20px #55402c08; }
+    #nextskill-home .mobile-nav :is(a,button) { display: flex; flex-direction: column; gap: 5px; align-items: center; justify-content: center; min-height: 57px; min-width: 0; padding: 4px 2px; border: 0; background: transparent; color: #9a846d; font-size: 11px; font-weight: 400; }
     #nextskill-home .mobile-nav [aria-current] { color: #ad512a; background: #ffecd9; border-radius: 12px; }
     #nextskill-home .mobile-nav .icon { width: 21px; height: 21px; }
     #nextskill-home #buddy-summon { display: none; }
