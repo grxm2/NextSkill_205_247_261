@@ -11,7 +11,11 @@ namespace NextSkill_205_247_261.Controllers
     {
         public IActionResult Index()
         {
-            return View(new HomeDashboardViewModel());
+            return View(new HomeDashboardViewModel
+            {
+                LearnerName = User.Identity?.IsAuthenticated == true ? User.Identity.Name ?? "ผู้เรียน" : "นักผจญภัย",
+                PopularCourses = GetCourses().Where(c => new[] { 1, 5, 6, 9 }.Contains(c.Id)).ToArray()
+            });
         }
 
         public IActionResult Privacy()

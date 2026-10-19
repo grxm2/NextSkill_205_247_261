@@ -1,92 +1,23 @@
 @model HomeDashboardViewModel
 @{
-    ViewData["Title"] = "Learning Club";
+    ViewData["Title"] = "SeaLearn | โลกแห่งการเรียนรู้";
+    ViewData["PageClass"] = "sealearn-home sea-glass-theme";
     Layout = "_HomeLayout";
-    var currentLesson = Model.Lessons.FirstOrDefault(lesson => lesson.Status == "current");
-    var completedCount = Model.Lessons.Count(lesson => lesson.Status == "completed");
 }
-@section Styles { <link rel="stylesheet" href="~/css/journey-path.css" asp-append-version="true" /> }
-@section Scripts { <script src="~/js/journey-path.js" asp-append-version="true" defer></script> }
-<a class="skip-link" href="#main-content">ข้ามไปเนื้อหา</a>
-<partial name="_LearningSidebar" model="Model" />
+@section Styles {
+    <link rel="stylesheet" href="~/css/journey-path.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sealearn.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sea-glass.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sea-home-refresh.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sea-journey.css" asp-append-version="true" />
+}
+@section Scripts {
+    <script src="~/js/journey-path.js" asp-append-version="true" defer></script>
+    <script src="~/js/sealearn.js" asp-append-version="true" defer></script>
+}
+<a class="skip-link" href="#sea-home">ข้ามไปเนื้อหา</a>
+<partial name="_SeaLearnHome" model="Model" />
 
-<div class="app-content">
-    <div class="topbar"><a class="mobile-brand brand" asp-controller="Home" asp-action="Index"><span class="brand-mark" aria-hidden="true">n<span>↗</span></span>nextskill.</a><span class="topbar-location">พื้นที่เรียนรู้ <span aria-hidden="true">/</span> <strong>หน้าหลัก</strong></span><a class="topbar-member account-link" asp-controller="Account" asp-action="@(User.Identity?.IsAuthenticated == true ? (User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard") : "Login")"><span class="member-dot" aria-hidden="true"></span><span class="account-label">@(User.Identity?.IsAuthenticated == true ? "บัญชีของฉัน" : "เข้าสู่ระบบ")</span><span class="avatar" aria-hidden="true">@(User.Identity?.IsAuthenticated == true ? User.Identity.Name?.FirstOrDefault().ToString() : "↗")</span></a></div>
-    <main class="page-container" id="main-content">
-        <div class="home-welcome"><div><p class="welcome-label">ยินดีต้อนรับกลับ, @Model.LearnerName</p><h1 id="welcome-title">เก่งขึ้น ในแบบของคุณ<span class="welcome-flower" aria-hidden="true">✳</span></h1></div><button type="button" class="tour-trigger" id="buddy-tour-start" aria-label="ให้คู่หูพาชมหน้าเว็บ">ให้ <span data-buddy-name>Niko</span> พาชม <span class="icon icon-arrow-up" aria-hidden="true"></span></button></div>
-
-        <section class="learning-stats" aria-label="สถิติการเรียนของคุณ">
-            <div class="stat-item stat-xp"><span class="stat-icon"><span class="icon icon-lightning" aria-hidden="true"></span></span><div><span>XP สะสม</span><strong>@Model.TotalXp.ToString("N0") <small>XP</small></strong></div></div>
-            <div class="stat-item stat-streak"><span class="stat-icon"><span class="icon icon-fire" aria-hidden="true"></span></span><div><span>ต่อเนื่อง</span><strong>@Model.StreakDays <small>วัน</small></strong></div></div>
-            <div class="stat-item stat-hearts"><span class="stat-icon"><span class="icon icon-heart" aria-hidden="true"></span></span><div><span>หัวใจ</span><strong>@Model.Hearts <small>/ @Model.MaxHearts</small></strong></div></div>
-            <div class="stat-item stat-goal"><span class="stat-icon"><span class="icon icon-check" aria-hidden="true"></span></span><div><span>เป้าหมาย</span><strong>0 <small>/ 1 บท</small></strong></div></div>
-        </section>
-
-        <div class="learning-dashboard">
-            <section class="course-card" aria-labelledby="continue-title">
-                <div class="course-copy"><p class="course-eyebrow"><span>เรียนต่อจากครั้งล่าสุด</span><span class="course-unit">บทที่ 4</span></p><p class="course-name">English for Business</p><h2 id="continue-title">@currentLesson?.Title</h2><p class="course-meta"><span>10–15 นาที</span><span class="meta-divider" aria-hidden="true"></span><span>+40 XP</span></p><button type="button" class="button button-primary resume-button" data-open-dialog="lesson-dialog" data-lesson-title="@currentLesson?.Title">เรียนต่อเลย <span class="icon icon-arrow-right" aria-hidden="true"></span></button></div>
-                <div class="course-art" aria-hidden="true"><svg viewBox="0 0 220 210" fill="none"><ellipse cx="113" cy="185" rx="77" ry="12" fill="#BF562B" opacity=".22"/><g transform="rotate(-12 110 100)"><rect x="48" y="30" width="126" height="146" rx="15" fill="#91482D"/><rect x="42" y="22" width="126" height="146" rx="15" fill="#FFF2CE" stroke="#663E2E" stroke-width="2.5"/><path d="M59 22V168" stroke="#E8BE87" stroke-width="3"/><rect x="73" y="44" width="71" height="72" rx="9" fill="#F9C355"/><path d="M88 93L101 63H108L121 93M92 83H117" stroke="#69432B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M78 133H139M78 143H119" stroke="#A48C6B" stroke-width="4" stroke-linecap="round"/><path d="M139 22V52L149 45L158 52V22" fill="#4A785D"/></g><path d="M188 50L192 62L204 66L192 70L188 82L184 70L172 66L184 62Z" fill="#FFF6D9"/><circle cx="29" cy="126" r="6" fill="#FFCA75"/><path d="M181 140L186 145L197 133" stroke="#5F3B28" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </section>
-
-            <section class="companion-card niko-coach-card" aria-labelledby="home-companion-title">
-                <div class="niko-coach-heading"><h2 id="home-companion-title">ฝึกกับ <span data-buddy-name>Niko</span></h2><span class="niko-practice-count" id="niko-home-progress" aria-label="ฝึกแล้ว 0 จาก 3 สถานการณ์">0 / 3</span></div>
-                <p class="niko-coach-topic">@currentLesson?.Title</p>
-                <div class="niko-coach-stage"><div class="arrival-character"><span class="buddy-slot" data-buddy-anchor="arrival"></span></div><div class="hero-speech"><span id="buddy-greeting">ลองเริ่มฟีดแบ็กจากสิ่งที่ทำได้ดี แล้วค่อยเสนอทางเลือกใหม่</span></div></div>
-                <div class="niko-coach-actions"><button type="button" id="niko-practice-start" class="button button-primary" aria-haspopup="dialog">ฝึก 1 นาที <span class="icon icon-arrow-right" aria-hidden="true"></span></button><button type="button" class="niko-style-action" data-open-dialog="companion-dialog" aria-label="ตั้งชื่อและแต่งตัวคู่หู" title="ตั้งชื่อและแต่งตัว"><span class="icon icon-star" aria-hidden="true"></span></button></div>
-            </section>
-
-            <section class="journey-card surface" id="learning-path" aria-labelledby="journey-title">
-                <div class="section-heading journey-heading"><div><p class="section-kicker">เรียนจบ @completedCount จาก @Model.Lessons.Count ด่าน · @Model.CourseProgress%</p><h2 id="journey-title">เส้นทางการเรียน<span class="heading-dot">.</span></h2></div><div class="journey-controls"><button type="button" class="path-locate" id="jump-current" aria-label="ไปยังด่านที่กำลังเรียน"><span class="locate-icon" aria-hidden="true"></span>ด่านปัจจุบัน</button><button type="button" class="journey-motion-button" id="journey-motion" aria-pressed="false" aria-label="พักเอฟเฟกต์เส้นทาง" title="พักเอฟเฟกต์เส้นทาง"><span class="journey-motion-symbol" aria-hidden="true"></span></button></div></div>
-
-                <div class="map-guide buddy-state-store" data-learner="@Model.LearnerName"><button type="button" class="guide-buddy buddy-interaction" id="buddy-greet" aria-label="ทักทายคู่หู"><span class="buddy-slot" data-buddy-anchor="map"></span></button><div class="guide-message"><strong>ไปด้วยกันนะ @Model.LearnerName</strong><span>อีก 2 บทเรียนก็ถึงรางวัลถัดไป</span><button type="button" class="buddy-motion-control" id="buddy-motion" aria-pressed="false">พักการเคลื่อนไหว</button></div></div>
-                @foreach (var chapter in Model.JourneySections)
-                {
-                    <section class="path-chapter @(chapter.Number == 1 ? "chapter-unlocked" : "chapter-locked")" id="path-chapter-@chapter.Number" aria-labelledby="chapter-title-@chapter.Number">
-                        <div class="unit-banner"><span class="unit-number">@chapter.Number.ToString("D2")</span><div><p>ช่วงที่ @chapter.Number <span>· ด่าน @chapter.Lessons.First().Number–@chapter.Lessons.Last().Number</span></p><h3 id="chapter-title-@chapter.Number">@chapter.Title</h3></div><span class="unit-state">@if (chapter.Number == 1) { <text>กำลังเรียน</text> } else { <span class="icon icon-lock" aria-hidden="true"></span><text>รอปลดล็อก</text> }</span></div>
-                        <div class="journey-steps" aria-label="@chapter.Title">
-                            <svg class="game-map-path" viewBox="0 0 600 @chapter.MapHeight" preserveAspectRatio="none" aria-hidden="true">
-                                <path class="map-ribbon-edge" d="@chapter.Path"/><path class="map-track" d="@chapter.Path"/><path class="map-track-complete" d="@chapter.CompletedPath"/><path class="map-ribbon-stitch" d="@chapter.Path"/>
-                                @if (chapter.Number == 1)
-                                { <g id="journey-traveler" class="journey-traveler"><circle class="traveler-tail tail-far" r="2.5"/><circle class="traveler-tail tail-middle" r="3"/><circle class="traveler-tail tail-near" r="3.5"/><g class="traveler-position"><circle class="traveler-disc" r="12"/><g class="traveler-needle"><path d="M7 0L-5-5L-2 0L-5 5Z"/></g></g></g> }
-                            </svg>
-                            <div class="journey-levels">
-                            @foreach (var lesson in chapter.Lessons)
-                            {
-                                <div class="journey-step step-@lesson.Number position-@((lesson.Number - 1) % 4) @lesson.Status" id="lesson-@lesson.Number">
-                                    @if (lesson.Status == "current") { <span class="start-bubble">ไปต่อกัน!</span> }
-                                    @if (lesson.Status == "locked")
-                                    { <button class="level-node" disabled aria-label="ด่านที่ @lesson.Number @lesson.Title ยังไม่ปลดล็อก"><span class="node-number" aria-hidden="true">@lesson.Number</span><span class="icon @(lesson.Number == 16 ? "icon-trophy" : "icon-lock")" aria-hidden="true"></span></button> }
-                                    else
-                                    { <button class="level-node" data-open-dialog="lesson-dialog" data-lesson-title="@lesson.Title" aria-label="@(lesson.Status == "completed" ? "ทบทวน" : "เรียนต่อ") ด่าน @lesson.Number: @lesson.Title"><span class="node-number" aria-hidden="true">@lesson.Number</span>@if (lesson.Status == "completed") { <span class="icon icon-check" aria-hidden="true"></span> } else { <span class="journey-aura" aria-hidden="true"></span><span class="icon icon-book" aria-hidden="true"></span> }</button> }
-                                    <span class="level-label"><span class="lesson-number">ด่าน @lesson.Number</span><span class="level-name">@lesson.Title</span></span>
-                                    @if (lesson.Status == "completed") { <span class="level-stars" aria-label="เรียนจบแล้ว">★★★</span> }
-                                </div>
-                            }
-                            </div>
-                        </div>
-                        @if (chapter.Number == 1)
-                        { <div class="checkpoint"><span class="checkpoint-icon" aria-hidden="true"><span class="reward-chest"></span></span><div><span class="checkpoint-kicker">รางวัลใกล้ถึงแล้ว</span><h3>กล่องสกิลใหม่ <strong>+80 XP</strong></h3><p>อีก 2 บทเรียนเพื่อปลดล็อก</p></div><button class="text-button" data-open-dialog="reward-dialog" aria-label="ดูรางวัลกล่องสกิลใหม่"><span class="icon icon-arrow-right" aria-hidden="true"></span></button></div> }
-                        else if (chapter.Number == Model.JourneySections.Count)
-                        { <div class="journey-finish"><span class="icon icon-trophy" aria-hidden="true"></span><div><strong>จากก้าวแรก สู่โอกาสใหม่</strong><span>16 ด่านที่พาคุณพร้อมใช้ภาษาอังกฤษในที่ทำงาน</span></div></div> }
-                    </section>
-                }
-            </section>
-
-            <aside class="activity-rail" aria-label="กิจกรรมและความก้าวหน้า">
-                <section class="quests-card surface" id="daily-quests" aria-labelledby="quests-title"><div class="section-heading"><h2 id="quests-title">ภารกิจวันนี้</h2><span class="quest-counter">0 / @Model.Quests.Count</span></div>
-                @foreach (var quest in Model.Quests)
-                { <div class="quest quest-@quest.Kind"><span class="quest-icon"><span class="icon @(quest.Kind == "xp" ? "icon-lightning" : quest.Kind == "quiz" ? "icon-star" : "icon-book")" aria-hidden="true"></span></span><div class="quest-info"><div class="quest-top"><h3>@quest.Title</h3><span>@quest.Reward</span></div><div class="quest-bottom"><progress value="@quest.Current" max="@quest.Target" aria-label="@quest.Title">@quest.Current / @quest.Target</progress><span>@quest.Current/@quest.Target</span></div></div></div> }
-                <div class="quest-reward"><span class="icon icon-star" aria-hidden="true"></span><span>ก้าวเล็ก ๆ ก็เป็นความก้าวหน้า</span></div>
-            </section>
-                <section class="week-card" aria-labelledby="week-title"><div class="section-heading"><h2 id="week-title">สัปดาห์นี้ของคุณ</h2><span class="week-score">5 / 7 วัน</span></div><div class="week" aria-label="สถิติประจำสัปดาห์">@foreach (var day in new[] { ("จ", true), ("อ", true), ("พ", true), ("พฤ", true), ("ศ", true), ("ส", false), ("อา", false) }) { <span class="week-day"><span>@day.Item1</span><span class="day @(day.Item2 ? "done" : "")">@if (day.Item2) { <span class="icon icon-check" aria-hidden="true"></span> } else { <span class="day-dot"></span> }</span></span> }</div><p>รักษาจังหวะดี ๆ นี้ไว้ แล้วไปต่อกัน</p></section>
-                <section class="league-card surface" aria-labelledby="league-title"><div class="section-heading"><div class="league-title"><span class="league-emblem"><span class="icon icon-trophy" aria-hidden="true"></span></span><div><p class="section-kicker">เติบโตไปด้วยกัน</p><h2 id="league-title">ลีกเงิน</h2></div></div><span class="league-tier">II</span></div><ol class="leaderboard">@foreach (var member in Model.League) { <li class="@(member.IsCurrentUser ? "your-rank" : "")"><span class="rank">@member.Rank.ToString("D2")</span><span class="member-avatar avatar-@member.Rank" aria-hidden="true">@member.Name[0]</span><span class="member-name">@member.Name @if (member.IsCurrentUser) { <small>คุณ</small> }</span><strong>@member.Xp <span>XP</span></strong></li> }</ol><button class="text-button league-button" data-open-dialog="league-dialog">ดูอันดับทั้งหมด <span class="icon icon-arrow-right" aria-hidden="true"></span></button></section>
-                <section class="freeze-card" aria-label="ตัวช่วยรักษาสถิติ"><span class="freeze-icon"><span class="icon icon-snowflake" aria-hidden="true"></span></span><div><h2 id="freeze-title">เกราะรักษาสถิติ</h2><p id="freeze-description">มีเกราะป้องกัน 1 ครั้ง</p></div><button class="freeze-button" id="equip-freeze" aria-pressed="false">ใช้เกราะ</button></section>
-            </aside>
-        </div>
-        <partial name="_BuddyGuide" />
-    </main>
-    <footer class="home-footer"><span class="footer-motto">ก้าวเล็ก ๆ สู่สกิลที่ใหญ่ขึ้น<span aria-hidden="true"> ↗</span></span><span>ข้อมูลตัวอย่าง · ยังไม่บันทึกผลการเรียน</span><a href="#main-content">กลับด้านบน ↑</a></footer>
-</div>
 <button type="button" id="studio-launch" data-open-dialog="companion-dialog" hidden tabindex="-1" aria-hidden="true">เปิดหน้าคู่หู</button>
 <partial name="_LearningMobileNav" />
 

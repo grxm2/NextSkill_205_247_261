@@ -1,0 +1,249 @@
+/* Theme-gram Home only. Bright ocean, layered glass, quiet learning content. */
+#nextskill-home.sealearn-home {
+    --sea-ink: #10345c; --sea-muted: #49698c; --sea-blue: #0877cf;
+    --club-ink: #10345c; --club-muted: #49698c; --club-paper: #f1f9ff;
+    --club-orange: #1497e8; --club-orange-deep: #0869ad; --club-orange-soft: #e2f5ff;
+    --club-line: #d5e9f6; --club-green: #288a83;
+    background: #f1f9ff; color: var(--sea-ink); font-size: 15px;
+}
+#nextskill-home.sealearn-home :is(a,button,input,summary):focus-visible { outline: 3px solid #075f9f; outline-offset: 4px; }
+#nextskill-home.sealearn-home [id] { scroll-margin-top: 26px; }
+#nextskill-home.sealearn-home .sea-landing { background: radial-gradient(ellipse at 0 73%,#d9f0ff 0,transparent 35%),linear-gradient(#f5fbff,#edf7ff); color: var(--sea-ink); padding-bottom: 24px; }
+#nextskill-home.sealearn-home .sea-glass {
+    background: #effaffdf; color: var(--sea-ink); border: 1px solid #ffffffb5;
+    box-shadow: inset 0 1px 1px #fff, inset 0 -1px 1px #1477bb12,0 8px 26px #155b8b12;
+    backdrop-filter: blur(22px) saturate(140%); -webkit-backdrop-filter: blur(22px) saturate(140%);
+}
+#nextskill-home.sealearn-home .sea-nav { width: calc(100% - 96px); max-width: 1320px; min-height: 94px; margin-bottom: -94px; gap: 26px; color: var(--sea-ink); }
+#nextskill-home.sealearn-home .sea-brand { font-size: 27px; letter-spacing: -.8px; gap: 11px; }
+#nextskill-home.sealearn-home .sea-brand-symbol { width: 53px; height: 43px; transform: none; }
+#nextskill-home.sealearn-home .sea-brand small { color: #436f9a; font-size: 8px; letter-spacing: 1.7px; }
+#nextskill-home.sealearn-home .sea-nav nav { background: #e7f6ff55; padding: 5px; gap: 2px; margin-left: auto; }
+#nextskill-home.sealearn-home .sea-nav nav > a { display: flex; align-items: center; justify-content: center; gap: 8px; }
+#nextskill-home.sealearn-home .sea-nav nav > a,
+#nextskill-home.sealearn-home .sea-more summary { font-size: 12px; padding: 11px 15px; min-height: 44px; color: #123b65; }
+#nextskill-home.sealearn-home .sea-nav nav > a:hover { background: #ffffff60; color: #0665ae; }
+#nextskill-home.sealearn-home .sea-nav nav > a[aria-current] { background: #f6fcffc9; color: #0068be; box-shadow: inset 0 1px 2px #fff,0 2px 8px #4d9fd21c; }
+#nextskill-home.sealearn-home .sea-more > div { background: #f1fafff5; border-color: #fff; }
+#nextskill-home.sealearn-home .sea-more :is(a,button) { color: #21476c; }
+#nextskill-home.sealearn-home .sea-more :is(a,button):hover { background: #dff2ff; }
+#nextskill-home.sealearn-home .sea-search { flex: 0 1 260px; height: 46px; background: #edf8ffc9; box-shadow: inset 0 1px 1px #ffffffa0; }
+#nextskill-home.sealearn-home .sea-search input { font-size: 12px; }
+#nextskill-home.sealearn-home .sea-account { font-size: 12px; color: #153e6b; padding: 4px 9px 4px 4px; border-radius: 28px; background: #edf8ff80; backdrop-filter: blur(12px); }
+#nextskill-home.sealearn-home .sea-avatar { width: 43px; height: 43px; background: linear-gradient(140deg,#e0f8ff,#95d8fb); color: #075591; border: 2px solid #fff; box-shadow: 0 3px 12px #085ea329; }
+#nextskill-home.sealearn-home .sea-hero,
+#nextskill-home.sealearn-home .sea-hero-inner { min-height: 660px; }
+#nextskill-home.sealearn-home .sea-world { background: #a6ddf7; }
+#nextskill-home.sealearn-home .sea-landscape { width: 104%; height: 110%; left: -2%; top: -4%; object-position: 50% 65%; }
+#nextskill-home.sealearn-home .sea-world::after { background: linear-gradient(90deg,#edf8ffd9 0%,#edf8ffb0 25%,#edf8ff10 50%,transparent 67%),linear-gradient(0deg,#eff8ff 0%,#eaf7ff15 12%,transparent 29%); }
+#nextskill-home.sealearn-home .sea-hero-inner { position: relative; max-width: 1264px; display: block; padding: 145px 32px 160px; }
+#nextskill-home.sealearn-home .sea-hero-copy { max-width: 650px; padding: 0; }
+#nextskill-home.sealearn-home .sea-kicker { display: flex; align-items: center; gap: 8px; color: #386792; font: 700 10px/1.6 Manrope,sans-serif; letter-spacing: 3px; margin-bottom: 17px; }
+#nextskill-home.sealearn-home .sea-kicker .icon { width: 13px; height: 13px; }
+#nextskill-home.sealearn-home .sea-hero h1 { font-size: clamp(38px,3.5vw,52px); color: #10345c; line-height: 1.3; letter-spacing: -1.5px; font-weight: 700; margin-bottom: 14px; text-shadow: 0 2px 18px #fff9; }
+#nextskill-home.sealearn-home .sea-hero h1 > span { font-size: .86em; color: #10345c; line-height: inherit; }
+#nextskill-home.sealearn-home .sea-title-break { display: none; }
+#nextskill-home.sealearn-home .sea-subtitle { color: #3e648a; font-size: 16px; line-height: 1.85; margin-bottom: 25px; }
+#nextskill-home.sealearn-home .sea-actions { align-items: flex-start; flex-direction: column; gap: 15px; }
+#nextskill-home.sealearn-home .sea-primary { min-height: 62px; padding: 14px 28px; font-size: 20px; gap: 15px; background: linear-gradient(145deg,#159ded,#0873d2); color: #fff; border: 1px solid #d6f6ff; box-shadow: inset 0 2px 5px #b5f5ffaa,0 0 0 3px #ffffff50,0 6px 22px #168ed638; }
+#nextskill-home.sealearn-home .sea-primary:hover { color: #fff; background: #0574c8; }
+#nextskill-home.sealearn-home .sea-primary .icon { width: 22px; height: 22px; margin-left: 4px; }
+#nextskill-home.sealearn-home .sea-hero-link { display: inline-flex; gap: 12px; padding: 3px 0; color: #2d5c82; font-size: 13px; min-height: 32px; }
+#nextskill-home.sealearn-home .sea-hero-link:hover { color: #005ca5; }
+#nextskill-home.sealearn-home .sea-progress { position: absolute; right: 32px; bottom: 133px; width: 300px; margin: 0; padding: 18px 20px 13px; border-radius: 24px; background: #e7f6ff85; }
+#nextskill-home.sealearn-home .sea-panel-heading h2 { display: flex; align-items: center; gap: 9px; color: #153d64; font-size: 16px; }
+#nextskill-home.sealearn-home .sea-panel-heading h2 .icon { color: #ba730d; width: 23px; height: 23px; }
+#nextskill-home.sealearn-home .sea-panel-heading > a { display: grid; place-items: center; width: 32px; height: 32px; color: #265a80; }
+#nextskill-home.sealearn-home .sea-panel-heading > a .icon { width: 18px; height: 18px; }
+#nextskill-home.sealearn-home .sea-daily-task { border: 1px solid #ffffffb3; background: #f1faff45; border-radius: 13px; padding: 10px 12px; margin-top: 9px; }
+#nextskill-home.sealearn-home .sea-daily-task > div { display: flex; align-items: center; justify-content: space-between; gap: 14px; font-size: 12px; }
+#nextskill-home.sealearn-home .sea-daily-task > div + div { margin-top: 9px; }
+#nextskill-home.sealearn-home .sea-daily-task strong { font: 700 12px Manrope,sans-serif; }
+#nextskill-home.sealearn-home .sea-daily-task progress { display: block; appearance: none; width: 100%; height: 7px; border: 0; border-radius: 8px; background: #b1d3eb; overflow: hidden; }
+#nextskill-home.sealearn-home .sea-daily-task progress::-webkit-progress-bar { background: #b1d3eb; border-radius: 8px; }
+#nextskill-home.sealearn-home .sea-daily-task progress::-webkit-progress-value { background: #148fe4; border-radius: 8px; }
+#nextskill-home.sealearn-home .sea-daily-task progress::-moz-progress-bar { background: #148fe4; }
+#nextskill-home.sealearn-home .sea-xp { flex-shrink: 0; background: #fff0bb; color: #855203; border: 1px solid #fff8d8; padding: 2px 7px; border-radius: 8px; font: 700 11px/1.5 Manrope,sans-serif; }
+#nextskill-home.sealearn-home .sea-rewards { border: 0; padding-top: 10px; align-items: center; }
+#nextskill-home.sealearn-home .sea-rewards > span { color: #31597b; font-size: 10px; }
+#nextskill-home.sealearn-home .sea-rewards .icon { color: #96630e; }
+#nextskill-home.sealearn-home .sea-rewards > a { font-size: 11px; color: #1b618f; }
+#nextskill-home.sealearn-home .sea-preview { color: #486983; font-size: 10px; margin-top: 8px; }
+#nextskill-home.sealearn-home .sea-motion { top: 108px; bottom: auto; left: auto; right: max(32px,calc((100vw - 1200px)/2)); background: #f0faffb8; border-color: #ffffffbb; color: #2c5a7b; font-size: 10px; min-height: 32px; padding: 6px 11px; }
+#nextskill-home.sealearn-home .sea-cloud { background: radial-gradient(ellipse,#ffffff6b,transparent 70%); height: 180px; }
+#nextskill-home.sealearn-home .sea-cloud-one { top: 40%; left: 48%; width: 25%; opacity: .6; }
+#nextskill-home.sealearn-home .sea-cloud-two { bottom: 8%; right: -8%; width: 42%; }
+#nextskill-home.sealearn-home .sea-mist { height: 110px; background: radial-gradient(ellipse at bottom,#f2f9ffda,transparent 72%); }
+#nextskill-home.sealearn-home .sea-content { position: relative; max-width: 1264px; padding: 0 32px; }
+#nextskill-home.sealearn-home .sea-shortcuts { position: relative; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 15px; margin-top: -103px; overflow: visible; border: 0; border-radius: 0; background: none; }
+#nextskill-home.sealearn-home .sea-shortcuts > a { min-height: 87px; padding: 16px; border: 1px solid #ffffffc9; border-radius: 22px; gap: 13px; background: #dff3ff91; transition: transform .22s ease,background .22s ease; }
+#nextskill-home.sealearn-home .sea-shortcuts > a:hover { transform: translateY(-4px); background: #f4fcffed; }
+#nextskill-home.sealearn-home .sea-shortcuts > a > span:nth-child(2) { display: block; min-width: 0; }
+#nextskill-home.sealearn-home .sea-shortcuts strong { display: block; font-size: 13px; line-height: 1.6; color: #163e60; }
+#nextskill-home.sealearn-home .sea-shortcuts small { display: block; font-size: 11px; color: #3e6480; white-space: nowrap; }
+#nextskill-home.sealearn-home .sea-shortcuts > a > span:last-child { display: inline; margin-left: auto; font-size: 26px; line-height: 1; color: #29658d; }
+#nextskill-home.sealearn-home .sea-shortcut-symbol { display: grid; place-items: center; width: 46px; height: 49px; flex: 0 0 46px; border-radius: 15px; background: linear-gradient(140deg,#f8fdff,#8cd1ef); color: #106ab2; box-shadow: inset 1px 1px 2px #fff,0 3px 7px #25699122; }
+#nextskill-home.sealearn-home .sea-shortcuts .sea-shortcut-symbol .icon { width: 29px; height: 29px; color: #106ab2; }
+#nextskill-home.sealearn-home .sea-shortcuts .sea-shortcut-gold { background: linear-gradient(140deg,#fff8d5,#e8bf60); }
+#nextskill-home.sealearn-home .sea-shortcuts .sea-shortcut-gold .icon { color: #946018; }
+#nextskill-home.sealearn-home .sea-compass { font: 600 42px/1 Manrope,sans-serif; border-radius: 50%; transform: rotate(-12deg); }
+#nextskill-home.sealearn-home .sea-courses { padding: 28px 0 38px; }
+#nextskill-home.sealearn-home .sea-section-top { align-items: center; margin-bottom: 22px; }
+#nextskill-home.sealearn-home .sea-section-top h2 { color: #12345a; font-size: 28px; line-height: 1.55; letter-spacing: -.7px; }
+#nextskill-home.sealearn-home .sea-section-kicker { display: none; color: #507a9c; letter-spacing: 2px; font: 700 9px/1.8 Manrope,sans-serif; margin-bottom: 5px; }
+#nextskill-home.sealearn-home .sea-section-description { color: #52718f; font-size: 13px; }
+#nextskill-home.sealearn-home .sea-section-top > a { color: #076bc0; font-size: 13px; white-space: nowrap; min-height: 44px; display: flex; align-items: center; gap: 10px; }
+#nextskill-home.sealearn-home .sea-course-carousel { position: relative; }
+#nextskill-home.sealearn-home .sea-course-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: calc((100% - 40px)/3); gap: 20px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 3px 0 14px; }
+#nextskill-home.sealearn-home .sea-course-grid::-webkit-scrollbar { display: none; }
+#nextskill-home.sealearn-home .sea-course { scroll-snap-align: start; border-radius: 20px; border: 1px solid #ffffffd9; background: #ffffffb8; box-shadow: 0 5px 14px #1d679809; }
+#nextskill-home.sealearn-home .sea-course:hover { transform: translateY(-2px); box-shadow: 0 8px 14px #21649415; }
+#nextskill-home.sealearn-home .sea-course-art { aspect-ratio: 3.2; border-radius: 17px; margin: 0; }
+#nextskill-home.sealearn-home .sea-course-art img { object-position: 50% 43%; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+#nextskill-home.sealearn-home .sea-course:hover .sea-course-art img { transform: scale(1.035); }
+#nextskill-home.sealearn-home .sea-course-info { padding: 15px 19px 13px; }
+#nextskill-home.sealearn-home .sea-category { font: 700 9px/1.8 Manrope,sans-serif; text-transform: uppercase; letter-spacing: 1.2px; color: #35739d; }
+#nextskill-home.sealearn-home .sea-course-info h3 { font-size: 17px; line-height: 1.65; min-height: 0; margin: 2px 0 3px; }
+#nextskill-home.sealearn-home .sea-course-info > p { display: block; font-size: 12px; color: #57728e; min-height: 21px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#nextskill-home.sealearn-home .sea-course-bottom { margin-top: 12px; }
+#nextskill-home.sealearn-home .sea-course-bottom > span { font-size: 11px; color: #47719a; }
+#nextskill-home.sealearn-home .sea-course-bottom > a { background: #eef8ff; border: 1px solid #fff; width: 38px; height: 38px; color: #0c65ad; box-shadow: 0 2px 7px #1675bc14; }
+#nextskill-home.sealearn-home .sea-carousel-arrow { position: absolute; z-index: 2; top: 45%; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: #f5fcffdb; backdrop-filter: blur(12px); border: 1px solid #fff; color: #1964a4; box-shadow: 0 4px 15px #267eb21a; font: 400 30px/1 Manrope,sans-serif; }
+#nextskill-home.sealearn-home .sea-carousel-prev { left: -55px; }
+#nextskill-home.sealearn-home .sea-carousel-next { right: -55px; }
+#nextskill-home.sealearn-home .sea-carousel-arrow:disabled { opacity: .38; cursor: default; }
+#nextskill-home.sealearn-home .sea-adventure { min-height: 168px; border-radius: 24px; margin-top: 0; }
+#nextskill-home.sealearn-home .sea-adventure h2 { font-size: 26px; }
+#nextskill-home.sealearn-home .sea-adventure .sea-button { color: #fff; background: #ecfaff24; backdrop-filter: blur(12px); }
+#nextskill-home.sealearn-home .sea-community { color: #1e537a; background: #ffffff80; border-color: #dceefa; border-radius: 18px; margin-top: 24px; }
+#nextskill-home.sealearn-home .sea-community summary > span { color: #526d86; }
+#nextskill-home.sealearn-home .sea-community p { color: #42617e; }
+#nextskill-home.sealearn-home .sea-community .sea-secondary { color: #0c67ad; background: #e8f6ff; }
+#nextskill-home.sealearn-home .sea-workspace { background: #f1f9ff; }
+#nextskill-home.sealearn-home .sea-workspace > summary { max-width: 1200px; margin-inline: auto; color: #1b5079; }
+#nextskill-home.sealearn-home .button-primary { background: #128bdb; color: #fff; border-color: #0b74bd; box-shadow: 0 3px 0 #0d659d; }
+#nextskill-home.sealearn-home .course-card { background: #daf2ff; border-color: #c1e5fa; }
+#nextskill-home.sealearn-home .journey-card .current .level-node { background: #1499e5; border-color: #0875b8; box-shadow: 0 6px 0 #075c91,inset 0 3px 0 #85ddff; }
+#nextskill-home.sealearn-home .journey-aura { border-color: #7cd4fa; }
+#nextskill-home.sealearn-home .journey-aura::after { background: #1599de; }
+#nextskill-home.sealearn-home .journey-card .map-track-complete { stroke: #63c3c2; }
+#nextskill-home.sealearn-home .journey-card .map-ribbon-edge { stroke: #c6e4f3; }
+#nextskill-home.sealearn-home .journey-card .map-track { stroke: #e0f1fb; }
+@media (min-width:1600px) {
+    #nextskill-home.sealearn-home .sea-hero,#nextskill-home.sealearn-home .sea-hero-inner { min-height: 740px; }
+    #nextskill-home.sealearn-home .sea-hero-inner { padding-top: 163px; }
+}
+@media (max-width:1350px) {
+    #nextskill-home.sealearn-home .sea-nav { gap: 17px; width: calc(100% - 64px); }
+    #nextskill-home.sealearn-home .sea-brand { font-size: 24px; }
+    #nextskill-home.sealearn-home .sea-brand-symbol { width: 44px; }
+    #nextskill-home.sealearn-home .sea-nav nav > a,#nextskill-home.sealearn-home .sea-more summary { padding-inline: 11px; }
+    #nextskill-home.sealearn-home .sea-search { flex-basis: 220px; }
+    #nextskill-home.sealearn-home .sea-carousel-prev { left: -18px; }
+    #nextskill-home.sealearn-home .sea-carousel-next { right: -18px; }
+    #nextskill-home.sealearn-home .sea-workspace > summary { margin-inline: 32px; }
+}
+@media (max-width:1100px) and (min-width:1024px) {
+    #nextskill-home.sealearn-home .sea-search { flex-basis: 180px; }
+    #nextskill-home.sealearn-home .sea-nav { gap: 12px; }
+    #nextskill-home.sealearn-home .sea-brand { font-size: 22px; gap: 6px; }
+    #nextskill-home.sealearn-home .sea-nav nav > a,#nextskill-home.sealearn-home .sea-more summary { padding-inline: 9px; font-size: 11px; }
+}
+@media (max-width:1023px) {
+    #nextskill-home.sealearn-home .sea-nav { width: calc(100% - 48px); min-height: 130px; margin-bottom: -130px; padding-top: 16px; gap: 12px; }
+    #nextskill-home.sealearn-home .sea-menu-button { display: flex; align-items: center; gap: 9px; color: #17496f; background: #eaf8ffad; border-color: #fff; font-size: 12px; padding: 9px 14px; }
+    #nextskill-home.sealearn-home .sea-nav nav { display: none; top: 69px; background: #f2fafff5; border-radius: 20px; margin: 0; }
+    #nextskill-home.sealearn-home .sea-nav nav[data-open] { display: grid; }
+    #nextskill-home.sealearn-home .sea-nav nav > a { justify-content: flex-start; }
+    #nextskill-home.sealearn-home .sea-search { flex-basis: 100%; width: 100%; max-width: none; height: 42px; }
+    #nextskill-home.sealearn-home .sea-search button { height: 42px; }
+    #nextskill-home.sealearn-home .sea-hero,#nextskill-home.sealearn-home .sea-hero-inner { min-height: 730px; }
+    #nextskill-home.sealearn-home .sea-hero-inner { padding: 177px 24px 160px; }
+    #nextskill-home.sealearn-home .sea-hero-copy { max-width: 570px; }
+    #nextskill-home.sealearn-home .sea-hero h1 { font-size: 43px; }
+    #nextskill-home.sealearn-home .sea-subtitle { font-size: 15px; }
+    #nextskill-home.sealearn-home .sea-progress { right: 24px; bottom: 128px; width: 275px; padding: 13px 16px; }
+    #nextskill-home.sealearn-home .sea-motion { top: 147px; bottom: auto; left: auto; right: 24px; }
+    #nextskill-home.sealearn-home .sea-content { padding-inline: 24px; }
+    #nextskill-home.sealearn-home .sea-shortcuts { gap: 12px; }
+    #nextskill-home.sealearn-home .sea-shortcuts > a { padding: 13px 10px; gap: 9px; border-radius: 18px; }
+    #nextskill-home.sealearn-home .sea-shortcut-symbol { width: 36px; height: 41px; flex-basis: 36px; border-radius: 12px; }
+    #nextskill-home.sealearn-home .sea-shortcuts .sea-shortcut-symbol .icon { width: 24px; height: 24px; }
+    #nextskill-home.sealearn-home .sea-shortcuts strong { font-size: 11px; }
+    #nextskill-home.sealearn-home .sea-shortcuts small { font-size: 9px; white-space: normal; }
+    #nextskill-home.sealearn-home .sea-shortcuts > a > span:last-child { display: none; }
+    #nextskill-home.sealearn-home .sea-course-grid { grid-auto-columns: calc((100% - 18px)/2); gap: 18px; }
+    #nextskill-home.sealearn-home .sea-course-art { aspect-ratio: 2.4; }
+}
+@media (max-width:767px) {
+    #nextskill-home.sealearn-home .sea-nav { width: calc(100% - 36px); min-height: 128px; margin-bottom: -128px; gap: 10px; }
+    #nextskill-home.sealearn-home .sea-brand { font-size: 23px; }
+    #nextskill-home.sealearn-home .sea-brand-symbol { width: 40px; height: 36px; }
+    #nextskill-home.sealearn-home .sea-brand small { font-size: 7px; letter-spacing: 1.2px; }
+    #nextskill-home.sealearn-home .sea-menu-button { padding: 9px 12px; }
+    #nextskill-home.sealearn-home .sea-account > span:last-child { display: none; }
+    #nextskill-home.sealearn-home .sea-avatar { width: 38px; height: 38px; }
+    #nextskill-home.sealearn-home .sea-hero,#nextskill-home.sealearn-home .sea-hero-inner { min-height: 900px; }
+    #nextskill-home.sealearn-home .sea-hero-inner { padding: 168px 22px 0; }
+    #nextskill-home.sealearn-home .sea-hero-copy { max-width: 100%; }
+    #nextskill-home.sealearn-home .sea-kicker { font-size: 8px; letter-spacing: 2px; margin-bottom: 15px; }
+    #nextskill-home.sealearn-home .sea-hero h1 { font-size: clamp(30px,8.5vw,43px); line-height: 1.48; letter-spacing: -.6px; margin-bottom: 13px; }
+    #nextskill-home.sealearn-home .sea-hero h1 > span { font-size: .9em; }
+    #nextskill-home.sealearn-home .sea-title-break { display: inline; }
+    #nextskill-home.sealearn-home .sea-subtitle { font-size: 12px; line-height: 1.9; margin-bottom: 21px; }
+    #nextskill-home.sealearn-home .sea-actions { gap: 12px; }
+    #nextskill-home.sealearn-home .sea-primary { min-height: 55px; font-size: 17px; padding: 11px 23px; }
+    #nextskill-home.sealearn-home .sea-hero-link { font-size: 11px; }
+    #nextskill-home.sealearn-home .sea-landscape { width: 100%; height: 64%; left: 0; top: auto; bottom: 70px; object-position: 66% 66%; }
+    #nextskill-home.sealearn-home .sea-world { background: #e3f4ff; }
+    #nextskill-home.sealearn-home .sea-world::after { background: linear-gradient(180deg,#e4f4ff 0%,#e4f4fff5 32%,#e4f4ff94 45%,transparent 59%,transparent 75%,#edf7ff 100%); }
+    #nextskill-home.sealearn-home .sea-cloud-one { top: 52%; }
+    #nextskill-home.sealearn-home .sea-progress { top: auto; right: 22px; left: 22px; bottom: 125px; width: auto; max-width: 390px; margin-left: auto; padding: 13px 16px 10px; background: #e8f7ffd4; border-radius: 20px; }
+    #nextskill-home.sealearn-home .sea-panel-heading h2 { font-size: 14px; }
+    #nextskill-home.sealearn-home .sea-daily-task { margin-top: 3px; padding: 8px 10px; }
+    #nextskill-home.sealearn-home .sea-preview { font-size: 9px; margin-top: 5px; }
+    #nextskill-home.sealearn-home .sea-motion { top: auto; bottom: 92px; left: 22px; right: auto; min-height: 28px; font-size: 9px; }
+    #nextskill-home.sealearn-home .sea-content { padding-inline: 18px; }
+    #nextskill-home.sealearn-home .sea-shortcuts { grid-template-columns: repeat(2,minmax(0,1fr)); margin-top: -62px; gap: 10px; }
+    #nextskill-home.sealearn-home .sea-shortcuts > a { min-height: 80px; padding: 12px 10px; border-bottom: 1px solid #fff; }
+    #nextskill-home.sealearn-home .sea-shortcuts > a:last-child { grid-column: auto; }
+    #nextskill-home.sealearn-home .sea-shortcuts strong { font-size: 11px; }
+    #nextskill-home.sealearn-home .sea-shortcuts small { font-size: 9px; line-height: 1.6; }
+    #nextskill-home.sealearn-home .sea-courses { padding: 33px 0 22px; }
+    #nextskill-home.sealearn-home .sea-section-top { gap: 8px; margin-bottom: 16px; }
+    #nextskill-home.sealearn-home .sea-section-top h2 { font-size: 23px; }
+    #nextskill-home.sealearn-home .sea-section-description { font-size: 11px; max-width: 240px; }
+    #nextskill-home.sealearn-home .sea-section-kicker { font-size: 8px; letter-spacing: 1.5px; }
+    #nextskill-home.sealearn-home .sea-section-top > a { font-size: 10px; gap: 5px; }
+    #nextskill-home.sealearn-home .sea-course-grid { grid-template-columns: none; grid-auto-columns: 88%; gap: 14px; }
+    #nextskill-home.sealearn-home .sea-course-art { aspect-ratio: 2.25; }
+    #nextskill-home.sealearn-home .sea-course-info { padding: 13px 16px; }
+    #nextskill-home.sealearn-home .sea-course-info h3 { font-size: 17px; }
+    #nextskill-home.sealearn-home .sea-course-info > p { font-size: 11px; }
+    #nextskill-home.sealearn-home .sea-carousel-arrow { width: 36px; height: 36px; top: 35%; }
+    #nextskill-home.sealearn-home .sea-carousel-prev { left: -9px; }
+    #nextskill-home.sealearn-home .sea-carousel-next { right: -9px; }
+    #nextskill-home.sealearn-home .sea-adventure { min-height: 218px; padding: 25px 22px; gap: 16px; }
+    #nextskill-home.sealearn-home .sea-adventure h2 { font-size: 20px; }
+    #nextskill-home.sealearn-home .sea-adventure p { font-size: 11px; }
+    #nextskill-home.sealearn-home .sea-community { margin-top: 17px; }
+    #nextskill-home.sealearn-home .sea-workspace > summary { margin-inline: 22px; }
+}
+@media (max-width:359px) {
+    #nextskill-home.sealearn-home .sea-brand { font-size: 20px; gap: 6px; }
+    #nextskill-home.sealearn-home .sea-brand-symbol { width: 34px; }
+    #nextskill-home.sealearn-home .sea-nav { gap: 7px; }
+    #nextskill-home.sealearn-home .sea-menu-button { padding-inline: 10px; }
+    #nextskill-home.sealearn-home .sea-hero h1 { font-size: 29px; }
+    #nextskill-home.sealearn-home .sea-shortcut-symbol { width: 31px; height: 36px; flex-basis: 31px; }
+    #nextskill-home.sealearn-home .sea-shortcuts > a { gap: 7px; }
+    #nextskill-home.sealearn-home .sea-shortcuts strong { font-size: 10px; }
+}
+@media (prefers-reduced-transparency:reduce), (prefers-contrast:more) {
+    #nextskill-home.sealearn-home .sea-glass,#nextskill-home.sealearn-home .sea-progress,#nextskill-home.sealearn-home .sea-nav nav,#nextskill-home.sealearn-home .sea-shortcuts > a { background: #f0f9ff; backdrop-filter: none; -webkit-backdrop-filter: none; border-color: #739cb8; }
+    #nextskill-home.sealearn-home .sea-world::after { background: linear-gradient(90deg,#f0f9fff5,#f0f9ffb0 40%,transparent 65%); }
+}
+@media (prefers-reduced-motion:reduce) {
+    #nextskill-home.sealearn-home .sea-course:hover .sea-course-art img { transform: none; }
+    #nextskill-home.sealearn-home .sea-shortcuts > a:hover { transform: none; }
+}

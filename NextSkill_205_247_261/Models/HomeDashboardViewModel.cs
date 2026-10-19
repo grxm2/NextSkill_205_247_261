@@ -3,6 +3,12 @@ namespace NextSkill_205_247_261.Models;
 // Preview data. Connect to the learner service when authentication and persistence are ready.
 public sealed class HomeDashboardViewModel
 {
+    public IReadOnlyList<Course> PopularCourses { get; init; } = [];
+    public bool IsProgressPreview => true; // No persisted learner-progress service exists yet.
+    public int CompletedLessons => Lessons.Count(lesson => lesson.Status == "completed");
+    public int UnlockedIslands => JourneySections.Count(section => section.Lessons.Any(lesson => lesson.Status != "locked"));
+    public int CurrentLevel => Lessons.FirstOrDefault(lesson => lesson.Status == "current")?.Number ?? 1;
+    public int Coins { get; init; } = 0;
     public string LearnerName { get; init; } = "Gram";
     public int TotalXp { get; init; } = 2480;
     public int StreakDays { get; init; } = 12;

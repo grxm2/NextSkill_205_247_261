@@ -1,0 +1,212 @@
+/* Home-only SeaLearn reference treatment. Liquid Glass is approximated on the web
+   with translucent fills, edge highlights and blur; this is not an Apple API. */
+#nextskill-home.sea-glass-theme {
+    --sea-ink: #10375d;
+    --sea-blue: #0874cd;
+    --sea-ease: cubic-bezier(.23, 1, .32, 1);
+    background: #edf7ff;
+}
+#nextskill-home.sea-glass-theme .sea-landing {
+    color: var(--sea-ink);
+    background: linear-gradient(#edf7ff, #f8fcff);
+}
+#nextskill-home.sea-glass-theme :is(a,button,input,summary):focus-visible { outline-color: #075493; }
+#nextskill-home.sea-glass-theme .sea-nav { color: var(--sea-ink); gap: 24px; }
+#nextskill-home.sea-glass-theme .sea-brand { font-size: 26px; }
+#nextskill-home.sea-glass-theme .sea-brand-symbol { color: #168bcb; }
+#nextskill-home.sea-glass-theme .sea-brand small { color: #315f88; }
+#nextskill-home.sea-glass-theme .sea-glass,
+#nextskill-home.sea-glass-theme .sea-nav nav,
+#nextskill-home.sea-glass-theme .sea-shortcuts > a {
+    background: #e4f4fd;
+    border: 1px solid #ffffffdb;
+    box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 #ffffff40, 0 8px 30px #155c8e12;
+}
+@supports (backdrop-filter: blur(20px)) {
+    #nextskill-home.sea-glass-theme .sea-glass,
+    #nextskill-home.sea-glass-theme .sea-nav nav,
+    #nextskill-home.sea-glass-theme .sea-shortcuts > a {
+        background: linear-gradient(125deg, #ffffffb8, #d8f2ff85);
+        backdrop-filter: blur(20px) saturate(145%);
+        -webkit-backdrop-filter: blur(20px) saturate(145%);
+    }
+}
+#nextskill-home.sea-glass-theme .sea-nav nav > a,
+#nextskill-home.sea-glass-theme .sea-more summary { font-size: 12px; padding: 11px 15px; }
+#nextskill-home.sea-glass-theme .sea-nav nav > a[aria-current] {
+    background: #f5fcfff2; color: #0663b3; box-shadow: inset 0 0 0 1px #fff, 0 3px 12px #377ebc12;
+}
+#nextskill-home.sea-glass-theme .sea-nav nav > a:hover { color: #075493; background: #fff9; }
+#nextskill-home.sea-glass-theme .sea-more > div { background: #f1f9ff; }
+#nextskill-home.sea-glass-theme .sea-more :is(a,button) { color: var(--sea-ink); }
+#nextskill-home.sea-glass-theme .sea-more :is(a,button):hover { background: #cbeaff; }
+#nextskill-home.sea-glass-theme .sea-account { font-size: 12px; }
+#nextskill-home.sea-glass-theme .sea-avatar { background: #f0faffad; color: #075ba8; border: 2px solid #fff; }
+#nextskill-home.sea-glass-theme .sea-search { background: #f2faffc9; }
+#nextskill-home.sea-glass-theme .sea-search input { font-size: 12px; }
+#nextskill-home.sea-glass-theme .sea-hero { min-height: 720px; }
+#nextskill-home.sea-glass-theme .sea-world { background: #8bceee; }
+#nextskill-home.sea-glass-theme .sea-landscape {
+    width: 106%; height: 112%; left: -3%; top: -5%; object-position: 50% 55%;
+}
+#nextskill-home.sea-glass-theme .sea-world::after {
+    background: linear-gradient(90deg, #eff8fff2, #e6f6ffb8 30%, #deefff00 59%),
+                linear-gradient(0deg, #edf7ff 0%, #edf7ff00 15%);
+}
+#nextskill-home.sea-glass-theme .sea-hero-inner {
+    min-height: 720px; max-width: 1400px; padding: 140px 40px 120px;
+    grid-template-columns: minmax(0, 1fr) 300px; gap: 100px; align-items: start;
+}
+#nextskill-home.sea-glass-theme .sea-hero-copy { max-width: 650px; padding: 0; }
+#nextskill-home.sea-glass-theme .sea-kicker {
+    display: flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 2.5px;
+    color: #37688e; margin-bottom: 18px; font-weight: 600;
+}
+#nextskill-home.sea-glass-theme .sea-kicker .icon { width: 13px; height: 13px; }
+#nextskill-home.sea-glass-theme .sea-hero h1 {
+    color: #0a315a; font-size: clamp(38px, 3.8vw, 56px); line-height: 1.35;
+    letter-spacing: -1.4px; text-shadow: 0 2px 18px #ffffffb8; margin-bottom: 16px;
+}
+#nextskill-home.sea-glass-theme .sea-hero h1 > span { color: #0a315a; font-size: .77em; line-height: 1.5; }
+#nextskill-home.sea-glass-theme .sea-subtitle { color: #315c80; font-size: 16px; margin-bottom: 24px; }
+#nextskill-home.sea-glass-theme .sea-button {
+    min-height: 48px; transition: transform 180ms var(--sea-ease), box-shadow 180ms ease, background-color 180ms ease;
+}
+#nextskill-home.sea-glass-theme .sea-primary {
+    min-height: 58px; padding-inline: 27px; color: #fff; font-size: 17px;
+    background: linear-gradient(140deg, #148de9, #0366c5);
+    border: 1px solid #fff; box-shadow: inset 0 2px 4px #e3f8ff99, 0 5px 22px #057fd136;
+}
+#nextskill-home.sea-glass-theme .sea-primary:hover { color: #fff; }
+#nextskill-home.sea-glass-theme .sea-secondary { color: #164e78; background: #edf8ffcf; border-color: #fff; }
+#nextskill-home.sea-glass-theme .sea-active-quest { display: flex; align-items: center; gap: 12px; margin-top: 26px; color: #234f73; }
+#nextskill-home.sea-glass-theme .sea-quest-mark { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 14px; background: #f3fbffba; border: 1px solid #fff; }
+#nextskill-home.sea-glass-theme .sea-quest-mark .icon { width: 22px; height: 22px; color: #0876c4; }
+#nextskill-home.sea-glass-theme .sea-active-quest p { margin: 0 0 2px; font-size: 11px; }
+#nextskill-home.sea-glass-theme .sea-active-quest strong { display: block; font-size: 14px; }
+#nextskill-home.sea-glass-theme .sea-active-quest div > span { font-size: 10px; }
+#nextskill-home.sea-glass-theme .sea-quest-direction { display: none; }
+#nextskill-home.sea-glass-theme .sea-progress { margin-top: 90px; padding: 20px; border-radius: 26px; color: #123e65; }
+#nextskill-home.sea-glass-theme .sea-panel-heading h2 { color: #123e65; font-size: 15px; }
+#nextskill-home.sea-glass-theme .sea-level { background: #e2f3ff; color: #1261a1; border-color: #fff; }
+#nextskill-home.sea-glass-theme .sea-player { display: flex; align-items: center; gap: 10px; margin-top: 15px; }
+#nextskill-home.sea-glass-theme .sea-player img { width: 44px; height: 44px; object-fit: contain; }
+#nextskill-home.sea-glass-theme .sea-player > div { min-width: 0; }
+#nextskill-home.sea-glass-theme .sea-player strong { display: block; font-size: 13px; overflow-wrap: anywhere; }
+#nextskill-home.sea-glass-theme .sea-player > div > span { display: block; font-size: 10px; color: #365f7c; }
+#nextskill-home.sea-glass-theme .sea-player-hearts { margin-left: auto; display: flex; gap: 3px; align-items: center; white-space: nowrap; font-size: 10px; }
+#nextskill-home.sea-glass-theme .sea-player-hearts .icon { color: #a72e56; width: 14px; height: 14px; }
+#nextskill-home.sea-glass-theme .sea-progress-main { padding: 16px 0; }
+#nextskill-home.sea-glass-theme .sea-ring { width: 66px; height: 66px; background: conic-gradient(#0785de calc(var(--sea-progress)*1%),#bfdcef 0); }
+#nextskill-home.sea-glass-theme .sea-ring::before { inset: 5px; background: #edf8ff; }
+#nextskill-home.sea-glass-theme .sea-ring strong { font-size: 22px; color: #12598c; }
+#nextskill-home.sea-glass-theme .sea-progress-main :is(p,a),
+#nextskill-home.sea-glass-theme .sea-progress-main > div:not(.sea-ring) > strong { color: #174c75; }
+#nextskill-home.sea-glass-theme .sea-rewards { padding-top: 12px; border-color: #90b9d25c; }
+#nextskill-home.sea-glass-theme .sea-rewards > span { color: #245477; }
+#nextskill-home.sea-glass-theme .sea-rewards .icon { color: #0777bf; }
+#nextskill-home.sea-glass-theme .sea-mini-map { position: relative; isolation: isolate; display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 18px; }
+#nextskill-home.sea-glass-theme .sea-mini-map::before { content: ''; position: absolute; top: 16px; left: 24px; right: 24px; border-top: 2px dashed #639bbc; z-index: -1; }
+#nextskill-home.sea-glass-theme .sea-map-stop { display: flex; align-items: center; flex-direction: column; gap: 5px; color: #255678; }
+#nextskill-home.sea-glass-theme .sea-map-stop .icon { width: 32px; height: 32px; border: 8px solid transparent; mask-origin: content-box; mask-clip: content-box; }
+#nextskill-home.sea-glass-theme .sea-map-stop::before { content: ''; position: absolute; width: 32px; height: 32px; border: 1px solid #7cbce0; background: #e0f4ff; border-radius: 50%; z-index: -1; }
+#nextskill-home.sea-glass-theme .sea-map-stop small { font-size: 10px; }
+#nextskill-home.sea-glass-theme .sea-map-stop.is-current { color: #fff; }
+#nextskill-home.sea-glass-theme .sea-map-stop.is-current small { color: #124f7e; font-weight: 600; }
+#nextskill-home.sea-glass-theme .sea-map-stop.is-current::before { background: #0878cc; border-color: #fff; box-shadow: 0 0 0 3px #1a8ad627; }
+#nextskill-home.sea-glass-theme .sea-map-stop.is-locked { color: #4f6f83; }
+#nextskill-home.sea-glass-theme .sea-preview { color: #355b77; font-size: 10px; margin-top: 14px; }
+#nextskill-home.sea-glass-theme .sea-motion { bottom: 116px; right: 40px; background: #eef8ffe8; color: #205778; border-color: #fff; }
+#nextskill-home.sea-glass-theme .sea-content { position: relative; max-width: 1400px; margin-top: -94px; padding-inline: 40px; }
+#nextskill-home.sea-glass-theme .sea-shortcuts { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; border: 0; background: none; border-radius: 0; overflow: visible; }
+#nextskill-home.sea-glass-theme .sea-shortcuts > a { border-radius: 22px; min-height: 84px; padding: 17px; gap: 12px; color: #16466e; transition: transform 180ms var(--sea-ease), box-shadow 180ms ease; }
+#nextskill-home.sea-glass-theme .sea-shortcuts > a:last-child { border: 1px solid #fff; }
+#nextskill-home.sea-glass-theme .sea-shortcuts .icon { flex-shrink: 0; width: 30px; height: 30px; color: #087cbe; }
+#nextskill-home.sea-glass-theme .sea-shortcuts strong { display: block; font-size: 13px; }
+#nextskill-home.sea-glass-theme .sea-shortcuts small { display: block; font-size: 11px; margin-top: 3px; color: #365f7f; }
+#nextskill-home.sea-glass-theme .sea-shortcuts > a > span:last-child { color: #22668e; font-size: 23px; }
+#nextskill-home.sea-glass-theme .sea-courses { padding: 42px 0 32px; }
+#nextskill-home.sea-glass-theme .sea-selection-label { margin: 0 0 8px; color: #47718f; font-size: 9px; letter-spacing: 2px; font-weight: 600; }
+#nextskill-home.sea-glass-theme .sea-section-top h2 { color: #10375d; font-size: 28px; }
+#nextskill-home.sea-glass-theme .sea-section-description { margin: 6px 0 0; font-size: 13px; color: #466d90; }
+#nextskill-home.sea-glass-theme .sea-section-top > a { color: #0869b3; white-space: nowrap; min-height: 44px; display: flex; align-items: center; gap: 10px; }
+#nextskill-home.sea-glass-theme .sea-course { background: #ffffffd6; border-color: #fff; box-shadow: 0 6px 28px #175e8c08; transition: transform 180ms var(--sea-ease), box-shadow 180ms ease; }
+#nextskill-home.sea-glass-theme .sea-course-tags { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+#nextskill-home.sea-glass-theme .sea-category { display: flex; align-items: center; gap: 5px; color: #24678c; }
+#nextskill-home.sea-glass-theme .sea-category .icon { width: 14px; height: 14px; }
+#nextskill-home.sea-glass-theme .sea-difficulty { color: #446d89; font-size: 10px; }
+#nextskill-home.sea-glass-theme .sea-course-info h3 { color: #10375d; }
+#nextskill-home.sea-glass-theme .sea-course-bottom > a { width: auto; height: auto; min-height: 44px; display: flex; gap: 8px; padding: 10px 12px; font-size: 11px; border-radius: 999px; }
+#nextskill-home.sea-glass-theme .sea-community,
+#nextskill-home.sea-glass-theme .sea-community p,
+#nextskill-home.sea-glass-theme .sea-community summary > span { color: #375f7f; }
+#nextskill-home.sea-glass-theme .sea-community summary { font-size: 13px; }
+#nextskill-home.sea-glass-theme .sea-workspace { background: #f8fcff; border-top: 1px solid #dcebf6; }
+/* Cancel inherited hover displacement on touch, and add it only for precise pointers. */
+#nextskill-home.sea-glass-theme :is(.sea-button,.sea-course):hover { transform: none; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    #nextskill-home.sea-glass-theme :is(.sea-button,.sea-shortcuts > a):hover { transform: translateY(-2px); }
+    #nextskill-home.sea-glass-theme .sea-course:hover { transform: translateY(-4px); }
+}
+@media (max-width: 1240px) {
+    #nextskill-home.sea-glass-theme .sea-nav { gap: 14px; }
+    #nextskill-home.sea-glass-theme .sea-nav nav > a,
+    #nextskill-home.sea-glass-theme .sea-more summary { padding-inline: 10px; }
+    #nextskill-home.sea-glass-theme .sea-hero-inner { gap: 35px; padding-inline: 32px; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts > a { padding: 15px 12px; gap: 8px; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts strong { font-size: 11px; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts small { font-size: 10px; }
+    #nextskill-home.sea-glass-theme .sea-course-bottom { flex-wrap: wrap; }
+}
+@media (max-width: 1023px) {
+    #nextskill-home.sea-glass-theme .sea-nav nav { background: #edf8fff7; }
+    #nextskill-home.sea-glass-theme .sea-menu-button { background: #f2faffdc; color: #174c75; border-color: #fff; }
+    #nextskill-home.sea-glass-theme .sea-hero-inner { grid-template-columns: minmax(0, 1fr) 260px; gap: 24px; padding: 184px 24px 145px; }
+    #nextskill-home.sea-glass-theme .sea-hero h1 { font-size: 38px; }
+    #nextskill-home.sea-glass-theme .sea-subtitle { font-size: 14px; }
+    #nextskill-home.sea-glass-theme .sea-progress { margin-top: 65px; padding: 18px; }
+    #nextskill-home.sea-glass-theme .sea-content { padding-inline: 24px; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #nextskill-home.sea-glass-theme .sea-shortcuts > a { justify-content: flex-start; min-height: 72px; padding: 16px; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts strong { font-size: 13px; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts small { font-size: 11px; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts > a > span:last-child { display: block; }
+    #nextskill-home.sea-glass-theme .sea-motion { bottom: 110px; right: 24px; }
+}
+@media (max-width: 767px) {
+    #nextskill-home.sea-glass-theme .sea-brand { font-size: 23px; }
+    #nextskill-home.sea-glass-theme .sea-hero { min-height: 0; }
+    #nextskill-home.sea-glass-theme .sea-hero-inner { min-height: 0; grid-template-columns: 1fr; padding: 176px 22px 72px; gap: 32px; }
+    #nextskill-home.sea-glass-theme .sea-world::after { background: linear-gradient(90deg,#edf8ffeb,#e7f7ff80),linear-gradient(0deg,#edf7ff,#edf7ff00 40%); }
+    #nextskill-home.sea-glass-theme .sea-landscape { object-position: 62% center; }
+    #nextskill-home.sea-glass-theme .sea-kicker { font-size: 9px; letter-spacing: 1.7px; }
+    #nextskill-home.sea-glass-theme .sea-hero h1 { font-size: clamp(32px, 8vw, 43px); letter-spacing: -.8px; }
+    #nextskill-home.sea-glass-theme .sea-primary { font-size: 14px; min-height: 52px; padding-inline: 20px; }
+    #nextskill-home.sea-glass-theme .sea-secondary { font-size: 12px; }
+    #nextskill-home.sea-glass-theme .sea-progress { margin-top: 0; max-width: 420px; padding: 22px; }
+    #nextskill-home.sea-glass-theme .sea-content { margin-top: 0; padding-inline: 18px; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts { gap: 10px; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts > a { padding: 14px 11px; border-radius: 18px; min-height: 78px; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts > a:last-child { grid-column: auto; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts .icon { width: 23px; height: 23px; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts strong { font-size: 10px; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts small { font-size: 9px; }
+    #nextskill-home.sea-glass-theme .sea-shortcuts > a > span:last-child { display: none; }
+    #nextskill-home.sea-glass-theme .sea-motion { bottom: 18px; right: 22px; }
+    #nextskill-home.sea-glass-theme .sea-courses { padding-top: 32px; }
+    #nextskill-home.sea-glass-theme .sea-section-top { align-items: flex-start; gap: 12px; }
+    #nextskill-home.sea-glass-theme .sea-section-top h2 { font-size: 23px; }
+    #nextskill-home.sea-glass-theme .sea-section-description { font-size: 11px; max-width: 230px; }
+    #nextskill-home.sea-glass-theme .sea-difficulty { display: none; }
+    #nextskill-home.sea-glass-theme .sea-course-bottom { align-items: flex-start; flex-direction: column; gap: 12px; }
+    #nextskill-home.sea-glass-theme .sea-course-bottom > a { width: 100%; justify-content: center; }
+}
+@media (prefers-reduced-transparency: reduce) {
+    #nextskill-home.sea-glass-theme .sea-glass,
+    #nextskill-home.sea-glass-theme .sea-nav nav,
+    #nextskill-home.sea-glass-theme .sea-shortcuts > a { background: #eaf6ff; backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+@media (forced-colors: active) {
+    #nextskill-home.sea-glass-theme .sea-world { display: none; }
+    #nextskill-home.sea-glass-theme :is(.sea-glass,.sea-course,.sea-shortcuts > a,.sea-button) { border: 1px solid CanvasText; }
+}
