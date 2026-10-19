@@ -12,6 +12,7 @@ fs.mkdirSync(output, { recursive: true });
  page.on('response', response => { if(response.status() >= 400) failures.push(`${response.status()} ${response.url()}`); });
  const base = process.env.SEALEARN_TEST_URL || 'http://127.0.0.1:5190';
  await page.goto(`${base}/Home/Index`); await page.evaluate(() => document.fonts.ready);
+ assert.equal(await page.locator('#sea-workspace').evaluate(e=>e.open),false);
  for (const width of [320,375,768,1024,1440,1920]) {
   await page.setViewportSize({width,height:1000}); await page.waitForTimeout(200);
   const measure = await page.evaluate(() => ({ viewport: innerWidth, width: document.documentElement.scrollWidth, nav:document.querySelector('.sea-nav').getBoundingClientRect().width, broken: [...document.querySelectorAll('.sea-landing img')].filter(i=>i.complete && !i.naturalWidth).map(i=>i.src) }));
@@ -37,11 +38,14 @@ fs.mkdirSync(output, { recursive: true });
  }
  checks.push({test:'All SeaLearn links and fragment targets',result:'PASS',count:links.length});
  await page.locator('#sea-courses').scrollIntoViewIfNeeded(); await page.screenshot({path:path.join(output, 'sealearn-courses.png')});
- await page.locator('.sea-community [data-open-dialog]').click(); assert.ok(await page.locator('#league-dialog').evaluate(e=>e.open)); await page.keyboard.press('Escape');
+ await page.locator('.sea-community summary').click(); await page.locator('.sea-community [data-open-dialog]').click(); assert.ok(await page.locator('#league-dialog').evaluate(e=>e.open)); await page.keyboard.press('Escape');
  await page.locator('.sea-more summary').click(); await page.locator('.sea-more [data-open-dialog="companion-dialog"]').click(); assert.ok(await page.locator('#companion-dialog').evaluate(e=>e.open)); await page.keyboard.press('Escape'); checks.push({test:'League and companion dialogs preserved',result:'PASS'});
+ await page.locator('.sea-shortcuts a[href="#learning-path"]').click(); assert.ok(await page.locator('#sea-workspace').evaluate(e=>e.open));
  await page.locator('#jump-current').click(); await page.waitForTimeout(200); assert.equal(await page.locator('.journey-step.current button').evaluate(e=>document.activeElement===e),true);
  await page.locator('.journey-step.current button').click(); assert.ok(await page.locator('#lesson-dialog').evaluate(e=>e.open)); await page.keyboard.press('Escape');
- await page.locator('#niko-practice-start').click(); assert.ok(await page.locator('dialog[open]').count()); await page.keyboard.press('Escape'); checks.push({test:'Journey, lesson and Niko practice retained',result:'PASS'});
+ await page.locator('#niko-practice-start').click(); assert.ok(await page.locator('dialog[open]').count()); await page.keyboard.press('Escape'); checks.push({test:'On-demand workspace, journey, lesson and Niko practice retained',result:'PASS'});
+ await page.goto(`${base}/Home/Index#daily-quests`); assert.ok(await page.locator('#sea-workspace').evaluate(e=>e.open));
+ checks.push({test:'Direct deep link opens retained workspace',result:'PASS'});
  await page.locator('#sea-query').fill('JavaScript'); await page.locator('.sea-search button').click(); await page.waitForURL('**/Home/Courses?q=JavaScript'); assert.ok((await page.locator('body').innerText()).includes('JavaScript Basics')); checks.push({test:'Search uses existing course controller',result:'PASS'});
  for (const path of ['/Home/Details/1','/Home/Details/5','/Home/Details/6','/Home/Details/9','/Courses/Enrollment','/Account/Login','/Account/Register','/Home/Privacy','/']) { const r=await page.request.get(base+path);assert.equal(r.status(),200,path); }
  checks.push({test:'Course details, enrollment, account pages, privacy and entry route',result:'PASS'});

@@ -8,6 +8,7 @@
     const button = document.getElementById('sea-motion');
     const menuButton = document.querySelector('.sea-menu-button');
     const menu = document.getElementById('sea-menu');
+    const workspace = document.getElementById('sea-workspace');
     const controller = new AbortController();
     const options = { signal: controller.signal };
     let paused = false, visible = true, frame = 0, x = 0, y = 0;
@@ -62,6 +63,24 @@
     menu.addEventListener('click', event => { if (event.target.closest('a,button')) closeMenu(); }, options);
     document.addEventListener('keydown', event => { if (event.key === 'Escape' && menu.hasAttribute('data-open')) { closeMenu(); menuButton.focus(); } }, options);
     document.addEventListener('click', event => { if (!event.target.closest('.sea-nav')) closeMenu(); }, options);
+    function revealDestination(hash) {
+        if (!hash || hash === '#') return;
+        let target;
+        try { target = document.getElementById(decodeURIComponent(hash.slice(1))); } catch { return; }
+        if (!target) return;
+        if (workspace?.contains(target)) workspace.open = true;
+        if (target instanceof HTMLDetailsElement) target.open = true;
+    }
+    document.addEventListener('click', event => {
+        const link = event.target.closest('a[href^="#"]');
+        if (link) revealDestination(link.hash);
+    }, options);
+    window.addEventListener('hashchange', () => revealDestination(location.hash), options);
+    workspace?.addEventListener('toggle', () => {
+        // The retained map and companion measure their anchors when their workspace opens.
+        if (workspace.open) window.dispatchEvent(new Event('resize'));
+    }, options);
+    revealDestination(location.hash);
     // Tear down for page exit, and restore after a back-forward-cache navigation.
     window.addEventListener('pagehide', event => {
         stop();
