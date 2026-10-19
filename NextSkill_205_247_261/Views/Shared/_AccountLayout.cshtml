@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] | NextSkill</title>
+    <link rel="stylesheet" href="~/css/account.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/account-game.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="site-header">
+        <a class="wordmark" asp-controller="Home" asp-action="Index">NEXTSKILL</a>
+        <nav aria-label="Main navigation">
+            <a asp-controller="Home" asp-action="Courses">Courses</a>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-controller="Account" asp-action="@(User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard")">My account</a>
+                <form asp-controller="Account" asp-action="Logout" method="post"><button class="nav-button" type="submit">Log out</button></form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login">Log in</a>
+            }
+        </nav>
+    </header>
+    <main>@RenderBody()</main>
+    <footer class="site-footer">NEXTSKILL / Upskill &amp; Reskill</footer>
+    <script src="~/js/account.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

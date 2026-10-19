@@ -1,0 +1,36 @@
+@model LoginForm
+@{
+    Layout = "_AccountLayout";
+    var admin = (string?)ViewData["Role"] == "Admin";
+    ViewData["Title"] = admin ? "Admin log in" : "Log in";
+}
+<div class="auth-grid">
+    <partial name="_AccountStory" />
+    <section class="auth-form" aria-labelledby="form-heading">
+        <h2 id="form-heading">@(admin ? "Admin log in" : "Welcome back")</h2>
+        <p class="form-intro">@(admin ? "Log in to your admin account." : "Log in and take your next step.")</p>
+        <nav class="account-types" aria-label="Account type">
+            <a asp-action="Login" class="@(!admin ? "active" : "")" aria-current="@(!admin ? "page" : null)">User</a>
+            <a asp-action="AdminLogin" class="@(admin ? "active" : "")" aria-current="@(admin ? "page" : null)">Admin</a>
+        </nav>
+        @if (TempData["Success"] is string success)
+        { <div class="success-message" role="status">@success</div> }
+        <form asp-controller="Account" asp-action="@(admin ? "AdminLogin" : "Login")" method="post">
+            <div asp-validation-summary="All" class="validation-summary" role="alert" tabindex="-1"></div>
+            <div class="field">
+                <label asp-for="Email">Email <span>*</span></label>
+                <input asp-for="Email" type="email" autocomplete="username" placeholder="you@example.com" required maxlength="254" />
+            </div>
+            <div class="field">
+                <label asp-for="Password">Password <span>*</span></label>
+                <div class="password-wrap">
+                    <input asp-for="Password" autocomplete="current-password" placeholder="Enter your password" required maxlength="128" />
+                    <button class="password-toggle" type="button" data-target="Password" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                </div>
+            </div>
+            <div class="check-row"><input asp-for="RememberMe" /><label asp-for="RememberMe">Remember me</label></div>
+            <button type="submit" class="primary-button">Log in</button>
+        </form>
+        <p class="switch-form">Don't have an account? <a asp-action="@(admin ? "AdminRegister" : "Register")">Create account</a></p>
+    </section>
+</div>
