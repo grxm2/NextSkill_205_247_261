@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="th">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,14 +8,22 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/NextSkill_205_247_261.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/buddy-character.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/companion.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/buddy-motion.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/buddy-agent.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/buddy-expressions.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/adventure-theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/ocean-theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/dashboard-polish.css" asp-append-version="true" />
 </head>
-<body>
+<body class="ocean-theme">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
                     <span class="brand-logo me-2" aria-hidden="true"></span>
-                    <span class="brand-text">Course catalog</span>
+                    <span class="brand-text">NextSkill</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -44,12 +52,15 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2569 - NextSkill_205_247_261 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2569 - NextSkill_205_247_261 - <a asp-area="" asp-controller="Home" asp-action="Privacy">ความเป็นส่วนตัว</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <partial name="_FloatingBuddy" />
+    <script src="~/js/buddy-agent.js" asp-append-version="true" defer></script>
+    <script src="~/js/buddy-motion.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
