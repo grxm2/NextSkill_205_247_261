@@ -49,58 +49,6 @@
         <div class="sea-hero-inner">
             <div class="sea-hero-copy">
                 <p class="sea-kicker"><span class="icon icon-star" aria-hidden="true"></span> LEARN · EXPLORE · LEVEL UP</p>
-<<<<<<< Updated upstream
-                <h1 id="sea-title">เรียนรู้วันนี้<br /><span>เพื่อเวอร์ชันที่ดีกว่าในอนาคต</span></h1>
-                <p class="sea-subtitle">เปลี่ยนการเรียนรู้ให้เป็นการผจญภัย<br />ค้นพบสกิลใหม่ ในจังหวะของคุณ</p>
-                <div class="sea-actions">
-                    <button type="button" class="sea-button sea-primary" data-sea-practice aria-haspopup="dialog"><span class="icon icon-lightning" aria-hidden="true"></span> <span data-sea-practice-label>เริ่มภารกิจ</span> <span class="icon icon-arrow-right" aria-hidden="true"></span></button>
-                    <a class="sea-button sea-secondary" href="#learning-path"><span class="icon icon-grid" aria-hidden="true"></span> แผนที่การผจญภัย</a>
-                </div>
-                <div class="sea-active-quest">
-                    <span class="sea-quest-mark"><span class="icon icon-book" aria-hidden="true"></span></span>
-                    <div><p>ภารกิจปัจจุบัน · แบบฝึกกับ Niko</p><strong>@currentLesson?.Title</strong><span>3 สถานการณ์ · ไม่ใช้หัวใจ · ไม่คิด XP</span></div>
-                    <span class="sea-quest-direction" aria-hidden="true">›</span>
-                </div>
-            </div>
-            <aside class="sea-progress sea-glass" aria-labelledby="sea-progress-title">
-                <div class="sea-panel-heading">
-                    <h2 id="sea-progress-title">บันทึกนักผจญภัย</h2>
-                    <span class="sea-level">LV. @Model.CurrentLevel</span>
-                </div>
-                <div class="sea-player">
-                    <img src="~/images/sea-compass-emblem.webp" alt="" width="128" height="128" />
-                    <div><strong>@Model.LearnerName</strong><span>English for Business</span></div>
-                    <span class="sea-player-hearts"><span class="icon icon-heart" aria-hidden="true"></span>@Model.Hearts/@Model.MaxHearts</span>
-                </div>
-                <div class="sea-progress-main">
-                    <div class="sea-ring" style="--sea-progress: @Model.CourseProgress" role="img" aria-label="ความคืบหน้าตัวอย่าง @Model.CourseProgress เปอร์เซ็นต์">
-                        <strong>@Model.CourseProgress<small>%</small></strong>
-                    </div>
-                    <div><p>เรียนไปแล้ว</p><strong>@Model.CompletedLessons จาก @Model.Lessons.Count ด่าน</strong><a href="#learning-path">เรียนต่อ <span aria-hidden="true">→</span></a></div>
-                </div>
-                <div class="sea-rewards">
-                    <span><span class="icon icon-lightning" aria-hidden="true"></span><strong>@Model.TotalXp.ToString("N0")</strong> XP</span>
-                    <span><span class="icon icon-grid" aria-hidden="true"></span>ปลดล็อก @Model.UnlockedIslands เกาะ</span>
-                </div>
-                <nav class="sea-mini-map" aria-label="ด่านเรียนใกล้คุณ">
-                    @foreach (var lesson in Model.Lessons.Take(4))
-                    {
-                        @if (lesson.Status == "locked")
-                        {
-                            <span class="sea-map-stop is-locked"><span class="icon icon-lock" aria-hidden="true"></span><small>ด่าน @lesson.Number</small><span class="sr-only">ยังไม่ปลดล็อก</span></span>
-                        }
-                        else
-                        {
-                            <a class="sea-map-stop is-@lesson.Status" href="#lesson-@lesson.Number" aria-label="@(lesson.Status == "completed" ? "ทบทวน" : "ไปยัง") ด่าน @lesson.Number @lesson.Title"><span class="icon @(lesson.Status == "completed" ? "icon-check" : "icon-book")" aria-hidden="true"></span><small>ด่าน @lesson.Number</small></a>
-                        }
-                    }
-                </nav>
-                @if (Model.IsProgressPreview)
-                {
-                    <p class="sea-preview">ข้อมูลตัวอย่าง · ยังไม่บันทึกผลการเรียน</p>
-                }
-            </aside>
-=======
                 <h1 id="sea-title">เรียนรู้วันนี้<br /><span>เพื่อเวอร์ชันที่ดีกว่า<br class="sea-title-break" />ในอนาคต</span></h1>
                 <p class="sea-subtitle">ทุกบทเรียน คือการผจญภัยครั้งใหม่<br />ปลดล็อกสกิล ออกสำรวจโลกกว้าง ในจังหวะของคุณ</p>
                 <div class="sea-actions">
@@ -115,22 +63,11 @@
                 <div class="niko-coach-stage"><div class="arrival-character"><span class="buddy-slot" data-buddy-anchor="arrival"></span></div><div class="hero-speech"><span id="buddy-greeting">ลองเริ่มฟีดแบ็กจากสิ่งที่ทำได้ดี แล้วค่อยเสนอทางเลือกใหม่</span></div></div>
                 <div class="niko-coach-actions"><button type="button" id="niko-practice-start" class="button button-primary" aria-haspopup="dialog">ฝึก 1 นาที <span class="icon icon-arrow-right" aria-hidden="true"></span></button><button type="button" class="niko-style-action" data-open-dialog="companion-dialog" aria-label="ตั้งชื่อและแต่งตัวคู่หู" title="ตั้งชื่อและแต่งตัว"><span class="icon icon-star" aria-hidden="true"></span></button></div>
             </section>
->>>>>>> Stashed changes
         </div>
         <button class="sea-motion" type="button" id="sea-motion" aria-pressed="false">พักเอฟเฟกต์ฉาก</button>
     </section>
     <div class="sea-content">
         <nav class="sea-shortcuts" aria-label="สำรวจการเรียนรู้">
-<<<<<<< Updated upstream
-            <a href="#sea-courses"><span class="icon icon-book" aria-hidden="true"></span><span><strong>คอร์สแนะนำ</strong><small>เริ่มต้นเส้นทางใหม่</small></span><span aria-hidden="true">›</span></a>
-            <a href="#learning-path"><span class="icon icon-grid" aria-hidden="true"></span><span><strong>เส้นทางการเรียนรู้</strong><small>วางแผนสู่เป้าหมาย</small></span><span aria-hidden="true">›</span></a>
-            <a href="#daily-quests"><span class="icon icon-trophy" aria-hidden="true"></span><span><strong>ภารกิจ & รางวัล</strong><small>ก้าวเล็ก ๆ ในทุกวัน</small></span><span aria-hidden="true">›</span></a>
-            <a asp-controller="Home" asp-action="Courses"><span class="icon icon-lightning" aria-hidden="true"></span><span><strong>คลังความรู้</strong><small>ค้นพบสกิลที่ใช่</small></span><span aria-hidden="true">›</span></a>
-        </nav>
-        <section class="sea-courses" id="sea-courses" aria-labelledby="sea-courses-title">
-            <div class="sea-section-top"><div><p class="sea-selection-label">YOUR NEXT ADVENTURE</p><h2 id="sea-courses-title">คอร์สเรียนยอดนิยม</h2><p class="sea-section-description">ออกสำรวจคอร์สสุดพิเศษ เพื่อปลดล็อกสกิลใหม่ของคุณ</p></div><a asp-controller="Home" asp-action="Courses">ดูทั้งหมด <span aria-hidden="true">→</span></a></div>
-            <div class="sea-course-grid">
-=======
             <a class="sea-glass" href="#sea-courses"><span class="sea-shortcut-symbol sea-compass" aria-hidden="true"><svg viewBox="0 0 32 32" width="33" height="33" fill="none"><circle cx="16" cy="16" r="13" fill="#effbff" stroke="#448ab4" stroke-width="1.5"/><path d="m22 9-4 10-10 4 5-10Z" fill="#1785cf"/><path d="m22 9-4 10-2-3Z" fill="#e79169"/><circle cx="16" cy="16" r="2" fill="#fff"/></svg></span><span><strong>คอร์สแนะนำ</strong><small>เริ่มต้นเส้นทางใหม่</small></span><span aria-hidden="true">›</span></a>
             <a class="sea-glass" href="#learning-path"><span class="sea-shortcut-symbol"><span class="icon icon-grid" aria-hidden="true"></span></span><span><strong>เส้นทางการเรียนรู้</strong><small>วางแผนสู่เป้าหมาย</small></span><span aria-hidden="true">›</span></a>
             <a class="sea-glass" href="#daily-quests"><span class="sea-shortcut-symbol sea-shortcut-gold"><span class="icon icon-trophy" aria-hidden="true"></span></span><span><strong>ภารกิจ & รางวัล</strong><small>ทำภารกิจ ปลดล็อกไอเทม</small></span><span aria-hidden="true">›</span></a>
@@ -141,7 +78,6 @@
             <div class="sea-course-carousel">
             <button class="sea-carousel-arrow sea-carousel-prev" type="button" aria-label="ดูคอร์สก่อนหน้า" aria-controls="sea-course-track" disabled>‹</button>
             <div class="sea-course-grid" id="sea-course-track" tabindex="0" aria-label="คอร์สแนะนำ เลื่อนเพื่อดูคอร์สเพิ่มเติม">
->>>>>>> Stashed changes
                 @foreach (var course in Model.PopularCourses)
                 {
                     <partial name="_SeaCourseCard" model="course" />

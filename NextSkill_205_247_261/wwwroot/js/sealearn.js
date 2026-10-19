@@ -35,9 +35,7 @@
         document.getElementById('niko-practice-start')?.click();
     }, options);
     let paused = false, visible = true, frame = 0, x = 0, y = 0;
-<<<<<<< Updated upstream
     let renderedX = 0, renderedY = 0, scrollDepth = 0, geometryDirty = true, lastTime = 0;
-=======
     try { paused = localStorage.getItem('sealearn.scene.paused') === 'true'; } catch {}
     function syncCourses() {
         if (!track || !previous || !next) return;
@@ -63,7 +61,6 @@
     }, options);
     window.addEventListener('resize', syncCourses, options);
     document.fonts?.ready.then(syncCourses);
->>>>>>> Stashed changes
     function stop() {
         cancelAnimationFrame(frame);
         frame = 0;
@@ -117,22 +114,17 @@
     }, options);
     hero.addEventListener('pointerleave', () => { x = y = 0; queue(); }, options);
     // Scroll events only schedule a frame; all geometry reads happen once inside paint.
-<<<<<<< Updated upstream
     function updateGeometry() { geometryDirty = true; queue(); }
     window.addEventListener('scroll', updateGeometry, { passive: true, signal: controller.signal });
     window.addEventListener('resize', updateGeometry, options);
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) stop(); else updateGeometry();
     }, options);
-    button.addEventListener('click', () => { paused = !paused; sync(); }, options);
-=======
-    window.addEventListener('scroll', queue, { passive: true, signal: controller.signal });
     button.addEventListener('click', () => {
         paused = !paused;
         try { localStorage.setItem('sealearn.scene.paused', String(paused)); } catch {}
         sync();
     }, options);
->>>>>>> Stashed changes
     reduce.addEventListener('change', sync, options);
     desktop.addEventListener('change', sync, options);
     const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
