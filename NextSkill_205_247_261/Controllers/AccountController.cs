@@ -29,7 +29,12 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
     private IActionResult RegistrationPage(string role, RegisterForm form)
     { ViewData["Role"] = role; return View("Register", form); }
     private IActionResult LoginPage(string role, LoginForm form)
-    { ViewData["Role"] = role; return View("Login", form); }
+    {
+        if (User.Identity?.IsAuthenticated == true)
+            return RedirectToAction("Index", "Home");
+        ViewData["Role"] = role;
+        return View("Login", form);
+    }
     private async Task<IActionResult> RegisterAccount(RegisterForm form, string role)
     {
         if (role == "Admin" && string.IsNullOrWhiteSpace(form.InvitationCode))
@@ -72,7 +77,7 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(identity), new AuthenticationProperties { IsPersistent = form.RememberMe });
-                    return RedirectToAction(role == "Admin" ? nameof(AdminDashboard) : nameof(Dashboard));
+                    return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Email or password is incorrect, or the account is temporarily locked. After 5 failed attempts, wait 15 minutes.");
             }

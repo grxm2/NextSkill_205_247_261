@@ -11,9 +11,10 @@
     <header class="site-header">
         <a class="wordmark" asp-controller="Home" asp-action="Index">NEXTSKILL</a>
         <nav aria-label="Main navigation">
-            <a asp-controller="Home" asp-action="Courses">Courses</a>
             @if (User.Identity?.IsAuthenticated == true)
             {
+                <a asp-controller="Home" asp-action="Index">Home</a>
+                <a asp-controller="Home" asp-action="Courses">Courses</a>
                 <a asp-controller="Account" asp-action="@(User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard")">My account</a>
                 <form asp-controller="Account" asp-action="Logout" method="post"><button class="nav-button" type="submit">Log out</button></form>
             }

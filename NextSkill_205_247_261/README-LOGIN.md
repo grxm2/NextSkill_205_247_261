@@ -4,7 +4,9 @@
 
 ## เปิดใช้งาน
 
-เปิด Solution ใน Visual Studio แล้วกด F5 หน้าแรกยังเป็น Learning Club ให้กด **เข้าสู่ระบบ** ที่มุมขวาบน หรือเปิด `/Account/Login` โดยตรง
+เปิด Solution ใน Visual Studio แล้วกด F5 เว็บจะเริ่มที่หน้า **Login** หากยังไม่ได้เข้าสู่ระบบ เมื่อ Login สำเร็จทั้ง User และ Admin จะเข้าสู่หน้า **Home (Learning Club)** จากนั้นกด **Courses** ใน Navigation เพื่อเปิดแค็ตตาล็อกจาก branch game
+
+หน้า Home และหน้าคอร์สต้องเข้าสู่ระบบก่อน หากมี session อยู่แล้วจะเข้า Home ได้ทันที ส่วนหน้า Login/สมัครสมาชิกจะไม่แสดงเมนู Courses ให้ข้ามลำดับนี้
 
 การรวม branch Login เก็บหน้า Home, Navigation, Floating Buddy และแค็ตตาล็อก `/Home/Courses` ปัจจุบันไว้ครบ หน้า Dashboard ของ User และ Admin ยังแยกตามบทบาทตามระบบบัญชีเดิม
 
@@ -14,8 +16,9 @@
 | Login User | `/Account/Login` |
 | สมัคร Admin | `/Account/AdminRegister` |
 | Login Admin | `/Account/AdminLogin` |
-| หน้า User หลัง Login | `/Account/Dashboard` |
-| หน้า Admin หลัง Login | `/Account/AdminDashboard` |
+| หน้า Home หลัง Login (User / Admin) | `/Home/Index` |
+| ข้อมูลบัญชี User | `/Account/Dashboard` |
+| จัดการระบบ Admin (ผ่านบัญชีของฉัน) | `/Account/AdminDashboard` |
 
 สมัครสำเร็จแล้วให้เข้าสู่ระบบด้วยอีเมลและรหัสผ่านที่ตั้งเอง รหัสผ่านต้องยาว 8–128 ตัวอักษร
 

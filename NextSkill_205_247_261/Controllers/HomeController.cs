@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NextSkill_205_247_261.Models;
 using System.Diagnostics;
@@ -9,6 +10,7 @@ namespace NextSkill_205_247_261.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             return View(new HomeDashboardViewModel());
@@ -20,6 +22,7 @@ namespace NextSkill_205_247_261.Controllers
         }
 
         // Courses list with search, filter, sort and pagination
+        [Authorize]
         public IActionResult Courses(string q, string tag, string sort = "Recommended", int page = 1, int pageSize = 9)
         {
             var all = GetCourses();
@@ -63,6 +66,7 @@ namespace NextSkill_205_247_261.Controllers
             return View(items);
         }
 
+        [Authorize]
         public IActionResult Details(int id)
         {
             var course = GetCourses().FirstOrDefault(c => c.Id == id);
