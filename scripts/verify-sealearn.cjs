@@ -7,6 +7,7 @@ fs.mkdirSync(output, { recursive: true });
 (async () => {
  const browser = await chromium.launch({ headless: true, channel: 'msedge' });
  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+ page.setDefaultTimeout(10000);
  const errors = [], failures = [], checks = [];
  page.on('pageerror', error => errors.push(error.message));
  page.on('response', response => { if(response.status() >= 400) failures.push(`${response.status()} ${response.url()}`); });
@@ -14,13 +15,27 @@ fs.mkdirSync(output, { recursive: true });
  await page.goto(`${base}/Home/Index`); await page.evaluate(() => document.fonts.ready);
  assert.equal(await page.locator('#sea-workspace').evaluate(e=>e.open),false);
  for (const width of [320,375,768,1024,1440,1920]) {
-  await page.setViewportSize({width,height:1000}); await page.waitForTimeout(200);
+  console.log(`Checking viewport ${width}px`);
+  await page.setViewportSize({width,height:1000});
+  await page.waitForFunction(() => document.getElementById('sea-motion').disabled === (innerWidth < 1024));
   const measure = await page.evaluate(() => ({ viewport: innerWidth, width: document.documentElement.scrollWidth, nav:document.querySelector('.sea-nav').getBoundingClientRect().width, broken: [...document.querySelectorAll('.sea-landing img')].filter(i=>i.complete && !i.naturalWidth).map(i=>i.src) }));
   assert.ok(measure.width <= width, `overflow ${width}: ${JSON.stringify(measure)}`); assert.deepEqual(measure.broken, []);
+  // An overlapping glass panel can pass an overflow check but block navigation.
+  for (const selector of ['[data-sea-practice]', '.sea-shortcuts > a']) {
+   const unobstructed = await page.locator(selector).evaluateAll(nodes => nodes.every(node => {
+    const rect = node.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > innerHeight) return true;
+    const hit = document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2);
+    return hit === node || node.contains(hit);
+   }));
+   assert.ok(unobstructed, `Blocked Home control at ${width}px: ${selector}`);
+  }
+  if(width < 1024) assert.equal(await page.locator('.sea-landscape').evaluate(e=>e.style.transform),'', `Small screens keep the scene still at ${width}px`);
   checks.push({test:`responsive ${width}px`,result:'PASS',...measure});
   if([375,768,1440].includes(width)) await page.screenshot({path:path.join(output, `sealearn-${width}.png`)});
  }
  await page.setViewportSize({width:375,height:900});
+ console.log('Checking menu and motion controls');
  await page.locator('.sea-menu-button').click(); assert.equal(await page.locator('.sea-menu-button').getAttribute('aria-expanded'),'true');
  await page.keyboard.press('Escape'); assert.equal(await page.locator('.sea-menu-button').getAttribute('aria-expanded'),'false'); checks.push({test:'Mobile menu and Escape focus return',result:'PASS'});
  await page.setViewportSize({width:1440,height:1000});
@@ -31,6 +46,27 @@ fs.mkdirSync(output, { recursive: true });
  await page.emulateMedia({reducedMotion:'reduce'}); await page.waitForTimeout(100);
  assert.equal(await page.locator('.sea-landscape').evaluate(e=>e.style.transform),''); assert.ok(await page.locator('#sea-motion').isDisabled()); checks.push({test:'Parallax pointer, pause, OS reduced motion',result:'PASS'});
  await page.emulateMedia({reducedMotion:'no-preference'});
+ await page.waitForFunction(() => !document.getElementById('sea-motion').disabled);
+ console.log('Checking parallax settling and live preference changes');
+ // Scroll parallax must settle, release compositor hints, and reset immediately
+ // when the preference changes during a live animation.
+ await page.evaluate(() => scrollTo(0,160)); await page.waitForTimeout(1000);
+ const settledTransform = await page.locator('.sea-landscape').evaluate(e=>e.style.transform);
+ assert.notEqual(settledTransform,'');
+ assert.equal(await page.locator('.sea-landscape').evaluate(e=>e.style.willChange),'');
+ await page.waitForTimeout(100);
+ assert.equal(await page.locator('.sea-landscape').evaluate(e=>e.style.transform),settledTransform);
+ await page.mouse.move(750,320);
+ await page.waitForFunction(() => document.querySelector('.sea-landscape').style.willChange === 'transform');
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.waitForFunction(() => document.getElementById('sea-motion').disabled).catch(async error => {
+  console.log(await page.evaluate(() => ({ reduced: matchMedia('(prefers-reduced-motion: reduce)').matches, motion: document.getElementById('sea-motion').outerHTML, transform: document.querySelector('.sea-landscape').style.transform, hidden: document.hidden })), errors);
+  throw error;
+ });
+ assert.equal(await page.locator('.sea-landscape').evaluate(e=>e.style.transform),'');
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ await page.evaluate(() => scrollTo(0,0));
+ checks.push({test:'Scroll parallax settles and releases compositor hints; live reduced-motion reset; unobstructed controls at all widths',result:'PASS'});
  const previewXp = await page.locator('.sea-rewards strong').innerText();
  await page.locator('[data-sea-practice]').click();
  assert.ok(await page.locator('#niko-practice-dialog').evaluate(e=>e.open));

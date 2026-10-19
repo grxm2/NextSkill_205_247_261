@@ -12,25 +12,46 @@
     const controller = new AbortController();
     const options = { signal: controller.signal };
     let paused = false, visible = true, frame = 0, x = 0, y = 0;
+    let renderedX = 0, renderedY = 0, scrollDepth = 0, geometryDirty = true, lastTime = 0;
     function stop() {
         cancelAnimationFrame(frame);
         frame = 0;
+        renderedX = renderedY = lastTime = 0;
         layers.forEach(layer => { layer.style.transform = ''; layer.style.willChange = ''; });
     }
-    function enabled() { return !paused && !reduce.matches && desktop.matches && visible; }
-    function paint() {
+    function enabled() { return !paused && !reduce.matches && desktop.matches && visible && !document.hidden; }
+    function paint(time) {
         frame = 0;
-        if (!enabled()) return;
-        const scrollDepth = Math.max(-30, Math.min(45, -hero.getBoundingClientRect().top * .08));
+        if (!enabled()) {
+            // A preference can change before its MediaQueryList event is delivered.
+            // Clear the in-flight transform and refresh the control in that frame.
+            sync();
+            return;
+        }
+        // Read geometry only after scrolling/resizing; pointer easing never forces layout.
+        if (geometryDirty) {
+            scrollDepth = Math.max(-30, Math.min(45, -hero.getBoundingClientRect().top * .08));
+            geometryDirty = false;
+        }
+        // Frame-rate independent easing. Stop requesting frames once the scene settles.
+        const blend = 1 - Math.exp(-Math.min(time - (lastTime || time - 16), 64) / 85);
+        lastTime = time;
+        renderedX += (x - renderedX) * blend;
+        renderedY += (y + scrollDepth - renderedY) * blend;
+        const settled = Math.abs(x - renderedX) < .05 && Math.abs(y + scrollDepth - renderedY) < .05;
+        if (settled) { renderedX = x; renderedY = y + scrollDepth; }
         layers.forEach(layer => {
             const depth = Number(layer.dataset.seaDepth);
-            layer.style.transform = `translate3d(${x * depth}px,${(y + scrollDepth) * depth}px,0)`;
-            layer.style.willChange = 'transform';
+            layer.style.transform = `translate3d(${renderedX * depth}px,${renderedY * depth}px,0)`;
+            layer.style.willChange = settled ? '' : 'transform';
         });
+        if (!settled) queue(); else lastTime = 0;
     }
     function queue() { if (enabled() && !frame) frame = requestAnimationFrame(paint); }
     function sync() {
         stop();
+        x = y = 0;
+        geometryDirty = true;
         button.disabled = reduce.matches || !desktop.matches;
         button.setAttribute('aria-pressed', String(paused || reduce.matches || !desktop.matches));
         button.textContent = reduce.matches || !desktop.matches ? 'ฉากนิ่ง · ลดการเคลื่อนไหว' : paused ? 'เปิดเอฟเฟกต์ฉาก' : 'พักเอฟเฟกต์ฉาก';
@@ -45,7 +66,12 @@
     }, options);
     hero.addEventListener('pointerleave', () => { x = y = 0; queue(); }, options);
     // Scroll events only schedule a frame; all geometry reads happen once inside paint.
-    window.addEventListener('scroll', queue, { passive: true, signal: controller.signal });
+    function updateGeometry() { geometryDirty = true; queue(); }
+    window.addEventListener('scroll', updateGeometry, { passive: true, signal: controller.signal });
+    window.addEventListener('resize', updateGeometry, options);
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stop(); else updateGeometry();
+    }, options);
     button.addEventListener('click', () => { paused = !paused; sync(); }, options);
     reduce.addEventListener('change', sync, options);
     desktop.addEventListener('change', sync, options);

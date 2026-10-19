@@ -1,60 +1,48 @@
-# SeaLearn Home on Theme-gram
+# SeaLearn Home — Theme-gram
 
-The Home at `/Home/Index` is now a compact ocean-adventure game menu. It retains the supplied fantasy reference scene and adds a gold start button, beveled controls, a framed player HUD, transparent compass emblem, mini stage map, current practice quest, and dark-blue course selection panels. The actual Niko feedback practice is playable directly from the hero, with the original app routes and learning tools retained.
+## Ocean Liquid Glass redesign (19 October 2026)
 
-## Game-menu revision
+The Home at `/Home/Index` follows the supplied SeaLearn reference: an airy ocean-blue adventure scene, navy Thai headings, translucent navigation and shortcut panels, a blue primary action, and a pale course area. The existing locally hosted scene, illustrations, fonts, course data and learning tools are reused; no new runtime dependency is needed.
 
-- Added `wwwroot/css/sea-game.css` as an isolated Home-only game skin. Reduced-motion and opaque fallbacks remain supported.
-- Added `wwwroot/images/sea-compass-emblem.webp`: a 256 x 256 transparent game emblem generated with the built-in image tool. Its prompt is in `docs/SEALEARN-ART.md`.
-- Updated `Views/Home/Index.cshtml`, `_SeaLearnHome.cshtml`, and `_SeaCourseCard.cshtml` for the current-quest preview, player level/hearts, model-derived mini map, real course difficulty, and stage selection controls.
-- Extended the existing `wwwroot/js/niko-coach.js` entry point to accept the hero's practice button. It uses the same practice state, retry feedback, three scenarios, summary, browser storage, and focus return. The label changes to continue or review when appropriate.
-- Completed and locked stage states are derived from the existing model. Available mini-map nodes open the retained journey; locked stages are non-interactive. Practice does not award invented XP or consume hearts.
-- Updated `scripts/verify-sealearn.cjs` to play all three scenarios, check incorrect-answer retry behavior, summary, focus return, updated start label, unchanged preview XP, and mini-map states.
+The CSS approximates Liquid Glass on the web using translucent fills, edge highlights and backdrop blur. Solid-fill fallbacks support browsers without blur and the reduced-transparency preference. All new styling is scoped to the Home-only `sea-glass-theme` class.
 
+### Changed files
 
-## What changed in the reference revision
+- `NextSkill_205_247_261/Views/Home/Index.cshtml`: selects the new Home skin instead of the previous dark game skin.
+- `NextSkill_205_247_261/Views/Shared/_SeaLearnHome.cshtml`: simplifies the hero kicker, adds shortcut descriptions, and introduces the popular-course heading. The existing practice action, player preview, journey links and real course links remain.
+- `NextSkill_205_247_261/wwwroot/css/sea-glass.css`: responsive ocean-glass presentation, readable text, precise-pointer hover effects, focus states, reduced-transparency and forced-color fallbacks.
+- `NextSkill_205_247_261/wwwroot/js/sealearn.js`: frame-rate-independent pointer/scroll easing, geometry reads only when needed, compositor hint release after settling, hidden-tab suspension, and immediate in-flight cleanup when motion preferences change.
+- `scripts/verify-sealearn.cjs`: adds unobstructed-control checks, small-screen static-scene checks, parallax settling, live reduced-motion changes and bounded waits synchronized with browser state.
+- `README-SEALEARN.md`: current implementation and validation notes.
 
-- Replaced the pale white landing treatment with an immersive blue ocean world.
-- Generated a new hero scene and two course-thumbnail illustrations; optimized them as WebP. Removed the unused first-version `sea-world.webp` derivative. The original `learning-world.png` is unchanged.
-- Moved the existing search form to the header without changing its endpoint or `q` field.
-- Reduced repeated statistics, card descriptions, labels, and unsupported course-progress displays. The progress preview remains explicitly labeled.
-- Preserved the original learning dashboard in a native expandable workspace. Learning-path and quest links open it automatically, including direct URL fragments. Niko, practice, studio, league, lesson previews, and existing rewards remain available.
-- Added a visible primary main landmark and retained keyboard navigation, pause controls, mobile parallax reduction, and OS reduced motion.
+### Motion behavior
 
-## MVC and routes
+Only decorative background layers move. Learning text and controls remain stationary. Pointer and scroll input share a single scheduled animation frame, with an 85ms exponential smoothing time constant. Rendering stops when the scene settles, leaves the viewport, or the tab is hidden. Parallax is disabled below 1024px, on coarse pointers, and with `prefers-reduced-motion: reduce`; a visible pause control is also available. Existing Home reduced-motion rules remove positional hover effects and animated scrolling.
 
-The existing ASP.NET Core MVC (.NET 10) architecture, models, database, authentication middleware, shared layout, and route definitions remain intact. The first version's `HomeController` and `HomeDashboardViewModel` integration is retained. `/` still opens the existing account entry flow.
+### MVC and preserved behavior
 
-`/Home/Courses?q=...` handles search. Cards open `/Home/Details/{id}` for actual catalog courses. Enrollment uses `/Courses/Enrollment`; account links respect authenticated user/admin roles. No new routes were added.
+No controller, model, database, authentication, route, shared application layout or non-Home page was changed. `/` continues to open the existing account entry flow. `/Home/Courses?q=...` handles search; course cards open `/Home/Details/{id}`. Enrollment remains at `/Courses/Enrollment`.
 
-## Files in this revision
+The existing learning workspace still opens from journey and quest links, including direct URL fragments. Niko practice, retries, the three-scenario summary, keyboard focus return, the companion studio, league preview and locked journey states remain available. Progress/XP are still explicitly labeled as preview data; practice does not claim saved XP or rewards.
 
-Modified:
-- `Views/Home/Index.cshtml`
-- `Views/Shared/_SeaLearnHome.cshtml`
-- `Views/Shared/_SeaCourseCard.cshtml`
-- `wwwroot/css/sealearn.css`
-- `wwwroot/js/sealearn.js`
-- `scripts/verify-sealearn.cjs`
-- `README-SEALEARN.md`
+### Validation
 
-Added:
-- `wwwroot/images/sea-adventure-world.webp` (266,296 bytes)
-- `wwwroot/images/sea-coding-study.webp` (97,266 bytes)
-- `wwwroot/images/sea-design-study.webp` (93,706 bytes)
-- `docs/SEALEARN-ART.md` (image-generation provenance and prompts)
+- Release build passed: zero errors; eight pre-existing nullable-reference warnings in Course/Lesson models and catalog views.
+- Project-level Release publish passed with zero errors.
+- Edge/Playwright checks passed against the published Production app at widths 320, 375, 768, 1024, 1440 and 1920px: no horizontal overflow or broken landing images; visible primary/shortcut controls unobstructed.
+- Pointer/scroll parallax, settling and compositor-hint release, pause/resume, static small-screen behavior, and live reduced-motion reset passed.
+- Mobile menu/Escape, 17 unique navigation destinations, course search, details, enrollment, account pages, privacy, entry route, journey/lesson dialogs, deep links, companion studio, league and all three Niko scenarios passed.
+- No browser JavaScript errors or failed HTTP responses occurred.
+- Desktop, tablet and mobile screenshots were visually reviewed. Browser coverage is Edge; authenticated SQL-backed operations were not exercised with real credentials.
 
-Removed:
-- Unused `wwwroot/images/sea-world.webp`; the source original remains in the repository and the derivative remains in Git history.
+Repeat checks with .NET 10, Node.js, Playwright and Microsoft Edge installed:
 
-## Validation (19 October 2026)
+```powershell
+dotnet publish NextSkill_205_247_261/NextSkill_205_247_261.csproj -c Release -o artifacts/publish
+# Start the published app in artifacts/publish:
+dotnet NextSkill_205_247_261.dll --urls http://127.0.0.1:5190
+# From the repository root in a second terminal:
+node scripts/verify-sealearn.cjs
+```
 
-Build and Release publish passed with zero errors. Browser regression checks against the published Production application cover widths 320, 375, 768, 1024, 1440, and 1920 px, no horizontal overflow, loaded images, menu/Escape focus return, pointer parallax/pause/reduced motion, all 17 unique new navigation destinations, community disclosure, league/studio, expandable workspace, current journey/lesson, Niko practice, direct quest deep links, existing JavaScript course search, course details, enrollment, account pages, privacy, and application entry. The hero entry was also tested through an incorrect answer, all three correct answers, the completion summary, and keyboard focus return; preview XP remains unchanged. No runtime JavaScript errors or failed HTTP responses were observed.
-
-Existing nullable-reference warnings remain in original Course/Lesson models and catalog views. NU1900 occurs when this environment cannot reach NuGet vulnerability metadata. Real authenticated SQL operations were not tested with credentials; no database or authentication code was changed.
-
-To repeat UI checks, run the application locally with Node.js, Playwright and Microsoft Edge available. Set `SEALEARN_TEST_URL` to the local origin (default `http://127.0.0.1:5190`), then run `node scripts/verify-sealearn.cjs`. Reports/screenshots go to ignored `artifacts/sealearn/`, or `SEALEARN_TEST_OUTPUT` if set.
-
-## Data limitations
-
-The existing catalog is in-memory sample data. Persisted learner progress, per-course durations/progress, coins, discussion, and notifications do not have real data feeds in this repository. The Home page keeps explicit preview labeling, displays actual catalog titles and lesson counts, and avoids claiming saved rewards or completion.
+Set `SEALEARN_TEST_URL` to override the origin, or `SEALEARN_TEST_OUTPUT` to override the report directory. Reports and screenshots default to ignored `artifacts/sealearn/`.

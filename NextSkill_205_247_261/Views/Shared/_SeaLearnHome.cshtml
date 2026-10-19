@@ -48,11 +48,11 @@
         </div>
         <div class="sea-hero-inner">
             <div class="sea-hero-copy">
-                <p class="sea-kicker"><span class="icon icon-star" aria-hidden="true"></span> SEA OF SKILLS <span class="sea-kicker-divider" aria-hidden="true"></span> โลกแห่งการผจญภัย</p>
+                <p class="sea-kicker"><span class="icon icon-star" aria-hidden="true"></span> LEARN · EXPLORE · LEVEL UP</p>
                 <h1 id="sea-title">เรียนรู้วันนี้<br /><span>เพื่อเวอร์ชันที่ดีกว่าในอนาคต</span></h1>
                 <p class="sea-subtitle">เปลี่ยนการเรียนรู้ให้เป็นการผจญภัย<br />ค้นพบสกิลใหม่ ในจังหวะของคุณ</p>
                 <div class="sea-actions">
-                    <button type="button" class="sea-button sea-primary" data-sea-practice aria-haspopup="dialog"><span class="sea-play" aria-hidden="true">▶</span> <span data-sea-practice-label>เริ่มภารกิจ</span> <span class="icon icon-arrow-right" aria-hidden="true"></span></button>
+                    <button type="button" class="sea-button sea-primary" data-sea-practice aria-haspopup="dialog"><span class="icon icon-lightning" aria-hidden="true"></span> <span data-sea-practice-label>เริ่มภารกิจ</span> <span class="icon icon-arrow-right" aria-hidden="true"></span></button>
                     <a class="sea-button sea-secondary" href="#learning-path"><span class="icon icon-grid" aria-hidden="true"></span> แผนที่การผจญภัย</a>
                 </div>
                 <div class="sea-active-quest">
@@ -104,14 +104,13 @@
     </section>
     <div class="sea-content">
         <nav class="sea-shortcuts" aria-label="สำรวจการเรียนรู้">
-            <a href="#sea-courses"><span class="icon icon-book" aria-hidden="true"></span><strong>คอร์สแนะนำ</strong><span aria-hidden="true">↗</span></a>
-            <a href="#learning-path"><span class="icon icon-grid" aria-hidden="true"></span><strong>เส้นทางการเรียนรู้</strong><span aria-hidden="true">↗</span></a>
-            <a href="#daily-quests"><span class="icon icon-trophy" aria-hidden="true"></span><strong>ภารกิจ & รางวัล</strong><span aria-hidden="true">↗</span></a>
-            <a asp-controller="Home" asp-action="Courses"><span class="icon icon-lightning" aria-hidden="true"></span><strong>คลังความรู้</strong><span aria-hidden="true">↗</span></a>
-            <a href="#sea-community"><span class="icon icon-heart" aria-hidden="true"></span><strong>ชุมชน</strong><span aria-hidden="true">↗</span></a>
+            <a href="#sea-courses"><span class="icon icon-book" aria-hidden="true"></span><span><strong>คอร์สแนะนำ</strong><small>เริ่มต้นเส้นทางใหม่</small></span><span aria-hidden="true">›</span></a>
+            <a href="#learning-path"><span class="icon icon-grid" aria-hidden="true"></span><span><strong>เส้นทางการเรียนรู้</strong><small>วางแผนสู่เป้าหมาย</small></span><span aria-hidden="true">›</span></a>
+            <a href="#daily-quests"><span class="icon icon-trophy" aria-hidden="true"></span><span><strong>ภารกิจ & รางวัล</strong><small>ก้าวเล็ก ๆ ในทุกวัน</small></span><span aria-hidden="true">›</span></a>
+            <a asp-controller="Home" asp-action="Courses"><span class="icon icon-lightning" aria-hidden="true"></span><span><strong>คลังความรู้</strong><small>ค้นพบสกิลที่ใช่</small></span><span aria-hidden="true">›</span></a>
         </nav>
         <section class="sea-courses" id="sea-courses" aria-labelledby="sea-courses-title">
-            <div class="sea-section-top"><div><p class="sea-selection-label">CHOOSE YOUR NEXT ADVENTURE</p><h2 id="sea-courses-title">เลือกด่าน อัปสกิลใหม่</h2></div><a asp-controller="Home" asp-action="Courses">ดูทั้งหมด <span aria-hidden="true">→</span></a></div>
+            <div class="sea-section-top"><div><p class="sea-selection-label">YOUR NEXT ADVENTURE</p><h2 id="sea-courses-title">คอร์สเรียนยอดนิยม</h2><p class="sea-section-description">ออกสำรวจคอร์สสุดพิเศษ เพื่อปลดล็อกสกิลใหม่ของคุณ</p></div><a asp-controller="Home" asp-action="Courses">ดูทั้งหมด <span aria-hidden="true">→</span></a></div>
             <div class="sea-course-grid">
                 @foreach (var course in Model.PopularCourses)
                 {
