@@ -1,0 +1,5 @@
+@model Course
+<article class="sea-course">
+    <a class="sea-course-art sea-art-@Model.Category.ToLowerInvariant()" asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id" tabindex="-1" aria-hidden="true"><img src="~/images/sea-world.webp" alt="" width="1774" height="887" loading="lazy" /><span class="sea-course-glyph">@(Model.Category == "Technology" ? "</>" : "Aa")</span></a>
+    <div class="sea-course-info"><span class="sea-category">@Model.Category</span><h3><a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id">@Model.Title</a></h3><p>@Model.Description</p><div class="sea-course-meta"><span><span class="icon icon-book" aria-hidden="true"></span> @Model.Lessons.Count บทเรียน</span><span>@Model.Level</span></div><label class="sea-course-progress">ความคืบหน้า <small>ยังไม่มีข้อมูล</small><progress max="100" value="0" aria-label="ยังไม่มีข้อมูลความคืบหน้า @Model.Title"></progress></label><a class="sea-course-link" asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id">ดูรายละเอียดคอร์ส <span class="icon icon-arrow-right" aria-hidden="true"></span></a></div>
+</article>
