@@ -1,0 +1,131 @@
+@model AdminDashboardModel
+@{
+    Layout = null;
+    var initial = string.IsNullOrWhiteSpace(Model.FullName) ? "A" : System.Globalization.StringInfo.GetNextTextElement(Model.FullName.Trim()).ToUpperInvariant();
+    var samples = new[] {
+        new { Name = "Digital skills essentials", Status = "Published", Learners = "1,240", Completion = "74%", Rating = "4.8" },
+        new { Name = "Design thinking fundamentals", Status = "Published", Learners = "860", Completion = "69%", Rating = "4.9" },
+        new { Name = "Introduction to data analytics", Status = "Draft", Learners = "—", Completion = "—", Rating = "—" },
+        new { Name = "Communication at work", Status = "Review", Learners = "420", Completion = "62%", Rating = "4.7" }
+    };
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin dashboard | NextSkill</title>
+    <link rel="stylesheet" href="~/css/admin-dashboard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-game.css" asp-append-version="true" />
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="admin-shell">
+        <aside class="sidebar">
+            <a class="brand" href="#dashboard">NEXTSKILL<span>ADMIN ARCADE</span></a>
+            <nav aria-label="Admin navigation" class="admin-nav">
+                <a href="#dashboard" class="active" aria-current="page"><span>Dashboard</span><small>Overview</small></a>
+                <a href="#courses"><span>Courses</span><small>Manage</small></a>
+                <a href="#curriculum"><span>Curriculum</span><small>Build</small></a>
+                <a href="#learners"><span>Learners</span><small>Access</small></a>
+                <a href="#reports"><span>Reports</span><small>Insights</small></a>
+                <a href="#settings"><span>Settings</span><small>System</small></a>
+            </nav>
+            <div class="sidebar-account"><strong>Admin account</strong><span>Course manager</span>
+                <form asp-action="Logout" method="post"><button class="pill-button sign-out" type="submit">Sign out <span aria-hidden="true">↗</span></button></form>
+            </div>
+            <div class="sidebar-bottom">NEXTSKILL<span>Upskill &amp; Reskill</span></div>
+        </aside>
+        <div class="workspace">
+            <header class="topbar">
+                <h1 id="page-title">Admin dashboard</h1>
+                <div class="topbar-actions">
+                    <details class="notifications"><summary>Notifications <span>0</span></summary><div class="notification-popover"><strong>You're all caught up</strong><p>No pending course notifications.</p></div></details>
+                    <a class="profile-link" href="#settings" aria-label="Open admin account settings"><span class="avatar">@initial</span><span class="profile-label">Admin</span></a>
+                </div>
+            </header>
+            <main id="main-content" tabindex="-1">
+                <section id="dashboard" class="admin-panel" data-title="Admin dashboard" aria-label="Dashboard overview">
+                    <div class="arcade-hero">
+                        <div class="hero-copy">
+                            <span class="arcade-kicker">LET'S PLAY. LET'S LEARN.</span>
+                            <h2>Ready for your next quest?</h2>
+                            <p>Welcome back, @Model.FullName! A little progress today.<br />A whole new level of learning tomorrow.</p>
+                            <a class="hero-link" href="#learners">Meet your learning squad ↗</a>
+                        </div>
+                        <svg class="arcade-art" viewBox="0 0 240 165" fill="none" aria-hidden="true">
+                            <path d="m28 24 5 12 13 3-12 6-3 13-6-12-13-3 12-6z" fill="#FFE27A" stroke="#302447" stroke-width="2.5"/>
+                            <path d="m205 108 4 10 11 3-10 5-3 11-5-10-11-3 10-5z" fill="#B4F47C" stroke="#302447" stroke-width="2.5"/>
+                            <circle cx="198" cy="33" r="15" fill="#FFE27A" stroke="#302447" stroke-width="3"/>
+                            <circle cx="198" cy="33" r="8" stroke="#C28C30" stroke-width="2"/>
+                            <path d="M116 54V37c0-14 19-10 19-24" stroke="#302447" stroke-width="5" stroke-linecap="round"/>
+                            <g transform="rotate(-12 120 100)"><path d="M77 58h85c18 0 23 14 29 34l8 33c5 23-15 32-28 16l-16-19H84l-17 19c-14 16-33 6-27-16l9-34c5-19 10-33 28-33Z" fill="#FFD4E9" stroke="#302447" stroke-width="4"/>
+                            <path d="M69 82h12v12h12v12H81v12H69v-12H57V94h12z" fill="#7550DF" stroke="#302447" stroke-width="3" stroke-linejoin="round"/>
+                            <circle cx="157" cy="85" r="8" fill="#B4F47C" stroke="#302447" stroke-width="3"/><circle cx="175" cy="104" r="8" fill="#FFE27A" stroke="#302447" stroke-width="3"/>
+                            <rect x="106" y="106" width="10" height="4" rx="2" fill="#302447"/><rect x="123" y="106" width="10" height="4" rx="2" fill="#302447"/>
+                            <path d="M93 72h40" stroke="white" stroke-width="5" stroke-linecap="round"/></g>
+                        </svg>
+                    </div>
+                    <div class="metric-grid">
+                        <article class="metric"><h2>Active courses</h2><strong>0</strong><p>No courses published yet</p></article>
+                        <article class="metric"><h2>Total learners</h2><strong>@Model.Users.ToString("N0")</strong><p>+@Model.NewUsersThisMonth registered this month (UTC)</p></article>
+                        <article class="metric"><h2>Completion rate</h2><strong>—</strong><p>Available when learning begins</p></article>
+                        <article class="metric"><h2>Needs action</h2><strong>0</strong><p>No pending course reviews</p></article>
+                    </div>
+                    <div class="overview-grid">
+                        <section class="performance" aria-labelledby="performance-title">
+                            <div class="section-heading"><h2 id="performance-title">Course performance</h2><label class="preview-switch"><input id="sample-toggle" type="checkbox" /> Preview sample data</label></div>
+                            <div class="outlined-card course-card">
+                                <div class="table-scroll"><table><thead><tr><th>Course</th><th>Status</th><th>Learners</th><th>Completion</th><th>Rating</th><th>Action</th></tr></thead>
+                                    <tbody id="empty-courses"><tr><td colspan="6"><div class="empty-courses"><span class="empty-icon" aria-hidden="true">▤</span><h3>Your next course starts here.</h3><p>There are no courses to report on yet.<br />Turn on the preview to see an example.</p></div></td></tr></tbody>
+                                    <tbody id="sample-courses" hidden>
+                                        @foreach (var course in samples)
+                                        {
+                                            <tr><td>@course.Name</td><td><span class="status-badge @(course.Status == "Published" ? "published" : "")">@course.Status</span></td><td>@course.Learners</td><td class="completion">@course.Completion</td><td>@course.Rating</td><td><button type="button" class="view-button" data-course="@course.Name" data-status="@course.Status">View ›</button></td></tr>
+                                        }
+                                    </tbody>
+                                </table></div>
+                                <div class="table-footer"><span id="sample-note" hidden>Sample data only · not real courses</span><a class="pill-button" href="#courses">View all courses <span aria-hidden="true">↗</span></a></div>
+                            </div>
+                        </section>
+                        <section class="task-section" aria-labelledby="tasks-title"><div class="section-heading"><h2 id="tasks-title">Admin tasks</h2></div>
+                            <div class="task-card">
+                                <a href="#courses" class="task-row"><span class="task-circle" aria-hidden="true"></span><span><strong>Review course changes</strong><small>0 waiting</small></span><span class="task-arrow" aria-hidden="true">↗</span></a>
+                                <a href="#curriculum" class="task-row"><span class="task-circle" aria-hidden="true"></span><span><strong>Resolve content flags</strong><small>No flagged content</small></span><span class="task-arrow" aria-hidden="true">↗</span></a>
+                                <a href="#learners" class="task-row"><span class="task-circle" aria-hidden="true"></span><span><strong>Review account directory</strong><small>@Model.Users users · @Model.Admins admins</small></span><span class="task-arrow" aria-hidden="true">↗</span></a>
+                                <a href="#reports" class="task-row"><span class="task-circle" aria-hidden="true"></span><span><strong>Check completion reports</strong><small>No course completions yet</small></span><span class="task-arrow" aria-hidden="true">↗</span></a>
+                            </div>
+                        </section>
+                    </div>
+                    <section class="activity-section" aria-labelledby="activity-title"><div class="section-heading"><h2 id="activity-title">Recent activity</h2><span class="subtle">Latest account registrations &amp; sign-ins</span></div>
+                        <div class="outlined-card activity-card">
+                            @if (Model.Activities.Count == 0) { <p class="empty-message">Account activity will appear here.</p> }
+                            @foreach (var item in Model.Activities)
+                            {
+                                <div class="activity-row"><time datetime="@item.OccurredAt.ToString("O")" data-local-time>@item.OccurredAt.ToString("dd MMM HH:mm") UTC</time><p><strong>@item.FullName</strong> @item.Action.</p><span class="activity-tag">@item.Role</span></div>
+                            }
+                        </div>
+                    </section>
+                </section>
+                <section id="courses" class="admin-panel" data-title="Courses" aria-labelledby="courses-heading">
+                    <div class="section-heading"><h2 id="courses-heading">Course library</h2><span class="subtle">0 published courses</span></div>
+                    <div class="outlined-card large-empty"><span class="empty-icon" aria-hidden="true">▤</span><h3>A place for your next great course.</h3><p>Your course library is empty. Course creation and publishing are not available yet.</p><a class="pill-button" href="#dashboard">Back to overview</a></div>
+                </section>
+                <section id="curriculum" class="admin-panel" data-title="Curriculum" aria-labelledby="curriculum-heading"><h2 id="curriculum-heading">Learning paths</h2><div class="outlined-card large-empty"><span class="empty-icon" aria-hidden="true">≡</span><h3>Build a clear path forward.</h3><p>There are no lessons or learning paths yet. Curriculum editing is not available yet.</p><a class="pill-button" href="#courses">Go to courses</a></div></section>
+                <section id="learners" class="admin-panel" data-title="Learners & accounts" aria-labelledby="members-heading">
+                    <div class="section-heading directory-heading"><div><h2 id="members-heading">Account directory</h2><p class="subtle">@Model.Users users · @Model.Admins admins · Latest 100 registrations</p></div><div class="directory-controls"><label for="member-search" class="sr-only">Search accounts</label><input id="member-search" type="search" placeholder="Search name or email" /><label for="member-role" class="sr-only">Account type</label><select id="member-role"><option value="all">All accounts</option><option value="User">User</option><option value="Admin">Admin</option></select></div></div>
+                    <div class="outlined-card table-scroll"><table class="members-table"><thead><tr><th>Name</th><th>Email</th><th>Account type</th><th>Joined</th></tr></thead><tbody>
+                        @foreach (var member in Model.Members)
+                        { <tr data-member data-role="@member.Role"><td>@member.FullName</td><td>@member.Email</td><td><span class="status-badge @(member.Role == "Admin" ? "published" : "")">@member.Role</span></td><td><time datetime="@member.CreatedAt.ToString("O")" data-local-date>@member.CreatedAt.ToString("dd MMM yyyy")</time></td></tr> }
+                        <tr id="no-members" hidden="@(Model.Members.Count > 0)"><td colspan="4" class="empty-message">No matching accounts.</td></tr>
+                    </tbody></table></div><p class="subtle" id="member-count" aria-live="polite">@Model.Members.Count accounts shown</p>
+                </section>
+                <section id="reports" class="admin-panel" data-title="Reports" aria-labelledby="reports-heading"><h2 id="reports-heading">Account overview</h2><div class="metric-grid report-metrics"><article class="metric"><h3>Registered users</h3><strong>@Model.Users.ToString("N0")</strong><p>Learner accounts</p></article><article class="metric"><h3>Administrators</h3><strong>@Model.Admins.ToString("N0")</strong><p>Admin accounts</p></article><article class="metric"><h3>New users this month</h3><strong>@Model.NewUsersThisMonth.ToString("N0")</strong><p>Calendar month in UTC</p></article></div><div class="outlined-card report-note"><h3>Learning reports</h3><p>Course completion and ratings will appear after courses and enrollments become available.</p></div></section>
+                <section id="settings" class="admin-panel" data-title="Settings" aria-labelledby="settings-heading"><h2 id="settings-heading">Admin account</h2><div class="outlined-card settings-card"><span class="avatar large-avatar">@initial</span><dl><dt>Full name</dt><dd>@Model.FullName</dd><dt>Email</dt><dd>@Model.Email</dd><dt>Access level</dt><dd><span class="status-badge published">Admin</span></dd></dl><p class="subtle">This account has access to the admin dashboard and account directory.</p><form asp-action="Logout" method="post"><button type="submit" class="pill-button">Sign out</button></form></div></section>
+            </main>
+        </div>
+    </div>
+    <dialog id="course-dialog"><form method="dialog"><button class="dialog-close" aria-label="Close course preview">×</button></form><span class="status-badge">Sample preview</span><h2 id="course-dialog-title">Course preview</h2><p id="course-dialog-status"></p><p>This is an example of a course performance row. It is not a published course and has no real enrollments.</p></dialog>
+    <script src="~/js/admin-dashboard.js" asp-append-version="true"></script>
+</body>
+</html>

@@ -1,8 +1,49 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    Layout = null;
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>เข้าสู่ระบบ | NextSkill</title>
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+</head>
+<body>
+    <main class="login-shell">
+        <section class="story" aria-labelledby="story-title">
+            <a class="brand" href="@Url.Action("Index", "Home")" aria-label="NextSkill หน้าหลัก"><span class="brand-icon">N<span>↗</span></span>NextSkill<span class="brand-dot">.</span></a>
+            <div class="story-content">
+                <span class="eyebrow"><span class="status-dot"></span> YOUR NEXT CHAPTER STARTS HERE</span>
+                <h1 id="story-title">ก้าวต่อไป<br />เริ่มต้นที่<span>ตัวคุณ.</span></h1>
+                <p>เรียนรู้สิ่งใหม่ พัฒนาทักษะที่ใช่<br />และเปิดโอกาสให้อนาคตของคุณ</p>
+                <div class="journey" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="step step-one">01 <span>เรียนรู้</span></div><div class="step step-two">02 <span>ลงมือทำ</span></div><div class="step step-three">↗ <span>เติบโต</span></div></div>
+            </div>
+            <p class="story-footer">A LITTLE PROGRESS, EVERY DAY.</p>
+        </section>
+        <section class="form-panel" aria-labelledby="login-title">
+            <div class="form-wrap">
+                <div class="welcome-icon" aria-hidden="true">↗</div>
+                <p class="form-eyebrow">WELCOME BACK</p>
+                <h2 id="login-title">ยินดีต้อนรับกลับมา</h2>
+                <p class="intro">เข้าสู่ระบบเพื่อเริ่มต้นการเรียนรู้ของคุณ</p>
+                <form id="login-form">
+                    <label for="email">อีเมล</label>
+                    <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="username" required maxlength="254" />
+                    <label for="password">รหัสผ่าน</label>
+                    <div class="password-field">
+                        <input id="password" name="password" type="password" placeholder="กรอกรหัสผ่านของคุณ" autocomplete="current-password" required />
+                        <button class="toggle-password" type="button" aria-controls="password" aria-pressed="false">แสดง</button>
+                    </div>
+                    <p class="privacy-note">ใช้อีเมลและรหัสผ่านสำหรับบัญชีของคุณ</p>
+                    <button class="submit-button" type="submit">เข้าสู่ระบบ <span aria-hidden="true">↗</span></button>
+                    <div id="login-status" class="login-status" role="status" hidden></div>
+                </form>
+                <div class="demo-note"><span aria-hidden="true">ⓘ</span><p>หน้าฟอร์มตัวอย่าง<br /><span>ยังไม่ได้เชื่อมต่อระบบบัญชีผู้ใช้</span></p></div>
+            </div>
+            <footer>© @DateTime.Now.Year NextSkill <span>เติบโตไปด้วยกัน ทุกวัน</span></footer>
+        </section>
+    </main>
+    <script src="~/js/login.js" asp-append-version="true"></script>
+</body>
+</html>

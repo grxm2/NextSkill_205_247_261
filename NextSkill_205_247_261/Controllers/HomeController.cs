@@ -8,8 +8,10 @@ namespace NextSkill_205_247_261.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Register", "Account");
         }
+
+        public IActionResult Courses() => View();
 
         public IActionResult Privacy()
         {
