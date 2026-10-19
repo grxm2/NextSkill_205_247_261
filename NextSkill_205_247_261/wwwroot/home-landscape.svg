@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <!-- A quiet landscape at the edges leaves the learning content clear. -->
+  <path d="M-90 250C-20 160 100 170 120 250C200 245 220 300 200 320H-90Z" fill="#fff" fill-opacity=".58"/>
+  <path d="M1350 145C1365 90 1440 85 1470 145C1530 120 1590 160 1610 195H1335C1320 170 1330 150 1350 145Z" fill="#fff" fill-opacity=".62"/>
+  <circle cx="1480" cy="335" r="70" fill="#edcf89" fill-opacity=".25"/>
+  <path d="M-100 750C100 580 180 640 300 790C420 920 580 910 720 1000H-100Z" fill="#bdd8bd" fill-opacity=".45"/>
+  <path d="M1180 1000C1260 780 1490 650 1700 770V1000Z" fill="#accfc1" fill-opacity=".45"/>
+  <path d="M-100 875C100 755 260 865 480 1000H-100Z" fill="#8fbaa6" fill-opacity=".24"/>
+  <path d="M1270 1000C1430 840 1520 820 1700 880V1000Z" fill="#7ba99d" fill-opacity=".18"/>
+</svg>

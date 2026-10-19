@@ -1,0 +1,114 @@
+@model CourseEnrollmentViewModel
+@{
+    ViewData["Title"] = "English for Business · คอร์สเรียน";
+    ViewData["PageClass"] = "course-enrollment";
+    Layout = "_HomeLayout";
+}
+@section Styles { <link rel="stylesheet" href="~/css/course-enrollment.css" asp-append-version="true" /> }
+@section Scripts { <script src="~/js/course-enrollment.js" asp-append-version="true" defer></script> }
+
+<a class="skip-link" href="#main-content">ข้ามไปเนื้อหา</a>
+<partial name="_LearningSidebar" model="Model.Learner" />
+<div class="app-content">
+    <div class="topbar">
+        <a class="mobile-brand brand" asp-controller="Home" asp-action="Index"><span class="brand-mark" aria-hidden="true">n<span>↗</span></span>nextskill.</a>
+        <span class="topbar-location">พื้นที่เรียนรู้ <span aria-hidden="true">/</span> <strong>คอร์สเรียน</strong></span>
+        <span class="avatar" aria-label="โปรไฟล์ @Model.Learner.LearnerName">G</span>
+    </div>
+
+    <main class="page-container enrollment-page" id="main-content" data-course-id="@Model.CourseId">
+
+        <div class="enrollment-grid">
+            <div class="course-detail-main">
+                <section class="enrollment-hero" aria-labelledby="course-title">
+                    <div class="enrollment-hero-copy">
+
+                        <h1 id="course-title" lang="en">English for<br>Business<span class="course-title-dot" aria-hidden="true">.</span></h1>
+                        <p class="enrollment-tagline">สื่อสารให้ชัด มั่นใจในทุกวันทำงาน</p>
+
+                        <p class="course-facts">16 บทเรียน <span aria-hidden="true">·</span> บทละ 10–15 นาที</p>
+                    </div>
+                    <div class="enrollment-cover">
+                        <div class="course-book-illustration" aria-hidden="true">
+                            <svg viewBox="0 0 260 260" fill="none"><ellipse cx="131" cy="222" rx="81" ry="12" fill="#A44D26" opacity=".2"/><g transform="rotate(-11 124 130)"><rect x="67" y="48" width="137" height="168" rx="15" fill="#945032"/><rect x="59" y="39" width="137" height="168" rx="15" fill="#FFF1C9" stroke="#69442F" stroke-width="2.5"/><path d="M78 39V207" stroke="#E6BE82" stroke-width="3"/><rect x="95" y="65" width="79" height="81" rx="10" fill="#F5C35F"/><path d="M110 122L124 87H132L147 122M115 110H141" stroke="#70462E" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M98 165H169M98 177H147" stroke="#AD8F61" stroke-width="4" stroke-linecap="round"/><path d="M166 39V75L177 67L187 75V39" fill="#4A785D"/></g><rect x="12" y="119" width="69" height="48" rx="13" fill="#FFFCF2" stroke="#D86B39" stroke-width="2"/><path d="M33 167L26 181L51 167" fill="#FFFCF2"/><path d="M26 136H65M26 148H51" stroke="#A26942" stroke-width="3.5" stroke-linecap="round"/><path d="M213 58L217 71L230 75L217 79L213 92L209 79L196 75L209 71Z" fill="#FFF4CF"/><circle cx="39" cy="73" r="7" fill="#FFCB75"/><path d="M215 178L222 185L238 168" stroke="#634332" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                        <button type="button" class="course-preview-trigger" data-open-dialog="course-preview-dialog">ลองเรียนก่อน <span class="icon icon-arrow-up" aria-hidden="true"></span></button>
+                    </div>
+                </section>
+
+                <div class="course-tabs" role="tablist" aria-label="รายละเอียดคอร์ส" id="course-tabs">
+                    <button type="button" role="tab" id="course-tab-overview" aria-controls="course-panel-overview" aria-selected="true" tabindex="0" data-course-tab="overview">เกี่ยวกับคอร์ส</button>
+                    <button type="button" role="tab" id="course-tab-syllabus" aria-controls="course-panel-syllabus" aria-selected="false" tabindex="-1" data-course-tab="syllabus">บทเรียน <span>16</span></button>
+                </div>
+
+                <section class="course-tab-panel" id="course-panel-overview" role="tabpanel" aria-labelledby="course-tab-overview" tabindex="0">
+                    <h2 class="course-section-title">สิ่งที่จะได้ฝึก</h2>
+                    <ul class="course-outcome-list">
+                        @foreach (var outcome in Model.Outcomes)
+                        { <li><span class="outcome-check"><span class="icon icon-check" aria-hidden="true"></span></span><h3>@outcome.Title</h3></li> }
+                    </ul>
+                    <details class="course-more-details">
+                        <summary>คอร์สนี้เหมาะกับใคร <span class="disclosure-plus" aria-hidden="true">+</span></summary>
+                        <div><p>เหมาะกับคนที่อ่านประโยคพื้นฐานได้ และอยากใช้ภาษาอังกฤษในการทำงาน เรียนตามเวลาของคุณได้ทีละบท</p><p class="course-author">ออกแบบบทเรียนโดย NextSkill Studio</p></div>
+                    </details>
+                </section>
+
+                <section class="course-tab-panel" id="course-panel-syllabus" role="tabpanel" aria-labelledby="course-tab-syllabus" tabindex="0" hidden>
+                    <div class="course-section-heading"><h2>บทเรียนในคอร์ส</h2><span class="course-section-meta">4 ยูนิต</span></div>
+                    <div class="course-syllabus">
+                        @foreach (var unit in Model.Learner.JourneySections)
+                        {
+                            <details class="syllabus-unit" id="course-unit-@unit.Number">
+                                <summary><span class="syllabus-unit-number">@unit.Number.ToString("D2")</span><span><strong>@unit.Title</strong><small>ด่าน @unit.Lessons.First().Number–@unit.Lessons.Last().Number</small></span><span class="syllabus-expand" aria-hidden="true">+</span></summary>
+                                <ol start="@unit.Lessons.First().Number">
+                                    @foreach (var lesson in unit.Lessons)
+                                    { <li><span class="syllabus-lesson-number">@lesson.Number.ToString("D2")</span><span lang="en">@lesson.Title</span>@if (lesson.Number == 3) { <button type="button" class="syllabus-sample" data-open-dialog="lesson-dialog" data-lesson-title="Feedback patterns">ลองเรียน</button> } else { <span class="syllabus-duration">10–15 นาที</span> }</li> }
+                                </ol>
+                            </details>
+                        }
+                    </div>
+
+                </section>
+
+            </div>
+
+            <aside class="enrollment-rail" aria-label="เริ่มเรียนกับ Niko">
+                <section class="enrollment-start-card" aria-labelledby="enrollment-start-title">
+                    <h2 id="enrollment-start-title">เริ่มเมื่อคุณพร้อม</h2>
+                    <div class="enrollment-niko-stage"><div class="course-niko-character"><span class="buddy-slot" data-buddy-anchor="arrival"></span></div><div class="course-niko-speech"><strong data-buddy-name>Niko</strong><p id="course-coach-message" role="status" aria-live="polite">เริ่มทีละบท แล้วค่อยเก่งขึ้นด้วยกันนะ</p></div></div>
+                    <button type="button" class="button button-primary enroll-course-button" id="enroll-course">เริ่มเรียนคอร์สนี้ <span class="icon icon-arrow-right" aria-hidden="true"></span></button>
+                    <a class="button button-primary enrollment-continue" id="enrollment-continue" asp-controller="Home" asp-action="Index" asp-fragment="learning-path" hidden>ไปเส้นทางเรียน <span class="icon icon-arrow-right" aria-hidden="true"></span></a>
+                    <p class="enrollment-save-note" id="enrollment-save-note">ลงทะเบียนตัวอย่าง · บันทึกในเบราว์เซอร์นี้</p>
+                    <details class="course-coach-tools" id="course-coach-tools">
+                        <summary>ฝึกและขอคำแนะนำ <span class="disclosure-plus" aria-hidden="true">+</span></summary>
+                        <div class="course-coach-tools-content">
+                            <div class="course-practice-row"><button type="button" class="course-text-action" id="niko-practice-start" aria-haspopup="dialog">ฝึก 1 นาที <span class="icon icon-arrow-right" aria-hidden="true"></span></button><span class="niko-practice-count" id="niko-home-progress" aria-label="ฝึกแล้ว 0 จาก 3 สถานการณ์">0 / 3</span></div>
+                            <p id="buddy-greeting">ลองให้ฟีดแบ็กอย่างสุภาพกับคู่หู</p>
+                            <button type="button" class="course-coach-help" id="niko-course-help">คอร์สนี้เหมาะกับฉันไหม? <span aria-hidden="true">↗</span></button>
+                        </div>
+                    </details>
+                </section>
+
+                <details class="course-reward-details" id="course-rewards">
+                    <summary><span class="icon icon-star" aria-hidden="true"></span>รางวัลของคอร์ส <span class="disclosure-plus" aria-hidden="true">+</span></summary>
+                    <div class="course-reward-content"><dl class="course-reward-list"><div><dt>XP ตลอดคอร์ส</dt><dd>@Model.TotalXp XP</dd></div><div><dt>ตราทักษะ</dt><dd>4 ตรา</dd></div><div><dt>กล่องรางวัล</dt><dd>3 กล่อง</dd></div><div><dt>ด่านสุดท้าย</dt><dd>1 ชาเลนจ์</dd></div></dl><p>รางวัลตัวอย่างเมื่อเรียนผ่านแต่ละช่วง</p></div>
+                </details>
+            </aside>
+        </div>
+
+        <div class="map-guide buddy-state-store" data-learner="@Model.Learner.LearnerName"><button type="button" id="buddy-greet">ทักทายคู่หู</button><div class="guide-message"><strong>ไปทีละก้าวด้วยกัน</strong><span>ลองบทเรียนสั้นก่อนเริ่มคอร์สได้เลย</span><button type="button" id="buddy-motion" aria-pressed="false">พักการเคลื่อนไหว</button></div></div>
+        <noscript><p class="course-bottom-note">เปิด JavaScript เพื่อทดลองลงทะเบียนและฝึกกับ Niko</p></noscript>
+    </main>
+
+</div>
+<partial name="_LearningMobileNav" />
+<button type="button" id="studio-launch" data-open-dialog="companion-dialog" hidden tabindex="-1" aria-hidden="true">เปิดหน้าคู่หู</button>
+
+<dialog id="course-preview-dialog" class="home-dialog enrollment-preview-dialog" aria-labelledby="course-preview-title"><form method="dialog"><button class="dialog-close" aria-label="ปิดตัวอย่างคอร์ส">×</button></form><div class="preview-dialog-heading"><div><p class="eyebrow">English for Business · สำรวจคอร์ส</p><h2 id="course-preview-title">บทเรียนสั้น<br>ใช้ได้ในสถานการณ์จริง</h2></div><div class="preview-niko-character"><span class="buddy-slot" data-buddy-anchor="lesson"></span></div></div><p>ฝึกเลือกคำพูดในที่ทำงาน แล้วรับคำอธิบายจากคู่หู เริ่มจากตัวอย่าง Feedback patterns ได้เลย</p><ol class="course-preview-steps"><li><span>01</span><div><strong>อ่านสถานการณ์</strong><p>เพื่อนทำงานได้ดี แต่ยังมีจุดที่อยากให้ปรับ</p></div></li><li><span>02</span><div><strong>ลองเลือกประโยค</strong><p lang="en">“One thing that worked well was…”</p></div></li><li><span>03</span><div><strong>เข้าใจ แล้วค่อยนำไปใช้</strong><p>เริ่มจากสิ่งที่ทำได้ดี ก่อนเสนอทางเลือกใหม่</p></div></li></ol><button type="button" class="button button-primary" id="course-preview-practice">ลองฝึกกับ <span data-buddy-name>Niko</span> <span class="icon icon-arrow-right" aria-hidden="true"></span></button><p class="dialog-note">ตัวอย่างแบบฝึกเสริม ยังไม่คิด XP หรือบันทึกผลการเรียน</p></dialog>
+
+<dialog id="lesson-dialog" class="home-dialog" aria-labelledby="lesson-dialog-title"><form method="dialog"><button class="dialog-close" aria-label="ปิดตัวอย่างบทเรียน">×</button></form><span class="dialog-symbol"><span class="icon icon-book" aria-hidden="true"></span></span><div class="lesson-buddy" aria-hidden="true"><span class="buddy-slot" data-buddy-anchor="lesson"></span></div><p class="eyebrow">English for Business · ตัวอย่างบทเรียน</p><h2 id="lesson-dialog-title">Feedback patterns</h2><p>ฝึกสื่อสารความคิดเห็นอย่างสร้างสรรค์ในที่ทำงาน ผ่านบทเรียนสั้น 10–15 นาที</p><div class="lesson-example"><span class="eyebrow">ลองพูดประโยคนี้</span><blockquote>“One thing that worked really well was…”</blockquote><p>เริ่มด้วยสิ่งที่ทำได้ดี ก่อนเสนอแนวทางปรับปรุง</p></div><p class="dialog-note">ตัวอย่างเนื้อหา ยังไม่มีการบันทึกผลการเรียนหรือรับ XP</p><form method="dialog"><button class="button button-primary">กลับไปดูคอร์ส <span class="icon icon-arrow-right" aria-hidden="true"></span></button></form></dialog>
+<button type="button" class="resume-button" data-open-dialog="lesson-dialog" data-lesson-title="Feedback patterns" hidden>เปิดตัวอย่างบทเรียน</button>
+<dialog id="league-dialog" class="home-dialog" aria-labelledby="league-dialog-title"><form method="dialog"><button class="dialog-close" aria-label="ปิดอันดับ">×</button></form><span class="dialog-symbol"><span class="icon icon-trophy" aria-hidden="true"></span></span><p class="eyebrow">เติบโตไปด้วยกัน</p><h2 id="league-dialog-title">ลีกเงิน</h2><p>เก็บประสบการณ์ไปด้วยกัน ผู้เรียน 10 อันดับแรกจะได้เลื่อนลีก</p><ol class="leaderboard dialog-leaderboard">@foreach (var member in Model.Learner.League) { <li class="@(member.IsCurrentUser ? "your-rank" : "")"><span class="rank">@member.Rank.ToString("D2")</span><span class="member-avatar avatar-@member.Rank" aria-hidden="true">@member.Name[0]</span><span class="member-name">@member.Name</span><strong>@member.Xp <span>XP</span></strong></li> }</ol><p class="dialog-note">อันดับและคะแนนเป็นข้อมูลตัวอย่าง</p></dialog>
+<div class="sr-only" role="status" aria-live="polite" id="home-status"></div><div class="sr-only" role="status" aria-live="polite" id="buddy-status"></div>
+<partial name="_CompanionStudio" />
+<partial name="_NikoPractice" model="Model.Learner" />
