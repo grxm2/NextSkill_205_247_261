@@ -8,11 +8,62 @@
     const button = document.getElementById('sea-motion');
     const menuButton = document.querySelector('.sea-menu-button');
     const menu = document.getElementById('sea-menu');
-    const workspace = document.getElementById('sea-workspace');
     const controller = new AbortController();
     const options = { signal: controller.signal };
+    const track = document.getElementById('sea-course-track');
+    const previous = document.querySelector('.sea-carousel-prev');
+    const next = document.querySelector('.sea-carousel-next');
+    const heroDock = document.querySelector('.sea-niko [data-buddy-anchor]');
+    const journeyDock = document.getElementById('sea-journey-buddy');
+    const dockPractice = document.querySelector('.sea-dock-practice');
+    // A single Niko moves between two reserved homes, retaining appearance and state.
+    function dockCompanion() {
+        if (!heroDock || !journeyDock) return;
+        const bounds = heroDock.getBoundingClientRect();
+        const atHero = bounds.bottom > 32 && bounds.top < innerHeight - 32;
+        heroDock.dataset.buddyAnchor = atHero ? 'arrival' : 'harbor';
+        journeyDock.dataset.buddyAnchor = atHero ? 'journey' : 'arrival';
+        window.NextSkillAgent?.refresh();
+    }
+    const dockObserver = heroDock && 'IntersectionObserver' in window
+        ? new IntersectionObserver(dockCompanion, { rootMargin: '-32px 0px', threshold: 0 }) : null;
+    dockObserver?.observe(heroDock);
+    window.addEventListener('resize', dockCompanion, options);
+    dockPractice?.addEventListener('click', () => {
+        const dialog = document.getElementById('niko-practice-dialog');
+        dialog?.addEventListener('close', () => dockPractice.focus({ preventScroll: true }), { once: true });
+        document.getElementById('niko-practice-start')?.click();
+    }, options);
     let paused = false, visible = true, frame = 0, x = 0, y = 0;
+<<<<<<< Updated upstream
     let renderedX = 0, renderedY = 0, scrollDepth = 0, geometryDirty = true, lastTime = 0;
+=======
+    try { paused = localStorage.getItem('sealearn.scene.paused') === 'true'; } catch {}
+    function syncCourses() {
+        if (!track || !previous || !next) return;
+        previous.disabled = track.scrollLeft <= 2;
+        next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+    }
+    function moveCourses(direction) {
+        if (!track) return;
+        const card = track.querySelector('.sea-course');
+        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        const distance = card ? card.getBoundingClientRect().width + gap : track.clientWidth;
+        track.scrollBy({ left: distance * direction, behavior: reduce.matches ? 'instant' : 'smooth' });
+    }
+    previous?.addEventListener('click', () => moveCourses(-1), options);
+    next?.addEventListener('click', () => moveCourses(1), options);
+    track?.addEventListener('scroll', syncCourses, { passive: true, signal: controller.signal });
+    track?.addEventListener('keydown', event => {
+        if (event.target !== track || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        if (event.key === 'Home' || event.key === 'End') {
+            track.scrollTo({ left: event.key === 'Home' ? 0 : track.scrollWidth, behavior: reduce.matches ? 'instant' : 'smooth' });
+        } else moveCourses(event.key === 'ArrowRight' ? 1 : -1);
+    }, options);
+    window.addEventListener('resize', syncCourses, options);
+    document.fonts?.ready.then(syncCourses);
+>>>>>>> Stashed changes
     function stop() {
         cancelAnimationFrame(frame);
         frame = 0;
@@ -66,6 +117,7 @@
     }, options);
     hero.addEventListener('pointerleave', () => { x = y = 0; queue(); }, options);
     // Scroll events only schedule a frame; all geometry reads happen once inside paint.
+<<<<<<< Updated upstream
     function updateGeometry() { geometryDirty = true; queue(); }
     window.addEventListener('scroll', updateGeometry, { passive: true, signal: controller.signal });
     window.addEventListener('resize', updateGeometry, options);
@@ -73,6 +125,14 @@
         if (document.hidden) stop(); else updateGeometry();
     }, options);
     button.addEventListener('click', () => { paused = !paused; sync(); }, options);
+=======
+    window.addEventListener('scroll', queue, { passive: true, signal: controller.signal });
+    button.addEventListener('click', () => {
+        paused = !paused;
+        try { localStorage.setItem('sealearn.scene.paused', String(paused)); } catch {}
+        sync();
+    }, options);
+>>>>>>> Stashed changes
     reduce.addEventListener('change', sync, options);
     desktop.addEventListener('change', sync, options);
     const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
@@ -94,7 +154,6 @@
         let target;
         try { target = document.getElementById(decodeURIComponent(hash.slice(1))); } catch { return; }
         if (!target) return;
-        if (workspace?.contains(target)) workspace.open = true;
         if (target instanceof HTMLDetailsElement) target.open = true;
     }
     document.addEventListener('click', event => {
@@ -102,19 +161,18 @@
         if (link) revealDestination(link.hash);
     }, options);
     window.addEventListener('hashchange', () => revealDestination(location.hash), options);
-    workspace?.addEventListener('toggle', () => {
-        // The retained map and companion measure their anchors when their workspace opens.
-        if (workspace.open) window.dispatchEvent(new Event('resize'));
-    }, options);
     revealDestination(location.hash);
     // Tear down for page exit, and restore after a back-forward-cache navigation.
     window.addEventListener('pagehide', event => {
         stop();
         observer?.disconnect();
+        dockObserver?.disconnect();
         if (!event.persisted) controller.abort();
     });
     window.addEventListener('pageshow', event => {
-        if (event.persisted) { observer?.observe(hero); sync(); }
+        if (event.persisted) { observer?.observe(hero); dockObserver?.observe(heroDock); sync(); syncCourses(); dockCompanion(); }
     });
+    syncCourses();
+    dockCompanion();
     sync();
 })();
