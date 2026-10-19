@@ -1,0 +1,448 @@
+/* Learning Club: home-only design system. */
+#nextskill-home {
+    --club-paper: #faf8f4; --club-white: #fff; --club-ink: #302b28;
+    --club-muted: #736c64; --club-line: #e8e2d9; --club-orange: #f77945;
+    --club-orange-deep: #b84d27; --club-orange-soft: #fff0e6;
+    --club-green: #48765c; --club-gold: #bd861c; --club-purple: #8056ab;
+    --ink: var(--club-ink); --canvas: var(--club-paper); --paper: var(--club-white);
+    --forest: var(--club-green); --forest-deep: #31563f; --lime: #e5edb4; --line: var(--club-line);
+    --ease-out: cubic-bezier(.23,1,.32,1);
+    color: var(--club-ink); background: var(--club-paper); font: 15px/1.65 Prompt,"Segoe UI",Tahoma,sans-serif;
+}
+#nextskill-home :is(button,input) { font-family: inherit; }
+#nextskill-home :is(h1,h2,h3,p) { margin: 0; }
+#nextskill-home :is(button,a,input):focus-visible { outline: 3px solid #a34423; outline-offset: 5px; }
+#nextskill-home :is(a,button) { -webkit-tap-highlight-color: transparent; }
+#nextskill-home .app-sidebar { display: flex; flex-direction: column; position: fixed; inset: 0 auto 0 0; width: 218px; padding: 34px 22px 20px; z-index: 30; border-right: 1px solid var(--club-line); background: #fffdfa; }
+#nextskill-home .brand { color: var(--club-ink); font-size: 27px; font-weight: 700; letter-spacing: -1.7px; display: flex; align-items: center; gap: 8px; }
+#nextskill-home .brand-mark { width: 36px; height: 38px; background: var(--club-orange); color: #472b1e; border-radius: 12px; box-shadow: 0 3px 0 #d56134; font-size: 28px; }
+#nextskill-home .brand-period { color: #d46034; }
+#nextskill-home .sidebar-caption { margin: 48px 12px 13px; font-size: 12px; color: #81776c; }
+#nextskill-home .desktop-nav { display: flex; flex-direction: column; align-items: stretch; gap: 7px; align-self: stretch; width: 100%; }
+#nextskill-home .nav-link { width: 100%; min-height: 50px; display: grid; grid-template-columns: 22px minmax(0,1fr) 6px; align-items: center; column-gap: 12px; padding: 12px 13px; border: 0; border-radius: 12px; background: transparent; color: #6d665e; font-size: 14px; line-height: 24px; text-align: left; font-weight: 500; }
+#nextskill-home .nav-label { min-width: 0; white-space: nowrap; text-align: left; }
+#nextskill-home .nav-link::after { display: none; }
+#nextskill-home .nav-link.active { color: #963e20; background: #ffeadc; }
+#nextskill-home .nav-link .icon { width: 21px; height: 21px; }
+#nextskill-home .nav-dot { margin-left: auto; background: #d45c2e; width: 6px; height: 6px; border-radius: 50%; }
+#nextskill-home .sidebar-bottom { margin-top: auto; padding-top: 30px; }
+#nextskill-home .sidebar-note { padding: 18px 12px 25px; border-bottom: 1px solid var(--club-line); color: #7b6c55; }
+#nextskill-home .sidebar-note>.icon { width: 28px; height: 28px; margin-bottom: 12px; color: #9a8061; }
+#nextskill-home .sidebar-note p { font-size: 13px; line-height: 1.9; }
+#nextskill-home .sidebar-note strong { color: #4d443b; font-weight: 500; }
+#nextskill-home .sidebar-profile { display: flex; align-items: center; gap: 9px; padding-top: 21px; }
+#nextskill-home .avatar { display: grid; place-items: center; width: 36px; height: 36px; flex: 0 0 36px; border-radius: 50%; border: 2px solid #fff; outline: 1px solid #e8d7bd; background: #f4d6a9; font-size: 13px; color: #705129; font-weight: 600; }
+#nextskill-home .sidebar-profile strong { display: block; font-size: 13px; font-weight: 600; }
+#nextskill-home .sidebar-profile div>span { display: block; font-size: 10px; color: #81776d; white-space: nowrap; }
+#nextskill-home .profile-spark { margin-left: auto; color: #9a8e7e; }
+#nextskill-home .app-content { margin-left: 218px; }
+#nextskill-home .topbar { max-width: 1376px; margin: auto; height: 66px; display: flex; justify-content: space-between; align-items: center; padding: 0 42px; border-bottom: 1px solid var(--club-line); }
+#nextskill-home .topbar-location { color: #8b8176; font-size: 13px; }
+#nextskill-home .topbar-location>span { margin: 0 12px; color: #c6bdb1; }
+#nextskill-home .topbar-location strong { font-weight: 400; color: #5f554c; }
+#nextskill-home .topbar-member { display: flex; align-items: center; gap: 9px; font-size: 12px; color: #776d60; }
+#nextskill-home .topbar-member .avatar { margin-left: 12px; }
+#nextskill-home .member-dot { width: 6px; height: 6px; border-radius: 50%; background: #63886b; }
+#nextskill-home .mobile-brand { display: none; }
+#nextskill-home .page-container { max-width: 1376px; margin: auto; padding: 24px 42px 0; }
+#nextskill-home .home-welcome { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
+#nextskill-home .welcome-label { color: var(--club-muted); font-size: 13px; margin-bottom: 3px; }
+#nextskill-home .home-welcome h1 { font-size: clamp(28px,2.5vw,36px); font-weight: 600; letter-spacing: -1.1px; line-height: 1.5; }
+#nextskill-home .welcome-flower { font-size: 39px; font-weight: 400; display: inline-block; margin-left: 11px; color: #d8663c; vertical-align: -2px; }
+#nextskill-home .tour-trigger { display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 44px; padding: 9px 12px; border: 1px solid #ded5c9; border-radius: 10px; background: #fffdfa; color: #62554a; font-size: 12px; white-space: nowrap; }
+#nextskill-home .tour-trigger .icon { width: 15px; height: 15px; }
+#nextskill-home .learning-stats { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); margin-bottom: 22px; padding: 13px 0; background: #fffdfa; border: 1px solid var(--club-line); border-radius: 15px; }
+#nextskill-home .stat-item { display: flex; gap: 11px; align-items: center; padding: 0 22px; min-width: 0; }
+#nextskill-home .stat-item+.stat-item { border-left: 1px solid #eee7dd; }
+#nextskill-home .stat-icon { display: grid; place-items: center; flex: 0 0 38px; width: 38px; height: 42px; background: #fff3cc; color: #9e741c; border-radius: 11px; }
+#nextskill-home .stat-streak .stat-icon { background: #ffe9dc; color: #b64f27; }
+#nextskill-home .stat-hearts .stat-icon { background: #fce7e4; color: #b74f58; }
+#nextskill-home .stat-goal .stat-icon { background: #eaf1e9; color: #4b7355; }
+#nextskill-home .stat-item div>span { display: block; color: #7c7165; font-size: 12px; line-height: 1.5; }
+#nextskill-home .stat-item strong { display: block; font-size: 23px; font-weight: 600; line-height: 1.6; letter-spacing: -.4px; font-variant-numeric: tabular-nums; }
+#nextskill-home .stat-item small { font-size: 12px; font-weight: 400; color: #7b6b5a; letter-spacing: 0; }
+#nextskill-home .learning-dashboard { display: grid; grid-template-columns: minmax(0,1fr) 300px; grid-template-areas: "course buddy" "path activity"; gap: 27px 26px; align-items: start; }
+#nextskill-home .course-card { grid-area: course; position: relative; overflow: hidden; isolation: isolate; display: grid; grid-template-columns: minmax(0,1fr) 160px; align-items: center; gap: 8px; min-height: 234px; padding: 21px 28px; background: #f98a56; border: 1px solid #ed7746; border-radius: 21px; }
+#nextskill-home .course-eyebrow { display: flex; align-items: center; gap: 9px; color: #5b2d18; font-size: 12px; line-height: 1.6; }
+#nextskill-home .course-unit { border: 1px solid #b85d3299; border-radius: 5px; padding: 2px 6px; font-size: 11px; white-space: nowrap; }
+#nextskill-home .course-name { margin-top: 10px; font-size: 14px; color: #542e1d; }
+#nextskill-home .course-card h2 { font-size: clamp(25px,2.25vw,33px); font-weight: 600; color: #39261c; letter-spacing: -.8px; line-height: 1.35; margin-top: 4px; }
+#nextskill-home .course-meta { display: flex; align-items: center; gap: 9px; color: #5e2e19; font-size: 13px; margin-top: 8px; }
+#nextskill-home .meta-divider { width: 3px; height: 3px; border-radius: 50%; background: #a4522c; }
+#nextskill-home .course-art svg { width: 180px; max-width: 115%; display: block; transform: rotate(3deg); }
+#nextskill-home .button-primary { display: inline-flex; align-items: center; justify-content: center; gap: 15px; padding: 12px 17px 10px; min-height: 46px; font-size: 14px; font-weight: 500; background: var(--club-orange); color: #43291e; border: 1px solid #d56537; border-bottom: 4px solid #bc512a; border-radius: 11px; box-shadow: none; transition: transform 140ms var(--ease-out),background-color 140ms ease; }
+#nextskill-home .button-primary .icon { width: 18px; height: 18px; }
+#nextskill-home .resume-button { margin-top: 14px; background: #fffaf1; border-color: #ce7244; border-bottom-color: #b8552e; color: #693a24; min-width: 150px; }
+#nextskill-home .button-primary:active { transform: translateY(2px); }
+#nextskill-home .companion-card { grid-area: buddy; position: relative; min-height: 234px; background: #f7edce; border: 1px solid #e8dcb7; border-radius: 21px; padding: 19px 20px; }
+#nextskill-home .companion-card h2 { font-size: 17px; line-height: 1.7; font-weight: 500; margin-top: 4px; color: #574526; }
+#nextskill-home .arrival-character { position: absolute; width: 125px; height: 144px; left: 15px; bottom: 35px; background: none; border: 0; box-shadow: none; border-radius: 0; }
+#nextskill-home .arrival-character::before { content: ''; position: absolute; width: 125px; height: 80px; border-radius: 50%; bottom: 7px; left: -2px; background: #ecdca8; }
+#nextskill-home .arrival-character .buddy-slot { position: absolute; display: block; inset: 0; width: 100%; height: 100%; }
+#nextskill-home .hero-speech { position: absolute; right: 16px; top: 77px; width: 128px; padding: 12px; background: #fffcf3; border: 1px solid #e1d2a9; border-radius: 12px 12px 12px 3px; font-size: 13px; line-height: 1.65; color: #6c5938; }
+#nextskill-home .companion-card-bottom { position: absolute; display: flex; justify-content: space-between; align-items: center; left: 20px; right: 18px; bottom: 12px; gap: 12px; }
+#nextskill-home .buddy-nameplate { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #71613e; }
+#nextskill-home .buddy-nameplate strong { font-size: 14px; font-weight: 600; color: #65512d; }
+#nextskill-home .buddy-nameplate>span { display: none; }
+#nextskill-home .companion-home-action { min-height: 36px; padding: 5px 0 5px 9px; border: 0; background: none; font-size: 12px; color: #73552c; }
+#nextskill-home .companion-home-action>span { margin-left: 4px; }
+#nextskill-home .journey-card { grid-area: path; min-width: 0; padding: 0; border: 0; background: transparent; box-shadow: none; border-radius: 0; overflow: visible; scroll-margin-top: 20px; }
+#nextskill-home .section-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+#nextskill-home .section-heading h2 { font-size: 18px; line-height: 1.5; font-weight: 500; letter-spacing: -.4px; }
+#nextskill-home .journey-heading { padding: 1px 2px 14px; }
+#nextskill-home .journey-heading h2 { font-size: 24px; font-weight: 600; line-height: 1.4; }
+#nextskill-home .heading-dot { color: #cf5f35; }
+#nextskill-home .section-kicker { font-size: 13px; color: #756653; line-height: 1.8; margin-bottom: 2px; }
+#nextskill-home .path-locate { min-height: 44px; padding: 8px 10px; display: flex; align-items: center; gap: 7px; color: #986039; border: 1px solid #e3d5c4; border-radius: 10px; background: #fffdfa; font-size: 12px; white-space: nowrap; }
+#nextskill-home .locate-icon { width: 13px; height: 13px; border: 2px solid currentColor; border-radius: 50%; position: relative; }
+#nextskill-home .locate-icon::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: currentColor; }
+#nextskill-home .buddy-state-store { display: none; }
+#nextskill-home .path-chapter { margin-bottom: 19px; padding: 19px 20px 20px; background: #fff; border: 1px solid var(--club-line); border-radius: 20px; scroll-margin-top: 20px; }
+#nextskill-home .unit-banner { display: flex; flex-direction: row; align-items: center; gap: 12px; margin: 0; padding: 0 0 16px; border: 0; border-bottom: 1px solid #eee7dd; border-radius: 0; background: none; text-align: left; }
+#nextskill-home .unit-number { width: 42px; height: 45px; flex: 0 0 42px; display: grid; place-items: center; background: #f4f0e9; color: #93816b; border-radius: 12px; font-size: 18px; font-weight: 500; }
+#nextskill-home .chapter-unlocked .unit-number { background: #ffead8; color: #ac4e25; }
+#nextskill-home .unit-banner p { font-size: 12px; color: #756653; line-height: 1.5; }
+#nextskill-home .unit-banner h3 { font-size: 16px; line-height: 1.7; font-weight: 500; color: #4e4034; }
+#nextskill-home .unit-state { display: flex; align-items: center; gap: 4px; margin-left: auto; white-space: nowrap; color: #75644f; font-size: 11px; }
+#nextskill-home .unit-state>.icon { width: 13px; height: 13px; }
+#nextskill-home .chapter-unlocked .unit-state { color: #a7542d; padding: 4px 8px; border-radius: 6px; background: #fff0e5; }
+#nextskill-home .journey-steps { position: relative; display: block; height: auto; min-height: 0; margin: 27px 0 0; padding: 0; }
+#nextskill-home .journey-steps::before,#nextskill-home .journey-steps::after { display: none; }
+#nextskill-home .game-map-path { position: absolute; display: block; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+#nextskill-home .game-map-path path { fill: none; stroke-width: 12px; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+#nextskill-home .game-map-path .map-track { stroke: #eee9e1; stroke-dasharray: 3 20; }
+#nextskill-home .game-map-path .map-track-complete { stroke: #a6c8b4; stroke-dasharray: none; }
+#nextskill-home .journey-levels { display: grid; grid-template-columns: minmax(0,1fr); grid-auto-rows: 136px; gap: 0; position: relative; width: 100%; }
+#nextskill-home .journey-step { grid-column: 1; grid-row: auto; display: flex; flex-direction: column; align-items: center; position: relative; width: 164px; height: 136px; left: 0; top: auto; transform: translateX(-50%); margin: 0; padding: 0; z-index: 1; }
+#nextskill-home .journey-step.position-0 { left: 30%; }
+#nextskill-home .journey-step.position-1 { left: 60%; }
+#nextskill-home .journey-step.position-2 { left: 35%; }
+#nextskill-home .journey-step.position-3 { left: 65%; }
+#nextskill-home .chapter-unlocked .journey-levels { grid-template-rows: 166px 136px 136px; }
+#nextskill-home .chapter-unlocked .step-1 { grid-row: 1; left: 25%; }
+#nextskill-home .chapter-unlocked .step-2 { grid-row: 1; left: 75%; }
+#nextskill-home .chapter-unlocked .step-3 { grid-row: 2; }
+#nextskill-home .chapter-unlocked .step-4 { grid-row: 3; }
+#nextskill-home .level-node { display: grid; place-items: center; position: relative; left: auto; top: auto; flex: 0 0 76px; width: 76px; height: 76px; box-sizing: border-box; margin: 0; border: 2px solid #e5dfd5; outline: 0; background: #f7f4ef; color: #b1a491; border-radius: 50%; box-shadow: 0 5px 0 #ddd5c8,inset 0 3px 0 #fff; transition: transform 140ms var(--ease-out),background-color 140ms ease; }
+#nextskill-home .level-node>.icon { width: 27px; height: 27px; }
+#nextskill-home .completed .level-node { border-color: #567f62; background: #608e69; color: #fff; box-shadow: 0 5px 0 #456d50,inset 0 3px 0 #a1c39f; }
+#nextskill-home .current .level-node { border-color: #d65e31; background: #f7854f; color: #612f1c; box-shadow: 0 5px 0 #bd542e,inset 0 3px 0 #ffb58c,0 0 0 8px #fff1e5,0 0 0 10px #f4c29f; }
+#nextskill-home .level-node:disabled { opacity: 1; cursor: not-allowed; }
+#nextskill-home .node-number { position: absolute; left: -4px; top: -1px; display: grid; place-items: center; width: 23px; height: 23px; background: #fff; border: 1px solid #e1d5c4; border-bottom: 2px solid #cebea8; border-radius: 8px; font-size: 12px; font-weight: 400; color: #76604a; line-height: 1; }
+#nextskill-home .level-label { display: block; position: static; transform: none; width: 164px; max-width: none; margin: 11px 0 0; font-size: 13px; line-height: 1.45; text-align: center; font-weight: 400; color: #766655; }
+#nextskill-home .level-name { display: block; max-width: 164px; }
+#nextskill-home .lesson-number { display: none; }
+#nextskill-home .current .level-label { color: #9f4c2d; font-weight: 500; }
+#nextskill-home .level-stars { position: absolute; top: 57px; right: 19px; transform: rotate(10deg); padding: 0 4px 0 2px; border: 1px solid #d8b777; border-radius: 5px; background: #fff0c7; color: #a36a15; font-size: 12px; letter-spacing: -2px; line-height: 1.4; }
+#nextskill-home .start-bubble { position: absolute; inset: auto auto calc(100% + 7px) 50%; width: auto; transform: translateX(-50%); white-space: nowrap; padding: 5px 10px; border: 1px solid #d87a50; border-bottom: 3px solid #c7643b; border-radius: 8px; color: #a04b26; background: #fff9f3; font-size: 12px; font-weight: 500; animation: none; }
+#nextskill-home .start-bubble::after { display: none; }
+#nextskill-home .path-spark { display: none; }
+#nextskill-home .checkpoint { display: flex; align-items: center; gap: 13px; padding: 15px; margin-top: 0; background: #fcf5df; border: 1px solid #ecdcaa; border-radius: 14px; }
+#nextskill-home .checkpoint-icon { display: grid; place-items: center; flex: 0 0 46px; width: 46px; height: 50px; background: #f7e6ac; border-radius: 12px; }
+#nextskill-home .reward-chest { display: block; position: relative; width: 31px; height: 24px; border: 2px solid #9d6e27; border-bottom: 4px solid #9d6e27; border-radius: 6px 6px 5px 5px; background: #e5b84e; transform: rotate(-5deg); }
+#nextskill-home .reward-chest::before { content: ''; position: absolute; left: -2px; right: -2px; height: 10px; top: -5px; border: 2px solid #9d6e27; border-radius: 7px 7px 3px 3px; background: #f6d579; }
+#nextskill-home .reward-chest::after { content: ''; position: absolute; left: 11px; top: 4px; width: 6px; height: 9px; background: #fff2b7; border: 1px solid #a0752c; border-radius: 2px; }
+#nextskill-home .checkpoint-kicker { font-size: 11px; color: #8c6b28; }
+#nextskill-home .checkpoint h3 { font-size: 14px; line-height: 1.6; font-weight: 500; color: #6c511e; }
+#nextskill-home .checkpoint h3 strong { font-size: 13px; margin-left: 4px; font-weight: 500; color: #8c651b; }
+#nextskill-home .checkpoint p { font-size: 13px; color: #8a743f; margin-top: 1px; }
+#nextskill-home .checkpoint .text-button { margin-left: auto; display: grid; place-items: center; flex: 0 0 38px; width: 38px; min-height: 44px; border: 1px solid #e0ca8b; border-radius: 9px; background: #fff9e9; color: #8d6d2a; }
+#nextskill-home .journey-finish { display: flex; gap: 13px; align-items: center; border-top: 1px solid #eee7dd; padding: 20px 0 0; }
+#nextskill-home .journey-finish>.icon { width: 32px; height: 32px; color: #ba8d3c; }
+#nextskill-home .journey-finish strong { display: block; font-size: 16px; font-weight: 500; color: #65513b; }
+#nextskill-home .journey-finish div>span { display: block; font-size: 13px; color: #887661; margin-top: 3px; }
+#nextskill-home .activity-rail { grid-area: activity; display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+#nextskill-home :is(.quests-card,.week-card,.league-card) { padding: 21px; background: #fffdfa; border: 1px solid var(--club-line); border-radius: 19px; box-shadow: none; }
+#nextskill-home .quests-card { order: 0; }
+#nextskill-home .quest-counter { font-size: 12px; color: #897664; padding: 2px 7px; border: 1px solid #e8ddcc; border-radius: 6px; background: #faf4e9; }
+#nextskill-home .quest { display: flex; align-items: center; gap: 11px; padding: 19px 0; margin: 0; border: 0; }
+#nextskill-home .quest+.quest { border-top: 1px solid #f0e9df; }
+#nextskill-home .quest-icon { display: grid; place-items: center; flex: 0 0 36px; width: 36px; height: 41px; background: #ffeadc; color: #b05b34; border: 1px solid #edc7ac; border-radius: 10px; }
+#nextskill-home .quest-icon .icon { width: 20px; height: 20px; }
+#nextskill-home .quest-xp .quest-icon { background: #fcf0c9; color: #9d7729; border-color: #e7d59b; }
+#nextskill-home .quest-quiz .quest-icon { background: #f0e8f7; color: #8357a7; border-color: #ddc6ed; }
+#nextskill-home .quest-info { min-width: 0; flex: 1; }
+#nextskill-home .quest-top { display: flex; align-items: baseline; justify-content: space-between; gap: 5px; }
+#nextskill-home .quest h3 { font-size: 13px; font-weight: 400; color: #65523f; line-height: 1.7; }
+#nextskill-home .quest-top>span { font-size: 11px; white-space: nowrap; color: #98572e; }
+#nextskill-home .quest-xp .quest-top>span { color: #927020; }
+#nextskill-home .quest-quiz .quest-top>span { color: #7d56a0; }
+#nextskill-home .quest-bottom { display: flex; align-items: center; gap: 9px; margin-top: 8px; }
+#nextskill-home .quest-bottom>span { min-width: 29px; text-align: right; color: #76634e; font-size: 11px; }
+#nextskill-home progress { height: 7px; background: #f0ebe2; }
+#nextskill-home progress::-webkit-progress-bar { background: #f0ebe2; }
+#nextskill-home progress::-webkit-progress-value { background: #de9460; }
+#nextskill-home progress::-moz-progress-bar { background: #de9460; }
+#nextskill-home .quest-xp progress::-webkit-progress-value { background: #d3aa49; }
+#nextskill-home .quest-xp progress::-moz-progress-bar { background: #d3aa49; }
+#nextskill-home .quest-quiz progress::-webkit-progress-value { background: #a084bd; }
+#nextskill-home .quest-quiz progress::-moz-progress-bar { background: #a084bd; }
+#nextskill-home .quest-reward { display: flex; align-items: center; gap: 6px; padding-top: 13px; border-top: 1px solid #ece4d8; font-size: 11px; color: #776044; }
+#nextskill-home .quest-reward .icon { width: 16px; height: 16px; color: #a78438; }
+#nextskill-home .week-card { order: 1; }
+#nextskill-home .week-card h2 { font-size: 16px; }
+#nextskill-home .week-score { color: #8e7a61; font-size: 11px; }
+#nextskill-home .week { display: flex; justify-content: space-between; gap: 5px; margin: 20px 0 16px; }
+#nextskill-home .week-day { display: flex; flex-direction: column; align-items: center; gap: 8px; color: #8b7b67; font-size: 11px; }
+#nextskill-home .day { display: grid; place-items: center; width: 28px; height: 31px; border: 1px solid #e8dccb; border-radius: 9px; background: #fffdf8; }
+#nextskill-home .day.done { background: #f6cc89; border-color: #e5b975; color: #936a2b; }
+#nextskill-home .day .icon { width: 15px; height: 15px; }
+#nextskill-home .day-dot { width: 3px; height: 3px; border-radius: 50%; background: #c5b79f; }
+#nextskill-home .week-card>p { font-size: 12px; color: #76624d; }
+#nextskill-home .league-card { order: 2; }
+#nextskill-home .league-title { display: flex; align-items: center; gap: 10px; }
+#nextskill-home .league-emblem { width: 37px; height: 41px; display: grid; place-items: center; background: #f2eee5; color: #9d8b6f; border: 1px solid #e2d9c9; border-radius: 10px 10px 16px 16px; }
+#nextskill-home .league-title .section-kicker { font-size: 11px; }
+#nextskill-home .league-tier { color: #8e7857; background: #f7f0df; border-color: #e2d4b6; font-size: 12px; }
+#nextskill-home .leaderboard { padding: 0; margin: 17px -6px 3px; }
+#nextskill-home .leaderboard li { gap: 8px; padding: 11px 7px; margin-top: 2px; border: 0; border-radius: 9px; }
+#nextskill-home .leaderboard .your-rank { background: #fff0e2; border: 1px solid #f0d8bf; }
+#nextskill-home .rank { font-size: 12px; color: #9a856c; }
+#nextskill-home .member-avatar { width: 27px; height: 27px; background: #eae8d8; color: #7d795b; font-size: 12px; }
+#nextskill-home .member-avatar.avatar-2 { background: #f5cea0; color: #9a6131; }
+#nextskill-home .member-name,#nextskill-home .leaderboard strong { font-size: 13px; color: #715a41; }
+#nextskill-home .member-name small { font-size: 10px; color: #a2734c; }
+#nextskill-home .leaderboard strong>span { font-size: 10px; }
+#nextskill-home .league-button { display: flex; width: 100%; min-height: 44px; justify-content: space-between; font-size: 12px; color: #a16033; border-top: 1px solid #ede3d4; margin-top: 8px; padding: 14px 0 0; }
+#nextskill-home .freeze-card { order: 3; display: flex; align-items: center; gap: 10px; padding: 14px; background: #f1f3eb; border: 1px solid #dde2d0; border-radius: 14px; box-shadow: none; }
+#nextskill-home .freeze-icon { width: 31px; height: 35px; flex: 0 0 31px; background: #e5eadc; border: 0; border-radius: 8px; color: #77865b; }
+#nextskill-home .freeze-card h2 { font-size: 12px; font-weight: 500; color: #62714f; }
+#nextskill-home .freeze-card p { font-size: 11px; color: #5f6b4a; }
+#nextskill-home .freeze-button { min-height: 40px; margin-left: auto; padding: 7px; border: 1px solid #ced7c1; border-radius: 8px; background: #fffdf7; color: #6c7a53; font-size: 11px; white-space: nowrap; }
+#nextskill-home .home-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; max-width: 1292px; margin: 30px 42px 0; padding: 26px 0 30px; border: 0; border-top: 1px solid var(--club-line); background: transparent; box-shadow: none; border-radius: 0; font-size: 11px; color: #77644e; }
+#nextskill-home .footer-motto { color: #806b54; font-size: 13px; }
+#nextskill-home .footer-motto>span { color: #c6653c; }
+#nextskill-home .home-footer>a { margin-left: auto; min-height: 40px; display: flex; align-items: center; color: #9b633b; font-size: 12px; }
+#nextskill-home .mobile-nav { display: none; }
+/* The existing companion engine and native dialogs receive the same warm palette. */
+#nextskill-home .home-dialog { color: var(--club-ink); border-color: #ded3c2; background: #fffdf8; box-shadow: 0 25px 100px #46311e26; }
+#nextskill-home .home-dialog::backdrop { background: #34271f66; backdrop-filter: blur(4px); }
+#nextskill-home .home-dialog h2 { color: #49372a; font-size: 26px; }
+#nextskill-home :is(.eyebrow,.dialog-note,.companion-kicker,.companion-field-hint,.companion-storage-note) { color: #8b7056; font-size: 13px; letter-spacing: 0; }
+#nextskill-home .dialog-symbol { background: #fae8ce; color: #b67537; }
+#nextskill-home .dialog-close { color: #947757; background: #f4eee4; min-width: 40px; min-height: 40px; }
+#nextskill-home .lesson-buddy { position: absolute; top: 24px; right: 46px; width: 80px; height: 92px; pointer-events: none; background: transparent; }
+#nextskill-home .lesson-example { background: #f9f0df; border-color: #e7d7b8; }
+#nextskill-home .lesson-example blockquote { color: #665035; }
+#nextskill-home .home-dialog>p,#nextskill-home .lesson-example p { color: #78634f; }
+#nextskill-home .companion-stage { background: #f7edce; border-color: #e5d8b5; }
+#nextskill-home .companion-stage h3 { color: #745832; }
+#nextskill-home .companion-portrait { background: #f0dfb0; border-color: #d8c490; }
+#nextskill-home .portrait-orbit { background: #f0dfb0; }
+#nextskill-home .companion-level { color: #7b6034; background: #f7e5b6; letter-spacing: 0; }
+#nextskill-home :is(.companion-header>p,.companion-panel>p,.companion-emotion,.companion-rest,.companion-activity,.buddy-break summary,.buddy-study-card p,.buddy-study-card blockquote) { color: #796044; }
+#nextskill-home .companion-stage .companion-rest:disabled { color: #796b50; }
+#nextskill-home .buddy-read-button { background: #fff7df; border-color: #d2af69; color: #8a5c28; box-shadow: 0 3px 0 #c5a365; }
+#nextskill-home .companion-name-form input { border-color: #ddc9ac; color: #735235; }
+#nextskill-home .companion-swatch { background: #f7f1e7; color: #856a4b; }
+#nextskill-home .companion-swatch[aria-pressed=true],#nextskill-home .companion-accessories button[aria-pressed=true] { background: #ffecd3; border-color: #d99b61; color: #83542b; }
+#nextskill-home :is(.companion-accessories strong,.companion-accessories small,.companion-next-unlock div>span,.bond-card p,.signal-game-heading,.signal-result) { color: #806140; }
+#nextskill-home .signal-game { background: #f9f2e5; border-color: #e5d7bc; }
+#nextskill-home .companion-tabs { background: #f3ede1; }
+#nextskill-home .companion-tabs button { color: #8b7459; }
+#nextskill-home .companion-tabs [aria-selected=true] { background: #fffdf7; color: #9e542d; box-shadow: 0 2px 5px #6b451d10; }
+#nextskill-home :is(.companion-speech,.buddy-study-card,.bond-card,.companion-next-unlock) { background: #fffbf1; border-color: #e9ddc5; color: #7d6347; }
+#nextskill-home :is(.companion-panel h3,.buddy-study-card h4,.companion-field-label,.bond-heading,.companion-next-unlock strong) { color: #725338; }
+#nextskill-home :is(.companion-small-button,.companion-gestures button,.companion-motion,.buddy-encourage,.companion-accessories button,.signal-action,.signal-inputs button) { border-color: #ddc9a9; background: #fff7e8; color: #8e6036; }
+#nextskill-home .agent-menu { border-color: #dac5a4; color: #745235; background: #fffcf5; box-shadow: 0 10px 35px #5840251a; }
+#nextskill-home .agent-menu button { background: #f6ecdb; color: #87623c; }
+#nextskill-home .agent-menu button[aria-pressed=true] { background: #f6d8aa; color: #745026; }
+#nextskill-home .agent-summon { background: #fffaf1; border-color: #e5c9a8; border-bottom-width: 2px; color: #a16436; font-size: 12px; font-weight: 500; box-shadow: 0 3px 10px #8f602411; }
+#nextskill-home .buddy-coach { background: transparent; border: 0; color: #765330; }
+#nextskill-home .coach-bubble { background: #fffbf2; border-color: #d9b988; color: #674c31; }
+#nextskill-home .coach-bubble::before { background: #fffbf2; border-color: #d9b988; }
+#nextskill-home .coach-bubble h2 { color: #6b492e; }
+#nextskill-home .coach-voice-row button,#nextskill-home .coach-actions>button:first-child { color: #936134; }
+#nextskill-home .coach-close { color: #89603c; min-width: 36px; min-height: 36px; background: #fff9ed; }
+#nextskill-home .buddy-tour-target { outline-color: #cf653a !important; }
+#nextskill-home :is(.coach-meta,.coach-audio-status) { color: #94724f; }
+#nextskill-home .coach-character { background: transparent; }
+#nextskill-home .jump-highlight .level-node { animation: club-locate 520ms var(--ease-out) 1; }
+@keyframes club-locate { 0%,100% { transform: scale(1); } 40% { transform: scale(1.09); } }
+@media(hover:hover) and (pointer:fine) {
+    #nextskill-home .nav-link:not(.active):hover { background: #f7f0e6; color: #97643e; }
+    #nextskill-home .button-primary:hover { background: #f58b5e; color: #43291e; transform: translateY(-1px); }
+    #nextskill-home .resume-button:hover { background: #fff; color: #693a24; }
+    #nextskill-home .level-node:not(:disabled):hover { transform: translateY(-3px); outline: none; }
+    #nextskill-home .companion-home-action:hover { color: #ac4e29; }
+    #nextskill-home .tour-trigger:hover,#nextskill-home .path-locate:hover { background: #fff1e4; }
+}
+@media(max-width:1199.98px) {
+    #nextskill-home .app-sidebar { width: 82px; padding: 28px 12px 20px; align-items: center; }
+    #nextskill-home .app-sidebar .brand { font-size: 0; gap: 0; }
+    #nextskill-home .app-sidebar .brand-period { display: none; }
+    #nextskill-home .sidebar-caption,#nextskill-home .sidebar-note,#nextskill-home .sidebar-profile div,#nextskill-home .profile-spark { display: none; }
+    #nextskill-home .desktop-nav { margin-top: 40px; }
+    #nextskill-home .nav-link { font-size: 0; grid-template-columns: 22px; justify-content: center; padding: 13px; min-height: 50px; gap: 0; }
+    #nextskill-home .desktop-nav .nav-label { display: none; }
+    #nextskill-home .nav-dot { display: none; }
+    #nextskill-home .sidebar-profile { padding-top: 20px; }
+    #nextskill-home .app-content { margin-left: 82px; }
+    #nextskill-home .topbar { padding: 0 28px; height: 72px; }
+    #nextskill-home .page-container { padding: 24px 28px 0; }
+    #nextskill-home .home-welcome h1 { font-size: 31px; }
+    #nextskill-home .welcome-flower { font-size: 34px; }
+    #nextskill-home .learning-dashboard { grid-template-columns: minmax(0,1fr) 280px; gap: 24px 22px; }
+    #nextskill-home .course-card { grid-template-columns: minmax(0,1fr); }
+    #nextskill-home .course-art { display: none; }
+    #nextskill-home .course-card h2 { font-size: 30px; }
+    #nextskill-home .stat-item { padding: 0 14px; gap: 8px; }
+    #nextskill-home .stat-icon { width: 32px; height: 38px; flex-basis: 32px; border-radius: 9px; }
+    #nextskill-home .stat-item div>span { font-size: 11px; }
+    #nextskill-home .stat-item strong { font-size: 21px; }
+    #nextskill-home .hero-speech { width: 119px; right: 12px; font-size: 12px; padding: 11px; }
+    #nextskill-home .arrival-character { left: 9px; width: 120px; height: 138px; }
+    #nextskill-home .companion-card h2 { font-size: 16px; }
+    #nextskill-home .companion-card-bottom { left: 17px; right: 14px; }
+    #nextskill-home .unit-state { display: none; }
+    #nextskill-home .path-chapter { padding: 17px; }
+    #nextskill-home .level-label,#nextskill-home .level-name,#nextskill-home .journey-step { width: 146px; max-width: 146px; }
+    #nextskill-home .level-stars { right: 10px; }
+    #nextskill-home .checkpoint { padding: 12px; gap: 9px; }
+    #nextskill-home .checkpoint h3 strong { display: block; margin-left: 0; }
+    #nextskill-home .checkpoint p { font-size: 12px; }
+    #nextskill-home .home-footer { margin-left: 28px; margin-right: 28px; }
+}
+@media(max-width:879.98px) {
+    #nextskill-home { padding-bottom: calc(80px + env(safe-area-inset-bottom,0px)); }
+    #nextskill-home .app-sidebar { display: none; }
+    #nextskill-home .app-content { margin-left: 0; }
+    #nextskill-home .topbar-location { display: none; }
+    #nextskill-home .mobile-brand { display: flex; font-size: 24px; }
+    #nextskill-home .learning-dashboard { grid-template-columns: minmax(0,1fr) 264px; gap: 22px 20px; }
+    #nextskill-home .companion-card { padding: 18px 16px; }
+    #nextskill-home .hero-speech { width: 113px; right: 10px; }
+    #nextskill-home .arrival-character { left: 7px; width: 115px; height: 132px; }
+    #nextskill-home :is(.quests-card,.week-card,.league-card) { padding: 19px 17px; }
+    #nextskill-home .quest { gap: 8px; }
+    #nextskill-home .quest-top { display: block; }
+    #nextskill-home .quest-icon { width: 32px; flex-basis: 32px; height: 37px; border-radius: 9px; }
+    #nextskill-home .freeze-card { flex-wrap: wrap; }
+    #nextskill-home .freeze-button { flex: 1 0 100%; }
+    #nextskill-home .mobile-nav { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); position: fixed; inset: auto 0 0; z-index: 60; width: 100%; margin: 0; padding: 7px 12px calc(7px + env(safe-area-inset-bottom,0px)); border: 0; border-top: 1px solid #e8dfd0; border-radius: 18px 18px 0 0; background: #fffdf8; box-shadow: 0 -4px 20px #55402c08; }
+    #nextskill-home .mobile-nav :is(a,button) { display: flex; flex-direction: column; gap: 5px; align-items: center; justify-content: center; min-height: 57px; padding: 4px 8px; border: 0; background: transparent; color: #9a846d; font-size: 11px; font-weight: 400; }
+    #nextskill-home .mobile-nav [aria-current] { color: #ad512a; background: #ffecd9; border-radius: 12px; }
+    #nextskill-home .mobile-nav .icon { width: 21px; height: 21px; }
+    #nextskill-home #buddy-summon { display: none; }
+}
+@media(max-width:700px) {
+    #nextskill-home { padding-bottom: calc(80px + env(safe-area-inset-bottom,0px)); }
+    #nextskill-home .topbar { height: 67px; padding: 0 20px; }
+    #nextskill-home .topbar-member { font-size: 11px; gap: 5px; }
+    #nextskill-home .topbar-member .avatar { margin-left: 6px; width: 31px; height: 31px; flex-basis: 31px; font-size: 12px; }
+    #nextskill-home .mobile-brand { font-size: 24px; letter-spacing: -1.5px; }
+    #nextskill-home .mobile-brand .brand-mark { width: 32px; height: 34px; font-size: 25px; border-radius: 10px; }
+    #nextskill-home .page-container { padding: 23px 20px 0; }
+    #nextskill-home .home-welcome { margin-bottom: 20px; gap: 8px; align-items: start; }
+    #nextskill-home .home-welcome h1 { font-size: 29px; letter-spacing: -.7px; }
+    #nextskill-home .welcome-flower { font-size: 31px; margin-left: 7px; }
+    #nextskill-home .tour-trigger { font-size: 0; gap: 0; width: 40px; min-width: 40px; padding: 10px; margin-top: 20px; }
+    #nextskill-home .tour-trigger [data-buddy-name] { display: none; }
+    #nextskill-home .tour-trigger .icon { width: 19px; height: 19px; }
+    #nextskill-home .learning-stats { padding: 14px 0; margin-bottom: 20px; border-radius: 13px; }
+    #nextskill-home .stat-item { display: block; padding: 0 13px; }
+    #nextskill-home .stat-icon { display: none; }
+    #nextskill-home .stat-item div>span { font-size: 12px; line-height: 1.5; min-height: 20px; max-width: 80px; }
+    #nextskill-home .stat-item strong { font-size: 21px; white-space: nowrap; }
+    #nextskill-home .stat-item small { font-size: 10px; }
+    #nextskill-home .learning-dashboard { grid-template-columns: minmax(0,1fr); grid-template-areas: "course" "buddy" "path" "activity"; gap: 20px; }
+    #nextskill-home .course-card { min-height: 200px; padding: 20px 25px; border-radius: 18px; }
+    #nextskill-home .course-copy { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 0 10px; align-items: center; }
+    #nextskill-home .course-eyebrow,#nextskill-home .course-name,#nextskill-home .course-card h2 { grid-column: 1 / -1; }
+    #nextskill-home .course-meta { grid-column: 1; grid-row: 4; flex-wrap: wrap; gap: 3px 7px; margin-top: 13px; font-size: 12px; }
+    #nextskill-home .resume-button { grid-column: 2; grid-row: 4; margin-top: 13px; min-width: 129px; padding-left: 13px; padding-right: 13px; gap: 10px; }
+    #nextskill-home .course-card h2 { font-size: 31px; }
+    #nextskill-home .course-name { margin-top: 10px; }
+    #nextskill-home .companion-card { display: grid; grid-template-columns: 110px minmax(0,1fr); gap: 3px 13px; padding: 17px 20px; min-height: 157px; border-radius: 18px; }
+    #nextskill-home .companion-card h2 { grid-column: 2; grid-row: 1; font-size: 17px; margin: 0; }
+    #nextskill-home .arrival-character { position: relative; left: auto; bottom: auto; grid-column: 1; grid-row: 1 / span 3; align-self: center; width: 105px; height: 121px; }
+    #nextskill-home .arrival-character::before { width: 103px; height: 60px; bottom: 4px; left: 0; }
+    #nextskill-home .hero-speech { position: static; grid-column: 2; grid-row: 2; width: auto; padding: 0; background: none; border: 0; border-radius: 0; color: #7b6541; font-size: 13px; }
+    #nextskill-home .companion-card-bottom { position: static; grid-column: 2; grid-row: 3; gap: 10px; align-self: end; }
+    #nextskill-home .buddy-nameplate { display: none; }
+    #nextskill-home .companion-home-action { min-height: 40px; border: 1px solid #d9c48e; border-radius: 8px; padding: 5px 10px; background: #fff9e8; color: #826131; font-size: 12px; }
+    #nextskill-home .journey-heading { padding-top: 8px; }
+    #nextskill-home .journey-heading h2 { font-size: 25px; }
+    #nextskill-home .path-chapter { padding: 19px 20px; border-radius: 18px; }
+    #nextskill-home .unit-state { display: flex; }
+    #nextskill-home .level-label,#nextskill-home .level-name,#nextskill-home .journey-step { width: 160px; max-width: 160px; }
+    #nextskill-home .level-stars { right: 16px; }
+    #nextskill-home .checkpoint h3 strong { display: inline; margin-left: 4px; }
+    #nextskill-home .quest-top { display: flex; }
+    #nextskill-home .quest-icon { width: 40px; flex-basis: 40px; height: 45px; }
+    #nextskill-home .quest h3 { font-size: 15px; }
+    #nextskill-home .quest-top>span,#nextskill-home .quest-bottom>span { font-size: 13px; }
+    #nextskill-home .week { margin: 23px 0 18px; }
+    #nextskill-home .week-day { font-size: 13px; }
+    #nextskill-home .day { width: 35px; height: 36px; border-radius: 11px; }
+    #nextskill-home .freeze-button { flex: 0 0 auto; }
+    #nextskill-home .home-footer { margin: 25px 20px 0; padding: 22px 0; gap: 8px 20px; }
+    #nextskill-home .home-footer>a { margin-left: 0; }
+}
+@media(max-width:480px) {
+    #nextskill-home .page-container { padding: 20px 16px 0; }
+    #nextskill-home .topbar { padding: 0 18px; }
+    #nextskill-home .topbar-member { font-size: 0; }
+    #nextskill-home .member-dot { display: none; }
+    #nextskill-home .home-welcome h1 { font-size: 26px; }
+    #nextskill-home .welcome-flower { font-size: 27px; margin-left: 5px; }
+    #nextskill-home .welcome-label { font-size: 12px; }
+    #nextskill-home .tour-trigger { margin-top: 19px; width: 36px; min-width: 36px; min-height: 40px; }
+    #nextskill-home .stat-item { padding: 0 9px; }
+    #nextskill-home .stat-item div>span { font-size: 12px; }
+    #nextskill-home .stat-item strong { font-size: 20px; }
+    #nextskill-home .course-card { padding: 20px 22px; }
+    #nextskill-home .course-card h2 { font-size: 29px; }
+    #nextskill-home .companion-card { grid-template-columns: 91px minmax(0,1fr); padding: 16px; gap: 3px 12px; min-height: 149px; }
+    #nextskill-home .arrival-character { width: 90px; height: 104px; }
+    #nextskill-home .arrival-character::before { width: 90px; height: 55px; }
+    #nextskill-home .companion-card h2 { font-size: 15px; }
+    #nextskill-home .hero-speech { font-size: 13px; }
+    #nextskill-home .companion-home-action { min-height: 36px; font-size: 11px; }
+    #nextskill-home .journey-heading h2 { font-size: 23px; }
+    #nextskill-home .section-kicker { font-size: 12px; }
+    #nextskill-home .path-locate { font-size: 11px; padding: 7px 9px; }
+    #nextskill-home .path-chapter { padding: 17px 15px; }
+    #nextskill-home .unit-number { flex-basis: 37px; width: 37px; height: 41px; font-size: 17px; }
+    #nextskill-home .unit-banner { gap: 10px; }
+    #nextskill-home .unit-banner h3 { font-size: 15px; }
+    #nextskill-home .unit-state { display: none; }
+    #nextskill-home .level-label,#nextskill-home .level-name,#nextskill-home .journey-step { width: 134px; max-width: 134px; }
+    #nextskill-home .level-stars { right: 4px; }
+    #nextskill-home .checkpoint h3 strong { display: block; margin-left: 0; }
+    #nextskill-home .checkpoint { gap: 9px; padding: 12px; }
+    #nextskill-home .checkpoint p { font-size: 12px; }
+    #nextskill-home .journey-finish strong { font-size: 15px; }
+    #nextskill-home .home-footer { margin-left: 16px; margin-right: 16px; }
+}
+@media(max-width:359px) {
+    #nextskill-home .page-container { padding-left: 12px; padding-right: 12px; }
+    #nextskill-home .home-welcome h1 { font-size: 23px; }
+    #nextskill-home .welcome-flower { display: none; }
+    #nextskill-home .tour-trigger { min-width: 34px; width: 34px; }
+    #nextskill-home .stat-item { padding: 0 7px; }
+    #nextskill-home .stat-item strong { font-size: 18px; }
+    #nextskill-home .stat-item div>span { font-size: 11px; }
+    #nextskill-home .course-card { padding: 20px; }
+    #nextskill-home .course-card h2 { font-size: 26px; }
+    #nextskill-home .course-eyebrow { font-size: 11px; }
+    #nextskill-home .companion-card { grid-template-columns: 83px minmax(0,1fr); gap: 3px 10px; padding: 14px; }
+    #nextskill-home .arrival-character { width: 82px; height: 95px; }
+    #nextskill-home .arrival-character::before { width: 82px; }
+    #nextskill-home .companion-card h2 { font-size: 14px; }
+    #nextskill-home .hero-speech { font-size: 12px; }
+    #nextskill-home .journey-heading h2 { font-size: 21px; }
+    #nextskill-home .path-locate { padding: 7px; font-size: 10px; }
+    #nextskill-home .path-locate .locate-icon { display: none; }
+    #nextskill-home .path-chapter { padding: 15px 12px; }
+    #nextskill-home .level-label,#nextskill-home .level-name,#nextskill-home .journey-step { width: 120px; max-width: 120px; }
+    #nextskill-home .level-stars { right: 0; }
+    #nextskill-home .checkpoint { padding: 10px; gap: 8px; }
+    #nextskill-home .checkpoint h3 { font-size: 13px; }
+    #nextskill-home .checkpoint-icon { width: 39px; flex-basis: 39px; height: 44px; }
+    #nextskill-home .checkpoint p { max-width: 130px; }
+}
+@media(prefers-reduced-motion:reduce) {
+    #nextskill-home .jump-highlight .level-node { animation: none; }
+    #nextskill-home :is(.level-node,.button-primary,.nav-link,.path-locate) { transition: none; }
+}

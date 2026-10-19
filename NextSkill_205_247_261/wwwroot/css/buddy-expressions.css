@@ -1,0 +1,45 @@
+.buddy-brow { position: absolute; top: 14px; width: 18px; height: 4px; border-radius: 4px; background: var(--buddy-ink); opacity: .45; }
+.brow-left { left: 27px; transform: rotate(-5deg); }.brow-right { right: 27px; transform: rotate(5deg); }
+.buddy-eye { position: relative; }
+.buddy-tear { display: none; position: absolute; top: 43px; right: 28px; width: 8px; height: 12px; border-radius: 2px 80% 80%; background: #55c6ee; transform: rotate(45deg); }
+.buddy-mood-mark { position: absolute; z-index: 4; top: 12px; right: 0; color: #1c91bf; font-size: 32px; font-weight: 800; line-height: 1; transform: rotate(12deg); }
+.skill-buddy[data-emotion=thinking] .buddy-mood-mark::before,.skill-buddy[data-emotion=curious] .buddy-mood-mark::before { content: '?'; }
+.skill-buddy[data-emotion=surprised] .buddy-mood-mark::before { content: '!'; color: #eba32e; }
+.skill-buddy[data-emotion=sleepy] .buddy-mood-mark::before { content: 'z'; color: #8a83c1; }
+.skill-buddy[data-emotion=proud] .buddy-mood-mark::before,.skill-buddy[data-emotion=excited] .buddy-mood-mark::before { content: '✦'; color: #eab02b; }
+#nextskill-agent .skill-buddy[data-emotion=happy] .buddy-cheek,
+#nextskill-agent .skill-buddy[data-emotion=laughing] .buddy-cheek,
+#nextskill-agent .skill-buddy[data-emotion=excited] .buddy-cheek { background: #f6b28d; opacity: .85; }
+#nextskill-agent .skill-buddy[data-emotion=happy] .buddy-smile,
+#nextskill-agent .skill-buddy[data-emotion=proud] .buddy-smile,
+#nextskill-agent .skill-buddy[data-emotion=encouraging] .buddy-smile { transform: scale(1.3); }
+#nextskill-agent .skill-buddy[data-emotion=laughing] .buddy-smile,
+#nextskill-agent .skill-buddy[data-emotion=excited] .buddy-smile { width: 26px; height: 17px; left: calc(50% - 13px); bottom: 9px; border: 3px solid var(--buddy-ink); border-radius: 4px 4px 16px 16px; background: var(--buddy-ink); transform: none; }
+.skill-buddy[data-emotion=laughing] .buddy-pupil,.skill-buddy[data-emotion=excited] .buddy-pupil { opacity: 0; }
+.skill-buddy[data-emotion=laughing] .buddy-eye::before,.skill-buddy[data-emotion=excited] .buddy-eye::before { content: ''; position: absolute; width: 17px; height: 10px; top: 6px; left: -2px; border: 3px solid var(--buddy-ink); border-bottom: 0; border-radius: 15px 15px 0 0; }
+.skill-buddy[data-emotion=sad] .brow-left { transform: rotate(-23deg); opacity: .85; }.skill-buddy[data-emotion=sad] .brow-right { transform: rotate(23deg); opacity: .85; }
+#nextskill-agent .skill-buddy[data-emotion=sad] .buddy-smile { border-top: 3px solid var(--buddy-ink); border-bottom: 0; border-radius: 14px 14px 0 0; bottom: 9px; transform: scale(.9); }
+.skill-buddy[data-emotion=sad] .buddy-tear { display: block; }
+.skill-buddy[data-emotion=sad] .buddy-eye { transform: scaleY(.8); }
+.skill-buddy[data-emotion=thinking] .brow-left,.skill-buddy[data-emotion=curious] .brow-left { transform: translateY(-5px) rotate(-15deg); opacity: .8; }
+.skill-buddy[data-emotion=thinking] .brow-right { transform: rotate(-8deg); opacity: .8; }
+#nextskill-agent .skill-buddy[data-emotion=thinking] .buddy-smile { width: 15px; height: 4px; border: 0; background: var(--buddy-ink); border-radius: 5px; transform: rotate(-9deg); bottom: 15px; }
+#nextskill-agent .skill-buddy[data-emotion=surprised] .buddy-smile { width: 13px; height: 17px; border: 3px solid var(--buddy-ink); border-radius: 50%; left: calc(50% - 6px); bottom: 8px; transform: none; }
+.skill-buddy[data-emotion=surprised] .buddy-eye { transform: scale(1.2); }.skill-buddy[data-emotion=surprised] .buddy-brow { transform: translateY(-6px); opacity: .8; }
+.skill-buddy[data-emotion=sleepy] .buddy-eye { transform: scaleY(.2); }.skill-buddy[data-emotion=sleepy] .buddy-brow { opacity: .2; }
+#nextskill-agent .skill-buddy[data-emotion=sleepy] .buddy-smile { width: 12px; height: 12px; border: 3px solid var(--buddy-ink); border-radius: 50%; transform: none; }
+.skill-buddy[data-emotion=focused] .brow-left { transform: rotate(8deg); opacity: .8; }.skill-buddy[data-emotion=focused] .brow-right { transform: rotate(-8deg); opacity: .8; }
+.skill-buddy[data-emotion=encouraging] .brow-left { transform: rotate(-10deg); }.skill-buddy[data-emotion=encouraging] .brow-right { transform: rotate(10deg); }
+/* Speech keeps its mouth shape even when another expression is active. */
+#nextskill-agent .skill-buddy[data-speaking=true] .buddy-smile { width: 19px; height: 11px; left: calc(50% - 9px); border: 3px solid var(--buddy-ink); background: var(--buddy-ink); border-radius: 45%; }
+.agent-menu { max-height: min(480px,calc(100dvh - 160px)); overflow: auto; overscroll-behavior: contain; }
+.agent-expression-picker { margin: 9px 0; padding: 9px 0; border-top: 1px solid #e0ecdf; border-bottom: 1px solid #e0ecdf; }
+.agent-expression-picker summary { font-size: 12px; cursor: pointer; font-weight: 700; }
+#agent-feeling { display: inline-block; margin-left: 4px; font-size: 10px; font-weight: 400; color: #62816a; }
+.agent-pose-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 5px; padding-top: 8px; }
+.agent-pose-grid button { margin: 0; padding: 9px 3px; min-height: 38px; text-align: center; font-size: 11px; }
+#nextskill-agent[data-dragging=true] .skill-buddy[data-living=true] .foot-left { animation: buddy-dangle-left 900ms ease-in-out infinite; }
+#nextskill-agent[data-dragging=true] .skill-buddy[data-living=true] .foot-right { animation: buddy-dangle-right 900ms ease-in-out infinite; }
+@keyframes buddy-dangle-left { 0%,100% { transform: translateY(-4px) rotate(-14deg); } 50% { transform: translateY(-7px) rotate(-27deg); } }
+@keyframes buddy-dangle-right { 0%,100% { transform: translateY(-7px) rotate(27deg); } 50% { transform: translateY(-4px) rotate(14deg); } }
+@media(prefers-reduced-motion:reduce) { #nextskill-agent[data-dragging=true] .buddy-foot { animation: none !important; } }
