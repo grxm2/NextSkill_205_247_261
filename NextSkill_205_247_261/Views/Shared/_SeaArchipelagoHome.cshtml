@@ -1,0 +1,106 @@
+@model HomeDashboardViewModel
+@{
+    var currentLesson = Model.Lessons.FirstOrDefault(lesson => lesson.Status == "current");
+    var accountAction = User.Identity?.IsAuthenticated == true
+        ? (User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard") : "Login";
+}
+<header class="sea-nav">
+    <a class="sea-brand" asp-controller="Home" asp-action="Index" aria-label="NextSkill หน้าแรก">
+        <svg class="sea-brand-symbol" viewBox="0 0 56 44" fill="none" aria-hidden="true"><path d="M3 17C14 17 14 5 26 5S39 17 53 8C44 27 33 19 25 16S12 14 3 17Z" fill="url(#sea-wave)"/><path d="M3 34C14 34 16 22 28 24S40 36 53 25C45 45 33 38 25 34S12 31 3 34Z" fill="url(#sea-wave)"/><defs><linearGradient id="sea-wave" x1="12" y1="8" x2="42" y2="39" gradientUnits="userSpaceOnUse"><stop stop-color="#89edff"/><stop offset="1" stop-color="#0789dc"/></linearGradient></defs></svg>
+        <span>NextSkill<small>LEARN · PLAY · GROW</small></span>
+    </a>
+    <button class="sea-menu-button" type="button" aria-expanded="false" aria-controls="sea-menu">
+        เมนู <span aria-hidden="true">☰</span>
+    </button>
+    <nav id="sea-menu" class="sea-glass" aria-label="เมนู NextSkill">
+        <a href="#sea-home" aria-current="page"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="m12 3 10 9h-3v9h-5v-6h-4v6H5v-9H2Z"/></svg>หน้าแรก</a>
+        <a asp-controller="Home" asp-action="Courses">คอร์สเรียน</a>
+        <a href="#learning-path">เส้นทางเรียน</a>
+        <a href="#daily-quests">ภารกิจ</a>
+        <details class="sea-more">
+            <summary>เพิ่มเติม</summary>
+            <div class="sea-glass">
+                <a href="#sea-community">ชุมชน</a>
+                <a asp-controller="Courses" asp-action="Enrollment">จัดการคอร์สเรียน</a>
+                <button type="button" data-open-dialog="companion-dialog">คู่หูของฉัน</button>
+                <button type="button" data-open-dialog="league-dialog">อันดับของฉัน</button>
+                <a asp-controller="Home" asp-action="Privacy">ความเป็นส่วนตัว</a>
+            </div>
+        </details>
+    </nav>
+    <form class="sea-search" asp-controller="Home" asp-action="Courses" method="get" role="search">
+        <label class="sr-only" for="sea-query">ค้นหาคอร์สที่อยากเรียน</label>
+        <input id="sea-query" type="search" name="q" placeholder="ค้นหาคอร์สที่สนใจ..." maxlength="200" />
+        <button type="submit" aria-label="ค้นหาคอร์ส"><span class="icon icon-arrow-right" aria-hidden="true"></span></button>
+    </form>
+    <a class="sea-account" asp-controller="Account" asp-action="@accountAction">
+        <span class="sea-avatar" aria-hidden="true">@(User.Identity?.IsAuthenticated == true ? Model.LearnerName.FirstOrDefault().ToString() : "↗")</span>
+        <span>@(User.Identity?.IsAuthenticated == true ? "บัญชีของฉัน" : "เข้าสู่ระบบ")</span>
+    </a>
+</header>
+<main class="sea-landing" id="sea-home" tabindex="-1">
+    <section class="sea-hero" aria-labelledby="sea-title">
+        <div class="sea-world" aria-hidden="true">
+            <img class="sea-landscape" data-sea-depth="0.45" src="~/images/sea-home-academy.webp" width="1660" height="948" fetchpriority="high" alt="" />
+            <div class="sea-cloud sea-cloud-one" data-sea-depth="0.8"></div>
+            <div class="sea-cloud sea-cloud-two" data-sea-depth="1.2"></div>
+            <div class="sea-mist" data-sea-depth="1.5"></div>
+        </div>
+        <div class="sea-hero-inner">
+            <div class="sea-hero-copy">
+                <p class="sea-kicker"><span class="icon icon-star" aria-hidden="true"></span> LEARN · EXPLORE · LEVEL UP</p>
+                <h1 id="sea-title">เรียนรู้วันนี้<br /><span>เพื่อเวอร์ชันที่ดีกว่า<br class="sea-title-break" />ในอนาคต</span></h1>
+                <p class="sea-subtitle">ทุกบทเรียน คือการผจญภัยครั้งใหม่<br />ปลดล็อกสกิล ออกสำรวจโลกกว้าง ในจังหวะของคุณ</p>
+                <div class="sea-actions">
+                    <a class="sea-button sea-primary" href="#learning-path"><svg viewBox="0 0 32 32" width="28" height="28" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="1.5"/><path d="m22 9-4 10-10 4 5-10Z" fill="currentColor"/><circle cx="16" cy="16" r="2" fill="#0877cf"/></svg>เริ่มผจญภัย <span class="icon icon-arrow-right" aria-hidden="true"></span></a>
+                    <a class="sea-hero-link" href="#sea-niko">พบ Niko คู่หูในการเรียนรู้ <span aria-hidden="true">↗</span></a>
+                </div>
+            </div>
+            <section class="companion-card niko-coach-card sea-progress sea-glass sea-niko" id="sea-niko" aria-labelledby="home-companion-title">
+                <p class="sea-niko-eyebrow">YOUR ADVENTURE COMPANION</p>
+                <div class="niko-coach-heading"><h2 id="home-companion-title">ฝึกกับ <span data-buddy-name>Niko</span></h2><span class="niko-practice-count" id="niko-home-progress" aria-label="ฝึกแล้ว 0 จาก 3 สถานการณ์">0 / 3</span></div>
+                <p class="niko-coach-topic">@currentLesson?.Title</p>
+                <div class="niko-coach-stage"><div class="arrival-character"><span class="buddy-slot" data-buddy-anchor="arrival"></span></div><div class="hero-speech"><span id="buddy-greeting">ลองเริ่มฟีดแบ็กจากสิ่งที่ทำได้ดี แล้วค่อยเสนอทางเลือกใหม่</span></div></div>
+                <div class="niko-coach-actions"><button type="button" id="niko-practice-start" class="button button-primary" aria-haspopup="dialog">ฝึก 1 นาที <span class="icon icon-arrow-right" aria-hidden="true"></span></button><button type="button" class="niko-style-action" data-open-dialog="companion-dialog" aria-label="ตั้งชื่อและแต่งตัวคู่หู" title="ตั้งชื่อและแต่งตัว"><span class="icon icon-star" aria-hidden="true"></span></button></div>
+            </section>
+        </div>
+        <button class="sea-motion" type="button" id="sea-motion" aria-pressed="false">พักเอฟเฟกต์ฉาก</button>
+    </section>
+    <div class="sea-content">
+        <nav class="sea-shortcuts" aria-label="สำรวจการเรียนรู้">
+            <a class="sea-glass" href="#sea-courses"><span class="sea-shortcut-symbol sea-compass" aria-hidden="true"><svg viewBox="0 0 32 32" width="33" height="33" fill="none"><circle cx="16" cy="16" r="13" fill="#effbff" stroke="#448ab4" stroke-width="1.5"/><path d="m22 9-4 10-10 4 5-10Z" fill="#1785cf"/><path d="m22 9-4 10-2-3Z" fill="#e79169"/><circle cx="16" cy="16" r="2" fill="#fff"/></svg></span><span><strong>คอร์สแนะนำ</strong><small>เริ่มต้นเส้นทางใหม่</small></span><span aria-hidden="true">›</span></a>
+            <a class="sea-glass" href="#learning-path"><span class="sea-shortcut-symbol"><span class="icon icon-grid" aria-hidden="true"></span></span><span><strong>เส้นทางการเรียนรู้</strong><small>วางแผนสู่เป้าหมาย</small></span><span aria-hidden="true">›</span></a>
+            <a class="sea-glass" href="#daily-quests"><span class="sea-shortcut-symbol sea-shortcut-gold"><span class="icon icon-trophy" aria-hidden="true"></span></span><span><strong>ภารกิจ & รางวัล</strong><small>ทำภารกิจ ปลดล็อกไอเทม</small></span><span aria-hidden="true">›</span></a>
+            <a class="sea-glass" asp-controller="Home" asp-action="Courses"><span class="sea-shortcut-symbol"><span class="icon icon-book" aria-hidden="true"></span></span><span><strong>คลังความรู้</strong><small>ค้นพบสิ่งที่อยากเรียน</small></span><span aria-hidden="true">›</span></a>
+        </nav>
+        <section class="sea-courses" id="sea-courses" aria-labelledby="sea-courses-title">
+            <div class="sea-section-top"><div><p class="sea-section-kicker">YOUR NEXT ADVENTURE</p><h2 id="sea-courses-title">คอร์สเรียนยอดนิยม</h2><p class="sea-section-description">ออกสำรวจคอร์สสุดพิเศษ เพื่อปลดล็อกสกิลใหม่ของคุณ</p></div><a asp-controller="Home" asp-action="Courses">ดูทั้งหมด <span aria-hidden="true">→</span></a></div>
+            <div class="sea-course-carousel">
+            <button class="sea-carousel-arrow sea-carousel-prev" type="button" aria-label="ดูคอร์สก่อนหน้า" aria-controls="sea-course-track" disabled>‹</button>
+            <div class="sea-course-grid" id="sea-course-track" tabindex="0" aria-label="คอร์สแนะนำ เลื่อนเพื่อดูคอร์สเพิ่มเติม">
+                @foreach (var course in Model.PopularCourses)
+                {
+                    <partial name="_SeaCourseCard" model="course" />
+                }
+            </div>
+            <button class="sea-carousel-arrow sea-carousel-next" type="button" aria-label="ดูคอร์สถัดไป" aria-controls="sea-course-track">›</button>
+            </div>
+            @if (!Model.PopularCourses.Any())
+            {
+                <p>ยังไม่มีคอร์สแนะนำ <a asp-controller="Home" asp-action="Courses">เปิดคลังคอร์ส</a></p>
+            }
+        </section>
+        <partial name="_SkillArchipelago" model="Model" />
+        <section class="sea-adventure" aria-labelledby="sea-adventure-title">
+            <img src="~/images/sea-underwater.webp" alt="นักผจญภัยและคู่หูสำรวจซากปราสาทใต้ทะเล" width="1536" height="512" loading="lazy" />
+            <div><h2 id="sea-adventure-title">Explore · Learn · Level Up</h2><p>เก็บทักษะใหม่ ปลดล็อกโลกที่ใหญ่กว่าเดิม</p></div>
+            <a class="sea-button" href="#learning-path">เริ่มออกผจญภัย <span class="icon icon-arrow-right" aria-hidden="true"></span></a>
+        </section>
+        <details id="sea-community" class="sea-community">
+            <summary>พื้นที่ชุมชน <span>กำลังเตรียมพร้อม</span></summary>
+            <p>ชุมชนสนทนายังไม่เปิดให้บริการ ลองสำรวจอันดับตัวอย่างหรือฝึกสกิลกับ Niko ระหว่างรอ</p>
+            <button class="sea-button sea-secondary" type="button" data-open-dialog="league-dialog">ดูอันดับตัวอย่าง <span class="icon icon-trophy" aria-hidden="true"></span></button>
+        </details>
+        <footer class="sea-journey-footer"><span>NextSkill · เก่งขึ้นทีละก้าว ไปด้วยกันกับ Niko</span><a asp-controller="Home" asp-action="Privacy">ความเป็นส่วนตัว</a><a href="#sea-home">กลับด้านบน ↑</a></footer>
+    </div>
+</main>

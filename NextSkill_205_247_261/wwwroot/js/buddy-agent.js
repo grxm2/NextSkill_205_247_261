@@ -38,7 +38,7 @@
         const coach = document.getElementById('buddy-coach');
         const slot = modal ? modal.querySelector('[data-buddy-anchor]')
             : coach && !coach.hidden ? coach.querySelector('[data-buddy-anchor]')
-            : document.querySelector('[data-buddy-anchor="arrival"]');
+            : document.querySelector('[data-buddy-home="active"]') || document.querySelector('[data-buddy-anchor="arrival"]');
         const parent = modal || document.body;
         if (layer.parentElement !== parent) parent.append(layer);
         root.hidden = !slot;

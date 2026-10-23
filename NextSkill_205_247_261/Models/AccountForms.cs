@@ -4,6 +4,8 @@ namespace NextSkill_205_247_261.Models;
 
 public class LoginForm
 {
+    [StringLength(2048)]
+    public string? ReturnUrl { get; set; }
     [Required, EmailAddress, StringLength(254)]
     public string Email { get; set; } = "";
     [Required, StringLength(128), DataType(DataType.Password)]
@@ -13,6 +15,8 @@ public class LoginForm
 
 public class RegisterForm
 {
+    [StringLength(2048)]
+    public string? ReturnUrl { get; set; }
     [Required, StringLength(100, MinimumLength = 2)]
     [RegularExpression(@".*\S.*", ErrorMessage = "Please enter your full name.")]
     [Display(Name = "Full name")]

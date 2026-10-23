@@ -200,7 +200,7 @@
         clearTimeout(idleTimer);
         if (enabled()) {
             idleTurn++;
-            robots.filter(robot => visible(robot) && !robot.dataset.posing).forEach(robot => {
+            robots.filter(robot => visible(robot) && !robot.dataset.posing && !robot.closest('[data-voyage="rowing"]')).forEach(robot => {
                 // Reading is the default study behaviour. Break-time poses remain user initiated.
                 if (['arrival', 'studio', 'lesson', 'practice'].includes(robot.dataset.context) && idleTurn % 2 === 0) window.NextSkillBuddyMotion.play('read', robot);
                 else if (idleTurn % 3 === 0) window.NextSkillBuddyMotion.play('curious', robot);

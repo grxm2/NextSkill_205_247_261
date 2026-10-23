@@ -1,30 +1,21 @@
 @model HomeDashboardViewModel
-@{
-    ViewData["Title"] = "SeaLearn | โลกแห่งการเรียนรู้";
-    ViewData["PageClass"] = "sealearn-home sea-glass-theme";
-    Layout = "_HomeLayout";
-}
-@section Styles {
-    <link rel="stylesheet" href="~/css/journey-path.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/sealearn.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/sea-glass.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/sea-home-refresh.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/sea-journey.css" asp-append-version="true" />
-}
-@section Scripts {
-    <script src="~/js/journey-path.js" asp-append-version="true" defer></script>
-    <script src="~/js/sealearn.js" asp-append-version="true" defer></script>
-}
-<a class="skip-link" href="#sea-home">ข้ามไปเนื้อหา</a>
-<partial name="_SeaLearnHome" model="Model" />
-
-<button type="button" id="studio-launch" data-open-dialog="companion-dialog" hidden tabindex="-1" aria-hidden="true">เปิดหน้าคู่หู</button>
-<partial name="_LearningMobileNav" />
-
-<dialog id="lesson-dialog" class="home-dialog" aria-labelledby="lesson-dialog-title"><form method="dialog"><button class="dialog-close" aria-label="ปิดตัวอย่างบทเรียน">×</button></form><span class="dialog-symbol"><span class="icon icon-book" aria-hidden="true"></span></span><div class="lesson-buddy" aria-hidden="true"><span class="buddy-slot" data-buddy-anchor="lesson"></span></div><p class="eyebrow">English for Business · ตัวอย่างบทเรียน</p><h2 id="lesson-dialog-title">Feedback patterns</h2><p>ฝึกสื่อสารความคิดเห็นอย่างสร้างสรรค์ในที่ทำงาน ผ่านบทเรียนสั้น 10–15 นาที</p><div class="lesson-example"><span class="eyebrow">ลองพูดประโยคนี้</span><blockquote>“One thing that worked really well was…”</blockquote><p>เริ่มด้วยสิ่งที่ทำได้ดี ก่อนเสนอแนวทางปรับปรุง</p></div><p class="dialog-note">ตัวอย่างเนื้อหาบนหน้าโฮม ยังไม่มีการบันทึกผลการเรียนหรือรับ XP</p><form method="dialog"><button class="button button-primary">กลับสู่เส้นทางเรียน <span class="icon icon-arrow-right" aria-hidden="true"></span></button></form></dialog>
-<dialog id="reward-dialog" class="home-dialog" aria-labelledby="reward-dialog-title"><form method="dialog"><button class="dialog-close" aria-label="ปิดรางวัล">×</button></form><span class="dialog-symbol"><span class="icon icon-star" aria-hidden="true"></span></span><p class="eyebrow">รางวัลระหว่างทาง</p><h2 id="reward-dialog-title">อีกนิดก็ถึงรางวัลแล้ว</h2><p>เรียนให้จบอีก 2 บท เพื่อปลดล็อกกล่องรางวัล</p><div class="reward-detail"><strong>+80 XP</strong><span>และโอกาสรับเหรียญตราใหม่</span></div><p class="dialog-note">รางวัลตัวอย่าง ยังไม่สามารถรับได้ในหน้าโฮมนี้</p><form method="dialog"><button class="button button-primary">กลับไปเรียนต่อ <span class="icon icon-arrow-right" aria-hidden="true"></span></button></form></dialog>
-<dialog id="league-dialog" class="home-dialog" aria-labelledby="league-dialog-title"><form method="dialog"><button class="dialog-close" aria-label="ปิดอันดับ">×</button></form><span class="dialog-symbol"><span class="icon icon-trophy" aria-hidden="true"></span></span><p class="eyebrow">เติบโตไปด้วยกัน</p><h2 id="league-dialog-title">ลีกเงิน</h2><p>เก็บประสบการณ์ไปด้วยกัน ผู้เรียน 10 อันดับแรกจะได้เลื่อนลีก</p><ol class="leaderboard dialog-leaderboard">@foreach (var member in Model.League) { <li class="@(member.IsCurrentUser ? "your-rank" : "")"><span class="rank">@member.Rank.ToString("D2")</span><span class="member-avatar avatar-@member.Rank" aria-hidden="true">@member.Name[0]</span><span class="member-name">@member.Name</span><strong>@member.Xp <span>XP</span></strong></li> }</ol><p class="dialog-note">อันดับและคะแนนเป็นข้อมูลตัวอย่าง</p></dialog>
-<div class="sr-only" role="status" aria-live="polite" id="home-status"></div>
-<div class="sr-only" role="status" aria-live="polite" id="buddy-status"></div>
-<partial name="_CompanionStudio" />
-<partial name="_NikoPractice" />
+@{ Layout = "_SmartJourneyLayout"; ViewData["Title"] = "ออกเดินทางสู่ทักษะใหม่"; ViewData["JourneyMode"] = "home"; }
+<main id="journey-main" class="ocean-home">
+<section id="ocean-journey" class="ow-scene" aria-label="เดินทางผ่านโลกทะเลกับ Niko">
+    <div class="ow-sky" aria-hidden="true"></div>
+    <div class="ow-distance" aria-hidden="true"><img src="~/images/journey/rocky-island.svg" alt="" /><img src="~/images/journey/destination-island.svg" alt="" /></div>
+    <div class="ow-sea" aria-hidden="true"><div class="ow-sun-path"></div><div class="ow-swell ow-swell-0"><div class="ow-swell-drift"></div></div><div class="ow-swell ow-swell-1"><div class="ow-swell-drift"></div></div><div class="ow-swell ow-swell-2"><div class="ow-swell-drift"></div></div><div class="ow-water-lines"></div></div>
+    <div class="ow-near-sea" aria-hidden="true"><div class="ow-swell ow-swell-3"><div class="ow-swell-drift"></div></div><div class="ow-swell ow-swell-4"><div class="ow-swell-drift"></div></div></div>
+    <svg class="ow-seabirds" viewBox="0 0 400 120" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 55q14-13 28 0 14-13 28 0M170 28q10-10 20 0 10-10 20 0M290 80q15-14 30 0 15-14 30 0"/></g></svg>
+    <div class="ow-clouds" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="ow-camera">
+        <figure class="ow-land ow-start-land"><img src="~/images/journey/starting-island.svg" width="760" height="520" alt="เกาะเริ่มต้น มีต้นมะพร้าวและหาดทราย" /><span class="ow-island-mascot sj-mascot-anchor buddy-slot" data-buddy-anchor="shore" data-buddy-home="active"></span><figcaption>ท่าเรือเริ่มต้น</figcaption></figure>
+        <div class="ow-harbor" id="course-harbor"><div class="ow-dock"><img src="~/images/journey/course-container.svg" width="800" height="560" alt="ตู้คอนเทนเนอร์คลังเส้นทางการเรียน" /><button class="ow-container-button" type="button" data-smart-action="choose-course">เปิดคลังคอร์ส ↗</button></div><div class="ow-harbor-board"><p class="sj-eyebrow">ท่าเรือแห่งทักษะ</p><h2>เลือกเส้นทางที่อยากไป</h2><p>เลือกคอร์สก่อน แล้วผ่านเมฆไปยังเกาะบทเรียนของคุณ</p><div id="harbor-course-list" data-course-grid="featured" class="sj-featured-courses"><p>กำลังเปิดคลังคอร์ส…</p></div><button type="button" class="sj-text-link" data-smart-action="choose-course">ค้นหาคอร์สทั้งหมด ↗</button></div></div>
+    </div>
+    <div class="ow-vessel" aria-label="Niko เดินทางบนเรือลำเดียวกัน"><div class="ow-wake" aria-hidden="true"></div><div class="ow-boat-idle"><span class="ow-boat-anchor sj-mascot-anchor buddy-slot" data-buddy-anchor="arrival"></span><img class="ow-boat-art" src="~/images/journey/rowing-hull.svg" width="480" height="280" alt="เรือของ Niko" /><img class="voyage-oar" src="~/images/journey/rowing-oar.svg" alt="" /></div></div>
+    <div class="ow-intro"><p class="sj-eyebrow">NextSkill · Upskill & Reskill</p><h1>ทักษะใหม่ของคุณ<br /><em>เริ่มที่เกาะนี้</em></h1><p>ฝึกภาษา ออกแบบ และเขียนโค้ด<br />ออกเดินทางไปกับ Niko ในจังหวะของคุณ</p><div class="ow-intro-actions"><button type="button" class="sj-button" data-ocean-go="0.62" data-ocean-tour="true">เลือกคอร์สทันที →</button><button type="button" class="sj-text-link" data-ocean-go="0.2">ออกเรือไปด้วยกัน ↓</button></div><a id="home-resume" class="sj-home-resume" href="/Learning/Island" hidden><span><small>ยินดีต้อนรับกลับ</small><strong id="home-resume-title">กลับไปเรียนต่อ</strong></span><span>→</span></a></div>
+    <div class="ow-journey-caption" aria-live="off"><span data-buddy-name>Niko</span><p id="ocean-caption">พร้อมแล้ว ค่อย ๆ เลื่อนเพื่อออกจากฝั่ง</p></div>
+    <nav class="ow-controls" aria-label="จุดหมายในการเดินทาง"><span id="ocean-location">01 / เกาะเริ่มต้น</span><div><button type="button" data-ocean-go="0">เกาะเริ่มต้น</button><button type="button" data-ocean-go="0.62">ท่าเรือคอร์ส</button><button type="button" data-smart-action="choose-course">เลือกคอร์สเพื่อเข้าด่าน ↗</button></div><button type="button" data-smart-action="choose-course" class="ow-skip">ข้าม · เลือกคอร์ส ↗</button><progress id="ocean-progress" max="1" value="0" aria-label="ระยะทางการสำรวจ"></progress></nav>
+</section>
+<noscript><p>เลือกคอร์สได้ที่ <a href="/Home/Courses">รายการคอร์สทั้งหมด</a></p></noscript>
+</main>

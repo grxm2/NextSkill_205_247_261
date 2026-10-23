@@ -1,0 +1,26 @@
+.ow-island-mascot{position:absolute;width:100px;height:115px;left:39%;top:39%;z-index:3}
+.voyage-oar{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;transform-origin:68% 49%}
+[data-voyage="rowing"] .voyage-oar{animation:niko-row 1.8s ease-in-out infinite}
+[data-voyage="rowing"] .buddy-upper{animation:niko-row-body 1.8s ease-in-out infinite!important}
+[data-voyage="rowing"] .arm-left{animation:niko-row-left 1.8s ease-in-out infinite!important}
+[data-voyage="rowing"] .arm-right{animation:niko-row-right 1.8s ease-in-out infinite!important}
+.voyage-cloud-boat{position:absolute;z-index:4;left:calc(50% - 105px);top:34%;width:210px;height:123px;pointer-events:none}
+.voyage-hull{position:relative;z-index:2;width:100%;height:auto}
+.voyage-seat{position:absolute;width:85px;height:98px;left:calc(48% - 42.5px);top:calc(38% - 98px);z-index:1}
+.voyage-arrival-boat{position:absolute;width:180px;pointer-events:none;opacity:0;z-index:3}.voyage-arrival-boat.has-arrived{opacity:1}
+.voyage-arrival-boat .voyage-seat{width:70px;height:81px;left:calc(48% - 35px);top:calc(38% - 81px)}
+.voyage-paused [data-voyage="rowing"] *{animation-play-state:paused!important}
+@keyframes niko-row{0%,100%{transform:rotate(-14deg) translateY(-3px)}50%{transform:rotate(13deg) translateY(3px)}}
+@keyframes niko-row-body{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg) translateY(3px)}}
+@keyframes niko-row-left{0%,100%{transform:rotate(50deg)}50%{transform:rotate(15deg)}}
+@keyframes niko-row-right{0%,100%{transform:translate(-5px,28px) rotate(-30deg)}50%{transform:translate(3px,35px) rotate(8deg)}}
+@media(max-width:700px){.ow-island-mascot{width:77px;height:89px;top:33%;left:38%}}
+@media(prefers-reduced-motion:reduce){[data-voyage="rowing"] *{animation:none!important}}
+
+[data-voyage="rowing"] .buddy-book{display:none!important}
+.voyage-cloud-boat{z-index:1}
+
+/* Back gunwale -> seated mascot -> front hull -> oar. All share one viewport. */
+.ow-boat-idle,.archipelago-boat,.voyage-cloud-boat,.voyage-arrival-boat{background:url('/images/journey/rowing-back.svg') center/100% 100% no-repeat;isolation:isolate}
+.ow-boat-idle .ow-boat-anchor,.archipelago-boat .voyage-seat,.voyage-cloud-boat .voyage-seat,.voyage-arrival-boat .voyage-seat{top:auto!important;bottom:38%;z-index:1}
+.voyage-hull{display:block}
