@@ -13,25 +13,26 @@ namespace NextSkill_205_247_261.Controllers;
 [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
 public class AccountController(AccountStore store, ILogger<AccountController> logger) : Controller
 {
-    [HttpGet] public IActionResult Register() => RegistrationPage("User", new());
-    [HttpGet] public IActionResult AdminRegister() => RegistrationPage("Admin", new());
+    [HttpGet] public IActionResult Register(string? returnUrl) => RegistrationPage("User", new() { ReturnUrl = SafeReturnUrl(returnUrl) });
+    [HttpGet] public IActionResult AdminRegister(string? returnUrl) => RegistrationPage("Admin", new() { ReturnUrl = SafeReturnUrl(returnUrl) });
     [HttpPost, EnableRateLimiting("authentication")]
     public Task<IActionResult> Register(RegisterForm form) => RegisterAccount(form, "User");
     [HttpPost, EnableRateLimiting("authentication")]
     public Task<IActionResult> AdminRegister(RegisterForm form) => RegisterAccount(form, "Admin");
-    [HttpGet] public IActionResult Login() => LoginPage("User", new());
-    [HttpGet] public IActionResult AdminLogin() => LoginPage("Admin", new());
+    [HttpGet] public IActionResult Login(string? returnUrl) => LoginPage("User", new() { ReturnUrl = SafeReturnUrl(returnUrl) });
+    [HttpGet] public IActionResult AdminLogin(string? returnUrl) => LoginPage("Admin", new() { ReturnUrl = SafeReturnUrl(returnUrl) });
     [HttpPost, EnableRateLimiting("authentication")]
     public Task<IActionResult> Login(LoginForm form) => LoginAccount(form, "User");
     [HttpPost, EnableRateLimiting("authentication")]
     public Task<IActionResult> AdminLogin(LoginForm form) => LoginAccount(form, "Admin");
 
     private IActionResult RegistrationPage(string role, RegisterForm form)
-    { ViewData["Role"] = role; return View("Register", form); }
+    { form.ReturnUrl = SafeReturnUrl(form.ReturnUrl); ViewData["Role"] = role; return View("Register", form); }
     private IActionResult LoginPage(string role, LoginForm form)
     {
         if (User.Identity?.IsAuthenticated == true)
-            return RedirectToAction("Index", "Home");
+            return ContinueLearning(form.ReturnUrl);
+        form.ReturnUrl = SafeReturnUrl(form.ReturnUrl);
         ViewData["Role"] = role;
         return View("Login", form);
     }
@@ -49,7 +50,7 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
                 if (error is null)
                 {
                     TempData["Success"] = "Account created successfully. Please log in.";
-                    return RedirectToAction(role == "Admin" ? nameof(AdminLogin) : nameof(Login));
+                    return RedirectToAction(role == "Admin" ? nameof(AdminLogin) : nameof(Login), new { returnUrl = SafeReturnUrl(form.ReturnUrl) });
                 }
                 ModelState.AddModelError("", error);
             }
@@ -77,7 +78,7 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(identity), new AuthenticationProperties { IsPersistent = form.RememberMe });
-                    return RedirectToAction("Index", "Home");
+                    return ContinueLearning(form.ReturnUrl);
                 }
                 ModelState.AddModelError("", "Email or password is incorrect, or the account is temporarily locked. After 5 failed attempts, wait 15 minutes.");
             }
@@ -89,6 +90,17 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
         }
         return LoginPage(role, form);
     }
+    private string? SafeReturnUrl(string? returnUrl)
+    {
+        if (string.IsNullOrWhiteSpace(returnUrl) || returnUrl.Length > 2048 || !Url.IsLocalUrl(returnUrl)) return null;
+        var path = returnUrl.Split('?', '#')[0];
+        if (new[] { "/Account/Login", "/Account/AdminLogin", "/Account/Register", "/Account/AdminRegister" }
+            .Any(authPath => string.Equals(path.TrimEnd('/'), authPath, StringComparison.OrdinalIgnoreCase))) return null;
+        return returnUrl;
+    }
+    private IActionResult ContinueLearning(string? returnUrl)
+        => SafeReturnUrl(returnUrl) is string local ? LocalRedirect(local) : RedirectToAction("Entry", "Learning");
+
     [Authorize(Roles = "User")]
     public IActionResult Dashboard() => View("Dashboard", new DashboardModel(User.Identity!.Name!,
         User.FindFirstValue(ClaimTypes.Email)!, "User", 0, 0));

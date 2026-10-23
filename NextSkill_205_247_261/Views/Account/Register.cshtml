@@ -10,10 +10,11 @@
         <h2 id="form-heading">@(admin ? "Create admin account" : "Create your account")</h2>
         <p class="form-intro">@(admin ? "Manage the learning experience. Invitation required." : "Start learning and track your progress.")</p>
         <nav class="account-types" aria-label="Account type">
-            <a asp-action="Register" class="@(!admin ? "active" : "")" aria-current="@(!admin ? "page" : null)">User</a>
-            <a asp-action="AdminRegister" class="@(admin ? "active" : "")" aria-current="@(admin ? "page" : null)">Admin</a>
+            <a asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="@(!admin ? "active" : "")" aria-current="@(!admin ? "page" : null)">User</a>
+            <a asp-action="AdminRegister" asp-route-returnUrl="@Model.ReturnUrl" class="@(admin ? "active" : "")" aria-current="@(admin ? "page" : null)">Admin</a>
         </nav>
         <form asp-controller="Account" asp-action="@(admin ? "AdminRegister" : "Register")" method="post">
+            <input type="hidden" asp-for="ReturnUrl" />
             <div asp-validation-summary="All" class="validation-summary" role="alert" tabindex="-1"></div>
             <div class="field">
                 <label asp-for="FullName">Full name <span>*</span></label>
@@ -52,6 +53,6 @@
             </div>
             <button type="submit" class="primary-button">@(admin ? "Create admin account" : "Create account")</button>
         </form>
-        <p class="switch-form">Already have an account? <a asp-action="@(admin ? "AdminLogin" : "Login")">Log in</a></p>
+        <p class="switch-form">Already have an account? <a asp-action="@(admin ? "AdminLogin" : "Login")" asp-route-returnUrl="@Model.ReturnUrl">Log in</a></p>
     </section>
 </div>

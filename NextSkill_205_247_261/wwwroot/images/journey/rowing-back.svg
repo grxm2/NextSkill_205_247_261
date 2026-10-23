@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 280" fill="none">  <g id="boat-back">
+    <path d="M92 111c65-34 190-36 272-9l-17 66-205 26Z" fill="#92552C"/>
+    <path d="M103 113c68-22 167-23 247-9l-10 47-195 32Z" fill="#AD6A34"/>
+    <path d="M121 111c43-10 82-13 125-12m-104 30c51-12 117-16 185-10m-169 26c53-10 103-14 163-11" stroke="#714728" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+    <path d="m142 154 22-8 142-6 17 8-157 20Z" fill="#E3A456"/>
+    <path d="m165 168 158-20-1 9-154 22Z" fill="#B97434"/>
+    <path d="M90 108c13-8 21-7 22 4l7 42-13 12Z" fill="#E7A153"/>
+    <path d="M350 100c10-6 18-5 18 6l-10 39-14-6Z" fill="#D89545"/>
+  </g></svg>

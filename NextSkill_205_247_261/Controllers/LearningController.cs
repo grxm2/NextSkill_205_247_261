@@ -1,0 +1,134 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using NextSkill_205_247_261.Models;
+using NextSkill_205_247_261.Services;
+
+namespace NextSkill_205_247_261.Controllers;
+
+[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+public sealed class LearningController(LearningStore store, ILogger<LearningController> logger, IWebHostEnvironment environment, IConfiguration configuration, IDataProtectionProvider protection) : Controller
+{
+    private Guid? previewId;
+    // Preview identities are isolated, signed browser sessions, never authentication claims.
+    public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+    {
+        var action = context.ActionDescriptor.RouteValues["action"];
+        if (User.Identity?.IsAuthenticated != true && action is not (nameof(Catalog) or nameof(Entry)))
+        {
+            if (!environment.IsDevelopment() || !configuration.GetValue("Learning:GuestPreview", true))
+            {
+                context.Result = Challenge();
+                return;
+            }
+            var protector = protection.CreateProtector("NextSkill.LocalLearningPreview.v1");
+            if (Request.Cookies.TryGetValue("NextSkill.LearningPreview", out var cookie))
+            {
+                try { if (Guid.TryParse(protector.Unprotect(cookie), out var id)) previewId = id; }
+                catch (System.Security.Cryptography.CryptographicException) { }
+            }
+            if (previewId is null)
+            {
+                previewId = Guid.NewGuid();
+                Response.Cookies.Append("NextSkill.LearningPreview", protector.Protect(previewId.Value.ToString()),
+                    new CookieOptions { HttpOnly = true, Secure = Request.IsHttps, SameSite = SameSiteMode.Lax, IsEssential = true });
+            }
+        }
+        await next();
+    }
+
+    [AllowAnonymous, HttpGet]
+    public IActionResult Catalog() => Json(new { courses = LearningCatalog.PublicCatalog() });
+
+    // Only the explicit root route uses this dispatcher. Deep links and Home stay put.
+    [AllowAnonymous, HttpGet]
+    public async Task<IActionResult> Entry(CancellationToken token)
+    {
+        if (User.Identity?.IsAuthenticated != true) return RedirectToAction("Index", "Home");
+        try
+        {
+            var state = await store.StateAsync(AccountId, Role, token);
+            return state.ActiveCourseId is int courseId
+                ? RedirectToAction(nameof(Island), new { courseId }) : RedirectToAction("Index", "Home");
+        }
+        catch (SqlException ex)
+        {
+            logger.LogError(ex, "Learning entry could not read account-linked progress");
+            TempData["LearningError"] = "ยังอ่านความคืบหน้าไม่ได้ กรุณาลองอีกครั้ง ข้อมูลเดิมของคุณยังไม่ถูกเปลี่ยน";
+            return RedirectToAction("Index", "Home");
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Island(int? courseId, int? lessonId, CancellationToken token)
+    {
+        try
+        {
+            var state = await store.StateAsync(AccountId, Role, token);
+            courseId ??= state.ActiveCourseId;
+            if (courseId is null) return RedirectToAction("Index", "Home", new { chooseCourse = true });
+            LearningStore.RequireCourse(courseId.Value);
+            var course = state.Courses.First(c => c.CourseId == courseId.Value);
+            if (lessonId.HasValue)
+            {
+                LearningStore.RequireLesson(course.CourseId, lessonId.Value);
+                if (!course.UnlockedIslands.Contains(lessonId.Value))
+                    return StatusCode(403, "เกาะนี้ยังล็อกอยู่ เรียนด่านก่อนหน้าให้ผ่านก่อนครับ");
+            }
+            return View(new LearningIslandViewModel
+            {
+                State = state, Course = course, LearnerName = User.Identity?.Name ?? "ผู้เรียนทดลอง", InitialLessonId = lessonId
+            });
+        }
+        catch (LearningRuleException ex) { return StatusCode(ex.StatusCode, ex.Message); }
+        catch (SqlException ex)
+        {
+            logger.LogError(ex, "Learning island could not read account-linked progress");
+            Response.Headers.RetryAfter = "30";
+            return StatusCode(503, "ยังเชื่อมต่อข้อมูลการเรียนไม่ได้ กรุณาลองใหม่ภายหลัง ระบบไม่ได้รีเซ็ตความคืบหน้าของคุณ");
+        }
+    }
+
+    [HttpGet]
+    public Task<IActionResult> State(CancellationToken token)
+        => Api(async () => await store.StateAsync(AccountId, Role, token));
+
+    [HttpPost]
+    public Task<IActionResult> SelectCourse([FromBody] SelectLearningCourseRequest? request, CancellationToken token)
+        => Body(request, () => store.SelectCourseAsync(AccountId, Role, request!.CourseId, token));
+
+    [HttpPost]
+    public Task<IActionResult> Checkpoint([FromBody] LearningCheckpointRequest? request, CancellationToken token)
+        => Body(request, () => store.CheckpointAsync(AccountId, Role, request!.CourseId, request.LessonId, token));
+
+    [HttpGet]
+    public Task<IActionResult> Lesson(int courseId, int lessonId, CancellationToken token)
+        => Api(async () => await store.LessonAsync(AccountId, Role, courseId, lessonId, token));
+
+    [HttpPost]
+    public Task<IActionResult> CompleteLesson([FromBody] CompleteLearningLessonRequest? request, CancellationToken token)
+        => Body(request, () => store.CompleteAsync(AccountId, Role, request!, token));
+
+    private Task<IActionResult> Body<TRequest, TResult>(TRequest? request, Func<Task<TResult>> action) where TRequest : class
+    {
+        if (request is null || !ModelState.IsValid)
+            return Task.FromResult<IActionResult>(BadRequest(new { code = "invalid_request", message = "ข้อมูลไม่ครบหรือไม่ถูกต้อง กรุณาลองใหม่" }));
+        return Api(async () => await action());
+    }
+    private async Task<IActionResult> Api<T>(Func<Task<T>> action)
+    {
+        try { return Json(await action()); }
+        catch (LearningRuleException ex) { return StatusCode(ex.StatusCode, new { code = ex.Code, message = ex.Message }); }
+        catch (SqlException ex)
+        {
+            logger.LogError(ex, "Learning database operation unavailable");
+            Response.Headers.RetryAfter = "30";
+            return StatusCode(503, new { code = "learning_unavailable", message = "ยังเชื่อมต่อข้อมูลการเรียนไม่ได้ กรุณาลองใหม่ ความคืบหน้าเดิมยังไม่ถูกเปลี่ยน" });
+        }
+    }
+    private Guid AccountId => previewId ?? Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+    private string Role => previewId.HasValue ? "User" : User.FindFirstValue(ClaimTypes.Role)!;
+}
