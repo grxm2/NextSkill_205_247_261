@@ -20,13 +20,21 @@
 .skill-buddy[data-living="true"]:not([data-posing]) .buddy-antenna {
     animation: buddy-rest-antenna 3.6s ease-in-out infinite;
 }
+.skill-buddy[data-living="true"]:not([data-posing]) .ear-left {
+    animation: buddy-ear-left 3.6s ease-in-out infinite;
+}
+.skill-buddy[data-living="true"]:not([data-posing]) .ear-right {
+    animation: buddy-ear-right 3.6s ease-in-out infinite;
+}
 @keyframes buddy-breathe {
     0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
     50% { transform: translateY(-3px) rotate(1.4deg) scale(1.018, 1.025); }
 }
-@keyframes buddy-rest-left { 0%,100% { transform: rotate(29deg); } 50% { transform: rotate(23deg); } }
-@keyframes buddy-rest-right { 0%,100% { transform: rotate(33deg); } 50% { transform: rotate(39deg); } }
-@keyframes buddy-rest-antenna { 0%,100% { transform: rotate(10deg); } 50% { transform: rotate(-3deg); } }
+@keyframes buddy-rest-left { 0%,100% { transform: rotate(26deg); } 50% { transform: rotate(20deg); } }
+@keyframes buddy-rest-right { 0%,100% { transform: rotate(32deg); } 50% { transform: rotate(38deg); } }
+@keyframes buddy-rest-antenna { 0%,100% { transform: rotate(12deg); } 50% { transform: rotate(-2deg); } }
+@keyframes buddy-ear-left { 0%,100% { transform: rotate(10deg); } 50% { transform: rotate(15deg); } }
+@keyframes buddy-ear-right { 0%,100% { transform: rotate(-10deg); } 50% { transform: rotate(-15deg); } }
 .companion-pose-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
 .companion-pose-buttons button { border: 1px solid #bed2b3; border-bottom-width: 3px; border-radius: 12px; background: #fff; color: #36582d; padding: 8px 12px; font: inherit; font-size: 12px; font-weight: 800; cursor: pointer; }
 .companion-pose-buttons button:active { border-bottom-width: 1px; padding-bottom: 10px; }

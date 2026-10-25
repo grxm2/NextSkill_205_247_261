@@ -1,19 +1,115 @@
 .ow-island-mascot{position:absolute;width:100px;height:115px;left:39%;top:39%;z-index:3}
-.voyage-oar{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;transform-origin:68% 49%}
-[data-voyage="rowing"] .voyage-oar{animation:niko-row 1.8s ease-in-out infinite}
-[data-voyage="rowing"] .buddy-upper{animation:niko-row-body 1.8s ease-in-out infinite!important}
-[data-voyage="rowing"] .arm-left{animation:niko-row-left 1.8s ease-in-out infinite!important}
-[data-voyage="rowing"] .arm-right{animation:niko-row-right 1.8s ease-in-out infinite!important}
+.voyage-oar{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;transform-origin:68% 49%;transition:transform .4s ease}
+
+/* Rowing State (Sailing across the sea) */
+[data-voyage="rowing"] .voyage-oar{animation:niko-row 1.5s ease-in-out infinite}
+[data-voyage="rowing"] .buddy-upper{animation:niko-row-body 1.5s ease-in-out infinite!important}
+[data-voyage="rowing"] .arm-left{animation:niko-row-left 1.5s ease-in-out infinite!important}
+[data-voyage="rowing"] .arm-right{animation:niko-row-right 1.5s ease-in-out infinite!important}
+
+/* Illustrated Mascot Rowing Avatar Switches */
+[data-voyage="rowing"] .buddy-avatar-idle,
+.ow-scene[data-voyage="rowing"] .buddy-avatar-idle,
+.ow-boat-idle .buddy-avatar-idle {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(.92);
+}
+
+[data-voyage="rowing"] .buddy-avatar-rowing,
+.ow-scene[data-voyage="rowing"] .buddy-avatar-rowing {
+    opacity: 1 !important;
+    pointer-events: auto;
+    animation: nimo-paddle-stroke 1.5s cubic-bezier(.45,.05,.55,.95) infinite;
+}
+
+/* Boat Hull Rocking during Rowing */
+[data-voyage="rowing"] .ow-boat-idle,
+.ow-scene[data-voyage="rowing"] .ow-boat-idle {
+    animation: nimo-boat-rock 1.5s ease-in-out infinite !important;
+}
+
+/* Water Wake Animation during Rowing */
+[data-voyage="rowing"] .ow-wake{animation:ow-wake-rowing 1.5s ease-in-out infinite alternate!important;opacity:.95}
+
+/* ========================================================
+   Active Mouse Wheel Scroll Rowing (Energetic & Dynamic)
+   ======================================================== */
+.ow-actively-scrolling [data-voyage="rowing"] .ow-boat-idle .buddy-avatar-rowing,
+[data-voyage="rowing"].ow-actively-scrolling .ow-boat-idle .buddy-avatar-rowing,
+.ow-vessel.ow-actively-scrolling [data-voyage="rowing"] .buddy-avatar-rowing,
+.ow-actively-scrolling .ow-boat-idle .buddy-avatar-rowing{animation-duration:.85s!important}
+
+.ow-actively-scrolling [data-voyage="rowing"] .voyage-oar,
+[data-voyage="rowing"].ow-actively-scrolling .voyage-oar,
+.ow-vessel.ow-actively-scrolling .voyage-oar{animation-duration:.85s!important}
+
+.ow-actively-scrolling [data-voyage="rowing"] .ow-boat-idle,
+[data-voyage="rowing"].ow-actively-scrolling .ow-boat-idle,
+.ow-vessel.ow-actively-scrolling .ow-boat-idle{animation-duration:.85s!important}
+
+.ow-actively-scrolling [data-voyage="rowing"] .ow-wake,
+[data-voyage="rowing"].ow-actively-scrolling .ow-wake{animation-duration:.85s!important;opacity:1}
+
+/* ========================================================
+   Docked at Course Harbor State (User Screenshot 2)
+   ======================================================== */
+[data-voyage="docked"] .buddy-avatar-idle,
+.ow-scene[data-voyage="docked"] .buddy-avatar-idle{opacity:1;animation:buddySoftFloat 3.8s ease-in-out infinite}
+[data-voyage="docked"] .buddy-avatar-rowing,
+.ow-scene[data-voyage="docked"] .buddy-avatar-rowing{opacity:0;animation:none}
+[data-voyage="docked"] .voyage-oar,
+.ow-scene[data-voyage="docked"] .voyage-oar{animation:none;transform:rotate(-6deg) translateY(0)}
+[data-voyage="docked"] .ow-boat-idle,
+.ow-scene[data-voyage="docked"] .ow-boat-idle{animation:none}
+
 .voyage-cloud-boat{position:absolute;z-index:4;left:calc(50% - 105px);top:34%;width:210px;height:123px;pointer-events:none}
 .voyage-hull{position:relative;z-index:2;width:100%;height:auto}
 .voyage-seat{position:absolute;width:85px;height:98px;left:calc(48% - 42.5px);top:calc(38% - 98px);z-index:1}
 .voyage-arrival-boat{position:absolute;width:180px;pointer-events:none;opacity:0;z-index:3}.voyage-arrival-boat.has-arrived{opacity:1}
 .voyage-arrival-boat .voyage-seat{width:70px;height:81px;left:calc(48% - 35px);top:calc(38% - 81px)}
 .voyage-paused [data-voyage="rowing"] *{animation-play-state:paused!important}
-@keyframes niko-row{0%,100%{transform:rotate(-14deg) translateY(-3px)}50%{transform:rotate(13deg) translateY(3px)}}
+
+/* ========================================================
+   Rowing Keyframe Animations
+   ======================================================== */
+@keyframes niko-row{
+    0%{transform:rotate(-16deg) translateY(-4px)}
+    22%{transform:rotate(-2deg) translateY(5px) scaleY(1.02)}
+    50%{transform:rotate(16deg) translateY(3px)}
+    75%{transform:rotate(4deg) translateY(-2px)}
+    100%{transform:rotate(-16deg) translateY(-4px)}
+}
+
 @keyframes niko-row-body{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg) translateY(3px)}}
 @keyframes niko-row-left{0%,100%{transform:rotate(50deg)}50%{transform:rotate(15deg)}}
 @keyframes niko-row-right{0%,100%{transform:translate(-5px,28px) rotate(-30deg)}50%{transform:translate(3px,35px) rotate(8deg)}}
+
+/* Nimo Mascot Paddle Stroke Animation */
+@keyframes nimo-paddle-stroke{
+    0%{transform:translateY(-2px) rotate(-9deg) scale(.98,1.02)}
+    22%{transform:translateY(6px) rotate(-3deg) scale(1.02,.98)}
+    50%{transform:translateY(-5px) rotate(10deg) scale(.97,1.03)}
+    75%{transform:translateY(-2px) rotate(3deg) scale(1,1)}
+    100%{transform:translateY(-2px) rotate(-9deg) scale(.98,1.02)}
+}
+
+/* Boat Rocking during Rowing */
+@keyframes nimo-boat-rock{
+    0%{transform:translateY(0px) rotate(-2deg)}
+    25%{transform:translateY(4px) rotate(1deg)}
+    50%{transform:translateY(-4px) rotate(3deg)}
+    75%{transform:translateY(-1px) rotate(0deg)}
+    100%{transform:translateY(0px) rotate(-2deg)}
+}
+
+/* Wake Surge during Rowing */
+@keyframes ow-wake-rowing{
+    0%{transform:scale(.95,.88);filter:drop-shadow(0 2px 6px rgba(7,94,141,.2))}
+    50%{transform:scale(1.12,1.15) translateY(2px);filter:drop-shadow(0 6px 14px rgba(7,94,141,.35))}
+    100%{transform:scale(.98,.92);filter:drop-shadow(0 2px 6px rgba(7,94,141,.2))}
+}
+
 @media(max-width:700px){.ow-island-mascot{width:77px;height:89px;top:33%;left:38%}}
 @media(prefers-reduced-motion:reduce){[data-voyage="rowing"] *{animation:none!important}}
 

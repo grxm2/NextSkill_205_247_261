@@ -86,8 +86,8 @@
             setText(`[data-progress-caption="${key}"]`,`สำรวจแล้ว ${count} จาก ${island.lessons.length} ด่าน`);
             setText(`[data-progress-value="${key}"]`,`${Math.round(count/island.lessons.length*100)}%`);
             const progress=stop.querySelector('progress');progress.max=island.lessons.length;progress.value=count;progress.textContent=`${count} / ${island.lessons.length}`;
-            setText(`[data-next-lesson="${key}"]`,!open?(key==='ux'?'เปิดเส้นทางเมื่อฝึกฟีดแบ็กกับ Niko ครบ 3 สถานการณ์':'เปิดเส้นทางเมื่อผ่านแบบฝึก UX ทั้ง 3 ด่าน'):complete?'สำรวจครบแล้ว กลับมาทบทวนได้เสมอ':`ด่านถัดไป · ${island.lessons[currentNumber(key)-1].name}`);
-            stop.querySelector('[data-start-island]').firstChild.textContent=!open?'ไปเปิดเส้นทาง ':complete?'ทบทวนกับ Niko ':count?'เรียนต่อกับ Niko ':'เริ่มสำรวจเกาะนี้ ';
+            setText(`[data-next-lesson="${key}"]`,!open?(key==='ux'?'เปิดเส้นทางเมื่อฝึกฟีดแบ็กกับ Nimo ครบ 3 สถานการณ์':'เปิดเส้นทางเมื่อผ่านแบบฝึก UX ทั้ง 3 ด่าน'):complete?'สำรวจครบแล้ว กลับมาทบทวนได้เสมอ':`ด่านถัดไป · ${island.lessons[currentNumber(key)-1].name}`);
+            stop.querySelector('[data-start-island]').firstChild.textContent=!open?'ไปเปิดเส้นทาง ':complete?'ทบทวนกับ Nimo ':count?'เรียนต่อกับ Nimo ':'เริ่มสำรวจเกาะนี้ ';
             const list=stop.querySelector('[data-lesson-list]');
             const focused=document.activeElement?.dataset.lessonIsland===key?Number(document.activeElement.dataset.lesson):null;
             list.replaceChildren(...island.lessons.map(lesson=>lessonButton(key,lesson)));
@@ -101,7 +101,7 @@
         document.querySelectorAll('.route-javascript').forEach(line=>line.classList.toggle('is-open',unlocked('javascript')));
         const all=unlocked('javascript');
         setText('#arch-voyage-title',all?'สามเกาะ เชื่อมทักษะของคุณ':state.uxOpen?'จากการออกแบบ สู่การเขียนโค้ด':'จากภาษา สู่การออกแบบ');
-        setText('#arch-voyage-description',all?'ทุกเส้นทางเปิดแล้ว ลองต่อยอดหรือกลับมาทบทวนทักษะที่อยากฝึก':state.uxOpen?'ผ่านแบบฝึก UX ทั้ง 3 ด่าน เพื่อเปิดเส้นทางไปเกาะ JavaScript':'ฝึกฟีดแบ็กกับ Niko ครบ 3 สถานการณ์ เพื่อเปิดหมอกไปยังเกาะ UX');
+        setText('#arch-voyage-description',all?'ทุกเส้นทางเปิดแล้ว ลองต่อยอดหรือกลับมาทบทวนทักษะที่อยากฝึก':state.uxOpen?'ผ่านแบบฝึก UX ทั้ง 3 ด่าน เพื่อเปิดเส้นทางไปเกาะ JavaScript':'ฝึกฟีดแบ็กกับ Nimo ครบ 3 สถานการณ์ เพื่อเปิดหมอกไปยังเกาะ UX');
         document.getElementById('arch-voyage-action').firstChild.textContent=all?'ไปเกาะนักพัฒนา ':state.uxOpen?'ไปฝึกบนเกาะนักออกแบบ ':'เริ่มภารกิจเปิดเส้นทาง ';
         queueGeometry();
     }
@@ -171,13 +171,13 @@
         ['เครื่องมือใดเหมาะกับการทำงานเดิมซ้ำหลายรอบ?', ['comment', 'for loop', 'string'], 1, 'ลูปช่วยให้ทำชุดคำสั่งซ้ำตามเงื่อนไข โดยไม่ต้องเขียนคำสั่งเดิมหลายครั้ง'],
         ['ฟังก์ชันช่วยเรื่องใดเป็นหลัก?', ['เปลี่ยนทุกค่าเป็นข้อความ', 'ใช้แทนการเก็บข้อมูลทั้งหมด', 'รวมขั้นตอนการทำงานให้เรียกใช้ซ้ำได้'], 2, 'แยกงานเป็นฟังก์ชัน ช่วยให้เรียกใช้ซ้ำ เข้าใจ และดูแลโค้ดได้ง่ายขึ้น'],
         ['ถ้า const skills = ["UX", "JS"] แล้ว skills[0] มีค่าอะไร?', ['"UX"', '"JS"', 'undefined'], 0, 'อาร์เรย์ใน JavaScript เริ่มนับตำแหน่งที่ 0 ดังนั้นสมาชิกตัวแรกคือ "UX"'],
-        ['โครงสร้างใดเหมาะกับข้อมูลผู้เรียนที่มี name และ level?', ['"name, level"', '{ name: "Niko", level: 1 }', 'name + level'], 1, 'ออบเจ็กต์ใช้เก็บข้อมูลเป็นคู่ชื่อกับค่า เหมาะกับสิ่งที่มีหลายคุณสมบัติ'],
+        ['โครงสร้างใดเหมาะกับข้อมูลผู้เรียนที่มี name และ level?', ['"name, level"', '{ name: "Nimo", level: 1 }', 'name + level'], 1, 'ออบเจ็กต์ใช้เก็บข้อมูลเป็นคู่ชื่อกับค่า เหมาะกับสิ่งที่มีหลายคุณสมบัติ'],
         ['ต้องการเลือกปุ่มที่มี id="start" บนหน้าเว็บ ใช้คำสั่งใด?', ['document.open("start")', 'window.button("start")', 'document.querySelector("#start")'], 2, 'querySelector ใช้ CSS selector เลือกองค์ประกอบ โดย #start หมายถึง id ที่ชื่อ start'],
         ['ต้องการทำงานเมื่อผู้ใช้คลิกปุ่ม ควรใช้เหตุการณ์ใด?', ['click', 'font', 'margin'], 0, 'เหตุการณ์ click ใช้รับการกดปุ่มจากผู้ใช้ รวมถึงการเปิดใช้งานด้วยคีย์บอร์ด'],
         ['ปุ่มเรียนต่อควรเปลี่ยนข้อความหลังผู้ใช้ทำภารกิจเสร็จ ควรทำอย่างไร?', ['เปลี่ยนเฉพาะสีภาพพื้นหลัง', 'รับเหตุการณ์ ตรวจสถานะ แล้วอัปเดตข้อความบน DOM', 'ปิดการกดปุ่มทั้งหมดถาวร'], 1, 'เชื่อมเหตุการณ์ สถานะ และ DOM เข้าด้วยกัน ทำให้หน้าเว็บตอบสนองต่อการใช้งานจริง']
     ].map(([question, choices, answer, explanation]) => ({ question, choices, answer, explanation }));
     const introductionQuestions = [
-        { question: 'เจอเพื่อนร่วมทีมครั้งแรก ประโยคไหนเหมาะกับการแนะนำตัว?', choices: ['Hi, I’m Niko. I work on the design team.', 'Who are you? Go away.', 'I don’t want to talk.'], answer: 0, explanation: 'เริ่มด้วยคำทักทาย ชื่อ และบทบาทสั้น ๆ ช่วยให้เพื่อนร่วมทีมรู้จักคุณและเริ่มคุยต่อได้' },
+        { question: 'เจอเพื่อนร่วมทีมครั้งแรก ประโยคไหนเหมาะกับการแนะนำตัว?', choices: ['Hi, I’m Nimo. I work on the design team.', 'Who are you? Go away.', 'I don’t want to talk.'], answer: 0, explanation: 'เริ่มด้วยคำทักทาย ชื่อ และบทบาทสั้น ๆ ช่วยให้เพื่อนร่วมทีมรู้จักคุณและเริ่มคุยต่อได้' },
         { question: 'อยากขอให้เพื่อนร่วมทีมช่วยอธิบายงานอีกครั้ง ควรพูดว่าอะไร?', choices: ['You make no sense.', 'Could you walk me through that again, please?', 'I won’t listen.'], answer: 1, explanation: 'ขอให้อธิบายอีกครั้งอย่างสุภาพ ช่วยให้คุณเข้าใจงานและทำงานร่วมกันได้มั่นใจขึ้น' }
     ];
 

@@ -48,6 +48,7 @@ public sealed class LearningController(LearningStore store, ILogger<LearningCont
     public async Task<IActionResult> Entry(CancellationToken token)
     {
         if (User.Identity?.IsAuthenticated != true) return RedirectToAction("Index", "Home");
+        if (User.IsInRole("Admin")) return RedirectToAction("AdminDashboard", "Account");
         try
         {
             var state = await store.StateAsync(AccountId, Role, token);

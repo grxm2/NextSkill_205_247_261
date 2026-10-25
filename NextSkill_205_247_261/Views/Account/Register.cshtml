@@ -2,57 +2,93 @@
 @{
     Layout = "_AccountLayout";
     var admin = (string?)ViewData["Role"] == "Admin";
-    ViewData["Title"] = admin ? "Create admin account" : "Create your account";
+    ViewData["Title"] = admin ? "สร้างบัญชีผู้ดูแล (Admin)" : "สมัครสมาชิกใหม่";
 }
 <div class="auth-grid">
     <partial name="_AccountStory" />
-    <section class="auth-form" aria-labelledby="form-heading">
-        <h2 id="form-heading">@(admin ? "Create admin account" : "Create your account")</h2>
-        <p class="form-intro">@(admin ? "Manage the learning experience. Invitation required." : "Start learning and track your progress.")</p>
-        <nav class="account-types" aria-label="Account type">
-            <a asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="@(!admin ? "active" : "")" aria-current="@(!admin ? "page" : null)">User</a>
-            <a asp-action="AdminRegister" asp-route-returnUrl="@Model.ReturnUrl" class="@(admin ? "active" : "")" aria-current="@(admin ? "page" : null)">Admin</a>
+    <section class="auth-form nimo-auth-card" aria-labelledby="form-heading">
+        <div class="form-header-badge">
+            <span class="badge-dot"></span>
+            <span>@(admin ? "NEW ADMIN · สิทธิ์ผู้ดูแล" : "START YOUR JOURNEY · เริ่มต้นก้าวแรก")</span>
+        </div>
+        <h2 id="form-heading">@(admin ? "สร้างบัญชีผู้ดูแล" : "สมัครสมาชิกใหม่")</h2>
+        <p class="form-intro">@(admin ? "สร้างบัญชีสำหรับผู้ดูแลระบบ (ต้องใช้รหัสเชิญ)" : "สร้างบัญชีเพื่อเริ่มเรียนและบันทึกความก้าวหน้ากับ Nimo")</p>
+        
+        <nav class="account-types" aria-label="ประเภทบัญชี">
+            <a asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="@(!admin ? "active" : "")" aria-current="@(!admin ? "page" : null)">
+                <span class="type-icon">🎒</span> ผู้เรียนทั่วไป (User)
+            </a>
+            <a asp-action="AdminRegister" asp-route-returnUrl="@Model.ReturnUrl" class="@(admin ? "active" : "")" aria-current="@(admin ? "page" : null)">
+                <span class="type-icon">⚙️</span> ผู้ดูแลระบบ (Admin)
+            </a>
         </nav>
-        <form asp-controller="Account" asp-action="@(admin ? "AdminRegister" : "Register")" method="post">
+
+        <form asp-controller="Account" asp-action="@(admin ? "AdminRegister" : "Register")" method="post" class="login-core-form">
             <input type="hidden" asp-for="ReturnUrl" />
             <div asp-validation-summary="All" class="validation-summary" role="alert" tabindex="-1"></div>
+            
             <div class="field">
-                <label asp-for="FullName">Full name <span>*</span></label>
-                <input asp-for="FullName" autocomplete="name" placeholder="Your full name" required minlength="2" maxlength="100" />
+                <label asp-for="FullName">ชื่อ-นามสกุล (Full name) <span>*</span></label>
+                <input asp-for="FullName" autocomplete="name" placeholder="ระบุชื่อของคุณ" required minlength="2" maxlength="100" />
             </div>
+
             <div class="field">
-                <label asp-for="Email">Email <span>*</span></label>
+                <label asp-for="Email">อีเมล (Email) <span>*</span></label>
                 <input asp-for="Email" type="email" autocomplete="email" placeholder="you@example.com" required maxlength="254" />
             </div>
+
             <div class="field">
-                <label asp-for="Password">Password <span>*</span></label>
+                <label asp-for="Password">รหัสผ่าน (Password) <span>*</span></label>
                 <div class="password-wrap">
-                    <input asp-for="Password" autocomplete="new-password" placeholder="Enter your password" required minlength="8" maxlength="128" aria-describedby="password-hint" />
-                    <button class="password-toggle" type="button" data-target="Password" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                    <input asp-for="Password" autocomplete="new-password" placeholder="ตั้งรหัสผ่านของคุณ" required minlength="8" maxlength="128" aria-describedby="password-hint" />
+                    <button class="password-toggle" type="button" data-target="Password" aria-label="แสดงรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
                 </div>
-                <small id="password-hint">Use at least 8 characters.</small>
+                <small id="password-hint">ความยาวอย่างน้อย 8 ตัวอักษร</small>
             </div>
+
             <div class="field">
-                <label asp-for="ConfirmPassword">Confirm password <span>*</span></label>
+                <label asp-for="ConfirmPassword">ยืนยันรหัสผ่าน (Confirm password) <span>*</span></label>
                 <div class="password-wrap">
-                    <input asp-for="ConfirmPassword" autocomplete="new-password" placeholder="Re-enter your password" required maxlength="128" />
-                    <button class="password-toggle" type="button" data-target="ConfirmPassword" aria-label="Show confirm password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                    <input asp-for="ConfirmPassword" autocomplete="new-password" placeholder="กรอกรหัสผ่านอีกครั้ง" required maxlength="128" />
+                    <button class="password-toggle" type="button" data-target="ConfirmPassword" aria-label="แสดงรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
+
             @if (admin)
             {
                 <div class="field">
-                    <label asp-for="InvitationCode">Admin invitation code <span>*</span></label>
-                    <input asp-for="InvitationCode" type="password" autocomplete="off" placeholder="Enter your invitation code" required maxlength="128" aria-describedby="invitation-hint" />
-                    <small id="invitation-hint">Get a single-use invitation from your system owner.</small>
+                    <label asp-for="InvitationCode">รหัสเชิญผู้ดูแล (Admin invitation code) <span>*</span></label>
+                    <input asp-for="InvitationCode" type="text" autocomplete="off" placeholder="กรอกรหัสเชิญ 4 หลัก (XXXX)" required maxlength="32" aria-describedby="invitation-hint" />
+                    <small id="invitation-hint">รหัสเชิญสำหรับผู้ดูแลระบบ: <strong>XXXX</strong> (4 ตัวอักษร)</small>
                 </div>
             }
+
             <div class="check-row">
-                <input asp-for="AcceptTerms" required />
-                <label asp-for="AcceptTerms">I agree to the <a asp-action="Terms" target="_blank" rel="noopener">Terms of Use and Privacy Policy</a>.</label>
+                <input asp-for="AcceptTerms" id="AcceptTerms" required />
+                <label asp-for="AcceptTerms" for="AcceptTerms">ฉันยอมรับ <a asp-action="Terms" target="_blank" rel="noopener">เงื่อนไขการใช้งานและนโยบายความเป็นส่วนตัว</a></label>
             </div>
-            <button type="submit" class="primary-button">@(admin ? "Create admin account" : "Create account")</button>
+
+            <button type="submit" class="primary-button nimo-submit-btn">
+                <span>@(admin ? "สร้างบัญชีผู้ดูแล" : "สมัครสมาชิกและเริ่มเรียน")</span>
+                <span class="btn-arrow" aria-hidden="true">→</span>
+            </button>
         </form>
-        <p class="switch-form">Already have an account? <a asp-action="@(admin ? "AdminLogin" : "Login")" asp-route-returnUrl="@Model.ReturnUrl">Log in</a></p>
+
+        <p class="switch-form">
+            มีบัญชี NextSkill อยู่แล้วใช่ไหม? 
+            <a asp-action="@(admin ? "AdminLogin" : "Login")" asp-route-returnUrl="@Model.ReturnUrl">
+                เข้าสู่ระบบ ↗
+            </a>
+        </p>
     </section>
 </div>

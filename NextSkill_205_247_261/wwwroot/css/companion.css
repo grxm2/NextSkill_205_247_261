@@ -1,49 +1,57 @@
-/* Personal companion: cosmetic state stays local until account persistence is connected. */
+/* Personal companion: Nimo (นิโม) learning companion theme */
 .skill-buddy {
-    --buddy-main: #6fc952; --buddy-edge: #5bb640; --buddy-dark: #56b643;
-    --buddy-highlight: #8ed76c; --buddy-limb: #80cd5b; --buddy-limb-edge: #62b547;
-    --buddy-face: #ecf8db; --buddy-face-edge: #54af3f; --buddy-ink: #34704a;
+    --buddy-main: #60a5fa; --buddy-edge: #3b82f6; --buddy-dark: #2563eb;
+    --buddy-highlight: #bae6fd; --buddy-limb: #60a5fa; --buddy-limb-edge: #3b82f6;
+    --buddy-face: #ffffff; --buddy-face-edge: #3b82f6; --buddy-ink: #1e3a8a;
+    --buddy-ear-bg: #2563eb; --buddy-ear-border: #1d4ed8;
 }
-.skill-buddy[data-colour=sky] {
-    --buddy-main: #64bde8; --buddy-edge: #40a3d3; --buddy-dark: #3c9fce;
-    --buddy-highlight: #88d5f5; --buddy-limb: #81cdeb; --buddy-limb-edge: #4faed7;
-    --buddy-face: #e8f8ff; --buddy-face-edge: #3897c5; --buddy-ink: #2a6384;
+.skill-buddy[data-colour=sky], .skill-buddy:not([data-colour]) {
+    --buddy-main: #60a5fa; --buddy-edge: #3b82f6; --buddy-dark: #2563eb;
+    --buddy-highlight: #bae6fd; --buddy-limb: #60a5fa; --buddy-limb-edge: #3b82f6;
+    --buddy-face: #ffffff; --buddy-face-edge: #3b82f6; --buddy-ink: #1e3a8a;
+    --buddy-ear-bg: #2563eb; --buddy-ear-border: #1d4ed8;
+}
+.skill-buddy[data-colour=sprout] {
+    --buddy-main: #4ade80; --buddy-edge: #22c55e; --buddy-dark: #16a34a;
+    --buddy-highlight: #bbf7d0; --buddy-limb: #4ade80; --buddy-limb-edge: #22c55e;
+    --buddy-face: #f0fdf4; --buddy-face-edge: #22c55e; --buddy-ink: #14532d;
+    --buddy-ear-bg: #16a34a; --buddy-ear-border: #15803d;
 }
 .skill-buddy[data-colour=sunshine] {
-    --buddy-main: #efb64f; --buddy-edge: #d99a36; --buddy-dark: #db9b35;
-    --buddy-highlight: #ffd67e; --buddy-limb: #f3c369; --buddy-limb-edge: #dda345;
-    --buddy-face: #fff7dc; --buddy-face-edge: #d89b35; --buddy-ink: #886329;
+    --buddy-main: #fbbf24; --buddy-edge: #f59e0b; --buddy-dark: #d97706;
+    --buddy-highlight: #fef08a; --buddy-limb: #fbbf24; --buddy-limb-edge: #f59e0b;
+    --buddy-face: #fffbeb; --buddy-face-edge: #f59e0b; --buddy-ink: #78350f;
+    --buddy-ear-bg: #d97706; --buddy-ear-border: #b45309;
 }
 .skill-buddy[data-colour=berry] {
-    --buddy-main: #ac8ade; --buddy-edge: #9170c7; --buddy-dark: #916ec9;
-    --buddy-highlight: #c8aff1; --buddy-limb: #bca0e7; --buddy-limb-edge: #a080d1;
-    --buddy-face: #f5efff; --buddy-face-edge: #8f6cc7; --buddy-ink: #614582;
+    --buddy-main: #a78bfa; --buddy-edge: #8b5cf6; --buddy-dark: #7c3aed;
+    --buddy-highlight: #ddd6fe; --buddy-limb: #a78bfa; --buddy-limb-edge: #8b5cf6;
+    --buddy-face: #f5f3ff; --buddy-face-edge: #8b5cf6; --buddy-ink: #4c1d95;
+    --buddy-ear-bg: #7c3aed; --buddy-ear-border: #6d28d9;
 }
-.skill-buddy .buddy-body { background: var(--buddy-main); border-color: var(--buddy-edge); box-shadow: inset 0 -10px var(--buddy-dark), inset 5px 5px var(--buddy-highlight); }
-.skill-buddy .buddy-face { background: var(--buddy-face); border-color: var(--buddy-face-edge); }
+.skill-buddy .buddy-body { background: linear-gradient(180deg, var(--buddy-highlight) 0%, var(--buddy-main) 65%, var(--buddy-dark) 100%); border-color: var(--buddy-edge); }
+.skill-buddy .buddy-face { border-color: transparent; }
 .skill-buddy .buddy-eye { background: transparent; }
 .skill-buddy .buddy-eye::after { display: none; }
-.buddy-pupil { display: block; width: 100%; height: 100%; border-radius: 9px; background: var(--buddy-ink); position: relative; }
-.buddy-pupil::after { content: ''; display: block; position: absolute; top: 3px; left: 2px; width: 4px; height: 4px; background: #fff; border-radius: 50%; }
+.skill-buddy .buddy-ear { background: linear-gradient(180deg, var(--buddy-edge) 0%, var(--buddy-ear-bg) 70%, var(--buddy-ear-border) 100%); border-color: var(--buddy-ear-border); }
 .skill-buddy .buddy-smile { border-color: var(--buddy-ink); }
-.skill-buddy .buddy-cheek { background: var(--buddy-highlight); opacity: .45; }
-.skill-buddy .buddy-ear, .skill-buddy .buddy-antenna { background: var(--buddy-dark); }
-.skill-buddy .buddy-arm { background: var(--buddy-limb); border-color: var(--buddy-limb-edge); }
-.skill-buddy .buddy-foot { background: var(--buddy-main); border-color: var(--buddy-edge); border-bottom-color: var(--buddy-dark); }
-.skill-buddy .buddy-badge { color: var(--buddy-face); }
-.skill-buddy .buddy-shadow { background: #9bbd832d; }
+.skill-buddy .buddy-cheek { background: #fda4af; opacity: .85; }
+.skill-buddy .buddy-arm { background: linear-gradient(180deg, var(--buddy-highlight) 0%, var(--buddy-main) 100%); border-color: var(--buddy-edge); }
+.skill-buddy .buddy-foot { background: linear-gradient(180deg, var(--buddy-main) 0%, var(--buddy-dark) 100%); border-color: var(--buddy-edge); border-bottom-color: var(--buddy-dark); }
+.skill-buddy .buddy-badge { color: var(--buddy-dark); }
+.skill-buddy .buddy-shadow { background: radial-gradient(ellipse at center, rgba(2, 132, 199, 0.3) 0%, rgba(2, 132, 199, 0) 70%); }
 .buddy-star-pin, .buddy-scarf { display: none; position: absolute; }
-.buddy-star-pin { bottom: 17px; right: 14px; width: 24px; height: 24px; background: #ffe08c; border: 2px solid #dba746; border-bottom-width: 3px; border-radius: 8px; place-items: center; color: #b77a26; }
+.buddy-star-pin { bottom: 15px; right: 14px; width: 26px; height: 26px; background: #fde047; border: 2px solid #d97706; border-radius: 50%; place-items: center; color: #b45309; box-shadow: 0 0 8px rgba(253, 224, 71, 0.6); z-index: 5; }
 .buddy-star-pin .icon { width: 16px; height: 16px; }
-.buddy-scarf { left: 1px; right: 1px; top: 101px; height: 14px; background: #eb8274; border-top: 3px solid #f59b89; border-bottom: 3px solid #cb665d; border-radius: 5px; }
-.buddy-scarf>span { position: absolute; right: 16px; top: 8px; width: 17px; height: 37px; background: #e9796e; border: 2px solid #cb665d; border-top: 0; border-radius: 0 0 4px 4px; transform: rotate(-12deg); }
+.buddy-scarf { left: 14px; right: 14px; top: 104px; height: 16px; background: #38bdf8; border-top: 3px solid #7dd3fc; border-bottom: 3px solid #0284c7; border-radius: 8px; z-index: 5; }
+.buddy-scarf>span { position: absolute; right: 14px; top: 10px; width: 18px; height: 38px; background: #38bdf8; border: 2px solid #0284c7; border-top: 0; border-radius: 0 0 6px 6px; transform: rotate(-12deg); }
 .skill-buddy[data-accessory=star] .buddy-star-pin { display: grid; }
 .skill-buddy[data-accessory=scarf] .buddy-scarf { display: block; }
 .skill-buddy[data-emotion=happy] .buddy-smile, .skill-buddy[data-emotion=excited] .buddy-smile { transform: scale(1.2); }
-.skill-buddy[data-emotion=excited] .buddy-cheek { opacity: .8; }
-.skill-buddy[data-emotion=thinking] .buddy-smile { transform: scaleX(.65) rotate(-10deg); }
-.skill-buddy[data-emotion=curious] .buddy-smile { width: 10px; height: 10px; border: 3px solid var(--buddy-ink); border-radius: 50%; left: calc(50% - 5px); }
-.skill-buddy[data-level="3"] .buddy-antenna>span { box-shadow: inset 2px 2px #ffe08c, 0 0 0 4px #ffe8a955; }
+.skill-buddy[data-emotion=excited] .buddy-cheek { opacity: 1; transform: scale(1.15); }
+.skill-buddy[data-emotion=thinking] .buddy-smile { transform: scaleX(.7) rotate(-10deg); }
+.skill-buddy[data-emotion=curious] .buddy-smile { width: 12px; height: 12px; border: 3px solid var(--buddy-ink); border-radius: 50%; left: calc(50% - 6px); background: #fb7185; }
+.skill-buddy[data-level="3"] .buddy-antenna>span { box-shadow: 0 0 16px #fde047, 0 0 0 4px rgba(253, 224, 71, 0.4); }
 
 .path-first .companion-invite { order: -1; display: flex; position: relative; overflow: hidden; min-height: 162px; padding: 22px; border: 2px solid #d9e9f2; border-bottom-width: 4px; border-radius: 20px; background: #eff8fc; }
 .companion-invite-copy { position: relative; z-index: 1; max-width: 175px; }

@@ -33,8 +33,9 @@
             ? data.accessory : 'none';
         const theme = document.body.dataset.companionTheme || 'ocean';
         let colour = data.colourRevision === 2 && colours.includes(data.colour) ? data.colour : 'sky';
-        if (theme === 'learning-club' && data.theme !== theme && colour === 'sky') colour = 'sunshine';
-        return { version: 1, colourRevision: 2, theme, name: cleanName(data.name) || 'Niko', colour, accessory, stars };
+        const nameVal = cleanName(data.name);
+        const resolvedName = nameVal === 'Niko' || !nameVal ? 'Nimo' : nameVal;
+        return { version: 1, colourRevision: 2, theme, name: resolvedName, colour, accessory, stars };
     }
 
     function load() {

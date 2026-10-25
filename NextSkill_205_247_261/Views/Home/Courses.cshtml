@@ -78,7 +78,7 @@
     else
     {
         <div class="row g-3">
-            @foreach (var item in Model)
+            @foreach (var item in (Model ?? Enumerable.Empty<NextSkill_205_247_261.Models.Course>()))
             {
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="course-card p-3" data-course-id="@item.Id" data-total-lessons="@(item.Lessons?.Count ?? 0)">

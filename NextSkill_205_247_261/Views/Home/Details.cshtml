@@ -1,4 +1,3 @@
-@model NextSkill_205_247_261.Models.Course
 @{
     ViewData["Title"] = Model?.Title ?? "Course details";
 }
@@ -11,17 +10,17 @@
     <div class="card p-4 course-detail">
         <div class="d-flex justify-content-between align-items-start">
             <div>
-                <h2>@Model.Title</h2>
-                <div class="text-muted">@Model.Category · @Model.Level · @Model.Units units · Instructor: @Model.Instructor</div>
+                <h2>@(Model?.Title ?? "Course")</h2>
+                <div class="text-muted">@(Model?.Category) · @(Model?.Level) · @(Model?.Units) units · Instructor: @(Model?.Instructor)</div>
             </div>
-            @if (Model.Featured)
+            @if (Model?.Featured == true)
             {
                 <div class="badge bg-secondary">FEATURED</div>
             }
         </div>
 
         <div class="my-3">
-            <p>@Model.Description</p>
+            <p>@(Model?.Description)</p>
         </div>
 
         <div class="mb-3">
@@ -34,7 +33,7 @@
 
         <div>
             <h5>Lessons</h5>
-            @if (Model.Lessons == null || !Model.Lessons.Any())
+            @if (Model?.Lessons == null || !Model.Lessons.Any())
             {
                 <div class="alert alert-light">No lessons in this course.</div>
             }
@@ -64,7 +63,7 @@
 
 @section Scripts{
     <script>
-        var COURSE_ID = @Model.Id;
+        var COURSE_ID = @(Model?.Id ?? 0);
     </script>
     <script src="~/js/catalog.js"></script>
 }

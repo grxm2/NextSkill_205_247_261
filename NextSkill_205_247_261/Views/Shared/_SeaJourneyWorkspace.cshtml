@@ -5,7 +5,7 @@
 }
 <section class="sea-workspace sea-learning-hub" id="sea-workspace" aria-labelledby="welcome-title">
     <div class="page-container" id="main-content">
-        <div class="home-welcome"><div><p class="welcome-label">ยินดีต้อนรับกลับ, @Model.LearnerName</p><h2 id="welcome-title">การผจญภัยของคุณ<span class="welcome-flower" aria-hidden="true">✳</span></h2></div><button type="button" class="tour-trigger" id="buddy-tour-start" aria-label="ให้คู่หูพาชมหน้าเว็บ">ให้ <span data-buddy-name>Niko</span> พาชม <span class="icon icon-arrow-up" aria-hidden="true"></span></button></div>
+        <div class="home-welcome"><div><p class="welcome-label">ยินดีต้อนรับกลับ, @Model.LearnerName</p><h2 id="welcome-title">การผจญภัยของคุณ<span class="welcome-flower" aria-hidden="true">✳</span></h2></div><button type="button" class="tour-trigger" id="buddy-tour-start" aria-label="ให้คู่หูพาชมหน้าเว็บ">ให้ <span data-buddy-name>Nimo</span> พาชม <span class="icon icon-arrow-up" aria-hidden="true"></span></button></div>
 
         <section class="learning-stats" aria-label="สถิติการเรียนของคุณ">
             <div class="stat-item stat-xp"><span class="stat-icon"><span class="icon icon-lightning" aria-hidden="true"></span></span><div><span>XP สะสม</span><strong>@Model.TotalXp.ToString("N0") <small>XP</small></strong></div></div>
@@ -66,9 +66,9 @@
 
             <aside class="activity-rail" aria-label="กิจกรรมและความก้าวหน้า">
                 <section class="sea-journey-companion sea-glass" aria-labelledby="sea-dock-title">
-                    <div class="section-heading"><h2 id="sea-dock-title">ไปด้วยกันกับ <span data-buddy-name>Niko</span></h2><span class="sea-dock-online" aria-label="คู่หูพร้อมแล้ว"></span></div>
+                    <div class="section-heading"><h2 id="sea-dock-title">ไปด้วยกันกับ <span data-buddy-name>Nimo</span></h2><span class="sea-dock-online" aria-label="คู่หูพร้อมแล้ว"></span></div>
                     <div class="sea-dock-stage"><span class="buddy-slot" data-buddy-anchor="journey" id="sea-journey-buddy"></span><p>ลองด่านสีฟ้า<br />แล้วค่อย ๆ เก่งขึ้น<br />ไปด้วยกันนะ</p></div>
-                    <div class="sea-dock-actions"><button type="button" class="button button-primary sea-dock-practice">ฝึกกับ <span data-buddy-name>Niko</span></button><button type="button" class="niko-style-action" data-open-dialog="companion-dialog" aria-label="เปิดหน้าคู่หูและแต่งตัว Niko"><span class="icon icon-star" aria-hidden="true"></span></button></div>
+                    <div class="sea-dock-actions"><button type="button" class="button button-primary sea-dock-practice">ฝึกกับ <span data-buddy-name>Nimo</span></button><button type="button" class="niko-style-action" data-open-dialog="companion-dialog" aria-label="เปิดหน้าคู่หูและแต่งตัว Nimo"><span class="icon icon-star" aria-hidden="true"></span></button></div>
                 </section>
                 <section class="quests-card surface" id="daily-quests" aria-labelledby="quests-title"><div class="section-heading"><h2 id="quests-title">ภารกิจวันนี้</h2><span class="quest-counter">0 / @Model.Quests.Count</span></div>
                 @foreach (var quest in Model.Quests)
@@ -82,6 +82,6 @@
         </div>
         <partial name="_BuddyGuide" />
         @if (Model.IsProgressPreview)
-        { <p class="sea-journey-note">เส้นทาง คะแนน และรางวัลเป็นข้อมูลตัวอย่าง · แบบฝึกกับ Niko บันทึกไว้ในเบราว์เซอร์นี้</p> }
+        { <p class="sea-journey-note">เส้นทาง คะแนน และรางวัลเป็นข้อมูลตัวอย่าง · แบบฝึกกับ Nimo บันทึกไว้ในเบราว์เซอร์นี้</p> }
     </div>
 </section>

@@ -62,13 +62,23 @@
     function appearance() {
         try {
             const value = JSON.parse(localStorage.getItem('nextskill.companion.v1'));
-            if (value?.version !== 1) return;
+            if (value?.name === 'Niko') {
+                value.name = 'Nimo';
+                try { localStorage.setItem('nextskill.companion.v1', JSON.stringify(value)); } catch {}
+            }
+            if (value?.version !== 1) {
+                document.querySelectorAll('[data-buddy-name]').forEach(node => { node.textContent = 'Nimo'; });
+                return;
+            }
             if (['sprout', 'sky', 'sunshine', 'berry'].includes(value.colour)) robot.dataset.colour = value.colour;
             const stars = Number.isInteger(value.stars) && value.stars >= 0 ? value.stars : 0;
             robot.dataset.accessory = value.accessory === 'scarf' && stars >= 3 ? 'scarf' : value.accessory === 'star' && stars >= 1 ? 'star' : 'none';
             robot.dataset.level = String(stars >= 6 ? 3 : stars >= 3 ? 2 : 1);
-            if (typeof value.name === 'string') document.querySelectorAll('[data-buddy-name]').forEach(node => { node.textContent = value.name.replace(/[\p{Cc}\p{Cf}]/gu, '').trim().slice(0, 18) || 'Niko'; });
-        } catch {}
+            const buddyName = typeof value.name === 'string' && value.name.trim() && value.name !== 'Niko' ? value.name.replace(/[\p{Cc}\p{Cf}]/gu, '').trim().slice(0, 18) : 'Nimo';
+            document.querySelectorAll('[data-buddy-name]').forEach(node => { node.textContent = buddyName; });
+        } catch {
+            document.querySelectorAll('[data-buddy-name]').forEach(node => { node.textContent = 'Nimo'; });
+        }
     }
 
     handle.addEventListener('click', () => {
