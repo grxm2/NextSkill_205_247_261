@@ -11,14 +11,38 @@
     let paused = guide.dataset.motion === 'paused';
     let suspended = false;
     const harborStop = .62;
-    const captions = ['พร้อมแล้ว ค่อย ๆ เลื่อนเพื่อออกจากฝั่ง', 'ออกจากฝั่งแล้ว มีทักษะใหม่รออยู่ข้างหน้า', 'เลือกคอร์สก่อน แล้วเราจะผ่านเมฆไปเกาะบทเรียนด้วยกัน'];
+    const captions = [
+        'พร้อมแล้ว ค่อย ๆ เลื่อนเพื่อออกจากฝั่ง',
+        'ฮึบ! ฮึบ! กำลังพายเรือพาไปที่ท่าเรือคอร์สนะ ⛵',
+        'ถึงท่าเรือแล้ว! เลือกคอร์สก่อน แล้วเราจะผ่านเมฆไปเกาะบทเรียนด้วยกัน ✨'
+    ];
     const locations = ['01 / เกาะเริ่มต้น', '02 / ทะเลเปิด', '03 / เลือกคอร์สก่อนเข้าด่าน'];
+    let rowingTimer = null;
+    function triggerScrollRowing() {
+        if (!scene) return;
+        scene.classList.add('ow-actively-scrolling');
+        clearTimeout(rowingTimer);
+        rowingTimer = setTimeout(() => {
+            scene?.classList.remove('ow-actively-scrolling');
+        }, 450);
+    }
     function announce(progress) {
         if (progress > .025) window.NextSkillVoyage?.board();
         document.getElementById('ocean-progress').value = progress / harborStop;
         const stage = progress < .16 ? 0 : progress < .48 ? 1 : 2;
         scene.dataset.stage = stage;
         scene.querySelector(".ow-harbor").inert = stage !== 2;
+
+        // Manage rowing while traveling vs docked at course harbor
+        if (progress > 0.025 && progress < (harborStop - 0.04)) {
+            scene.dataset.voyage = 'rowing';
+            triggerScrollRowing();
+        } else if (stage === 2) {
+            scene.dataset.voyage = 'docked';
+        } else if (stage === 0) {
+            scene.dataset.voyage = 'shore';
+        }
+
         if (stage === lastStage) return;
         lastStage = stage;
         document.getElementById('ocean-caption').textContent = captions[stage];
@@ -90,7 +114,10 @@
             event.preventDefault(); event.stopImmediatePropagation(); go(link.hash==='#journey-world'?.78:link.hash==='#course-harbor'?.62:0,event.detail>0);
         }
     },true);
-    ['wheel','touchstart','pointerdown'].forEach(type=>window.addEventListener(type,()=>travelScroll?.kill(),{passive:true}));
+    ['wheel','touchstart','pointerdown'].forEach(type=>window.addEventListener(type,()=>{
+        travelScroll?.kill();
+        if (scene && scene.dataset.stage !== '0') triggerScrollRowing();
+    },{passive:true}));
     window.addEventListener('keydown',event=>{if(['Escape','ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key))travelScroll?.kill();});
     const observer = new MutationObserver(() => { paused = guide.dataset.motion === 'paused'; syncIdle(); });
     observer.observe(guide,{attributes:true,attributeFilter:['data-motion']});

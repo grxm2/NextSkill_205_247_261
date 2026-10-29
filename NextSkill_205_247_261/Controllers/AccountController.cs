@@ -31,7 +31,11 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
     private IActionResult LoginPage(string role, LoginForm form)
     {
         if (User.Identity?.IsAuthenticated == true)
+        {
+            if (User.IsInRole("Admin") || role == "Admin")
+                return RedirectToAction(nameof(AdminDashboard));
             return ContinueLearning(form.ReturnUrl);
+        }
         form.ReturnUrl = SafeReturnUrl(form.ReturnUrl);
         ViewData["Role"] = role;
         return View("Login", form);
@@ -68,16 +72,40 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
         {
             try
             {
+                var actualRole = role;
                 var account = await store.AuthenticateAsync(role, form.Email, form.Password);
+                if (account is null && role == "User")
+                {
+                    account = await store.AuthenticateAsync("Admin", form.Email, form.Password);
+                    if (account is not null) actualRole = "Admin";
+                }
+
                 if (account is not null)
                 {
                     var identity = new ClaimsIdentity(new[] {
                         new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()),
                         new Claim(ClaimTypes.Name, account.FullName),
-                        new Claim(ClaimTypes.Email, account.Email), new Claim(ClaimTypes.Role, role)
+                        new Claim(ClaimTypes.Email, account.Email),
+                        new Claim(ClaimTypes.Role, actualRole)
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(identity), new AuthenticationProperties { IsPersistent = form.RememberMe });
+
+                    if (actualRole == "Admin")
+                    {
+                        var local = SafeReturnUrl(form.ReturnUrl);
+                        if (local is not null &&
+                            !string.Equals(local, "/", StringComparison.OrdinalIgnoreCase) &&
+                            !string.Equals(local, "/Home", StringComparison.OrdinalIgnoreCase) &&
+                            !string.Equals(local, "/Home/Index", StringComparison.OrdinalIgnoreCase) &&
+                            !string.Equals(local, "/Account/Dashboard", StringComparison.OrdinalIgnoreCase) &&
+                            !local.StartsWith("/Learning", StringComparison.OrdinalIgnoreCase))
+                        {
+                            return LocalRedirect(local);
+                        }
+                        return RedirectToAction(nameof(AdminDashboard));
+                    }
+
                     return ContinueLearning(form.ReturnUrl);
                 }
                 ModelState.AddModelError("", "Email or password is incorrect, or the account is temporarily locked. After 5 failed attempts, wait 15 minutes.");
@@ -101,17 +129,91 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
     private IActionResult ContinueLearning(string? returnUrl)
         => SafeReturnUrl(returnUrl) is string local ? LocalRedirect(local) : RedirectToAction("Entry", "Learning");
 
-    [Authorize(Roles = "User")]
-    public IActionResult Dashboard() => View("Dashboard", new DashboardModel(User.Identity!.Name!,
-        User.FindFirstValue(ClaimTypes.Email)!, "User", 0, 0));
+    [Authorize]
+    public IActionResult Dashboard()
+    {
+        if (User.IsInRole("Admin"))
+            return RedirectToAction(nameof(AdminDashboard));
+
+        return View("Dashboard", new DashboardModel(User.Identity!.Name!,
+            User.FindFirstValue(ClaimTypes.Email)!, "User", 0, 0));
+    }
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AdminDashboard()
     {
         var model = await store.AdminOverviewAsync();
         model.FullName = User.Identity!.Name!;
         model.Email = User.FindFirstValue(ClaimTypes.Email)!;
+        model.Courses = AdminContentStore.GetAllCourses();
+        model.Questions = AdminContentStore.GetAllQuestions();
         return View("AdminDashboard", model);
     }
+
+    [HttpPost, Authorize(Roles = "Admin")]
+    public IActionResult AdminSaveCourse([FromBody] Course form)
+    {
+        if (form is null || string.IsNullOrWhiteSpace(form.Title))
+            return BadRequest(new { success = false, message = "กรุณาระบุชื่อคอร์สเรียน" });
+
+        var saved = AdminContentStore.SaveCourse(form);
+        return Json(new { success = true, course = saved });
+    }
+
+    [HttpPost, Authorize(Roles = "Admin")]
+    public IActionResult AdminDeleteCourse([FromBody] CourseDeleteRequest req)
+    {
+        var success = AdminContentStore.DeleteCourse(req.Id);
+        return Json(new { success, id = req.Id });
+    }
+
+    [HttpPost, Authorize(Roles = "Admin")]
+    public async Task<IActionResult> AdminUploadCourses([FromForm] IFormFile? file, [FromForm] string? jsonText)
+    {
+        string? json = jsonText;
+        if (file is not null && file.Length > 0)
+        {
+            using var reader = new StreamReader(file.OpenReadStream());
+            json = await reader.ReadToEndAsync();
+        }
+
+        if (string.IsNullOrWhiteSpace(json))
+            return BadRequest(new { success = false, message = "ไม่พบข้อมูลไฟล์คอร์สที่ต้องการอัปโหลด" });
+
+        try
+        {
+            int imported = AdminContentStore.ImportCourses(json);
+            return Json(new { success = true, count = imported, message = $"นำเข้าคอร์สสำเร็จ {imported} รายการ" });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { success = false, message = "รูปแบบไฟล์ JSON ไม่ถูกต้อง: " + ex.Message });
+        }
+    }
+
+    [HttpPost, Authorize(Roles = "Admin")]
+    public IActionResult AdminSaveQuestion([FromBody] AdminQuizQuestion form)
+    {
+        if (form is null || string.IsNullOrWhiteSpace(form.Prompt))
+            return BadRequest(new { success = false, message = "กรุณาระบุเนื้อหาคำถาม" });
+
+        var saved = AdminContentStore.SaveQuestion(form);
+        return Json(new { success = true, question = saved });
+    }
+
+    [HttpPost, Authorize(Roles = "Admin")]
+    public IActionResult AdminDeleteQuestion([FromBody] QuestionDeleteRequest req)
+    {
+        var success = AdminContentStore.DeleteQuestion(req.Id);
+        return Json(new { success, id = req.Id });
+    }
+
+    [HttpGet, Authorize(Roles = "Admin")]
+    public IActionResult AdminGetQuestions(int? courseId)
+    {
+        var questions = AdminContentStore.GetAllQuestions(courseId);
+        return Json(questions);
+    }
+
     [HttpPost, Authorize]
     public async Task<IActionResult> Logout()
     {
@@ -121,3 +223,7 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
     [HttpGet] public IActionResult AccessDenied() { Response.StatusCode = 403; return View(); }
     [HttpGet] public IActionResult Terms() => View();
 }
+
+public record CourseDeleteRequest(int Id);
+public record QuestionDeleteRequest(string Id);
+

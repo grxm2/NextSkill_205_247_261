@@ -1,31 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewData["Title"] | NextSkill</title>
+    <title>@ViewData["Title"] — NextSkill</title>
+    <link rel="icon" href="~/home-favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="~/fonts/Prompt-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="~/fonts/Prompt-SemiBold.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="stylesheet" href="~/css/account.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/account-game.css" asp-append-version="true" />
 </head>
-<body>
+<body class="nimo-account-theme">
     <header class="site-header">
-        <a class="wordmark" asp-controller="Home" asp-action="Index">NEXTSKILL</a>
-        <nav aria-label="Main navigation">
+        <a class="account-brand" asp-controller="Home" asp-action="Index" aria-label="NextSkill กลับหน้าแรก">
+            <svg class="brand-symbol" viewBox="0 0 48 48" aria-hidden="true">
+                <rect width="48" height="48" rx="15" fill="#0284c7" />
+                <path d="M12 32V17h6l13 15V17h6v16h-7L18 20v12Z" fill="#fff" />
+                <path d="m28 8 10 1-1 9-4-4-7 7-4-4 8-7Z" fill="#fde047" />
+            </svg>
+            <span class="brand-text">
+                <strong>NextSkill</strong>
+                <small>เก่งขึ้น ในเส้นทางของคุณ</small>
+            </span>
+        </a>
+        <nav aria-label="Main navigation" class="account-nav">
             @if (User.Identity?.IsAuthenticated == true)
             {
-                <a asp-controller="Home" asp-action="Index">Home</a>
-                <a asp-controller="Home" asp-action="Courses">Courses</a>
-                <a asp-controller="Account" asp-action="@(User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard")">My account</a>
-                <form asp-controller="Account" asp-action="Logout" method="post"><button class="nav-button" type="submit">Log out</button></form>
+                <a asp-controller="Home" asp-action="Index">หน้าแรก</a>
+                <a asp-controller="Home" asp-action="Courses">คอร์สเรียน</a>
+                <a asp-controller="Account" asp-action="@(User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard")">บัญชีของฉัน</a>
+                <form asp-controller="Account" asp-action="Logout" method="post"><button class="nav-button" type="submit">ออกจากระบบ</button></form>
             }
             else
             {
-                <a asp-controller="Account" asp-action="Login">Log in</a>
+                <a asp-controller="Home" asp-action="Index">หน้าแรก</a>
+                <a asp-controller="Home" asp-action="Courses">คอร์สเรียน</a>
+                <a asp-controller="Account" asp-action="Login" class="nav-login-link active">เข้าสู่ระบบ ↗</a>
             }
         </nav>
     </header>
-    <main>@RenderBody()</main>
-    <footer class="site-footer">NEXTSKILL / Upskill &amp; Reskill</footer>
+    <main class="account-main">@RenderBody()</main>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand-copy">
+                <span>NextSkill · Upskill &amp; Reskill</span>
+                <span class="footer-tagline">เก่งขึ้นทีละก้าว ไปด้วยกันกับ Nimo 💙</span>
+            </div>
+            <div class="footer-links">
+                <a asp-controller="Home" asp-action="Privacy">ความเป็นส่วนตัว</a>
+                <span aria-hidden="true">·</span>
+                <a asp-controller="Account" asp-action="Terms">เงื่อนไขการใช้งาน</a>
+            </div>
+        </div>
+    </footer>
     <script src="~/js/account.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
