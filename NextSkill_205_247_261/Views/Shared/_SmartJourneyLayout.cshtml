@@ -59,6 +59,7 @@
     <script src="~/js/island-details.js" asp-append-version="true" defer></script>
     <script src="~/js/archipelago.js" asp-append-version="true" defer></script>
     <script src="~/js/smart-journey.js" asp-append-version="true" defer></script>
+@if (ViewData["JourneyMode"]?.ToString() == "learn") { <script src="~/js/island-water-motion.js" asp-append-version="true" defer></script><script src="~/js/underwater-journey.js" asp-append-version="true" defer></script> }
 @if (ViewData["JourneyMode"]?.ToString() == "home") {
 <script src="~/lib/gsap/gsap.min.js" defer></script><script src="~/lib/gsap/ScrollTrigger.min.js" defer></script><script src="~/js/ocean-world.js" asp-append-version="true" defer></script>
 <script src="~/js/ocean-life.js" asp-append-version="true" defer></script>

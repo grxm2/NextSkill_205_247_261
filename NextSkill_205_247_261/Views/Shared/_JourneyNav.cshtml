@@ -11,6 +11,6 @@
             <span class="sj-nav-xp" hidden><span class="icon icon-lightning" aria-hidden="true"></span><strong data-state-xp>0</strong> XP</span>
             <details class="sj-profile"><summary aria-label="เปิดเมนูบัญชี"><span>@((User.Identity?.Name ?? "N").FirstOrDefault())</span><span class="sj-profile-name">@(User.Identity?.Name ?? "บัญชีของฉัน")</span></summary><div><a asp-controller="Account" asp-action="@(User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard")">โปรไฟล์และบัญชี</a><button type="button" data-open-dialog="companion-dialog">คู่หูของฉัน</button><form asp-controller="Account" asp-action="Logout" method="post"><button type="submit">ออกจากระบบ</button></form></div></details>
         }
-        else { <a class="sj-login" asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Learning/Entry">เข้าสู่ระบบ <span aria-hidden="true">↗</span></a> }
+        else if (learning) { <a class="sj-login" asp-controller="Account" asp-action="Register">สมัครเพื่อบันทึกความคืบหน้า</a> } else { <a class="sj-login" asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Learning/Entry">เข้าสู่ระบบ</a> }
     </div>
 </div></header>

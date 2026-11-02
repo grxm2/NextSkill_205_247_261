@@ -79,7 +79,7 @@
             || course.lessons.find(item => item.status === 'current') || course.lessons.at(-1);
     }
     function islandArt(id) {
-        return `/images/journey/${id === 2 ? 'rocky-island' : id === 3 ? 'meeting-island' : id >= 4 ? 'presentation-island' : 'destination-island-detailed'}.svg`;
+        return id === 1 ? '/images/journey/learning-island-reference-v2.png' : id === 2 ? '/images/journey/learning-island-camp-seamount-v1.png' : '/images/journey/learning-island-temple-seamount-v1.png';
     }
     function setState(value) {
         state = value;
@@ -93,24 +93,26 @@
         const course = viewedCourse();
         if (!course) return;
         const current = targetLesson(course);
+        const hasProgress = course.completedLessons.length > 0;
+        const hasHistory = state.courses.some(item => item.completedLessons.length > 0);
         $('#current-course-title').textContent = course.title;
         $('#current-island-number').textContent = `เกาะ ${course.currentIslandId} / ${course.totalLessons}`;
         $('#current-island-title').textContent = course.isComplete ? 'ครบทุกเกาะแล้ว เก่งขึ้นอีกขั้น!' : current.title;
         $('.sj-island-scene>img').src = islandArt(course.currentIslandId);
         $('#current-island-description').textContent = course.isComplete
             ? 'ทบทวนบทเรียนที่อยากฝึกเพิ่ม หรือเปิดตู้เลือกเส้นทางใหม่ได้ทุกเมื่อ'
-            : course.hasStarted ? 'บทเรียนที่ค้างไว้พร้อมแล้ว เรียนต่อได้เลย ไม่ต้องเริ่มการเดินทางใหม่'
-                : course.description;
-        $('#learner-greeting').textContent = `${course.hasStarted ? 'ยินดีต้อนรับกลับ' : 'พร้อมเริ่มเส้นทางใหม่ไหม'}, ${boot?.learnerName || 'ผู้เรียน'}`;
+            : hasProgress ? 'บทเรียนที่ค้างไว้พร้อมแล้ว เรียนต่อได้เลย ไม่ต้องเริ่มการเดินทางใหม่'
+                : 'พร้อมเริ่มด่านแรกแล้ว';
+        $('#learner-greeting').textContent = `${hasHistory ? 'กลับมาแล้ว' : 'ยินดีต้อนรับ'}, ${boot?.learnerName || 'ผู้เรียน'}`;
         $('#current-lesson-minutes').textContent = `${current.minutes} นาที · มีแบบฝึกท้ายบท`;
         $('#current-lesson-xp').textContent = course.isComplete ? 'ทบทวนได้ ไม่เพิ่ม XP ซ้ำ' : `ผ่านบทเรียน รับ ${current.xp} XP`;
-        $('#resume-learning').replaceChildren(document.createTextNode(course.isComplete ? 'ทบทวนบทเรียน' : course.hasStarted ? 'เรียนต่อ' : 'เริ่มเรียนเกาะแรก'), node('span', '', '→'));
+        $('#resume-learning').replaceChildren(document.createTextNode(course.isComplete ? 'ทบทวนบทเรียน' : hasProgress ? 'เรียนต่อ' : 'เริ่มเรียน'), node('span', '', '→'));
         $('#course-progress-caption').textContent = `สำเร็จ ${course.completedLessons.length} จาก ${course.totalLessons} เกาะ`;
         $('#course-progress-value').textContent = `${course.progress}%`;
         $('#course-progress').value = course.completedLessons.length;
         $('#course-progress').max = course.totalLessons;
         $('#island-status-tag').replaceChildren(node('i'), document.createTextNode(course.isComplete ? 'สำรวจครบทุกเกาะแล้ว' : `เกาะ ${course.currentIslandId} · ${current.islandName}`));
-        $('#niko-learning-message').textContent = course.isComplete ? 'ทำได้แล้ว! จะพักหรือไปเส้นทางใหม่ ฉันไปด้วยนะ' : course.hasStarted ? 'ฉันจำเกาะเดิมได้ พร้อมเมื่อไรก็ไปต่อกันนะ' : 'เริ่มจากบทสั้น ๆ แล้วค่อยไปเกาะถัดไปด้วยกัน';
+        $('#niko-learning-message').textContent = course.isComplete ? 'ทำได้แล้ว! จะพักหรือไปเส้นทางใหม่ ฉันไปด้วยนะ' : hasProgress ? 'ฉันจำเกาะเดิมได้ พร้อมเมื่อไรก็ไปต่อกันนะ' : 'เริ่มจากบทสั้น ๆ แล้วค่อยไปเกาะถัดไปด้วยกัน';
         $('#achievement-count').textContent = number(state.achievements.length);
         const achievementNames = { 'first-lesson': 'สำเร็จบทเรียนแรก', 'course-13': 'จบเส้นทางอังกฤษเพื่อการทำงาน', 'course-1': 'จบเส้นทาง UX Research', 'course-5': 'จบเส้นทาง JavaScript' };
         $('#achievement-description').textContent = state.achievements.length ? state.achievements.map(id => achievementNames[id] || 'ความสำเร็จใหม่').join(' · ') : 'ผ่านบทเรียนแรก เพื่อรับความสำเร็จแรกของคุณ';
@@ -127,10 +129,10 @@
             const button = node('button', `sj-lesson-island is-${item.status}`);
             button.type = 'button'; button.dataset.lessonId = item.id;
             button.disabled = item.status === 'locked';
-            button.setAttribute('aria-label', `เกาะ ${item.id}: ${item.title} — ${item.status === 'locked' ? 'ยังไม่ปลดล็อก' : item.status === 'completed' ? 'สำเร็จแล้ว กดทบทวน' : 'กดเริ่มเรียน'}`);
+            button.setAttribute('aria-label', `เกาะ ${item.id}: ${item.title} — ${item.status === 'locked' ? 'ยังไม่ปลดล็อก' : item.status === 'completed' ? 'สำเร็จแล้ว กดทบทวน' : 'ดูรายละเอียดด่านปัจจุบัน'}`);
             if (item.status === 'current') button.setAttribute('aria-current', 'step');
-            const art = node('img'); art.src = islandArt(item.id); art.alt = ''; art.width = 640; art.height = 440;
-            button.append(node('span', 'sj-island-index', String(item.id).padStart(2, '0')), art, node('h3', '', item.title), node('span', 'sj-island-status', item.status === 'locked' ? '🔒 เรียนด่านก่อนหน้าเพื่อเปิดเกาะ' : item.status === 'completed' ? '✓ สำเร็จแล้ว · ทบทวน' : 'เริ่มเกาะนี้ →'));
+            const art = node('img'); art.src = islandArt(item.id); art.alt = ''; art.width = 1448; art.height = 1086;
+            button.append(node('span', 'sj-island-index', String(item.id).padStart(2, '0')), art, node('h3', '', item.title), node('span', 'sj-island-status', item.status === 'locked' ? '🔒 เรียนด่านก่อนหน้าเพื่อเปิดเกาะ' : item.status === 'completed' ? '✓ สำเร็จแล้ว · ทบทวน' : 'ดูรายละเอียดด่าน'));
             button.addEventListener('click', () => guarded(() => window.NextSkillIslandDetails ? window.NextSkillIslandDetails.show(item, course.courseId, () => openLesson(course.courseId, item.id)) : openLesson(course.courseId, item.id)));
             return button;
         }));
@@ -505,7 +507,7 @@
     $('#next-island').addEventListener('click', async () => { const destination=nextLessonId; if (!destination) return; closeLesson(); if(window.NextSkillArchipelago) await window.NextSkillArchipelago.sail(destination); else openLesson(courseId,destination); });
     $('#niko-practice-start').addEventListener('click', () => guarded(resumeLesson));
     $('#buddy-tour-start').addEventListener('click', () => guarded(() => openDialog($('#journey-help-dialog'))));
-    $('#locate-current')?.addEventListener('click', event => (window.NextSkillIslandDetails?.reset(), ($('#lesson-route .is-current') || $('#lesson-route')).scrollIntoView({ behavior: event.detail && motionAllowed() ? 'smooth' : 'instant', block: 'center' })));
+    $('#locate-current')?.addEventListener('click', event => { window.NextSkillIslandDetails?.reset(); const target = $('#lesson-route .is-current'); if (target && window.NextSkillUnderwater) window.NextSkillUnderwater.goTo(target.dataset.lessonId, !!event.detail && motionAllowed()); else (target || $('#lesson-route')).scrollIntoView({ behavior: event.detail && motionAllowed() ? 'smooth' : 'instant', block: 'center' }); });
     document.addEventListener('click', event => {
         const link = event.target.closest('a[href]');
         if (!link || event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || link.target === '_blank' || link.hasAttribute('download')) return;
