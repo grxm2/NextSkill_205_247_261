@@ -43,7 +43,10 @@
         idle(robot);
     }
     function tracks(pose) {
-        if (pose === 'read' || pose === 'sleep' || pose === 'land') return ['none', 'none'];
+        if (pose === 'read' || pose === 'sleep') return ['none', 'none'];
+        if (pose === 'land') return ['scale(1.04,.96)', 'scale(.99,1.01)', 'none'];
+        if (pose === 'wave') return ['none', 'rotate(-5deg)', 'rotate(4deg)', 'rotate(-2deg)', 'none'];
+        if (pose === 'cheer') return ['none', 'translateY(-5px) rotate(3deg)', 'none'];
         if (['celebrate', 'jump', 'proud'].includes(pose)) return [
             { transform: 'none', offset: 0 },
             { transform: 'scale(1.02,.98)', offset: 1 / 6 },

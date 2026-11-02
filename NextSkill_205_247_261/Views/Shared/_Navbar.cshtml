@@ -1,0 +1,44 @@
+@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    var action = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    var home = controller.Equals("Home", StringComparison.OrdinalIgnoreCase) && action.Equals("Index", StringComparison.OrdinalIgnoreCase);
+    var catalog = controller.Equals("Courses", StringComparison.OrdinalIgnoreCase) || controller.Equals("Home", StringComparison.OrdinalIgnoreCase) && (action.Equals("Courses", StringComparison.OrdinalIgnoreCase) || action.Equals("Details", StringComparison.OrdinalIgnoreCase));
+    var learning = controller.Equals("Learning", StringComparison.OrdinalIgnoreCase);
+    var authenticated = User.Identity?.IsAuthenticated == true;
+}
+<header class="ns-navbar sj-header" data-navbar>
+    <div class="ns-navbar__inner site-nav__inner">
+        <a class="ns-navbar__brand" asp-controller="Home" asp-action="Index" aria-label="NextSkill กลับหน้าแรก">
+            <img src="~/images/nextskill-logo-light.svg" asp-append-version="true" alt="" width="32" height="32" />
+            <span>NextSkill</span><small>เก่งขึ้น ในเส้นทางของคุณ</small>
+        </a>
+        <button class="ns-navbar__toggle" type="button" aria-expanded="false" aria-controls="nextskill-main-menu" aria-label="เปิดเมนูหลัก" data-navbar-toggle hidden><span aria-hidden="true"></span></button>
+        <nav class="ns-navbar__menu" id="nextskill-main-menu" aria-label="เมนูหลัก">
+            <a class="ns-navbar__link @(home ? "glass" : null)" asp-controller="Home" asp-action="Index" aria-current="@(home ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--home" aria-hidden="true"></span>หน้าแรก</a>
+            <a class="ns-navbar__link @(catalog ? "glass" : null)" asp-controller="Home" asp-action="Courses" aria-current="@(catalog ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--book" aria-hidden="true"></span>คอร์สเรียน</a>
+            <a class="ns-navbar__link @(learning ? "glass" : null)" asp-controller="Learning" asp-action="Island" aria-current="@(learning ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--boat" aria-hidden="true"></span>เกาะของฉัน</a>
+        </nav>
+        <div class="ns-navbar__account">
+            @if (authenticated)
+            {
+                <div class="dropdown ns-navbar__profile">
+                    <button class="ns-navbar__avatar" type="button" id="nextskill-profile-menu" data-bs-toggle="dropdown" aria-expanded="false" aria-label="เปิดเมนูบัญชี">
+                        <img src="~/images/nimo-learning.png" asp-append-version="true" width="44" height="44" alt="" /><span aria-hidden="true">⌄</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end ns-navbar__dropdown" aria-labelledby="nextskill-profile-menu">
+                        <li><a class="dropdown-item" asp-controller="Account" asp-action="@(User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard")">โปรไฟล์</a></li>
+                        <li><form asp-controller="Account" asp-action="Logout" method="post"><button class="dropdown-item" type="submit">ออกจากระบบ</button></form></li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <a class="ns-navbar__login glass" asp-controller="Account" asp-action="Login">เข้าสู่ระบบ</a>
+            }
+        </div>
+    </div>
+    <svg class="ns-navbar__wave" viewBox="0 0 1440 18" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path class="ns-navbar__wave-fill" d="M0 0V10C60 4 60 4 180 10S370 4 500 10S680 16 810 10S1010 16 1130 10S1320 16 1440 10V0Z" />
+        <path d="M0 10C60 4 60 4 180 10S370 4 500 10S680 16 810 10S1010 16 1130 10S1320 16 1440 10" fill="none" stroke="white" stroke-opacity=".8" stroke-width="2" vector-effect="non-scaling-stroke" />
+    </svg>
+</header>

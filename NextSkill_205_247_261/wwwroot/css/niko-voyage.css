@@ -102,3 +102,11 @@
 .ow-boat-idle,.archipelago-boat,.voyage-cloud-boat,.voyage-arrival-boat{background:url('/images/journey/rowing-back.svg') center/100% 100% no-repeat;isolation:isolate}
 .ow-boat-idle .ow-boat-anchor,.archipelago-boat .voyage-seat,.voyage-cloud-boat .voyage-seat,.voyage-arrival-boat .voyage-seat{top:auto!important;bottom:38%;z-index:1}
 .voyage-hull{display:block}
+
+/* Slightly larger on the home shore and in the same boat, preserving the feet position. */
+.ocean-home .ow-island-mascot{width:112px;height:129px;left:calc(39% - 6px);top:calc(39% - 14px)}
+.ocean-home .ow-boat-anchor{width:112px;height:129px;left:calc(48% - 56px)}
+@media(max-width:700px){
+ .ocean-home .ow-island-mascot{width:86px;height:99px;left:calc(38% - 4.5px);top:calc(33% - 10px)}
+ .ocean-home .ow-boat-anchor{width:86px;height:99px;left:calc(48% - 43px)}
+}
