@@ -4,7 +4,7 @@
  const scene=document.querySelector('.ow-scene');
  const shore=document.querySelector('.ow-island-mascot');
  const seat=document.querySelector('.ow-boat-anchor');
- let boarded=false, boarding, jump, flight, arrivalBoat;
+ let boarded=false, boarding, jump, flight, arrivalBoat, generation=0;
  const allowed=()=>!reduce.matches && window.NextSkillAgent?.motionAllowed();
  function select(slot){
   document.querySelectorAll('[data-buddy-home="active"]').forEach(el=>el.removeAttribute('data-buddy-home'));
@@ -19,10 +19,11 @@
   if(boarding)return boarding;
   if(boarded || !shore || !seat)return;
   boarded=true;
+  const run=++generation;
   boarding=(async()=>{
    const from=shore.getBoundingClientRect();select(seat);
    const to=seat.getBoundingClientRect();
-   row(scene);
+   scene.dataset.voyage='boarding';
    if(allowed() && !document.querySelector('dialog[open]')){
     const dx=from.left-to.left,dy=from.top-to.top;
     window.NextSkillBuddyMotion?.play('jump');
@@ -34,10 +35,20 @@
     ],{duration:850,easing:'ease-in-out'});
     await jump.finished.catch(()=>{});
    }
-   window.NextSkillBuddyMotion?.stop(document.querySelector('.skill-buddy'));
-   window.NextSkillBuddyMotion?.express('happy');
+   if(run===generation){
+    if(scene.dataset.voyage!=='docked')row(scene);
+    window.NextSkillBuddyMotion?.stop(document.querySelector('.skill-buddy'));
+    window.NextSkillBuddyMotion?.express('happy');
+   }
   })();
-  return boarding;
+  const current=boarding;
+  current.finally(()=>{if(boarding===current)boarding=null;});
+  return current;
+ }
+ function returnToShore(){
+  if(!shore || !boarded)return;
+  generation++;jump?.cancel();jump=null;boarding=null;boarded=false;
+  scene.dataset.voyage='shore';select(shore);
  }
  function markup(){return '<span class="voyage-seat sj-mascot-anchor buddy-slot" data-buddy-anchor="sailing"></span><img class="voyage-hull" src="/images/journey/rowing-hull.svg" alt=""/><img class="voyage-oar" src="/images/journey/rowing-oar.svg" alt=""/>';}
  function cloudBoat(cloud){
@@ -62,12 +73,14 @@
  function sync(){
   const stopped=!allowed() || (!document.getElementById('journey-cloud-transition')?.open && !!document.querySelector('dialog[open]'));
   document.body.classList.toggle('voyage-paused',stopped);
-  if(stopped){jump?.finish();flight?.finish();}
+  if(stopped){generation++;jump?.cancel();flight?.cancel();}
  }
  const guide=document.querySelector('.map-guide');if(guide)new MutationObserver(sync).observe(guide,{attributes:true,attributeFilter:['data-motion']});
  document.querySelectorAll('dialog').forEach(el=>new MutationObserver(sync).observe(el,{attributes:true,attributeFilter:['open']}));
  document.addEventListener('visibilitychange',sync);reduce.addEventListener('change',sync);
- window.addEventListener('resize',()=>{jump?.finish();});
- window.NextSkillVoyage={board,cloudBoat,descend,finishArrival};
+ window.NextSkillMotion?.subscribe(sync, { element:scene || document.querySelector('.skill-buddy'),kind:'reaction' });
+ window.addEventListener('resize',()=>{generation++;jump?.cancel();flight?.cancel();});
+ window.addEventListener('pagehide',()=>{generation++;jump?.cancel();flight?.cancel();});
+ window.NextSkillVoyage={board,returnToShore,cloudBoat,descend,finishArrival};
  if(shore)select(shore);sync();
 })();

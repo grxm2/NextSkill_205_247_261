@@ -7,5 +7,8 @@ public class CoursesController : Controller
 {
     public IActionResult Index() => RedirectToAction(nameof(Enrollment));
 
-    public IActionResult Enrollment() => View(new CourseEnrollmentViewModel());
+    // The former English for Business overview covered workplace English.
+    // Its current canonical curriculum is English for Work (catalog ID 13).
+    // This GET only opens its description; it never changes the active course.
+    public IActionResult Enrollment() => RedirectToAction("Details", "Home", new { id = 13 });
 }

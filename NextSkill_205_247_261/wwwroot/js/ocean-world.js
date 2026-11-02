@@ -7,51 +7,42 @@
     const guide = document.querySelector('.map-guide');
     const camera = scene.querySelector('.ow-camera');
     const vessel = scene.querySelector('.ow-vessel');
-    let context, timeline, idle, travelScroll, lastStage = -1;
-    let paused = guide.dataset.motion === 'paused';
+    const track = scene.closest('.ow-track');
+    let context, timeline, travelScroll, lastStage = -1;
+    let paused = guide?.dataset.motion === 'paused';
     let suspended = false;
+    let directScroll = false;
+    let boarded = false;
+    const touch = matchMedia('(pointer: coarse)');
+    const scrubDuration = () => touch.matches ? .32 : .48;
     const harborStop = .62;
-    const captions = [
-        'พร้อมแล้ว ค่อย ๆ เลื่อนเพื่อออกจากฝั่ง',
-        'ฮึบ! ฮึบ! กำลังพายเรือพาไปที่ท่าเรือคอร์สนะ ⛵',
-        'ถึงท่าเรือแล้ว! เลือกคอร์สก่อน แล้วเราจะผ่านเมฆไปเกาะบทเรียนด้วยกัน ✨'
-    ];
-    const locations = ['01 / เกาะเริ่มต้น', '02 / ทะเลเปิด', '03 / เลือกคอร์สก่อนเข้าด่าน'];
-    let rowingTimer = null;
-    function triggerScrollRowing() {
-        if (!scene) return;
-        scene.classList.add('ow-actively-scrolling');
-        clearTimeout(rowingTimer);
-        rowingTimer = setTimeout(() => {
-            scene?.classList.remove('ow-actively-scrolling');
-        }, 450);
-    }
     function announce(progress) {
-        if (progress > .025) window.NextSkillVoyage?.board();
-        document.getElementById('ocean-progress').value = progress / harborStop;
+        if (progress > .025 && !boarded) { boarded = true; window.NextSkillVoyage?.board(); }
+        else if (progress <= .025 && boarded) { boarded = false; window.NextSkillVoyage?.returnToShore(); }
         const stage = progress < .16 ? 0 : progress < .48 ? 1 : 2;
-        scene.dataset.stage = stage;
-        scene.querySelector(".ow-harbor").inert = stage !== 2;
-
-        // Manage rowing while traveling vs docked at course harbor
-        if (progress > 0.025 && progress < (harborStop - 0.04)) {
-            scene.dataset.voyage = 'rowing';
-            triggerScrollRowing();
-        } else if (stage === 2) {
-            scene.dataset.voyage = 'docked';
-        } else if (stage === 0) {
-            scene.dataset.voyage = 'shore';
-        }
+        const voyage = progress > .025 && progress < harborStop - .04 ? 'rowing' : stage === 2 ? 'docked' : 'shore';
+        // Keep the standing avatar visible during the jump, even when the user
+        // scrolls manually while Nimo is boarding.
+        if (scene.dataset.voyage !== voyage && (scene.dataset.voyage !== 'boarding' || voyage !== 'rowing')) scene.dataset.voyage = voyage;
 
         if (stage === lastStage) return;
         lastStage = stage;
-        document.getElementById('ocean-caption').textContent = captions[stage];
-        document.getElementById('ocean-location').textContent = locations[stage];
+        scene.dataset.stage = stage;
+        scene.querySelector('.ow-harbor').inert = stage !== 2;
         if (stage === 0) window.NextSkillBuddyMotion?.play('wave', undefined, { motion: !reduced.matches && !paused });
     }
     function destroy() {
-        travelScroll?.kill(); idle?.kill(); context?.revert(); context = null; timeline = null; idle = null;
+        stopTravel(); context?.revert(); context = null; timeline = null;
+        lastStage = -1;
         root.classList.remove('ow-enhanced');
+    }
+    function stopTravel() {
+        if (!travelScroll) return;
+        const travel = travelScroll;
+        travelScroll = null;
+        travel.kill();
+        scene.classList.remove('ow-tour-traveling');
+        timeline?.scrollTrigger?.scrubDuration(paused ? 0 : scrubDuration());
     }
     function build() {
         destroy();
@@ -61,9 +52,14 @@
         root.classList.add('ow-enhanced');
         gsap.registerPlugin(ScrollTrigger);
         context = gsap.context(() => {
-            timeline = gsap.timeline({defaults:{ease:'none'},scrollTrigger:{id:'ocean-master',trigger:scene,start:'top top',end:()=>`+=${Math.max(innerHeight * 2.9, 2000)}`,pin:true,scrub:1,invalidateOnRefresh:true,anticipatePin:1,onUpdate:self=>announce(self.progress * harborStop)}});
-            timeline.to(camera,{x:()=>-innerWidth*.5,duration:.2,ease:'power1.in'},0)
-                .to(camera,{x:()=>-innerWidth*2.2,duration:.42,ease:'power1.inOut'},.2)
+            timeline = gsap.timeline({
+                defaults:{ease:'none'},
+                // Status follows the rendered playhead, including the final scrub frames.
+                onUpdate() { announce(this.progress() * harborStop); },
+                scrollTrigger:{id:'ocean-master',trigger:track || scene,start:'top top',end:()=>`+=${Math.max(scene.clientHeight * 2.9, 2000)}`,scrub:paused ? true : scrubDuration(),invalidateOnRefresh:true}
+            });
+            // One uninterrupted camera track: no stop or acceleration seam at open water.
+            timeline.to(camera,{x:()=>-innerWidth*2.2,duration:harborStop,force3D:true},0)
                 .to('.ow-intro',{x:()=>-innerWidth*.65,autoAlpha:0,duration:.23},0)
                 .to('.ow-distance',{x:()=>-innerWidth*.24,duration:harborStop},0)
                 .to('.ow-clouds',{x:()=>-innerWidth*.5,duration:harborStop},0)
@@ -72,22 +68,30 @@
                 .to('.ow-swell-2',{xPercent:-12,y:-22,duration:harborStop},0)
                 .to('.ow-swell-3',{xPercent:-19,y:15,duration:harborStop},0)
                 .to('.ow-swell-4',{xPercent:-27,y:24,duration:harborStop},0)
-                .to('.ow-seabirds',{x:()=>-innerWidth*.37,y:-25,duration:harborStop},0)
-                .to('.ow-start-land',{rotation:-2,y:35,duration:harborStop},0)
-                .fromTo('.ow-harbor',{scale:.58},{scale:1,duration:.4,ease:'power1.out'},.2)
-                .to(vessel,{x:()=>innerWidth*.05,y:12,duration:.2,ease:'power1.inOut'},0)
-                .to(vessel,{x:()=>-innerWidth*(innerWidth<701?.15:.33),y:()=>innerWidth<701?(innerHeight<741?70:45):30,duration:.42,ease:'power1.inOut'},.2);
-            idle = gsap.to('.ow-boat-idle',{y:-5,rotation:2,duration:2.4,ease:'sine.inOut',repeat:-1,yoyo:true});
+                .to('.ow-seabirds',{x:()=>-innerWidth*.37,y:-18,duration:harborStop},0)
+                .to(vessel,{x:()=>-innerWidth*(innerWidth<701?.15:.33),y:()=>innerWidth<701?(innerHeight<741?70:45):30,duration:harborStop,force3D:true},0);
         }, scene);
-        syncIdle(); ScrollTrigger.refresh(); announce(timeline.scrollTrigger.progress * harborStop);
+        directScroll = paused;
+        syncIdle(); ScrollTrigger.refresh(); announce(timeline.progress() * harborStop);
     }
     function syncIdle() {
-        const stopped = paused || document.hidden || !!document.querySelector('dialog[open]');
+        const state = window.NextSkillMotion?.snapshot({ element: scene, kind: 'ambient' });
+        const stopped = state ? !state.ambientAllowed : paused || document.hidden || !!document.querySelector('dialog[open]');
         scene.classList.toggle('ow-motion-paused', stopped);
-        if (idle) idle.paused(stopped);
+        const trigger = timeline?.scrollTrigger;
+        // Pause removes inertial catch-up while retaining manual scroll/navigation.
+        if (trigger && directScroll !== paused) {
+            directScroll = paused;
+            trigger.scrubDuration(paused ? 0 : scrubDuration());
+        }
+        const scrub = trigger?.getTween();
+        if (stopped) {
+            stopTravel();
+            if (typeof scrub?.pause === 'function') scrub.pause();
+        } else if (typeof scrub?.play === 'function') scrub.play();
     }
     function go(progress, motion = false, tour = false) {
-        travelScroll?.kill();
+        stopTravel();
         // Islands only exist on the saved course route; scrolling Home cannot
         // reveal an unselected preview, including direct map hash links.
         if (progress > harborStop) {
@@ -99,8 +103,13 @@
             const target = trigger.start + (trigger.end-trigger.start)*(progress/harborStop);
             if(tour && motion && !reduced.matches && !paused) {
                 const position = {top:scrollY};
-                travelScroll = gsap.to(position,{top:target,duration:3.2,ease:'power1.inOut',onUpdate:()=>window.scrollTo({top:position.top,behavior:'instant'})});
-            } else window.scrollTo({top:target,behavior:motion && !reduced.matches?'smooth':'instant'});
+                // The tour already eases scroll. A second scrub tween makes the camera
+                // chase it and adds extra work on every frame.
+                trigger.scrubDuration(0);
+                scene.classList.add('ow-tour-traveling');
+                document.dispatchEvent(new CustomEvent('nextskill:ocean-travel-start'));
+                travelScroll = gsap.to(position,{top:target,duration:4.2,ease:'power1.inOut',onUpdate:()=>window.scrollTo({top:position.top,behavior:'instant'}),onComplete:stopTravel});
+            } else window.scrollTo({top:target,behavior:motion && !reduced.matches && !paused?'smooth':'instant'});
         } else {
             const target = progress < .2 ? scene : document.getElementById('course-harbor');
             target.scrollIntoView({behavior:'instant',block:'start'});
@@ -109,31 +118,52 @@
     document.addEventListener('click', async event => {
         const button = event.target.closest('[data-ocean-go]');
         const link = event.target.closest('a[href]');
-        if (button) { event.preventDefault(); if (Number(button.dataset.oceanGo) > 0) await window.NextSkillVoyage?.board(); go(Number(button.dataset.oceanGo),event.detail>0,button.dataset.oceanTour === 'true'); }
+        if (button) {
+            event.preventDefault();
+            // The immediate primary action opens the existing picker. Storytelling
+            // belongs to the separate, explicitly requested boat-tour action.
+            if (button.dataset.oceanTour === 'true') {
+                stopTravel();
+                document.querySelector('[data-smart-action="choose-course"]')?.click();
+                return;
+            }
+            const requested = Number(button.dataset.oceanGo);
+            const tour = requested === .2;
+            if (requested > 0) await window.NextSkillVoyage?.board();
+            go(tour ? harborStop : requested,event.detail>0,tour);
+        }
         else if (link && link.origin===location.origin && ['/Home','/Home/Index'].includes(link.pathname) && ['#journey-world','#course-harbor','#ocean-journey'].includes(link.hash)) {
             event.preventDefault(); event.stopImmediatePropagation(); go(link.hash==='#journey-world'?.78:link.hash==='#course-harbor'?.62:0,event.detail>0);
         }
     },true);
     ['wheel','touchstart','pointerdown'].forEach(type=>window.addEventListener(type,()=>{
-        travelScroll?.kill();
-        if (scene && scene.dataset.stage !== '0') triggerScrollRowing();
+        stopTravel();
     },{passive:true}));
-    window.addEventListener('keydown',event=>{if(['Escape','ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key))travelScroll?.kill();});
-    const observer = new MutationObserver(() => { paused = guide.dataset.motion === 'paused'; syncIdle(); });
-    observer.observe(guide,{attributes:true,attributeFilter:['data-motion']});
+    window.addEventListener('keydown',event=>{if(['Escape','ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key))stopTravel();});
+    const observer = new MutationObserver(() => { paused = guide?.dataset.motion === 'paused'; syncIdle(); });
+    if (guide) observer.observe(guide,{attributes:true,attributeFilter:['data-motion']});
     document.querySelectorAll('dialog').forEach(dialog=>observer.observe(dialog,{attributes:true,attributeFilter:['open']}));
     reduced.addEventListener('change',build);
     document.addEventListener('visibilitychange',syncIdle);
+    window.NextSkillMotion?.subscribe(state => { paused = state.paused; syncIdle(); }, { element: scene, kind: 'ambient' });
     window.addEventListener('pagehide',()=>{suspended=true;destroy();});
     window.addEventListener('pageshow',()=>{if(suspended){suspended=false;build();}});
     document.fonts.ready.then(()=>window.ScrollTrigger?.refresh());
     build();
+    if (scene.querySelector('[data-ocean-life]')?.dataset.development === 'true') {
+        window.NextSkillOceanWorldTest = Object.freeze({ snapshot: () => ({
+            targetProgress:timeline?.scrollTrigger.progress ?? 0,
+            renderedProgress:timeline?.progress() ?? 0,
+            scrubDuration:paused ? 0 : scrubDuration(),
+            stage:lastStage, paused, static:root.classList.contains('ow-static'),
+            ambientAllowed:!scene.classList.contains('ow-motion-paused')
+        }) });
+    }
     if (location.hash==='#journey-world') requestAnimationFrame(()=>go(.78));
     // Selection is saved immediately by the existing course controller. This short
     // departure never delays a click, authentication, or the server request.
     document.addEventListener('click', event=>{
         if (!event.target.closest('[data-select-course]') || reduced.matches || paused || !window.gsap) return;
         window.NextSkillBuddyMotion?.play('wave');
-        gsap.to('.ow-boat-idle',{x:40,duration:.35,ease:'power2.in',repeat:1,yoyo:true,overwrite:'auto'});
     });
 })();

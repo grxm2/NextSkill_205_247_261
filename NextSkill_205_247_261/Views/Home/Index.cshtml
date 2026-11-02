@@ -1,21 +1,21 @@
 @model HomeDashboardViewModel
 @{ Layout = "_SmartJourneyLayout"; ViewData["Title"] = "ออกเดินทางสู่ทักษะใหม่"; ViewData["JourneyMode"] = "home"; }
 <main id="journey-main" class="ocean-home">
+<div class="ow-track">
 <section id="ocean-journey" class="ow-scene" aria-label="เดินทางผ่านโลกทะเลกับ Nimo">
+    <partial name="_OceanLife" />
     <div class="ow-sky" aria-hidden="true"></div>
-    <div class="ow-distance" aria-hidden="true"><img src="~/images/journey/rocky-island.svg" alt="" /><img src="~/images/journey/destination-island.svg" alt="" /></div>
+    <div class="ow-distance" aria-hidden="true"><img src="~/images/journey/distant-coast.svg" asp-append-version="true" width="1200" height="140" alt="" /></div>
     <div class="ow-sea" aria-hidden="true"><div class="ow-sun-path"></div><div class="ow-swell ow-swell-0"><div class="ow-swell-drift"></div></div><div class="ow-swell ow-swell-1"><div class="ow-swell-drift"></div></div><div class="ow-swell ow-swell-2"><div class="ow-swell-drift"></div></div><div class="ow-water-lines"></div></div>
     <div class="ow-near-sea" aria-hidden="true"><div class="ow-swell ow-swell-3"><div class="ow-swell-drift"></div></div><div class="ow-swell ow-swell-4"><div class="ow-swell-drift"></div></div></div>
-    <svg class="ow-seabirds" viewBox="0 0 400 120" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 55q14-13 28 0 14-13 28 0M170 28q10-10 20 0 10-10 20 0M290 80q15-14 30 0 15-14 30 0"/></g></svg>
     <div class="ow-clouds" aria-hidden="true"><span></span><span></span><span></span></div>
     <div class="ow-camera">
-        <figure class="ow-land ow-start-land"><img src="~/images/journey/starting-island.svg" width="760" height="520" alt="เกาะเริ่มต้น มีต้นมะพร้าวและหาดทราย" /><span class="ow-island-mascot sj-mascot-anchor buddy-slot" data-buddy-anchor="shore" data-buddy-home="active"></span><figcaption>ท่าเรือเริ่มต้น</figcaption></figure>
+        <figure class="ow-land ow-start-land"><partial name="_StartingIslandArt" /><span class="ow-island-mascot sj-mascot-anchor buddy-slot" data-buddy-anchor="shore" data-buddy-home="active"></span><figcaption>ท่าเรือเริ่มต้น</figcaption></figure>
         <div class="ow-harbor" id="course-harbor"><div class="ow-dock"><img src="~/images/journey/course-container.svg" width="800" height="560" alt="ตู้คอนเทนเนอร์คลังเส้นทางการเรียน" /><button class="ow-container-button" type="button" data-smart-action="choose-course">เปิดคลังคอร์ส ↗</button></div><div class="ow-harbor-board"><p class="sj-eyebrow">ท่าเรือแห่งทักษะ</p><h2>เลือกเส้นทางที่อยากไป</h2><p>เลือกคอร์สก่อน แล้วผ่านเมฆไปยังเกาะบทเรียนของคุณ</p><div id="harbor-course-list" data-course-grid="featured" class="sj-featured-courses"><p>กำลังเปิดคลังคอร์ส…</p></div><button type="button" class="sj-text-link" data-smart-action="choose-course">ค้นหาคอร์สทั้งหมด ↗</button></div></div>
     </div>
     <div class="ow-vessel" aria-label="Nimo เดินทางบนเรือลำเดียวกัน"><div class="ow-wake" aria-hidden="true"></div><div class="ow-boat-idle"><span class="ow-boat-anchor sj-mascot-anchor buddy-slot" data-buddy-anchor="arrival"></span><img class="ow-boat-art" src="~/images/journey/rowing-hull.svg" width="480" height="280" alt="เรือของ Nimo" /><img class="voyage-oar" src="~/images/journey/rowing-oar.svg" alt="" /></div></div>
-    <div class="ow-intro"><p class="sj-eyebrow">NextSkill · Upskill & Reskill</p><h1>ทักษะใหม่ของคุณ<br /><em>เริ่มที่เกาะนี้</em></h1><p>ฝึกภาษา ออกแบบ และเขียนโค้ด<br />ออกเดินทางไปกับ Nimo ในจังหวะของคุณ</p><div class="ow-intro-actions"><button type="button" class="sj-button" data-ocean-go="0.62" data-ocean-tour="true">เลือกคอร์สทันที →</button><button type="button" class="sj-text-link" data-ocean-go="0.2">ออกเรือไปด้วยกัน ↓</button></div><a id="home-resume" class="sj-home-resume" href="/Learning/Island" hidden><span><small>ยินดีต้อนรับกลับ</small><strong id="home-resume-title">กลับไปเรียนต่อ</strong></span><span>→</span></a></div>
-    <div class="ow-journey-caption" aria-live="off"><span data-buddy-name>Nimo</span><p id="ocean-caption">พร้อมแล้ว ค่อย ๆ เลื่อนเพื่อออกจากฝั่ง</p></div>
-    <nav class="ow-controls" aria-label="จุดหมายในการเดินทาง"><span id="ocean-location">01 / เกาะเริ่มต้น</span><div><button type="button" data-ocean-go="0">เกาะเริ่มต้น</button><button type="button" data-ocean-go="0.62">ท่าเรือคอร์ส</button><button type="button" data-smart-action="choose-course">เลือกคอร์สเพื่อเข้าด่าน ↗</button></div><button type="button" data-smart-action="choose-course" class="ow-skip">ข้าม · เลือกคอร์ส ↗</button><progress id="ocean-progress" max="1" value="0" aria-label="ระยะทางการสำรวจ"></progress></nav>
+    <div class="ow-intro"><p class="sj-eyebrow">NextSkill · Upskill & Reskill</p><h1>ทักษะใหม่ของคุณ<br /><em>เริ่มที่เกาะนี้</em></h1><p>ฝึกภาษา ออกแบบ และเขียนโค้ด<br />ออกเดินทางไปกับ Nimo ในจังหวะของคุณ</p><div class="ow-intro-actions"><button type="button" class="ns-button ns-button--primary" data-ocean-go="0.62" data-ocean-tour="true">เลือกคอร์สทันที →</button><button type="button" class="sj-text-link" data-ocean-go="0.2">ออกเรือไปด้วยกัน ↓</button></div></div>
 </section>
+</div>
 <noscript><p>เลือกคอร์สได้ที่ <a href="/Home/Courses">รายการคอร์สทั้งหมด</a></p></noscript>
 </main>

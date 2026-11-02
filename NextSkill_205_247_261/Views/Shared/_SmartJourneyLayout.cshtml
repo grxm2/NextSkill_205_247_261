@@ -12,6 +12,7 @@
     <title>@ViewData["Title"] — NextSkill</title>
     <link rel="icon" href="~/home-favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="~/fonts/Prompt-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="stylesheet" href="~/css/nextskill-tokens.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/buddy-character.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/companion.css" asp-append-version="true" />
@@ -24,10 +25,17 @@
 <link rel="stylesheet" href="~/css/journey-clouds.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/archipelago.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/learning-workspace.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/niko-voyage.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/nextskill-components.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/lesson-experience.css" asp-append-version="true" />
+@if (ViewData["JourneyMode"]?.ToString() == "home") {
+    <link rel="stylesheet" href="~/css/ocean-life.css" asp-append-version="true" />
+}
 </head>
 <body data-guest-preview="@((JourneyEnvironment.EnvironmentName == "Development" && JourneyConfiguration.GetValue("Learning:GuestPreview", true)).ToString().ToLowerInvariant())" id="nextskill-home" class="smart-journey" data-companion-theme="learning-club" data-journey-mode="@ViewData["JourneyMode"]" data-authenticated="@(User.Identity?.IsAuthenticated == true ? "true" : "false")">
     <a class="skip-link" href="#journey-main">ข้ามไปเนื้อหา</a>
     <partial name="_JourneyNav" />
+    <partial name="_LearningStatus" />
     @RenderBody()
     <footer class="sj-footer"><a asp-controller="Home" asp-action="Index" class="sj-footer-brand">NextSkill<span>ทักษะใหม่ เริ่มจากก้าวที่คุณเลือก</span></a><div><a asp-controller="Home" asp-action="Privacy">ความเป็นส่วนตัว</a><a asp-controller="Account" asp-action="Terms">เงื่อนไขการใช้งาน</a><button type="button" id="sj-motion" aria-pressed="false">พักการเคลื่อนไหว</button></div></footer>
     <div class="map-guide" data-motion="active" hidden><button type="button" id="buddy-motion" hidden>พักการเคลื่อนไหว</button></div>
@@ -41,11 +49,11 @@
     <partial name="_SmartJourneyDialogs" />
     <partial name="_CompanionStudio" />
     <partial name="_FloatingBuddy" />
+    <script src="~/js/motion-state.js" asp-append-version="true" defer></script>
     <script src="~/js/buddy-agent.js" asp-append-version="true" defer></script>
     <script src="~/js/buddy-motion.js" asp-append-version="true" defer></script>
     <script src="~/js/home.js" asp-append-version="true" defer></script>
     <script src="~/js/companion.js" asp-append-version="true" defer></script>
-    <link rel="stylesheet" href="~/css/niko-voyage.css" asp-append-version="true" />
     <script src="~/js/niko-voyage.js" asp-append-version="true" defer></script>
     <script src="~/js/journey-clouds.js" asp-append-version="true" defer></script>
     <script src="~/js/island-details.js" asp-append-version="true" defer></script>
@@ -53,6 +61,7 @@
     <script src="~/js/smart-journey.js" asp-append-version="true" defer></script>
 @if (ViewData["JourneyMode"]?.ToString() == "home") {
 <script src="~/lib/gsap/gsap.min.js" defer></script><script src="~/lib/gsap/ScrollTrigger.min.js" defer></script><script src="~/js/ocean-world.js" asp-append-version="true" defer></script>
+<script src="~/js/ocean-life.js" asp-append-version="true" defer></script>
 }
 </body>
 </html>

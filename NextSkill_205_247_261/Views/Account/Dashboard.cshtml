@@ -1,18 +1,17 @@
 @model DashboardModel
-@{ Layout = "_AccountLayout"; ViewData["Title"] = Model.Role + " dashboard"; }
+@{ Layout = "_AccountLayout"; ViewData["Title"] = "บัญชีของฉัน"; }
 <section class="content-page">
-    <p class="eyebrow">@Model.Role.ToUpperInvariant() ACCOUNT</p>
-    <h1>Welcome, @Model.FullName.</h1>
-    <p>You are successfully logged in.</p>
-    <dl class="account-details"><dt>Email</dt><dd>@Model.Email</dd><dt>Account type</dt><dd>@Model.Role</dd></dl>
+    <p class="eyebrow">NextSkill · พื้นที่ของคุณ</p>
+    <h1>ยินดีต้อนรับ, @Model.FullName</h1>
+    <p>พร้อมเมื่อไร ออกเดินทางต่อจากเกาะเดิมไปกับ Nimo ได้เลย</p>
+    <dl class="account-details"><dt>อีเมล</dt><dd>@Model.Email</dd><dt>ประเภทบัญชี</dt><dd>@(Model.Role == "Admin" ? "ผู้ดูแลระบบ" : "ผู้เรียน")</dd></dl>
     @if (Model.Role == "Admin")
     {
-        <div class="stats"><article><strong>@Model.Users</strong><span>User accounts</span></article><article><strong>@Model.Admins</strong><span>Admin accounts</span></article></div>
-        <p class="muted">User and admin accounts are stored separately.</p>
+        <div class="stats"><article><strong>@Model.Users</strong><span>บัญชีผู้เรียน</span></article><article><strong>@Model.Admins</strong><span>บัญชีผู้ดูแล</span></article></div>
     }
     else
     {
-        <a class="primary-button button-link" asp-controller="Home" asp-action="Courses">Explore courses</a>
+        <div class="ns-button-row"><a class="ns-button ns-button--primary" asp-controller="Learning" asp-action="Entry">กลับไปเรียนต่อ →</a><a class="ns-button ns-button--secondary" asp-controller="Home" asp-action="Courses">สำรวจคอร์ส</a></div>
     }
-    <form asp-action="Logout" method="post"><button class="secondary-button" type="submit">Log out</button></form>
+    <form asp-action="Logout" method="post"><button class="ns-button ns-button--text" type="submit">ออกจากระบบ</button></form>
 </section>

@@ -1,0 +1,31 @@
+/* Explicit .ns-* components avoid overriding Bootstrap or legacy behavioral hooks. */
+.ns-button{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:11px 20px;border:1px solid var(--ns-border);border-radius:var(--ns-radius-control);background:var(--ns-surface);color:var(--ns-ink);font:500 14px/1.5 var(--ns-font);text-decoration:none;text-align:center;cursor:pointer;transition:transform 160ms var(--ns-ease-out),background-color 160ms ease,border-color 160ms ease;touch-action:manipulation}
+.ns-button--primary{min-height:52px;background:var(--ns-primary);border-color:var(--ns-primary);color:#fff;box-shadow:0 3px 0 #07526e}
+.ns-button--secondary{background:#f6fcff;color:var(--ns-primary-hover)}
+.ns-button--text{border-color:transparent;background:transparent;color:var(--ns-primary-hover);box-shadow:none}
+.ns-button--danger{background:var(--ns-danger-surface);border-color:#e6bac1;color:var(--ns-danger)}
+.ns-button--compact{min-height:44px;padding:9px 14px;font-size:13px}
+.ns-button--block{display:flex;width:100%}
+.ns-button--icon{width:44px;min-width:44px;min-height:44px;padding:8px}
+.ns-button:active:not(:disabled):not([aria-disabled=true]){transform:translateY(2px)}
+.ns-button:focus-visible{outline:3px solid var(--ns-primary-hover);outline-offset:4px}
+.ns-button:disabled,.ns-button[aria-disabled=true]{cursor:default;background:#e5eef2;border-color:#cbdce5;color:#526f80;box-shadow:none;transform:none}
+.ns-button[aria-busy=true]{cursor:progress}
+.ns-button svg{width:20px;height:20px;flex-shrink:0}
+@media(hover:hover) and (pointer:fine){.ns-button:hover:not(:disabled):not([aria-disabled=true]){background:#eaf6fc;border-color:#91bdce;color:var(--ns-primary-hover);text-decoration:none}.ns-button--primary:hover:not(:disabled):not([aria-disabled=true]){background:var(--ns-primary-hover);border-color:var(--ns-primary-hover);color:#fff}.ns-button--danger:hover:not(:disabled):not([aria-disabled=true]){background:#ffe4e9;color:var(--ns-danger)}}
+.ns-field{display:grid;gap:8px;min-width:0;color:var(--ns-ink);font:500 14px/1.6 var(--ns-font)}
+.ns-field input,.ns-field select{box-sizing:border-box;width:100%;min-height:48px;padding:10px 14px;border:1px solid #91b7c9;border-radius:12px;background:#fff;color:var(--ns-ink);font:400 16px/1.6 var(--ns-font)}
+.ns-field input:focus-visible,.ns-field select:focus-visible{outline:3px solid #087faa55;outline-offset:2px;border-color:var(--ns-primary)}
+.ns-surface{background:var(--ns-surface);border:1px solid var(--ns-border);border-radius:var(--ns-radius-surface);box-shadow:var(--ns-shadow)}
+.ns-status{padding:14px 18px;border:1px solid var(--ns-border);border-radius:12px;color:var(--ns-ink);background:#f5fbff;font:400 14px/1.8 var(--ns-font)}
+.ns-status--error{color:var(--ns-danger);background:var(--ns-danger-surface);border-color:#e6bac1}
+.ns-status--success{color:var(--ns-success);background:var(--ns-success-surface);border-color:#bddfcf}
+.ns-status:empty{display:none}
+.ns-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid var(--ns-border);border-radius:9px;background:#f2faff;color:var(--ns-primary-hover);font:500 12px/1.6 var(--ns-font)}
+.ns-badge--upcoming{background:var(--ns-warning-surface);color:var(--ns-warning);border-color:#eadca7}
+.ns-button-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){.ns-button{transition:background-color 160ms ease,border-color 160ms ease}.ns-button:active:not(:disabled):not([aria-disabled=true]){transform:none}}
+/* Narrow, temporary shell aliases: account/admin variables consume foundation.
+   Legacy selectors remain isolated until their next page-specific migration. */
+.nimo-account-theme{--nimo-blue:var(--ns-primary);--nimo-blue-dark:var(--ns-primary-hover);--nimo-navy:var(--ns-ink);--ink:var(--ns-ink);--muted:var(--ns-muted)}
+.ns-admin{--nimo-blue:var(--ns-primary);--nimo-blue-hover:var(--ns-primary-hover);--nimo-blue-dark:var(--ns-primary-hover);--nimo-navy:var(--ns-ink);--nimo-muted:var(--ns-muted)}

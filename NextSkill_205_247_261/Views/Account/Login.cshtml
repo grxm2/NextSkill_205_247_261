@@ -46,7 +46,7 @@
                 <label asp-for="Password">รหัสผ่าน (Password) <span>*</span></label>
                 <div class="password-wrap">
                     <input asp-for="Password" autocomplete="current-password" placeholder="กรอกรหัสผ่านของคุณ" required maxlength="128" />
-                    <button class="password-toggle" type="button" data-target="Password" aria-label="แสดงรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
+                    <button class="password-toggle ns-button ns-button--icon ns-button--text" type="button" data-target="Password" aria-label="แสดงรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
                             <circle cx="12" cy="12" r="3"/>
@@ -60,7 +60,7 @@
                 <label asp-for="RememberMe" for="RememberMe">จดจำฉันไว้ในเบราว์เซอร์นี้</label>
             </div>
 
-            <button type="submit" class="primary-button nimo-submit-btn">
+            <button type="submit" class="ns-button ns-button--primary ns-button--block">
                 <span>เข้าสู่ระบบ</span>
                 <span class="btn-arrow" aria-hidden="true">→</span>
             </button>
@@ -70,7 +70,7 @@
             <span>หรือ</span>
         </div>
 
-        <a class="secondary-button guest-entry nimo-guest-btn" asp-controller="Home" asp-action="Index" lang="th">
+        <a class="ns-button ns-button--secondary ns-button--block" asp-controller="Home" asp-action="Index" lang="th">
             <span>ข้ามไปก่อน · เริ่มสำรวจหน้าแรกเลย</span>
             <span class="guest-arrow" aria-hidden="true">↗</span>
         </a>
