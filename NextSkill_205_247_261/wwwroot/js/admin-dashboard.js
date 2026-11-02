@@ -197,8 +197,8 @@
                 <td>${escapeHtml(c.instructor || '')}</td>
                 <td>${c.featured ? '<span class="status-badge yellow">★ แนะนำ</span>' : '<span style="color: var(--nimo-muted); font-size: 12px;">ทั่วไป</span>'}</td>
                 <td style="text-align: right; white-space: nowrap;">
-                    <button type="button" class="btn-action secondary btn-edit-course" data-id="${c.id}">✏️ แก้ไข</button>
-                    <button type="button" class="btn-action danger btn-delete-course" data-id="${c.id}" data-title="${escapeHtml(c.title)}">🗑️ ลบ</button>
+                    <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-course" data-id="${c.id}">✏️ แก้ไข</button>
+                    <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-course" data-id="${c.id}" data-title="${escapeHtml(c.title)}">🗑️ ลบ</button>
                 </td>
             </tr>
         `).join('') || `<tr><td colspan="8" class="empty-message">ไม่พบคอร์สที่ตรงกับเงื่อนไขการค้นหา</td></tr>`;
@@ -453,12 +453,12 @@
                     </div>
                 ` : ''}
                 <div class="question-card-footer">
-                    <button type="button" class="btn-action secondary btn-test-quiz" data-id="${q.id}">
+                    <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-test-quiz" data-id="${q.id}">
                         <span>🎮 ทดสอบตอบ</span>
                     </button>
                     <div style="display: flex; gap: 8px;">
-                        <button type="button" class="btn-action secondary btn-edit-question" data-id="${q.id}">✏️ แก้ไข</button>
-                        <button type="button" class="btn-action danger btn-delete-question" data-id="${q.id}">🗑️ ลบ</button>
+                        <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-question" data-id="${q.id}">✏️ แก้ไข</button>
+                        <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-question" data-id="${q.id}">🗑️ ลบ</button>
                     </div>
                 </div>
             </div>
@@ -488,7 +488,7 @@
 
         const choicesContainer = document.getElementById('tester-choices');
         choicesContainer.innerHTML = (q.choices || []).map((choice, i) => `
-            <button type="button" class="btn-action secondary tester-choice-btn" data-choice-index="${i}" style="width: 100%; justify-content: flex-start; padding: 12px 16px; font-size: 14px; border-radius: 12px;">
+            <button type="button" class="ns-button ns-button--secondary ns-button--compact tester-choice-btn" data-choice-index="${i}" style="width: 100%; justify-content: flex-start; padding: 12px 16px; font-size: 14px; border-radius: 12px;">
                 <span style="font-weight: 700; width: 24px; color: var(--nimo-blue);">${String.fromCharCode(65 + i)}.</span>
                 <span>${escapeHtml(choice)}</span>
             </button>

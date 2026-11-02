@@ -40,14 +40,13 @@
     height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 10px 20px rgba(2, 132, 199, 0.28));
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, filter 0.35s ease;
+    transition: opacity 160ms ease-out;
     user-select: none;
     -webkit-user-drag: none;
 }
 
 .buddy-avatar-idle {
     opacity: 1;
-    animation: buddySoftFloat 3.8s ease-in-out infinite;
     transform-origin: 50% 80%;
 }
 
@@ -57,11 +56,19 @@
     transform-origin: 50% 88%;
 }
 
-.skill-buddy:hover .buddy-avatar-idle,
-#buddy-agent-handle:hover .buddy-avatar-idle {
-    transform: scale(1.08) translateY(-6px) rotate(2deg);
-    filter: drop-shadow(0 16px 26px rgba(2, 132, 199, 0.38));
-}
+.buddy-idle-motion,.buddy-reaction { position:absolute; inset:0; transform-origin:50% 80%; }
+.buddy-idle-motion { animation:buddySoftFloat 5.2s ease-in-out infinite; animation-play-state:paused; }
+.skill-buddy[data-living="true"]:not([data-posing]) .buddy-idle-motion { animation-play-state:running; }
+.skill-buddy[data-posing] .buddy-idle-motion { animation-play-state:paused; }
+.buddy-reaction-mark { position:absolute; right:6%; top:2%; z-index:6; display:grid; place-items:center; min-width:29px; height:29px; border:2px solid #fff; border-radius:50%; background:#e8faff; color:#17658a; font:600 18px/1 sans-serif; opacity:0; transition:opacity 160ms ease-out; box-shadow:0 3px 8px #174b6118; }
+.skill-buddy[data-posing] .buddy-reaction-mark { opacity:1; }
+.skill-buddy[data-emotion="thinking"] .buddy-reaction-mark:before,.skill-buddy[data-emotion="curious"] .buddy-reaction-mark:before { content:'?'; }
+.skill-buddy[data-emotion="happy"] .buddy-reaction-mark:before,.skill-buddy[data-emotion="encouraging"] .buddy-reaction-mark:before { content:'✓'; }
+.skill-buddy[data-emotion="excited"] .buddy-reaction-mark:before,.skill-buddy[data-emotion="proud"] .buddy-reaction-mark:before { content:'✦'; color:#916516; }
+.skill-buddy[data-emotion="focused"] .buddy-reaction-mark:before { content:'…'; }
+.skill-buddy[data-emotion="surprised"] .buddy-reaction-mark:before { content:'!'; }
+.skill-buddy[data-emotion="sleepy"] .buddy-reaction-mark:before { content:'z'; }
+@media(prefers-reduced-motion:reduce) { .buddy-idle-motion { animation:none!important; transform:none!important; } }
 
 @keyframes buddySoftFloat {
     0%, 100% {

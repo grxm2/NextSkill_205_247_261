@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - NextSkill_205_247_261</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/nextskill-tokens.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/NextSkill_205_247_261.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/buddy-character.css" asp-append-version="true" />
@@ -16,49 +17,29 @@
     <link rel="stylesheet" href="~/css/adventure-theme.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/ocean-theme.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/dashboard-polish.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/course-pages.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site-shell.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/nextskill-components.css" asp-append-version="true" />
 </head>
-<body class="ocean-theme">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
-                    <span class="brand-logo me-2" aria-hidden="true"></span>
-                    <span class="brand-text">NextSkill</span>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="mainNav">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Courses">Courses</a>
-                        </li>
-                    </ul>
-
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-outline-secondary me-2 d-none d-lg-inline search-icon" aria-label="Search"></button>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
+<body class="ocean-theme ns-site-shell">
+    <partial name="_SiteNav" />
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="ns-site-footer">
         <div class="container">
-            &copy; 2569 - NextSkill_205_247_261 - <a asp-area="" asp-controller="Home" asp-action="Privacy">ความเป็นส่วนตัว</a>
+            <span class="ns-site-footer-brand">NextSkill · เก่งขึ้นทีละก้าว ไปด้วยกันกับ Nimo</span>
+            <div><a asp-area="" asp-controller="Home" asp-action="Privacy">ความเป็นส่วนตัว</a><a asp-controller="Account" asp-action="Terms">เงื่อนไขการใช้งาน</a></div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <partial name="_FloatingBuddy" />
+    <script src="~/js/motion-state.js" asp-append-version="true" defer></script>
     <script src="~/js/buddy-agent.js" asp-append-version="true" defer></script>
     <script src="~/js/buddy-motion.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Scripts", required: false)

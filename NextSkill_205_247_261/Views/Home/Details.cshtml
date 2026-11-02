@@ -1,69 +1,48 @@
+@model CourseDetailsPageViewModel
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment CourseEnvironment
+@inject Microsoft.Extensions.Configuration.IConfiguration CourseConfiguration
 @{
-    ViewData["Title"] = Model?.Title ?? "Course details";
+    ViewData["Title"] = Model.Course.Title;
+    var course = Model.Course;
+    var authenticated = User.Identity?.IsAuthenticated == true;
+    var preview = !authenticated && CourseEnvironment.EnvironmentName == "Development" && CourseConfiguration.GetValue("Learning:GuestPreview", true);
+    var eligible = authenticated || preview;
+    var islandUrl = Url.Action("Island", "Learning", new { courseId = course.Id })!;
+    var startUrl = eligible ? islandUrl : Url.Action("Login", "Account", new { returnUrl = islandUrl });
 }
-
-<div class="container py-4">
-    <div class="mb-3">
-        <a asp-action="Courses" class="btn btn-link">&larr; Back to courses</a>
-    </div>
-
-    <div class="card p-4 course-detail">
-        <div class="d-flex justify-content-between align-items-start">
-            <div>
-                <h2>@(Model?.Title ?? "Course")</h2>
-                <div class="text-muted">@(Model?.Category) · @(Model?.Level) · @(Model?.Units) units · Instructor: @(Model?.Instructor)</div>
-            </div>
-            @if (Model?.Featured == true)
+<section class="ns-course-page" data-course-page data-progress-eligible="@eligible.ToString().ToLowerInvariant()" data-course-id="@course.Id" data-can-start="@course.CanStart.ToString().ToLowerInvariant()" id="course-content">
+    <a asp-action="Courses" class="ns-course-back">← กลับไปคลังคอร์ส</a>
+    <header class="ns-course-hero"><div><p class="ns-course-eyebrow">@course.CategoryLabel · เส้นทางแห่งทักษะ</p><h1>@course.Title</h1><p>@course.Description</p><div class="ns-course-meta">@if (course.CanStart) { <span>@course.Curriculum.TotalLessons เกาะบทเรียน</span><span>ฝึกทีละขั้น พร้อมแบบฝึกท้ายบท</span> } else { <span>กำลังเตรียมบทเรียนสำหรับเส้นทางนี้</span> }</div></div><img src="@course.Art" width="220" height="180" alt="" /></header>
+    <div class="ns-catalog-status ns-status" data-catalog-status role="status" aria-live="polite" hidden></div>
+    <div class="ns-course-details-grid">
+        <div class="ns-course-description">
+            <section class="ns-surface" aria-labelledby="course-lessons-title"><h2 id="course-lessons-title">@(course.CanStart ? "เกาะที่เราจะไปด้วยกัน" : "เส้นทางนี้กำลังเตรียมพร้อม")</h2>
+            @if (course.CanStart)
             {
-                <div class="badge bg-secondary">FEATURED</div>
-            }
-        </div>
-
-        <div class="my-3">
-            <p>@(Model?.Description)</p>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Progress</label>
-            <div class="progress">
-                <div id="detailProgressBar" class="progress-bar" role="progressbar" style="width:0%">0%</div>
-            </div>
-            <div id="detailStatus" class="small text-muted mt-1">Not started</div>
-        </div>
-
-        <div>
-            <h5>Lessons</h5>
-            @if (Model?.Lessons == null || !Model.Lessons.Any())
-            {
-                <div class="alert alert-light">No lessons in this course.</div>
+                <ol class="ns-course-lessons">
+                @foreach (var lesson in course.Curriculum.Lessons)
+                { <li data-learning-lesson-id="@lesson.Id"><div><strong>@lesson.Id.ToString("00") · @lesson.Title</strong><small>@lesson.IslandName · @lesson.Minutes นาที · @lesson.Xp XP เมื่อผ่านครั้งแรก</small></div><span class="ns-lesson-state" data-lesson-state>อ่านรายละเอียดและเริ่มจากเกาะแรก</span></li> }
+                </ol>
             }
             else
+            { <p>คอร์สนี้อยู่ในคลังความรู้แล้ว แต่ยังไม่เปิดบทเรียนและการรับ XP คุณสามารถกลับไปเลือกเส้นทางที่พร้อมเรียนได้</p> }
+            </section>
+            @if (course.Metadata.Skills.Count > 0)
+            { <section class="ns-surface"><h2>ทักษะที่จะได้รู้จัก</h2><ul class="ns-course-skills">@foreach (var skill in course.Metadata.Skills) { <li class="ns-badge">@skill</li> }</ul></section> }
+            <section class="ns-surface"><h2>เรียนในจังหวะของคุณ</h2><p>อ่านเนื้อหา ลองตอบคำถาม แล้วดูคำอธิบายจาก Nimo เมื่อผ่านบทเรียนจะเปิดเกาะถัดไป บทที่ผ่านแล้วกลับมาทบทวนได้ โดยไม่เพิ่ม XP ซ้ำ</p></section>
+        </div>
+        <aside class="ns-course-start ns-surface" aria-labelledby="course-start-title"><img src="~/images/nimo-learning.png" width="180" height="135" alt="Nimo คู่หูการเรียนรู้" /><h2 id="course-start-title">@(course.CanStart ? "พร้อมออกเดินทางไหม?" : "แล้วพบกันเร็ว ๆ นี้")</h2>
+            <p>@(course.CanStart ? "Nimo จะพาเริ่มจากบทเรียนสั้น ๆ แล้วค่อยไปเกาะถัดไปด้วยกัน" : "ระหว่างนี้ยังมีเส้นทางอื่นที่พร้อมให้ลองฝึก")</p>
+            @if (course.CanStart)
             {
-                <ul class="list-group">
-                    @foreach (var lesson in Model.Lessons)
-                    {
-                        <li class="list-group-item d-flex justify-content-between align-items-center" data-lesson-id="@lesson.Id">
-                            <div>
-                                <strong>@lesson.Title</strong>
-                            </div>
-                            <div>
-                                <button class="btn btn-sm btn-outline-success mark-complete" data-lesson-id="@lesson.Id">Mark as complete</button>
-                            </div>
-                        </li>
-                    }
-                </ul>
+                <div class="ns-course-progress" data-course-progress hidden><span data-progress-label></span><progress max="100" value="0" aria-label="ความก้าวหน้า @course.Title"></progress></div>
+                <a class="ns-button ns-button--primary ns-button--block" href="@startUrl" data-course-start data-island-url="@islandUrl" data-course-id="@course.Id">@(eligible ? "เริ่มเรียนเกาะแรก" : "เข้าสู่ระบบเพื่อเริ่มเรียน") <span aria-hidden="true">→</span></a>
+                <p>@(preview ? "โหมดทดลองในเครื่อง · ความก้าวหน้าแยกจากบัญชีและอาจหายเมื่อปิดเบราว์เซอร์" : authenticated ? "ความก้าวหน้าบันทึกตามบัญชีของคุณ เรียนต่อจากเกาะเดิมได้" : "เข้าสู่ระบบเพื่อบันทึกความก้าวหน้าและกลับมาเรียนต่อ")</p>
+                <div hidden id="catalog-antiforgery">@Html.AntiForgeryToken()</div>
             }
-        </div>
-
-        <div class="mt-3">
-            <button id="startLearning" class="btn btn-primary">Start learning</button>
-        </div>
+            <a class="ns-button ns-button--secondary" asp-action="Courses">เลือกเส้นทางอื่น</a>
+        </aside>
     </div>
-</div>
-
-@section Scripts{
-    <script>
-        var COURSE_ID = @(Model?.Id ?? 0);
-    </script>
-    <script src="~/js/catalog.js"></script>
-}
+    <noscript><p class="ns-status ns-course-noscript">อ่านรายละเอียดคอร์สได้ตามปกติ เปิด JavaScript เพื่อเลือกคอร์สและทำบทเรียนแบบโต้ตอบ การอ่านหน้านี้ยังไม่เปลี่ยนความก้าวหน้าของคุณ</p></noscript>
+</section>
+@section Scripts { <script src="~/js/catalog.js" asp-append-version="true" defer></script> }

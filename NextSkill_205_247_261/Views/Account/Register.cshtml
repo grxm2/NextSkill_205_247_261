@@ -41,7 +41,7 @@
                 <label asp-for="Password">รหัสผ่าน (Password) <span>*</span></label>
                 <div class="password-wrap">
                     <input asp-for="Password" autocomplete="new-password" placeholder="ตั้งรหัสผ่านของคุณ" required minlength="8" maxlength="128" aria-describedby="password-hint" />
-                    <button class="password-toggle" type="button" data-target="Password" aria-label="แสดงรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
+                    <button class="password-toggle ns-button ns-button--icon ns-button--text" type="button" data-target="Password" aria-label="แสดงรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
                             <circle cx="12" cy="12" r="3"/>
@@ -55,7 +55,7 @@
                 <label asp-for="ConfirmPassword">ยืนยันรหัสผ่าน (Confirm password) <span>*</span></label>
                 <div class="password-wrap">
                     <input asp-for="ConfirmPassword" autocomplete="new-password" placeholder="กรอกรหัสผ่านอีกครั้ง" required maxlength="128" />
-                    <button class="password-toggle" type="button" data-target="ConfirmPassword" aria-label="แสดงรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
+                    <button class="password-toggle ns-button ns-button--icon ns-button--text" type="button" data-target="ConfirmPassword" aria-label="แสดงรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
                             <circle cx="12" cy="12" r="3"/>
@@ -78,7 +78,7 @@
                 <label asp-for="AcceptTerms" for="AcceptTerms">ฉันยอมรับ <a asp-action="Terms" target="_blank" rel="noopener">เงื่อนไขการใช้งานและนโยบายความเป็นส่วนตัว</a></label>
             </div>
 
-            <button type="submit" class="primary-button nimo-submit-btn">
+            <button type="submit" class="ns-button ns-button--primary ns-button--block">
                 <span>@(admin ? "สร้างบัญชีผู้ดูแล" : "สมัครสมาชิกและเริ่มเรียน")</span>
                 <span class="btn-arrow" aria-hidden="true">→</span>
             </button>

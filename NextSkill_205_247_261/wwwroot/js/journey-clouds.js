@@ -1,37 +1,105 @@
 (() => {
-'use strict';
-const key='nextskill.journey-arrival',reduced=matchMedia('(prefers-reduced-motion: reduce)'),cloud=document.getElementById('journey-cloud-transition');
-if(!cloud)return;
-const wait=ms=>new Promise(r=>setTimeout(r,ms));
-let marker,boot,covering,navigating=false;
-try{marker=JSON.parse(sessionStorage.getItem(key));boot=JSON.parse(document.getElementById('learning-initial-state')?.textContent||'null');}catch{}
-const isArriving=!!(marker&&boot&&marker.courseId===boot.course.courseId&&Date.now()-marker.at<900000);
-function clear(){try{sessionStorage.removeItem(key);}catch{}}
-function remember(courseId){try{sessionStorage.setItem(key,JSON.stringify({courseId,at:Date.now()}));}catch{}}
-function cover(){
- document.documentElement.classList.add('journey-transition-active');
- cloud.className='is-covered';
- if(!cloud.open)cloud.showModal();
- document.documentElement.classList.remove('journey-arrival-prepaint');
-}
-function close(){cloud.close();cloud.className='';document.documentElement.classList.remove('journey-transition-active','journey-arrival-prepaint');window.NextSkillAgent?.refresh();}
-function begin(){if(!covering){cover();covering=new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));}return covering;}
-cloud.addEventListener('cancel',e=>e.preventDefault());
-window.NextSkillJourneyTransition={isArriving,remember,begin,cancel(){navigating=false;covering=null;clear();close();},async navigate(url,id){if(navigating)return;navigating=true;remember(id);await begin();location.assign(url);}};
-async function arrive(){
- if(!isArriving)return;
- clear();
- try{
-  const map=document.getElementById('lesson-map'),current=document.querySelector('#lesson-route .is-current')||document.querySelector('#lesson-route .is-completed:last-child');
-  await Promise.race([document.fonts.ready,wait(1200)]);
-  if(map)window.scrollTo({top:map.getBoundingClientRect().top+scrollY-24,behavior:'instant'});
-  await Promise.race([Promise.all([...document.querySelectorAll('#lesson-route img')].map(img=>img.decode?.().catch(()=>{}))),wait(1200)]);
-  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
-  if(!reduced.matches){cloud.classList.add('is-revealing');await wait(1900);}
-  close();current?.focus({preventScroll:true});
- }finally{close();}
-}
-if(isArriving)cover();else document.documentElement.classList.remove('journey-arrival-prepaint');
-document.addEventListener('nextskill:learning-ready',arrive,{once:true});
-window.addEventListener('pageshow',e=>{if(e.persisted){navigating=false;covering=null;close();}});
+    'use strict';
+    const key = 'nextskill.journey-arrival';
+    const seenKey = 'nextskill.journey-arrival-seen';
+    const cloud = document.getElementById('journey-cloud-transition');
+    if (!cloud) return;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    let marker, boot, seen = false;
+    try {
+        marker = JSON.parse(sessionStorage.getItem(key));
+        boot = JSON.parse(document.getElementById('learning-initial-state')?.textContent || 'null');
+        seen = sessionStorage.getItem(seenKey) === 'true';
+    } catch {}
+    const isArriving = !!(marker && boot && marker.courseId === boot.course.courseId && Date.now() - marker.at < 900000);
+    const label = cloud.querySelector('.jc-label');
+    const skip = document.createElement('button');
+    skip.type = 'button'; skip.className = 'jc-skip'; skip.textContent = 'ข้ามไปเกาะบทเรียน'; skip.hidden = true;
+    cloud.append(skip);
+    let generation = 0, navigating = false, covering, status = 'loading', revealing = false;
+    let deadline = 0, revealTimer = 0, settled = false;
+    const pending = new Map();
+    const clearMarker = () => { try { sessionStorage.removeItem(key); } catch {} };
+    const remember = id => { try { sessionStorage.setItem(key, JSON.stringify({ courseId: id, at: Date.now() })); } catch {} };
+    function delay(ms) { return new Promise(resolve => { const timer = setTimeout(() => { pending.delete(timer); resolve(); }, ms); pending.set(timer, resolve); }); }
+    function clearWork() {
+        clearTimeout(deadline); clearTimeout(revealTimer);
+        pending.forEach((resolve, timer) => { clearTimeout(timer); resolve(); }); pending.clear();
+    }
+    function close(focus = false) {
+        generation++; clearWork(); covering = null; revealing = false;
+        if (cloud.open) cloud.close();
+        cloud.className = ''; skip.hidden = true;
+        document.documentElement.classList.remove('journey-transition-active', 'journey-arrival-prepaint');
+        window.NextSkillAgent?.refresh(); window.NextSkillMotion?.refresh();
+        if (focus && status === 'ready') {
+            try { sessionStorage.setItem(seenKey, 'true'); } catch {}
+            (document.querySelector('#lesson-route .is-current') || document.querySelector('#lesson-route .is-completed:last-child'))?.focus({ preventScroll: true });
+        }
+    }
+    function recover() {
+        status = 'error'; close(); clearMarker();
+        const main = document.getElementById('journey-main');
+        if (!main || main.querySelector('.jc-recovery')) return;
+        const note = document.createElement('section'); note.className = 'jc-recovery'; note.setAttribute('role', 'alert');
+        const text = document.createElement('p'); text.textContent = 'ยังเตรียมเส้นทางไม่ได้ ลองโหลดหน้าอีกครั้ง หรือเลือกคอร์สจากเมนู';
+        const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'sj-button'; retry.textContent = 'โหลดหน้าอีกครั้ง'; retry.addEventListener('click', () => location.reload());
+        note.append(text, retry); main.prepend(note);
+    }
+    function cover() {
+        document.documentElement.classList.add('journey-transition-active');
+        cloud.className = 'is-covered';
+        if (label) label.textContent = 'กำลังเตรียมเกาะบทเรียนของคุณ…';
+        if (!cloud.open) cloud.showModal();
+        document.documentElement.classList.remove('journey-arrival-prepaint');
+        // Course selection has a 15s transport deadline; let it recover first.
+        clearTimeout(deadline); deadline = setTimeout(recover, 17000);
+    }
+    function begin() {
+        if (!covering) { cover(); covering = Promise.resolve(); }
+        return covering;
+    }
+    function finishReveal() { if (revealing) close(true); }
+    skip.addEventListener('click', () => { if (status === 'ready') close(true); });
+    cloud.addEventListener('cancel', event => {
+        event.preventDefault();
+        if (status === 'ready') close(true);
+    });
+    cloud.addEventListener('transitionend', event => { if (event.target.classList.contains('jc-bank-bottom')) finishReveal(); });
+    async function arrive(result) {
+        if (!isArriving || settled) return;
+        settled = true; status = result; clearMarker();
+        if (result !== 'ready') { close(); return; }
+        const run = generation;
+        const map = document.getElementById('lesson-map');
+        await Promise.race([document.fonts?.ready || Promise.resolve(), delay(800)]);
+        if (run !== generation) return;
+        if (map) window.scrollTo({ top: map.getBoundingClientRect().top + scrollY - 24, behavior: 'instant' });
+        await Promise.race([Promise.all([...document.querySelectorAll('#lesson-route img')].map(img => img.decode?.().catch(() => {}))), delay(800)]);
+        if (run !== generation) return;
+        clearTimeout(deadline);
+        skip.hidden = false;
+        if (label) label.textContent = 'เกาะบทเรียนพร้อมแล้ว';
+        const policy = window.NextSkillMotion?.snapshot() || { reduced: reduced.matches, paused: false, hidden: document.hidden };
+        if (policy.reduced || policy.paused || policy.hidden) { close(true); return; }
+        const duration = seen ? 200 : 900;
+        cloud.style.setProperty('--jc-reveal-duration', `${duration}ms`);
+        // Flush the covered state once, then let CSS own the finite reveal.
+        void cloud.offsetWidth;
+        revealing = true; cloud.classList.add('is-revealing');
+        revealTimer = setTimeout(finishReveal, duration + 120);
+    }
+    document.addEventListener('nextskill:learning-settled', event => { arrive(event.detail?.status === 'ready' ? 'ready' : 'error'); });
+    // Legacy startup completion is not proof that data loaded successfully.
+    document.addEventListener('nextskill:learning-ready', () => { queueMicrotask(() => { if (!settled) arrive('error'); }); });
+    window.NextSkillMotion?.subscribe(state => { if (status === 'ready' && cloud.open && (state.reduced || state.paused || state.hidden)) close(true); });
+    reduced.addEventListener('change', () => { if (reduced.matches && status === 'ready' && cloud.open) close(true); });
+    window.NextSkillJourneyTransition = {
+        isArriving, remember, begin,
+        cancel() { navigating = false; clearMarker(); close(); },
+        async navigate(url, id) { if (navigating) return; navigating = true; remember(id); await begin(); location.assign(url); }
+    };
+    if (isArriving) cover(); else document.documentElement.classList.remove('journey-arrival-prepaint');
+    window.addEventListener('pagehide', () => { generation++; clearWork(); });
+    window.addEventListener('pageshow', event => { if (event.persisted) { navigating = false; close(); } });
 })();

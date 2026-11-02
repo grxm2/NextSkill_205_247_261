@@ -12,10 +12,12 @@
     <link rel="icon" href="~/home-favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="~/fonts/Prompt-Regular.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="preload" href="~/fonts/Prompt-SemiBold.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="stylesheet" href="~/css/nextskill-tokens.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/admin-dashboard.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/admin-game.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/nextskill-components.css" asp-append-version="true" />
 </head>
-<body>
+<body class="ns-admin">
     <a class="skip-link" href="#main-content">ข้ามไปเนื้อหาหลัก</a>
     <div class="admin-shell">
         <!-- Sidebar Navigation -->
@@ -69,7 +71,7 @@
                 <strong>@Model.FullName</strong>
                 <span>@Model.Email</span>
                 <form asp-action="Logout" method="post" style="margin-top: 14px;">
-                    <button class="btn-action secondary" type="submit" style="width: 100%; justify-content: center;">
+                    <button class="ns-button ns-button--secondary ns-button--compact" type="submit" style="width: 100%; justify-content: center;">
                         ออกจากระบบ ↗
                     </button>
                 </form>
@@ -84,7 +86,7 @@
             <header class="topbar">
                 <h1 id="page-title">ศูนย์ควบคุมผู้ดูแล NextSkill</h1>
                 <div class="topbar-actions">
-                    <a asp-controller="Home" asp-action="Index" class="btn-action secondary" target="_blank" title="เปิดหน้าเว็บผู้เรียนในแท็บใหม่">
+                    <a asp-controller="Home" asp-action="Index" class="ns-button ns-button--secondary ns-button--compact" target="_blank" title="เปิดหน้าเว็บผู้เรียนในแท็บใหม่">
                         <span>ดูหน้าบ้าน (ผู้เรียน) ↗</span>
                     </a>
                     <div class="admin-user-pill">
@@ -111,13 +113,13 @@
                                 จัดการคอร์สเรียน อัปโหลดเนื้อหาใหม่ และปรับแต่งแบบฝึกหัด เพื่อให้ผู้เรียนทุกคนสนุกและเก่งขึ้นในเส้นทางของตัวเองไปกับ Nimo
                             </p>
                             <div class="hero-quick-actions">
-                                <button type="button" class="hero-action-btn" id="hero-btn-new-course">
+                                <button type="button" class="ns-button ns-button--primary" id="hero-btn-new-course">
                                     <span>+ สร้างคอร์สใหม่</span>
                                 </button>
-                                <button type="button" class="hero-action-btn secondary" id="hero-btn-upload-course">
+                                <button type="button" class="ns-button ns-button--secondary" id="hero-btn-upload-course">
                                     <span>⬆️ อัปโหลดไฟล์คอร์ส (JSON)</span>
                                 </button>
-                                <button type="button" class="hero-action-btn secondary" id="hero-btn-new-question">
+                                <button type="button" class="ns-button ns-button--secondary" id="hero-btn-new-question">
                                     <span>+ เพิ่มคำถามแบบฝึกหัด</span>
                                 </button>
                             </div>
@@ -169,7 +171,7 @@
                         <section class="performance outlined-card" aria-labelledby="quick-courses-title" style="padding: 24px;">
                             <div class="section-heading">
                                 <h2 id="quick-courses-title">คอร์สเรียนล่าสุด</h2>
-                                <a href="#courses" class="btn-action secondary">ดูทั้งหมด (@Model.Courses.Count) →</a>
+                                <a href="#courses" class="ns-button ns-button--secondary ns-button--compact">ดูทั้งหมด (@Model.Courses.Count) →</a>
                             </div>
                             <div class="table-scroll">
                                 <table>
@@ -203,15 +205,15 @@
                                 <h2 id="admin-tasks-title">เมนูด่วนผู้ดูแล</h2>
                             </div>
                             <div style="display: flex; flex-direction: column; gap: 12px;">
-                                <a href="#courses" class="btn-action secondary" style="justify-content: flex-start; padding: 12px 16px;">
+                                <a href="#courses" class="ns-button ns-button--secondary ns-button--compact" style="justify-content: flex-start; padding: 12px 16px;">
                                     <span>📚 จัดการคอร์สเรียน &amp; อัปโหลด</span>
                                     <span style="margin-left: auto;">↗</span>
                                 </a>
-                                <a href="#questions" class="btn-action secondary" style="justify-content: flex-start; padding: 12px 16px;">
+                                <a href="#questions" class="ns-button ns-button--secondary ns-button--compact" style="justify-content: flex-start; padding: 12px 16px;">
                                     <span>❓ จัดการแบบฝึกหัด &amp; แก้คำถาม</span>
                                     <span style="margin-left: auto;">↗</span>
                                 </a>
-                                <a href="#learners" class="btn-action secondary" style="justify-content: flex-start; padding: 12px 16px;">
+                                <a href="#learners" class="ns-button ns-button--secondary ns-button--compact" style="justify-content: flex-start; padding: 12px 16px;">
                                     <span>👥 ค้นหาและดูผู้เรียน (@Model.Users คน)</span>
                                     <span style="margin-left: auto;">↗</span>
                                 </a>
@@ -252,10 +254,10 @@
                             <span class="subtle">มีทั้งหมด <strong id="course-total-badge">@Model.Courses.Count</strong> คอร์สในระบบ</span>
                         </div>
                         <div class="section-heading-actions">
-                            <button type="button" class="btn-action secondary" id="btn-open-upload-modal">
+                            <button type="button" class="ns-button ns-button--secondary ns-button--compact" id="btn-open-upload-modal">
                                 <span>⬆️ อัปโหลดคอร์ส (JSON)</span>
                             </button>
-                            <button type="button" class="btn-action primary" id="btn-open-course-modal">
+                            <button type="button" class="ns-button ns-button--primary ns-button--compact" id="btn-open-course-modal">
                                 <span>+ สร้างคอร์สใหม่</span>
                             </button>
                         </div>
@@ -313,8 +315,8 @@
                                                 }
                                             </td>
                                             <td style="text-align: right; white-space: nowrap;">
-                                                <button type="button" class="btn-action secondary btn-edit-course" data-id="@course.Id">✏️ แก้ไข</button>
-                                                <button type="button" class="btn-action danger btn-delete-course" data-id="@course.Id" data-title="@course.Title">🗑️ ลบ</button>
+                                                <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-course" data-id="@course.Id">✏️ แก้ไข</button>
+                                                <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-course" data-id="@course.Id" data-title="@course.Title">🗑️ ลบ</button>
                                             </td>
                                         </tr>
                                     }
@@ -334,7 +336,7 @@
                             <span class="subtle">มีทั้งหมด <strong id="question-total-badge">@Model.TotalQuestions</strong> ข้อในระบบ สำหรับฝึกคู่กับ Nimo</span>
                         </div>
                         <div class="section-heading-actions">
-                            <button type="button" class="btn-action primary" id="btn-open-question-modal">
+                            <button type="button" class="ns-button ns-button--primary ns-button--compact" id="btn-open-question-modal">
                                 <span>+ เพิ่มคำถามใหม่</span>
                             </button>
                         </div>
@@ -398,12 +400,12 @@
                                     }
 
                                     <div class="question-card-footer">
-                                        <button type="button" class="btn-action secondary btn-test-quiz" data-id="@q.Id" style="font-size: 12px;">
+                                        <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-test-quiz" data-id="@q.Id" style="font-size: 12px;">
                                             <span>🎮 ทดสอบตอบ</span>
                                         </button>
                                         <div style="display: flex; gap: 8px;">
-                                            <button type="button" class="btn-action secondary btn-edit-question" data-id="@q.Id">✏️ แก้ไข</button>
-                                            <button type="button" class="btn-action danger btn-delete-question" data-id="@q.Id">🗑️ ลบ</button>
+                                            <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-question" data-id="@q.Id">✏️ แก้ไข</button>
+                                            <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-question" data-id="@q.Id">🗑️ ลบ</button>
                                         </div>
                                     </div>
                                 </div>
@@ -491,7 +493,7 @@
                             <dd style="margin: 0; color: #047857; font-weight: 600;">● ปกติ (Online &amp; Active)</dd>
                         </dl>
                         <form asp-action="Logout" method="post" style="margin-top: 28px; border-top: 1px solid #f1f5f9; padding-top: 20px;">
-                            <button type="submit" class="btn-action danger" style="padding: 10px 22px; font-size: 13.5px;">ออกจากระบบ</button>
+                            <button type="submit" class="ns-button ns-button--danger ns-button--compact" style="padding: 10px 22px; font-size: 13.5px;">ออกจากระบบ</button>
                         </form>
                     </div>
                 </section>
@@ -557,8 +559,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-action secondary" data-close-modal="course-modal">ยกเลิก</button>
-                <button type="submit" class="btn-action primary" id="btn-save-course">บันทึกข้อมูลคอร์ส</button>
+                <button type="button" class="ns-button ns-button--secondary ns-button--compact" data-close-modal="course-modal">ยกเลิก</button>
+                <button type="submit" class="ns-button ns-button--primary ns-button--compact" id="btn-save-course">บันทึกข้อมูลคอร์ส</button>
             </div>
         </form>
     </dialog>
@@ -598,8 +600,8 @@
                 <div id="upload-feedback" style="display: none; padding: 10px; border-radius: 8px; font-size: 13px;"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-action secondary" data-close-modal="course-upload-modal">ยกเลิก</button>
-                <button type="submit" class="btn-action primary" id="btn-submit-upload">เริ่มนำเข้าข้อมูล</button>
+                <button type="button" class="ns-button ns-button--secondary ns-button--compact" data-close-modal="course-upload-modal">ยกเลิก</button>
+                <button type="submit" class="ns-button ns-button--primary ns-button--compact" id="btn-submit-upload">เริ่มนำเข้าข้อมูล</button>
             </div>
         </form>
     </dialog>
@@ -671,8 +673,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-action secondary" data-close-modal="question-modal">ยกเลิก</button>
-                <button type="submit" class="btn-action primary" id="btn-save-question">บันทึกคำถาม</button>
+                <button type="button" class="ns-button ns-button--secondary ns-button--compact" data-close-modal="question-modal">ยกเลิก</button>
+                <button type="submit" class="ns-button ns-button--primary ns-button--compact" id="btn-save-question">บันทึกคำถาม</button>
             </div>
         </form>
     </dialog>
@@ -705,7 +707,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn-action secondary" data-close-modal="quiz-tester-modal">ปิดหน้าต่างทดสอบ</button>
+            <button type="button" class="ns-button ns-button--secondary ns-button--compact" data-close-modal="quiz-tester-modal">ปิดหน้าต่างทดสอบ</button>
         </div>
     </dialog>
 

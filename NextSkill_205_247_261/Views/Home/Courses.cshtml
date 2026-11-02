@@ -1,124 +1,53 @@
-@model IEnumerable<NextSkill_205_247_261.Models.Course>
+@model CourseCatalogPageViewModel
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment CourseEnvironment
+@inject Microsoft.Extensions.Configuration.IConfiguration CourseConfiguration
 @{
-    ViewData["Title"] = "Courses";
-    var q = ViewBag.Query as string ?? string.Empty;
-    var tag = ViewBag.Tag as string ?? "All";
-    var sort = ViewBag.Sort as string ?? "Recommended";
-    int page = ViewBag.Page ?? 1;
-    int totalPages = ViewBag.TotalPages ?? 1;
-    int totalCount = ViewBag.TotalCount ?? 0;
-    int pageSize = ViewBag.PageSize ?? 9;
+    ViewData["Title"] = "คลังคอร์สเรียน";
+    var eligible = User.Identity?.IsAuthenticated == true || (CourseEnvironment.EnvironmentName == "Development" && CourseConfiguration.GetValue("Learning:GuestPreview", true));
 }
-
-<div class="course-catalog container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="mb-0">Find your next course</h2>
-        <div class="text-muted small">Sort:</div>
-    </div>
-
-    <p class="text-muted">Browse by topic, level, or learning time.</p>
-
-    <form method="get" class="mb-3">
-        <div class="row g-2">
-            <div class="col-md-8">
-                <div class="input-group">
-                    <input name="q" value="@q" class="form-control search-input" placeholder="Search courses, skills, or instructors" />
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="d-flex">
-                    <select name="sort" class="form-select" onchange="this.form.submit()">
-                        @if (sort == "Recommended")
-                        {
-                            <option value="Recommended" selected>Recommended</option>
-                        }
-                        else
-                        {
-                            <option value="Recommended">Recommended</option>
-                        }
-
-                        @if (sort == "A-Z")
-                        {
-                            <option value="A-Z" selected>A–Z</option>
-                        }
-                        else
-                        {
-                            <option value="A-Z">A–Z</option>
-                        }
-
-                        @if (sort == "Recently")
-                        {
-                            <option value="Recently" selected>Recently added</option>
-                        }
-                        else
-                        {
-                            <option value="Recently">Recently added</option>
-                        }
-                    </select>
-                </div>
-            </div>
-        </div>
+<section class="ns-course-page" data-course-page data-progress-eligible="@eligible.ToString().ToLowerInvariant()" id="course-content">
+    <header class="ns-course-hero">
+        <div><p class="ns-course-eyebrow">ท่าเรือแห่งทักษะ · NextSkill</p><h1>เลือกเกาะถัดไป<br />ให้ความสนใจของคุณ</h1><p>ค้นพบสิ่งที่อยากเรียน แล้วค่อย ๆ ฝึกไปกับ Nimo แต่ละเส้นทางมีบทเรียนสั้นและแบบฝึกให้ลองใช้จริง</p></div>
+        <img src="~/images/journey/course-container.svg" width="220" height="180" alt="" />
+    </header>
+    <form method="get" asp-action="Courses" class="ns-course-filter ns-surface" role="search">
+        <label class="ns-field" for="course-query">อยากฝึกเรื่องอะไร?<input id="course-query" name="q" value="@Model.Query" type="search" maxlength="200" placeholder="ชื่อคอร์ส ทักษะ หรือผู้สอน" /></label>
+        <label class="ns-field" for="course-sort">เรียงตาม<select id="course-sort" name="sort"><option value="Recommended" selected="@(Model.Sort == "Recommended")">แนะนำให้ลอง</option><option value="A-Z" selected="@(Model.Sort == "A-Z")">ชื่อคอร์ส A–Z</option><option value="Recently" selected="@(Model.Sort == "Recently")">เพิ่มล่าสุด</option></select></label>
+        <input type="hidden" name="tag" value="@Model.Tag" /><input type="hidden" name="pageSize" value="@Model.PageSize" />
+        <button type="submit" class="ns-button ns-button--primary">ค้นหาคอร์ส <span aria-hidden="true">→</span></button>
     </form>
-
-    <div class="mb-4 tags">
-        <a class="btn btn-outline-secondary btn-sm @(tag=="All"?"active":"")" href="?q=@q&tag=All">All</a>
-        <a class="btn btn-outline-secondary btn-sm @(tag=="Design"?"active":"")" href="?q=@q&tag=Design">Design</a>
-        <a class="btn btn-outline-secondary btn-sm @(tag=="Business"?"active":"")" href="?q=@q&tag=Business">Business</a>
-        <a class="btn btn-outline-secondary btn-sm @(tag=="Technology"?"active":"")" href="?q=@q&tag=Technology">Technology</a>
-        <a class="btn btn-outline-secondary btn-sm @(tag=="Short"?"active":"")" href="?q=@q&tag=Short">Short courses</a>
-    </div>
-
-    <div class="mb-2 text-muted">@totalCount courses</div>
-
-    @if (!Model?.Any() ?? true)
-    {
-        <div class="alert alert-light">No courses found</div>
-    }
+    <nav class="ns-course-tags" aria-label="หมวดหมู่คอร์ส">
+        <a asp-action="Courses" asp-route-q="@Model.Query" asp-route-sort="@Model.Sort" asp-route-tag="All" asp-route-pageSize="@Model.PageSize" aria-current="@(Model.Tag == "All" ? "true" : null)">ทั้งหมด</a>
+        @foreach (var category in Model.Categories)
+        { <a asp-action="Courses" asp-route-q="@Model.Query" asp-route-sort="@Model.Sort" asp-route-tag="@category" asp-route-pageSize="@Model.PageSize" aria-current="@(Model.Tag == category ? "true" : null)">@CourseCatalogPageViewModel.CategoryLabel(category)</a> }
+    </nav>
+    <div class="ns-catalog-status ns-status" data-catalog-status role="status" aria-live="polite" hidden></div>
+    <div class="ns-course-section-heading"><h2>เส้นทางที่รอให้คุณค้นพบ</h2><p>พบ @Model.TotalCount คอร์ส@(string.IsNullOrWhiteSpace(Model.Query) ? "" : $" สำหรับ “{Model.Query}”")</p></div>
+    @if (Model.Courses.Count == 0)
+    { <section class="ns-course-empty ns-surface"><h2>ยังไม่พบคอร์สที่ตรงกัน</h2><p>ลองค้นหาด้วยคำอื่น หรือเปิดดูเส้นทางทั้งหมดได้เลย</p><a class="ns-button ns-button--secondary" asp-action="Courses">ดูคอร์สทั้งหมด</a></section> }
     else
     {
-        <div class="row g-3">
-            @foreach (var item in (Model ?? Enumerable.Empty<NextSkill_205_247_261.Models.Course>()))
-            {
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="course-card p-3" data-course-id="@item.Id" data-total-lessons="@(item.Lessons?.Count ?? 0)">
-                        @if (item.Featured)
-                        {
-                            <div class="card-badge">FEATURED</div>
-                        }
-                        <div class="card-media mb-2"></div>
-                        <h5>@item.Title</h5>
-                        <div class="text-muted small">@item.Level · @item.Units units</div>
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <div class="progress w-75">
-                                <div class="progress-bar" role="progressbar" style="width:0%"></div>
-                            </div>
-                            <div class="percent text-end small ms-2">0%</div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <div class="status small text-muted">Not started</div>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-dark start-link" data-course-id="@item.Id">View course</a>
-                        </div>
-                    </div>
+        <div class="ns-course-grid">
+        @foreach (var item in Model.Courses)
+        {
+            <article class="ns-course-card ns-surface" data-course-id="@item.Id" data-can-start="@item.CanStart.ToString().ToLowerInvariant()">
+                <div class="ns-course-card-art"><img src="@item.Art" alt="" width="280" height="180" loading="lazy" /><span class="ns-badge @(item.CanStart ? "" : "ns-badge--upcoming")">@(item.CanStart ? "พร้อมออกเดินทาง" : "เร็ว ๆ นี้")</span></div>
+                <div class="ns-course-card-copy"><div class="ns-course-meta"><span>@item.CategoryLabel</span>@if (item.CanStart) { <span>@item.Curriculum.TotalLessons เกาะบทเรียน</span> }</div><h3><a asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h3><p>@item.Description</p>
+                    <div class="ns-course-card-footer"><div class="ns-course-progress" data-course-progress hidden><span data-progress-label></span><progress max="100" value="0" aria-label="ความก้าวหน้า @item.Title"></progress></div><a class="ns-button ns-button--secondary" asp-action="Details" asp-route-id="@item.Id">ดูเส้นทางนี้ <span aria-hidden="true">→</span></a></div>
                 </div>
-            }
+            </article>
+        }
         </div>
     }
-
-    <div class="d-flex justify-content-center mt-4">
-        <nav aria-label="Page navigation">
-            <ul class="pagination pagination-rounded">
-                <li class="page-item @(page<=1?"disabled":"")"><a class="page-link" href="?q=@q&tag=@tag&sort=@sort&page=@(page-1)">Prev</a></li>
-                @for (int p = 1; p <= totalPages; p++)
-                {
-                    <li class="page-item @(p==page?"active":"")"><a class="page-link" href="?q=@q&tag=@tag&sort=@sort&page=@p">@p</a></li>
-                }
-                <li class="page-item @(page>=totalPages?"disabled":"")"><a class="page-link" href="?q=@q&tag=@tag&sort=@sort&page=@(page+1)">Next</a></li>
-            </ul>
+    @if (Model.TotalPages > 1)
+    {
+        <nav class="ns-course-pagination" aria-label="หน้ารายการคอร์ส">
+            @if (Model.Page > 1) { <a class="ns-button ns-button--compact" asp-action="Courses" asp-route-q="@Model.Query" asp-route-tag="@Model.Tag" asp-route-sort="@Model.Sort" asp-route-pageSize="@Model.PageSize" asp-route-page="@(Model.Page - 1)">← ก่อนหน้า</a> }
+            @for (var pageNumber = 1; pageNumber <= Model.TotalPages; pageNumber++)
+            { <a class="ns-button ns-button--compact" asp-action="Courses" asp-route-q="@Model.Query" asp-route-tag="@Model.Tag" asp-route-sort="@Model.Sort" asp-route-pageSize="@Model.PageSize" asp-route-page="@pageNumber" aria-current="@(pageNumber == Model.Page ? "page" : null)">@pageNumber</a> }
+            @if (Model.Page < Model.TotalPages) { <a class="ns-button ns-button--compact" asp-action="Courses" asp-route-q="@Model.Query" asp-route-tag="@Model.Tag" asp-route-sort="@Model.Sort" asp-route-pageSize="@Model.PageSize" asp-route-page="@(Model.Page + 1)">ถัดไป →</a> }
         </nav>
-    </div>
-</div>
-
-@section Scripts{
-    <script src="~/js/catalog.js"></script>
-}
+    }
+    <noscript><p class="ns-status ns-course-noscript">ค้นหาและอ่านรายละเอียดคอร์สได้ตามปกติ เปิด JavaScript เพื่อโหลดความก้าวหน้าและทำบทเรียนแบบโต้ตอบ</p></noscript>
+</section>
+@section Scripts { <script src="~/js/catalog.js" asp-append-version="true" defer></script> }

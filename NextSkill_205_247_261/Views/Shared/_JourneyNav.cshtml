@@ -4,13 +4,13 @@
 }
 <header class="sj-header"><div class="sj-nav-inner">
     <a class="sj-brand" asp-controller="Home" asp-action="Index" aria-label="NextSkill กลับหน้าแรก"><svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="15" fill="currentColor"/><path d="M12 32V17h6l13 15V17h6v16h-7L18 20v12Z" fill="#fff"/><path d="m28 8 10 1-1 9-4-4-7 7-4-4 8-7Z" fill="#ffda82"/></svg><span>NextSkill<small>เก่งขึ้น ในเส้นทางของคุณ</small></span></a>
-    <nav class="sj-nav" aria-label="เมนูหลัก"><a asp-controller="Home" asp-action="Index" aria-current="@(!learning ? "page" : null)">หน้าแรก</a><a asp-controller="Learning" asp-action="Island" aria-current="@(learning ? "page" : null)">เกาะของฉัน</a><button type="button" data-smart-action="choose-course">เปลี่ยนคอร์ส</button><a asp-controller="Home" asp-action="Index" asp-fragment="journey-world">แผนที่การเรียน</a></nav>
+    <nav class="sj-nav" aria-label="เมนูหลัก"><a asp-controller="Home" asp-action="Index" aria-current="@(!learning ? "page" : null)">หน้าแรก</a><a asp-controller="Home" asp-action="Courses">คอร์สเรียน</a><a asp-controller="Learning" asp-action="Island" aria-current="@(learning ? "page" : null)">เกาะของฉัน</a><button type="button" data-smart-action="choose-course">@(learning ? "เปลี่ยนคอร์ส" : "เลือกคอร์ส")</button></nav>
     <div class="sj-account-nav">
         @if (loggedIn)
         {
             <span class="sj-nav-xp" hidden><span class="icon icon-lightning" aria-hidden="true"></span><strong data-state-xp>0</strong> XP</span>
             <details class="sj-profile"><summary aria-label="เปิดเมนูบัญชี"><span>@((User.Identity?.Name ?? "N").FirstOrDefault())</span><span class="sj-profile-name">@(User.Identity?.Name ?? "บัญชีของฉัน")</span></summary><div><a asp-controller="Account" asp-action="@(User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard")">โปรไฟล์และบัญชี</a><button type="button" data-open-dialog="companion-dialog">คู่หูของฉัน</button><form asp-controller="Account" asp-action="Logout" method="post"><button type="submit">ออกจากระบบ</button></form></div></details>
         }
-        else { <a class="sj-login" asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Learning/Entry">เข้าสู่ระบบ <span aria-hidden="true">↗</span></a> }
+        else if (learning) { <a class="sj-login" asp-controller="Account" asp-action="Register">สมัครเพื่อบันทึกความคืบหน้า</a> } else { <a class="sj-login" asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Learning/Entry">เข้าสู่ระบบ</a> }
     </div>
 </div></header>

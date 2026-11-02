@@ -18,6 +18,7 @@
     const speech = document.getElementById('companion-speech');
     const motionControl = document.getElementById('companion-motion');
     const robots = [...document.querySelectorAll('.skill-buddy')];
+    const fixedIllustration = robots.some(robot => robot.dataset.character === 'nimo');
     let storageAvailable = true;
     let game = { phase: 'idle', sequence: [], entered: [], awarded: false };
     let pointerFrame = 0;
@@ -105,6 +106,19 @@
             button.title = unlocked ? 'เลือกของแต่งชิ้นนี้' : `สะสม ${accessoryRequirements[item]} ดาวเพื่อปลดล็อก`;
             button.querySelector('small').textContent = item === 'none' ? 'เลือกได้เสมอ' : unlocked ? 'ปลดล็อกแล้ว เลือกใส่ได้' : `${accessoryRequirements[item]} ดาวคู่หู`;
         });
+        if (fixedIllustration) {
+            // Preserve saved selections and local companion stars, but do not
+            // claim hidden legacy styling changed the illustrated character.
+            dialog.querySelectorAll('[data-companion-colour],[data-companion-accessory]').forEach(button => {
+                button.disabled = true;
+                button.title = 'Nimo ใช้ลุคประจำตัว การเปลี่ยนสีและของแต่งยังไม่เปิดใช้งาน';
+                button.setAttribute('aria-describedby', 'companion-art-note');
+                const hint = button.querySelector('small');
+                if (hint) hint.textContent = 'ยังไม่เปิดใช้งาน';
+            });
+            document.getElementById('companion-next-unlock').textContent = 'ดาวคู่หูของคุณ';
+            document.getElementById('companion-unlock-hint').textContent = 'สะสมจากเกมพักสมอง แยกจาก XP การเรียน';
+        }
     }
 
     function selectTab(name, focus = false) {
@@ -151,6 +165,7 @@
     document.querySelector('#companion-name-form button').addEventListener('click', event => pose('smile', event));
     dialog.querySelectorAll('[data-companion-colour]').forEach(button => {
         button.addEventListener('click', event => {
+            if (fixedIllustration) return;
             buddy.colour = button.dataset.companionColour;
             save(); render();
             emotion('happy', 'ลุคใหม่ พร้อมไปเรียนด้วยกัน');
@@ -160,6 +175,7 @@
     });
     dialog.querySelectorAll('[data-companion-accessory]').forEach(button => {
         button.addEventListener('click', event => {
+            if (fixedIllustration) return;
             const item = button.dataset.companionAccessory;
             if (!Object.hasOwn(accessoryRequirements, item) || buddy.stars < accessoryRequirements[item]) return;
             buddy.accessory = item;
@@ -171,8 +187,8 @@
     });
     document.getElementById('companion-high-five').addEventListener('click', event => {
         document.dispatchEvent(new CustomEvent('nextskill:buddy-action', { detail: { kind: 'hello', motion: event.detail > 0 } }));
-        emotion('happy', 'ไฮไฟว์ เพื่อนร่วมทีม');
-        say('ไฮไฟว์! ไปต่อด้วยกันนะ');
+        emotion('happy', 'ส่งกำลังใจให้เพื่อนร่วมทีม');
+        say('ไปต่อด้วยกันทีละก้าวนะ');
         pose('highfive', event);
     });
 
@@ -217,7 +233,10 @@
         motionControl.textContent = state === 'reduced' ? 'ลดการเคลื่อนไหวแล้ว' : state === 'paused' ? 'ขยับต่อ' : 'พักการเคลื่อนไหว';
         if (state !== 'active') resetGaze();
     }
-    motionControl.addEventListener('click', () => document.getElementById('buddy-motion').click());
+    motionControl.addEventListener('click', () => {
+        if (window.NextSkillMotion) window.NextSkillMotion.togglePaused();
+        else document.getElementById('buddy-motion').click();
+    });
     new MutationObserver(syncMotion).observe(guide, { attributes: true, attributeFilter: ['data-motion'] });
 
     function resetGaze() {
@@ -329,7 +348,7 @@
                 save(); render();
                 pose('celebrate', event);
                 emotion('excited', 'เราเป็นทีมที่ดีนะ');
-                const gift = buddy.stars === 1 ? ' ปลดล็อกเข็มกลัดดาวแล้ว' : buddy.stars === 3 ? ' ปลดล็อกผ้าพันคอแล้ว' : '';
+                const gift = fixedIllustration ? '' : buddy.stars === 1 ? ' ปลดล็อกเข็มกลัดดาวแล้ว' : buddy.stars === 3 ? ' ปลดล็อกผ้าพันคอแล้ว' : '';
                 document.getElementById('signal-result').textContent = `ทำได้ดีมาก +1 ดาวคู่หู${gift}`;
                 say(`เราเรียงสัญลักษณ์สำเร็จแล้ว${gift || ' ชนะไปด้วยกันอีกครั้ง'}`);
             }

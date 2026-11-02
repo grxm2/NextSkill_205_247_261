@@ -1,0 +1,13 @@
+/* Water-space effects stay below the vessel, text and interactive controls. */
+.ocean-life{position:absolute;inset:0;z-index:4;overflow:hidden;pointer-events:none;user-select:none;contain:layout paint}
+.ocean-life-airspace,.ocean-life-effects{position:absolute;inset:0;pointer-events:none}
+.ocean-life-fish,.ocean-life-splash,.ocean-life-ripple{position:absolute;left:0;top:0;display:block;max-width:none;opacity:0;pointer-events:none;transform-origin:center}
+.ocean-life-fish{width:44px;height:26px;overflow:visible;filter:drop-shadow(0 1px 1px #07536b45)}
+.ocean-life-fish [data-fish-tail]{transform-origin:8px 8px}
+.ocean-life-fish [data-fish-fin]{transform-origin:17px 8px}
+.ocean-life-splash{width:40px;height:26px;transform-origin:50% 100%}
+.ocean-life-ripple{width:72px;height:26px}
+.ow-seabirds{overflow:visible}
+.ow-bird-glide,.ow-bird-wing{transform-box:view-box;transform-origin:0 0}
+@media(max-width:700px),(pointer:coarse){.ocean-life-fish{width:30px;height:18px}.ocean-life-splash{width:28px;height:19px}.ocean-life-ripple{width:50px;height:19px}}
+@media(prefers-reduced-motion:reduce){.ocean-life{display:none}.ow-bird-glide,.ow-bird-wing{transform:none!important}}

@@ -17,7 +17,7 @@
     function save() {
         try { localStorage.setItem('nextskill.agent.v1', JSON.stringify({ placementVersion: 4, paused })); } catch {}
     }
-    function motionAllowed() { return !paused && !reduce.matches && !document.hidden; }
+    function motionAllowed() { return window.NextSkillMotion?.snapshot({ element: robot, kind: 'reaction' }).reactionAllowed ?? (!paused && !reduce.matches && !document.hidden); }
     function closeMenu(restoreFocus = false) {
         menu.hidden = true;
         handle.setAttribute('aria-expanded', 'false');
@@ -50,6 +50,7 @@
             robot.dataset.context = slot.dataset.buddyAnchor;
         }
         window.NextSkillBuddyMotion?.refresh();
+        window.NextSkillMotion?.refresh();
         positionMenu();
     }
     function sync() {
@@ -88,6 +89,7 @@
         if (!menu.hidden) menu.querySelector('button')?.focus({ preventScroll: true });
     });
     pause.addEventListener('click', () => {
+        if (window.NextSkillMotion) { window.NextSkillMotion.togglePaused(); return; }
         const control = document.getElementById('buddy-motion');
         if (control) control.click();
         else { paused = !paused; save(); sync(); }
@@ -138,6 +140,7 @@
     window.addEventListener('pagehide', () => { closeMenu(); sizes.disconnect(); observer.disconnect(); });
     window.addEventListener('pageshow', () => { document.querySelectorAll('[data-buddy-anchor]').forEach(slot => sizes.observe(slot)); document.querySelectorAll('dialog').forEach(dialog => observer.observe(dialog, { attributes: true, attributeFilter: ['open'] })); if (coach) observer.observe(coach, { attributes: true, attributeFilter: ['hidden'] }); refresh(); });
     window.NextSkillAgent = { visit: refresh, refresh, resume: refresh, motionAllowed, isPaused: () => paused };
+    window.NextSkillMotion?.subscribe(state => { paused = state.paused; sync(); }, { element: robot, kind: 'reaction' });
     save(); appearance(); sync(); refresh();
     document.fonts?.ready.then(refresh);
 })();

@@ -25,31 +25,37 @@ namespace NextSkill_205_247_261.Controllers
         }
 
         // Courses list with search, filter, sort and pagination
-        public IActionResult Courses(string q, string tag, string sort = "Recommended", int page = 1, int pageSize = 9)
+        public IActionResult Courses(string? q, string? tag, string sort = "Recommended", int page = 1, int pageSize = 9)
         {
-            var all = GetCourses();
-
-            // search across title, category, instructor, skills
+            var curricula = LearningCatalog.PublicCatalog().ToDictionary(course => course.Id);
+            var all = GetCourses().Where(course => curricula.ContainsKey(course.Id))
+                .Select(course => new CourseBrowseItem(course, curricula[course.Id])).ToList();
+            var categories = all.Select(course => course.Category).Distinct().Order().ToArray();
+            pageSize = Math.Clamp(pageSize, 3, 24);
+            q = q?.Trim() ?? "";
+            tag = string.IsNullOrWhiteSpace(tag) ? "All" : tag;
             if (!string.IsNullOrWhiteSpace(q))
             {
-                var term = q.Trim();
-                all = all.Where(c => c.Title.Contains(term, StringComparison.OrdinalIgnoreCase)
-                                    || c.Category.Contains(term, StringComparison.OrdinalIgnoreCase)
-                                    || (!string.IsNullOrEmpty(c.Instructor) && c.Instructor.Contains(term, StringComparison.OrdinalIgnoreCase))
-                                    || (c.Skills != null && c.Skills.Any(s => s.Contains(term, StringComparison.OrdinalIgnoreCase))))
+                all = all.Where(c => c.Title.Contains(q, StringComparison.OrdinalIgnoreCase)
+                                    || c.Category.Contains(q, StringComparison.OrdinalIgnoreCase)
+                                    || c.CategoryLabel.Contains(q, StringComparison.OrdinalIgnoreCase)
+                                    || (c.Metadata.Instructor?.Contains(q, StringComparison.OrdinalIgnoreCase) ?? false)
+                                    || (c.Metadata.Skills?.Any(s => s.Contains(q, StringComparison.OrdinalIgnoreCase)) ?? false))
                          .ToList();
             }
-
-            if (!string.IsNullOrWhiteSpace(tag) && tag != "All")
+            if (tag == "Short")
+                all = all.Where(c => c.CanStart && c.Curriculum.Lessons.Sum(lesson => lesson.Minutes) <= 45).ToList();
+            else if (tag != "All")
             {
                 all = all.Where(c => string.Equals(c.Category, tag, StringComparison.OrdinalIgnoreCase)).ToList();
             }
-
-            // sorting: Recommended (default), A-Z
-            if (string.Equals(sort, "A-Z", StringComparison.OrdinalIgnoreCase))
+            sort = sort is "A-Z" or "Recently" ? sort : "Recommended";
+            all = sort switch
             {
-                all = all.OrderBy(c => c.Title).ToList();
-            }
+                "A-Z" => all.OrderBy(c => c.Title).ToList(),
+                "Recently" => all.OrderByDescending(c => c.Id).ToList(),
+                _ => all.OrderByDescending(c => c.CanStart).ThenByDescending(c => c.Metadata.Featured).ThenBy(c => c.Id).ToList()
+            };
 
             var total = all.Count;
             var totalPages = (int)Math.Ceiling(total / (double)pageSize);
@@ -57,22 +63,20 @@ namespace NextSkill_205_247_261.Controllers
 
             var items = all.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
-            ViewBag.TotalCount = total;
-            ViewBag.Page = page;
-            ViewBag.TotalPages = totalPages;
-            ViewBag.PageSize = pageSize;
-            ViewBag.Query = q;
-            ViewBag.Tag = tag;
-            ViewBag.Sort = sort;
-
-            return View(items);
+            return View(new CourseCatalogPageViewModel
+            {
+                Courses = items, Categories = categories, Query = q, Tag = tag, Sort = sort,
+                Page = page, PageSize = pageSize, TotalCount = total, TotalPages = totalPages
+            });
         }
 
         public IActionResult Details(int id)
         {
             var course = GetCourses().FirstOrDefault(c => c.Id == id);
             if (course == null) return NotFound();
-            return View(course);
+            var curriculum = LearningCatalog.PublicCatalog().FirstOrDefault(item => item.Id == id);
+            if (curriculum is null) return NotFound();
+            return View(new CourseDetailsPageViewModel(new CourseBrowseItem(course, curriculum)));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,164 +1,88 @@
-// catalog.js
-// Manages per-course progress using localStorage. Stores a map: { [courseId]: { started: bool, completed: [lessonId,...] } }
-(function () {
-    const STORAGE_KEY = 'courseProgress_v1';
+/* Public course pages enhance normal MVC links. LearningController remains the
+   only authority for progress, selection, locks and rewards. No local completion. */
+(() => {
+    'use strict';
+    const page = document.querySelector('[data-course-page]');
+    if (!page) return;
+    const status = page.querySelector('[data-catalog-status]');
+    const eligible = page.dataset.progressEligible === 'true';
+    let loading = false;
+    let selecting = false;
 
-    function readMap() {
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            return raw ? JSON.parse(raw) : {};
-        } catch (e) {
-            console.error('Failed to read progress', e);
-            return {};
+    function message(text, retry = false) {
+        status.replaceChildren(document.createTextNode(text));
+        status.classList.toggle('ns-status--error', retry);
+        status.hidden = !text;
+        if (retry) {
+            const button = document.createElement('button');
+            button.type = 'button'; button.className = 'ns-button ns-button--compact ns-button--secondary';
+            button.textContent = 'ลองโหลดอีกครั้ง'; button.addEventListener('click', loadProgress);
+            status.append(button);
         }
     }
-
-    function writeMap(map) {
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
-        } catch (e) {
-            console.error('Failed to save progress', e);
-        }
-    }
-
-    function getCourseState(courseId) {
-        const map = readMap();
-        return map[courseId] || { started: false, completed: [] };
-    }
-
-    function setCourseState(courseId, state) {
-        const map = readMap();
-        map[courseId] = state;
-        writeMap(map);
-    }
-
-    function updateCardProgress($card) {
-        const id = $card.dataset.courseId;
-        const total = parseInt($card.dataset.totalLessons || '0');
-        const state = getCourseState(id);
-        const completed = (state.completed || []).length;
-        let percent = 0;
-        let status = 'Not started';
-        if (total > 0) {
-            percent = Math.round((completed / total) * 100);
-            if (completed === 0 && state.started) status = 'In progress';
-            else if (completed === 0) status = 'Not started';
-            else if (completed >= total) status = 'Completed';
-            else status = 'In progress';
-        }
-
-        const bar = $card.querySelector('.progress-bar');
-        const percentEl = $card.querySelector('.percent');
-        const statusEl = $card.querySelector('.status');
-        if (bar) bar.style.width = percent + '%';
-        if (percentEl) percentEl.textContent = percent + '%';
-        if (statusEl) statusEl.textContent = status;
-    }
-
-    function initCatalogPage() {
-        const cards = document.querySelectorAll('.course-card');
-        cards.forEach(card => {
-            updateCardProgress(card);
-            const startLink = card.querySelector('.start-link');
-            if (startLink) {
-                startLink.addEventListener('click', function (e) {
-                    // mark started before navigating
-                    const courseId = this.dataset.courseId;
-                    const state = getCourseState(courseId);
-                    if (!state.started) {
-                        state.started = true;
-                        setCourseState(courseId, state);
-                    }
-                    // allow navigation
-                });
-            }
+    function displayProgress(state) {
+        page.querySelectorAll('[data-course-progress]').forEach(wrap => {
+            const owner = wrap.closest('[data-course-id]');
+            const course = state.courses.find(item => item.courseId === Number(owner.dataset.courseId));
+            if (!course) { wrap.hidden = true; return; }
+            wrap.hidden = false;
+            wrap.querySelector('[data-progress-label]').textContent = course.hasStarted
+                ? `ผ่านแล้ว ${course.completedLessons.length} จาก ${course.totalLessons} เกาะ · ${course.progress}%` : 'ยังไม่ได้เริ่มเส้นทางนี้';
+            const bar = wrap.querySelector('progress'); bar.value = course.progress;
+        });
+        const course = state.courses.find(item => item.courseId === Number(page.dataset.courseId));
+        if (!course) return;
+        const start = page.querySelector('[data-course-start]');
+        if (start && !selecting) start.textContent = `${course.isComplete ? 'ทบทวนบทเรียน' : course.hasStarted ? 'เรียนต่อจากเกาะเดิม' : 'เริ่มเรียนเกาะแรก'} →`;
+        page.querySelectorAll('[data-learning-lesson-id]').forEach(row => {
+            const lesson = course.lessons.find(item => item.id === Number(row.dataset.learningLessonId));
+            if (!lesson) return;
+            const label = row.querySelector('[data-lesson-state]');
+            label.dataset.status = lesson.status;
+            label.textContent = lesson.status === 'completed' ? '✓ ผ่านแล้ว · ทบทวนได้' : lesson.status === 'locked' ? 'ยังไม่ปลดล็อก' : 'เกาะถัดไปของคุณ';
         });
     }
-
-    function initDetailsPage() {
-        if (typeof COURSE_ID === 'undefined') return;
-        const courseId = String(COURSE_ID);
-        const state = getCourseState(courseId);
-        // set UI status
-        const progressBar = document.getElementById('detailProgressBar');
-        const statusEl = document.getElementById('detailStatus');
-        const lessonItems = document.querySelectorAll('[data-lesson-id]');
-        const total = lessonItems.length;
-
-        function refresh() {
-            const s = getCourseState(courseId);
-            const completed = (s.completed || []).length;
-            const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
-            if (progressBar) {
-                progressBar.style.width = percent + '%';
-                progressBar.textContent = percent + '%';
-            }
-            if (statusEl) {
-                if (completed === 0 && s.started) statusEl.textContent = 'In progress';
-                else if (completed === 0) statusEl.textContent = 'Not started';
-                else if (completed >= total) statusEl.textContent = 'Completed';
-                else statusEl.textContent = 'In progress';
-            }
-            // update lesson buttons
-            lessonItems.forEach(li => {
-                const lid = li.dataset.lessonId;
-                const btn = li.querySelector('.mark-complete');
-                if (s.completed && s.completed.indexOf(Number(lid)) !== -1) {
-                    li.classList.add('completed');
-                    if (btn) {
-                        btn.textContent = 'Completed';
-                        btn.disabled = true;
-                        btn.classList.remove('btn-outline-success');
-                        btn.classList.add('btn-success');
-                    }
-                } else {
-                    li.classList.remove('completed');
-                    if (btn) {
-                        btn.textContent = 'Mark as complete';
-                        btn.disabled = false;
-                        btn.classList.remove('btn-success');
-                        btn.classList.add('btn-outline-success');
-                    }
-                }
-            });
-        }
-
-        // mark start
-        const startBtn = document.getElementById('startLearning');
-        if (startBtn) {
-            startBtn.addEventListener('click', function () {
-                const s = getCourseState(courseId);
-                if (!s.started) {
-                    s.started = true;
-                    setCourseState(courseId, s);
-                }
-                // scroll to lessons
-                const firstLesson = document.querySelector('[data-lesson-id]');
-                if (firstLesson) firstLesson.scrollIntoView({ behavior: 'smooth' });
-                refresh();
-            });
-        }
-
-        // lesson complete handlers
-        document.addEventListener('click', function (e) {
-            if (!e.target.matches('.mark-complete')) return;
-            const btn = e.target;
-            const lid = Number(btn.dataset.lessonId);
-            const s = getCourseState(courseId);
-            if (!s.completed) s.completed = [];
-            if (s.completed.indexOf(lid) === -1) s.completed.push(lid);
-            setCourseState(courseId, s);
-            refresh();
-        });
-
-        // initial refresh
-        refresh();
+    async function loadProgress() {
+        if (!eligible || loading) return;
+        loading = true; page.setAttribute('aria-busy', 'true');
+        message('กำลังโหลดความก้าวหน้าจากระบบการเรียน…');
+        try {
+            const response = await fetch('/Learning/State', { credentials: 'same-origin', headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(15000) });
+            if (!response.ok) throw new Error(response.status === 401 ? 'เซสชันหมดอายุ เข้าสู่ระบบอีกครั้งเพื่อดูความก้าวหน้า' : 'ยังโหลดความก้าวหน้าไม่ได้ ข้อมูลเดิมยังไม่ถูกเปลี่ยน');
+            const state = await response.json();
+            if (!Array.isArray(state.courses)) throw new Error('ยังโหลดความก้าวหน้าไม่ได้');
+            displayProgress(state); message('');
+        } catch (error) {
+            message(error.name === 'TimeoutError' ? 'โหลดความก้าวหน้านานกว่าปกติ ลองอีกครั้งได้โดยไม่เริ่มใหม่' : error.message || 'ยังโหลดความก้าวหน้าไม่ได้', true);
+        } finally { loading = false; page.removeAttribute('aria-busy'); }
     }
-
-    // init on DOMContentLoaded
-    document.addEventListener('DOMContentLoaded', function () {
-        if (document.querySelector('.course-catalog')) initCatalogPage();
-        if (document.querySelector('.course-detail')) initDetailsPage();
+    const start = page.querySelector('[data-course-start]');
+    start?.addEventListener('click', async event => {
+        if (selecting) { event.preventDefault(); return; }
+        // Anonymous production links use the existing login ReturnUrl directly.
+        if (!eligible || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+        event.preventDefault();
+        selecting = true;
+        const label = start.textContent;
+        start.setAttribute('aria-disabled', 'true'); start.setAttribute('aria-busy', 'true'); start.textContent = 'กำลังเตรียมเส้นทาง…';
+        try {
+            const response = await fetch('/Learning/SelectCourse', {
+                method: 'POST', credentials: 'same-origin', signal: AbortSignal.timeout(15000),
+                headers: { Accept: 'application/json', 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('#catalog-antiforgery input')?.value || '' },
+                body: JSON.stringify({ courseId: Number(start.dataset.courseId) })
+            });
+            if (response.status === 401) {
+                location.assign(`/Account/Login?returnUrl=${encodeURIComponent(start.dataset.islandUrl)}`); return;
+            }
+            const result = await response.json().catch(() => null);
+            if (!response.ok) throw new Error(result?.message || 'ยังเปิดเส้นทางไม่ได้ กรุณาลองอีกครั้ง');
+            location.assign(start.dataset.islandUrl);
+        } catch (error) {
+            message(error.name === 'TimeoutError' ? 'การเปิดเส้นทางใช้เวลานาน ลองกดเริ่มอีกครั้งได้ ข้อมูลเดิมยังอยู่' : error.message || 'ยังเปิดเส้นทางไม่ได้');
+            status.classList.add('ns-status--error');
+        } finally {
+            selecting = false; start.removeAttribute('aria-disabled'); start.removeAttribute('aria-busy'); start.textContent = label;
+        }
     });
-
+    loadProgress();
 })();
