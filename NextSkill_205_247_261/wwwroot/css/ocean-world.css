@@ -25,15 +25,16 @@
 .ow-sky{background:radial-gradient(ellipse at 77% 21%,#fffceb 0%,#fffceb00 24%),linear-gradient(#d9f4fb 0%,#f0fbfa 40%,#b6e9ed 45%,#66cbe1 100%)}
 .ow-sea{inset:40% 0 0;background:linear-gradient(#c2edf1,#6acfe4 50%,#2caed1);overflow:visible}
 .ow-sun-path{position:absolute;left:58%;top:0;width:28%;height:85%;opacity:.28;background:linear-gradient(180deg,#fff9,transparent);clip-path:polygon(42% 0,59% 0,100% 100%,0 100%);animation:ow-sunlight 11s ease-in-out infinite}
-/* Two complete tiles. Overscan also covers the foreground's 27% scroll offset. */
-.ow-swell{position:absolute;left:-42%;width:210%;height:55%;pointer-events:none;will-change:transform}
-.ow-swell-drift{position:absolute;inset:0 auto 0 0;width:200%;background-repeat:repeat-x;background-size:50% 100%;animation:ow-current 180s linear infinite;will-change:transform}
-.ow-swell-0{top:-7%;height:40%;opacity:.85}.ow-swell-0 .ow-swell-drift{background-image:url('/images/journey/ocean-swell-0.svg');animation-duration:180s;animation-delay:-43s}
-.ow-swell-1{top:12%;height:53%}.ow-swell-1 .ow-swell-drift{background-image:url('/images/journey/ocean-swell-1.svg');animation-duration:152s;animation-delay:-81s}
-.ow-swell-2{top:37%;height:72%}.ow-swell-2 .ow-swell-drift{background-image:url('/images/journey/ocean-swell-2.svg');animation-duration:128s;animation-delay:-29s}
+/* The scroll offset still has overscan at either edge. The inner surface is
+   only slightly wider than its parent, instead of over four viewports wide. */
+.ow-swell{position:absolute;left:-30%;width:180%;height:55%;pointer-events:none;will-change:transform}
+.ow-swell-drift{position:absolute;inset:0 auto 0 0;width:120%;background-repeat:repeat-x;background-size:97.222222% 100%;animation:ow-current 18s ease-in-out infinite alternate;will-change:transform}
+.ow-swell-0{top:-7%;height:40%;opacity:.85}.ow-swell-0 .ow-swell-drift{background-image:url('/images/journey/ocean-swell-0.svg');animation-duration:18s;animation-delay:-4.3s}
+.ow-swell-1{top:12%;height:53%}.ow-swell-1 .ow-swell-drift{background-image:url('/images/journey/ocean-swell-1.svg');animation-duration:15.2s;animation-delay:-8.1s}
+.ow-swell-2{top:37%;height:72%}.ow-swell-2 .ow-swell-drift{background-image:url('/images/journey/ocean-swell-2.svg');animation-duration:12.8s;animation-delay:-2.9s}
 .ow-near-sea{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
-.ow-swell-3{top:80%;height:28%;opacity:.85}.ow-swell-3 .ow-swell-drift{background-image:url('/images/journey/ocean-swell-3.svg');animation-duration:104s;animation-delay:-61s}
-.ow-swell-4{top:91%;height:27%;opacity:.85}.ow-swell-4 .ow-swell-drift{background-image:url('/images/journey/ocean-swell-4.svg');animation-duration:88s;animation-delay:-17s}
+.ow-swell-3{top:80%;height:28%;opacity:.85}.ow-swell-3 .ow-swell-drift{background-image:url('/images/journey/ocean-swell-3.svg');animation-duration:10.4s;animation-delay:-6.1s}
+.ow-swell-4{top:91%;height:27%;opacity:.85}.ow-swell-4 .ow-swell-drift{background-image:url('/images/journey/ocean-swell-4.svg');animation-duration:8.8s;animation-delay:-1.7s}
 .ow-water-lines{inset:0 -8%;opacity:.2;background:repeating-linear-gradient(177deg,transparent 0 80px,#efffff88 82px 83px,transparent 85px 130px);animation:ow-water-light 14s ease-in-out infinite}
 
 
@@ -55,7 +56,7 @@
 .ow-intro h1{color:#123f56;font-weight:700}.ow-intro h1 em{color:#007f9e}
 .ow-harbor-board{background:#f5ffffed;box-shadow:0 22px 60px #124d7a20;border-color:#fff}
 .ow-motion-paused .ow-swell-drift,.ow-motion-paused .ow-start-land:before,.ow-motion-paused .ow-start-land:after,.ow-motion-paused .ow-wake,.ow-motion-paused .ow-sun-path,.ow-motion-paused .ow-water-lines{animation-play-state:paused}
-@keyframes ow-current{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@keyframes ow-current{from{transform:translate3d(0,0,0)}to{transform:translate3d(-10%,0,0)}}
 @keyframes ow-shore{0%{transform:scale(.96,.94);opacity:0}18%{opacity:.5}70%{opacity:.2}100%{transform:scale(1.12,1.24);opacity:0}}
 @keyframes ow-sunlight{0%,100%{transform:translate3d(-6px,0,0) scaleX(.97);opacity:.24}50%{transform:translate3d(6px,0,0) scaleX(1.03);opacity:.34}}
 @keyframes ow-water-light{0%,100%{transform:translate3d(-1%,0,0);opacity:.13}50%{transform:translate3d(1%,3px,0);opacity:.22}}

@@ -79,7 +79,7 @@
             || course.lessons.find(item => item.status === 'current') || course.lessons.at(-1);
     }
     function islandArt(id) {
-        return id === 1 ? '/images/journey/learning-island-reference-v2.png' : id === 2 ? '/images/journey/learning-island-camp-seamount-v1.png' : '/images/journey/learning-island-temple-seamount-v1.png';
+        return id === 1 ? '/images/journey/learning-island-reference-v2.png' : id === 2 ? '/images/journey/learning-island-camp-seamount-v1.png' : id === 3 ? '/images/journey/learning-island-shipwreck-v1.png' : '/images/journey/learning-island-temple-seamount-v1.png';
     }
     function setState(value) {
         state = value;
@@ -96,8 +96,8 @@
         const hasProgress = course.completedLessons.length > 0;
         const hasHistory = state.courses.some(item => item.completedLessons.length > 0);
         $('#current-course-title').textContent = course.title;
-        $('#current-island-number').textContent = `เกาะ ${course.currentIslandId} / ${course.totalLessons}`;
-        $('#current-island-title').textContent = course.isComplete ? 'ครบทุกเกาะแล้ว เก่งขึ้นอีกขั้น!' : current.title;
+        $('#current-island-number').textContent = `ด่าน ${course.currentIslandId} / ${course.totalLessons}`;
+        $('#current-island-title').textContent = course.isComplete ? 'ครบทุกด่านแล้ว เก่งขึ้นอีกขั้น!' : current.title;
         $('.sj-island-scene>img').src = islandArt(course.currentIslandId);
         $('#current-island-description').textContent = course.isComplete
             ? 'ทบทวนบทเรียนที่อยากฝึกเพิ่ม หรือเปิดตู้เลือกเส้นทางใหม่ได้ทุกเมื่อ'
@@ -107,11 +107,11 @@
         $('#current-lesson-minutes').textContent = `${current.minutes} นาที · มีแบบฝึกท้ายบท`;
         $('#current-lesson-xp').textContent = course.isComplete ? 'ทบทวนได้ ไม่เพิ่ม XP ซ้ำ' : `ผ่านบทเรียน รับ ${current.xp} XP`;
         $('#resume-learning').replaceChildren(document.createTextNode(course.isComplete ? 'ทบทวนบทเรียน' : hasProgress ? 'เรียนต่อ' : 'เริ่มเรียน'), node('span', '', '→'));
-        $('#course-progress-caption').textContent = `สำเร็จ ${course.completedLessons.length} จาก ${course.totalLessons} เกาะ`;
+        $('#course-progress-caption').textContent = `สำเร็จ ${course.completedLessons.length} จาก ${course.totalLessons} ด่าน`;
         $('#course-progress-value').textContent = `${course.progress}%`;
         $('#course-progress').value = course.completedLessons.length;
         $('#course-progress').max = course.totalLessons;
-        $('#island-status-tag').replaceChildren(node('i'), document.createTextNode(course.isComplete ? 'สำรวจครบทุกเกาะแล้ว' : `เกาะ ${course.currentIslandId} · ${current.islandName}`));
+        $('#island-status-tag').replaceChildren(node('i'), document.createTextNode(course.isComplete ? 'สำรวจครบทุกด่านแล้ว' : `ด่าน ${course.currentIslandId} · ${current.islandName}`));
         $('#niko-learning-message').textContent = course.isComplete ? 'ทำได้แล้ว! จะพักหรือไปเส้นทางใหม่ ฉันไปด้วยนะ' : hasProgress ? 'ฉันจำเกาะเดิมได้ พร้อมเมื่อไรก็ไปต่อกันนะ' : 'เริ่มจากบทสั้น ๆ แล้วค่อยไปเกาะถัดไปด้วยกัน';
         $('#achievement-count').textContent = number(state.achievements.length);
         const achievementNames = { 'first-lesson': 'สำเร็จบทเรียนแรก', 'course-13': 'จบเส้นทางอังกฤษเพื่อการทำงาน', 'course-1': 'จบเส้นทาง UX Research', 'course-5': 'จบเส้นทาง JavaScript' };
@@ -129,10 +129,10 @@
             const button = node('button', `sj-lesson-island is-${item.status}`);
             button.type = 'button'; button.dataset.lessonId = item.id;
             button.disabled = item.status === 'locked';
-            button.setAttribute('aria-label', `เกาะ ${item.id}: ${item.title} — ${item.status === 'locked' ? 'ยังไม่ปลดล็อก' : item.status === 'completed' ? 'สำเร็จแล้ว กดทบทวน' : 'ดูรายละเอียดด่านปัจจุบัน'}`);
+            button.setAttribute('aria-label', `ด่าน ${item.id}: ${item.title} — ${item.status === 'locked' ? 'ยังไม่ปลดล็อก' : item.status === 'completed' ? 'สำเร็จแล้ว กดทบทวน' : 'ดูรายละเอียดด่านปัจจุบัน'}`);
             if (item.status === 'current') button.setAttribute('aria-current', 'step');
             const art = node('img'); art.src = islandArt(item.id); art.alt = ''; art.width = 1448; art.height = 1086;
-            button.append(node('span', 'sj-island-index', String(item.id).padStart(2, '0')), art, node('h3', '', item.title), node('span', 'sj-island-status', item.status === 'locked' ? '🔒 เรียนด่านก่อนหน้าเพื่อเปิดเกาะ' : item.status === 'completed' ? '✓ สำเร็จแล้ว · ทบทวน' : 'ดูรายละเอียดด่าน'));
+            button.append(node('span', 'sj-island-index', String(item.id).padStart(2, '0')), art, node('h3', '', item.title), node('span', 'sj-island-status', item.status === 'locked' ? 'เรียนด่านก่อนหน้าเพื่อเปิดด่านนี้' : item.status === 'completed' ? '✓ สำเร็จแล้ว · ทบทวน' : 'ดูรายละเอียดด่าน'));
             button.addEventListener('click', () => guarded(() => window.NextSkillIslandDetails ? window.NextSkillIslandDetails.show(item, course.courseId, () => openLesson(course.courseId, item.id)) : openLesson(course.courseId, item.id)));
             return button;
         }));
@@ -149,12 +149,12 @@
         const info = node('div');
         info.append(node('h3', '', course.title), node('p', 'sj-course-description', course.description));
         const meta = node('div', 'sj-course-small-meta');
-        meta.append(node('span', '', categoryLabel(course.category)), node('span', '', course.canStart ? `${course.totalLessons} เกาะเรียนรู้` : 'กำลังเตรียมเส้นทาง'));
+        meta.append(node('span', '', categoryLabel(course.category)), node('span', '', course.canStart ? `${course.totalLessons} ด่านเรียนรู้` : 'กำลังเตรียมเส้นทาง'));
         info.append(meta); card.append(info);
         if (isCurrent) card.append(node('span', 'sj-course-tag', 'คอร์สปัจจุบัน'));
         if (progress?.hasStarted) {
             const wrap = node('div', 'sj-course-progress');
-            const caption = node('div'); caption.append(node('span', '', `สำเร็จ ${progress.completedLessons.length}/${progress.totalLessons} เกาะ`), node('strong', '', `${progress.progress}%`));
+            const caption = node('div'); caption.append(node('span', '', `สำเร็จ ${progress.completedLessons.length}/${progress.totalLessons} ด่าน`), node('strong', '', `${progress.progress}%`));
             const bar = node('progress'); bar.max = progress.totalLessons; bar.value = progress.completedLessons.length; bar.setAttribute('aria-label', `ความก้าวหน้า ${course.title}`);
             wrap.append(caption, bar); card.append(wrap);
         }
@@ -304,7 +304,7 @@
     function renderLesson() {
         $('#lesson-loading').hidden = true;
         $('#lesson-content').hidden = false;
-        $('#lesson-location').textContent = `เกาะ ${lesson.id} · ${lesson.islandName} · ${lesson.minutes} นาที`;
+        $('#lesson-location').textContent = `ด่าน ${lesson.id} · ${lesson.islandName} · ${lesson.minutes} นาที`;
         $('#lesson-title').textContent = lesson.title;
         $('#lesson-summary').textContent = lesson.summary;
         $('#lesson-reading').replaceChildren(...lesson.reading.map(reading => {
@@ -374,7 +374,7 @@
         const panel = $('#lesson-result'); panel.hidden = false; panel.dataset.passed = String(result.passed);
         $('.sj-result-symbol').textContent = result.passed ? '✓' : '↻';
         $('#lesson-result-eyebrow').textContent = `${result.score} / ${result.totalQuestions} ข้อ · ผ่านเมื่อถูก ${result.requiredCorrect} ข้อ`;
-        $('#lesson-result-title').textContent = result.passed ? (result.alreadyCompleted ? 'ทบทวนเรียบร้อยแล้ว' : 'ทำได้แล้ว อีกเกาะที่คุณผ่าน!') : 'อีกนิดเดียว ลองใช้คำแนะนำดูนะ';
+        $('#lesson-result-title').textContent = result.passed ? (result.alreadyCompleted ? 'ทบทวนเรียบร้อยแล้ว' : 'ทำได้แล้ว อีกด่านที่คุณผ่าน!') : 'อีกนิดเดียว ลองใช้คำแนะนำดูนะ';
         $('#lesson-result-message').textContent = result.passed ? (result.alreadyCompleted ? 'ผลการเรียนเดิมอยู่ครบ บทเรียนนี้รับรางวัลแล้ว จึงไม่เพิ่ม XP ซ้ำ' : result.reward) : 'ดูคำอธิบาย แล้วกลับไปแก้คำตอบได้ คำตอบเดิมของคุณยังอยู่ครบ';
         $('#lesson-result-feedback').replaceChildren(...result.feedback.map(item => {
             const box = node('article', 'lesson-feedback-item'); box.dataset.correct = String(item.correct);
@@ -536,9 +536,12 @@
         if (window.NextSkillMotion) paused=window.NextSkillMotion.snapshot().paused;
         const mode = reduce.matches ? 'reduced' : paused ? 'paused' : 'active';
         if (guide.dataset.motion !== mode) guide.dataset.motion = mode;
-        body.dataset.motion = mode;
-        $('#sj-motion').setAttribute('aria-pressed', String(!motionAllowed()));
-        $('#sj-motion').textContent = reduce.matches ? 'ลดการเคลื่อนไหวตามอุปกรณ์' : paused ? 'เปิดการเคลื่อนไหว' : 'พักการเคลื่อนไหว';
+        if (body.dataset.motion !== mode) body.dataset.motion = mode;
+        const control = $('#sj-motion');
+        const pressed = String(!motionAllowed());
+        const label = reduce.matches ? 'ลดการเคลื่อนไหวตามอุปกรณ์' : paused ? 'เปิดการเคลื่อนไหว' : 'พักการเคลื่อนไหว';
+        if (control.getAttribute('aria-pressed') !== pressed) control.setAttribute('aria-pressed', pressed);
+        if (control.textContent !== label) control.textContent = label;
         if (!motionAllowed()) layers.forEach(layer => { layer.style.transform = ''; offsets.delete(layer); });
     }
     function sceneFrame() {
@@ -565,7 +568,11 @@
     $('#buddy-motion').addEventListener('click', () => { if(window.NextSkillMotion) window.NextSkillMotion.togglePaused(); else paused = !paused; syncMotion(); queueScene(); });
     $('#sj-motion').addEventListener('click', () => $('#buddy-motion').click());
     reduce.addEventListener('change', () => { syncMotion(); queueScene(); });
-    window.addEventListener('scroll', queueScene, { passive: true });
+    // The ocean has its own scroll timeline and explicitly owns Nimo's slot.
+    // Only run this older parallax/anchor tracker when its elements exist.
+    if (layers.length || (body.dataset.journeyMode === 'home' && $('[data-scene] .sj-mascot-anchor'))) {
+        window.addEventListener('scroll', queueScene, { passive: true });
+    }
     window.addEventListener('resize', queueScene, { passive: true });
     document.addEventListener('visibilitychange', queueScene);
     window.addEventListener('pageshow', queueScene);

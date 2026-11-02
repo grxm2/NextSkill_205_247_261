@@ -16,6 +16,16 @@
     const touch = matchMedia('(pointer: coarse)');
     const scrubDuration = () => touch.matches ? .32 : .48;
     const harborStop = .62;
+    function departureClearance() {
+        const island = scene.querySelector('.ow-start-land');
+        const art = island?.querySelector('.ow-island-art');
+        if (!island || !art || !vessel) return 0;
+        // Keep the visible hull below the sand while the shore moves past.
+        // Layout coordinates stay stable even while the camera is translated.
+        const beachBottom = island.offsetTop + art.getBoundingClientRect().height * .83;
+        const hullTop = vessel.offsetTop + vessel.offsetHeight * .45;
+        return Math.max(0, beachBottom - hullTop + 12);
+    }
     function announce(progress) {
         if (progress > .025 && !boarded) { boarded = true; window.NextSkillVoyage?.board(); }
         else if (progress <= .025 && boarded) { boarded = false; window.NextSkillVoyage?.returnToShore(); }
@@ -26,10 +36,12 @@
         if (scene.dataset.voyage !== voyage && (scene.dataset.voyage !== 'boarding' || voyage !== 'rowing')) scene.dataset.voyage = voyage;
 
         if (stage === lastStage) return;
+        const previousStage = lastStage;
         lastStage = stage;
         scene.dataset.stage = stage;
         scene.querySelector('.ow-harbor').inert = stage !== 2;
         if (stage === 0) window.NextSkillBuddyMotion?.play('wave', undefined, { motion: !reduced.matches && !paused });
+        if (stage === 2 && previousStage !== -1 && !reduced.matches && !paused) window.NextSkillBuddyMotion?.play('cheer');
     }
     function destroy() {
         stopTravel(); context?.revert(); context = null; timeline = null;
@@ -58,8 +70,10 @@
                 onUpdate() { announce(this.progress() * harborStop); },
                 scrollTrigger:{id:'ocean-master',trigger:track || scene,start:'top top',end:()=>`+=${Math.max(scene.clientHeight * 2.9, 2000)}`,scrub:paused ? true : scrubDuration(),invalidateOnRefresh:true}
             });
-            // One uninterrupted camera track: no stop or acceleration seam at open water.
-            timeline.to(camera,{x:()=>-innerWidth*2.2,duration:harborStop,force3D:true},0)
+            // Give the boat room to move away from shore before the camera
+            // begins its continuous move across open water.
+            timeline.to(camera,{x:()=>-innerWidth*.074,duration:harborStop*.06,ease:'power1.in',force3D:true},harborStop*.07)
+                .to(camera,{x:()=>-innerWidth*2.2,duration:harborStop*.87,ease:'none',force3D:true},harborStop*.13)
                 .to('.ow-intro',{x:()=>-innerWidth*.65,autoAlpha:0,duration:.23},0)
                 .to('.ow-distance',{x:()=>-innerWidth*.24,duration:harborStop},0)
                 .to('.ow-clouds',{x:()=>-innerWidth*.5,duration:harborStop},0)
@@ -68,8 +82,12 @@
                 .to('.ow-swell-2',{xPercent:-12,y:-22,duration:harborStop},0)
                 .to('.ow-swell-3',{xPercent:-19,y:15,duration:harborStop},0)
                 .to('.ow-swell-4',{xPercent:-27,y:24,duration:harborStop},0)
-                .to('.ow-seabirds',{x:()=>-innerWidth*.37,y:-18,duration:harborStop},0)
-                .to(vessel,{x:()=>-innerWidth*(innerWidth<701?.15:.33),y:()=>innerWidth<701?(innerHeight<741?70:45):30,duration:harborStop,force3D:true},0);
+                .to('.ow-seabirds',{x:()=>innerWidth*.03,y:-10,duration:harborStop},0)
+                // First move the hull clear of the sand. The camera starts
+                // travelling once that move is complete.
+                .to(vessel,{y:departureClearance,duration:harborStop*.07,ease:'power1.out',force3D:true},0)
+                .to(vessel,{x:()=>innerWidth<701?Math.max(0,innerWidth*.10-vessel.offsetLeft):-innerWidth*.33,duration:harborStop*.93,ease:'sine.inOut',force3D:true},harborStop*.07)
+                .to(vessel,{y:()=>innerWidth<701?(innerHeight<741?70:45):30,duration:harborStop*.62,ease:'sine.inOut'},harborStop*.38);
         }, scene);
         directScroll = paused;
         syncIdle(); ScrollTrigger.refresh(); announce(timeline.progress() * harborStop);
@@ -129,7 +147,7 @@
             }
             const requested = Number(button.dataset.oceanGo);
             const tour = requested === .2;
-            if (requested > 0) await window.NextSkillVoyage?.board();
+            if (requested > 0 && await window.NextSkillVoyage?.board() === false) return;
             go(tour ? harborStop : requested,event.detail>0,tour);
         }
         else if (link && link.origin===location.origin && ['/Home','/Home/Index'].includes(link.pathname) && ['#journey-world','#course-harbor','#ocean-journey'].includes(link.hash)) {

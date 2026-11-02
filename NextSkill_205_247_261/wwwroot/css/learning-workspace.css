@@ -295,3 +295,31 @@
 /* Rock foundations are part of the artwork and blend naturally into the sea. */
 .smart-journey .learning-workspace #lesson-route .sj-lesson-island:not([data-lesson-id="1"]):before{display:none}
 .smart-journey .learning-workspace #lesson-route .sj-lesson-island:not([data-lesson-id="1"]) img{mask-image:none}
+
+/* Keep route markings behind readable labels. */
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island h3,.smart-journey .learning-workspace #lesson-route .sj-lesson-island:not(.is-current) .sj-island-status{position:relative;z-index:1;display:table;margin-left:auto;margin-right:auto;padding:3px 12px;border-radius:18px;background:#d9f5f5ed;color:#073a50;text-shadow:none}
+
+/* Ocean navigation, shared by the landing and learning journey. */
+body.smart-journey .sj-header{isolation:isolate;border:0;background:linear-gradient(115deg,#00518d,#075d9b 58%,#1273ab);backdrop-filter:none;box-shadow:0 5px 20px #00518326}
+body.smart-journey .sj-header:before{content:'';position:absolute;z-index:0;left:59%;top:75%;width:36%;height:115px;pointer-events:none;background:radial-gradient(ellipse at 50% 0,#fff1aecc 0,#ffdd8777 15%,transparent 56%),conic-gradient(from 154deg at 50% 0,transparent 0 6deg,#fff0b044 7deg 12deg,transparent 13deg 22deg,#fff0b044 23deg 28deg,transparent 29deg 40deg,#fff0b033 41deg 47deg,transparent 48deg 55deg);mask-image:linear-gradient(#000,transparent);opacity:.8}
+body.smart-journey .sj-header:after{content:'';position:absolute;left:0;right:0;bottom:-9px;height:17px;z-index:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 20' preserveAspectRatio='none'%3E%3Cpath d='M0 4 C100 -4 170 17 280 9 S440 2 560 10 S720 12 820 5 S970 2 1070 10 S1200 1 1310 7 S1490 14 1600 5' fill='none' stroke='%23b4f6ff' stroke-width='3'/%3E%3Cpath d='M1020 8 C1110 17 1200 1 1310 7 S1490 14 1600 5' fill='none' stroke='%23ffe7a0' stroke-width='3'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+body.smart-journey .sj-nav-inner{position:relative;z-index:1;gap:20px}
+body.smart-journey .sj-brand>span{color:#fff}
+body.smart-journey .sj-brand small{color:#d7efff}
+body.smart-journey .sj-nav{gap:clamp(8px,1.8vw,28px)}
+body.smart-journey .sj-nav a,body.smart-journey .sj-nav>button{gap:7px;min-height:44px;padding:8px 13px;border-radius:30px;color:#fff;font-size:14px;font-weight:500;text-decoration:none}
+body.smart-journey .sj-nav a:before,body.smart-journey .sj-nav>button:before{content:'';display:block;flex:0 0 19px;width:19px;height:19px;background:currentColor;mask-size:contain;mask-repeat:no-repeat;mask-position:center}
+body.smart-journey .sj-nav a:nth-child(1):before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 11 12 3l9 8M5 10v10h5v-6h4v6h5V10'/%3E%3C/svg%3E")}
+body.smart-journey .sj-nav a:nth-child(2):before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 6c-2-2-5-2-9-1v14c4-1 7-1 9 1m0-14c2-2 5-2 9-1v14c-4-1-7-1-9 1m0-14v14'/%3E%3C/svg%3E")}
+body.smart-journey .sj-nav a:nth-child(3):before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v13M10 5 4 15h6zM14 6l6 9h-6zM3 18c3 2 5 2 8 0 3 2 6 2 10 0'/%3E%3C/svg%3E")}
+body.smart-journey .sj-nav>button:before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m2 8 10-5 10 5-10 5L2 8Zm3 5 7 4 7-4M5 17l7 4 7-4'/%3E%3C/svg%3E")}
+body.smart-journey .sj-nav [aria-current="page"]{background:#e8f7ff;color:#0065a0;font-weight:600}
+body.smart-journey .sj-nav [aria-current]:after{display:none}
+body.smart-journey .sj-nav a:hover,body.smart-journey .sj-nav>button:hover{background:#e8f7ff;color:#005a91!important}
+body.smart-journey .sj-nav a:focus-visible,body.smart-journey .sj-nav button:focus-visible,body.smart-journey .sj-login:focus-visible,body.smart-journey .sj-profile summary:focus-visible{outline:3px solid #ffe69b;outline-offset:3px}
+body.smart-journey .sj-login{color:#fff!important;border-color:#bce6fa;background:#ffffff1c;font-weight:500}
+body.smart-journey .sj-profile>summary,body.smart-journey .sj-nav-xp,body.smart-journey .sj-nav-xp strong{color:#fff}
+@media(max-width:1100px){body.smart-journey .sj-nav{gap:2px}body.smart-journey .sj-nav a,body.smart-journey .sj-nav>button{padding-inline:8px}}
+@media(max-width:900px){body.smart-journey .sj-nav-inner{padding-bottom:13px}body.smart-journey .sj-nav{justify-content:space-between;gap:0}body.smart-journey .sj-nav a,body.smart-journey .sj-nav>button{font-size:12px;padding:6px 8px;min-height:40px}body.smart-journey .sj-nav a:before,body.smart-journey .sj-nav>button:before{width:16px;height:16px;flex-basis:16px}}
+@media(max-width:450px){body.smart-journey .sj-nav a,body.smart-journey .sj-nav>button{font-size:11px;gap:3px;padding-inline:5px}body.smart-journey .sj-nav a:before,body.smart-journey .sj-nav>button:before{width:14px;height:14px;flex-basis:14px}body.smart-journey .sj-brand small{font-size:10px}}
+

@@ -1,0 +1,11 @@
+:root{--glass-bg:linear-gradient(145deg,rgba(255,255,255,.62),rgba(255,255,255,.28));--glass-border:rgba(255,255,255,.55)}
+.glass{position:relative;isolation:isolate;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--ns-ink);-webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.85),inset 0 -1px 0 rgba(255,255,255,.2),0 10px 30px rgba(0,60,120,.22)}
+.glass:before{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:radial-gradient(ellipse at 0 0,rgba(255,255,255,.55),transparent 58%);pointer-events:none}
+.smart-journey .learning-sidebar .sj-current-island.glass{--glass-bg:linear-gradient(145deg,rgba(245,252,255,.94),rgba(240,249,255,.9));border:1px solid var(--glass-border);background:var(--glass-bg);backdrop-filter:blur(14px) saturate(1.6);-webkit-backdrop-filter:blur(14px) saturate(1.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.85),inset 0 -1px 0 rgba(255,255,255,.2),0 10px 30px rgba(0,60,120,.22)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass,.smart-journey .learning-sidebar .sj-current-island.glass{background:rgba(240,249,255,.94)}}
+@media(prefers-reduced-transparency:reduce){.glass,.smart-journey .learning-sidebar .sj-current-island.glass{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(240,249,255,.97)}}
+
+/* Login keeps a transparent outline even in glass fallback modes. */
+.ns-navbar .ns-navbar__login.glass{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.6);box-shadow:none}
+.ns-navbar .ns-navbar__login.glass:hover{background:rgba(255,255,255,.22)}
+.ns-navbar .ns-navbar__login.glass:before{content:none}

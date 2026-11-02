@@ -20,9 +20,11 @@
     <link rel="stylesheet" href="~/css/course-pages.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site-shell.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/nextskill-components.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/glass.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
 </head>
 <body class="ocean-theme ns-site-shell">
-    <partial name="_SiteNav" />
+    <partial name="_Navbar" />
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -43,5 +45,6 @@
     <script src="~/js/buddy-agent.js" asp-append-version="true" defer></script>
     <script src="~/js/buddy-motion.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/navbar.js" asp-append-version="true" defer></script>
 </body>
 </html>

@@ -246,11 +246,8 @@
     }
 
     function flightBounds() {
-        const style = getComputedStyle(scene.querySelector('.ow-seabirds'));
-        const scale = Math.max(1, parseFloat(style.width)) / 400;
-        const left = parseFloat(style.left) || 0;
-        // Include the entire parallax travel: loop boundaries always stay beyond the scene edge.
-        return { start:(innerWidth - left + innerWidth * .37) / scale + 80, end:-left / scale - 80 };
+        // The flock stays inside its right-hand SVG viewport throughout parallax.
+        return { start:352, end:48 };
     }
     function flightFrames(bird) {
         const { start, end } = flightBounds();
@@ -259,7 +256,7 @@
         return Array.from({ length:61 }, (_, frame) => {
             const t = frame / 60;
             const phase = t * Math.PI * 2;
-            return { offset:t, transform:`translate3d(${(start + (end - start) * t - origin) / scale}px,${Math.sin(phase) * 6}px,0) rotate(${Math.sin(phase) * 2}deg)` };
+            return { offset:t, transform:`translate3d(${((start + end) / 2 + (start - end) / 2 * Math.cos(phase) - origin) / scale}px,${Math.sin(phase) * 6}px,0) rotate(${Math.sin(phase) * 2}deg)` };
         });
     }
     birds.forEach((bird, index) => {

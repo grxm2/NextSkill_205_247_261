@@ -12,9 +12,11 @@
     <link rel="stylesheet" href="~/css/account-game.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site-shell.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/nextskill-components.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/glass.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
 </head>
 <body class="nimo-account-theme ns-site-shell">
-    <partial name="_SiteNav" />
+    <partial name="_Navbar" />
     <main class="account-main">@RenderBody()</main>
     <footer class="site-footer">
         <div class="footer-inner">
@@ -31,5 +33,7 @@
     </footer>
     <script src="~/js/account.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="~/js/navbar.js" asp-append-version="true" defer></script>
 </body>
 </html>
