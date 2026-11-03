@@ -38,12 +38,12 @@
 .ow-water-lines{inset:0 -8%;opacity:.2;background:repeating-linear-gradient(177deg,transparent 0 80px,#efffff88 82px 83px,transparent 85px 130px);animation:ow-water-light 14s ease-in-out infinite}
 
 
-.ow-start-land{filter:drop-shadow(0 22px 12px #126c8a18)}
-.ow-island-art{display:block;width:100%;height:auto;overflow:visible}
-.ow-palm{transform-box:view-box;animation:ow-palm-sway 8s ease-in-out infinite;transform-origin:523px 124px}
-.ow-palm--far{transform-origin:640px 137px;animation-duration:9.6s;animation-delay:-3.2s}
+.ow-start-land{filter:none}
+.ow-island-art{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 22px 12px #126c8a18)}
+.ow-palm{transform-box:view-box;animation:ow-palm-sway 6.4s ease-in-out infinite;transform-origin:523px 124px}
+.ow-palm--far{transform-origin:640px 137px;animation-duration:8s;animation-delay:-2.7s}
 .ow-motion-paused .ow-palm{animation-play-state:paused}
-@keyframes ow-palm-sway{0%,100%{transform:rotate(-.8deg)}50%{transform:rotate(1.2deg)}}
+@keyframes ow-palm-sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2.4deg)}}
 .ow-start-land:before,.ow-start-land:after{content:'';position:absolute;left:8%;right:7%;height:18%;bottom:6%;border:2px solid #e0fffcaa;border-radius:50%;z-index:-1;animation:ow-shore 7.6s linear infinite}
 .ow-start-land:after{animation-delay:-3.8s;border-color:#c9ffed99}
 .ow-land figcaption{font-size:12px;letter-spacing:.04em;color:#22617a}
@@ -62,7 +62,7 @@
 @keyframes ow-water-light{0%,100%{transform:translate3d(-1%,0,0);opacity:.13}50%{transform:translate3d(1%,3px,0);opacity:.22}}
 @keyframes ow-wake{from{transform:scale(.95,.9);opacity:.65}to{transform:scale(1.06,1.08);opacity:1}}
 .ow-static .ow-near-sea{display:none}.ow-static .ow-swell-drift,.ow-static .ow-wake,.ow-static .ow-sun-path,.ow-static .ow-water-lines{animation:none}
-@media(max-width:700px){.ow-sea{inset:46% 0 0}.ow-seabirds{top:35%;left:45%;width:48%}.ow-swell-3{top:83%}.ow-swell-4{top:94%}.ow-distance{--ow-distance-height:48px;left:34%;top:calc(46% - var(--ow-distance-height));width:105%;opacity:.55}.ow-start-land{filter:none}}
+@media(max-width:700px){.ow-sea{inset:46% 0 0}.ow-seabirds{top:35%;left:45%;width:48%}.ow-swell-3{top:83%}.ow-swell-4{top:94%}.ow-distance{--ow-distance-height:48px;left:34%;top:calc(46% - var(--ow-distance-height));width:105%;opacity:.55}.ow-island-art{filter:none}}
 @media(prefers-reduced-motion:reduce){.ow-swell-drift,.ow-wake,.ow-start-land:before,.ow-start-land:after,.ow-sun-path,.ow-water-lines,.ow-palm{animation:none!important;will-change:auto}.ow-swell{will-change:auto}}
 
 /* Grounded timber harbor. Distant terrain stays in atmospheric perspective. */

@@ -16,6 +16,22 @@
     const touch = matchMedia('(pointer: coarse)');
     const scrubDuration = () => touch.matches ? .32 : .48;
     const harborStop = .62;
+    function fitVesselOffset(offset) {
+        // Leave room for the hull and its gentle rocking inside the scene.
+        const available = scene.clientHeight - vessel.offsetTop - vessel.offsetHeight - 20;
+        return Math.max(0, Math.min(offset, available));
+    }
+    function arrivalOffset() {
+        const baseline = innerWidth < 701 ? (innerHeight < 741 ? 70 : 45) : 30;
+        if (innerWidth >= 701) return fitVesselOffset(baseline);
+        const board = scene.querySelector('.ow-harbor-board');
+        const seat = scene.querySelector('.ow-boat-anchor');
+        if (!board || !seat) return fitVesselOffset(baseline);
+        // The course list can grow after loading; keep Nimo below it when
+        // space permits, and retain the existing viewport clearance.
+        const bottom = board.getBoundingClientRect().bottom - scene.getBoundingClientRect().top;
+        return fitVesselOffset(Math.max(baseline, bottom + 12 - vessel.offsetTop - seat.offsetTop));
+    }
     function departureClearance() {
         const island = scene.querySelector('.ow-start-land');
         const art = island?.querySelector('.ow-island-art');
@@ -24,7 +40,7 @@
         // Layout coordinates stay stable even while the camera is translated.
         const beachBottom = island.offsetTop + art.getBoundingClientRect().height * .83;
         const hullTop = vessel.offsetTop + vessel.offsetHeight * .45;
-        return Math.max(0, beachBottom - hullTop + 12);
+        return fitVesselOffset(Math.max(0, beachBottom - hullTop + 12));
     }
     function announce(progress) {
         if (progress > .025 && !boarded) { boarded = true; window.NextSkillVoyage?.board(); }
@@ -87,7 +103,7 @@
                 // travelling once that move is complete.
                 .to(vessel,{y:departureClearance,duration:harborStop*.07,ease:'power1.out',force3D:true},0)
                 .to(vessel,{x:()=>innerWidth<701?Math.max(0,innerWidth*.10-vessel.offsetLeft):-innerWidth*.33,duration:harborStop*.93,ease:'sine.inOut',force3D:true},harborStop*.07)
-                .to(vessel,{y:()=>innerWidth<701?(innerHeight<741?70:45):30,duration:harborStop*.62,ease:'sine.inOut'},harborStop*.38);
+                .to(vessel,{y:arrivalOffset,duration:harborStop*.62,ease:'sine.inOut'},harborStop*.38);
         }, scene);
         directScroll = paused;
         syncIdle(); ScrollTrigger.refresh(); announce(timeline.progress() * harborStop);
@@ -138,17 +154,20 @@
         const link = event.target.closest('a[href]');
         if (button) {
             event.preventDefault();
-            // The immediate primary action opens the existing picker. Storytelling
-            // belongs to the separate, explicitly requested boat-tour action.
-            if (button.dataset.oceanTour === 'true') {
-                stopTravel();
-                document.querySelector('[data-smart-action="choose-course"]')?.click();
-                return;
-            }
             const requested = Number(button.dataset.oceanGo);
-            const tour = requested === .2;
+            // The main action always starts the boat tour, including pages
+            // rendered from an older cached view that used a different value.
+            const tour = requested === .2 || button.matches('.ow-intro-actions .ns-button--primary');
+            if (tour) event.stopImmediatePropagation();
+            // A deliberate request to watch the voyage resumes the site's
+            // paused motion; the device's reduced-motion setting still wins.
+            if (tour && paused && !reduced.matches) {
+                if (window.NextSkillMotion) window.NextSkillMotion.setPaused(false);
+                else { paused = false; if (guide) guide.dataset.motion = 'active'; }
+            }
             if (requested > 0 && await window.NextSkillVoyage?.board() === false) return;
-            go(tour ? harborStop : requested,event.detail>0,tour);
+            // A keyboard activation should start the same voyage as a click.
+            go(tour ? harborStop : requested,tour || event.detail>0,tour);
         }
         else if (link && link.origin===location.origin && ['/Home','/Home/Index'].includes(link.pathname) && ['#journey-world','#course-harbor','#ocean-journey'].includes(link.hash)) {
             event.preventDefault(); event.stopImmediatePropagation(); go(link.hash==='#journey-world'?.78:link.hash==='#course-harbor'?.62:0,event.detail>0);

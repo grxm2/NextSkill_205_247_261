@@ -80,7 +80,12 @@
     reduce.addEventListener('change', refresh);
     document.addEventListener('visibilitychange', refresh);
     window.addEventListener('resize', queue, { passive: true });
-    window.addEventListener('scroll', queue, { passive: true, capture: true });
+    // On the ocean scene the observers already report visibility changes.
+    // Measuring every subscribed element on every scroll frame forces layout
+    // while the ScrollTrigger timeline is applying its transforms.
+    if (!document.querySelector('.ocean-home')) {
+        window.addEventListener('scroll', queue, { passive: true, capture: true });
+    }
     window.addEventListener('storage', event => {
         if (event.key !== storageKey) return;
         try { paused = JSON.parse(event.newValue)?.paused === true; } catch {}
