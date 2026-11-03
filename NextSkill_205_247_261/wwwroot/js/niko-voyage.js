@@ -4,8 +4,12 @@
  const scene=document.querySelector('.ow-scene');
  const shore=document.querySelector('.ow-island-mascot');
  const seat=document.querySelector('.ow-boat-anchor');
- let boarded=false, boarding, jump, flight, arrivalBoat, generation=0;
+ let boarded=false, boarding, jump, jumpSlot, flight, arrivalBoat, generation=0;
  const allowed=()=>!reduce.matches && window.NextSkillAgent?.motionAllowed();
+ const sceneAllowed=()=>{
+  const state=window.NextSkillMotion?.snapshot({element:scene,kind:'reaction'});
+  return state ? state.reactionAllowed : !reduce.matches && !document.hidden && !window.NextSkillAgent?.isPaused();
+ };
  function select(slot){
   document.querySelectorAll('[data-buddy-home="active"]').forEach(el=>el.removeAttribute('data-buddy-home'));
   slot.dataset.buddyHome='active';window.NextSkillAgent?.refresh();
@@ -15,30 +19,51 @@
   const robot=document.querySelector('.skill-buddy');
   window.NextSkillBuddyMotion?.stop(robot);
  }
- function cancelJump(){
+ function cancelJump(settle=false){
   const previous=jump;jump=null;previous?.cancel();
+  if(previous && settle && shore && seat)select(boarded ? seat : shore);
  }
  function transfer(target,pose){
   const agent=document.getElementById('nextskill-agent');
-  // Record the displayed position before cancelling an interrupted jump.
+  // Capture the actual in-flight position before retargeting on a reversal.
   const from=agent && !agent.hidden ? agent.getBoundingClientRect() : null;
-  cancelJump();select(target);
-  if(!agent || agent.parentElement!==target || !from || !allowed() || document.querySelector('dialog[open]'))return null;
-  const to=agent.getBoundingClientRect();
-  const visible=r=>r.width>0 && r.height>0 && r.right>0 && r.left<innerWidth && r.bottom>0 && r.top<innerHeight;
-  if(!visible(from)||!visible(to))return null;
-  const dx=from.left-to.left,dy=from.top-to.top;
-  if(Math.hypot(dx,dy)>Math.max(innerWidth*1.25,700))return null;
-  const arc=Math.min(96,Math.max(44,Math.hypot(dx,dy)*.28));
-  const direction=Math.sign(dx)||1;
+  // The boat or shore can momentarily be outside the viewport while the
+  // camera is moving. Gate the jump on the scene, not the sprite's old bounds.
+  const canAnimate=!!(scene && agent && from && from.width && from.height && sceneAllowed() && !document.querySelector('dialog[open]'));
+  cancelJump();
+  if(!canAnimate){select(target);return null;}
+  if(!jumpSlot){
+   jumpSlot=document.createElement('span');
+   jumpSlot.className='ow-jump-anchor sj-mascot-anchor buddy-slot';
+   jumpSlot.dataset.buddyAnchor='in-flight';
+   scene.append(jumpSlot);
+  }
+  const sceneRect=scene.getBoundingClientRect(),to=target.getBoundingClientRect();
+  const startX=from.left-sceneRect.left,startY=from.top-sceneRect.top;
+  const arc=Math.min(96,Math.max(44,Math.hypot(from.left-to.left,from.top-to.top)*.28));
+  jumpSlot.style.width=`${target.clientWidth}px`;jumpSlot.style.height=`${target.clientHeight}px`;
+  jumpSlot.style.transform=`translate3d(${startX}px,${startY}px,0)`;
+  select(jumpSlot);
+  if(agent.parentElement!==jumpSlot){select(target);return null;}
   window.NextSkillBuddyMotion?.play(pose);
-  jump=target.animate([
-   {transform:`translate3d(${dx}px,${dy}px,0) rotate(0deg)`,offset:0},
-   {transform:`translate3d(${dx*.58}px,${dy*.58-arc}px,0) rotate(${direction*6}deg)`,offset:.42},
-   {transform:`translate3d(${dx*.13}px,${dy*.13-arc*.28}px,0) rotate(${-direction*3}deg)`,offset:.8},
-   {transform:'translate3d(0,0,0) rotate(0deg)',offset:1}
-  ],{duration:760,easing:'cubic-bezier(.77,0,.175,1)'});
-  return jump;
+  let frame=0,startTime,resolve;
+  const finished=new Promise(done=>{resolve=done;});
+  const active={finished,cancel(){cancelAnimationFrame(frame);resolve(false);}};
+  jump=active;
+  function step(now){
+   if(jump!==active)return;
+   if(startTime===undefined)startTime=now;
+   const t=Math.min(1,(now-startTime)/760),ease=t*t*(3-2*t);
+   // Track the landing point as the user scrolls or reverses direction.
+   const box=target.getBoundingClientRect(),sceneBox=scene.getBoundingClientRect();
+   const x=startX+(box.left-sceneBox.left-startX)*ease;
+   const y=startY+(box.top-sceneBox.top-startY)*ease-Math.sin(Math.PI*t)*arc;
+   jumpSlot.style.transform=`translate3d(${x}px,${y}px,0)`;
+   if(t<1){frame=requestAnimationFrame(step);return;}
+   jump=null;select(target);resolve(true);
+  }
+  frame=requestAnimationFrame(step);
+  return active;
  }
  async function board(){
   if(boarding)return boarding;
@@ -91,16 +116,16 @@
   flight?.cancel();document.querySelector('.voyage-cloud-boat')?.remove();
  }
  function sync(){
-  const stopped=!allowed() || (!document.getElementById('journey-cloud-transition')?.open && !!document.querySelector('dialog[open]'));
+  const stopped=!(jump ? sceneAllowed() : allowed()) || (!document.getElementById('journey-cloud-transition')?.open && !!document.querySelector('dialog[open]'));
   document.body.classList.toggle('voyage-paused',stopped);
-  if(stopped){cancelJump();flight?.cancel();}
+  if(stopped){cancelJump(true);flight?.cancel();}
  }
  const guide=document.querySelector('.map-guide');if(guide)new MutationObserver(sync).observe(guide,{attributes:true,attributeFilter:['data-motion']});
  document.querySelectorAll('dialog').forEach(el=>new MutationObserver(sync).observe(el,{attributes:true,attributeFilter:['open']}));
  document.addEventListener('visibilitychange',sync);reduce.addEventListener('change',sync);
  window.NextSkillMotion?.subscribe(sync, { element:scene || document.querySelector('.skill-buddy'),kind:'reaction' });
- window.addEventListener('resize',()=>{cancelJump();flight?.cancel();});
- window.addEventListener('pagehide',()=>{generation++;cancelJump();flight?.cancel();});
+ window.addEventListener('resize',()=>{cancelJump(true);flight?.cancel();});
+ window.addEventListener('pagehide',()=>{generation++;cancelJump(true);flight?.cancel();});
  window.NextSkillVoyage={board,returnToShore,cloudBoat,descend,finishArrival};
  if(shore)select(shore);sync();
 })();

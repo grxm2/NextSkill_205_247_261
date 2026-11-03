@@ -37,13 +37,14 @@
    Docked at Course Harbor State (User Screenshot 2)
    ======================================================== */
 [data-voyage="docked"] .buddy-avatar-idle,
-.ow-scene[data-voyage="docked"] .buddy-avatar-idle{opacity:1;animation:buddySoftFloat 3.8s ease-in-out infinite}
+.ow-scene[data-voyage="docked"] .buddy-avatar-idle{opacity:1;animation:none}
+.ow-scene[data-voyage="docked"] .buddy-idle-motion{animation-name:nimo-shore-breathe}
 [data-voyage="docked"] .buddy-avatar-rowing,
 .ow-scene[data-voyage="docked"] .buddy-avatar-rowing{opacity:0;animation:none}
 [data-voyage="docked"] .voyage-oar,
 .ow-scene[data-voyage="docked"] .voyage-oar{animation:none;transform:rotate(-6deg) translateY(0)}
 [data-voyage="docked"] .ow-boat-idle,
-.ow-scene[data-voyage="docked"] .ow-boat-idle{animation:none}
+.ow-scene[data-voyage="docked"] .ow-boat-idle{animation:nimo-boat-idle 4.8s ease-in-out infinite}
 
 .voyage-cloud-boat{position:absolute;z-index:4;left:calc(50% - 105px);top:34%;width:210px;height:123px;pointer-events:none}
 .voyage-hull{position:relative;z-index:2;width:100%;height:auto}
@@ -51,8 +52,8 @@
 .voyage-arrival-boat{position:absolute;width:180px;pointer-events:none;opacity:0;z-index:3}.voyage-arrival-boat.has-arrived{opacity:1}
 .voyage-arrival-boat .voyage-seat{width:70px;height:81px;left:calc(48% - 35px);top:calc(38% - 81px)}
 .voyage-paused [data-voyage="rowing"] *, .voyage-paused .buddy-idle-motion,.ow-motion-paused .ow-boat-idle,.ow-motion-paused .voyage-oar,.ow-motion-paused .buddy-avatar-rowing,.ow-motion-paused .buddy-avatar-idle,.ow-motion-paused .ow-wake {animation-play-state:paused!important}
-.ow-boat-idle { animation:nimo-boat-idle 5.2s ease-in-out infinite; }
-@keyframes nimo-boat-idle { 0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-4px) rotate(1deg)} }
+.ow-boat-idle { animation:nimo-boat-idle 4.8s ease-in-out infinite; }
+@keyframes nimo-boat-idle { 0%,100%{transform:translateY(0) rotate(-1.4deg)}50%{transform:translateY(-5px) rotate(1.4deg)} }
 
 /* ========================================================
    Rowing Keyframe Animations
@@ -96,6 +97,11 @@
 @media(prefers-reduced-motion:reduce){.ow-boat-idle,.buddy-idle-motion{animation:none!important;transform:none!important}}
 
 [data-voyage="rowing"] .buddy-book{display:none!important}
+
+/* The legacy CSS mascot is retained for script compatibility, but is fully
+   hidden behind the illustrated Nimo. Do not animate its invisible rig. */
+.ocean-home .nimo-buddy .buddy-upper,
+.ocean-home .nimo-buddy .buddy-upper * { animation:none!important; transition:none!important; }
 .voyage-cloud-boat{z-index:1}
 
 /* Back gunwale -> seated mascot -> front hull -> oar. All share one viewport. */
@@ -106,6 +112,12 @@
 /* Slightly larger on the home shore and in the same boat, preserving the feet position. */
 .ocean-home .ow-island-mascot{width:112px;height:129px;left:calc(39% - 6px);top:calc(39% - 14px)}
 .ocean-home .ow-boat-anchor{width:112px;height:129px;left:calc(48% - 56px)}
+.ocean-home .ow-jump-anchor{position:absolute;top:0;left:0;z-index:8;will-change:transform}
+.ocean-home .ow-jump-anchor .buddy-shadow{opacity:0}
+/* The PNG has transparent space beneath its feet; keep its shadow at contact. */
+.ocean-home .ow-island-mascot .buddy-shadow{left:35px;bottom:20px;width:130px;height:14px;background:radial-gradient(ellipse,rgba(117,84,36,.32),transparent 70%)}
+.ocean-home .ow-island-mascot .buddy-idle-motion{animation-name:nimo-shore-breathe;transform-origin:50% 90%}
+@keyframes nimo-shore-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.012,.994)}}
 @media(max-width:700px){
  .ocean-home .ow-island-mascot{width:86px;height:99px;left:calc(38% - 4.5px);top:calc(33% - 10px)}
  .ocean-home .ow-boat-anchor{width:86px;height:99px;left:calc(48% - 43px)}

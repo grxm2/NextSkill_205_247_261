@@ -1,5 +1,19 @@
 /* Home-only sunset; scene and travel positioning remain controlled by ocean-world. */
 .ocean-home .ow-sky{background:radial-gradient(ellipse 32% 12% at 75% 60%,#fff3c994,transparent 75%),linear-gradient(180deg,#6fbce7 0%,#aadbf2 27%,#f9dfd0 51%,#ffebc9 58%,#e4e9d7 64%,#a9dfe7 70%,#54c6df 88%,#1697c2 100%)}
+.ocean-home .ow-sky:before{content:'';position:absolute;inset:0 0 25% 40%;background:radial-gradient(ellipse 55% 72% at 100% 0,rgba(255,229,164,.30),transparent 75%),linear-gradient(145deg,transparent 43%,rgba(255,231,175,.12) 51%,transparent 65%);pointer-events:none}
+/* One coordinate system continues the sky behind the floating navigation.
+   The two surfaces meet at the same point in each gradient while the scene
+   still scrolls vertically before the horizontal journey starts. */
+.ow-enhanced .ocean-home{
+ --hero-sky-image:radial-gradient(ellipse 33% 54svh at 100% var(--nav-h),rgba(255,229,164,.30),transparent 75%),linear-gradient(145deg,transparent 43%,rgba(255,231,175,.12) 51%,transparent 65%),radial-gradient(ellipse 32% 12svh at 75% calc(var(--nav-h) + 60svh),#fff3c994,transparent 75%),linear-gradient(180deg,#6fbce7 var(--nav-h),#aadbf2 calc(var(--nav-h) + 27svh),#f9dfd0 calc(var(--nav-h) + 51svh),#ffebc9 calc(var(--nav-h) + 58svh),#e4e9d7 calc(var(--nav-h) + 64svh),#a9dfe7 calc(var(--nav-h) + 70svh),#54c6df calc(var(--nav-h) + 88svh),#1697c2 calc(var(--nav-h) + 100svh));
+ --hero-sky-size:100% calc(100svh + var(--nav-h)),60% calc(75svh + var(--nav-h)),100% calc(100svh + var(--nav-h)),100% calc(100svh + var(--nav-h));
+}
+.ow-enhanced .ocean-home .ow-track:before,.ow-enhanced .ocean-home .ow-sky{background-image:var(--hero-sky-image);background-size:var(--hero-sky-size);background-repeat:no-repeat}
+.ow-enhanced .ocean-home .ow-track:before{background-position:left top,right top,left top,left top}
+.ow-enhanced .ocean-home .ow-sky{background-position:left calc(-1 * var(--nav-h)),right calc(-1 * var(--nav-h)),left calc(-1 * var(--nav-h)),left calc(-1 * var(--nav-h))}
+.ow-enhanced .ocean-home .ow-sky:before{content:none}
+.ocean-home .hero-sky-texture{-webkit-mask-image:linear-gradient(to bottom,transparent,#000 32px);mask-image:linear-gradient(to bottom,transparent,#000 32px)}
+.ow-static .ocean-home .ow-track:before{background:radial-gradient(ellipse 33% 54svh at 100% 100%,rgba(255,229,164,.30),transparent 75%),#6fbce7}
 .hero-sky-texture{position:absolute;inset:0 0 38%;background:url('/images/hero/sky-clouds.webp') center 72%/cover no-repeat;opacity:.12;mix-blend-mode:soft-light;pointer-events:none}
 .hero-sun{position:absolute;left:75%;top:39%;width:clamp(40px,4.2vw,66px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#fffef1 0 32%,#fff3c1 46%,#ffd68178 65%,transparent 72%);box-shadow:0 0 55px 30px #ffe19d99;pointer-events:none}
 .hero-sun-rays{position:absolute;inset:-300%;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 12deg,#fff2c767 15deg,transparent 21deg 45deg,#fff2c750 49deg,transparent 56deg 90deg,#fff2c765 94deg,transparent 101deg 135deg,#fff2c74a 140deg,transparent 146deg 180deg,#fff2c765 184deg,transparent 191deg 225deg,#fff2c750 230deg,transparent 237deg 270deg,#fff2c765 274deg,transparent 281deg 315deg,#fff2c74a 320deg,transparent 327deg);mix-blend-mode:soft-light;animation:hero-rays 90s linear infinite}
@@ -12,7 +26,8 @@
 .hero-water-glints{position:absolute;left:75%;top:0;width:30%;height:95%;transform:translateX(-50%);pointer-events:none;overflow:hidden}
 .hero-water-glints span{position:absolute;left:50%;height:3px;border-radius:50%;background:#fff7c5;box-shadow:0 0 9px 2px #ffe6a3;animation:hero-glint 5.6s ease-in-out infinite alternate}
 .hero-water-glints span:nth-child(1){top:6%;width:12%;margin-left:-6%}.hero-water-glints span:nth-child(2){top:16%;width:22%;margin-left:-12%;animation-delay:-2s}.hero-water-glints span:nth-child(3){top:31%;width:33%;margin-left:-18%;animation-delay:-4s}.hero-water-glints span:nth-child(4){top:47%;width:27%;margin-left:-11%;animation-delay:-1s}.hero-water-glints span:nth-child(5){top:64%;width:40%;margin-left:-24%;animation-delay:-3s}.hero-water-glints span:nth-child(6){top:82%;width:29%;margin-left:-10%;animation-delay:-5s}
-.smart-journey .ocean-home .ow-intro h1{color:#123456}.smart-journey .ocean-home .ow-intro h1 em{position:relative;display:inline-block;color:#007bb6}.smart-journey .ocean-home .ow-intro h1 em:after{content:'';position:absolute;left:0;right:0;bottom:.05em;height:.09em;background:#ffc926;border-radius:50%;transform:rotate(-1deg)}
+.smart-journey .ocean-home .ow-intro{padding-top:33px}
+.smart-journey .ocean-home .ow-intro h1{color:#123456}.smart-journey .ocean-home .ow-intro h1 em{position:relative;display:inline-block;color:#007bb6}
 .smart-journey .ocean-home .ow-intro .sj-text-link{color:#073b56!important;font-size:16px;font-weight:600;text-shadow:0 1px 1px #ffffffa0}
 .ow-clouds span{--cloud-scale:1;animation:hero-cloud 24s ease-in-out infinite alternate}.ow-clouds span:first-child{--cloud-scale:1.5}.ow-clouds span:nth-child(2){--cloud-scale:.7;animation-delay:-9s}.ow-clouds span:nth-child(3){--cloud-scale:.7;animation-delay:-15s}
 @keyframes hero-rays{to{transform:rotate(360deg)}}
@@ -25,13 +40,15 @@
 
 /* Anchor the boat beside the beach, with its hull resting on water. */
 @media(min-width:701px){
- .ow-enhanced .smart-journey .ocean-home .ow-vessel{left:calc(47vw + min(152px,10.8vw) - clamp(160px,16.8vw,248px) - 15px);top:64%}
+ .ow-enhanced .smart-journey .ocean-home .ow-start-land{width:min(760px,54vw,calc((100svh - var(--nav-h)) * 1.1))}
+ .ow-enhanced .smart-journey .ocean-home .ow-vessel{left:calc(47vw + min(152px,10.8vw,calc((100svh - var(--nav-h)) * .22)) - clamp(160px,16.8vw,248px) - 15px);top:min(64%,calc(100% - var(--nav-h) - clamp(136px,12.3vw,185px) - 16px))}
  .ow-static .smart-journey .ocean-home .ow-sea{top:calc(27% + min(426px,30.3vw))}
  .ow-static .smart-journey .ocean-home .ow-distance{top:calc(27% + min(426px,30.3vw) - var(--ow-distance-height))}
  .ow-static .smart-journey .ocean-home .ow-vessel{left:calc(47vw + min(152px,10.8vw) - clamp(160px,16.8vw,248px) - 15px);top:calc(27% + min(426px,30.3vw) - 25px)}
 }
 @media(max-width:700px){
  .ow-enhanced .smart-journey .ocean-home .ow-vessel{left:calc(37.15vw - clamp(129.2px,36.48vw,155.8px) - 12px);top:60%}
+ .smart-journey .ocean-home .ow-scene[data-stage="2"] .ow-vessel{z-index:5;opacity:1}
  .ow-static .smart-journey .ocean-home .ow-sea{top:calc(290px + 42vw)}
  .ow-static .smart-journey .ocean-home .ow-distance{top:calc(290px + 42vw - var(--ow-distance-height))}
  .ow-static .smart-journey .ocean-home .ow-vessel{left:calc(39.25vw - clamp(129.2px,36.48vw,155.8px) - 12px);top:calc(290px + 42vw - 18px)}
@@ -44,8 +61,8 @@
 }
 @media(max-width:360px) and (max-height:680px){
  .ow-enhanced .smart-journey .ocean-home .ow-start-land{top:60%;width:75vw}
- .ow-enhanced .smart-journey .ocean-home .ow-vessel{top:74%}
+ .ow-enhanced .smart-journey .ocean-home .ow-vessel{top:min(74%,calc(100% - var(--nav-h) - 125px))}
  .ow-enhanced .smart-journey .ocean-home .ow-sea{top:68%}
  .ow-enhanced .smart-journey .ocean-home .ow-distance{top:calc(68% - var(--ow-distance-height))}
- .ow-enhanced .smart-journey .ocean-home .ow-sky{background:radial-gradient(ellipse 40% 12% at 79% 64%,#fff3c97a,transparent 75%),linear-gradient(180deg,#6fbce7 0%,#aadbf2 27%,#f9dfd0 53%,#ffebc9 62%,#e4e9d7 68%,#a9dfe7 76%,#54c6df 100%)}
+ .ow-enhanced .smart-journey .ocean-home{--hero-sky-image:radial-gradient(ellipse 33% 54svh at 100% var(--nav-h),rgba(255,229,164,.30),transparent 75%),linear-gradient(145deg,transparent 43%,rgba(255,231,175,.12) 51%,transparent 65%),radial-gradient(ellipse 40% 12svh at 79% calc(var(--nav-h) + 64svh),#fff3c97a,transparent 75%),linear-gradient(180deg,#6fbce7 var(--nav-h),#aadbf2 calc(var(--nav-h) + 27svh),#f9dfd0 calc(var(--nav-h) + 53svh),#ffebc9 calc(var(--nav-h) + 62svh),#e4e9d7 calc(var(--nav-h) + 68svh),#a9dfe7 calc(var(--nav-h) + 76svh),#54c6df calc(var(--nav-h) + 100svh))}
 }
