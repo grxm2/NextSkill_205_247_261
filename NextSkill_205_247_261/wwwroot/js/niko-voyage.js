@@ -28,7 +28,7 @@
   if(name && image?.dataset.decoded==='true' && image.naturalWidth) mascot.dataset.voyagePose=name;
   else if(mascot) delete mascot.dataset.voyagePose;
  }
- let boarded=false, boarding, jump, jumpSlot, flight, arrivalBoat, generation=0;
+ let boarded=false, boarding, jump, jumpSlot, flight, arrivalBoat, intro, generation=0;
  const allowed=()=>!reduce.matches && window.NextSkillAgent?.motionAllowed();
  const sceneAllowed=()=>{
   const state=window.NextSkillMotion?.snapshot({element:scene,kind:'reaction'});
@@ -98,6 +98,8 @@
   return active;
  }
  async function board(){
+  // A new journey takes over immediately, including while the entrance is landing.
+  cancelIntro(false);
   if(boarding)return boarding;
   if(boarded || !shore || !seat)return;
   boarded=true;
@@ -127,6 +129,44 @@
    if(allowed())window.NextSkillBuddyMotion?.play('land');
   }).catch(()=>{});
  }
+ function cancelIntro(settleOnShore){
+  if(!intro)return;
+  const current=intro;intro=null;
+  delete scene.dataset.arrival;
+  current.animation?.cancel();
+  document.documentElement.classList.remove('ow-arrival-pending');
+  if(settleOnShore){
+   ++generation;boarding=null;boarded=false;
+   cancelJump(false);select(shore);scene.dataset.voyage='shore';
+  }
+ }
+ function startIntro(){
+  const root=document.documentElement;
+  const motion=scene?.querySelector('.ow-arrival-motion');
+  if(!root.classList.contains('ow-arrival-pending') || !scene || !shore || !seat || !motion || !sceneAllowed() || scrollY >= 4){
+   root.classList.remove('ow-arrival-pending');return;
+  }
+  const current={animation:null};intro=current;
+  boarded=true;select(seat);scene.dataset.arrival='rowing';row(scene);
+  // Animate a child wrapper so the scroll-driven vessel transform remains independent.
+  const distance=Math.max(innerWidth * .75, motion.getBoundingClientRect().right + 40);
+  current.animation=motion.animate([
+   {transform:`translate3d(${-distance}px,0,0)`,offset:0,easing:'linear'},
+   {transform:`translate3d(${-distance * .05}px,0,0)`,offset:.8,easing:'cubic-bezier(.23,1,.32,1)'},
+   {transform:'translate3d(0,0,0)',offset:1}
+  ],{duration:5200,fill:'both'});
+  root.classList.remove('ow-arrival-pending');
+  current.animation.finished.then(async()=>{
+   if(intro!==current)return;
+   current.animation.cancel();current.animation=null;
+   scene.dataset.arrival='landing';scene.dataset.voyage='shore';boarded=false;
+   const landing=transfer(shore,'lift');
+   if(landing)await landing.finished;
+   if(intro!==current)return;
+   intro=null;delete scene.dataset.arrival;
+   if(allowed())window.NextSkillBuddyMotion?.play('land');
+  }).catch(()=>{});
+ }
  function markup(){return '<span class="voyage-seat sj-mascot-anchor buddy-slot" data-buddy-anchor="sailing"></span><img class="voyage-hull" src="/images/journey/rowing-hull.svg" alt=""/><img class="voyage-oar" src="/images/journey/rowing-oar.svg" alt=""/>';}
  function cloudBoat(cloud){
   if(!allowed())return;
@@ -148,16 +188,16 @@
   flight?.cancel();document.querySelector('.voyage-cloud-boat')?.remove();
  }
  function sync(){
-  const stopped=!(jump ? sceneAllowed() : allowed()) || (!document.getElementById('journey-cloud-transition')?.open && !!document.querySelector('dialog[open]'));
+  const stopped=!((jump || intro) ? sceneAllowed() : allowed()) || (!document.getElementById('journey-cloud-transition')?.open && !!document.querySelector('dialog[open]'));
   document.body.classList.toggle('voyage-paused',stopped);
-  if(stopped){cancelJump(true);flight?.cancel();}
+  if(stopped){cancelIntro(true);cancelJump(true);flight?.cancel();}
  }
  const guide=document.querySelector('.map-guide');if(guide)new MutationObserver(sync).observe(guide,{attributes:true,attributeFilter:['data-motion']});
  document.querySelectorAll('dialog').forEach(el=>new MutationObserver(sync).observe(el,{attributes:true,attributeFilter:['open']}));
  document.addEventListener('visibilitychange',sync);reduce.addEventListener('change',sync);
  window.NextSkillMotion?.subscribe(sync, { element:scene || document.querySelector('.skill-buddy'),kind:'reaction' });
- window.addEventListener('resize',()=>{cancelJump(true);flight?.cancel();});
- window.addEventListener('pagehide',()=>{generation++;cancelJump(true);flight?.cancel();});
+ window.addEventListener('resize',()=>{cancelIntro(true);cancelJump(true);flight?.cancel();});
+ window.addEventListener('pagehide',()=>{generation++;cancelIntro(true);cancelJump(true);flight?.cancel();});
  window.NextSkillVoyage={board,returnToShore,cloudBoat,descend,finishArrival};
- if(shore)select(shore);sync();
+ if(shore)select(shore);sync();startIntro();
 })();

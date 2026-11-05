@@ -1,0 +1,44 @@
+@model LearningIslandViewModel
+@{
+    Layout = "_SmartJourneyLayout";
+    ViewData["Title"] = "บทเรียนและแบบทดสอบ";
+    ViewData["JourneyMode"] = "practice";
+}
+<link rel="stylesheet" href="~/css/lesson-page.css" asp-append-version="true" />
+<main id="journey-main" class="practice-page">
+    <div class="practice-backdrop" aria-hidden="true"></div>
+    <div class="learning-celestial" aria-hidden="true"><partial name="_JourneyCelestial" /></div>
+    <nav class="practice-breadcrumb" aria-label="เส้นทางนำทาง">
+        <a asp-action="Island" asp-route-courseId="@Model.Course.CourseId">← @Model.Course.Title</a><span aria-hidden="true">›</span><span id="practice-breadcrumb-current">บทเรียนและแบบทดสอบ</span>
+    </nav>
+    <header class="practice-heading">
+        <span class="practice-heading-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11H11v31h26V11h-7M19 7h10v8H19Z"/><path d="m16 23 2 2 4-5m-6 13 2 2 4-5m5-7h5m-5 10h5"/></svg></span>
+        <div><h1 id="lesson-page-heading">บทเรียนและแบบทดสอบ</h1><h2 id="lesson-title" tabindex="-1">กำลังเปิดบทเรียน…</h2><p id="lesson-location">@Model.Course.Title</p></div>
+    </header>
+    <section id="lesson-dialog" class="practice-experience" data-lesson-page aria-labelledby="lesson-page-heading">
+        <div class="practice-panel ns-surface" id="practice-panel">
+            <p id="lesson-summary" class="practice-summary"></p>
+            <partial name="_LessonBody" />
+        </div>
+        <aside class="practice-sidebar" aria-label="ข้อมูลแบบทดสอบ">
+            <section class="practice-overview ns-surface">
+                <div class="practice-overview-heading"><h2>ความคืบหน้าแบบทดสอบ</h2><span id="practice-answered-count" aria-live="polite">0 / 0</span></div>
+                <progress id="practice-answer-progress" max="1" value="0" aria-label="จำนวนข้อที่ตอบแล้ว"></progress>
+                <dl class="practice-facts">
+                    <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>จำนวนข้อ</dt><dd id="practice-question-count">กำลังโหลด…</dd></div>
+                    <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m12 12 8-8"/></svg>เกณฑ์ผ่าน</dt><dd>ตอบถูกทุกข้อ</dd></div>
+                    <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></svg>คะแนนเต็ม</dt><dd id="practice-total-score">กำลังโหลด…</dd></div>
+                </dl>
+                <div class="practice-coach">
+                    <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18h6m-5 3h4M8 14a7 7 0 1 1 8 0l-1 2H9Z"/></svg>คำแนะนำ</h3>
+                    <p id="lesson-nimo-message">อ่านตัวอย่าง แล้วค่อย ๆ ลองทำไปด้วยกันนะ</p>
+                    <ul><li>อ่านคำถามให้ครบก่อน</li><li>เลือกคำตอบที่เหมาะสมที่สุด</li><li>ย้อนกลับไปเปลี่ยนคำตอบได้ก่อนส่ง</li></ul>
+                    <span class="practice-mascot buddy-slot sj-mascot-anchor" data-buddy-anchor="lesson-page" data-buddy-home="active"></span>
+                </div>
+            </section>
+            <button type="button" id="close-lesson" class="practice-exit ns-button ns-button--text">← กลับไปแผนที่เกาะ</button>
+            <p class="practice-save-note">@(User.Identity?.IsAuthenticated == true ? "ผลการเรียนบันทึกกับบัญชีของคุณ" : "โหมดทดลอง · บันทึกแยกสำหรับเซสชันนี้")</p>
+        </aside>
+    </section>
+</main>
+<script type="application/json" id="learning-initial-state">@Json.Serialize(new { state = Model.State, course = Model.Course, learnerName = Model.LearnerName, initialLessonId = Model.InitialLessonId })</script>

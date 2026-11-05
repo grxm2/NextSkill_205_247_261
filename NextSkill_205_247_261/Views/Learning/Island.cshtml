@@ -1,6 +1,7 @@
 @model LearningIslandViewModel
 @{ Layout = "_SmartJourneyLayout"; ViewData["Title"] = Model.Course.Title; ViewData["JourneyMode"] = "learn"; }
 <main id="journey-main" class="sj-learn">
+    <div class="learning-celestial" aria-hidden="true"><partial name="_JourneyCelestial" /></div>
     <div class="sj-learn-top"><a asp-controller="Home" asp-action="Index">← หน้าแรก</a><span class="sj-saved" id="learning-save-status"><i></i> @(User.Identity?.IsAuthenticated == true ? "บันทึกกับบัญชีของคุณ" : "โหมดทดลอง · ความคืบหน้าแยกสำหรับเบราว์เซอร์นี้")</span></div>
 
 

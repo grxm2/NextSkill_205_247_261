@@ -1,0 +1,34 @@
+    <div id="lesson-loading" class="sj-lesson-loading" role="status">กำลังเตรียมบทเรียนและบันทึกจุดที่เรียนค้างไว้…</div>
+    <div id="lesson-content" hidden>
+        <div class="lesson-step-status"><span id="lesson-step-caption">อ่านตัวอย่าง</span><progress id="lesson-step-progress" value="0" max="4" aria-label="ขั้นตอนการฝึก"></progress><div id="practice-question-steps" class="practice-question-steps" aria-hidden="true"></div></div>
+        <div id="lesson-reading" class="sj-lesson-reading"></div>
+        <form id="lesson-quiz" novalidate>
+            <div id="lesson-questions"></div>
+            <div class="lesson-step-actions">
+                <button type="button" id="lesson-step-back" class="ns-button ns-button--secondary" hidden>ย้อนกลับ</button>
+                <button type="button" id="lesson-reading-again" class="sj-text-link" hidden>ดูตัวอย่างอีกครั้ง</button>
+                <button type="button" id="lesson-step-next" class="ns-button ns-button--primary">เริ่มฝึก →</button>
+                <button type="submit" class="ns-button ns-button--primary" id="submit-lesson" hidden>ตรวจคำตอบ →</button>
+            </div>
+        </form>
+    </div>
+    <section id="lesson-result" class="sj-lesson-result" aria-live="polite" hidden>
+        <span class="sj-result-symbol" aria-hidden="true">✓</span><p class="sj-eyebrow" id="lesson-result-eyebrow"></p>
+        <h3 id="lesson-result-title" tabindex="-1"></h3><p id="lesson-result-message"></p>
+        <div id="lesson-result-feedback" class="lesson-result-feedback"></div>
+        <div id="lesson-reward" class="sj-lesson-reward"></div>
+        <div class="sj-result-actions">
+            <button type="button" class="ns-button ns-button--primary" id="edit-lesson-answers" hidden>แก้คำตอบ →</button>
+            <button type="button" class="ns-button ns-button--primary" id="next-island" hidden>ไปเกาะถัดไป →</button>
+            <button type="button" class="ns-button ns-button--secondary" id="finish-learning">พักไว้ แล้วกลับมาเรียนต่อ</button>
+            <button type="button" class="sj-text-link" id="choose-next-course" hidden>เลือกเส้นทางใหม่ →</button>
+        </div>
+    </section>
+    <p class="sj-error" id="lesson-error" role="alert" hidden></p>
+    <div id="submission-recovery" class="submission-recovery" hidden>
+        <p>คำตอบยังอยู่ในหน้านี้ การเชื่อมต่อขาดไม่ได้แปลว่าระบบยังไม่บันทึกผล</p>
+        <button type="button" class="ns-button ns-button--secondary" id="check-save-status">ตรวจสถานะการบันทึก</button>
+        <button type="button" class="sj-text-link" id="retry-submission">ส่งคำตอบเดิมอีกครั้ง</button>
+        <button type="button" class="sj-text-link" id="leave-unconfirmed">ออกจากหน้านี้</button>
+    </div>
+    <button type="button" id="retry-lesson" class="ns-button ns-button--secondary" hidden>ลองเปิดบทเรียนอีกครั้ง</button>

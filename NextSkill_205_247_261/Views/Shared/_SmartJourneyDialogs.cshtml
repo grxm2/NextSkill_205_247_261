@@ -1,44 +1,14 @@
 <dialog id="course-harbor-dialog" class="smart-dialog sj-harbor-dialog" aria-labelledby="course-harbor-title"><button type="button" class="sj-dialog-close" data-close-dialog="course-harbor-dialog" aria-label="ปิดตู้เลือกคอร์ส">×</button><header class="sj-picker-header"><div class="sj-picker-art"><partial name="_CourseContainerArt" /><span class="sj-mascot-anchor sj-picker-anchor buddy-slot" data-buddy-anchor="course-picker"></span></div><div><p class="sj-eyebrow">คลังเส้นทางการเรียนรู้</p><h2 id="course-harbor-title" tabindex="-1">วันนี้อยากไปเกาะไหน?</h2><p>เลือกคอร์สใหม่ได้เลย ความก้าวหน้าของคอร์สเดิมอยู่ครบ</p></div></header><div class="sj-course-filters"><label for="course-search"><span class="sj-field-title">ค้นหาคอร์ส</span><input id="course-search" type="search" placeholder="ชื่อคอร์ส หรือทักษะที่อยากฝึก" autocomplete="off" /></label><label for="course-category"><span class="sj-field-title">หมวดหมู่</span><select id="course-category"><option value="all">ทุกทักษะ</option></select></label></div><p class="sj-picker-current" id="course-picker-current" hidden></p><div id="course-list" class="sj-course-list" data-course-grid="all" aria-live="polite"><p class="sj-course-loading">กำลังเปิดคลังคอร์ส…</p></div><p class="sj-error" id="course-picker-error" role="alert" hidden></p><footer class="sj-picker-footer"><span>เลือกได้ทันที ไม่ต้องรอการเดินทาง</span><button type="button" data-close-dialog="course-harbor-dialog">กลับไปเกาะเดิม <span aria-hidden="true">↗</span></button></footer></dialog>
+@if (ViewData["JourneyMode"]?.ToString() != "practice")
+{
 <dialog id="lesson-dialog" class="smart-dialog sj-lesson-dialog" aria-labelledby="lesson-title">
     <button type="button" class="sj-dialog-close" id="close-lesson" aria-label="ปิดบทเรียน">×</button>
     <header class="sj-lesson-heading">
         <div class="sj-lesson-character"><span class="buddy-slot" data-buddy-anchor="lesson"></span></div>
         <div><p class="sj-eyebrow" id="lesson-location">บทเรียนของคุณ</p><h2 id="lesson-title" tabindex="-1">กำลังเปิดบทเรียน…</h2><p id="lesson-summary"></p><p id="lesson-nimo-message" class="lesson-nimo-message">พร้อมแล้ว เรามาฝึกทีละก้าวนะ</p></div>
     </header>
-    <div id="lesson-loading" class="sj-lesson-loading" role="status">กำลังเตรียมบทเรียนและบันทึกจุดที่เรียนค้างไว้…</div>
-    <div id="lesson-content" hidden>
-        <div class="lesson-step-status"><span id="lesson-step-caption">อ่านตัวอย่าง</span><progress id="lesson-step-progress" value="0" max="4" aria-label="ขั้นตอนการฝึก"></progress></div>
-        <div id="lesson-reading" class="sj-lesson-reading"></div>
-        <form id="lesson-quiz" novalidate>
-            <div id="lesson-questions"></div>
-            <div class="lesson-step-actions">
-                <button type="button" id="lesson-step-back" class="ns-button ns-button--secondary" hidden>ย้อนกลับ</button>
-                <button type="button" id="lesson-reading-again" class="sj-text-link" hidden>ดูตัวอย่างอีกครั้ง</button>
-                <button type="button" id="lesson-step-next" class="ns-button ns-button--primary">เริ่มฝึก →</button>
-                <button type="submit" class="ns-button ns-button--primary" id="submit-lesson" hidden>ตรวจคำตอบ →</button>
-            </div>
-        </form>
-    </div>
-    <section id="lesson-result" class="sj-lesson-result" aria-live="polite" hidden>
-        <span class="sj-result-symbol" aria-hidden="true">✓</span><p class="sj-eyebrow" id="lesson-result-eyebrow"></p>
-        <h3 id="lesson-result-title" tabindex="-1"></h3><p id="lesson-result-message"></p>
-        <div id="lesson-result-feedback" class="lesson-result-feedback"></div>
-        <div id="lesson-reward" class="sj-lesson-reward"></div>
-        <div class="sj-result-actions">
-            <button type="button" class="ns-button ns-button--primary" id="edit-lesson-answers" hidden>แก้คำตอบ →</button>
-            <button type="button" class="ns-button ns-button--primary" id="next-island" hidden>ไปเกาะถัดไป →</button>
-            <button type="button" class="ns-button ns-button--secondary" id="finish-learning">พักไว้ แล้วกลับมาเรียนต่อ</button>
-            <button type="button" class="sj-text-link" id="choose-next-course" hidden>เลือกเส้นทางใหม่ →</button>
-        </div>
-    </section>
-    <p class="sj-error" id="lesson-error" role="alert" hidden></p>
-    <div id="submission-recovery" class="submission-recovery" hidden>
-        <p>คำตอบยังอยู่ในหน้านี้ การเชื่อมต่อขาดไม่ได้แปลว่าระบบยังไม่บันทึกผล</p>
-        <button type="button" class="ns-button ns-button--secondary" id="check-save-status">ตรวจสถานะการบันทึก</button>
-        <button type="button" class="sj-text-link" id="retry-submission">ส่งคำตอบเดิมอีกครั้ง</button>
-        <button type="button" class="sj-text-link" id="leave-unconfirmed">ออกจากหน้านี้</button>
-    </div>
-    <button type="button" id="retry-lesson" class="ns-button ns-button--secondary" hidden>ลองเปิดบทเรียนอีกครั้ง</button>
+    <partial name="_LessonBody" />
 </dialog>
+}
 <dialog id="leave-lesson-dialog" class="smart-dialog sj-confirm-dialog" aria-labelledby="leave-lesson-title"><span class="icon icon-book" aria-hidden="true"></span><h2 id="leave-lesson-title">คำตอบยังไม่ได้ส่ง</h2><p>ระบบจำบทเรียนที่คุณกำลังเรียนไว้แล้ว แต่คำตอบในรอบนี้ยังไม่ได้บันทึก ต้องการกลับไปทำต่อหรือออกจากบทเรียน?</p><div class="sj-confirm-actions"><button type="button" class="ns-button ns-button--primary" data-stay-lesson>กลับไปทำต่อ</button><button type="button" class="ns-button ns-button--secondary" data-confirm-leave>ออกจากบทเรียน</button></div></dialog>
 <dialog id="journey-help-dialog" class="smart-dialog sj-help-dialog" aria-labelledby="journey-help-title"><button type="button" class="sj-dialog-close" data-close-dialog="journey-help-dialog" aria-label="ปิดวิธีสำรวจ">×</button><p class="sj-eyebrow">ไปด้วยกันกับ Nimo</p><h2 id="journey-help-title">เริ่มครั้งแรก สำรวจได้เต็มที่<br />ครั้งต่อไป เรียนต่อได้ทันที</h2><ol><li><strong>เปิดตู้เลือกคอร์ส</strong><p>เลือกทักษะที่อยากฝึก เริ่มที่เกาะแรกของคอร์สนั้นได้เลย</p></li><li><strong>เรียนและลองทำ</strong><p>ผ่านแบบทดสอบเพื่อรับ XP และปลดล็อกเกาะถัดไป</p></li><li><strong>กลับมาเรียนต่อจากเดิม</strong><p>คอร์ส ความก้าวหน้า และเกาะปัจจุบันผูกกับบัญชี เปลี่ยนอุปกรณ์ก็ไปต่อได้</p></li></ol><button type="button" class="ns-button ns-button--primary" data-close-dialog="journey-help-dialog">พร้อมออกเดินทาง →</button></dialog>

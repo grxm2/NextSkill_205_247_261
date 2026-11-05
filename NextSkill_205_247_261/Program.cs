@@ -34,6 +34,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
             var request = context.Request;
             var isApi = request.Path.StartsWithSegments("/Learning")
                 && !request.Path.StartsWithSegments("/Learning/Island")
+                && !request.Path.StartsWithSegments("/Learning/Practice")
                 && !request.Path.StartsWithSegments("/Learning/Entry");
             if (!isApi)
             {

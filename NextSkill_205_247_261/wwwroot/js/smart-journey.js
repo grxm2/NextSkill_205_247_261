@@ -26,6 +26,8 @@
     let recoveryBusy = false;
     const courseDialog = $('#course-harbor-dialog');
     const lessonDialog = $('#lesson-dialog');
+    const lessonPage = !!lessonDialog?.hasAttribute('data-lesson-page');
+    const lessonOpen = () => lessonPage || lessonDialog.open;
     const leaveDialog = $('#leave-lesson-dialog');
     const reduce = matchMedia('(prefers-reduced-motion: reduce)');
     const guide = $('.map-guide');
@@ -90,6 +92,7 @@
         renderCourses();
     }
     function renderIsland() {
+        if (!$('#lesson-route')) return;
         const course = viewedCourse();
         if (!course) return;
         const current = targetLesson(course);
@@ -200,7 +203,7 @@
         return catalogRequest;
     }
     function openDialog(dialog) {
-        if (!dialog.open) dialog.showModal();
+        if (dialog instanceof HTMLDialogElement && !dialog.open) dialog.showModal();
         window.NextSkillAgent?.refresh();
     }
     function openCourses() {
@@ -238,13 +241,13 @@
         finally { selectionBusy = false; renderCourses(); }
     }
     function guarded(action) {
-        if (lessonDialog.open && lessonDirty && !submitting) {
+        if (lessonOpen() && lessonDirty && !submitting) {
             pendingLeave = action; openDialog(leaveDialog); return;
         }
         if (submitting) { tell('กำลังบันทึกผล กรุณารอสักครู่'); return; }
         action();
     }
-    function closeLesson() {
+    function closeLesson(navigate = true) {
         lessonDirty = false;
         lessonRequest++;
         lessonController?.abort();
@@ -252,6 +255,7 @@
         recoveryBusy = false;
         if (lessonDialog.open) lessonDialog.close();
         window.NextSkillAgent?.refresh();
+        if (lessonPage && navigate) location.assign(`/Learning/Island?courseId=${courseId}`);
     }
     function clearLesson() {
         lesson = null; lessonDirty = false; nextLessonId = null;
@@ -275,6 +279,11 @@
     }
     async function openLesson(id, lessonId) {
         if (submitting) return;
+        if (!lessonPage || id !== boot?.course?.courseId || lessonId !== boot?.initialLessonId) {
+            lessonDirty = false;
+            location.assign(`/Learning/Practice?courseId=${id}&lessonId=${lessonId}`);
+            return;
+        }
         if (courseDialog.open) courseDialog.close();
         const requestId = ++lessonRequest;
         lessonController?.abort(); lessonController = new AbortController();
@@ -315,16 +324,19 @@
         }));
         $('#lesson-questions').replaceChildren(...lesson.questions.map((question, questionIndex) => {
             const field = node('fieldset', 'sj-quiz-question'); field.dataset.questionId = question.id;
-            const legend = node('legend', '', `${questionIndex + 1}. ${question.prompt}`); legend.tabIndex = -1;
+            const legend = node('legend', '', lessonPage ? question.prompt : `${questionIndex + 1}. ${question.prompt}`); legend.tabIndex = -1;
             field.append(legend);
             question.choices.forEach((choice, index) => {
                 const label = node('label', 'sj-quiz-choice');
                 const radio = node('input'); radio.type = 'radio'; radio.name = `question-${question.id}`; radio.value = index; radio.required = true;
-                radio.addEventListener('change', () => { selections.set(question.id, index); lessonDirty = true; });
-                label.append(radio, node('span', '', choice)); field.append(label);
+                radio.addEventListener('change', () => { selections.set(question.id, index); lessonDirty = true; updatePracticeProgress(); });
+                label.append(radio);
+                if (lessonPage) label.append(node('span', 'practice-choice-letter', `${String.fromCharCode(65 + index)}.`));
+                label.append(node('span', '', choice)); field.append(label);
             });
             return field;
         }));
+        if (lessonPage) $('#practice-question-steps').replaceChildren(...lesson.questions.map(() => node('span')));
         showStep(-1, false);
         $('#lesson-title').focus({ preventScroll: true });
         window.NextSkillBuddyMotion?.play('read');
@@ -336,17 +348,42 @@
         $('#lesson-content').hidden = false;
         $('#lesson-reading').hidden = stepIndex !== -1;
         $$('#lesson-questions fieldset').forEach((field, i) => { field.hidden = i !== stepIndex; });
-        $('#lesson-step-caption').textContent = stepIndex < 0 ? 'อ่านตัวอย่างก่อนเริ่ม' : `คำถาม ${stepIndex + 1} / ${lesson.questions.length}`;
+        $('#lesson-step-caption').textContent = stepIndex < 0 ? 'อ่านตัวอย่างก่อนเริ่ม' : `ข้อที่ ${stepIndex + 1} จาก ${lesson.questions.length}`;
         $('#lesson-step-progress').max = lesson.questions.length + 1;
         $('#lesson-step-progress').value = stepIndex + 1;
         $('#lesson-step-back').hidden = stepIndex < 0;
+        if (lessonPage) $('#lesson-step-back').disabled = stepIndex <= 0;
         $('#lesson-reading-again').hidden = stepIndex < 0;
         $('#lesson-step-next').hidden = stepIndex === lesson.questions.length - 1;
-        $('#lesson-step-next').textContent = stepIndex < 0 ? 'เริ่มฝึก →' : 'ข้อต่อไป →';
+        $('#lesson-step-next').textContent = stepIndex < 0 ? 'เริ่มแบบทดสอบ →' : 'ข้อต่อไป →';
         $('#submit-lesson').hidden = stepIndex !== lesson.questions.length - 1;
         $('#lesson-nimo-message').textContent = stepIndex < 0 ? 'ค่อย ๆ อ่านตัวอย่าง แล้วลองใช้ไปด้วยกันนะ' : 'เลือกคำตอบที่เหมาะที่สุด เปลี่ยนคำตอบก่อนส่งได้เสมอ';
         lessonDialog.scrollTop = 0;
+        if (lessonPage) {
+            $('#lesson-page-heading').textContent = stepIndex < 0 ? 'เตรียมตัวก่อนทำแบบทดสอบ' : 'แบบทดสอบท้ายบท';
+            $('#practice-breadcrumb-current').textContent = stepIndex < 0 ? 'บทเรียนและตัวอย่าง' : 'แบบทดสอบท้ายบท';
+            $('#lesson-summary').hidden = stepIndex >= 0;
+            updatePracticeProgress();
+            if (focus) positionPractice();
+        }
         if (focus) (stepIndex < 0 ? $('#lesson-title') : $$('#lesson-questions legend')[stepIndex]).focus({preventScroll:true});
+    }
+    function positionPractice() {
+        if (innerWidth > 800) window.scrollTo({top:0,behavior:'instant'});
+        else $('#practice-panel').scrollIntoView({behavior:'instant',block:'start'});
+    }
+    function updatePracticeProgress() {
+        if (!lessonPage || !lesson) return;
+        const total = lesson.questions.length;
+        $('#practice-answered-count').textContent = `${selections.size} / ${total}`;
+        $('#practice-answer-progress').max = total;
+        $('#practice-answer-progress').value = selections.size;
+        $('#practice-question-count').textContent = `${total} ข้อ`;
+        $('#practice-total-score').textContent = `${total} คะแนน`;
+        $$('#practice-question-steps span').forEach((segment,index) => {
+            segment.classList.toggle('is-current', index === stepIndex);
+            segment.classList.toggle('is-answered', selections.has(lesson.questions[index].id));
+        });
     }
     function validateStep(index) {
         const question = lesson?.questions[index];
@@ -363,6 +400,7 @@
         ['submit-lesson','close-lesson','lesson-step-back','lesson-step-next','lesson-reading-again','check-save-status','retry-submission','leave-unconfirmed'].forEach(id => { $('#'+id).disabled = busy; });
         $('#submit-lesson').textContent = busy ? 'กำลังตรวจและบันทึกผล…' : 'ตรวจคำตอบ →';
         $('#lesson-quiz').setAttribute('aria-busy', String(busy));
+        if (lessonPage && !busy) $('#lesson-step-back').disabled = stepIndex <= 0;
     }
     function renderResult(result, wasCourseComplete) {
         lastFeedback = result.feedback;
@@ -372,6 +410,7 @@
         $('#lesson-error').hidden = true;
         $('#lesson-content').hidden = true;
         const panel = $('#lesson-result'); panel.hidden = false; panel.dataset.passed = String(result.passed);
+        if (lessonPage) { $('#lesson-page-heading').textContent = 'ผลแบบทดสอบ'; $('#lesson-summary').hidden = true; }
         $('.sj-result-symbol').textContent = result.passed ? '✓' : '↻';
         $('#lesson-result-eyebrow').textContent = `${result.score} / ${result.totalQuestions} ข้อ · ผ่านเมื่อถูก ${result.requiredCorrect} ข้อ`;
         $('#lesson-result-title').textContent = result.passed ? (result.alreadyCompleted ? 'ทบทวนเรียบร้อยแล้ว' : 'ทำได้แล้ว อีกด่านที่คุณผ่าน!') : 'อีกนิดเดียว ลองใช้คำแนะนำดูนะ';
@@ -396,7 +435,8 @@
         else window.NextSkillBuddyMotion?.play('nod');
         tell(result.passed ? `ยืนยันผลแล้ว ${saveCopy}` : `ตอบถูก ${result.score} ข้อ ดูคำอธิบายและแก้คำตอบได้`);
         $('#lesson-result-title').focus({preventScroll:true});
-        panel.scrollIntoView({behavior:'instant',block:'nearest'});
+        if (lessonPage) positionPractice();
+        else panel.scrollIntoView({behavior:'instant',block:'nearest'});
     }
     async function submitLesson(event) {
         event.preventDefault();
@@ -491,7 +531,7 @@
     $('#check-save-status').addEventListener('click',checkSaveStatus);
     $('#retry-submission').addEventListener('click',()=> { if(uncertainAttempt&&!recoveryBusy) submitAttempt(uncertainAttempt); });
     $('#leave-unconfirmed').addEventListener('click',()=>guarded(closeLesson));
-    $('#choose-next-course').addEventListener('click',()=> { closeLesson(); openCourses(); });
+    $('#choose-next-course').addEventListener('click',()=> { closeLesson(false); openCourses(); });
     $('#retry-learning-state').addEventListener('click',async()=> {
         const button=$('#retry-learning-state'); button.disabled=true;
         try { setState(await api('State')); $('#learning-status').hidden=true; }
@@ -501,17 +541,17 @@
     $('#journey-help-dialog ol li:last-child p').textContent = signedIn ? 'ความก้าวหน้าผูกกับบัญชีของคุณ กลับมาเรียนต่อได้ทุกอุปกรณ์' : 'โหมดทดลองบันทึกแยกในเซสชันนี้ และไม่ย้ายผลเข้าบัญชีอัตโนมัติ';
     $('[data-stay-lesson]').addEventListener('click', () => { pendingLeave = null; leaveDialog.close(); });
     $('[data-confirm-leave]').addEventListener('click', () => {
-        const action = pendingLeave; pendingLeave = null; lessonDirty = false; leaveDialog.close(); closeLesson(); action?.();
+        const action = pendingLeave; pendingLeave = null; lessonDirty = false; leaveDialog.close(); closeLesson(false); action?.();
     });
     leaveDialog.addEventListener('cancel', () => { pendingLeave = null; });
-    $('#next-island').addEventListener('click', async () => { const destination=nextLessonId; if (!destination) return; closeLesson(); if(window.NextSkillArchipelago) await window.NextSkillArchipelago.sail(destination); else openLesson(courseId,destination); });
+    $('#next-island').addEventListener('click', async () => { const destination=nextLessonId; if (!destination) return; if(lessonPage){closeLesson();return;} closeLesson(); if(window.NextSkillArchipelago) await window.NextSkillArchipelago.sail(destination); else openLesson(courseId,destination); });
     $('#niko-practice-start').addEventListener('click', () => guarded(resumeLesson));
     $('#buddy-tour-start').addEventListener('click', () => guarded(() => openDialog($('#journey-help-dialog'))));
     $('#locate-current')?.addEventListener('click', event => { window.NextSkillIslandDetails?.reset(); const target = $('#lesson-route .is-current'); if (target && window.NextSkillUnderwater) window.NextSkillUnderwater.goTo(target.dataset.lessonId, !!event.detail && motionAllowed()); else (target || $('#lesson-route')).scrollIntoView({ behavior: event.detail && motionAllowed() ? 'smooth' : 'instant', block: 'center' }); });
     document.addEventListener('click', event => {
         const link = event.target.closest('a[href]');
         if (!link || event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || link.target === '_blank' || link.hasAttribute('download')) return;
-        if (lessonDialog.open && lessonDirty) {
+        if (lessonOpen() && lessonDirty) {
             event.preventDefault(); guarded(() => location.assign(link.href)); return;
         }
         if (link.origin === location.origin && link.pathname === location.pathname && link.hash) {
@@ -520,7 +560,7 @@
         }
     });
     window.addEventListener('beforeunload', event => {
-        if (lessonDialog.open && (lessonDirty || submitting)) { event.preventDefault(); event.returnValue = ''; }
+        if (lessonOpen() && (lessonDirty || submitting)) { event.preventDefault(); event.returnValue = ''; }
     });
     document.addEventListener('nextskill:buddy-pose', event => window.NextSkillBuddyMotion?.play(event.detail.pose, undefined, { motion: event.detail.motion }));
 

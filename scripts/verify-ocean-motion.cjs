@@ -27,6 +27,7 @@ async function check(name, operation) {
     }
 }
 async function open(width = 1440, height = 1000) {
+    await page.emulateMedia({ reducedMotion:'no-preference' });
     await page.setViewportSize({ width, height });
     const response = await page.goto(`${base}/Home/Index`, { waitUntil:'domcontentloaded' });
     assert.equal(response.status(), 200);
@@ -268,9 +269,11 @@ async function cameraSamples(duration) {
 
     await check('dialog pauses ambient motion and primary action stays immediate', async () => {
         await open();
+        await scrollToFraction(1);
+        await page.waitForFunction(() => document.querySelector('#ocean-journey').dataset.stage === '2');
         await startFish();
         const started = performance.now();
-        await page.locator('.sj-nav [data-smart-action="choose-course"]').first().click();
+        await page.locator('.ow-container-button').click();
         await page.locator('#course-harbor-dialog').waitFor({ state:'visible' });
         const openedMs = Math.round(performance.now()-started);
         assert.ok(openedMs < 1500, `Picker delayed by scene: ${openedMs}ms`);
@@ -289,7 +292,10 @@ async function cameraSamples(duration) {
         await open();
         await startFish();
         await page.emulateMedia({ reducedMotion:'reduce' });
-        await page.waitForFunction(() => window.NextSkillOceanLifeTest.snapshot().state.reduced);
+        await page.waitForFunction(() => {
+            const state = window.NextSkillOceanLifeTest.snapshot();
+            return state.state.reduced && !state.active && state.timerCount === 0 && state.animationCount === 0;
+        });
         const state = await snapshot();
         assert.equal(state.active, false); assert.equal(state.timerCount, 0); assert.equal(state.animationCount, 0);
         assert.equal(await page.evaluate(() => window.NextSkillOceanLifeTest.force(7).started), false);
@@ -346,7 +352,7 @@ async function cameraSamples(duration) {
         return { before, stopped, resumed };
     });
 
-    await check('every bird resets beyond both viewport edges at either parallax endpoint', async () => {
+    await check('bird flight loops without a visible position reset at either camera endpoint', async () => {
         const results = [];
         for (const width of [390,1440]) {
             await open(width);
@@ -354,15 +360,17 @@ async function cameraSamples(duration) {
                 await scrollToFraction(travel);
                 await sleep(700);
                 await page.evaluate(() => window.NextSkillMotion.setPaused(true));
+                let first;
                 for (const phase of [0,.99999]) {
                     const birds = await page.evaluate(phase => [...document.querySelectorAll('[data-ocean-bird]')].map(bird => {
                         const animation = bird.getAnimations()[0];
                         animation.currentTime = Number(animation.effect.getTiming().duration) * phase;
                         const rect = bird.getBoundingClientRect();
-                        return { origin:bird.dataset.flightOrigin, scale:bird.dataset.flightScale, left:rect.left,right:rect.right,viewport:innerWidth };
+                        return { origin:bird.dataset.flightOrigin, scale:bird.dataset.flightScale, left:rect.left,right:rect.right,top:rect.top };
                     }), phase);
                     assert.equal(birds.length, 3);
-                    assert.ok(birds.every(bird => phase === 0 ? bird.left > bird.viewport : bird.right < 0), `Visible bird reset: ${JSON.stringify({width,travel,phase,birds})}`);
+                    if (!first) first = birds;
+                    else assert.ok(birds.every((bird,index) => ['left','right','top'].every(axis => Math.abs(bird[axis]-first[index][axis]) < 1)), `Visible bird reset: ${JSON.stringify({width,travel,first,birds})}`);
                     results.push({ width,travel,phase,birds });
                 }
                 await page.evaluate(() => window.NextSkillMotion.setPaused(false));
@@ -406,7 +414,7 @@ async function cameraSamples(duration) {
                 const rect = button.getBoundingClientRect();
                 const center = document.elementFromPoint(rect.x+rect.width/2,rect.y+rect.height/2);
                 const status = document.querySelector('#learning-status');
-                const nav = document.querySelector('.sj-nav [data-smart-action="choose-course"]');
+                const nav = document.querySelector('.ns-navbar__login, .ns-navbar__avatar');
                 const navRect = nav.getBoundingClientRect();
                 const navCenter = document.elementFromPoint(navRect.x+navRect.width/2,navRect.y+navRect.height/2);
                 return { width:innerWidth,height:innerHeight,scrollWidth:document.documentElement.scrollWidth,
