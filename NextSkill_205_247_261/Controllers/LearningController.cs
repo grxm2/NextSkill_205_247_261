@@ -64,7 +64,14 @@ public sealed class LearningController(LearningStore store, ILogger<LearningCont
     }
 
     [HttpGet]
-    public async Task<IActionResult> Island(int? courseId, int? lessonId, CancellationToken token)
+    public Task<IActionResult> Island(int? courseId, int? lessonId, CancellationToken token)
+        => JourneyPage(courseId, lessonId, false, token);
+
+    [HttpGet]
+    public Task<IActionResult> Practice(int? courseId, int? lessonId, CancellationToken token)
+        => JourneyPage(courseId, lessonId, true, token);
+
+    private async Task<IActionResult> JourneyPage(int? courseId, int? lessonId, bool practice, CancellationToken token)
     {
         try
         {
@@ -73,13 +80,16 @@ public sealed class LearningController(LearningStore store, ILogger<LearningCont
             if (courseId is null) return RedirectToAction("Index", "Home", new { chooseCourse = true });
             LearningStore.RequireCourse(courseId.Value);
             var course = state.Courses.First(c => c.CourseId == courseId.Value);
+            if (practice) lessonId ??= course.LastLessonId ?? course.CurrentIslandId;
             if (lessonId.HasValue)
             {
                 LearningStore.RequireLesson(course.CourseId, lessonId.Value);
                 if (!course.UnlockedIslands.Contains(lessonId.Value))
                     return StatusCode(403, "เกาะนี้ยังล็อกอยู่ เรียนด่านก่อนหน้าให้ผ่านก่อนครับ");
             }
-            return View(new LearningIslandViewModel
+            if (!practice && lessonId.HasValue)
+                return RedirectToAction(nameof(Practice), new { courseId, lessonId });
+            return View(practice ? "Practice" : "Island", new LearningIslandViewModel
             {
                 State = state, Course = course, LearnerName = User.Identity?.Name ?? "ผู้เรียนทดลอง", InitialLessonId = lessonId
             });

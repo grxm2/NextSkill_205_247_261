@@ -49,14 +49,14 @@
         const voyage = progress > .025 && progress < harborStop - .04 ? 'rowing' : stage === 2 ? 'docked' : 'shore';
         // Keep the standing avatar visible during the jump, even when the user
         // scrolls manually while Nimo is boarding.
-        if (scene.dataset.voyage !== voyage && (scene.dataset.voyage !== 'boarding' || voyage !== 'rowing')) scene.dataset.voyage = voyage;
+        if (!scene.dataset.arrival && scene.dataset.voyage !== voyage && (scene.dataset.voyage !== 'boarding' || voyage !== 'rowing')) scene.dataset.voyage = voyage;
 
         if (stage === lastStage) return;
         const previousStage = lastStage;
         lastStage = stage;
         scene.dataset.stage = stage;
         scene.querySelector('.ow-harbor').inert = stage !== 2;
-        if (stage === 0) window.NextSkillBuddyMotion?.play('wave', undefined, { motion: !reduced.matches && !paused });
+        if (stage === 0 && !scene.dataset.arrival) window.NextSkillBuddyMotion?.play('wave', undefined, { motion: !reduced.matches && !paused });
         if (stage === 2 && previousStage !== -1 && !reduced.matches && !paused) window.NextSkillBuddyMotion?.play('cheer');
     }
     function destroy() {
@@ -173,10 +173,11 @@
             event.preventDefault(); event.stopImmediatePropagation(); go(link.hash==='#journey-world'?.78:link.hash==='#course-harbor'?.62:0,event.detail>0);
         }
     },true);
-    ['wheel','touchstart','pointerdown'].forEach(type=>window.addEventListener(type,()=>{
+    ['wheel','touchstart','pointerdown'].forEach(type=>window.addEventListener(type,event=>{
+        if (event.target instanceof Element && event.target.closest('[data-theme-toggle]')) return;
         stopTravel();
     },{passive:true}));
-    window.addEventListener('keydown',event=>{if(['Escape','ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key))stopTravel();});
+    window.addEventListener('keydown',event=>{if(event.target instanceof Element && event.target.closest('[data-theme-toggle]'))return;if(['Escape','ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key))stopTravel();});
     const observer = new MutationObserver(() => { paused = guide?.dataset.motion === 'paused'; syncIdle(); });
     if (guide) observer.observe(guide,{attributes:true,attributeFilter:['data-motion']});
     document.querySelectorAll('dialog').forEach(dialog=>observer.observe(dialog,{attributes:true,attributeFilter:['open']}));

@@ -19,8 +19,21 @@
 .ow-scene[data-voyage="rowing"] .buddy-avatar-rowing {
     opacity: 1 !important;
     pointer-events: auto;
-    animation: none;
+    transform-origin: 68% 70%;
+    animation: nimo-row-stroke 1.5s ease-in-out infinite !important;
 }
+
+/* The rowing illustration already includes the paddle held in both hands.
+   Hide the loose boat oar only while that illustration is on board. */
+[data-voyage="rowing"]:has(.buddy-avatar-rowing) .voyage-oar{visibility:hidden}
+@keyframes nimo-row-stroke{
+    0%,100%{transform:translate(0,0) rotate(-7deg)}
+    22%{transform:translate(0,2%) rotate(-3deg)}
+    55%{transform:translate(-2%,1%) rotate(8deg)}
+    78%{transform:translate(-1%,-1%) rotate(2deg)}
+}
+.ow-scene.ow-motion-paused[data-voyage="rowing"] .buddy-avatar-rowing,
+body.voyage-paused [data-voyage="rowing"] .buddy-avatar-rowing{animation-play-state:paused!important}
 
 /* Boat Hull Rocking during Rowing */
 [data-voyage="rowing"] .ow-boat-idle,
@@ -94,6 +107,7 @@
 
 @media(max-width:700px){.ow-island-mascot{width:77px;height:89px;top:33%;left:38%}}
 @media(prefers-reduced-motion:reduce){[data-voyage="rowing"] *{animation:none!important}}
+@media(prefers-reduced-motion:reduce){[data-voyage="rowing"] .buddy-avatar-rowing,.ow-scene[data-voyage="rowing"] .buddy-avatar-rowing{animation:none!important;transform:none}}
 @media(prefers-reduced-motion:reduce){.ow-boat-idle,.buddy-idle-motion{animation:none!important;transform:none!important}}
 
 [data-voyage="rowing"] .buddy-book{display:none!important}
@@ -151,4 +165,17 @@
    the feet and required an expensive filter on every animation frame. */
 .ocean-home .skill-buddy .buddy-avatar-img { filter: none; }
 .ocean-home .ow-island-mascot .buddy-idle-motion { transform-origin: 50% 96%; }
+
+/* Hide the starting positions until the entrance is ready; without JavaScript
+   or when motion is reduced, the regular shore scene remains visible. */
+.ow-arrival-pending .ocean-home .ow-vessel,
+.ow-arrival-pending .ocean-home .ow-island-mascot #nextskill-agent { visibility:hidden; }
+.ow-arrival-motion { position:relative; }
+.ow-scene[data-arrival="rowing"] .ow-boat-idle {
+    animation: nimo-arrival-rock 1.5s ease-in-out infinite !important;
+}
+@keyframes nimo-arrival-rock {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-4px) rotate(1deg); }
+}
 
