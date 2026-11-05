@@ -4,8 +4,10 @@ html{scroll-padding-top:var(--nav-h)}
 /* The offset is part of --nav-h so the sticky hero remains below the bar. */
 body .ns-navbar.sj-header{position:sticky;top:16px;z-index:1000;isolation:isolate;overflow:visible;box-sizing:border-box;width:calc(100% - 48px);max-width:1560px;height:84px;margin:16px auto 0;padding:0;border:0;border-radius:32px;background:transparent;color:#fff;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;font-family:var(--ns-font)}
 /* The mask cuts the lower edge itself into the same curve as the SVG stroke. */
-body .ns-navbar.sj-header:before{content:'';position:absolute;inset:0;width:auto;height:auto;opacity:1;z-index:0;box-sizing:border-box;border:1px solid rgba(255,255,255,.22);border-radius:inherit;background:radial-gradient(ellipse 24% 180% at 88% 0,rgba(255,227,160,.18),transparent 75%),linear-gradient(115deg,#07547f 0%,#087da8 52%,#07547f 100%);-webkit-mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201440%2084%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M0%200%20H1440%20V84%20H1408%20C1320%2084%201270%2072%201180%2075%20S1040%2085%20950%2080%20S810%2070%20720%2075%20S580%2085%20490%2080%20S350%2070%20260%2075%20S120%2084%2032%2084%20H0%20Z%22%2F%3E%3C%2Fsvg%3E");mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201440%2084%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M0%200%20H1440%20V84%20H1408%20C1320%2084%201270%2072%201180%2075%20S1040%2085%20950%2080%20S810%2070%20720%2075%20S580%2085%20490%2080%20S350%2070%20260%2075%20S120%2084%2032%2084%20H0%20Z%22%2F%3E%3C%2Fsvg%3E");-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;pointer-events:none}
-body .ns-navbar.sj-header:after{content:none}
+body .ns-navbar.sj-header:before{content:'';position:absolute;inset:0;width:auto;height:auto;opacity:1;z-index:0;box-sizing:border-box;border:1px solid rgba(255,255,255,.22);border-radius:inherit;background:radial-gradient(ellipse 30% 150% at 88% 0,rgba(255,227,160,.12),transparent 75%),linear-gradient(115deg,rgba(198,235,249,.78),rgba(216,244,252,.72) 52%,rgba(182,225,243,.76));-webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -1px 0 rgba(255,255,255,.12);-webkit-mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201440%2084%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M0%200%20H1440%20V84%20H1408%20C1320%2084%201270%2072%201180%2075%20S1040%2085%20950%2080%20S810%2070%20720%2075%20S580%2085%20490%2080%20S350%2070%20260%2075%20S120%2084%2032%2084%20H0%20Z%22%2F%3E%3C%2Fsvg%3E");mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201440%2084%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M0%200%20H1440%20V84%20H1408%20C1320%2084%201270%2072%201180%2075%20S1040%2085%20950%2080%20S810%2070%20720%2075%20S580%2085%20490%2080%20S350%2070%20260%2075%20S120%2084%2032%2084%20H0%20Z%22%2F%3E%3C%2Fsvg%3E");-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;pointer-events:none}
+/* Soft moving reflections sit inside the glass, beneath its content. */
+body .ns-navbar.sj-header:after{content:"";position:absolute;z-index:1;inset:7px 3% 17px;border-radius:inherit;pointer-events:none;background:radial-gradient(ellipse 17% 100% at 22% 50%,rgba(12,138,184,.25),transparent 75%),radial-gradient(ellipse 13% 100% at 62% 70%,rgba(21,167,198,.24),transparent 74%),radial-gradient(ellipse 14% 100% at 83% 36%,rgba(255,188,88,.22),transparent 76%);animation:nav-ocean-light 14s ease-in-out infinite alternate}
+@keyframes nav-ocean-light{from{transform:translate3d(-12px,0,0);opacity:.7}to{transform:translate3d(12px,0,0);opacity:1}}
 .ns-navbar *{box-sizing:border-box}
 .ns-navbar__inner{position:relative;z-index:2;display:flex;align-items:center;gap:24px;min-height:82px;width:100%;margin:0;padding:0 32px}
 .ns-navbar__brand{display:flex;align-items:center;gap:8px;flex-shrink:0;color:#fff!important;text-decoration:none!important}
@@ -64,3 +66,29 @@ body .ns-navbar.sj-header:after{content:none}
 }
 @media(max-width:450px){.ns-navbar .ns-navbar__login{padding-inline:10px}.ns-navbar__avatar{min-width:44px;min-height:44px}}
 @media(prefers-reduced-motion:reduce){#ocean-journey .hero-sun-rays{animation:none;opacity:.4}.ns-navbar *{transition:none!important;animation:none!important}}
+
+
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){body .ns-navbar.sj-header:before{background:rgba(220,245,253,.96)}}
+@media (prefers-reduced-transparency:reduce){body .ns-navbar.sj-header:before{-webkit-backdrop-filter:none;backdrop-filter:none;background:#def4fb}}
+
+/* Ink remains legible across the translucent glass; the mobile menu is a separate dark panel. */
+.ns-navbar .ns-navbar__brand{color:#063e60!important}
+.ns-navbar__brand>img{background:rgba(7,84,127,.9);border-radius:9px;padding:3px}
+.ns-navbar__brand>small{color:#164e69;border-color:rgba(7,84,127,.28);opacity:1}
+.ns-navbar .ns-navbar__link{color:#083e5b}
+.ns-navbar .ns-navbar__link:hover{color:#063551;background:rgba(255,255,255,.36)}
+.ns-navbar .ns-navbar__login,.ns-navbar .ns-navbar__login.glass{color:#083e5b;background:rgba(255,255,255,.24);border-color:rgba(7,84,127,.38)}
+.ns-navbar .ns-navbar__login:hover,.ns-navbar .ns-navbar__login.glass:hover{color:#063551;background:rgba(255,255,255,.46)}
+.ns-navbar__toggle{color:#083e5b;border-color:rgba(7,84,127,.4);background:rgba(255,255,255,.18)}
+.ns-navbar__avatar{color:#083e5b}
+@media(max-width:959.98px){
+ .ns-navbar .ns-navbar__menu .ns-navbar__link{color:#fff}
+ .ns-navbar .ns-navbar__menu .ns-navbar__link:hover{color:#fff;background:rgba(255,255,255,.15)}
+ .ns-navbar .ns-navbar__menu .ns-navbar__link[aria-current="page"]{color:#07517f;background:#eef9ff}
+}
+
+@media (prefers-reduced-motion:reduce){body .ns-navbar.sj-header:after{animation:none;transform:none;opacity:.8}}
+@media (prefers-reduced-transparency:reduce){body .ns-navbar.sj-header:after{display:none}}
+
+
+

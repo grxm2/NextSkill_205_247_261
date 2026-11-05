@@ -111,3 +111,61 @@
     document.dispatchEvent(new CustomEvent('nextskill:buddy-ready'));
     refresh();
 })();
+
+(() => {
+    'use strict';
+
+    // Decorative idle gestures only run when Nimo is on the landing-page shore
+    // or docked, visible and not already responding to another action.
+    const scene = document.querySelector('.ocean-home .ow-scene');
+    const robot = document.querySelector('#nextskill-agent .skill-buddy');
+    if (!scene || !robot || !window.NextSkillBuddyMotion) return;
+
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+    const poses = ['curious', 'nod', 'wave', 'think', 'dance'];
+    let index = 0;
+    let timer = 0;
+    let lastScroll = 0;
+    let active = true;
+
+    function canPlay() {
+        const policy = window.NextSkillMotion?.snapshot({ element: robot, kind: 'ambient' });
+        const voyage = scene.dataset.voyage;
+        return active && !document.hidden && !reduce.matches && !robot.dataset.posing &&
+            !document.querySelector('dialog[open]') && !robot.closest('.ow-jump-anchor') &&
+            (!voyage || voyage === 'shore' || voyage === 'docked') &&
+            performance.now() - lastScroll > 2000 &&
+            (policy ? policy.ambientAllowed : !window.NextSkillAgent?.isPaused());
+    }
+
+    function schedule(delay) {
+        if (!active || timer) return;
+        timer = window.setTimeout(tick, delay);
+    }
+    function tick() {
+        timer = 0;
+        if (canPlay()) {
+            window.NextSkillBuddyMotion.play(poses[index++ % poses.length], robot, { priority: 0 });
+        }
+        // A slow cadence gives the user time to read and allows reactions to take priority.
+        schedule(7000 + (index % 3) * 1600);
+    }
+    function refresh() {
+        if (document.hidden || reduce.matches) {
+            clearTimeout(timer);
+            timer = 0;
+        } else {
+            schedule(5000);
+        }
+    }
+    window.addEventListener('scroll', () => { lastScroll = performance.now(); }, { passive: true });
+    document.addEventListener('visibilitychange', refresh);
+    reduce.addEventListener('change', refresh);
+    window.addEventListener('pagehide', () => { active = false; clearTimeout(timer); timer = 0; });
+    window.addEventListener('pageshow', () => { active = true; refresh(); });
+    window.NextSkillMotion?.subscribe(refresh, { element: robot, kind: 'ambient' });
+    refresh();
+})();
+
+
+
