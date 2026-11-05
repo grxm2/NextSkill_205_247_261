@@ -122,3 +122,33 @@
  .ocean-home .ow-island-mascot{width:86px;height:99px;left:calc(38% - 4.5px);top:calc(33% - 10px)}
  .ocean-home .ow-boat-anchor{width:86px;height:99px;left:calc(48% - 43px)}
 }
+
+/* Dedicated illustrated poses are only active during the reversible transfer.
+   Keep the existing idle and rowing illustrations as the fallback. */
+.ocean-home .buddy-pose-image{opacity:0;pointer-events:none;transition:opacity 140ms ease-in-out;filter:none}
+.ocean-home .skill-buddy[data-voyage-pose] .buddy-avatar-idle,
+.ocean-home .skill-buddy[data-voyage-pose] .buddy-avatar-rowing{opacity:0!important;transition:opacity 140ms ease-in-out}
+.ocean-home .skill-buddy[data-voyage-pose="crouch"] .buddy-pose-crouch,
+.ocean-home .skill-buddy[data-voyage-pose="jump"] .buddy-pose-jump{opacity:1}
+.ocean-home .skill-buddy[data-voyage-pose] .buddy-reaction-mark{opacity:0}
+@media(prefers-reduced-motion:no-preference){
+ .ocean-home .ow-scene[data-voyage="shore"]:not(.ow-motion-paused) .skill-buddy[data-wave-ready="true"][data-posing="wave"]:not([data-voyage-pose]) .buddy-avatar-idle{opacity:0}
+ .ocean-home .ow-scene[data-voyage="shore"]:not(.ow-motion-paused) .skill-buddy[data-wave-ready="true"][data-posing="wave"]:not([data-voyage-pose]) .buddy-pose-wave{opacity:1}
+ .ocean-home .ow-scene[data-voyage="shore"]:not(.ow-motion-paused) .skill-buddy[data-wave-ready="true"][data-posing="wave"]:not([data-voyage-pose]) .buddy-reaction-mark{opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+ .ocean-home .buddy-pose-image{transition:none}
+}
+/* Contact shadow sits directly below the mascot's feet on the shore. */
+.ocean-home .ow-island-mascot .buddy-shadow {
+    left: 47px;
+    bottom: 31px;
+    width: 110px;
+    height: 10px;
+    background: radial-gradient(ellipse at center, rgba(105, 74, 39, .38), rgba(105, 74, 39, .16) 42%, transparent 72%);
+}
+/* A large cyan drop shadow on each moving bitmap looked like a gap beneath
+   the feet and required an expensive filter on every animation frame. */
+.ocean-home .skill-buddy .buddy-avatar-img { filter: none; }
+.ocean-home .ow-island-mascot .buddy-idle-motion { transform-origin: 50% 96%; }
+

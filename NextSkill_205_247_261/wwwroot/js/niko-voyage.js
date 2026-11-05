@@ -4,6 +4,30 @@
  const scene=document.querySelector('.ow-scene');
  const shore=document.querySelector('.ow-island-mascot');
  const seat=document.querySelector('.ow-boat-anchor');
+ const mascot=document.querySelector('.skill-buddy');
+ const poseImages={};
+ if(scene && shore && seat && mascot){
+  const wrapper=mascot.querySelector('.buddy-illustration-wrapper');
+  if(wrapper) ['crouch','jump','wave'].forEach(name=>{
+   const image=document.createElement('img');
+   image.className=`buddy-avatar-img buddy-pose-image buddy-pose-${name}`;
+   image.alt=''; image.setAttribute('aria-hidden','true');
+   image.decoding='async';
+   image.src=`/images/nimo-pose-${name}.png`;
+   wrapper.append(image); poseImages[name]=image;
+   // Loading alone doesn't guarantee that the browser decoded the PNG. Do
+   // that while idle, never on the frame that starts the jump.
+   const ready=()=>{image.dataset.decoded='true';if(name==='wave')mascot.dataset.waveReady='true';};
+   if(image.decode) image.decode().then(ready).catch(()=>{});
+   else image.addEventListener('load',ready,{once:true});
+  });
+ }
+ // Keep the original artwork whenever a pose has not finished loading.
+ function setPose(name){
+  const image=poseImages[name];
+  if(name && image?.dataset.decoded==='true' && image.naturalWidth) mascot.dataset.voyagePose=name;
+  else if(mascot) delete mascot.dataset.voyagePose;
+ }
  let boarded=false, boarding, jump, jumpSlot, flight, arrivalBoat, generation=0;
  const allowed=()=>!reduce.matches && window.NextSkillAgent?.motionAllowed();
  const sceneAllowed=()=>{
@@ -19,18 +43,20 @@
   const robot=document.querySelector('.skill-buddy');
   window.NextSkillBuddyMotion?.stop(robot);
  }
- function cancelJump(settle=false){
+ function cancelJump(settle=false,keepPose=false){
   const previous=jump;jump=null;previous?.cancel();
+  if(!keepPose)setPose(null);
   if(previous && settle && shore && seat)select(boarded ? seat : shore);
  }
  function transfer(target,pose){
   const agent=document.getElementById('nextskill-agent');
+  const interrupted=!!jump;
   // Capture the actual in-flight position before retargeting on a reversal.
   const from=agent && !agent.hidden ? agent.getBoundingClientRect() : null;
   // The boat or shore can momentarily be outside the viewport while the
   // camera is moving. Gate the jump on the scene, not the sprite's old bounds.
   const canAnimate=!!(scene && agent && from && from.width && from.height && sceneAllowed() && !document.querySelector('dialog[open]'));
-  cancelJump();
+  cancelJump(false,interrupted && canAnimate);
   if(!canAnimate){select(target);return null;}
   if(!jumpSlot){
    jumpSlot=document.createElement('span');
@@ -45,7 +71,10 @@
   jumpSlot.style.transform=`translate3d(${startX}px,${startY}px,0)`;
   select(jumpSlot);
   if(agent.parentElement!==jumpSlot){select(target);return null;}
-  window.NextSkillBuddyMotion?.play(pose);
+  window.NextSkillBuddyMotion?.play(pose,undefined,{motion:false});
+  // On a reversal retain the airborne pose and immediately retarget from the
+  // current rendered position instead of pausing for a second crouch.
+  setPose(interrupted?'jump':'crouch');
   let frame=0,startTime,resolve;
   const finished=new Promise(done=>{resolve=done;});
   const active={finished,cancel(){cancelAnimationFrame(frame);resolve(false);}};
@@ -53,14 +82,17 @@
   function step(now){
    if(jump!==active)return;
    if(startTime===undefined)startTime=now;
-   const t=Math.min(1,(now-startTime)/760),ease=t*t*(3-2*t);
+   const elapsed=now-startTime;
+   const t=Math.min(1,Math.max(0,(elapsed-(interrupted?0:140))/760)),ease=t*t*(3-2*t);
+   const nextPose=t===0&&!interrupted?'crouch':t<.82?'jump':'crouch';
+   if(mascot?.dataset.voyagePose!==nextPose)setPose(nextPose);
    // Track the landing point as the user scrolls or reverses direction.
    const box=target.getBoundingClientRect(),sceneBox=scene.getBoundingClientRect();
    const x=startX+(box.left-sceneBox.left-startX)*ease;
    const y=startY+(box.top-sceneBox.top-startY)*ease-Math.sin(Math.PI*t)*arc;
    jumpSlot.style.transform=`translate3d(${x}px,${y}px,0)`;
    if(t<1){frame=requestAnimationFrame(step);return;}
-   jump=null;select(target);resolve(true);
+   jump=null;select(target);setPose(null);resolve(true);
   }
   frame=requestAnimationFrame(step);
   return active;
