@@ -199,5 +199,10 @@
  window.addEventListener('resize',()=>{cancelIntro(true);cancelJump(true);flight?.cancel();});
  window.addEventListener('pagehide',()=>{generation++;cancelIntro(true);cancelJump(true);flight?.cancel();});
  window.NextSkillVoyage={board,returnToShore,cloudBoat,descend,finishArrival};
- if(shore)select(shore);sync();startIntro();
+ if(shore){
+  if(scene?.hasAttribute('data-catalog-departure')){boarded=true;select(seat);scene.dataset.voyage='docked';}
+  else select(shore);
+ }
+ sync();
+ if(!scene?.hasAttribute('data-catalog-departure'))startIntro();
 })();

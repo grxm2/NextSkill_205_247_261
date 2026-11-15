@@ -9,6 +9,17 @@ public sealed record CourseBrowseItem(Course Metadata, LearningCatalogCourse Cur
     public string Description => Curriculum.Description;
     public string Category => Curriculum.Category;
     public bool CanStart => Curriculum.CanStart;
+    // Catalog covers are separate from the island illustrations used by Details.
+    public string CoverArt => "/images/courses/" + (Id switch
+    {
+        13 => "english-for-work", 1 => "ux-research", 5 => "javascript-basics",
+        2 => "design-systems", 3 => "product-strategy", 4 => "no-code-prototyping", 6 => "advanced-css",
+        _ => Category switch
+        {
+            "Languages" or "Language" => "english-for-work", "Design" => "design-systems",
+            "Technology" or "Development" => "javascript-basics", _ => "product-strategy"
+        }
+    }) + ".jpg";
     public string Art => Curriculum.IslandKind switch
     {
         "ux" => "/images/journey/workshop-island.svg",

@@ -17,46 +17,65 @@
 /* Distant scenery uses its own layers so it cannot cover the learning UI. */
 .ocean-backdrop{--sea-level:62%;position:absolute;inset:0 auto 0 0;width:320vw;z-index:0;overflow:hidden;pointer-events:none;user-select:none}
 .ocean-backdrop-boat-track,.ocean-backdrop-buoy,.ocean-backdrop-whale-water{position:absolute;pointer-events:none}
-.ocean-backdrop-boat-track{--boat-width:clamp(42px,4.4vw,64px);top:calc(var(--sea-level) - var(--boat-width) * .49 + 16px);width:var(--boat-width);opacity:.52;animation:ocean-distant-sail 48s ease-in-out infinite alternate}
+/* About one CSS pixel per second: readable as sailing without competing with Nimo. */
+.ocean-backdrop-boat-track{--boat-width:clamp(50px,5.2vw,78px);--water-period:6.4s;--water-phase:0s;--sail-from:-28px;--sail-to:42px;--sail-period:64s;top:calc(var(--sea-level) - var(--boat-width) * .48 + 12px);width:var(--boat-width);opacity:.6;animation:ocean-distant-sail var(--sail-period) linear infinite alternate}
 .ocean-backdrop-boat-track--1{left:38vw;--ship-hull:#507e83}
-.ocean-backdrop-boat-track--2{left:66vw;--boat-width:clamp(38px,3.6vw,52px);--ship-hull:#af8073;--ship-accent:#d8c6a6;animation-delay:-17s;opacity:.46}
-.ocean-backdrop-boat-track--3{left:88vw;--boat-width:clamp(34px,3.1vw,45px);--ship-hull:#6b8496;animation-delay:-29s;opacity:.46}
-.ocean-backdrop-boat-track--4{left:132vw;--boat-width:clamp(52px,4.6vw,68px);--ship-hull:#628b82;animation-delay:-9s}
-.ocean-backdrop-boat-track--5{left:193vw;--boat-width:clamp(42px,4vw,58px);--ship-hull:#a98a6d;--ship-accent:#bdd7d0;animation-delay:-24s;opacity:.48}
-.ocean-backdrop-boat-track--6{left:20vw;--boat-width:clamp(36px,3.8vw,55px);--ship-hull:#b97d73;--ship-accent:#d8ad7f;animation-delay:-32s;opacity:.48}
-.ocean-backdrop-boat-track--7{left:164vw;--boat-width:clamp(42px,4vw,58px);--ship-hull:#78958a;--ship-accent:#dfd2ac;animation-delay:-13s;opacity:.48}
-.ocean-backdrop-boat{display:block;width:100%;height:auto;transform-origin:50% 82%;animation:ocean-distant-rock 5.5s ease-in-out infinite}
+.ocean-backdrop-boat-track--2{left:66vw;--boat-width:clamp(44px,4.3vw,62px);--ship-hull:#af8073;--ship-accent:#d8c6a6;animation-delay:-17s;opacity:.58}
+.ocean-backdrop-boat-track--3{left:88vw;--boat-width:clamp(40px,3.7vw,54px);--ship-hull:#6b8496;animation-delay:-29s;opacity:.56}
+.ocean-backdrop-boat-track--4{left:132vw;--boat-width:clamp(58px,5.4vw,80px);--ship-hull:#628b82;animation-delay:-9s}
+.ocean-backdrop-boat-track--5{left:193vw;--boat-width:clamp(48px,4.7vw,68px);--ship-hull:#a98a6d;--ship-accent:#bdd7d0;animation-delay:-24s;opacity:.6}
+.ocean-backdrop-boat-track--6{left:20vw;--boat-width:clamp(44px,4.5vw,65px);--ship-hull:#b97d73;--ship-accent:#d8ad7f;animation-delay:-32s;opacity:.6}
+.ocean-backdrop-boat-track--7{left:164vw;--boat-width:clamp(48px,4.7vw,68px);--ship-hull:#78958a;--ship-accent:#dfd2ac;animation-delay:-13s;opacity:.6}
+.ocean-backdrop-boat-track:nth-child(even){--sail-from:34px;--sail-to:-26px;--sail-period:72s;--water-period:7.2s}
+.ocean-backdrop-boat-track:nth-child(3n){--sail-period:80s;--water-period:8s}
+.ocean-backdrop-boat{position:relative;display:block;width:100%;height:auto;transform-origin:50% 88%;animation:ocean-distant-rock var(--water-period) var(--ease-in-out) var(--water-phase) infinite}
+/* The contact line stays in the water plane while only the hull rocks. */
+.ocean-backdrop-boat-water,.ocean-backdrop-boat-contact{position:absolute;inset:0;display:block;width:100%;height:auto;overflow:visible}
+.ocean-backdrop-boat-track:nth-child(even){--water-phase:-2.7s}
+.ocean-boat-ripple{transform-box:view-box;transform-origin:77px 72px;animation:ocean-contact-ripple var(--water-period) ease-out var(--water-phase) infinite;opacity:0}
+.ocean-boat-ripple--following{animation-delay:calc(var(--water-phase) - var(--water-period) / 2)}
 .ocean-ship-lights{opacity:.6}
 html[data-theme="dark"] .ocean-home .ocean-backdrop{filter:none}
 html[data-theme="dark"] .ocean-backdrop-boat-track{opacity:.6}
 html[data-theme="dark"] .ocean-ship-lights{opacity:1;filter:drop-shadow(0 0 3px #ffdc75) drop-shadow(0 0 5px #ffe3a0)}
-.ocean-backdrop-buoy{left:14vw;top:76%;width:clamp(23px,2.8vw,38px);opacity:.83;transform-origin:50% 80%;animation:ocean-buoy-bob 4s ease-in-out infinite}
-.ocean-backdrop-buoy img{display:block;width:100%;height:auto}
-.ocean-backdrop-whale-water{left:34vw;top:82%;width:clamp(68px,6vw,90px);height:clamp(38px,3.4vw,50px);overflow:hidden;opacity:.58}
+.ocean-backdrop-buoy{left:14vw;top:76%;width:clamp(30px,3.2vw,46px);opacity:.78}
+.ocean-backdrop-buoy img{position:relative;display:block;width:100%;height:auto;transform-origin:50% 80%;clip-path:inset(0 0 19%);animation:ocean-buoy-bob 4.8s ease-in-out infinite}
+.ocean-backdrop-buoy-water,.ocean-backdrop-buoy-contact{position:absolute;inset:0;display:block;width:100%;height:auto;overflow:visible}
+.ocean-buoy-ripple{transform-box:view-box;transform-origin:50px 129px;animation:ocean-contact-ripple 4.8s ease-out infinite;opacity:0}
+.ocean-buoy-ripple--following{animation-delay:-2.4s}
+.ocean-backdrop-whale-water{left:34vw;top:82%;width:clamp(68px,6vw,90px);height:clamp(38px,3.4vw,50px);opacity:.45}
+.ocean-backdrop-whale-window{position:absolute;inset:0;clip-path:inset(0 0 21%);overflow:hidden}
 .ocean-backdrop-whale{position:absolute;inset:0;animation:ocean-whale-surface 24s ease-in-out infinite}
+.ocean-whale-wake{position:absolute;inset:0;display:block;width:100%;height:auto;overflow:visible}
+.ocean-whale-ripple{transform-box:view-box;transform-origin:88px 79px;animation:ocean-whale-water 24s ease-in-out infinite;opacity:0}
+.ocean-whale-meniscus{animation:ocean-whale-contact 24s ease-in-out infinite;opacity:0}
 .ocean-backdrop-whale>svg:first-child{display:block;width:100%;height:auto}
-.ocean-backdrop-spout{position:absolute;left:29%;top:1%;width:12%;opacity:0;animation:ocean-whale-spout 24s ease-in-out infinite}
-@keyframes ocean-distant-sail{from{transform:translate3d(-7px,0,0)}to{transform:translate3d(12px,0,0)}}
-@keyframes ocean-distant-rock{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-2px) rotate(1.5deg)}}
-@keyframes ocean-buoy-bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-4px) rotate(3deg)}}
-@keyframes ocean-whale-surface{0%,12%,100%{transform:translateY(100%)}25%,48%{transform:translateY(8%)}65%{transform:translateY(100%)}}
-@keyframes ocean-whale-spout{0%,25%,53%,100%{opacity:0;transform:translateY(5px)}32%,43%{opacity:.8;transform:translateY(0)}}
-.ow-motion-paused .ocean-backdrop-boat-track,.ow-motion-paused .ocean-backdrop-boat,.ow-motion-paused .ocean-backdrop-buoy,.ow-motion-paused .ocean-backdrop-whale,.ow-motion-paused .ocean-backdrop-spout{animation-play-state:paused}
+.ocean-backdrop-spout{position:absolute;left:34%;top:27%;width:10%;opacity:0;animation:ocean-whale-spout 24s ease-in-out infinite}
+@keyframes ocean-distant-sail{from{transform:translate3d(var(--sail-from),0,0)}to{transform:translate3d(var(--sail-to),0,0)}}
+@keyframes ocean-distant-rock{0%,100%{transform:translateY(var(--boat-bob,.7px)) rotate(calc(-1 * var(--boat-roll,1deg)))}50%{transform:translateY(calc(-1 * var(--boat-bob,.7px))) rotate(var(--boat-roll,1deg))}}
+@keyframes ocean-buoy-bob{0%,100%{transform:translateY(.7px) rotate(-2deg)}50%{transform:translateY(-.7px) rotate(2deg)}}
+@keyframes ocean-contact-ripple{0%{transform:translateY(-1px) scale(.78,.7);opacity:0}18%{opacity:.38}100%{transform:translateY(2px) scale(1.22,1.25);opacity:0}}
+@keyframes ocean-whale-surface{0%,12%,75%,100%{transform:translateY(40%)}28%,43%{transform:translateY(8%)}60%{transform:translateY(25%)}}
+@keyframes ocean-whale-water{0%,12%,78%,100%{transform:scale(.8,.8);opacity:0}28%{opacity:.32;transform:scale(.94,.9)}70%{transform:scale(1.2,1.3);opacity:0}}
+@keyframes ocean-whale-contact{0%,16%,70%,100%{opacity:0}28%,45%{opacity:.45}}
+@keyframes ocean-whale-spout{0%,29%,50%,100%{opacity:0;transform:translateY(2px)}35%,40%{opacity:.5;transform:translateY(0)}}
+.ow-motion-paused :is(.ocean-backdrop-boat-track,.ocean-backdrop-boat,.ocean-backdrop-buoy img,.ocean-backdrop-whale,.ocean-backdrop-spout,.ocean-boat-ripple,.ocean-buoy-ripple,.ocean-whale-ripple,.ocean-whale-meniscus){animation-play-state:paused}
 @media(max-width:700px){
- .ocean-backdrop-boat-track--1{left:8vw;--boat-width:42px}
- .ocean-backdrop-boat-track--2{left:43vw;--boat-width:38px}
- .ocean-backdrop-boat-track--3{left:79vw;--boat-width:34px}
+ .ocean-backdrop-boat-track--1{left:8vw;--boat-width:48px}
+ .ocean-backdrop-boat-track--2{left:43vw;--boat-width:44px}
+ .ocean-backdrop-boat-track--3{left:79vw;--boat-width:39px}
  .ocean-backdrop-boat-track--4{--boat-width:46px}
  .ocean-backdrop-boat-track--5{--boat-width:41px}
- .ocean-backdrop-boat-track--6{left:25vw;--boat-width:34px}
+ .ocean-backdrop-boat-track--6{left:25vw;--boat-width:40px}
  .ocean-backdrop-boat-track--7{--boat-width:41px}
- .ocean-backdrop-buoy{left:85vw;top:79%;width:26px}
+ .ocean-backdrop-buoy{left:85vw;top:79%;width:32px}
  .ocean-backdrop-whale-water{left:46vw;top:86%;width:64px;height:36px}
 }
 @media(max-width:360px) and (max-height:680px){
  .ocean-backdrop{--sea-level:68%}
 }
 @media(prefers-reduced-motion:reduce){
- .ocean-backdrop-boat-track,.ocean-backdrop-boat,.ocean-backdrop-buoy,.ocean-backdrop-whale,.ocean-backdrop-spout{animation:none!important}
+ .ocean-backdrop-boat-track,.ocean-backdrop-boat,.ocean-backdrop-buoy img,.ocean-backdrop-whale,.ocean-backdrop-spout,.ocean-boat-ripple,.ocean-buoy-ripple,.ocean-whale-ripple,.ocean-whale-meniscus{animation:none!important}
+ .ocean-boat-ripple,.ocean-buoy-ripple{opacity:.2;transform:none}
  .ocean-backdrop-whale-water{display:none}
 }

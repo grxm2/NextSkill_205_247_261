@@ -11,7 +11,9 @@
         boot = JSON.parse(document.getElementById('learning-initial-state')?.textContent || 'null');
         seen = sessionStorage.getItem(seenKey) === 'true';
     } catch {}
-    const isArriving = !!(marker && boot && marker.courseId === boot.course.courseId && Date.now() - marker.at < 900000);
+    const age=Date.now()-marker?.at;
+    const isArriving = !!(marker && boot && marker.courseId === boot.course.courseId && age>=0 && age < (marker.source==='catalog'?60000:900000) && (!marker.url||marker.url===location.pathname+location.search));
+    if(isArriving&&marker.source==='catalog'&&!marker.skip)document.documentElement.classList.add('journey-island-arriving');
     const label = cloud.querySelector('.jc-label');
     const skip = document.createElement('button');
     skip.type = 'button'; skip.className = 'jc-skip'; skip.textContent = 'ข้ามไปเกาะบทเรียน'; skip.hidden = true;
@@ -30,7 +32,7 @@
         generation++; clearWork(); covering = null; revealing = false;
         if (cloud.open) cloud.close();
         cloud.className = ''; skip.hidden = true;
-        document.documentElement.classList.remove('journey-transition-active', 'journey-arrival-prepaint');
+        document.documentElement.classList.remove('journey-transition-active', 'journey-arrival-prepaint','journey-island-arriving');
         window.NextSkillAgent?.refresh(); window.NextSkillMotion?.refresh();
         if (focus && status === 'ready') {
             try { sessionStorage.setItem(seenKey, 'true'); } catch {}
@@ -59,7 +61,18 @@
         if (!covering) { cover(); covering = Promise.resolve(); }
         return covering;
     }
-    function finishReveal() { if (revealing) close(true); }
+    function focusRoute(){
+        if(document.querySelector('dialog[open]'))return;
+        const active=document.activeElement;
+        if(active&&active!==document.body&&!cloud.contains(active)&&active.matches('button,a,input,select'))return;
+        (document.querySelector('#lesson-route .is-current')||document.querySelector('#lesson-route .is-completed:last-child'))?.focus({preventScroll:true});
+    }
+    function finishReveal() {
+        if(!revealing)return;
+        const inbound=marker?.source==='catalog'&&!marker.skip;
+        close(!inbound);
+        if(inbound)Promise.resolve(window.NextSkillArchipelago?.arriveFromLeft()).then(focusRoute);
+    }
     skip.addEventListener('click', () => { if (status === 'ready') close(true); });
     cloud.addEventListener('cancel', event => {
         event.preventDefault();
@@ -74,15 +87,34 @@
         const map = document.getElementById('lesson-map');
         await Promise.race([document.fonts?.ready || Promise.resolve(), delay(800)]);
         if (run !== generation) return;
-        if (map) window.scrollTo({ top: map.getBoundingClientRect().top + scrollY - 24, behavior: 'instant' });
+        if (marker?.source!=='catalog' && map) window.scrollTo({ top: map.getBoundingClientRect().top + scrollY - 24, behavior: 'instant' });
         await Promise.race([Promise.all([...document.querySelectorAll('#lesson-route img')].map(img => img.decode?.().catch(() => {}))), delay(800)]);
         if (run !== generation) return;
+        if(marker?.source==='catalog'){
+            const route=document.getElementById('lesson-route');
+            const first=route?.querySelector('[data-lesson-id="1"] img');
+            if(first){
+                const rect=first.getBoundingClientRect();
+                const shore=rect.top+scrollY+rect.height*.82;
+                const sameViewport=marker.sea?.width===innerWidth&&marker.sea?.height===innerHeight;
+                const horizon=sameViewport?marker.sea.horizon:window.NextSkillSeaWorld?.referenceHorizon();
+                if(Number.isFinite(horizon)){
+                    const extra=Math.max(0,horizon-shore);
+                    if(extra)route.style.paddingTop=`${extra}px`;
+                    const aligned=first.getBoundingClientRect();
+                    const documentShore=aligned.top+scrollY+aligned.height*.82;
+                    window.scrollTo({top:Math.max(0,documentShore-horizon),behavior:'instant'});
+                    window.NextSkillSeaWorld?.setShore(documentShore);
+                }
+                window.NextSkillArchipelago?.prepareSurfaceArrival();
+            }
+        }
         clearTimeout(deadline);
         skip.hidden = false;
         if (label) label.textContent = 'เกาะบทเรียนพร้อมแล้ว';
         const policy = window.NextSkillMotion?.snapshot() || { reduced: reduced.matches, paused: false, hidden: document.hidden };
         if (policy.reduced || policy.paused || policy.hidden) { close(true); return; }
-        const duration = seen ? 200 : 900;
+        const duration = marker?.source==='catalog' ? 700 : seen ? 200 : 900;
         cloud.style.setProperty('--jc-reveal-duration', `${duration}ms`);
         // Flush the covered state once, then let CSS own the finite reveal.
         void cloud.offsetWidth;

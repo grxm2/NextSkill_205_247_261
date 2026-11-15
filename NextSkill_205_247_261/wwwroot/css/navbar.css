@@ -9,8 +9,8 @@ body .ns-navbar.sj-header:after{content:none}
 .ns-navbar *{box-sizing:border-box}
 .ns-navbar__inner{position:relative;z-index:2;display:flex;align-items:center;gap:24px;min-height:82px;width:100%;margin:0;padding:0 32px}
 .ns-navbar__brand{display:flex;align-items:center;gap:8px;flex-shrink:0;color:#fff!important;text-decoration:none!important}
-.ns-navbar__brand>img{display:block;width:32px;height:32px}
-.ns-navbar__brand>span{font-family:var(--ns-font-number);font-size:21px;font-weight:700;letter-spacing:-.8px;line-height:1.2}
+.ns-navbar__brand>img{display:block;width:64px;height:64px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 2px 3px rgba(23,62,86,.08))}
+.ns-navbar__brand>.ns-navbar__wordmark{display:flex;gap:5px;font-family:var(--ns-font-number);font-size:26px;font-weight:600;letter-spacing:-1px;line-height:1.1;white-space:nowrap;text-shadow:0 1px 0 rgba(255,255,255,.3)}
 .ns-navbar__brand>small{padding-left:18px;margin-left:4px;border-left:1px solid #ffffff55;color:#dcefff;font-size:13px;font-weight:400;opacity:.85;white-space:nowrap}
 .ns-navbar__menu{display:flex;align-items:center;justify-content:center;gap:22px;margin-inline:auto}
 .ns-navbar .ns-navbar__link{display:flex;align-items:center;justify-content:center;gap:.5rem;min-height:40px;height:40px;padding:0 1rem;border:1px solid transparent;border-radius:28px;color:#fff;font-size:15px;font-weight:600;line-height:1.5;text-decoration:none;white-space:nowrap;transition:background-color .2s ease}
@@ -56,7 +56,7 @@ body .ns-navbar.sj-header:after{content:none}
  :root{--nav-h:60px;--page-gutter:20px}
  body .ns-navbar.sj-header{top:8px;width:calc(100% - 24px);height:52px;margin-top:8px;border-radius:20px}
  .ns-navbar__inner{min-height:50px;height:50px;padding:0 12px;gap:8px}
- .ns-navbar__brand{gap:6px}.ns-navbar__brand>img{width:28px;height:28px}.ns-navbar__brand>span{font-size:18px}
+ .ns-navbar__brand{gap:4px}.ns-navbar__brand>img{width:46px;height:46px}.ns-navbar__brand>.ns-navbar__wordmark{font-size:21px;gap:4px}
  .ns-navbar__account{margin-left:auto}.ns-navbar__toggle:not([hidden]){display:flex;order:3;flex-shrink:0}
  .ns-navbar__menu{position:absolute;top:calc(100% + 12px);right:0;left:0;z-index:5;display:flex;flex-direction:column;align-items:stretch;gap:5px;margin:0;padding:10px;border:1px solid #ffffff60;border-radius:16px;background:#075c89;box-shadow:0 10px 25px #00285a33}
  .ns-navbar__menu[hidden]{display:none}.ns-navbar .ns-navbar__link{justify-content:flex-start;min-height:44px;height:44px}
@@ -69,7 +69,7 @@ body .ns-navbar.sj-header:after{content:none}
 
 /* Ink remains legible across the translucent glass; the mobile menu is a separate dark panel. */
 .ns-navbar .ns-navbar__brand{color:#063e60!important}
-.ns-navbar__brand>img{background:rgba(7,84,127,.9);border-radius:9px;padding:3px}
+.ns-navbar__brand>img{background:transparent;border:0;border-radius:0;padding:0}
 .ns-navbar__brand>small{color:#164e69;border-color:rgba(7,84,127,.28);opacity:1}
 .ns-navbar .ns-navbar__link{color:#083e5b}
 .ns-navbar .ns-navbar__link:hover{color:#063551;background:rgba(255,255,255,.36)}
@@ -82,3 +82,12 @@ body .ns-navbar.sj-header:after{content:none}
  .ns-navbar .ns-navbar__menu .ns-navbar__link:hover{color:#fff;background:rgba(255,255,255,.15)}
  .ns-navbar .ns-navbar__menu .ns-navbar__link[aria-current="page"]{color:#07517f;background:#eef9ff}
 }
+
+/* /* A compact lockup preserves room for the glass controls on narrow screens. */
+@media(max-width:450px){
+ .ns-navbar__inner{padding-inline:8px;gap:6px}
+ .ns-navbar__brand{gap:1px}
+ .ns-navbar__brand>img{width:42px;height:46px}
+ body .ns-navbar .ns-navbar__brand>.ns-navbar__wordmark{display:flex;flex-direction:column;gap:0;font-size:17px;line-height:1.03;letter-spacing:-.5px}
+}
+html[data-theme="dark"] .ns-navbar__wordmark{text-shadow:none}
