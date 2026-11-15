@@ -8,6 +8,7 @@
     const eligible = page.dataset.progressEligible === 'true';
     let loading = false;
     let selecting = false;
+    let latestState;
 
     function message(text, retry = false) {
         status.replaceChildren(document.createTextNode(text));
@@ -21,14 +22,19 @@
         }
     }
     function displayProgress(state) {
+        latestState=state;
         page.querySelectorAll('[data-course-progress]').forEach(wrap => {
             const owner = wrap.closest('[data-course-id]');
             const course = state.courses.find(item => item.courseId === Number(owner.dataset.courseId));
             if (!course) { wrap.hidden = true; return; }
-            wrap.hidden = false;
+            wrap.hidden = page.hasAttribute('data-catalog-ocean') && !course.hasStarted;
             wrap.querySelector('[data-progress-label]').textContent = course.hasStarted
                 ? `ผ่านแล้ว ${course.completedLessons.length} จาก ${course.totalLessons} เกาะ · ${course.progress}%` : 'ยังไม่ได้เริ่มเส้นทางนี้';
             const bar = wrap.querySelector('progress'); bar.value = course.progress;
+        });
+        page.querySelectorAll('[data-course-start]').forEach(link => {
+            const saved=state.courses.find(item=>item.courseId===Number(link.dataset.courseId));
+            if(saved&&!selecting)(link.querySelector('[data-course-action-label]')||link).textContent=`${saved.isComplete?'ทบทวนบทเรียน':saved.hasStarted?'เรียนต่อจากเกาะเดิม':page.hasAttribute('data-catalog-ocean')?'เลือกคอร์สนี้':'เริ่มเรียนเกาะแรก'}`;
         });
         const course = state.courses.find(item => item.courseId === Number(page.dataset.courseId));
         if (!course) return;
@@ -51,20 +57,24 @@
             if (!response.ok) throw new Error(response.status === 401 ? 'เซสชันหมดอายุ เข้าสู่ระบบอีกครั้งเพื่อดูความก้าวหน้า' : 'ยังโหลดความก้าวหน้าไม่ได้ ข้อมูลเดิมยังไม่ถูกเปลี่ยน');
             const state = await response.json();
             if (!Array.isArray(state.courses)) throw new Error('ยังโหลดความก้าวหน้าไม่ได้');
-            displayProgress(state); message('');
+            if(!selecting){displayProgress(state);message('');}
         } catch (error) {
             message(error.name === 'TimeoutError' ? 'โหลดความก้าวหน้านานกว่าปกติ ลองอีกครั้งได้โดยไม่เริ่มใหม่' : error.message || 'ยังโหลดความก้าวหน้าไม่ได้', true);
         } finally { loading = false; page.removeAttribute('aria-busy'); }
     }
-    const start = page.querySelector('[data-course-start]');
-    start?.addEventListener('click', async event => {
+    page.addEventListener('click', async event => {
+        const start=event.target.closest('[data-course-start]');
+        if(!start||!page.contains(start))return;
         if (selecting) { event.preventDefault(); return; }
         // Anonymous production links use the existing login ReturnUrl directly.
         if (!eligible || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
         event.preventDefault();
         selecting = true;
-        const label = start.textContent;
-        start.setAttribute('aria-disabled', 'true'); start.setAttribute('aria-busy', 'true'); start.textContent = 'กำลังเตรียมเส้นทาง…';
+        const text=start.querySelector('[data-course-action-label]')||start;
+        const label = text.textContent;
+        start.setAttribute('aria-disabled', 'true'); start.setAttribute('aria-busy', 'true'); text.textContent = 'กำลังเตรียมเส้นทาง…';
+        const voyage=window.NextSkillCourseVoyage;
+        voyage?.begin(start);
         try {
             const response = await fetch('/Learning/SelectCourse', {
                 method: 'POST', credentials: 'same-origin', signal: AbortSignal.timeout(15000),
@@ -72,16 +82,23 @@
                 body: JSON.stringify({ courseId: Number(start.dataset.courseId) })
             });
             if (response.status === 401) {
+                voyage?.cancel();
                 location.assign(`/Account/Login?returnUrl=${encodeURIComponent(start.dataset.islandUrl)}`); return;
             }
             const result = await response.json().catch(() => null);
             if (!response.ok) throw new Error(result?.message || 'ยังเปิดเส้นทางไม่ได้ กรุณาลองอีกครั้ง');
-            location.assign(start.dataset.islandUrl);
+            if(!Array.isArray(result?.courses)||!result.courses.some(item=>item.courseId===Number(start.dataset.courseId)&&item.hasStarted))throw new Error('ยังยืนยันคอร์สที่เลือกไม่ได้ กรุณาลองอีกครั้ง');
+            displayProgress(result);
+            if(voyage)await voyage.navigate(start.dataset.islandUrl,Number(start.dataset.courseId));
+            else location.assign(start.dataset.islandUrl);
         } catch (error) {
+            voyage?.cancel();
             message(error.name === 'TimeoutError' ? 'การเปิดเส้นทางใช้เวลานาน ลองกดเริ่มอีกครั้งได้ ข้อมูลเดิมยังอยู่' : error.message || 'ยังเปิดเส้นทางไม่ได้');
             status.classList.add('ns-status--error');
+            status.setAttribute('tabindex','-1');status.focus();
         } finally {
-            selecting = false; start.removeAttribute('aria-disabled'); start.removeAttribute('aria-busy'); start.textContent = label;
+            selecting = false; start.removeAttribute('aria-disabled'); start.removeAttribute('aria-busy'); text.textContent = label;
+            if(latestState)displayProgress(latestState);
         }
     });
     loadProgress();

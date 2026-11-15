@@ -1,0 +1,11 @@
+@* The one-use, exact-URL marker bridges two MVC documents without a content flash. *@
+<script>
+    try {
+        const arrival = JSON.parse(sessionStorage.getItem('nextskill.catalog-voyage.v1'));
+        if (arrival && arrival.url === location.pathname + location.search && Date.now() - arrival.at >= 0 && Date.now() - arrival.at < 30000) {
+            document.documentElement.classList.add('cv-arrival-pending');
+            window.catalogVoyageFallback = setTimeout(() => document.documentElement.classList.remove('cv-arrival-pending'), 6000);
+        } else sessionStorage.removeItem('nextskill.catalog-voyage.v1');
+    } catch {}
+</script>
+<style>.cv-arrival-pending:after{content:'';position:fixed;inset:0;z-index:200000;background:linear-gradient(#ffffff70,#ffffff70),#f4fbff url('/images/journey/clouds-reference-v1.png') center/cover no-repeat;pointer-events:none}</style>
