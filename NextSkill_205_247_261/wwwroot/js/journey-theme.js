@@ -10,7 +10,7 @@
     let orbit = null;
 
     function followLight() {
-        const scene = document.querySelector('.ow-scene') || document.querySelector('.sj-learn, .practice-page');
+        const scene = document.querySelector('.ow-scene') || document.querySelector('.sj-learn, .practice-page, [data-catalog-ocean]');
         const lights = [...document.querySelectorAll('.journey-sun,.journey-moon')];
         if (!scene || !lights.length) return;
         const sky = scene.querySelector('.ow-sky, .learning-celestial').getBoundingClientRect();
@@ -33,7 +33,7 @@
         celestialAnimations.forEach(animation => animation.cancel());
         celestialAnimations = [];
         orbit = null;
-        const scene = document.querySelector('.ow-scene') || document.querySelector('.sj-learn, .practice-page');
+        const scene = document.querySelector('.ow-scene') || document.querySelector('.sj-learn, .practice-page, [data-catalog-ocean]');
         ['sun','moon'].forEach(name => ['x','y','alpha'].forEach(value => scene?.style.removeProperty(`--journey-${name}-${value}`)));
         root.classList.remove('theme-transitioning');
     }

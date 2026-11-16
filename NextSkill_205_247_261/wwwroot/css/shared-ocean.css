@@ -20,3 +20,14 @@ html[data-theme="dark"] .ocean-surface-world .surface-ocean-waves{opacity:.65}
 @keyframes shared-ocean-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 @media(max-width:700px){:root{--ocean-boat-width:110px;--ocean-horizon:clamp(500px,70svh,620px)}}
 @media(prefers-reduced-motion:reduce){.ocean-surface-world :is(.island-water-drift,.surface-ocean-wave){animation:none;will-change:auto}.ocean-surface-world .island-water-layer{transform:none!important}.ocean-surface-world .underwater-surface{will-change:auto}}
+
+/* Shore contact belongs to the scenery, with no raised shadow under the land. */
+.catalog-page .catalog-harbor .knowledge-sanctum{mask:url('/images/journey/sanctum-waterline-mask.svg') center/100% 100% no-repeat}
+.catalog-page .catalog-harbor:before{content:'';position:absolute;inset:0;pointer-events:none;background:url('/images/journey/sanctum-submerged-rocks.svg') center/100% 100% no-repeat}
+.catalog-page .catalog-harbor:after{content:'';position:absolute;inset:0;pointer-events:none;background:url('/images/journey/sanctum-shore-contact.svg') center/100% 100% no-repeat}
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island[data-lesson-id="1"] img{filter:none;mask-image:linear-gradient(#000 0 83%,#000d 90%,#0007 96%,transparent 100%)}
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island[data-lesson-id="1"]:before{display:none}
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island[data-lesson-id="1"]:after{content:'';display:block;position:absolute;inset:0 0 auto;z-index:0;width:100%;height:auto;aspect-ratio:4/3;pointer-events:none;background:url('/images/journey/island-shore-contact.svg') center/100% 100% no-repeat}
+html[data-theme="dark"] .smart-journey .learning-workspace #lesson-route .sj-lesson-island[data-lesson-id="1"] img{filter:brightness(.85) saturate(.7)}
+html[data-theme="dark"] :is(.catalog-page .catalog-harbor,.sj-lesson-island[data-lesson-id="1"]):after{opacity:.7}
+html[data-theme="dark"] .catalog-page .catalog-harbor:before{opacity:.55}

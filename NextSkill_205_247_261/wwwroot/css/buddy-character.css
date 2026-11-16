@@ -63,7 +63,8 @@
 .buddy-reaction-mark { position:absolute; right:6%; top:2%; z-index:6; display:grid; place-items:center; min-width:29px; height:29px; border:2px solid #fff; border-radius:50%; background:#e8faff; color:#17658a; font:600 18px/1 sans-serif; opacity:0; transition:opacity 160ms ease-out; box-shadow:0 3px 8px #174b6118; }
 .skill-buddy[data-posing] .buddy-reaction-mark { opacity:1; }
 .skill-buddy[data-emotion="thinking"] .buddy-reaction-mark:before,.skill-buddy[data-emotion="curious"] .buddy-reaction-mark:before { content:'?'; }
-.skill-buddy[data-emotion="happy"] .buddy-reaction-mark:before,.skill-buddy[data-emotion="encouraging"] .buddy-reaction-mark:before { content:'✓'; }
+/* Positive gestures use the character's motion without a checkmark badge. */
+.skill-buddy[data-emotion="happy"] .buddy-reaction-mark,.skill-buddy[data-emotion="encouraging"] .buddy-reaction-mark { display:none; }
 .skill-buddy[data-emotion="excited"] .buddy-reaction-mark:before,.skill-buddy[data-emotion="proud"] .buddy-reaction-mark:before { content:'✦'; color:#916516; }
 .skill-buddy[data-emotion="focused"] .buddy-reaction-mark:before { content:'…'; }
 .skill-buddy[data-emotion="surprised"] .buddy-reaction-mark:before { content:'!'; }

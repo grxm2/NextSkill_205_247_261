@@ -84,9 +84,9 @@
         const island = scene.querySelector('.ow-start-land');
         const art = island?.querySelector('.ow-island-art');
         if (!island || !art || !vessel) return 0;
-        // Keep the visible hull below the sand while the shore moves past.
-        // Layout coordinates stay stable even while the camera is translated.
-        const beachBottom = island.offsetTop + art.getBoundingClientRect().height * .83;
+        // Use the painted shore, including its small scale around the waterline.
+        const artRect = art.getBoundingClientRect();
+        const beachBottom = artRect.top - scene.getBoundingClientRect().top + artRect.height * .83;
         const hullTop = vessel.offsetTop + vessel.offsetHeight * .45;
         return fitVesselOffset(Math.max(0, beachBottom - hullTop + 12));
     }

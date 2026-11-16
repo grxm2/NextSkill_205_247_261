@@ -52,6 +52,12 @@
     if (window.NextSkillMotion) window.NextSkillMotion.subscribe(sync, { element: main, kind: 'ambient' });
     else sync();
     window.NextSkillSeaWorld = {
+        // The back of the beach meets the sea before the foreground pier.
+        // Keep the camera, arrival and vessel on this same artwork coordinate.
+        surfaceShore(element) {
+            const rect = element.getBoundingClientRect();
+            return rect.top + scrollY + rect.height * .74;
+        },
         referenceHorizon: () => anchor.getBoundingClientRect().top,
         setShore(value) { shore=value;update(); },
         snapshot: () => ({horizon:shore-scrollY,width:innerWidth,height:innerHeight}),

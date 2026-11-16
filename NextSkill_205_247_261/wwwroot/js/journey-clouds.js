@@ -94,15 +94,13 @@
             const route=document.getElementById('lesson-route');
             const first=route?.querySelector('[data-lesson-id="1"] img');
             if(first){
-                const rect=first.getBoundingClientRect();
-                const shore=rect.top+scrollY+rect.height*.82;
+                const shore=window.NextSkillSeaWorld.surfaceShore(first);
                 const sameViewport=marker.sea?.width===innerWidth&&marker.sea?.height===innerHeight;
                 const horizon=sameViewport?marker.sea.horizon:window.NextSkillSeaWorld?.referenceHorizon();
                 if(Number.isFinite(horizon)){
                     const extra=Math.max(0,horizon-shore);
                     if(extra)route.style.paddingTop=`${extra}px`;
-                    const aligned=first.getBoundingClientRect();
-                    const documentShore=aligned.top+scrollY+aligned.height*.82;
+                    const documentShore=window.NextSkillSeaWorld.surfaceShore(first);
                     window.scrollTo({top:Math.max(0,documentShore-horizon),behavior:'instant'});
                     window.NextSkillSeaWorld?.setShore(documentShore);
                 }

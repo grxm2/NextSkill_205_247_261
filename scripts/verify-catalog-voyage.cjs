@@ -29,10 +29,11 @@ const nav = () => page.locator('.ns-navbar__link[href="/Home/Courses"]');
     browser = await chromium.launch({ headless: true, executablePath: process.env.BROWSER_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     page = await context.newPage(); page.on('pageerror', error => errors.push(error.message));
-    await check('Home starts at the island; the original long sea voyage reaches the distant harbor before clouds', async () => {
+    await check('Home lands on the island; the original long sea voyage reaches the distant harbor before clouds', async () => {
         await open('/Home/Index');
+        await page.waitForFunction(() => !document.querySelector('#ocean-journey').dataset.arrival && document.querySelector('#nextskill-agent')?.dataset.context === 'shore');
         assert.equal(await page.locator('#nextskill-agent').count(), 1);
-        assert.equal(await page.locator('.ow-boat-anchor #nextskill-agent').count(), 1);
+        assert.equal(await page.locator('.ow-island-mascot #nextskill-agent').count(), 1);
         const harbor = await page.locator('.ow-harbor').boundingBox();
         assert.ok(harbor.x >= 1440 * 2.2, 'The harbor keeps its original 226vw longitude');
         await screenshot('home-1440');

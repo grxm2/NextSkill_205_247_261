@@ -37,7 +37,7 @@
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const compact = matchMedia('(max-width:700px), (pointer:coarse)');
     const easeOut = 'cubic-bezier(0.23,1,0.32,1)';
-    const exclusionSelector = '.ow-intro h1,.ow-intro > p,.ow-intro-actions,.ow-journey-caption,.ow-controls,.ow-vessel,.ow-harbor,.ow-land,.sj-header';
+    const exclusionSelector = '.ow-intro h1,.ow-intro > p,.ow-intro-actions,.ow-journey-caption,.ow-controls,.ow-vessel,.ow-harbor,.ow-land,.sj-header,[data-island-animal]';
     const fishDuration = 1200;
     const frameCount = 61;
     const birdAnimations = [];

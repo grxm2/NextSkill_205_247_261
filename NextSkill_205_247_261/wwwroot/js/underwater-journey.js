@@ -19,8 +19,7 @@
     function measureSurface() {
         const first = route.querySelector('[data-lesson-id="1"] img');
         if (!first) return;
-        const rect = first.getBoundingClientRect();
-        const shore = rect.top + scrollY + rect.height * .82;
+        const shore = window.NextSkillSeaWorld.surfaceShore(first);
         // Background source waterline is approximately 26.5% down the image.
         const displayedHeight = Math.max(innerHeight, innerWidth * 941 / 1672);
         surfaceOffset = shore - displayedHeight * .265;

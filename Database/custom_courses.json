@@ -1,0 +1,225 @@
+[
+  {
+    "Id": 1,
+    "Title": "UX Research",
+    "Category": "Design",
+    "Level": "Beginner",
+    "Units": 6,
+    "Featured": true,
+    "Description": "\u0E40\u0E23\u0E35\u0E22\u0E19\u0E23\u0E39\u0E49\u0E27\u0E34\u0E18\u0E35\u0E01\u0E32\u0E23\u0E17\u0E33\u0E27\u0E34\u0E08\u0E31\u0E22\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49 \u0E2A\u0E31\u0E21\u0E20\u0E32\u0E29\u0E13\u0E4C \u0E41\u0E25\u0E30\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E08\u0E23\u0E34\u0E07",
+    "Instructor": "Alex Kim",
+    "Skills": [
+      "Research",
+      "UX",
+      "Interviewing"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "\u0E15\u0E31\u0E49\u0E07\u0E04\u0E33\u0E16\u0E32\u0E21\u0E27\u0E34\u0E08\u0E31\u0E22",
+        "DurationMinutes": 10
+      },
+      {
+        "Id": 2,
+        "Title": "\u0E2A\u0E31\u0E21\u0E20\u0E32\u0E29\u0E13\u0E4C\u0E42\u0E14\u0E22\u0E44\u0E21\u0E48\u0E0A\u0E35\u0E49\u0E19\u0E33",
+        "DurationMinutes": 10
+      },
+      {
+        "Id": 3,
+        "Title": "\u0E08\u0E32\u0E01\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E2A\u0E39\u0E48\u0E02\u0E49\u0E2D\u0E04\u0E49\u0E19\u0E1E\u0E1A",
+        "DurationMinutes": 10
+      },
+      {
+        "Id": 4,
+        "Title": "\u0E27\u0E32\u0E07\u0E41\u0E1C\u0E19\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19",
+        "DurationMinutes": 10
+      }
+    ]
+  },
+  {
+    "Id": 2,
+    "Title": "Design Systems",
+    "Category": "Design",
+    "Level": "Intermediate",
+    "Units": 8,
+    "Featured": false,
+    "Description": "\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E41\u0E25\u0E30\u0E14\u0E39\u0E41\u0E25\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23\u0E23\u0E30\u0E1A\u0E1A Design System \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E2D\u0E07\u0E04\u0E4C\u0E01\u0E23",
+    "Instructor": "Maya Li",
+    "Skills": [
+      "Design",
+      "System",
+      "Figma"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "Tokenization",
+        "DurationMinutes": 8
+      },
+      {
+        "Id": 2,
+        "Title": "Components \u0026 Variants",
+        "DurationMinutes": 12
+      },
+      {
+        "Id": 3,
+        "Title": "Documentation \u0026 Hand-off",
+        "DurationMinutes": 10
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "Title": "Product Strategy",
+    "Category": "Business",
+    "Level": "Beginner",
+    "Units": 5,
+    "Featured": true,
+    "Description": "\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E01\u0E25\u0E22\u0E38\u0E17\u0E18\u0E4C\u0E1C\u0E25\u0E34\u0E15\u0E20\u0E31\u0E13\u0E11\u0E4C \u0E27\u0E32\u0E07\u0E42\u0E23\u0E14\u0E41\u0E21\u0E1B \u0E41\u0E25\u0E30\u0E27\u0E31\u0E14\u0E1C\u0E25\u0E25\u0E31\u0E1E\u0E18\u0E4C\u0E18\u0E38\u0E23\u0E01\u0E34\u0E08",
+    "Instructor": "John Doe",
+    "Skills": [
+      "Product",
+      "Strategy",
+      "Roadmap"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "Product Vision \u0026 Goals",
+        "DurationMinutes": 10
+      },
+      {
+        "Id": 2,
+        "Title": "Roadmaps \u0026 Prioritization",
+        "DurationMinutes": 15
+      }
+    ]
+  },
+  {
+    "Id": 4,
+    "Title": "No-code Prototyping",
+    "Category": "Technology",
+    "Level": "Intermediate",
+    "Units": 7,
+    "Featured": false,
+    "Description": "\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E42\u0E1B\u0E23\u0E42\u0E15\u0E44\u0E17\u0E1B\u0E4C\u0E41\u0E25\u0E30\u0E40\u0E27\u0E47\u0E1A\u0E41\u0E2D\u0E1B\u0E1E\u0E25\u0E34\u0E40\u0E04\u0E0A\u0E31\u0E19\u0E42\u0E14\u0E22\u0E44\u0E21\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E40\u0E02\u0E35\u0E22\u0E19\u0E42\u0E04\u0E49\u0E14",
+    "Instructor": "Sara Park",
+    "Skills": [
+      "Prototyping",
+      "No-code"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "No-code Tools Overview",
+        "DurationMinutes": 8
+      },
+      {
+        "Id": 2,
+        "Title": "Interactive User Flows",
+        "DurationMinutes": 12
+      }
+    ]
+  },
+  {
+    "Id": 5,
+    "Title": "JavaScript Basics",
+    "Category": "Technology",
+    "Level": "Beginner",
+    "Units": 10,
+    "Featured": true,
+    "Description": "\u0E40\u0E23\u0E35\u0E22\u0E19\u0E23\u0E39\u0E49\u0E1E\u0E37\u0E49\u0E19\u0E10\u0E32\u0E19 JavaScript \u0E15\u0E31\u0E49\u0E07\u0E41\u0E15\u0E48\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23 \u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02 \u0E1F\u0E31\u0E07\u0E01\u0E4C\u0E0A\u0E31\u0E19 \u0E08\u0E19\u0E16\u0E36\u0E07 DOM",
+    "Instructor": "Lee Chan",
+    "Skills": [
+      "JavaScript",
+      "Frontend",
+      "Web"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23\u0E41\u0E25\u0E30\u0E0A\u0E19\u0E34\u0E14\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25",
+        "DurationMinutes": 8
+      },
+      {
+        "Id": 2,
+        "Title": "\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02\u0E41\u0E25\u0E30\u0E01\u0E32\u0E23\u0E40\u0E1B\u0E23\u0E35\u0E22\u0E1A\u0E40\u0E17\u0E35\u0E22\u0E1A",
+        "DurationMinutes": 10
+      },
+      {
+        "Id": 3,
+        "Title": "\u0E1F\u0E31\u0E07\u0E01\u0E4C\u0E0A\u0E31\u0E19\u0E41\u0E25\u0E30\u0E2D\u0E32\u0E23\u0E4C\u0E40\u0E23\u0E22\u0E4C",
+        "DurationMinutes": 10
+      },
+      {
+        "Id": 4,
+        "Title": "\u0E1B\u0E38\u0E48\u0E21\u0E41\u0E25\u0E30 DOM Manipulation",
+        "DurationMinutes": 10
+      }
+    ]
+  },
+  {
+    "Id": 6,
+    "Title": "Advanced CSS",
+    "Category": "Design",
+    "Level": "Intermediate",
+    "Units": 8,
+    "Featured": false,
+    "Description": "\u0E40\u0E17\u0E04\u0E19\u0E34\u0E04 CSS \u0E02\u0E31\u0E49\u0E19\u0E2A\u0E39\u0E07 Flexbox, Grid, Animations \u0E41\u0E25\u0E30 Responsive Design",
+    "Instructor": "Nina Rossi",
+    "Skills": [
+      "CSS",
+      "UI",
+      "Flexbox"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "Modern CSS Layouts",
+        "DurationMinutes": 10
+      },
+      {
+        "Id": 2,
+        "Title": "Micro-interactions \u0026 Keyframes",
+        "DurationMinutes": 12
+      }
+    ]
+  },
+  {
+    "Id": 13,
+    "Title": "English for Work",
+    "Category": "Languages",
+    "Level": "Beginner",
+    "Units": 4,
+    "Featured": true,
+    "Description": "\u0E1D\u0E36\u0E01\u0E20\u0E32\u0E29\u0E32\u0E2D\u0E31\u0E07\u0E01\u0E24\u0E29\u0E17\u0E35\u0E48\u0E43\u0E0A\u0E49\u0E08\u0E23\u0E34\u0E07\u0E43\u0E19\u0E01\u0E32\u0E23\u0E17\u0E33\u0E07\u0E32\u0E19 \u0E41\u0E19\u0E30\u0E19\u0E33\u0E15\u0E31\u0E27 \u0E2D\u0E35\u0E40\u0E21\u0E25 \u0E41\u0E25\u0E30\u0E01\u0E32\u0E23\u0E1B\u0E23\u0E30\u0E0A\u0E38\u0E21",
+    "Instructor": "NextSkill Team",
+    "Skills": [
+      "English",
+      "Communication",
+      "Workplace"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "\u0E41\u0E19\u0E30\u0E19\u0E33\u0E15\u0E31\u0E27\u0E43\u0E19\u0E17\u0E35\u0E48\u0E17\u0E33\u0E07\u0E32\u0E19",
+        "DurationMinutes": 8
+      },
+      {
+        "Id": 2,
+        "Title": "\u0E40\u0E02\u0E35\u0E22\u0E19\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E43\u0E2B\u0E49\u0E0A\u0E31\u0E14\u0E40\u0E08\u0E19",
+        "DurationMinutes": 10
+      },
+      {
+        "Id": 3,
+        "Title": "\u0E2A\u0E37\u0E48\u0E2D\u0E2A\u0E32\u0E23\u0E43\u0E19\u0E01\u0E32\u0E23\u0E1B\u0E23\u0E30\u0E0A\u0E38\u0E21",
+        "DurationMinutes": 10
+      },
+      {
+        "Id": 4,
+        "Title": "\u0E43\u0E2B\u0E49\u0E02\u0E49\u0E2D\u0E40\u0E2A\u0E19\u0E2D\u0E41\u0E19\u0E30\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E2A\u0E23\u0E23\u0E04\u0E4C",
+        "DurationMinutes": 10
+      }
+    ]
+  }
+]

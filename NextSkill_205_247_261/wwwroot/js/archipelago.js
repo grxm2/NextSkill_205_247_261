@@ -29,7 +29,7 @@
   });
  }
  function island(id){return route.querySelector('[data-lesson-id="'+id+'"]');}
- function destination(id){const el=island(id);if(!el)return position;const a=el.getBoundingClientRect(),b=map.getBoundingClientRect(),horizontal=!!el.closest('.underwater-strip');const inset=horizontal?Math.max(0,(a.width-420)/2):0;return {x:Math.max(0,a.left-b.left+inset-boat.offsetWidth*.35),y:a.top-b.top+a.width*(id===1?.62:.48)};}
+ function destination(id){const el=island(id);if(!el)return position;const a=el.getBoundingClientRect(),b=map.getBoundingClientRect(),horizontal=!!el.closest('.underwater-strip');const inset=horizontal?Math.max(0,(a.width-420)/2):0;const art=el.querySelector('img');const shore=id===1&&art&&window.NextSkillSeaWorld?window.NextSkillSeaWorld.surfaceShore(art)-scrollY-b.top+2:null;return {x:Math.max(0,a.left-b.left+inset-boat.offsetWidth*.35),y:shore??a.top-b.top+a.width*(id===1?.62:.48)};}
  function place(p){position=p;boat.style.transform=`translate3d(${p.x}px,${p.y}px,0)`;}
  function vehicle(id){boat.dataset.vehicle=id===1?'boat':'submarine';}
  function select(){document.querySelectorAll('[data-buddy-home="active"]').forEach(e=>e.removeAttribute('data-buddy-home'));boat.querySelector('[data-buddy-anchor]').dataset.buddyHome='active';window.NextSkillAgent?.refresh();}

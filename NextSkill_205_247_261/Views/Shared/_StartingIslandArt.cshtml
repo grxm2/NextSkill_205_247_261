@@ -1,55 +1,35 @@
-<svg class="ow-island-art" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" width="760" height="520" fill="none" role="img" aria-labelledby="start-title start-desc">
+<svg class="ow-island-art" data-island-wind="paused" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" width="760" height="520" fill="none" role="img" aria-labelledby="start-title start-desc">
   <title id="start-title">เกาะเริ่มต้นของ NextSkill</title>
-  <desc id="start-desc">เกาะทรายสีอบอุ่นในทะเลใส มีต้นมะพร้าวคู่ทางด้านขวาและพื้นที่ว่างตรงกลางสำหรับ Nimo</desc>
+  <desc id="start-desc">เกาะหาดทรายสีอบอุ่นและโขดหินริมฝั่ง มีต้นมะพร้าว ปู และเต่าเดินบนชายหาด เว้นพื้นที่ตรงกลางสำหรับ Nimo</desc>
   <defs>
     <linearGradient id="start-sand" x1="340" y1="255" x2="340" y2="423" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF2CB"/><stop offset="1" stop-color="#F3D18E"/></linearGradient>
     <radialGradient id="start-shallows" cx=".5" cy=".5" r=".5"><stop stop-color="#46BDBF" stop-opacity=".28"/><stop offset=".75" stop-color="#87E4DC" stop-opacity=".2"/><stop offset="1" stop-color="#A5EFEB" stop-opacity="0"/></radialGradient>
     <linearGradient id="start-trunk" x1="550" y1="185" x2="590" y2="320" gradientUnits="userSpaceOnUse"><stop stop-color="#B67B40"/><stop offset="1" stop-color="#8C582F"/></linearGradient>
-    @* Local leaf coordinates let each clump bend at its roots, above a still sand shadow. *@
-    <g id="start-shrub-leaves">
-      <path d="M32 1C17-1 4-9 0-22c15-1 28 8 32 23Z" fill="#648F43"/>
-      <path d="M34 0C21-9 14-23 19-35c12 5 19 20 15 35Z" fill="#75A64B"/>
-      <path d="M34 0c-6-15-3-32 7-40 8 13 3 30-7 40Z" fill="#8BB653"/>
-      <path d="M35 1c1-17 12-29 27-30-2 14-13 26-27 30Z" fill="#6E9F46"/>
-      <path d="M36 1c8-11 20-16 32-12-6 11-19 15-32 12Z" fill="#78AA4D"/>
-      <path d="M33 1C19 4 8 0 4-10c13-4 24 0 29 11Z" fill="#83AF50"/>
-      <path d="M34 1C23-4 20-14 24-23c9 4 14 14 10 24Z" fill="#A1C566"/>
-      <path d="M35 1c-2-13 4-24 15-29 4 13-3 24-15 29Z" fill="#90BA58"/>
-      <path d="M35 1c8-7 19-8 26-3-8 7-17 8-26 3Z" fill="#93BA5D"/>
-      <g fill="none" stroke="#527D3E" stroke-width=".9" stroke-linecap="round" opacity=".65">
-        <path d="M32 1 7-17m26 17L21-28M34 0l6-31M36 0l19-22M37 1l22-9M33 1 12-6m22 6-9-16m11 16 11-21"/>
-      </g>
-      <g fill="none" stroke="#C0D784" stroke-width="1.1" stroke-linecap="round" opacity=".65">
-        <path d="m38-26 2-7m-17 8 3 6m20 0 3-5m-36 16 7 3"/>
-      </g>
-    </g>
+    <radialGradient id="start-root-soil"><stop stop-color="#B5A35E" stop-opacity=".5"/><stop offset=".58" stop-color="#829347" stop-opacity=".23"/><stop offset="1" stop-color="#829347" stop-opacity="0"/></radialGradient>
+    <radialGradient id="start-root-shade"><stop stop-color="#47562F" stop-opacity=".38"/><stop offset="1" stop-color="#47562F" stop-opacity="0"/></radialGradient>
+    <linearGradient id="start-root-bark" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#9A6736"/><stop offset="1" stop-color="#AC8B4B"/></linearGradient>
+    <partial name="_StartingIslandShrubDefs" />
   </defs>
-  @* Shallow water stays in the beach plane, rather than forming a raised base. *@
-  <ellipse cx="382" cy="399" rx="307" ry="82" fill="url(#start-shallows)"/>
-  <path d="M143 371c-7 33 92 66 226 71 120 4 228-20 258-56" stroke="#329EAD" stroke-width="8" stroke-linecap="round" opacity=".13"/>
-  <g class="ow-shore-ripples" stroke="#D8FAF3" stroke-linecap="round">
-    <path d="M121 382c12 22 64 43 116 52m23 4c96 20 213 18 295-5m24-8c29-10 49-23 59-35" stroke-width="2.5" opacity=".6"/>
-    <path d="M111 404c25 23 84 41 149 48m36 4c87 11 183 5 249-13m37-12c25-11 41-23 48-35" stroke-width="2" opacity=".35"/>
-    <path d="M177 453c23 7 47 12 73 15m201-1c32-3 62-8 88-15m54-19 22-11" stroke-width="2" opacity=".28"/>
+  <partial name="_StartingIslandTerrain" />
+  @* Small feathered planting beds replace the broad flat shadow under both trees. *@
+  <g class="ow-palm-root-beds">
+    <ellipse cx="535" cy="345" rx="29" ry="10" fill="url(#start-root-soil)"/>
+    <ellipse cx="583" cy="351" rx="30" ry="10" fill="url(#start-root-soil)"/>
+    <ellipse cx="535" cy="344" rx="19" ry="4.5" fill="url(#start-root-shade)"/>
+    <ellipse cx="583" cy="350" rx="21" ry="5" fill="url(#start-root-shade)"/>
   </g>
-  <path d="M147 367c-15-34 34-69 116-86 85-18 192-14 276 14 68 22 100 51 77 80-27 35-125 58-233 55-116-4-216-28-236-63Z" fill="#FFF6D9"/>
-  <path d="M152 355c11-26 58-51 129-63 99-17 209-5 277 24 47 20 64 40 41 60-32 28-115 44-207 42-113-3-224-27-240-63Z" fill="url(#start-sand)"/>
-  <path d="M177 369c33 23 109 40 196 42 85 2 158-11 199-32" stroke="#E7BA74" stroke-width="3" stroke-linecap="round" opacity=".55"/>
-  @* A warm wet-sand edge and two offset swashes meet the sand directly. *@
-  <path class="ow-wet-sand" d="M149 371c27 31 127 56 236 58 110 3 206-19 231-54" stroke="#C6B181" stroke-width="5" stroke-linecap="round" opacity=".2"/>
-  <g class="ow-shore-wash" stroke="#F4FFEF" stroke-linecap="round">
-    <path d="M148 373c9 14 32 25 59 33m13 4c26 8 57 14 89 18m20 2c52 5 109 3 154-3m18-3c51-9 92-25 110-43" stroke-width="3.5"/>
-    <path d="M159 385l12 8m66 23 15 4m103 15 20 1m165-22 13-4m38-17 9-6" stroke-width="1.5" opacity=".65"/>
-  </g>
-  <g class="ow-shore-wash ow-shore-wash--return" stroke="#E6FFF5" stroke-linecap="round">
-    <path d="M143 384c13 17 43 31 78 40m31 7c50 12 111 17 169 15m24-2c56-4 103-14 140-31m18-10 14-12" stroke-width="2.5"/>
-    <g fill="#F4FFEF" stroke="none"><ellipse cx="238" cy="429" rx="3" ry="1.2"/><ellipse cx="323" cy="443" rx="2.5" ry="1"/><ellipse cx="493" cy="437" rx="3.5" ry="1.1"/><ellipse cx="573" cy="417" rx="2.5" ry="1"/></g>
-  </g>
-  <ellipse cx="528" cy="344" rx="69" ry="14" fill="#D7AF6B" opacity=".23"/>
   <path d="M525 339c8-45 14-92 11-140-2-31-12-55-24-76l17-9c18 27 29 52 31 85 3 56-5 104-15 145Z" fill="url(#start-trunk)"/>
   <path d="m536 183 22-5m-21 31 22-4m-23 32 21-1m-24 32 21 2m-25 30 20 3m-26 29 20 4" stroke="#6C4A29" stroke-width="4" opacity=".48"/>
   <path d="M569 345c6-39 17-74 35-109 17-32 25-67 24-105l18 2c5 41-5 81-23 117-17 33-27 67-30 101Z" fill="#B17A3B"/>
   <path d="m629 161 17 6m-21 20 17 8m-27 17 16 9m-29 17 15 9m-27 17 14 8m-25 18 15 7m-25 21 15 5m-21 22 16 3" stroke="#86592F" stroke-width="4" opacity=".6"/>
+  @* Tapered roots and short grass overlap the straight bottom edges of the trunks. *@
+  <g class="ow-palm-root-contact">
+    <path d="M529 332c2 5-3 9-10 12l-7 5c9-1 17-4 22-8 0 5-1 9-4 13 7-3 11-8 12-12 4 4 9 6 16 6l-9-7c-6-4-8-7-9-11Z" fill="url(#start-root-bark)"/>
+    <path d="M578 339c-1 5-5 8-11 11l-7 5c9-1 15-3 21-8-1 5-2 9-5 12 7-2 12-6 14-10 4 4 10 6 17 6l-10-7c-5-4-7-7-7-12Z" fill="url(#start-root-bark)"/>
+    <g fill="none" stroke="#D0AB67" stroke-width="1" stroke-linecap="round" opacity=".7"><path d="m532 335-7 9m13-7-2 11m45-6-8 9m13-8-4 10"/></g>
+    <g fill="#819B46"><path d="m519 348-6-6 9 3 1-8 3 9 8-4-4 7Zm47 6-7-6 10 3 1-7 3 8 8-4-4 7Z"/></g>
+    <g fill="#A0B55B"><path d="m536 350 1-7 3 5 6-4-3 7Zm49 6 2-8 3 6 7-4-4 7Z"/></g>
+  </g>
   <g class="ow-palm ow-palm--near"><g fill="#68AC46">
     <path d="M523 124c-39-25-85-18-115 16 34-12 70-11 115-16Z"/>
     <path d="M522 125c-47-6-80 17-91 66 30-33 59-52 91-66Z"/>
@@ -75,21 +55,19 @@
   </g><g fill="#95703D"><ellipse cx="520" cy="137" rx="9" ry="11"/><ellipse cx="535" cy="140" rx="8" ry="10"/><ellipse cx="633" cy="150" rx="8" ry="10"/></g>
   @* Keep the tallest clump to the left of both trunks, including its wind-sway envelope. *@
   <g class="ow-shrub ow-shrub--palms" transform="translate(449 349)">
-    <ellipse cx="34" cy="3" rx="30" ry="4.5" fill="#C49D60" opacity=".22"/>
-    <use class="ow-shrub-foliage" href="#start-shrub-leaves"/>
+    <ellipse cx="34" cy="3" rx="30" ry="5" fill="url(#start-shrub-ground)"/>
+    <partial name="_StartingIslandShrub" />
     <path d="m27 3 7-3 9 2" stroke="#729648" stroke-width="1.5" stroke-linecap="round"/>
   </g>
   <g class="ow-shrub ow-shrub--left" transform="translate(212 335) scale(.78)">
-    <ellipse cx="34" cy="3" rx="28" ry="4" fill="#C49D60" opacity=".18"/>
-    <use class="ow-shrub-foliage" href="#start-shrub-leaves"/>
+    <ellipse cx="34" cy="3" rx="28" ry="4.5" fill="url(#start-shrub-ground)"/>
+    <partial name="_StartingIslandShrub" />
     <path d="m28 2 6-2 7 2" stroke="#729648" stroke-width="1.5" stroke-linecap="round"/>
   </g>
   <g class="ow-shrub ow-shrub--front" transform="translate(443 385) scale(.65)">
-    <ellipse cx="34" cy="3" rx="29" ry="4" fill="#C49D60" opacity=".2"/>
-    <use class="ow-shrub-foliage" href="#start-shrub-leaves"/>
+    <ellipse cx="34" cy="3" rx="29" ry="4.5" fill="url(#start-shrub-ground)"/>
+    <partial name="_StartingIslandShrub" />
     <path d="m28 2 6-2 7 2" stroke="#729648" stroke-width="1.5" stroke-linecap="round"/>
   </g>
-  <g fill="#D6AE72" opacity=".65"><circle cx="274" cy="359" r="2"/><circle cx="286" cy="364" r="1.5"/><circle cx="194" cy="349" r="1.5"/><circle cx="466" cy="365" r="2"/><circle cx="484" cy="372" r="1.5"/><circle cx="349" cy="391" r="1.5"/><circle cx="371" cy="394" r="2"/></g>
-  <path d="m248 391 8-9 11 4-4 10-11 1Z" fill="#F8F1DD"/><path d="m253 393 3-8 6 2-2 7" stroke="#E0C7A0" stroke-width="1.5"/>
-  <path d="m113 431-21-3m562-17 24-6M197 460l-20-3m386-7 19-5" stroke="#C8F5EF" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+  <partial name="_StartingIslandWildlife" />
 </svg>
