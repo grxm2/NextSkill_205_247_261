@@ -58,19 +58,7 @@ public string CategoryLabel => Category switch
     _ => Category
 };
 
-    public string Art => Curriculum.IslandKind switch
-    {
-        "ux" => "/images/journey/workshop-island.svg",
-        "javascript" => "/images/journey/presentation-island.svg",
-        "english" => "/images/journey/sea-adventure-world.webp",
-        _ => "/images/journey/destination-island-detailed.svg"
-    };
-    public string CategoryLabel => Category switch
-    {
-        "Design" => "ออกแบบ", "Technology" or "Development" => "เทคโนโลยี",
-        "Business" => "ธุรกิจ", "Language" or "Languages" => "ภาษา",
-        "Marketing" => "การตลาด", "Data" or "Data Science" => "ข้อมูล", _ => Category
-    };
+  
 }
 
 public sealed class CourseCatalogPageViewModel
