@@ -5,14 +5,15 @@ namespace NextSkill_205_247_261.Models;
 public sealed record CourseBrowseItem(Course Metadata, LearningCatalogCourse Curriculum)
 {
     public int Id => Metadata.Id;
-    public string Title => Curriculum.Title;
-    public string Description => Curriculum.Description;
-    public string Category => Curriculum.Category;
-    public bool CanStart => Curriculum.CanStart;
+    public string Title => !string.IsNullOrWhiteSpace(Metadata.Title) ? Metadata.Title : Curriculum.Title;
+    public string Description => !string.IsNullOrWhiteSpace(Metadata.Description) ? Metadata.Description : Curriculum.Description;
+    public string Category => !string.IsNullOrWhiteSpace(Metadata.Category) ? Metadata.Category : Curriculum.Category;
+    public bool CanStart => Curriculum.CanStart || (Metadata.Lessons != null && Metadata.Lessons.Count > 0);
     public string Art => Curriculum.IslandKind switch
     {
         "ux" => "/images/journey/workshop-island.svg",
         "javascript" => "/images/journey/presentation-island.svg",
+        "english" => "/images/journey/sea-adventure-world.webp",
         _ => "/images/journey/destination-island-detailed.svg"
     };
     public string CategoryLabel => Category switch

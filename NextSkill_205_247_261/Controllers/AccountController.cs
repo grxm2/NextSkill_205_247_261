@@ -149,7 +149,7 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
         return View("AdminDashboard", model);
     }
 
-    [HttpPost, Authorize(Roles = "Admin")]
+    [HttpPost, Authorize(Roles = "Admin"), IgnoreAntiforgeryToken]
     public IActionResult AdminSaveCourse([FromBody] Course form)
     {
         if (form is null || string.IsNullOrWhiteSpace(form.Title))
@@ -159,14 +159,17 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
         return Json(new { success = true, course = saved });
     }
 
-    [HttpPost, Authorize(Roles = "Admin")]
+    [HttpPost, Authorize(Roles = "Admin"), IgnoreAntiforgeryToken]
     public IActionResult AdminDeleteCourse([FromBody] CourseDeleteRequest req)
     {
+        if (req is null || req.Id <= 0)
+            return BadRequest(new { success = false, message = "รหัสคอร์สไม่ถูกต้อง" });
+
         var success = AdminContentStore.DeleteCourse(req.Id);
         return Json(new { success, id = req.Id });
     }
 
-    [HttpPost, Authorize(Roles = "Admin")]
+    [HttpPost, Authorize(Roles = "Admin"), IgnoreAntiforgeryToken]
     public async Task<IActionResult> AdminUploadCourses([FromForm] IFormFile? file, [FromForm] string? jsonText)
     {
         string? json = jsonText;
@@ -190,7 +193,7 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
         }
     }
 
-    [HttpPost, Authorize(Roles = "Admin")]
+    [HttpPost, Authorize(Roles = "Admin"), IgnoreAntiforgeryToken]
     public IActionResult AdminSaveQuestion([FromBody] AdminQuizQuestion form)
     {
         if (form is null || string.IsNullOrWhiteSpace(form.Prompt))
@@ -200,14 +203,17 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
         return Json(new { success = true, question = saved });
     }
 
-    [HttpPost, Authorize(Roles = "Admin")]
+    [HttpPost, Authorize(Roles = "Admin"), IgnoreAntiforgeryToken]
     public IActionResult AdminDeleteQuestion([FromBody] QuestionDeleteRequest req)
     {
+        if (req is null || string.IsNullOrWhiteSpace(req.Id))
+            return BadRequest(new { success = false, message = "รหัสคำถามไม่ถูกต้อง" });
+
         var success = AdminContentStore.DeleteQuestion(req.Id);
         return Json(new { success, id = req.Id });
     }
 
-    [HttpGet, Authorize(Roles = "Admin")]
+    [HttpGet, Authorize(Roles = "Admin"), IgnoreAntiforgeryToken]
     public IActionResult AdminGetQuestions(int? courseId)
     {
         var questions = AdminContentStore.GetAllQuestions(courseId);

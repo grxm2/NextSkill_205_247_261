@@ -100,13 +100,102 @@ public static class LearningCatalog
         ])
     ];
 
-    public static LearningCourseDefinition? Find(int id) => Courses.FirstOrDefault(c => c.Id == id);
+    public static LearningCourseDefinition? Find(int id)
+    {
+        var adminCourse = AdminContentStore.GetCourse(id);
+        var predefined = Courses.FirstOrDefault(c => c.Id == id);
+
+        if (adminCourse is null && predefined is null) return null;
+
+        var title = !string.IsNullOrWhiteSpace(adminCourse?.Title) ? adminCourse.Title : (predefined?.Title ?? "คอร์สเรียน");
+        var category = !string.IsNullOrWhiteSpace(adminCourse?.Category) ? adminCourse.Category : (predefined?.Category ?? "Technology");
+        var description = !string.IsNullOrWhiteSpace(adminCourse?.Description) ? adminCourse.Description : (predefined?.Description ?? "");
+        var islandKind = predefined?.IslandKind ?? (category.ToLowerInvariant() switch
+        {
+            "languages" or "language" => "english",
+            "design" => "ux",
+            "technology" or "development" => "javascript",
+            _ => "destination"
+        });
+
+        var adminQuestions = AdminContentStore.GetAllQuestions(id);
+        List<LearningLessonDefinition> lessons = new();
+
+        if (predefined is not null && predefined.Lessons.Length > 0)
+        {
+            lessons = predefined.Lessons.Select(lesson =>
+            {
+                var lQuestions = adminQuestions.Where(q => q.LessonId == lesson.Id).ToList();
+                if (lQuestions.Count > 0)
+                {
+                    var dynamicQuiz = lQuestions.Select((q, qIdx) => new LearningQuizDefinition(
+                        qIdx + 1, q.Prompt, q.Choices.ToArray(), q.CorrectChoice, q.Explanation ?? ""
+                    )).ToArray();
+                    return new LearningLessonDefinition(lesson.Id, lesson.Title, lesson.IslandName, lesson.Summary,
+                        lesson.Reading, dynamicQuiz, lesson.Minutes, lesson.Xp);
+                }
+                return lesson;
+            }).ToList();
+        }
+        else if (adminCourse?.Lessons is { Count: > 0 })
+        {
+            lessons = adminCourse.Lessons.Select((l, idx) =>
+            {
+                var lQuestions = adminQuestions.Where(q => q.LessonId == l.Id).ToList();
+                LearningQuizDefinition[] quizDefs;
+                if (lQuestions.Count > 0)
+                {
+                    quizDefs = lQuestions.Select((q, qIdx) => new LearningQuizDefinition(
+                        qIdx + 1, q.Prompt, q.Choices.ToArray(), q.CorrectChoice, q.Explanation ?? ""
+                    )).ToArray();
+                }
+                else
+                {
+                    quizDefs = new[]
+                    {
+                        new LearningQuizDefinition(1, $"คำถามทดสอบความเข้าใจสำหรับ {l.Title}", new[] { "ตัวเลือกที่ถูกต้อง", "ตัวเลือกอื่น 1", "ตัวเลือกอื่น 2" }, 0, "ยอดเยี่ยม! ตอบถูกต้อง")
+                    };
+                }
+
+                var reading = new[]
+                {
+                    new LearningReading(l.Title, $"ยินดีต้อนรับสู่บทเรียน {l.Title} ในคอร์ส {title} เรียนรู้และพัฒนาทักษะไปกับเนื้อหาคุณภาพบน NextSkill", "เริ่มต้นศึกษาเนื้อหาในบทเรียนนี้ได้เลย")
+                };
+
+                return new LearningLessonDefinition(l.Id, l.Title, $"เกาะบทเรียน {l.Id}", $"บทเรียนเกี่ยวกับ {l.Title}", reading, quizDefs, l.DurationMinutes > 0 ? l.DurationMinutes : 10, 50);
+            }).ToList();
+        }
+        else
+        {
+            int units = adminCourse?.Units > 0 ? adminCourse.Units : 4;
+            for (int i = 1; i <= units; i++)
+            {
+                lessons.Add(new LearningLessonDefinition(
+                    i,
+                    $"บทที่ {i}: พื้นฐาน {title}",
+                    $"เกาะที่ {i}",
+                    $"เรียนรู้เนื้อหาสำคัญในบทที่ {i}",
+                    new[] { new LearningReading($"เนื้อหาบทที่ {i}", $"ศึกษาและทำความเข้าใจเกี่ยวกับ {title} ทีละขั้นตอน เพื่อนำไปประยุกต์ใช้งานจริง", "ฝึกฝนตามคำแนะนำของบทเรียน") },
+                    new[] { new LearningQuizDefinition(1, $"แนวคิดหลักของบทที่ {i} คืออะไร", new[] { "การประยุกต์ใช้ทักษะที่ถูกต้อง", "การข้ามขั้นตอน", "การไม่ฝึกฝน" }, 0, "ถูกต้องแล้วครับ!") },
+                    10,
+                    50
+                ));
+            }
+        }
+
+        return new LearningCourseDefinition(id, title, category, description, islandKind, lessons.ToArray());
+    }
+
     public static IReadOnlyList<LearningCatalogCourse> PublicCatalog() => CourseCatalog.GetCourses().Select(course =>
     {
         var path = Find(course.Id);
-        return new LearningCatalogCourse(course.Id, path?.Title ?? course.Title, path?.Category ?? course.Category,
-            path?.Description ?? course.Description, path?.IslandKind ?? "upcoming", path?.Lessons.Length ?? 0,
-            path is not null, path?.Lessons.Select((lesson, index) => Summary(lesson, index == 0 ? "current" : "locked")).ToArray() ?? []);
+        var title = !string.IsNullOrWhiteSpace(course.Title) ? course.Title : (path?.Title ?? "คอร์สเรียน");
+        var category = !string.IsNullOrWhiteSpace(course.Category) ? course.Category : (path?.Category ?? "Technology");
+        var description = !string.IsNullOrWhiteSpace(course.Description) ? course.Description : (path?.Description ?? "");
+        var islandKind = path?.IslandKind ?? "destination";
+        var lessons = path?.Lessons ?? Array.Empty<LearningLessonDefinition>();
+        return new LearningCatalogCourse(course.Id, title, category, description, islandKind, lessons.Length,
+            lessons.Length > 0, lessons.Select((lesson, index) => Summary(lesson, index == 0 ? "current" : "locked")).ToArray());
     }).OrderBy(c => c.Id == 13 ? 0 : c.Id == 1 ? 1 : c.Id == 5 ? 2 : c.Id + 3).ToArray();
 
     public static LearningLessonSummary Summary(LearningLessonDefinition lesson, string status)

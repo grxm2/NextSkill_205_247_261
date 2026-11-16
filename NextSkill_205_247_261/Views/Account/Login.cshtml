@@ -2,31 +2,43 @@
 @{
     Layout = "_AccountLayout";
     var admin = (string?)ViewData["Role"] == "Admin";
-    ViewData["Title"] = admin ? "เข้าสู่ระบบผู้ดูแล (Admin)" : "เข้าสู่ระบบ";
+    ViewData["Title"] = admin ? "เข้าสู่ระบบผู้ดูแล (Admin)" : "ยินดีต้อนรับกลับมา";
 }
+
 <div class="auth-grid">
     <partial name="_AccountStory" />
+
     <section class="auth-form nimo-auth-card" aria-labelledby="form-heading">
         <div class="form-header-badge">
-            <span class="badge-dot"></span>
-            <span>@(admin ? "ADMIN ACCESS · ระบบผู้ดูแล" : "WELCOME BACK · ยินดีต้อนรับกลับ")</span>
+            <span class="badge-dot" aria-hidden="true"></span>
+            <span>@(admin ? "ADMIN ACCESS · ระบบผู้ดูแล" : "WELCOME BACK · ยินดีต้อนรับกลับมา")</span>
         </div>
+
         <h2 id="form-heading">@(admin ? "เข้าสู่ระบบผู้ดูแล" : "ยินดีต้อนรับกลับมา")</h2>
-        <p class="form-intro">@(admin ? "เข้าสู่ระบบเพื่อจัดการเนื้อหาและผู้เรียนใน NextSkill" : "เข้าสู่ระบบเพื่อออกเดินทางต่อในเส้นทางของคุณกับ Nimo")</p>
+        <p class="form-intro">@(admin ? "เข้าสู่ระบบเพื่อจัดการเนื้อหา คอร์สเรียน และสถิติผู้เรียนใน NextSkill" : "เข้าสู่ระบบเพื่อเริ่มต้นการเรียนรู้ และพัฒนาทักษะไปกับ NextSkill อีกครั้ง")</p>
         
+        <!-- Role Switcher Capsule Tabs -->
         <nav class="account-types" aria-label="ประเภทบัญชี">
             <a asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="@(!admin ? "active" : "")" aria-current="@(!admin ? "page" : null)">
-                <span class="type-icon">🎒</span> ผู้เรียนทั่วไป (User)
+                <span class="type-icon" aria-hidden="true">
+                    <svg class="type-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </span>
+                <span>ผู้เรียน (User)</span>
             </a>
             <a asp-action="AdminLogin" asp-route-returnUrl="@Model.ReturnUrl" class="@(admin ? "active" : "")" aria-current="@(admin ? "page" : null)">
-                <span class="type-icon">⚙️</span> ผู้ดูแลระบบ (Admin)
+                <span class="type-icon" aria-hidden="true">
+                    <svg class="type-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </span>
+                <span>ผู้ดูแลระบบ (Admin)</span>
             </a>
         </nav>
 
         @if (TempData["Success"] is string success)
         { 
             <div class="success-message" role="status">
-                <span class="success-icon">✓</span>
+                <span class="success-icon" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
                 <span>@success</span>
             </div> 
         }
@@ -36,18 +48,30 @@
             <div asp-validation-summary="All" class="validation-summary" role="alert" tabindex="-1"></div>
             
             <div class="field">
-                <label asp-for="Email">อีเมล (Email) <span>*</span></label>
-                <div class="input-wrap">
-                    <input asp-for="Email" type="email" autocomplete="username" placeholder="you@example.com" required maxlength="254" />
+                <label asp-for="Email">อีเมล (Email) <span aria-hidden="true">*</span></label>
+                <div class="input-icon-wrap">
+                    <span class="input-leading-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="16" x="2" y="4" rx="2"/>
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                        </svg>
+                    </span>
+                    <input asp-for="Email" type="email" autocomplete="username" placeholder="กรอกอีเมลของคุณ เช่น name@example.com" required maxlength="254" />
                 </div>
             </div>
 
             <div class="field">
-                <label asp-for="Password">รหัสผ่าน (Password) <span>*</span></label>
-                <div class="password-wrap">
-                    <input asp-for="Password" autocomplete="current-password" placeholder="กรอกรหัสผ่านของคุณ" required maxlength="128" />
-                    <button class="password-toggle ns-button ns-button--icon ns-button--text" type="button" data-target="Password" aria-label="แสดงรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                <label asp-for="Password">รหัสผ่าน (Password) <span aria-hidden="true">*</span></label>
+                <div class="input-icon-wrap">
+                    <span class="input-leading-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </span>
+                    <input asp-for="Password" id="Password" type="password" autocomplete="current-password" placeholder="••••••••" required maxlength="128" />
+                    <button class="password-toggle-eye" type="button" data-target="Password" aria-label="แสดง/ซ่อนรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true">
                             <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
                             <circle cx="12" cy="12" r="3"/>
                         </svg>
@@ -57,10 +81,10 @@
 
             <div class="check-row">
                 <input asp-for="RememberMe" id="RememberMe" />
-                <label asp-for="RememberMe" for="RememberMe">จดจำฉันไว้ในเบราว์เซอร์นี้</label>
+                <label asp-for="RememberMe" for="RememberMe">จดจำฉันในระบบอัตโนมัติ</label>
             </div>
 
-            <button type="submit" class="ns-button ns-button--primary ns-button--block">
+            <button type="submit" class="btn-auth-submit">
                 <span>เข้าสู่ระบบ</span>
                 <span class="btn-arrow" aria-hidden="true">→</span>
             </button>
@@ -70,15 +94,15 @@
             <span>หรือ</span>
         </div>
 
-        <a class="ns-button ns-button--secondary ns-button--block" asp-controller="Home" asp-action="Index" lang="th">
-            <span>ข้ามไปก่อน · เริ่มสำรวจหน้าแรกเลย</span>
-            <span class="guest-arrow" aria-hidden="true">↗</span>
+        <a class="btn-skip-outline" asp-controller="Home" asp-action="Index">
+            <span>ข้ามไปก่อน - เข้าสู่ระบบจากโปรแกรมเลย</span>
+            <span class="guest-arrow" aria-hidden="true">→</span>
         </a>
 
         <p class="switch-form">
             ยังไม่มีบัญชีใช่ไหม? 
             <a asp-action="@(admin ? "AdminRegister" : "Register")" asp-route-returnUrl="@Model.ReturnUrl">
-                สมัครสมาชิกเพื่อเริ่มเรียน ↗
+                สมัครสมาชิกที่นี่เลย! →
             </a>
         </p>
     </section>
