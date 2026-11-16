@@ -5,7 +5,7 @@
 <head>
     <script>try { document.documentElement.dataset.theme = localStorage.getItem('nextskill.theme.v1') === 'dark' ? 'dark' : 'light'; } catch { document.documentElement.dataset.theme = 'light'; }</script>
 @if (ViewData["JourneyMode"]?.ToString() == "home") {
-    <script>try { if (!location.hash && scrollY < 4 && !matchMedia('(prefers-reduced-motion: reduce)').matches && JSON.parse(localStorage.getItem('nextskill.agent.v1') || '{}').paused !== true) { document.documentElement.classList.add('ow-arrival-pending'); setTimeout(() => document.documentElement.classList.remove('ow-arrival-pending'), 6000); } } catch {}</script>
+    <script>try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches && JSON.parse(localStorage.getItem('nextskill.agent.v1'))?.paused !== true && !location.hash) document.documentElement.classList.add('ow-arrival-pending'); } catch {}</script>
 }
     <script>try { const m=JSON.parse(sessionStorage.getItem('nextskill.journey-arrival')); if(location.pathname.toLowerCase()==='/learning/island' && m && Number(new URLSearchParams(location.search).get('courseId'))===m.courseId && Date.now()-m.at<900000) document.documentElement.classList.add('journey-arrival-prepaint'); } catch {}</script>
     <style>.journey-arrival-prepaint:before{content:'';position:fixed;inset:0;z-index:2147483647;background:#ccefff url('/images/journey/clouds-reference-v1.png') center/cover no-repeat}</style>
@@ -38,6 +38,15 @@
     <link rel="stylesheet" href="~/css/glass.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/journey-theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/course-harbor.css" asp-append-version="true" />
+@if (ViewData["JourneyMode"]?.ToString() == "learn") {
+    <link rel="stylesheet" href="~/css/shared-ocean.css" asp-append-version="true" />
+    <link rel="preload" href="~/images/journey/underwater-journey-background-v1.png" as="image" />
+}
+@if (ViewData["JourneyMode"]?.ToString() == "home") {
+    <link rel="stylesheet" href="~/css/catalog-voyage.css" asp-append-version="true" />
+}
+    <link rel="stylesheet" href="~/css/nimo-speech.css" asp-append-version="true" />
 </head>
 <body data-guest-preview="@((JourneyEnvironment.EnvironmentName == "Development" && JourneyConfiguration.GetValue("Learning:GuestPreview", true)).ToString().ToLowerInvariant())" id="nextskill-home" class="smart-journey" data-companion-theme="learning-club" data-journey-mode="@ViewData["JourneyMode"]" data-authenticated="@(User.Identity?.IsAuthenticated == true ? "true" : "false")">
     <a class="skip-link" href="#journey-main">ข้ามไปเนื้อหา</a>
@@ -52,10 +61,11 @@
     <div id="smart-antiforgery" hidden>@Html.AntiForgeryToken()</div>
     <div id="home-status" class="sr-only" role="status" aria-live="polite"></div>
     <div id="buddy-status" class="sr-only" role="status" aria-live="polite"></div>
-    <dialog id="journey-cloud-transition" aria-label="กำลังเดินทางสู่เกาะของคุณ"><div class="jc-core"></div><div class="jc-bank jc-bank-top"></div><div class="jc-bank jc-bank-bottom"></div><div class="jc-near jc-near-left"></div><div class="jc-near jc-near-right"></div><p class="jc-label">กำลังเดินทางสู่เกาะของคุณ</p></dialog>
+    <partial name="_JourneyCloudTransition" />
     <partial name="_SmartJourneyDialogs" />
     <partial name="_CompanionStudio" />
     <partial name="_FloatingBuddy" />
+@if (ViewData["JourneyMode"]?.ToString() == "home") { <partial name="_CatalogVoyage" /> }
     <script src="~/js/motion-state.js" asp-append-version="true" defer></script>
     <script src="~/js/journey-theme.js" asp-append-version="true" defer></script>
     <script src="~/js/buddy-agent.js" asp-append-version="true" defer></script>
@@ -67,13 +77,18 @@
     <script src="~/js/island-details.js" asp-append-version="true" defer></script>
     <script src="~/js/archipelago.js" asp-append-version="true" defer></script>
     <script src="~/js/smart-journey.js" asp-append-version="true" defer></script>
+    <script src="~/js/course-harbor.js" asp-append-version="true" defer></script>
 @if (ViewData["JourneyMode"]?.ToString() == "learn") { <script src="~/js/island-water-motion.js" asp-append-version="true" defer></script><script src="~/js/underwater-journey.js" asp-append-version="true" defer></script> }
 @if (ViewData["JourneyMode"]?.ToString() == "home") {
 <script src="~/lib/gsap/gsap.min.js" defer></script><script src="~/lib/gsap/ScrollTrigger.min.js" defer></script><script src="~/js/ocean-world.js" asp-append-version="true" defer></script>
 <script src="~/js/ocean-life.js" asp-append-version="true" defer></script>
+<script src="~/js/home-island-life.js" asp-append-version="true" defer></script>
+<script src="~/js/home-ocean-water.js" asp-append-version="true" defer></script>
 <script src="~/js/shooting-star.js" asp-append-version="true" defer></script>
 }
+@if (ViewData["JourneyMode"]?.ToString() == "home") { <script src="~/js/catalog-voyage.js" asp-append-version="true" defer></script> }
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="~/js/navbar.js" asp-append-version="true" defer></script>
+    <script src="~/js/nimo-speech.js" asp-append-version="true" defer></script>
 </body>
 </html>

@@ -1,0 +1,81 @@
+/* The sky holds the course controls; the waterfront stays clear for sailing. */
+.catalog-page .catalog-wrap{width:min(1280px,calc(100% - 64px));padding-top:24px}
+.catalog-page .catalog-hero{--catalog-art-width:430px;--catalog-art-left:-10px;--catalog-shore-local:calc(var(--ocean-horizon) - var(--nav-h) - 24px);position:relative;display:grid;grid-template-columns:440px minmax(0,1fr);gap:40px;align-items:start;min-height:calc(var(--catalog-shore-local) + var(--ocean-boat-width)*.583333 + 36px);margin:0 0 16px}
+.catalog-page .catalog-hero-copy{position:relative;z-index:3;grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:20px;min-width:0;padding-top:12px}
+.catalog-page .catalog-heading{min-width:0}
+.catalog-page .catalog-heading h1{margin:0;font-size:clamp(30px,2.65vw,40px);line-height:1.4;font-weight:600;letter-spacing:-.8px;text-wrap:balance}
+.catalog-page .catalog-heading h1>span{display:inline;color:var(--ns-primary-hover);margin-left:.2em}
+.catalog-page .catalog-intro{margin:10px 0 0;font-size:15px;line-height:1.8;max-width:620px}
+.catalog-page .catalog-harbor-scene{position:absolute;inset:0;width:100%;height:100%;margin:0;justify-self:start;pointer-events:none}
+.catalog-page .catalog-harbor{width:var(--catalog-art-width);max-width:none;left:var(--catalog-art-left);right:auto;top:calc(var(--catalog-shore-local) - var(--catalog-art-width)*.64)}
+.catalog-page .sanctum-cliff-mass{transform:translate(34px,-80px) scale(.48,.833333);transform-origin:0 0}
+.catalog-page .sanctum-coast-wash{display:none}
+.catalog-page .catalog-boat{width:var(--ocean-boat-width);height:calc(var(--ocean-boat-width)*.583333);left:calc(var(--catalog-art-left) + var(--catalog-art-width)*.56 - var(--ocean-boat-width)/2);top:calc(var(--catalog-shore-local) + 2px);bottom:auto}
+.catalog-page .catalog-boat-nimo{width:70px;height:81px;left:calc(48% - 35px);bottom:38%}
+.catalog-page .catalog-boat-idle{animation-delay:0s}
+.catalog-page .catalog-tools{position:static;top:auto;width:100%;padding:16px;border-radius:20px;background:var(--ns-liquid-bg);border:1px solid var(--ns-liquid-border);box-shadow:var(--ns-liquid-shadow);-webkit-backdrop-filter:var(--ns-liquid-filter);backdrop-filter:var(--ns-liquid-filter);color:var(--ns-liquid-ink);font-family:var(--ns-font);font-synthesis:none;letter-spacing:0;text-shadow:none}
+.catalog-page .catalog-search{grid-template-columns:minmax(0,1fr) 150px auto;gap:10px}
+.catalog-page :is(.catalog-search input,.catalog-search select){height:48px;font-size:16px;font-weight:500;line-height:1.6;background:var(--ns-liquid-control);border-color:var(--ns-liquid-control-border);box-shadow:none;color:var(--ns-liquid-ink)}
+.catalog-page .catalog-search input::placeholder,.catalog-page .catalog-search-field>svg{color:var(--ns-liquid-ink)}
+.catalog-page .catalog-search select option{background:#edf9ff;color:#083e5b}
+.catalog-page .catalog-search-submit{min-height:48px;padding:10px 16px;font-size:15px;font-weight:600;box-shadow:none}
+.catalog-page .ns-course-tags{gap:4px;margin-top:12px;padding-top:10px;border-top:1px solid var(--ns-liquid-border)}
+.catalog-page .ns-course-tags a{min-height:44px;padding:7px 13px;font-size:14px;font-weight:500;display:inline-flex;align-items:center;color:var(--ns-liquid-ink)}
+.catalog-page .ns-course-tags a[aria-current="true"]{color:#fff;font-weight:600}
+.catalog-page .ns-course-section-heading{margin:0 0 18px;padding-top:20px;border-top:1px solid #ffffff80;gap:16px;scroll-margin-top:calc(var(--nav-h) + 24px)}
+.catalog-page .ns-course-section-heading h2{font-size:22px;font-weight:600;margin:0}
+.catalog-page .ns-course-section-heading p{margin:0;font-size:14px}
+.catalog-page .ns-course-card{border-radius:20px;background:var(--catalog-surface);box-shadow:none;backdrop-filter:none;border-color:var(--catalog-edge)}
+.catalog-page .ns-course-card-art{height:168px}
+.catalog-page .ns-course-card-copy{background:none;gap:10px;padding:20px}
+.catalog-page .ns-course-card-copy>p{color:var(--ns-muted);line-height:1.75}
+.catalog-page .ns-course-card-footer{padding-top:10px;gap:12px}
+.catalog-page .catalog-card-actions{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.catalog-page .catalog-card-start{flex:1;min-height:46px;padding:10px 14px;font-size:14px;gap:12px;justify-content:space-between;white-space:nowrap}
+.catalog-page .catalog-course-link{padding:0;min-height:44px;border:0;font-size:13px;gap:4px;white-space:nowrap}
+.catalog-page .catalog-course-link>span{width:24px;height:24px;background:none}
+.catalog-page [data-course-start][aria-disabled="true"]{cursor:wait;opacity:.75}
+.catalog-page .ns-catalog-status{margin:0 0 20px;font-size:14px}
+html[data-theme="dark"] .catalog-page .ns-course-card{background:#16364beF}
+html[data-theme="dark"] .catalog-page .catalog-search :is(input,select){background:var(--ns-liquid-control);border-color:var(--ns-liquid-control-border);color:var(--ns-liquid-ink)}
+html[data-theme="dark"] .catalog-page .catalog-search select option{background:#16344d;color:#e2f1ff}
+@media(max-width:1100px){
+ .catalog-page .catalog-hero{--catalog-art-width:280px;--catalog-art-left:-6px;grid-template-columns:270px minmax(0,1fr);gap:24px}
+ .catalog-page .catalog-search{grid-template-columns:minmax(0,1fr) 150px}
+ .catalog-page .catalog-search-field{grid-column:1/-1}
+ .catalog-page .catalog-search-submit{width:100%}
+ .catalog-page .catalog-heading h1{font-size:32px}
+ .catalog-page .catalog-intro{max-width:32ch}
+}
+@media(max-width:700px){
+ .catalog-page .catalog-wrap{width:calc(100% - 32px);padding-top:16px}
+ .catalog-page .catalog-hero{--catalog-art-width:184px;--catalog-art-left:4px;display:block;margin-bottom:16px}
+ .catalog-page .catalog-hero-copy{display:flex;gap:16px;padding-top:8px}
+ .catalog-page .catalog-heading h1{font-size:28px;line-height:1.45;letter-spacing:-.5px}
+ .catalog-page .catalog-heading h1>span{display:inline;margin-left:.2em}
+ .catalog-page .catalog-intro{font-size:13px;line-height:1.75;margin-top:8px}
+ .catalog-page .ns-course-eyebrow{font-size:11px}
+ .catalog-page .catalog-boat-nimo{width:53px;height:61px;left:calc(48% - 26.5px)}
+ .catalog-page .catalog-tools{grid-column:1/-1;grid-row:2;padding:12px;border-radius:18px}
+ .catalog-page .catalog-search{grid-template-columns:minmax(0,1fr) 132px;gap:8px}
+ .catalog-page .catalog-search input{font-size:16px}
+ .catalog-page .catalog-search select{font-size:16px}
+ .catalog-page .ns-course-tags{gap:4px;margin-top:10px;padding-top:10px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}
+ .catalog-page .ns-course-tags a{padding:6px 8px;min-height:44px;flex-shrink:0;white-space:nowrap}
+ .catalog-page .ns-course-section-heading{align-items:start;gap:8px;padding-top:16px}
+ .catalog-page .ns-course-section-heading>div:first-child{display:block}
+ .catalog-page .ns-course-section-heading h2{font-size:20px}
+ .catalog-page .ns-course-section-heading p{font-size:13px;margin-top:4px}
+ .catalog-page .catalog-motion-toggle{font-size:11px;min-height:40px}
+ .catalog-page .ns-course-grid{gap:18px}
+ .catalog-page .ns-course-card-art{height:auto;aspect-ratio:16/9}
+ .catalog-page .ns-course-card-copy{padding:18px}
+}
+@media(max-width:359px){
+ .catalog-page .catalog-heading h1{font-size:26px}
+ .catalog-page .catalog-heading .ns-course-eyebrow{font-size:10px}
+ .catalog-page .catalog-search{grid-template-columns:minmax(0,1fr) 120px}
+ .catalog-page .catalog-search-submit{font-size:13px;padding:10px 12px}
+}
+.course-departing [data-catalog-ocean] :is(.catalog-hero-copy,.ns-course-section-heading,.ns-course-grid,.ns-course-empty,.ns-course-pagination,.ns-catalog-status){opacity:0;pointer-events:none;transition:opacity 240ms var(--ns-ease-out)}
+@media(prefers-reduced-motion:reduce){.course-departing [data-catalog-ocean] :is(.catalog-hero-copy,.ns-course-section-heading,.ns-course-grid,.ns-course-empty,.ns-course-pagination,.ns-catalog-status){transition:none}}

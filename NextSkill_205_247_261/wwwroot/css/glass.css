@@ -1,4 +1,4 @@
-:root{--glass-bg:linear-gradient(145deg,rgba(255,255,255,.62),rgba(255,255,255,.28));--glass-border:rgba(255,255,255,.55)}
+:root{--glass-bg:linear-gradient(145deg,rgba(255,255,255,.62),rgba(255,255,255,.28));--glass-border:rgba(255,255,255,.55);--ns-liquid-bg:rgba(255,255,255,.1);--ns-liquid-border:rgba(255,255,255,.22);--ns-liquid-filter:blur(18px) saturate(1.35) brightness(1.04);--ns-liquid-shadow:inset 0 1px 0 rgba(255,255,255,.2);--ns-liquid-ink:#083e5b;--ns-liquid-control:rgba(255,255,255,.24);--ns-liquid-control-border:rgba(7,84,127,.38)}
 .glass{position:relative;isolation:isolate;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--ns-ink);-webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.85),inset 0 -1px 0 rgba(255,255,255,.2),0 10px 30px rgba(0,60,120,.22)}
 .glass:before{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:radial-gradient(ellipse at 0 0,rgba(255,255,255,.55),transparent 58%);pointer-events:none}
 .smart-journey .learning-sidebar .sj-current-island.glass{--glass-bg:linear-gradient(145deg,rgba(245,252,255,.94),rgba(240,249,255,.9));border:1px solid var(--glass-border);background:var(--glass-bg);backdrop-filter:blur(14px) saturate(1.6);-webkit-backdrop-filter:blur(14px) saturate(1.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.85),inset 0 -1px 0 rgba(255,255,255,.2),0 10px 30px rgba(0,60,120,.22)}
@@ -9,3 +9,35 @@
 .ns-navbar .ns-navbar__login.glass{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.6);box-shadow:none}
 .ns-navbar .ns-navbar__login.glass:hover{background:rgba(255,255,255,.22)}
 .ns-navbar .ns-navbar__login.glass:before{content:none}
+
+/* The map's functional surfaces use the same clear material as the navbar. */
+html[data-theme] body.smart-journey[data-journey-mode="learn"] :is(.learning-sidebar .sj-current-island.glass,.learning-sidebar .sj-learning-summary,.island-detail,.island-detail-dialog,.smart-dialog){
+ background:var(--ns-liquid-bg);border:1px solid var(--ns-liquid-border);box-shadow:var(--ns-liquid-shadow);color:var(--ns-liquid-ink);-webkit-backdrop-filter:var(--ns-liquid-filter);backdrop-filter:var(--ns-liquid-filter)
+}
+html[data-theme] body.smart-journey[data-journey-mode="learn"] .sj-current-island.glass:before{content:none}
+html[data-theme] body.smart-journey[data-journey-mode="learn"] :is(.sj-current-copy h2,.sj-current-copy>.sj-eyebrow,.sj-current-description,.sj-current-meta,.sj-course-label,.sj-learning-summary strong,.sj-learning-summary>div>span,.sj-learning-summary>p,.island-detail h2,.island-detail p,#course-progress-caption,#course-progress-value){color:var(--ns-liquid-ink)}
+html[data-theme] body.smart-journey[data-journey-mode="learn"] :is(.sj-current-actions .ns-button--secondary,.sj-course-label>span:last-child,.sj-course-card){background:var(--ns-liquid-control);border-color:var(--ns-liquid-control-border);color:var(--ns-liquid-ink);box-shadow:none}
+html[data-theme] body.smart-journey[data-journey-mode="learn"] .sj-learning-summary .icon{color:var(--ns-liquid-ink);opacity:.8}
+/* A sheet carries the material once, without a second frosted panel inside it. */
+html[data-theme] body.smart-journey[data-journey-mode="learn"] #island-detail-dialog .island-detail{background:none;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+html[data-theme] body.smart-journey[data-journey-mode="learn"] .island-detail-dialog::backdrop{background:#103c5540;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+
+/* Medium Thai strokes and a clear type scale stay legible over moving water. */
+.catalog-page,body.smart-journey[data-journey-mode="learn"]{--ns-liquid-ink:#062c42}
+html[data-theme] body.smart-journey[data-journey-mode="learn"] :is(.learning-sidebar,.island-detail,.smart-dialog){font-family:var(--ns-font);font-synthesis:none;letter-spacing:0;text-shadow:none}
+html[data-theme] body.smart-journey[data-journey-mode="learn"] :is(.sj-current-description,.sj-current-meta,.island-detail p:not(.sj-eyebrow)){font-size:16px;font-weight:500;line-height:1.8}
+html[data-theme] body.smart-journey[data-journey-mode="learn"] :is(.sj-current-copy>.sj-eyebrow,.sj-course-label,.sj-learning-summary>p,.sj-learning-summary>div>span:last-child,.island-detail .sj-eyebrow,#course-progress-caption,#course-progress-value){font-family:var(--ns-font);font-size:14px;font-weight:500;line-height:1.8;letter-spacing:0}
+html[data-theme] body.smart-journey[data-journey-mode="learn"] .sj-course-label>span:last-child{font-size:14px;font-weight:500}
+html[data-theme] body.smart-journey[data-journey-mode="learn"] :is(.sj-current-copy h2,.island-detail h2){font-size:24px;font-weight:600;line-height:1.6;letter-spacing:0;text-wrap:pretty}
+html[data-theme] body.smart-journey[data-journey-mode="learn"] .sj-learning-summary strong{font-family:var(--ns-font-number);font-size:28px;font-weight:600;line-height:1.4;font-variant-numeric:tabular-nums}
+html[data-theme] body.smart-journey[data-journey-mode="learn"] :is(.sj-current-actions .ns-button,.island-detail .ns-button){font-size:16px;font-weight:600;line-height:1.6}
+html[data-theme="dark"] :is(.catalog-page,body.smart-journey[data-journey-mode="learn"]){--ns-liquid-ink:#f1f8ff}
+html[data-theme="dark"]{--ns-liquid-ink:#e2f1ff;--ns-liquid-control:rgba(209,233,255,.12);--ns-liquid-control-border:rgba(196,224,245,.36)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+ :root{--ns-liquid-bg:#edf9ff;--ns-liquid-border:#adcddd}
+ html[data-theme="dark"]{--ns-liquid-bg:#16344d;--ns-liquid-border:#59768d}
+}
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){
+ :root{--ns-liquid-bg:#edf9ff;--ns-liquid-border:#577b91;--ns-liquid-filter:none;--ns-liquid-control:#f5fcff}
+ html[data-theme="dark"]{--ns-liquid-bg:#16344d;--ns-liquid-border:#87acc5;--ns-liquid-control:#23465f}
+}

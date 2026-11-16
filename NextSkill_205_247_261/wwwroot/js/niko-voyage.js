@@ -199,5 +199,9 @@
  window.addEventListener('resize',()=>{cancelIntro(true);cancelJump(true);flight?.cancel();});
  window.addEventListener('pagehide',()=>{generation++;cancelIntro(true);cancelJump(true);flight?.cancel();});
  window.NextSkillVoyage={board,returnToShore,cloudBoat,descend,finishArrival};
- if(shore)select(shore);sync();startIntro();
+ // Home's catalog destination does not change its entrance: sail in, then
+ // wait on shore until the visitor starts the next voyage.
+ if(shore)select(shore);
+ sync();
+ startIntro();
 })();

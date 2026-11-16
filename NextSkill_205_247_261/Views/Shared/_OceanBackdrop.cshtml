@@ -3,8 +3,20 @@
     @for (var ship = 1; ship <= 7; ship++)
     {
         <div class="ocean-backdrop-boat-track ocean-backdrop-boat-track--@ship">
+            <svg class="ocean-backdrop-boat-water" viewBox="0 0 150 82" focusable="false">
+                <ellipse cx="77" cy="72" rx="57" ry="4" fill="#357F91" opacity=".16" />
+                <g class="ocean-boat-cruise-wake" fill="none" stroke="#DDF7EA" stroke-linecap="round">
+                    <path d="M-39 75c17 3 37 3 58-1m-43 6c12 2 25 2 37 0" stroke-width="2"/>
+                    <path d="M-14 71c10 1 20 1 30 0" stroke-width="1.2"/>
+                </g>
+                <g class="ocean-boat-ripple" fill="none" stroke="#D0EDE6" stroke-linecap="round">
+                    <path d="M22 71c-6 3 1 6 15 8m15 1c25 2 54 0 69-4 10-3 13-5 7-7" stroke-width="1.6"/>
+                </g>
+                <g class="ocean-boat-ripple ocean-boat-ripple--following" fill="none" stroke="#C6E9E2" stroke-width="1.2" stroke-linecap="round">
+                    <path d="M24 72c-5 3 2 6 16 7m15 2c24 1 50-1 64-5 11-3 14-6 7-7"/>
+                </g>
+            </svg>
             <svg class="ocean-backdrop-boat" viewBox="0 0 150 82" focusable="false">
-                <path d="M12 75c12 2 22 3 30 2m61 0c12 0 22-2 32-4" fill="none" stroke="#d6f2ed" stroke-width="2" stroke-linecap="round" opacity=".65" />
                 @if (ship == 2 || ship == 5)
                 {
                     @* A small sailing boat. *@
@@ -12,6 +24,9 @@
                     <path d="M72 12v49M34 60h76" fill="none" stroke="#6b7270" stroke-width="2"/>
                     <path d="M68 16c-7 15-16 26-30 40h30Z" fill="#fff4db" stroke="#c7cec5" stroke-width="1.2"/>
                     <path d="M76 22c5 12 13 24 25 34H76Z" fill="var(--ship-accent, #d6e8df)" stroke="#aac6c6" stroke-width="1.2"/>
+                    <path d="m63 27-19 25h19m18-20 12 20H81" stroke="#E6D8BA" stroke-width="1" stroke-linejoin="round" opacity=".7"/>
+                    <path d="M33 63h85M49 68h57" stroke="#E8D2AC" stroke-width="1.5" stroke-linecap="round" opacity=".65"/>
+                    <path d="M72 14 87 18l-15 3" fill="#C6A17D"/>
                     <g class="ocean-ship-lights" fill="#fff0a8"><circle cx="72" cy="12" r="2.3"/><circle cx="80" cy="61" r="2.2"/></g>
                 }
                 else if (ship == 3)
@@ -20,6 +35,9 @@
                     <path d="M13 60h124l-10 12H38c-10 0-18-5-25-12Z" fill="var(--ship-hull, #467b8a)" stroke="#345d6f" stroke-width="2"/>
                     <path d="M35 59V44h76v15M49 44V33h44v11" fill="#e2eee5" stroke="#658c92" stroke-width="2"/>
                     <path d="M59 37h12v6H59zm17 0h12v6H76z" fill="#78a8af"/>
+                    <path d="M42 47h62v10H42Z" fill="#93B6B8"/>
+                    <path d="M52 47v10m13-10v10m13-10v10m13-10v10" stroke="#DAE9DE" stroke-width="2"/>
+                    <path d="M30 62h98m-89 6h75M45 30h52" stroke="#CDE0D5" stroke-width="1.5" stroke-linecap="round" opacity=".8"/>
                     <path d="M71 33V19m-6 5h12" stroke="#6e898b" stroke-width="2"/>
                     <g class="ocean-ship-lights" fill="#fff0a8"><circle cx="44" cy="52" r="2.4"/><circle cx="57" cy="52" r="2.4"/><circle cx="70" cy="52" r="2.4"/><circle cx="83" cy="52" r="2.4"/><circle cx="96" cy="52" r="2.4"/></g>
                 }
@@ -29,6 +47,10 @@
                     <path d="M24 57h104l-12 15H51c-11 0-20-5-27-15Z" fill="var(--ship-hull, #b76e60)" stroke="#755a54" stroke-width="2"/>
                     <path d="M53 55V38h35V26h20v29" fill="#e9e4d2" stroke="#789392" stroke-width="2"/>
                     <path d="M91 31h11v9H91z" fill="#709da3"/><path d="M72 38V21h7v17" fill="var(--ship-accent, #d7ab69)"/>
+                    <path d="M59 42h10v7H59zm16 0h10v7H75z" fill="#81A6AA"/>
+                    <path d="M50 37h40m-3-12h23M33 61h84m-70 6h58" stroke="#E8D6B8" stroke-width="1.5" stroke-linecap="round"/>
+                    <circle cx="113" cy="59" r="4" stroke="#526E73" stroke-width="2"/>
+                    <path d="M74 21h4" stroke="#7F8171" stroke-width="2"/>
                     <g class="ocean-ship-lights" fill="#fff0a8"><circle cx="61" cy="50" r="2.4"/><circle cx="73" cy="50" r="2.4"/><circle cx="97" cy="26" r="2.3"/></g>
                 }
                 else if (ship == 7)
@@ -37,6 +59,8 @@
                     <path d="M19 61h115l-14 12H48c-12 0-22-5-29-12Z" fill="var(--ship-hull, #6b8c78)" stroke="#59756d" stroke-width="2"/>
                     <path d="M53 60V24m44 36V15" stroke="#728582" stroke-width="2"/>
                     <path d="M49 28 29 57h20ZM93 19 64 57h29Z" fill="var(--ship-accent, #e5d8b5)" stroke="#c5cabc" stroke-width="1.2"/>
+                    <path d="m46 37-12 17h12m43-24-18 24h18" stroke="#F7ECD3" stroke-width="1.2" stroke-linejoin="round"/>
+                    <path d="M30 64h92m-73 5h59M97 17l15 4-15 3" stroke="#DCC9A4" stroke-width="1.5" stroke-linecap="round"/>
                     <g class="ocean-ship-lights" fill="#fff0a8"><circle cx="97" cy="15" r="2.3"/><circle cx="75" cy="61" r="2.2"/></g>
                 }
                 else
@@ -47,18 +71,49 @@
                     <path d="M39 52V42h20l8-12h26l8 12h12v10" fill="#dce8dc" stroke="#557a81" stroke-width="2" stroke-linejoin="round" />
                     <path d="M68 39h21v9H68z" fill="#638d96"/><path d="M76 30V13m-8 6h16" stroke="#58757a" stroke-width="2" stroke-linecap="round"/>
                     <path d="M42 52h68" stroke="#edc89c" stroke-width="2"/>
+                    <path d="M72 41h13M82 40v7" stroke="#B9D5D2" stroke-width="1.1"/>
+                    <path d="M36 65c20 5 47 6 72 2" stroke="#234F62" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+                    <path d="M30 51v-7m7 7v-7m-9 1h17" stroke="#9BAF9F" stroke-width="1.2"/>
+                    <circle cx="116" cy="57" r="3.5" fill="#D9C8A4" stroke="#547C81" stroke-width="1.5"/>
+                    <path d="M93 31h5l5 9h-4" fill="#C2CFC0"/>
                     <g class="ocean-ship-lights" fill="#fff0a8"><circle cx="48" cy="47" r="2.4"/><circle cx="59" cy="47" r="2.4"/><circle cx="100" cy="47" r="2.4"/><circle cx="76" cy="14" r="2.2"/></g>
                 }
+            </svg>
+            <svg class="ocean-backdrop-boat-contact" viewBox="0 0 150 82" focusable="false">
+                <path d="M39 71c18 3 43 4 66 0l17-2c-9 6-26 8-43 8-19 0-32-2-40-6Z" fill="#82BEC2" opacity=".2"/>
+                <path d="M42 72c16 2 34 2 48 1m10 0 17-2" fill="none" stroke="#D1EDE3" stroke-width="1.3" stroke-linecap="round" opacity=".5"/>
             </svg>
         </div>
     }
     <div class="ocean-backdrop-buoy">
-        <img src="~/images/journey/sea-buoy.svg" width="100" height="160" alt="" draggable="false" />
+        <svg class="ocean-backdrop-buoy-water" viewBox="0 0 100 160" focusable="false">
+            <ellipse cx="50" cy="129" rx="28" ry="6" fill="#297C91" opacity=".16"/>
+            <g class="ocean-buoy-ripple" fill="none" stroke="#C7EAE3" stroke-width="1.8" stroke-linecap="round">
+                <path d="M29 126c-7 1-11 3-10 5 2 5 18 8 33 7m10-1c13-2 20-5 18-8-1-2-5-3-10-4"/>
+            </g>
+            <g class="ocean-buoy-ripple ocean-buoy-ripple--following" fill="none" stroke="#C7EAE3" stroke-width="1.4" stroke-linecap="round">
+                <path d="M29 127c-7 1-10 3-9 5 2 4 15 7 28 6m12 0c13-1 22-5 20-8-1-2-5-4-11-5"/>
+            </g>
+        </svg>
+        <img src="~/images/journey/sea-buoy-detail.svg" asp-append-version="true" width="100" height="160" alt="" draggable="false" />
+        <svg class="ocean-backdrop-buoy-contact" viewBox="0 0 100 160" focusable="false">
+            <path d="M27 127c12 5 34 5 46 0l-3 5c-10 4-30 4-40 0Z" fill="#79BCC1" opacity=".35"/>
+            <path d="M27 128c6 3 15 4 23 4s17-1 23-4" fill="none" stroke="#DAF0E5" stroke-width="1.8" stroke-linecap="round" opacity=".65"/>
+        </svg>
     </div>
     <div class="ocean-backdrop-whale-water">
+        <svg class="ocean-whale-wake" viewBox="0 0 180 100" fill="none" focusable="false">
+            <g class="ocean-whale-ripple" stroke="#BDE3DF" stroke-linecap="round">
+                <ellipse cx="88" cy="79" rx="62" ry="5" fill="#2A7188" stroke="none" opacity=".22"/>
+                <path d="M25 77c-13 3-8 8 14 10m15 1c31 3 70 0 88-5 14-4 16-7 5-10" stroke-width="2"/>
+            </g>
+            <g class="ocean-whale-meniscus" stroke="#C6E7DF" stroke-width="1.7" stroke-linecap="round">
+                <path d="M28 78c14 4 34 5 52 4m21 0c19-1 37-3 48-6"/>
+            </g>
+        </svg>
+        <div class="ocean-backdrop-whale-window">
         <div class="ocean-backdrop-whale">
             <svg viewBox="0 0 180 100" focusable="false">
-                <path d="M14 78c16 3 33 4 50 3m55 0c17-1 32-3 47-7" fill="none" stroke="#bfe8e6" stroke-width="2.5" stroke-linecap="round" opacity=".75" />
                 <path d="M24 76c10-20 27-31 51-32 24-2 42 8 55 24 5-9 13-14 24-16-5 6-8 14-8 20l11 5c-13 4-25 5-36 3-36 5-71 5-97-4Z" fill="#568b9e" />
                 <path d="M35 68c9-9 23-14 38-14" fill="none" stroke="#99c6cb" stroke-width="2" stroke-linecap="round" opacity=".7" />
                 <path d="M102 63c5 3 10 4 15 4-5 6-12 7-19 3Z" fill="#487b91" />
@@ -67,6 +122,7 @@
             <svg class="ocean-backdrop-spout" viewBox="0 0 30 31" focusable="false">
                 <path d="M15 28c0-9-1-15-7-20m7 17c0-10 1-16 6-22" fill="none" stroke="#d4f1ef" stroke-width="2" stroke-linecap="round" />
             </svg>
+        </div>
         </div>
     </div>
 </div>

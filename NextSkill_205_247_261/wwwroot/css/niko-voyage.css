@@ -41,9 +41,6 @@ body.voyage-paused [data-voyage="rowing"] .buddy-avatar-rowing{animation-play-st
     animation: nimo-boat-rock 1.5s ease-in-out infinite !important;
 }
 
-/* Water Wake Animation during Rowing */
-[data-voyage="rowing"] .ow-wake{animation:ow-wake-rowing 1.5s ease-in-out infinite alternate!important;opacity:.95}
-
 /* Keep one paddle cadence while scrolling; changing CSS duration remaps its phase. */
 
 /* ========================================================
@@ -66,7 +63,7 @@ body.voyage-paused [data-voyage="rowing"] .buddy-avatar-rowing{animation-play-st
 .voyage-arrival-boat .voyage-seat{width:70px;height:81px;left:calc(48% - 35px);top:calc(38% - 81px)}
 .voyage-paused [data-voyage="rowing"] *, .voyage-paused .buddy-idle-motion,.ow-motion-paused .ow-boat-idle,.ow-motion-paused .voyage-oar,.ow-motion-paused .buddy-avatar-rowing,.ow-motion-paused .buddy-avatar-idle,.ow-motion-paused .ow-wake {animation-play-state:paused!important}
 .ow-boat-idle { animation:nimo-boat-idle 4.8s ease-in-out infinite; }
-@keyframes nimo-boat-idle { 0%,100%{transform:translateY(0) rotate(-1.4deg)}50%{transform:translateY(-5px) rotate(1.4deg)} }
+@keyframes nimo-boat-idle { 0%,100%{transform:translateY(1px) rotate(-.55deg)}50%{transform:translateY(-1.2px) rotate(.55deg)} }
 
 /* ========================================================
    Rowing Keyframe Animations
@@ -94,15 +91,8 @@ body.voyage-paused [data-voyage="rowing"] .buddy-avatar-rowing{animation-play-st
 
 /* Boat Rocking during Rowing */
 @keyframes nimo-boat-rock{
-    0%,100%{transform:translateY(0) rotate(-.7deg)}
-    50%{transform:translateY(-3px) rotate(.9deg)}
-}
-
-/* Wake Surge during Rowing */
-@keyframes ow-wake-rowing{
-    0%{transform:scale(.95,.88);opacity:.7}
-    50%{transform:scale(1.12,1.15) translateY(2px);opacity:.95}
-    100%{transform:scale(.98,.92);opacity:.7}
+    0%,100%{transform:translateY(var(--nimo-bob,.8px)) rotate(calc(-1 * var(--nimo-roll,.5deg)))}
+    50%{transform:translateY(calc(-1 * var(--nimo-bob,.8px))) rotate(var(--nimo-roll,.5deg))}
 }
 
 @media(max-width:700px){.ow-island-mascot{width:77px;height:89px;top:33%;left:38%}}
@@ -175,7 +165,7 @@ body.voyage-paused [data-voyage="rowing"] .buddy-avatar-rowing{animation-play-st
     animation: nimo-arrival-rock 1.5s ease-in-out infinite !important;
 }
 @keyframes nimo-arrival-rock {
-    0%, 100% { transform: translateY(0) rotate(-1deg); }
-    50% { transform: translateY(-4px) rotate(1deg); }
+    0%, 100% { transform: translateY(.8px) rotate(-.5deg); }
+    50% { transform: translateY(-.8px) rotate(.5deg); }
 }
 

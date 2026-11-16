@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 160" fill="none">
+  <defs>
+    <linearGradient id="buoy-body" x1="35" y1="74" x2="65" y2="77" gradientUnits="userSpaceOnUse"><stop stop-color="#E7AC5C"/><stop offset=".4" stop-color="#F5CA7B"/><stop offset="1" stop-color="#C79150"/></linearGradient>
+    <linearGradient id="buoy-float" x1="50" y1="114" x2="50" y2="130" gradientUnits="userSpaceOnUse"><stop stop-color="#D99F56"/><stop offset="1" stop-color="#AF7F48"/></linearGradient>
+  </defs>
+  <path d="M28 116v5c1 7 11 10 22 10s21-3 22-10v-5" fill="url(#buoy-float)" stroke="#AE824D" stroke-width="1.5"/>
+  <ellipse cx="50" cy="116" rx="22" ry="8" fill="#F1CA86" stroke="#C7995B" stroke-width="1.5"/>
+  <ellipse cx="50" cy="116" rx="16" ry="4.5" stroke="#FFF0C9" stroke-width="1.2" opacity=".7"/>
+  <path d="m38 114 6-63h12l6 63c-5 4-18 4-24 0Z" fill="url(#buoy-body)" stroke="#B78A51" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="m41 81 18 0 2 19c-6 2-15 2-22 0Z" fill="#FFF2D2"/>
+  <path d="m54 81 5 0 2 19-6 1Z" fill="#DFD7B9" opacity=".6"/>
+  <path d="m46 58-4 51" stroke="#FFF0C5" stroke-width="1.3" stroke-linecap="round" opacity=".75"/>
+  <ellipse cx="50" cy="51" rx="6" ry="2.8" fill="#D4AE72" stroke="#AC8653" stroke-width="1.2"/>
+  <path d="M50 49V19" stroke="#A98859" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M52 21c9-4 15 3 24 0l-7 10 7 10c-10 3-15-4-24 0Z" fill="#FFF3D7" stroke="#D4C69F" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M55 25c5-1 9 1 13 1" stroke="#FFFDF1" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="50" cy="17" r="3" fill="#F3CD86" stroke="#C5A16B" stroke-width="1"/>
+  <path d="M46 109h8" stroke="#B48A53" stroke-width="1.3" stroke-linecap="round"/>
+  <g fill="#AD8753"><circle cx="33" cy="116" r="1"/><circle cx="67" cy="116" r="1"/><circle cx="50" cy="122" r="1"/></g>
+</svg>

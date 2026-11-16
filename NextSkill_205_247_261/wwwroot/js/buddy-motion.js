@@ -131,7 +131,7 @@
     function canPlay() {
         const policy = window.NextSkillMotion?.snapshot({ element: robot, kind: 'ambient' });
         const voyage = scene.dataset.voyage;
-        return active && !document.hidden && !reduce.matches && !robot.dataset.posing &&
+        return active && !document.hidden && !reduce.matches && !robot.dataset.posing && !robot.dataset.textSpeaking &&
             !document.querySelector('dialog[open]') && !robot.closest('.ow-jump-anchor') &&
             (!voyage || voyage === 'shore' || voyage === 'docked') &&
             performance.now() - lastScroll > 2000 &&

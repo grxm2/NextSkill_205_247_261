@@ -1,0 +1,100 @@
+/* The pier and the course board share the voyage camera; all controls stay in HTML. */
+.smart-journey .ocean-home .ow-harbor{left:226vw;top:calc(var(--nav-h) + 24px);width:88vw;max-width:none;max-height:none;display:grid;grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr);gap:clamp(20px,3vw,48px);align-items:start}
+.smart-journey .ocean-home .ow-dock{width:100%;max-width:calc((100svh - var(--nav-h) - 200px) * 1.142857);margin:0;min-width:0;align-self:center;justify-self:center;isolation:isolate}
+.smart-journey .ocean-home .ow-dock:before{content:none}
+.course-harbor-art{display:block;width:100%;height:auto;user-select:none;pointer-events:none}
+.harbor-model{position:relative;isolation:isolate}
+.harbor-model>.course-harbor-art{overflow:hidden}
+.harbor-door{transform-box:view-box;transition:transform 280ms var(--ns-ease-in-out);transform:scaleX(1) skewY(0deg)}
+.harbor-door--left{transform-origin:269px 337px}
+.harbor-door--right{transform-origin:524px 337px}
+[data-door-state="open"] .harbor-door--left{transform:scaleX(-.65) skewY(8deg)}
+[data-door-state="open"] .harbor-door--right{transform:scaleX(-.65) skewY(-8deg)}
+[data-harbor-arrival="true"] .harbor-door{transition-duration:900ms}
+.harbor-sign{transform-box:view-box;transform-origin:395px 159px;animation:harbor-sign-sway 6.4s var(--ns-ease-in-out) -2s infinite}
+.harbor-flag{transform-box:view-box;transform-origin:171px 55px;animation:harbor-flag-breeze 3.2s var(--ns-ease-in-out) -1s infinite}
+.harbor-lantern{transform-box:view-box;transform-origin:0 -17px;animation:harbor-lantern-sway 4.8s var(--ns-ease-in-out) -1.3s infinite}
+.harbor-lantern--right{animation-duration:5.4s;animation-delay:-3.1s}
+.harbor-planter-leaves{transform-box:view-box;transform-origin:184px 480px;animation:harbor-leaf-breeze 4.6s var(--ns-ease-in-out) -2s infinite}
+.harbor-pier-ripples{transform-box:fill-box;transform-origin:50% 50%;animation:harbor-pier-water 6.4s var(--ns-ease-in-out) -2.3s infinite}
+.harbor-bird{transform-box:view-box;transform-origin:0 0;transform:translate(438px,45px);animation:harbor-gull-visit 28s linear -6s infinite}
+.harbor-bird-head{transform-box:view-box;transform-origin:11px -19px;animation:harbor-gull-look 28s linear -6s infinite}
+.harbor-bird-wings{animation:harbor-gull-wings 28s linear -6s infinite}
+.harbor-bird-shadow{animation:harbor-gull-shadow 28s linear -6s infinite}
+.harbor-bird-wing{transform-box:view-box;transform-origin:-5px -12px;animation:harbor-wing-flap 320ms var(--ns-ease-in-out) infinite}
+.harbor-bird-wing--far{animation-name:harbor-wing-flap-far}
+.harbor-model :is(.harbor-sign,.harbor-flag,.harbor-lantern,.harbor-planter-leaves,.harbor-pier-ripples,.harbor-bird,.harbor-bird-head,.harbor-bird-wings,.harbor-bird-wing,.harbor-bird-shadow){animation-play-state:paused}
+.harbor-model[data-harbor-motion="active"] :is(.harbor-sign,.harbor-flag,.harbor-lantern,.harbor-planter-leaves,.harbor-pier-ripples,.harbor-bird,.harbor-bird-head,.harbor-bird-wings,.harbor-bird-wing,.harbor-bird-shadow){animation-play-state:running}
+.ow-motion-paused .harbor-door{transition:none}
+@keyframes harbor-sign-sway{0%,100%{transform:rotate(-.8deg)}50%{transform:rotate(.8deg)}}
+@keyframes harbor-flag-breeze{0%,100%{transform:skewY(-2deg) scaleX(.96)}50%{transform:skewY(3deg) scaleX(1)}}
+@keyframes harbor-lantern-sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes harbor-leaf-breeze{0%,100%{transform:rotate(-2deg) skewX(-1deg)}50%{transform:rotate(4deg) skewX(2deg)}}
+@keyframes harbor-pier-water{0%,100%{transform:scale(.98,1);opacity:.3}50%{transform:scale(1.025,1.08);opacity:.65}}
+@keyframes harbor-gull-visit{0%,8%{transform:translate(-90px,130px) rotate(-9deg);opacity:0}12%{transform:translate(80px,20px) rotate(-5deg);opacity:1}21%{transform:translate(330px,-3px) rotate(7deg)}28%,72%{transform:translate(438px,45px) rotate(0);opacity:1}76%{transform:translate(470px,-3px) rotate(-8deg);opacity:1}85%{transform:translate(740px,-26px) rotate(-4deg);opacity:1}92%,100%{transform:translate(940px,-60px) rotate(0);opacity:0}}
+@keyframes harbor-gull-wings{0%,25%,76%,100%{opacity:1}28%,73%{opacity:0}}
+@keyframes harbor-gull-shadow{0%,25%,76%,100%{opacity:0}28%,73%{opacity:.15}}
+@keyframes harbor-gull-look{0%,29%,44%,55%,70%,100%{transform:rotate(0)}35%,38%{transform:rotate(10deg)}61%,64%{transform:rotate(-9deg)}}
+@keyframes harbor-wing-flap{0%,100%{transform:rotate(25deg) scaleY(1)}50%{transform:rotate(-22deg) scaleY(.65)}}
+@keyframes harbor-wing-flap-far{0%,100%{transform:rotate(-25deg) scaleY(1)}50%{transform:rotate(22deg) scaleY(.65)}}
+.smart-journey .ocean-home .ow-harbor-board{width:100%;min-width:0;max-height:calc(100svh - var(--nav-h) - 64px);padding:clamp(20px,2.2vw,32px);padding-bottom:20px;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;scroll-padding:16px;background:linear-gradient(135deg,#ffffff55,#ffffff14 42%,#bceeff1c),#f4fcff21;border:1px solid #ffffff99;border-radius:28px;box-shadow:inset 0 1px 0 #ffffff80,inset 0 -1px 0 #ffffff26,0 12px 36px #174b6112;-webkit-backdrop-filter:blur(18px) saturate(1.35) brightness(1.04);backdrop-filter:blur(18px) saturate(1.35) brightness(1.04)}
+.smart-journey .ow-harbor-board .sj-eyebrow{display:inline-flex;align-items:center;gap:8px;margin:0 0 12px;padding:6px 12px;border-radius:999px;background:#dff3f6;color:var(--ns-primary-hover);font-size:13px;font-weight:500}
+.ow-harbor-board .sj-eyebrow svg{width:20px;height:20px;flex-shrink:0}
+.smart-journey .ow-harbor-board h2{margin:0;font-size:clamp(24px,2.3vw,34px);font-weight:600;line-height:1.45;letter-spacing:-.6px;color:var(--ns-ink)}
+.smart-journey .ow-harbor-board>p:not(.sj-eyebrow){margin:10px 0 20px;font-size:15px;line-height:1.8;color:var(--ns-muted)}
+.smart-journey .ow-harbor-board .sj-featured-courses{gap:10px}
+.smart-journey .ow-harbor-board .sj-course-card{grid-template-columns:44px minmax(0,1fr) auto;gap:12px;padding:14px;min-height:84px;border-radius:18px;background:#ffffff59;border-color:#ffffff99;box-shadow:inset 0 1px 0 #ffffff66,0 2px 5px #174b6108}
+.smart-journey .ow-harbor-board .sj-course-icon{width:44px;height:48px;font-size:19px;border-radius:13px}
+.smart-journey .ow-harbor-board .sj-course-card h3{font-size:16px;line-height:1.5;overflow-wrap:anywhere}
+.smart-journey .ow-harbor-board .sj-course-small-meta{gap:6px;font-size:14px;line-height:1.6;flex-wrap:wrap}
+.smart-journey .ow-harbor-board .sj-course-card .sj-course-action{grid-column:3;grid-row:1/3;min-width:88px;min-height:44px;padding:9px 12px;border:1px solid var(--ns-primary);border-radius:12px;background:var(--ns-primary);color:#fff;font-weight:500;justify-content:center;align-self:center;box-shadow:none;transition:background 160ms ease}
+.smart-journey .ow-harbor-board>.sj-text-link{min-height:44px;margin-top:12px;font-size:14px;color:var(--ns-primary-hover)!important}
+.sj-picker-art>.harbor-model,.sj-picker-art .course-harbor-art{width:100%;height:100%;object-fit:contain}
+.sj-picker-art .harbor-bird{animation:none;transform:translate(438px,45px)}
+.sj-picker-art .harbor-bird-wings{display:none}
+html[data-theme="dark"] .smart-journey .ow-harbor-board{background:linear-gradient(135deg,#bdddf522,#bdddf506 48%,#53cce318),#102b4559;border-color:#c8e8ff55;box-shadow:inset 0 1px 0 #daf1ff44,0 12px 36px #02152420}
+html[data-theme="dark"] .smart-journey .ow-harbor-board h2{color:#e7f3fb}
+html[data-theme="dark"] .smart-journey .ow-harbor-board .sj-eyebrow{background:#20495e;color:#bceef2}
+html[data-theme="dark"] .smart-journey .ow-harbor-board>p:not(.sj-eyebrow){color:#b4cadb}
+html[data-theme="dark"] .smart-journey .ow-harbor-board .sj-course-card{background:#173d5866;border-color:#b1d5ed55;box-shadow:inset 0 1px 0 #c2e4ff22}
+html[data-theme="dark"] .smart-journey .ow-harbor-board .sj-course-progress>div{color:#b4cadb}
+html[data-theme="dark"] .smart-journey .ow-harbor-board>.sj-text-link{color:#bceef2!important}
+@media(hover:hover) and (pointer:fine){
+ .smart-journey .ow-harbor-board .sj-course-card .sj-course-action:hover{background:var(--ns-primary-hover)}
+}
+@media(min-width:701px) and (max-height:820px){
+ .smart-journey .ocean-home .ow-dock{align-self:start}
+}
+@media(min-width:701px) and (max-width:1000px){
+ .smart-journey .ocean-home .ow-harbor{left:224vw;width:92vw;gap:20px;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
+ .smart-journey .ow-harbor-board .sj-course-card{grid-template-columns:36px minmax(0,1fr) auto;gap:8px;padding:10px}
+ .smart-journey .ow-harbor-board .sj-course-icon{width:36px;height:42px;font-size:17px}
+ .smart-journey .ow-harbor-board .sj-course-card h3{font-size:15px}
+ .smart-journey .ow-harbor-board .sj-course-card .sj-course-action{min-width:72px;padding-inline:8px}
+}
+@media(max-width:700px){
+ .smart-journey .ocean-home .ow-harbor{--harbor-art-size:clamp(112px,22svh,180px);left:calc(220vw + 20px);top:calc(var(--nav-h) + 12px);width:calc(100vw - 40px);display:flex;flex-direction:column;gap:8px;align-items:center}
+ .smart-journey .ocean-home .ow-dock{width:var(--harbor-art-size);max-width:none;min-height:calc(var(--harbor-art-size) * .875 + 48px);flex-shrink:0;margin:0;align-self:flex-start}
+ .smart-journey .ocean-home .ow-harbor-board{max-height:calc(100svh - var(--nav-h) - var(--harbor-art-size) * .875 - 248px);padding:16px;border-radius:22px;flex-shrink:0}
+ .smart-journey .ow-harbor-board .sj-eyebrow{font-size:12px;padding:4px 10px;margin-bottom:8px}
+ .smart-journey .ow-harbor-board h2{font-size:22px;line-height:1.45}
+ .smart-journey .ow-harbor-board>p:not(.sj-eyebrow){font-size:14px;margin:8px 0 12px}
+ .smart-journey .ow-harbor-board .sj-course-card{grid-template-columns:32px minmax(0,1fr) auto;gap:8px;padding:10px;min-height:76px;border-radius:14px}
+ .smart-journey .ow-harbor-board .sj-course-icon{width:32px;height:38px;font-size:16px;border-radius:10px}
+ .smart-journey .ow-harbor-board .sj-course-card h3{font-size:15px}
+ .smart-journey .ow-harbor-board .sj-course-small-meta{font-size:13px;gap:4px}
+ .smart-journey .ow-harbor-board .sj-course-card .sj-course-action{min-width:70px;padding:8px;border-radius:10px}
+ .smart-journey .ow-harbor-board>.sj-text-link{font-size:14px;margin-top:8px}
+}
+@media(max-width:700px) and (max-height:740px){
+ .smart-journey .ow-harbor-board>p:not(.sj-eyebrow){display:none}
+ .smart-journey .ow-harbor-board h2{margin-bottom:12px}
+}
+.ow-static .smart-journey .ocean-home .ow-harbor{position:relative;left:auto;top:auto;width:100%;max-height:none;margin:48px 0}
+.ow-static .smart-journey .ocean-home .ow-harbor-board{max-height:none;overflow:visible}
+@media(prefers-reduced-motion:reduce){
+ .harbor-door{transition:none}
+ .harbor-model :is(.harbor-sign,.harbor-flag,.harbor-lantern,.harbor-planter-leaves,.harbor-pier-ripples,.harbor-bird,.harbor-bird-head,.harbor-bird-wings,.harbor-bird-wing,.harbor-bird-shadow){animation:none}
+ .harbor-bird{transform:translate(438px,45px)}
+ .harbor-bird-wings{display:none}
+}

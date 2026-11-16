@@ -39,43 +39,78 @@
 
 
 .ow-start-land{filter:none}
-.ow-island-art{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 22px 12px #126c8a18)}
+.ow-island-art{display:block;width:100%;height:auto;overflow:visible}
 .ow-palm{transform-box:view-box;animation:ow-palm-sway 6.4s ease-in-out infinite;transform-origin:523px 124px}
 .ow-palm--far{transform-origin:640px 137px;animation-duration:8s;animation-delay:-2.7s}
 .ow-motion-paused .ow-palm{animation-play-state:paused}
 @keyframes ow-palm-sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2.4deg)}}
-.ow-start-land:before,.ow-start-land:after{content:'';position:absolute;left:8%;right:7%;height:18%;bottom:6%;border:2px solid #e0fffcaa;border-radius:50%;z-index:-1;animation:ow-shore 7.6s linear infinite}
-.ow-start-land:after{animation-delay:-3.8s;border-color:#c9ffed99}
+/* Only foliage moves: roots and shadows stay planted in the beach plane. */
+.ow-shrub{--shrub-period:8s;--shrub-phase:-1.8s}
+.ow-shrub--left{--shrub-phase:-2.05s}
+.ow-shrub--front{--shrub-phase:-2.35s}
+.ow-shrub-wind{transform-box:view-box;transform-origin:34px 0;animation-duration:var(--shrub-period);animation-delay:var(--shrub-phase);animation-timing-function:var(--ns-ease-in-out);animation-iteration-count:infinite;animation-play-state:paused}
+.ow-shrub-foliage{animation-name:ow-shrub-sway}
+.ow-shrub-branch--back{animation-name:ow-shrub-back;animation-delay:calc(var(--shrub-phase) - .12s)}
+.ow-shrub-branch--middle{animation-name:ow-shrub-middle;animation-delay:calc(var(--shrub-phase) - .28s)}
+.ow-shrub-branch--front{animation-name:ow-shrub-front;animation-delay:calc(var(--shrub-phase) - .4s)}
+.ow-shrub-tip{transform-origin:0 0;animation-name:ow-shrub-tip;animation-duration:7.6s}
+.ow-shrub-tip--late{animation-delay:calc(var(--shrub-phase) - .65s)}
+.ow-shrub-tip--middle{animation-delay:calc(var(--shrub-phase) - .35s)}
+.ow-island-art[data-island-wind="active"] .ow-shrub-wind{animation-play-state:running}
+.ow-motion-paused .ow-shrub-wind{animation-play-state:paused}
+@keyframes ow-shrub-sway{0%,100%{transform:rotate(-.7deg) skewX(-.4deg)}47%{transform:rotate(2.1deg) skewX(.8deg)}76%{transform:rotate(.3deg) skewX(.1deg)}}
+@keyframes ow-shrub-back{0%,100%{transform:rotate(-.5deg)}49%{transform:rotate(2.2deg)}78%{transform:rotate(.2deg)}}
+@keyframes ow-shrub-middle{0%,100%{transform:rotate(.2deg)}53%{transform:rotate(1.3deg)}82%{transform:rotate(-.3deg)}}
+@keyframes ow-shrub-front{0%,100%{transform:rotate(-.2deg)}54%{transform:rotate(.7deg)}81%{transform:rotate(-.4deg)}}
+@keyframes ow-shrub-tip{0%,100%{transform:rotate(-1deg)}30%{transform:rotate(.8deg)}56%{transform:rotate(2.8deg)}82%{transform:rotate(-.6deg)}}
+@media(prefers-reduced-motion:reduce){.ow-shrub-wind{animation:none!important;transform:none}}
+.ow-shore-ripples{opacity:.3}
+.ow-shore-wash{transform-box:view-box;transform-origin:384px 420px;animation:ow-shore 7.6s ease-in-out infinite;opacity:.3}
+.ow-shore-wash--return{animation-name:ow-shore-return;animation-delay:-3.8s}
+.ow-wet-sand{animation:ow-wet-sand 7.6s ease-in-out infinite}
+.ow-motion-paused :is(.ow-shore-wash,.ow-wet-sand){animation-play-state:paused}
 .ow-land figcaption{font-size:12px;letter-spacing:.04em;color:#22617a}
-.ow-wake{position:absolute;left:-34%;top:57%;width:155%;height:55%;background:url('/images/journey/ocean-wake.svg') center/contain no-repeat;animation:ow-wake 4.8s ease-in-out infinite alternate}
-.ow-boat-idle{filter:drop-shadow(0 8px 3px #135f7915)}
+.ow-wake{position:absolute;inset:0;pointer-events:none}
+.ow-wake>svg{display:block;width:100%;height:100%;overflow:visible}
+.ow-boat-idle{filter:none;transform-origin:50% 81%}
+.ow-hull-contact{position:absolute;inset:0;z-index:4;display:block;width:100%;height:100%;pointer-events:none}
+.ow-vessel-ripple{transform-box:view-box;transform-origin:239px 230px;animation:ow-vessel-ripple 4.8s ease-out infinite;opacity:0}
+.ow-vessel-ripple--following{animation-delay:-2.4s}
+.ow-paddle-ripple{transform-box:view-box;transform-origin:414px 246px;animation:ow-paddle-water 4.8s ease-out infinite;opacity:0}
+.ow-scene[data-voyage="rowing"] .ow-paddle-ripple{animation-duration:1.5s}
+.ow-scene[data-voyage="rowing"] .ow-vessel-ripple{animation-duration:1.5s}
+.ow-scene[data-voyage="rowing"] .ow-vessel-ripple--following{animation-delay:-.75s}
+.ow-motion-paused :is(.ow-vessel-ripple,.ow-paddle-ripple){animation-play-state:paused}
 .ow-seabirds{position:absolute;top:19%;left:46%;width:29%;color:#4f8ba3;opacity:.65;pointer-events:none;z-index:-1}
 .ow-clouds span{filter:blur(3px);opacity:.7}
 .ow-clouds span:first-child{top:12%;left:61%;transform:scale(1.5)}
 .ow-clouds span:nth-child(3){top:34%;left:2%;transform:scale(.7)}
 .ow-intro h1{color:#123f56;font-weight:700}.ow-intro h1 em{color:#007f9e}
 .ow-harbor-board{background:#f5ffffed;box-shadow:0 22px 60px #124d7a20;border-color:#fff}
-.ow-motion-paused .ow-swell-drift,.ow-motion-paused .ow-start-land:before,.ow-motion-paused .ow-start-land:after,.ow-motion-paused .ow-wake,.ow-motion-paused .ow-sun-path,.ow-motion-paused .ow-water-lines{animation-play-state:paused}
+.ow-motion-paused .ow-swell-drift,.ow-motion-paused .ow-wake,.ow-motion-paused .ow-sun-path,.ow-motion-paused .ow-water-lines{animation-play-state:paused}
 @keyframes ow-current{from{transform:translate3d(0,0,0)}to{transform:translate3d(-10%,0,0)}}
-@keyframes ow-shore{0%{transform:scale(.96,.94);opacity:0}18%{opacity:.5}70%{opacity:.2}100%{transform:scale(1.12,1.24);opacity:0}}
+@keyframes ow-shore{0%,100%{transform:translate3d(0,6px,0) scale(1.01,1.03);opacity:0}40%{transform:translate3d(0,-1px,0) scale(.995,.98);opacity:.45}70%{transform:translate3d(0,1px,0);opacity:.18}}
+@keyframes ow-shore-return{0%{transform:translate3d(0,-9px,0) scale(.97,.85);opacity:0}20%{opacity:.25}100%{transform:translate3d(0,2px,0) scale(1.025,1.06);opacity:0}}
+@keyframes ow-wet-sand{0%,100%{opacity:.12}45%,60%{opacity:.3}}
+@keyframes ow-vessel-ripple{0%{transform:translate3d(0,-2px,0) scale(.88,.75);opacity:0}16%{opacity:.42}100%{transform:translate3d(0,3px,0) scale(1.2,1.15);opacity:0}}
+@keyframes ow-paddle-water{0%,20%,100%{transform:scale(.85,.8);opacity:0}35%{opacity:.3}90%{transform:translateY(2px) scale(1.3,1.25);opacity:0}}
 @keyframes ow-sunlight{0%,100%{transform:translate3d(-6px,0,0) scaleX(.97);opacity:.24}50%{transform:translate3d(6px,0,0) scaleX(1.03);opacity:.34}}
 @keyframes ow-water-light{0%,100%{transform:translate3d(-1%,0,0);opacity:.13}50%{transform:translate3d(1%,3px,0);opacity:.22}}
-@keyframes ow-wake{from{transform:scale(.95,.9);opacity:.65}to{transform:scale(1.06,1.08);opacity:1}}
 .ow-static .ow-near-sea{display:none}.ow-static .ow-swell-drift,.ow-static .ow-wake,.ow-static .ow-sun-path,.ow-static .ow-water-lines{animation:none}
 @media(max-width:700px){.ow-sea{inset:46% 0 0}.ow-seabirds{top:35%;left:45%;width:48%}.ow-swell-3{top:83%}.ow-swell-4{top:94%}.ow-distance{--ow-distance-height:48px;left:34%;top:calc(46% - var(--ow-distance-height));width:105%;opacity:.55}.ow-island-art{filter:none}}
-@media(prefers-reduced-motion:reduce){.ow-swell-drift,.ow-wake,.ow-start-land:before,.ow-start-land:after,.ow-sun-path,.ow-water-lines,.ow-palm{animation:none!important;will-change:auto}.ow-swell{will-change:auto}}
+@media(prefers-reduced-motion:reduce){.ow-swell-drift,.ow-wake,.ow-shore-wash,.ow-wet-sand,.ow-vessel-ripple,.ow-paddle-ripple,.ow-sun-path,.ow-water-lines,.ow-palm,.ow-shrub-foliage{animation:none!important;will-change:auto}.ow-swell{will-change:auto}.ow-vessel-ripple{opacity:.2;transform:none}}
 
 /* Grounded timber harbor. Distant terrain stays in atmospheric perspective. */
 .ow-camera{z-index:5}
 /* Keep the same painted layer throughout the journey. The track provides the
    scroll distance and CSS sticky holds the scene without a pin/reparent swap. */
 .ow-enhanced .ow-track{height:calc(100svh + max(290svh, 2000px))}
-.ow-enhanced .smart-journey .ow-scene{position:sticky;top:0;height:100svh;min-height:0}
+/* Clipping must not create a hidden scroll container: focusing a dock button
+   otherwise shifts the camera and the boat independently of the voyage. */
+.ow-enhanced .smart-journey .ow-scene{position:sticky;top:0;height:100svh;min-height:0;overflow:clip}
 /* Blur over moving water is costly; use an opaque surface during the boat tour. */
 .ow-tour-traveling .ow-harbor-board,.ow-tour-traveling .ow-journey-caption,.ow-tour-traveling .ow-controls{backdrop-filter:none;background-color:#f2fffff5}
-/* The scroll-driven swell planes still move; hold their nested ambient drift to
-   avoid compositing two very wide animated layers per wave during the tour. */
-.ow-tour-traveling .ow-swell-drift{animation-play-state:paused;will-change:auto}
+/* Swell drift stays active during the voyage, alongside the scroll parallax. */
 
 
 .ow-dock{isolation:isolate}.ow-dock:before{content:'';position:absolute;z-index:-1;left:-5%;bottom:-12%;width:110%;height:52%;background:url('/images/journey/ocean-pier.svg') center/contain no-repeat;pointer-events:none}

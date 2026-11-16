@@ -40,6 +40,8 @@
             : coach && !coach.hidden ? coach.querySelector('[data-buddy-anchor]')
             : document.querySelector('[data-buddy-home="active"]') || document.querySelector('[data-buddy-anchor="arrival"]');
         const parent = modal || document.body;
+        const talk = menu.querySelector('[data-agent-action="talk"]');
+        if (talk) talk.hidden = Boolean(modal && modal.id !== 'lesson-dialog' || coach && !coach.hidden);
         if (layer.parentElement !== parent) parent.append(layer);
         root.hidden = !slot;
         if (slot) {
@@ -86,7 +88,7 @@
         menu.hidden = !menu.hidden;
         handle.setAttribute('aria-expanded', String(!menu.hidden));
         positionMenu();
-        if (!menu.hidden) menu.querySelector('button')?.focus({ preventScroll: true });
+        if (!menu.hidden) menu.querySelector('button:not([hidden]):not(:disabled)')?.focus({ preventScroll: true });
     });
     pause.addEventListener('click', () => {
         if (window.NextSkillMotion) { window.NextSkillMotion.togglePaused(); return; }
@@ -94,9 +96,10 @@
         if (control) control.click();
         else { paused = !paused; save(); sync(); }
     });
-    menu.querySelectorAll('[data-agent-action]').forEach(button => button.addEventListener('click', () => {
+    menu.querySelectorAll('[data-agent-action]').forEach(button => button.addEventListener('click', event => {
         closeMenu();
         const action = button.dataset.agentAction;
+        if (action === 'talk') window.NextSkillSpeech?.help({ motion: event.detail > 0, focus: event.detail === 0 });
         if (action === 'practice') document.getElementById('niko-practice-start')?.click();
         if (action === 'studio') document.getElementById('studio-launch')?.click();
         if (action === 'tour') document.getElementById('buddy-tour-start')?.click();
