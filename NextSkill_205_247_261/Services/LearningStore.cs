@@ -100,18 +100,20 @@ public sealed class LearningStore(IConfiguration configuration)
         await reader.NextResultAsync(token);
         while (await reader.ReadAsync(token)) achievements.Add(reader.GetString(0));
 
-        var courses = LearningCatalog.Courses.Select(course =>
+        var allCourseIds = CourseCatalog.GetCourses().Select(c => c.Id).Union(LearningCatalog.Courses.Select(c => c.Id)).Distinct();
+        var courses = allCourseIds.Select(id => LearningCatalog.Find(id)!).Where(c => c is not null).Select(course =>
         {
             var done = course.Lessons.Where(l => complete.Contains((course.Id, l.Id))).Select(l => l.Id).ToArray();
             var next = course.Lessons.FirstOrDefault(l => !complete.Contains((course.Id, l.Id)));
-            var current = next?.Id ?? course.Lessons[^1].Id;
+            var current = next?.Id ?? (course.Lessons.Length > 0 ? course.Lessons[^1].Id : 1);
             var unlocked = course.Lessons.TakeWhile(l => complete.Contains((course.Id, l.Id))).Select(l => l.Id).ToList();
             if (next is not null) unlocked.Add(next.Id);
             var last = started.GetValueOrDefault(course.Id);
             if (!last.HasValue || done.Contains(last.Value) || !unlocked.Contains(last.Value)) last = next?.Id;
+            var lessonsCount = Math.Max(1, course.Lessons.Length);
             return new LearningCourseProgress(course.Id, course.Title, course.Category, course.Description,
                 course.IslandKind, course.Lessons.Length, done, unlocked, current, last,
-                done.Length * 100 / course.Lessons.Length, started.ContainsKey(course.Id), next is null,
+                done.Length * 100 / lessonsCount, started.ContainsKey(course.Id), next is null,
                 course.Lessons.Select(l => LearningCatalog.Summary(l,
                     done.Contains(l.Id) ? "completed" : l.Id == current ? "current" : "locked")).ToArray());
         }).ToArray();

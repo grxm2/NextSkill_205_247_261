@@ -82,13 +82,37 @@ public static class AdminContentStore
             if (course.Id <= 0)
             {
                 course.Id = list.Count > 0 ? list.Max(c => c.Id) + 1 : 1;
+                if (course.Lessons == null || course.Lessons.Count == 0)
+                {
+                    course.Lessons = new List<Lesson>();
+                    int unitCount = Math.Max(1, course.Units > 0 ? course.Units : 4);
+                    for (int i = 1; i <= unitCount; i++)
+                    {
+                        course.Lessons.Add(new Lesson
+                        {
+                            Id = i,
+                            Title = $"บทเรียนที่ {i}: {course.Title}",
+                            DurationMinutes = 10
+                        });
+                    }
+                }
                 list.Add(course);
             }
             else
             {
                 var idx = list.FindIndex(c => c.Id == course.Id);
-                if (idx >= 0) list[idx] = course;
-                else list.Add(course);
+                if (idx >= 0)
+                {
+                    if ((course.Lessons == null || course.Lessons.Count == 0) && list[idx].Lessons != null && list[idx].Lessons.Count > 0)
+                    {
+                        course.Lessons = list[idx].Lessons;
+                    }
+                    list[idx] = course;
+                }
+                else
+                {
+                    list.Add(course);
+                }
             }
 
             cachedCourses = list;

@@ -5,11 +5,50 @@
     let courses = [];
     let questions = [];
 
+    function normalizeCourse(c) {
+        if (!c) return null;
+        return {
+            id: c.id ?? c.Id ?? 0,
+            title: c.title ?? c.Title ?? '',
+            category: c.category ?? c.Category ?? 'Technology',
+            level: c.level ?? c.Level ?? 'Beginner',
+            instructor: c.instructor ?? c.Instructor ?? '',
+            units: c.units ?? c.Units ?? (c.lessons ? c.lessons.length : (c.Lessons ? c.Lessons.length : 4)),
+            description: c.description ?? c.Description ?? '',
+            skills: c.skills ?? c.Skills ?? [],
+            featured: c.featured ?? c.Featured ?? false,
+            lessons: c.lessons ?? c.Lessons ?? []
+        };
+    }
+
+    function normalizeQuestion(q) {
+        if (!q) return null;
+        return {
+            id: q.id ?? q.Id ?? '',
+            courseId: q.courseId ?? q.CourseId ?? 0,
+            courseTitle: q.courseTitle ?? q.CourseTitle ?? '',
+            lessonId: q.lessonId ?? q.LessonId ?? 0,
+            lessonTitle: q.lessonTitle ?? q.LessonTitle ?? '',
+            prompt: q.prompt ?? q.Prompt ?? '',
+            choices: q.choices ?? q.Choices ?? [],
+            correctChoice: q.correctChoice ?? q.CorrectChoice ?? 0,
+            explanation: q.explanation ?? q.Explanation ?? '',
+            hint: q.hint ?? q.Hint ?? '',
+            updatedAt: q.updatedAt ?? q.UpdatedAt ?? ''
+        };
+    }
+
     try {
         const coursesElem = document.getElementById('admin-courses-data');
-        if (coursesElem) courses = JSON.parse(coursesElem.textContent || '[]');
+        if (coursesElem) {
+            const raw = JSON.parse(coursesElem.textContent || '[]');
+            courses = raw.map(normalizeCourse).filter(Boolean);
+        }
         const questionsElem = document.getElementById('admin-questions-data');
-        if (questionsElem) questions = JSON.parse(questionsElem.textContent || '[]');
+        if (questionsElem) {
+            const raw = JSON.parse(questionsElem.textContent || '[]');
+            questions = raw.map(normalizeQuestion).filter(Boolean);
+        }
     } catch (e) {
         console.error('Error parsing admin seed data', e);
     }
@@ -49,6 +88,9 @@
     document.getElementById('hero-btn-new-course')?.addEventListener('click', () => {
         openCourseModal();
     });
+    document.getElementById('btn-chart-add-deal')?.addEventListener('click', () => {
+        openCourseModal();
+    });
     document.getElementById('hero-btn-upload-course')?.addEventListener('click', () => {
         document.getElementById('course-upload-modal')?.showModal();
     });
@@ -80,16 +122,17 @@
     });
 
     function openCourseModal(courseToEdit = null) {
-        document.getElementById('course-modal-title').textContent = courseToEdit ? 'แก้ไขข้อมูลคอร์สเรียน' : 'สร้างคอร์สเรียนใหม่';
-        document.getElementById('course-id').value = courseToEdit ? courseToEdit.id : 0;
-        document.getElementById('course-title').value = courseToEdit ? courseToEdit.title : '';
-        document.getElementById('course-category').value = courseToEdit ? courseToEdit.category : 'Technology';
-        document.getElementById('course-level').value = courseToEdit ? courseToEdit.level : 'Beginner';
-        document.getElementById('course-instructor').value = courseToEdit ? courseToEdit.instructor : '';
-        document.getElementById('course-units').value = courseToEdit ? (courseToEdit.units || (courseToEdit.lessons ? courseToEdit.lessons.length : 4)) : 4;
-        document.getElementById('course-description').value = courseToEdit ? courseToEdit.description : '';
-        document.getElementById('course-skills').value = courseToEdit && courseToEdit.skills ? courseToEdit.skills.join(', ') : '';
-        document.getElementById('course-featured').checked = courseToEdit ? !!courseToEdit.featured : false;
+        const c = courseToEdit ? normalizeCourse(courseToEdit) : null;
+        document.getElementById('course-modal-title').textContent = c ? 'แก้ไขข้อมูลคอร์สเรียน' : 'สร้างคอร์สเรียนใหม่';
+        document.getElementById('course-id').value = c ? c.id : 0;
+        document.getElementById('course-title').value = c ? c.title : '';
+        document.getElementById('course-category').value = c ? c.category : 'Technology';
+        document.getElementById('course-level').value = c ? c.level : 'Beginner';
+        document.getElementById('course-instructor').value = c ? c.instructor : '';
+        document.getElementById('course-units').value = c ? (c.units || (c.lessons ? c.lessons.length : 4)) : 4;
+        document.getElementById('course-description').value = c ? c.description : '';
+        document.getElementById('course-skills').value = c && c.skills ? c.skills.join(', ') : '';
+        document.getElementById('course-featured').checked = c ? !!c.featured : false;
         courseModal.showModal();
     }
 
@@ -117,22 +160,28 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(coursePayload)
             });
+            if (!res.ok) {
+                const errText = await res.text();
+                throw new Error(`เซิร์ฟเวอร์ตอบกลับรหัส ${res.status}: ${errText}`);
+            }
             const data = await res.json();
             if (data.success && data.course) {
-                const idx = courses.findIndex(c => c.id === data.course.id);
-                if (idx >= 0) courses[idx] = data.course;
-                else courses.push(data.course);
+                const saved = normalizeCourse(data.course);
+                const idx = courses.findIndex(c => c.id === saved.id);
+                if (idx >= 0) courses[idx] = saved;
+                else courses.push(saved);
 
                 renderCoursesTable();
                 updateCourseSelectDropdowns();
                 updateMetrics();
                 courseModal.close();
+                alert('บันทึกข้อมูลคอร์สเรียนสำเร็จ! ข้อมูลอัปเดตไปยังหน้าผู้เรียนเรียบร้อยแล้ว');
             } else {
                 alert(data.message || 'บันทึกข้อมูลคอร์สไม่สำเร็จ');
             }
         } catch (err) {
-            console.error(err);
-            alert('เกิดข้อผิดพลาดในการเชื่อมต่อเพื่อบันทึกคอร์ส');
+            console.error('Save course error:', err);
+            alert('เกิดข้อผิดพลาดในการบันทึกคอร์ส: ' + err.message);
         }
     });
 
@@ -142,6 +191,7 @@
                 const id = parseInt(btn.dataset.id, 10);
                 const course = courses.find(c => c.id === id);
                 if (course) openCourseModal(course);
+                else alert('ไม่พบคอร์สที่ต้องการแก้ไข ID: ' + id);
             };
         });
 
@@ -157,17 +207,23 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id })
                     });
+                    if (!res.ok) {
+                        const errText = await res.text();
+                        throw new Error(`เซิร์ฟเวอร์ตอบกลับรหัส ${res.status}: ${errText}`);
+                    }
                     const data = await res.json();
                     if (data.success) {
                         courses = courses.filter(c => c.id !== id);
                         renderCoursesTable();
                         updateCourseSelectDropdowns();
                         updateMetrics();
+                        alert('ลบคอร์สเรียนสำเร็จ');
                     } else {
-                        alert('ไม่สามารถลบคอร์สได้');
+                        alert(data.message || 'ไม่สามารถลบคอร์สได้');
                     }
                 } catch (e) {
-                    alert('เกิดข้อผิดพลาดในการลบคอร์ส');
+                    console.error('Delete course error:', e);
+                    alert('เกิดข้อผิดพลาดในการลบคอร์ส: ' + e.message);
                 }
             };
         });
@@ -195,10 +251,11 @@
                 <td>${escapeHtml(c.level || '')}</td>
                 <td>${c.lessons ? c.lessons.length : (c.units || 0)} ด่าน</td>
                 <td>${escapeHtml(c.instructor || '')}</td>
-                <td>${c.featured ? '<span class="status-badge yellow">★ แนะนำ</span>' : '<span style="color: var(--nimo-muted); font-size: 12px;">ทั่วไป</span>'}</td>
+                <td>${c.featured ? '<span class="status-badge yellow">แนะนำ</span>' : '<span style="color: var(--nimo-muted); font-size: 12px;">ทั่วไป</span>'}</td>
                 <td style="text-align: right; white-space: nowrap;">
-                    <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-course" data-id="${c.id}">✏️ แก้ไข</button>
-                    <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-course" data-id="${c.id}" data-title="${escapeHtml(c.title)}">🗑️ ลบ</button>
+                    <a href="/Home/Details/${c.id}" target="_blank" class="ns-button ns-button--secondary ns-button--compact" title="เปิดดูหน้ารายละเอียดคอร์สนี้ในมุมมองของผู้เรียน" style="text-decoration: none;">ดูหน้าจริง</a>
+                    <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-course" data-id="${c.id}">แก้ไข</button>
+                    <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-course" data-id="${c.id}" data-title="${escapeHtml(c.title)}">ลบ</button>
                 </td>
             </tr>
         `).join('') || `<tr><td colspan="8" class="empty-message">ไม่พบคอร์สที่ตรงกับเงื่อนไขการค้นหา</td></tr>`;
@@ -348,21 +405,27 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
+            if (!res.ok) {
+                const errText = await res.text();
+                throw new Error(`เซิร์ฟเวอร์ตอบกลับรหัส ${res.status}: ${errText}`);
+            }
             const data = await res.json();
             if (data.success && data.question) {
-                const idx = questions.findIndex(q => q.id === data.question.id);
-                if (idx >= 0) questions[idx] = data.question;
-                else questions.push(data.question);
+                const saved = normalizeQuestion(data.question);
+                const idx = questions.findIndex(q => q.id === saved.id);
+                if (idx >= 0) questions[idx] = saved;
+                else questions.push(saved);
 
                 renderQuestionsGrid();
                 updateMetrics();
                 questionModal.close();
+                alert('บันทึกข้อมูลคำถามสำเร็จ!');
             } else {
                 alert(data.message || 'บันทึกคำถามไม่สำเร็จ');
             }
         } catch (e) {
-            console.error(e);
-            alert('เกิดข้อผิดพลาดในการบันทึกคำถาม');
+            console.error('Save question error:', e);
+            alert('เกิดข้อผิดพลาดในการบันทึกคำถาม: ' + e.message);
         }
     });
 
@@ -372,6 +435,7 @@
                 const id = btn.dataset.id;
                 const q = questions.find(item => item.id === id);
                 if (q) openQuestionModal(q);
+                else alert('ไม่พบคำถามที่ต้องการแก้ไข ID: ' + id);
             };
         });
 
@@ -385,16 +449,22 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id })
                     });
+                    if (!res.ok) {
+                        const errText = await res.text();
+                        throw new Error(`เซิร์ฟเวอร์ตอบกลับรหัส ${res.status}: ${errText}`);
+                    }
                     const data = await res.json();
                     if (data.success) {
                         questions = questions.filter(item => item.id !== id);
                         renderQuestionsGrid();
                         updateMetrics();
+                        alert('ลบคำถามสำเร็จ');
                     } else {
-                        alert('ไม่สามารถลบคำถามได้');
+                        alert(data.message || 'ไม่สามารถลบคำถามได้');
                     }
                 } catch (e) {
-                    alert('เกิดข้อผิดพลาดในการลบคำถาม');
+                    console.error('Delete question error:', e);
+                    alert('เกิดข้อผิดพลาดในการลบคำถาม: ' + e.message);
                 }
             };
         });
@@ -436,29 +506,29 @@
                             <div class="choice-item ${isCorrect ? 'correct' : ''}">
                                 <span class="choice-letter">${letter}</span>
                                 <span>${escapeHtml(choice)}</span>
-                                ${isCorrect ? '<span style="margin-left: auto; font-size: 11px; font-weight: 700; color: #047857;">✓ คำตอบที่ถูกต้อง</span>' : ''}
+                                ${isCorrect ? '<span style="margin-left: auto; font-size: 11px; font-weight: 700; color: #047857;">คำตอบที่ถูกต้อง</span>' : ''}
                             </div>
                         `;
                     }).join('')}
                 </div>
                 ${q.explanation ? `
                     <div class="question-note-box">
-                        <strong>💡 คำอธิบายเมื่อผู้เรียนตอบ:</strong>
+                        <strong>คำอธิบายเมื่อผู้เรียนตอบ:</strong>
                         <span>${escapeHtml(q.explanation)}</span>
                     </div>
                 ` : ''}
                 ${q.hint ? `
                     <div style="font-size: 12px; color: var(--nimo-muted); background: #fefce8; border: 1px solid #fef08a; padding: 7px 10px; border-radius: 8px;">
-                        <strong style="color: #b45309;">💬 คำใบ้จาก Nimo:</strong> ${escapeHtml(q.hint)}
+                        <strong style="color: #b45309;">คำใบ้จาก Nimo:</strong> ${escapeHtml(q.hint)}
                     </div>
                 ` : ''}
                 <div class="question-card-footer">
                     <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-test-quiz" data-id="${q.id}">
-                        <span>🎮 ทดสอบตอบ</span>
+                        <span>ทดสอบตอบ</span>
                     </button>
                     <div style="display: flex; gap: 8px;">
-                        <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-question" data-id="${q.id}">✏️ แก้ไข</button>
-                        <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-question" data-id="${q.id}">🗑️ ลบ</button>
+                        <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-question" data-id="${q.id}">แก้ไข</button>
+                        <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-question" data-id="${q.id}">ลบ</button>
                     </div>
                 </div>
             </div>
@@ -481,7 +551,7 @@
     function openQuizTester(q) {
         document.getElementById('tester-prompt').textContent = q.prompt;
         const bubble = document.getElementById('tester-nimo-bubble');
-        if (bubble) bubble.textContent = 'ลองตอบดูเลยนะ! ✨';
+        if (bubble) bubble.textContent = 'ลองเลือกคำตอบที่ถูกต้องได้เลย';
 
         const feedback = document.getElementById('tester-feedback');
         feedback.style.display = 'none';
@@ -517,16 +587,16 @@
                     feedback.style.background = '#ecfdf5';
                     feedback.style.border = '1px solid #a7f3d0';
                     feedback.style.color = '#047857';
-                    document.getElementById('tester-feedback-title').textContent = '🎉 ถูกต้องแล้ว! ยอดเยี่ยมมาก';
+                    document.getElementById('tester-feedback-title').textContent = 'ถูกต้องแล้ว ยอดเยี่ยมมาก';
                     document.getElementById('tester-feedback-text').textContent = q.explanation || 'ทำความเข้าใจจุดสำคัญนี้ได้ดีมาก!';
-                    if (bubble) bubble.textContent = 'เก่งมากเลย! ถูกต้องนะ ✨💙';
+                    if (bubble) bubble.textContent = 'เก่งมาก ถูกต้องแล้วครับ';
                 } else {
                     feedback.style.background = '#fef2f2';
                     feedback.style.border = '1px solid #fecaca';
                     feedback.style.color = '#b91c1c';
-                    document.getElementById('tester-feedback-title').textContent = '💡 ยังไม่ถูกต้อง ลองทบทวนข้อนี้ดูนะ';
+                    document.getElementById('tester-feedback-title').textContent = 'ยังไม่ถูกต้อง ลองทบทวนข้อนี้ดูนะ';
                     document.getElementById('tester-feedback-text').textContent = (q.explanation ? q.explanation + ' ' : '') + (q.hint ? `(คำใบ้: ${q.hint})` : '');
-                    if (bubble) bubble.textContent = 'ไม่เป็นไรนะ ลองดูคำอธิบายแล้วค่อย ๆ ฝึกไปด้วยกัน! 💙';
+                    if (bubble) bubble.textContent = 'ไม่เป็นไรนะ ลองดูคำอธิบายแล้วค่อย ๆ ฝึกไปด้วยกันครับ';
                 }
             };
         });
@@ -592,5 +662,285 @@
         }
         const mQuestions = document.getElementById('metric-questions-count');
         if (mQuestions) mQuestions.textContent = questions.length;
+
+        const donutNum = document.getElementById('donut-center-num');
+        if (donutNum) donutNum.textContent = courses.length;
+
+        const quotaText = document.getElementById('quota-text');
+        if (quotaText) quotaText.textContent = `${courses.length} / 20`;
     }
+
+    // ==========================================
+    // Dynamic Time-based Greeting & Thai Date
+    // ==========================================
+    function updateGreetingAndDate() {
+        const now = new Date();
+        const hr = now.getHours();
+        const greetingElem = document.getElementById('greeting-title');
+        if (greetingElem) {
+            let greeting = 'สวัสดีตอนเช้า';
+            if (hr >= 12 && hr < 17) {
+                greeting = 'สวัสดีตอนบ่าย';
+            } else if (hr >= 17) {
+                greeting = 'สวัสดีตอนเย็น';
+            }
+            const nameMatch = greetingElem.textContent.match(/คุณ\s+([^!,]+)/);
+            const name = nameMatch ? nameMatch[1].trim() : 'Admin';
+            greetingElem.textContent = `${greeting}, คุณ ${name}`;
+        }
+
+        const dateElem = document.getElementById('current-date-th');
+        if (dateElem) {
+            dateElem.textContent = new Intl.DateTimeFormat('th-TH', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).format(now);
+        }
+    }
+    updateGreetingAndDate();
+
+    // ==========================================
+    // Smooth Number Counter Animation
+    // ==========================================
+    function animateCounters() {
+        document.querySelectorAll('[data-count]').forEach(elem => {
+            const target = parseInt(elem.getAttribute('data-count'), 10);
+            if (isNaN(target)) return;
+            const duration = 1200;
+            const startTime = performance.now();
+            function update(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const ease = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(ease * target);
+                elem.textContent = current.toLocaleString('th-TH');
+                if (progress < 1) requestAnimationFrame(update);
+                else elem.textContent = target.toLocaleString('th-TH');
+            }
+            requestAnimationFrame(update);
+        });
+    }
+    setTimeout(animateCounters, 200);
+
+    // ==========================================
+    // Interactive Bar Chart Period Switcher
+    // ==========================================
+    const periodButtons = document.querySelectorAll('.chart-period-btn');
+    const barsContainer = document.getElementById('chart-bars-container');
+    const chartSubText = document.getElementById('chart-sub-text');
+
+    const chartPeriodData = {
+        '3m': {
+            sub: '680 ผู้เรียนและกิจกรรม ในช่วง 3 เดือนที่ผ่านมา',
+            bars: [
+                { month: 'Sep', val: '$26,500', height: '62%' },
+                { month: 'Oct', val: '$34,100', height: '80%' },
+                { month: 'Nov', val: '$42,343', height: '98%', highlighted: true }
+            ],
+            labels: ['ก.ย.', 'ต.ค.', 'พ.ย.']
+        },
+        '6m': {
+            sub: '1,240 ผู้เรียนและกิจกรรม ในช่วง 6 เดือนที่ผ่านมา',
+            bars: [
+                { month: 'Jun', val: '$18,400', height: '48%' },
+                { month: 'Jul', val: '$21,200', height: '56%' },
+                { month: 'Aug', val: '$29,800', height: '78%' },
+                { month: 'Sep', val: '$26,500', height: '70%' },
+                { month: 'Oct', val: '$34,100', height: '88%' },
+                { month: 'Nov', val: '$42,343', height: '98%', highlighted: true }
+            ],
+            labels: ['มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.']
+        },
+        '12m': {
+            sub: '3,850 ผู้เรียนและกิจกรรม ในรอบ 1 ปีที่ผ่านมา',
+            bars: [
+                { month: 'Dec', val: '$15,200', height: '38%' },
+                { month: 'Feb', val: '$19,800', height: '50%' },
+                { month: 'Apr', val: '$24,000', height: '60%' },
+                { month: 'Jun', val: '$28,500', height: '72%' },
+                { month: 'Aug', val: '$35,200', height: '86%' },
+                { month: 'Nov', val: '$42,343', height: '98%', highlighted: true }
+            ],
+            labels: ['ธ.ค.', 'ก.พ.', 'เม.ย.', 'มิ.ย.', 'ส.ค.', 'พ.ย.']
+        }
+    };
+
+    periodButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            periodButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const period = btn.getAttribute('data-period');
+            const data = chartPeriodData[period];
+            if (!data || !barsContainer) return;
+
+            if (chartSubText) chartSubText.textContent = data.sub;
+
+            barsContainer.innerHTML = data.bars.map(b => `
+                <div class="chart-bar-col ${b.highlighted ? 'highlighted' : ''}" data-month="${b.month}" data-val="${b.val}">
+                    ${b.highlighted ? `<div class="bar-highlight-tooltip">${b.val}</div>` : ''}
+                    <div class="bar-pill" style="height: ${b.height};"></div>
+                </div>
+            `).join('');
+
+            const xLabels = document.querySelector('.chart-x-labels');
+            if (xLabels) {
+                xLabels.innerHTML = data.labels.map(l => `<span>${l}</span>`).join('');
+            }
+
+            attachBarInteractions();
+        });
+    });
+
+    function attachBarInteractions() {
+        document.querySelectorAll('.chart-bar-col').forEach(col => {
+            col.addEventListener('mouseenter', () => {
+                const val = col.getAttribute('data-val');
+                let tt = col.querySelector('.bar-highlight-tooltip');
+                if (!tt) {
+                    tt = document.createElement('div');
+                    tt.className = 'bar-highlight-tooltip';
+                    tt.textContent = val;
+                    col.appendChild(tt);
+                }
+            });
+            col.addEventListener('mouseleave', () => {
+                if (!col.classList.contains('highlighted')) {
+                    const tt = col.querySelector('.bar-highlight-tooltip');
+                    if (tt) tt.remove();
+                }
+            });
+        });
+    }
+    attachBarInteractions();
+
+    // ==========================================
+    // Interactive Donut Chart Segment Hover
+    // ==========================================
+    const donutSegments = document.querySelectorAll('.donut-segment');
+    const donutCenterVal = document.getElementById('donut-center-num');
+    const defaultDonutTotal = courses.length || 24;
+
+    const segmentInfo = [
+        { name: 'Technology', val: '42%' },
+        { name: 'Design', val: '28%' },
+        { name: 'Business', val: '18%' },
+        { name: 'Languages', val: '12%' }
+    ];
+
+    donutSegments.forEach((seg, idx) => {
+        seg.addEventListener('mouseenter', () => {
+            if (donutCenterVal && segmentInfo[idx]) {
+                donutCenterVal.textContent = segmentInfo[idx].val;
+            }
+        });
+        seg.addEventListener('mouseleave', () => {
+            if (donutCenterVal) {
+                donutCenterVal.textContent = defaultDonutTotal;
+            }
+        });
+    });
+
+    // ==========================================
+    // Floating Interactive Mascot Buddy (Nimo)
+    // ==========================================
+    const mascotTrigger = document.getElementById('mascot-trigger-btn');
+    const mascotSpeech = document.getElementById('mascot-speech');
+    const mascotImg = document.getElementById('floating-mascot-img');
+    const topbarMascotToggle = document.getElementById('topbar-mascot-toggle');
+
+    const mascotPoses = [
+        '/images/nimo-rowing.png',
+        '/images/nimo-learning.png',
+        '/images/nimo-pose-wave.png',
+        '/images/nimo-pose-jump.png',
+        '/images/nimo-mascot.png'
+    ];
+
+    const mascotQuotes = [
+        'ยินดีต้อนรับครับกัปตัน แดชบอร์ดพร้อมทำงานเต็มที่แล้วครับ',
+        `คอร์สเรียนทั้ง ${courses.length || 24} คอร์สพร้อมเปิดสอนอย่างราบรื่นครับ`,
+        'มีผู้เรียนกำลังเข้าใช้งานอยู่ในระบบอย่างต่อเนื่องครับ',
+        'สามารถเพิ่มคอร์สใหม่หรือปรับคำถามได้จากเมนูด้านบนครับ',
+        'ระบบฐานข้อมูลและเซิร์ฟเวอร์ทำงานได้อย่างราบรื่นครับ',
+        'สถิติการเรียนรู้เพิ่มขึ้น 7% เทียบกับเดือนก่อนหน้า',
+        'กัปตันสามารถตรวจสอบข้อมูลและกิจกรรมทั้งหมดได้จากแผงควบคุมนี้ครับ'
+    ];
+
+    let quoteIdx = 0;
+    let poseIdx = 0;
+
+    function triggerMascotCheer() {
+        quoteIdx = (quoteIdx + 1) % mascotQuotes.length;
+        poseIdx = (poseIdx + 1) % mascotPoses.length;
+
+        if (mascotSpeech) {
+            mascotSpeech.style.animation = 'none';
+            void mascotSpeech.offsetWidth;
+            mascotSpeech.style.animation = 'popBubble 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+            mascotSpeech.textContent = mascotQuotes[quoteIdx];
+            mascotSpeech.style.display = 'block';
+        }
+
+        if (mascotImg) {
+            mascotImg.src = mascotPoses[poseIdx];
+        }
+
+        if (mascotTrigger) {
+            mascotTrigger.style.transform = 'translateY(-14px) scale(1.18) rotate(8deg)';
+            setTimeout(() => {
+                mascotTrigger.style.transform = '';
+            }, 300);
+        }
+    }
+
+    mascotTrigger?.addEventListener('click', triggerMascotCheer);
+    topbarMascotToggle?.addEventListener('click', () => {
+        triggerMascotCheer();
+        mascotSpeech?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    });
+
+    // ==========================================
+    // Global Search Shortcut (Ctrl+K)
+    // ==========================================
+    const globalSearch = document.getElementById('global-admin-search');
+    window.addEventListener('keydown', e => {
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+            e.preventDefault();
+            globalSearch?.focus();
+        }
+    });
+
+    globalSearch?.addEventListener('input', e => {
+        const q = e.target.value.trim().toLowerCase();
+        if (courseSearchInput) {
+            courseSearchInput.value = q;
+            renderCoursesTable();
+        }
+        if (questionSearchInput) {
+            questionSearchInput.value = q;
+            renderQuestionsGrid();
+        }
+        if (memberSearch) {
+            memberSearch.value = q;
+            filterMembers();
+        }
+    });
+
+    // ==========================================
+    // Notification Bell Click Interaction
+    // ==========================================
+    const bellBtn = document.getElementById('topbar-bell-btn');
+    bellBtn?.addEventListener('click', () => {
+        alert('การแจ้งเตือนระบบ NextSkill Admin:\n• มี 6 ด่านและแบบฝึกหัดรอการตรวจสอบ\n• ผู้เรียนออนไลน์พร้อมกัน 11 คน\n• ระบบฐานข้อมูล LocalDB ทำงานปกติสมบูรณ์');
+    });
+
+    document.getElementById('btn-quick-activity')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        const actSection = document.querySelector('.activity-section');
+        if (actSection) {
+            actSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
 })();

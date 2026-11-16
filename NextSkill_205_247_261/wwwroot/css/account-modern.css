@@ -1,0 +1,1883 @@
+/* ========================================================
+   NextSkill Modern Daylight Ocean Account Theme
+   Matching Reference: Floating 3D Elements, Hero Mascot Card,
+   Capsule Role Switcher, and Lively Learning Animations
+   ======================================================== */
+
+:root {
+    --acc-sky-bg: linear-gradient(180deg, #cbe9fc 0%, #e2f4ff 35%, #f2f9ff 70%, #ffffff 100%);
+    --acc-blue-primary: #0284c7;
+    --acc-blue-hover: #0369a1;
+    --acc-blue-gradient: linear-gradient(135deg, #0284c7 0%, #0099e6 100%);
+    --acc-card-blue: linear-gradient(160deg, #1d4ed8 0%, #0284c7 55%, #00a8e8 100%);
+    --acc-navy-dark: #0f172a;
+    --acc-slate: #334155;
+    --acc-muted: #64748b;
+    --acc-border: #bae6fd;
+    --acc-card-radius: 28px;
+}
+
+body.nimo-account-theme {
+    font-family: 'Prompt', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    background: var(--acc-sky-bg) !important;
+    background-attachment: fixed !important;
+    min-height: 100vh;
+    margin: 0;
+    color: var(--acc-navy-dark);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ==========================================
+   Background Ambient Glowing Orbs & Milestone Badges
+   ========================================== */
+
+.account-ambient-decor {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+/* Ambient Glowing Aurora Orbs */
+.ambient-glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(75px);
+    pointer-events: none;
+    opacity: 0.55;
+    animation: orbPulse 8s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+    width: 420px;
+    height: 420px;
+    top: -90px;
+    left: -120px;
+    background: radial-gradient(circle, #38bdf8 0%, #818cf8 60%, transparent 80%);
+}
+
+.orb-2 {
+    width: 480px;
+    height: 480px;
+    bottom: -110px;
+    right: -130px;
+    background: radial-gradient(circle, #67e8f9 0%, #60a5fa 60%, transparent 80%);
+    animation-delay: -3s;
+}
+
+.orb-3 {
+    width: 280px;
+    height: 280px;
+    top: 35%;
+    right: 8%;
+    background: radial-gradient(circle, #bae6fd 0%, #c7d2fe 70%, transparent 85%);
+    animation-delay: -5s;
+}
+
+@keyframes orbPulse {
+    0% { transform: scale(1) translateY(0); opacity: 0.45; }
+    50% { transform: scale(1.1) translateY(-20px); opacity: 0.65; }
+    100% { transform: scale(0.95) translateY(10px); opacity: 0.5; }
+}
+
+/* Duolingo Floating Puffy Clouds */
+.duo-clouds-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.duo-cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.52);
+    border-radius: 100px;
+    filter: blur(2.5px);
+    pointer-events: none;
+}
+
+.duo-cloud::before, .duo-cloud::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.duo-cloud-1 {
+    width: 240px;
+    height: 64px;
+    top: 7%;
+    left: -260px;
+    animation: cloudDriftSlow 36s linear infinite;
+}
+.duo-cloud-1::before {
+    width: 85px; height: 85px; top: -38px; left: 38px;
+}
+.duo-cloud-1::after {
+    width: 70px; height: 70px; top: -28px; left: 105px;
+}
+
+.duo-cloud-2 {
+    width: 300px;
+    height: 75px;
+    top: 55%;
+    left: -320px;
+    animation: cloudDriftSlow 48s linear infinite;
+    animation-delay: -20s;
+    opacity: 0.4;
+}
+.duo-cloud-2::before {
+    width: 100px; height: 100px; top: -48px; left: 48px;
+}
+.duo-cloud-2::after {
+    width: 85px; height: 85px; top: -36px; left: 130px;
+}
+
+.duo-cloud-3 {
+    width: 200px;
+    height: 52px;
+    top: 84%;
+    left: -220px;
+    animation: cloudDriftSlow 40s linear infinite;
+    animation-delay: -10s;
+    opacity: 0.35;
+}
+.duo-cloud-3::before {
+    width: 70px; height: 70px; top: -30px; left: 32px;
+}
+.duo-cloud-3::after {
+    width: 58px; height: 58px; top: -22px; left: 88px;
+}
+
+@keyframes cloudDriftSlow {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(100vw + 380px)); }
+}
+
+/* Floating Milestone Badges (Duolingo Tactile Game Style) */
+.ambient-float-card {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 2px solid rgba(255, 255, 255, 0.95);
+    border-bottom: 4px solid #bae6fd;
+    border-radius: 22px;
+    padding: 11px 18px;
+    box-shadow: 0 14px 34px rgba(2, 132, 199, 0.16), 0 3px 0 rgba(186, 230, 253, 0.6);
+    user-select: none;
+    z-index: 2;
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
+}
+
+.ambient-float-card.duo-interactive-badge {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+.ambient-float-card.duo-interactive-badge:hover {
+    transform: scale(1.08) translateY(-6px) !important;
+    box-shadow: 0 20px 40px rgba(2, 132, 199, 0.25), 0 4px 0 rgba(186, 230, 253, 0.8) !important;
+}
+
+.ambient-float-card.duo-interactive-badge:active {
+    transform: scale(0.96) translateY(2px) !important;
+    border-bottom-width: 2px !important;
+}
+
+.badge-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.duo-mini-pill {
+    font-size: 9.5px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 8px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+.duo-mini-pill.cyan {
+    background: #e0f2fe;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+}
+
+.duo-mini-pill.gold {
+    background: #fef3c7;
+    color: #b45309;
+    border: 1px solid #fde68a;
+    animation: pulseGold 2s infinite alternate;
+}
+
+.duo-mini-pill.green {
+    background: #dcfce7;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+@keyframes pulseGold {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.08); filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.4)); }
+}
+
+.float-card-top-right {
+    top: 90px;
+    right: 3.5%;
+    animation: floatBadgeSlow 7s ease-in-out infinite;
+}
+
+.float-card-mid-left {
+    top: 42%;
+    left: 2.5%;
+    animation: floatBadgeRev 8s ease-in-out infinite;
+}
+
+.float-card-bot-left {
+    bottom: 80px;
+    left: 4%;
+    animation: floatBadgeSlow 6.5s ease-in-out infinite;
+    animation-delay: -2s;
+}
+
+.float-card-icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-size: 19px;
+    flex-shrink: 0;
+}
+
+.float-card-icon-wrap.icon-grad {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 1.5px solid #bfdbfe;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+}
+
+.float-card-icon-wrap.icon-xp {
+    background: linear-gradient(135deg, #fefce8, #fef08a);
+    border: 1.5px solid #fde047;
+    box-shadow: 0 4px 10px rgba(234, 179, 8, 0.25);
+}
+
+.float-card-icon-wrap.icon-rocket {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border: 1.5px solid #bbf7d0;
+    box-shadow: 0 4px 10px rgba(34, 197, 94, 0.2);
+}
+
+.float-card-info strong {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #0c2333;
+    line-height: 1.25;
+}
+
+.float-card-info small {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #0284c7;
+    margin-top: 2px;
+}
+
+@keyframes floatBadgeSlow {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-14px) rotate(1.5deg); }
+}
+
+@keyframes floatBadgeRev {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(-1.5deg); }
+}
+
+/* Dot Matrix Patterns */
+.bg-dot-matrix {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-image: radial-gradient(#93c5fd 2px, transparent 2px);
+    background-size: 16px 16px;
+    opacity: 0.65;
+}
+
+.dot-top-left { top: 110px; left: 4%; }
+.dot-mid-right { top: 45%; right: 4%; }
+
+/* ==========================================
+   Floating Modern Pill Navbar
+   ========================================== */
+
+.site-header {
+    max-width: 1180px !important;
+    width: calc(100% - 36px) !important;
+    margin: 18px auto 0 !important;
+    padding: 10px 24px !important;
+    background: rgba(255, 255, 255, 0.88) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1.5px solid rgba(186, 230, 253, 0.7) !important;
+    border-radius: 40px !important;
+    box-shadow: 0 10px 30px rgba(2, 132, 199, 0.08) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    position: relative;
+    z-index: 10;
+    box-sizing: border-box;
+}
+
+.account-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.brand-symbol-wrap {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+    flex-shrink: 0;
+}
+
+.brand-symbol-wrap svg {
+    width: 20px;
+    height: 20px;
+}
+
+.brand-text-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.brand-text-row strong {
+    font-size: 19px;
+    font-weight: 800;
+    color: #0369a1;
+    letter-spacing: -0.4px;
+}
+
+.brand-text-row .brand-divider {
+    color: #bae6fd;
+    font-weight: 300;
+}
+
+.brand-text-row small {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: #0284c7;
+}
+
+.account-nav-center {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.account-nav-center a {
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #334155;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.account-nav-center a:hover {
+    color: #0284c7;
+    transform: translateY(-1px);
+}
+
+.account-nav-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(240, 249, 255, 0.85);
+    border: 1.5px solid #bae6fd;
+    color: #0284c7;
+    padding: 7px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.account-nav-action:hover {
+    background: #0284c7;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
+    transform: translateY(-1px);
+}
+
+/* ==========================================
+   Main Auth Layout Grid
+   ========================================== */
+
+.account-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 18px 48px;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.auth-grid {
+    width: 100%;
+    max-width: 1120px;
+    display: grid !important;
+    grid-template-columns: 1.08fr 0.92fr !important;
+    gap: 32px !important;
+    align-items: stretch;
+    margin: 0 auto;
+}
+
+/* ==========================================
+   Left Hero Promo Card (Rich Royal Blue)
+   ========================================== */
+
+.story-card.nimo-story-card {
+    background: var(--acc-card-blue) !important;
+    border-radius: var(--acc-card-radius) !important;
+    padding: 38px 36px 32px !important;
+    color: #ffffff !important;
+    box-shadow: 0 24px 50px rgba(2, 132, 199, 0.35) !important;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Background ripple art on hero card */
+.story-card.nimo-story-card::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.hero-rmooc-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.4px;
+    width: fit-content;
+    margin-bottom: 14px;
+}
+
+.hero-rmooc-pill .star-gold {
+    color: #fde047;
+    filter: drop-shadow(0 0 4px #fde047);
+}
+
+.story-card h1 {
+    font-size: clamp(32px, 3.2vw, 42px) !important;
+    font-weight: 800 !important;
+    line-height: 1.25 !important;
+    margin: 0 0 10px !important;
+    letter-spacing: -0.6px;
+    color: #ffffff !important;
+}
+
+.story-card h1 .sparkle-accent {
+    color: #fef08a;
+    display: inline-block;
+    animation: sparkleTwinkle 2s ease-in-out infinite;
+}
+
+.story-card .story-intro {
+    font-size: 13.5px !important;
+    line-height: 1.65 !important;
+    color: #e0f2fe !important;
+    margin: 0 0 20px !important;
+    max-width: 440px;
+}
+
+/* Mascot Centerpiece with High-Res Nimo */
+.hero-mascot-scene {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0 20px;
+    min-height: 250px;
+}
+
+.mascot-ambient-aura {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.08) 55%, transparent 75%);
+    filter: blur(12px);
+    pointer-events: none;
+    animation: auraGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes auraGlow {
+    0% { transform: scale(0.92); opacity: 0.6; }
+    100% { transform: scale(1.08); opacity: 1; }
+}
+
+.mascot-character-art {
+    position: relative;
+    width: 230px;
+    height: 230px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    user-select: none;
+}
+
+.mascot-character-art img.main-mascot-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.24));
+    animation: duolingoFloat 4s ease-in-out infinite;
+    transform-origin: bottom center;
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.25s ease;
+}
+
+.mascot-character-art:hover img.main-mascot-img {
+    transform: scale(1.09) rotate(3deg) translateY(-4px);
+    filter: drop-shadow(0 20px 36px rgba(2, 132, 199, 0.38));
+}
+
+/* Star sparkle orbit around Nimo */
+.story-sparkles-orbit {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.duo-sparkle {
+    position: absolute;
+    color: #fde047;
+    filter: drop-shadow(0 0 6px rgba(253, 224, 71, 0.8));
+    animation: sparkleTwinkle 2.4s ease-in-out infinite alternate;
+}
+.duo-sparkle.sp-1 { top: 12%; left: 8%; animation-delay: 0s; font-size: 19px; }
+.duo-sparkle.sp-2 { top: 22%; right: 10%; animation-delay: -0.9s; font-size: 15px; }
+.duo-sparkle.sp-3 { bottom: 22%; left: 6%; animation-delay: -1.7s; font-size: 16px; }
+
+/* Speech Bubble From Mascot (Duolingo Style with Pointer Tail) */
+.mascot-speech-pill {
+    position: absolute;
+    top: -12px;
+    right: -24px;
+    background: #ffffff !important;
+    color: #0284c7 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    padding: 10px 18px !important;
+    border-radius: 20px !important;
+    border: 2px solid #bae6fd !important;
+    border-bottom: 4px solid #7dd3fc !important;
+    box-shadow: 0 10px 25px rgba(2, 132, 199, 0.18) !important;
+    animation: speechBounce 3.2s ease-in-out infinite;
+    white-space: nowrap;
+    z-index: 4;
+    letter-spacing: -0.2px;
+}
+
+.speech-tail {
+    position: absolute;
+    bottom: -8px;
+    left: 22px;
+    width: 13px;
+    height: 13px;
+    background: #ffffff;
+    border-right: 2px solid #bae6fd;
+    border-bottom: 4px solid #7dd3fc;
+    transform: rotate(45deg);
+    border-radius: 2px;
+}
+
+/* Feature Pills Row (Duolingo 3D Tactile Pills) */
+.hero-features-pill-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 2;
+}
+
+.feature-tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.22) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.45) !important;
+    border-bottom: 3.5px solid rgba(255, 255, 255, 0.6) !important;
+    border-radius: 16px !important;
+    padding: 8px 16px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.18s ease !important;
+    cursor: default;
+}
+
+.feature-tag-pill:hover {
+    background: rgba(255, 255, 255, 0.32) !important;
+    transform: translateY(-2px) scale(1.04) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.feature-tag-pill .tag-svg {
+    flex-shrink: 0;
+}
+
+/* Bottom Announcement Sub-banner (Duolingo 3D Card) */
+.hero-bottom-sub-banner {
+    background: #ffffff !important;
+    border: 2px solid #bae6fd !important;
+    border-bottom: 4.5px solid #7dd3fc !important;
+    border-radius: 22px !important;
+    padding: 13px 18px !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    color: var(--acc-navy-dark);
+    box-shadow: 0 10px 24px rgba(2, 132, 199, 0.15) !important;
+    text-decoration: none;
+    transition: all 0.15s ease !important;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-bottom-sub-banner:hover {
+    transform: translateY(-2px) !important;
+    border-bottom-color: #38bdf8 !important;
+    box-shadow: 0 14px 30px rgba(2, 132, 199, 0.22) !important;
+}
+
+.hero-bottom-sub-banner:active {
+    transform: translateY(3px) !important;
+    border-bottom-width: 2px !important;
+}
+
+/* Story Card Ocean Wave Arch */
+.story-wave-decor {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 55px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.95;
+}
+
+.story-wave-decor svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.hero-bottom-sub-banner:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+.sub-banner-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sub-banner-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.sub-banner-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0c2333;
+    line-height: 1.3;
+}
+
+.sub-banner-text small {
+    display: block;
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.sub-banner-arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e0f2fe;
+    color: #0284c7;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    font-weight: 800;
+    flex-shrink: 0;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.hero-bottom-sub-banner:hover .sub-banner-arrow {
+    background: #0284c7;
+    color: #ffffff;
+}
+
+/* ==========================================
+   Right Auth Card (Clean Modern White Form)
+   ========================================== */
+
+.auth-form.nimo-auth-card {
+    background: #ffffff !important;
+    border: 1.5px solid #bae6fd !important;
+    border-radius: var(--acc-card-radius) !important;
+    padding: 38px 36px !important;
+    box-shadow: 0 24px 50px rgba(2, 132, 199, 0.12) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Pixel dot accent top-right */
+.auth-form.nimo-auth-card::after {
+    content: '';
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 36px;
+    height: 36px;
+    background-image: radial-gradient(#bae6fd 2px, transparent 2px);
+    background-size: 10px 10px;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.form-header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #0284c7;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #0284c7;
+    box-shadow: 0 0 8px rgba(2, 132, 199, 0.7);
+    animation: liveDotPulse 2s infinite;
+}
+
+.auth-form h2 {
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    color: #0c2333 !important;
+    margin: 0 0 6px !important;
+    letter-spacing: -0.5px;
+    line-height: 1.25;
+}
+
+.form-intro {
+    font-size: 13px !important;
+    color: #54758b !important;
+    line-height: 1.6 !important;
+    margin: 0 0 20px !important;
+}
+
+/* Role Switcher Pill (User / Admin - Duolingo 3D Capsule) */
+.account-types {
+    display: flex !important;
+    gap: 8px !important;
+    background: #f1f5f9 !important;
+    border: 2px solid #e2e8f0 !important;
+    border-bottom: 3.5px solid #cbd5e1 !important;
+    border-radius: 18px !important;
+    padding: 6px !important;
+    margin-bottom: 22px !important;
+}
+
+.account-types a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    color: #64748b;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    border-bottom: 3px solid transparent;
+    transition: all 0.15s ease;
+}
+
+.account-types a:hover:not(.active) {
+    color: #0284c7;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.account-types a.active {
+    background: #ffffff !important;
+    color: #0284c7 !important;
+    font-weight: 800 !important;
+    border: 2px solid #bae6fd !important;
+    border-bottom: 4px solid #7dd3fc !important;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15) !important;
+    transform: translateY(-1px);
+}
+
+/* Form Fields with Integrated Inner Icons (Duolingo Tactile Feel) */
+.field {
+    margin-bottom: 16px;
+}
+
+.field label {
+    display: block;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #0c2333 !important;
+    margin-bottom: 7px !important;
+}
+
+.field label span {
+    color: #ef4444;
+}
+
+.input-icon-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-leading-icon {
+    position: absolute;
+    left: 14px;
+    font-size: 16px;
+    color: #94a3b8;
+    pointer-events: none;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+.input-leading-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: #94a3b8;
+}
+
+.auth-form .input-icon-wrap input {
+    width: 100% !important;
+    height: 50px !important;
+    padding: 10px 16px 10px 44px !important;
+    background: #f8fafc !important;
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    font-size: 14px !important;
+    font-family: inherit !important;
+    color: #0c2333 !important;
+    outline: none !important;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-sizing: border-box !important;
+}
+
+.auth-form .input-icon-wrap input::placeholder {
+    color: #94a3b8 !important;
+    font-size: 13px;
+}
+
+.auth-form .input-icon-wrap input:focus {
+    background: #ffffff !important;
+    border-color: #0284c7 !important;
+    box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.16), 0 2px 0 #0284c7 !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Password Toggle Eye Button */
+.password-toggle-eye {
+    position: absolute;
+    right: 12px;
+    background: transparent !important;
+    border: none !important;
+    color: #94a3b8 !important;
+    cursor: pointer;
+    padding: 6px;
+    font-size: 16px;
+    display: grid;
+    place-items: center;
+    transition: color 0.15s ease, transform 0.15s ease;
+    border-radius: 8px;
+}
+
+.password-toggle-eye:hover {
+    color: #0284c7 !important;
+    transform: scale(1.1);
+}
+
+/* Remember Checkbox */
+.check-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 14px 0 20px;
+    font-size: 13px;
+    color: #54758b;
+}
+
+.check-row input[type="checkbox"],
+.check-row input {
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+    width: 18px !important;
+    height: 18px !important;
+    accent-color: #0284c7 !important;
+    cursor: pointer;
+    margin: 0 !important;
+    border-radius: 4px;
+}
+
+.check-row input:checked:after {
+    content: none !important;
+}
+
+.check-row label {
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    cursor: pointer;
+    user-select: none;
+    color: #475569 !important;
+    font-weight: 500;
+}
+
+/* Duolingo Signature Chunky 3D Submit Button */
+.btn-auth-submit,
+button.btn-auth-submit {
+    width: 100% !important;
+    height: 52px !important;
+    padding: 12px 24px !important;
+    background: #0284c7 !important;
+    color: #ffffff !important;
+    border: 2px solid #0369a1 !important;
+    border-bottom: 5px solid #02507a !important;
+    border-radius: 18px !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    font-family: inherit !important;
+    letter-spacing: 0.4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    cursor: pointer !important;
+    box-shadow: 0 6px 18px rgba(2, 132, 199, 0.32) !important;
+    transition: all 0.12s ease !important;
+    box-sizing: border-box !important;
+    user-select: none;
+}
+
+.btn-auth-submit:hover,
+button.btn-auth-submit:hover {
+    background: #0396e0 !important;
+    border-color: #0284c7 !important;
+    border-bottom-color: #026aa2 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 26px rgba(2, 132, 199, 0.42) !important;
+}
+
+.btn-auth-submit:active,
+button.btn-auth-submit:active {
+    transform: translateY(3px) !important;
+    border-bottom-width: 2px !important;
+    box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2) !important;
+}
+
+/* Guest / Skip Action (Duolingo 3D Secondary Button) */
+.guest-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0 16px;
+    color: #94a3b8;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.guest-divider::before, .guest-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1.5px solid #e2e8f0;
+}
+
+.guest-divider span {
+    padding: 0 14px;
+}
+
+.btn-skip-outline,
+a.btn-skip-outline {
+    width: 100% !important;
+    height: 48px !important;
+    padding: 10px 20px !important;
+    background: #ffffff !important;
+    border: 2px solid #e2e8f0 !important;
+    border-bottom: 4px solid #cbd5e1 !important;
+    border-radius: 16px !important;
+    color: #0284c7 !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    transition: all 0.12s ease !important;
+    box-sizing: border-box !important;
+    user-select: none;
+}
+
+.btn-skip-outline:hover,
+a.btn-skip-outline:hover {
+    background: #f0f9ff !important;
+    border-color: #bae6fd !important;
+    border-bottom-color: #7dd3fc !important;
+    color: #0369a1 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.12) !important;
+}
+
+.btn-skip-outline:active,
+a.btn-skip-outline:active {
+    transform: translateY(3px) !important;
+    border-bottom-width: 2px !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+.switch-form {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.switch-form a {
+    color: #0284c7;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+.switch-form a:hover {
+    color: #0369a1;
+    text-decoration: underline;
+}
+
+/* ==========================================
+   Duolingo Lively Keyframe Animations
+   ========================================== */
+
+/* Duolingo Float Squash & Stretch */
+@keyframes duolingoFloat {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg) scale(1, 1);
+    }
+    25% {
+        transform: translateY(-8px) rotate(-1.5deg) scale(0.98, 1.02);
+    }
+    50% {
+        transform: translateY(-13px) rotate(0deg) scale(1, 1);
+    }
+    75% {
+        transform: translateY(-5px) rotate(1.5deg) scale(1.02, 0.98);
+    }
+}
+
+@keyframes speechBounce {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-6px) rotate(-0.8deg);
+    }
+}
+
+@keyframes sparkleTwinkle {
+    0%, 100% { opacity: 0.7; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.25); filter: drop-shadow(0 0 8px rgba(253, 224, 71, 0.9)); }
+}
+
+@keyframes liveDotPulse {
+    0% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.7); }
+    70% { box-shadow: 0 0 0 6px rgba(2, 132, 199, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); }
+}
+
+/* Mascot Active Interactive Jump & Speech Pop */
+.mascot-click-jump {
+    animation: mascotJumpClick 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+@keyframes mascotJumpClick {
+    0% { transform: translateY(0) scale(1, 1) rotate(0deg); }
+    30% { transform: translateY(-28px) scale(1.15, 0.9) rotate(-5deg); }
+    55% { transform: translateY(-14px) scale(0.95, 1.08) rotate(4deg); }
+    75% { transform: translateY(-4px) scale(1.03, 0.98) rotate(-2deg); }
+    100% { transform: translateY(0) scale(1, 1) rotate(0deg); }
+}
+
+.speech-pop {
+    animation: speechPopEffect 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+@keyframes speechPopEffect {
+    0% { transform: scale(0.85); opacity: 0.6; }
+    50% { transform: scale(1.08); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.mascot-character-art:focus-visible {
+    outline: 3px dashed #bae6fd;
+    outline-offset: 8px;
+    border-radius: 24px;
+}
+
+/* Duolingo Confetti Burst Particles */
+.duo-confetti-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    border-radius: 50%;
+    animation: duoConfettiBurst 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes duoConfettiBurst {
+    0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--dx), var(--dy)) scale(0.2) rotate(var(--rot));
+        opacity: 0;
+    }
+}
+
+/* ==========================================
+   Responsive Breakpoints
+   ========================================== */
+
+@media (max-width: 960px) {
+    .auth-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+    }
+    .ambient-float-card {
+        display: none !important;
+    }
+    .site-header {
+        padding: 10px 16px !important;
+    }
+    .account-nav-center {
+        display: none;
+    }
+}
+
+/* Crisp Modern SVG Icons */
+.type-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.type-icon svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+.float-card-icon-wrap svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+}
+.float-card-icon-wrap.icon-grad svg {
+    color: #0284c7;
+}
+.float-card-icon-wrap.icon-xp svg {
+    color: #eab308;
+}
+.float-card-icon-wrap.icon-rocket svg {
+    color: #10b981;
+}
+.feature-tag-pill svg {
+    display: inline-block;
+    vertical-align: middle;
+}
+.account-nav-center svg {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    color: #0284c7;
+}
+
+/* ==========================================
+   Duolingo Cinematic Full-Screen Mascot Loading Experience
+   ========================================== */
+
+.nimo-loading-overlay.full-screen-mode {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    background: radial-gradient(circle at 50% 25%, #f0f9ff 0%, #e0f2fe 32%, #bae6fd 68%, #7dd3fc 100%) !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease;
+}
+
+.nimo-loading-overlay.full-screen-mode.is-active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+/* Full-Screen Daylight Sky Canvas */
+.fs-loading-sky {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Drifting Puffy Clouds across the screen */
+.fs-cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 120px;
+    filter: drop-shadow(0 14px 28px rgba(2, 132, 199, 0.12));
+}
+
+.fs-cloud::before, .fs-cloud::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.fs-c1 {
+    top: 8%;
+    left: -150px;
+    width: 280px;
+    height: 80px;
+    animation: fsCloudDrift1 38s linear infinite;
+}
+.fs-c1::before { width: 110px; height: 110px; top: -50px; left: 45px; }
+.fs-c1::after { width: 85px; height: 85px; top: -35px; left: 135px; }
+
+.fs-c2 {
+    top: 32%;
+    right: -160px;
+    width: 320px;
+    height: 90px;
+    animation: fsCloudDrift2 48s linear infinite;
+}
+.fs-c2::before { width: 125px; height: 125px; top: -55px; left: 55px; }
+.fs-c2::after { width: 95px; height: 95px; top: -40px; left: 165px; }
+
+.fs-c3 {
+    bottom: 22%;
+    left: -180px;
+    width: 360px;
+    height: 100px;
+    animation: fsCloudDrift1 55s linear infinite;
+}
+.fs-c3::before { width: 140px; height: 140px; top: -60px; left: 60px; }
+.fs-c3::after { width: 110px; height: 110px; top: -45px; left: 185px; }
+
+.fs-c4 {
+    top: 60%;
+    right: -140px;
+    width: 250px;
+    height: 70px;
+    animation: fsCloudDrift2 42s linear infinite;
+}
+.fs-c4::before { width: 95px; height: 95px; top: -42px; left: 40px; }
+.fs-c4::after { width: 75px; height: 75px; top: -30px; left: 120px; }
+
+@keyframes fsCloudDrift1 {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(100vw + 380px)); }
+}
+
+@keyframes fsCloudDrift2 {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-100vw - 380px)); }
+}
+
+/* Radiant Ambient Aurora Orbs */
+.fs-aurora-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(40px);
+}
+
+.fs-orb-top {
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(186, 230, 253, 0.4) 60%, transparent 80%);
+}
+
+.fs-orb-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(56, 189, 248, 0.25) 50%, transparent 75%);
+}
+
+/* Floating 3D Learning Artifacts (Cap, Book, Cube) */
+.fs-float-prop {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+    filter: drop-shadow(0 16px 28px rgba(2, 132, 199, 0.28));
+}
+
+.prop-cap {
+    top: 14%;
+    right: 12%;
+    animation: floatPropCap 6s ease-in-out infinite;
+}
+
+.prop-book {
+    top: 36%;
+    left: 8%;
+    animation: floatPropBook 7s ease-in-out infinite;
+}
+
+.prop-cube {
+    bottom: 24%;
+    right: 14%;
+    animation: floatPropCube 5.5s ease-in-out infinite;
+}
+
+@keyframes floatPropCap {
+    0%, 100% { transform: translateY(0) rotate(12deg) scale(1); }
+    50% { transform: translateY(-18px) rotate(18deg) scale(1.05); }
+}
+
+@keyframes floatPropBook {
+    0%, 100% { transform: translateY(0) rotate(-10deg) scale(1); }
+    50% { transform: translateY(-22px) rotate(-4deg) scale(1.06); }
+}
+
+@keyframes floatPropCube {
+    0%, 100% { transform: translateY(0) rotate(22deg) scale(1); }
+    50% { transform: translateY(-16px) rotate(12deg) scale(1.08); }
+}
+
+/* Twinkling Golden XP Stars across the sky */
+.fs-xp-star {
+    position: absolute;
+    color: #fde047;
+    filter: drop-shadow(0 0 8px rgba(253, 224, 71, 0.95));
+    animation: fsStarTwinkle 3s ease-in-out infinite alternate;
+}
+.xps-1 { top: 18%; left: 22%; font-size: 24px; animation-delay: 0s; }
+.xps-2 { top: 26%; right: 26%; font-size: 18px; animation-delay: -1s; }
+.xps-3 { top: 62%; left: 16%; font-size: 20px; animation-delay: -2s; }
+.xps-4 { bottom: 28%; left: 32%; font-size: 22px; animation-delay: -0.5s; }
+.xps-5 { top: 48%; right: 18%; font-size: 26px; animation-delay: -1.5s; }
+
+@keyframes fsStarTwinkle {
+    0% { transform: scale(0.8) rotate(0deg); opacity: 0.6; }
+    50% { transform: scale(1.3) rotate(45deg); opacity: 1; }
+    100% { transform: scale(0.9) rotate(90deg); opacity: 0.7; }
+}
+
+/* Full-Screen Content Layout */
+.fs-loading-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 960px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 36px 24px 60px;
+    box-sizing: border-box;
+}
+
+/* Top Branding Pill */
+.fs-top-brand-pill {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(14px);
+    border: 2px solid #bae6fd;
+    border-bottom: 4px solid #7dd3fc;
+    border-radius: 40px;
+    padding: 8px 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #0284c7;
+    box-shadow: 0 10px 24px rgba(2, 132, 199, 0.16);
+    user-select: none;
+    animation: fsSlideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fs-brand-symbol {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: #0284c7;
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+}
+
+.fs-brand-divider {
+    color: #bae6fd;
+    font-weight: 300;
+}
+
+.fs-top-brand-pill span:last-child {
+    color: #54758b;
+    font-weight: 600;
+    font-size: 12.5px;
+}
+
+@keyframes fsSlideDown {
+    0% { transform: translateY(-30px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Center Mascot Stage */
+.fs-mascot-stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto 0;
+    width: 100%;
+    max-width: 680px;
+    z-index: 3;
+}
+
+.fs-portal-aura {
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(56, 189, 248, 0.45) 50%, rgba(2, 132, 199, 0.1) 75%, transparent 100%);
+    filter: blur(22px);
+    animation: auraGlow 3.5s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.fs-nimo-hero {
+    position: relative;
+    z-index: 3;
+    width: 260px;
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.fs-nimo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 22px 36px rgba(2, 132, 199, 0.35));
+    animation: fsNimoFloat 4s ease-in-out infinite;
+    transform-origin: bottom center;
+}
+
+@keyframes fsNimoFloat {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg) scale(1, 1);
+    }
+    25% {
+        transform: translateY(-10px) rotate(-1.5deg) scale(0.98, 1.02);
+    }
+    50% {
+        transform: translateY(-18px) rotate(0deg) scale(1, 1);
+    }
+    75% {
+        transform: translateY(-8px) rotate(1.5deg) scale(1.02, 0.98);
+    }
+}
+
+/* Star Sparkles Rising from the book */
+.fs-book-sparkles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.fb-spark {
+    position: absolute;
+    color: #fde047;
+    filter: drop-shadow(0 0 8px rgba(253, 224, 71, 0.95));
+    animation: fsSparkRise 2.8s ease-in-out infinite;
+}
+.fb-1 { top: 40%; left: 34%; animation-delay: 0s; font-size: 22px; }
+.fb-2 { top: 32%; right: 35%; animation-delay: -0.7s; font-size: 17px; }
+.fb-3 { top: 48%; right: 32%; animation-delay: -1.4s; font-size: 19px; }
+.fb-4 { top: 22%; left: 48%; animation-delay: -2.1s; font-size: 24px; }
+
+@keyframes fsSparkRise {
+    0% { transform: translateY(18px) scale(0.5) rotate(0deg); opacity: 0; }
+    40% { opacity: 1; transform: translateY(-8px) scale(1.2) rotate(45deg); }
+    100% { transform: translateY(-45px) scale(0.6) rotate(90deg); opacity: 0; }
+}
+
+/* Elegant Duolingo Motivational Speech Bubble */
+.fs-speech-bubble {
+    position: relative;
+    z-index: 4;
+    max-width: 580px;
+    width: 90%;
+    margin-top: 18px;
+    background: #ffffff;
+    border: 2.5px solid #bae6fd;
+    border-bottom: 5px solid #7dd3fc;
+    border-radius: 26px;
+    padding: 14px 28px;
+    box-shadow: 0 14px 32px rgba(2, 132, 199, 0.18);
+    text-align: center;
+    box-sizing: border-box;
+    animation: speechBubblePop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fs-speech-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.fs-quote-mark, .fs-quote-mark-end {
+    font-size: 32px;
+    line-height: 1;
+    color: #0284c7;
+    font-weight: 800;
+    font-family: Georgia, serif;
+    flex-shrink: 0;
+}
+
+.fs-quote-text {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0369a1;
+    line-height: 1.5;
+    margin: 0;
+    letter-spacing: -0.3px;
+}
+
+.fs-speech-tail {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 18px;
+    height: 18px;
+    background: #ffffff;
+    border-left: 2.5px solid #bae6fd;
+    border-top: 2.5px solid #bae6fd;
+    border-radius: 3px;
+}
+
+/* Bottom Progress Console */
+.fs-progress-console {
+    width: 100%;
+    max-width: 640px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(18px);
+    border: 2.5px solid #bae6fd;
+    border-bottom: 6px solid #7dd3fc;
+    border-radius: 30px;
+    padding: 22px 28px 18px;
+    box-shadow: 0 20px 50px rgba(2, 132, 199, 0.22);
+    position: relative;
+    z-index: 10;
+    box-sizing: border-box;
+    animation: fsSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fsSlideUp {
+    0% { transform: translateY(40px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.fs-progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.fs-status-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fs-status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #0284c7;
+    box-shadow: 0 0 10px rgba(2, 132, 199, 0.8);
+    animation: liveDotPulse 1.8s infinite;
+}
+
+.fs-stage-label {
+    font-size: 14.5px;
+    font-weight: 800;
+    color: #0284c7;
+    letter-spacing: -0.2px;
+    transition: all 0.2s ease;
+}
+
+.fs-percent-number {
+    font-size: 26px;
+    font-weight: 900;
+    color: #0369a1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 8px rgba(2, 132, 199, 0.15);
+}
+
+/* 3D Chunky Progress Bar Track */
+.fs-progress-track {
+    height: 26px;
+    background: #e0f2fe;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    border: 2.5px solid #bae6fd;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.12);
+}
+
+.fs-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #0284c7 0%, #38bdf8 50%, #22c55e 100%);
+    border-radius: 20px;
+    position: relative;
+    transition: width 0.12s linear;
+    background-size: 32px 32px;
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
+    animation: progressStripeSweep 0.9s linear infinite;
+}
+
+.fs-progress-glow-tip {
+    position: absolute;
+    right: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 10px #ffffff;
+}
+
+.fs-progress-star-tip {
+    position: absolute;
+    right: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fde047;
+    font-size: 15px;
+    filter: drop-shadow(0 0 6px #fde047);
+    animation: fsStarSpin 2s linear infinite;
+}
+
+@keyframes fsStarSpin {
+    0% { transform: translateY(-50%) rotate(0deg); }
+    100% { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* Tip Capsule */
+.fs-tip-capsule {
+    margin-top: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #54758b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+}
+
+.fs-tip-capsule .tip-bulb {
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* Bottom Island Ocean Waves */
+.fs-waves-landscape {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 110px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.fs-wave-svg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.fs-wave-svg.wave-back {
+    animation: waveDriftBack 8s ease-in-out infinite alternate;
+}
+
+.fs-wave-svg.wave-front {
+    animation: waveDriftFront 6s ease-in-out infinite alternate;
+}
+
+@keyframes waveDriftBack {
+    0% { transform: translateX(0) scaleY(1); }
+    100% { transform: translateX(-30px) scaleY(1.15); }
+}
+
+@keyframes waveDriftFront {
+    0% { transform: translateX(0) scaleY(1); }
+    100% { transform: translateX(30px) scaleY(0.9); }
+}
+
+/* Responsive adjust for full screen */
+@media (max-width: 768px) {
+    .fs-nimo-hero {
+        width: 190px;
+        height: 190px;
+    }
+    .fs-speech-bubble {
+        padding: 12px 18px;
+    }
+    .fs-quote-text {
+        font-size: 14px;
+    }
+    .fs-progress-console {
+        padding: 16px 18px 14px;
+    }
+    .fs-percent-number {
+        font-size: 22px;
+    }
+    .prop-cap, .prop-book, .prop-cube {
+        display: none !important;
+    }
+}
+
+/* Shake animation on auth card upon error */
+.form-shake {
+    animation: formShake 0.45s ease-in-out !important;
+}
+
+@keyframes formShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+}
+
+

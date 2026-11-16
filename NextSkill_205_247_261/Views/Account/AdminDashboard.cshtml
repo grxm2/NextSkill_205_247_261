@@ -15,68 +15,104 @@
     <link rel="stylesheet" href="~/css/nextskill-tokens.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/admin-dashboard.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/admin-game.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-modern.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/nextskill-components.css" asp-append-version="true" />
 </head>
 <body class="ns-admin">
     <a class="skip-link" href="#main-content">ข้ามไปเนื้อหาหลัก</a>
+
+    <!-- Living Ocean Ambient Bubbles Layer -->
+    <div class="ocean-ambient-bubbles" aria-hidden="true">
+        <div class="ocean-bubble"></div>
+        <div class="ocean-bubble"></div>
+        <div class="ocean-bubble"></div>
+        <div class="ocean-bubble"></div>
+        <div class="ocean-bubble"></div>
+        <div class="ocean-bubble"></div>
+    </div>
+
     <div class="admin-shell">
-        <!-- Sidebar Navigation -->
+        <!-- Sidebar Navigation (Deep Ocean Glass) -->
         <aside class="sidebar">
             <a class="brand" href="#dashboard" aria-label="NextSkill Admin">
-                <div class="brand-icon-wrap">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <rect width="24" height="24" rx="6" fill="#0284c7" />
-                        <path d="M6 16V8h3l6 8V8h3v8h-3.5L8.5 10v6Z" fill="#fff" />
-                    </svg>
+                <div class="brand-mascot-badge">
+                    <img src="~/images/nimo-mascot.png" alt="Nimo" />
                 </div>
                 <div class="brand-text-block">
-                    <strong>NextSkill</strong>
-                    <small>เก่งขึ้น ในเส้นทางของคุณ</small>
+                    <strong>NextSkill Admin</strong>
+                    <small>Control Center · ทะเลการเรียนรู้</small>
                 </div>
             </a>
 
-            <div class="admin-badge-pill">
-                <span>⚙️</span> ศูนย์ควบคุมผู้ดูแลระบบ
-            </div>
-
+            <div class="nav-section-title">MAIN</div>
             <nav aria-label="Admin navigation" class="admin-nav">
                 <a href="#dashboard" class="active" aria-current="page">
-                    <span class="nav-icon">📊</span>
+                    <span class="nav-icon">
+                        <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                    </span>
                     <span>ภาพรวม</span>
                     <small>Overview</small>
                 </a>
+            </nav>
+
+            <div class="nav-section-title">COURSES &amp; APPS</div>
+            <nav class="admin-nav">
                 <a href="#courses">
-                    <span class="nav-icon">📚</span>
+                    <span class="nav-icon">
+                        <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    </span>
                     <span>จัดการคอร์สเรียน</span>
-                    <small>Courses (@Model.Courses.Count)</small>
+                    <small>@Model.Courses.Count</small>
                 </a>
                 <a href="#questions">
-                    <span class="nav-icon">❓</span>
-                    <span>แบบฝึกหัด &amp; คำถาม</span>
-                    <small>Quiz Studio (@Model.TotalQuestions)</small>
+                    <span class="nav-icon">
+                        <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    </span>
+                    <span>แบบฝึกหัด &amp; Quiz</span>
+                    <small>@Model.TotalQuestions</small>
                 </a>
                 <a href="#learners">
-                    <span class="nav-icon">👥</span>
+                    <span class="nav-icon">
+                        <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </span>
                     <span>รายชื่อผู้เรียน</span>
-                    <small>Accounts (@(Model.Users + Model.Admins))</small>
+                    <small>@(Model.Users + Model.Admins)</small>
                 </a>
+            </nav>
+
+            <div class="nav-section-title">SYSTEM</div>
+            <nav class="admin-nav">
                 <a href="#settings">
-                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-icon">
+                        <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </span>
                     <span>โปรไฟล์ &amp; ตั้งค่า</span>
                     <small>Settings</small>
                 </a>
             </nav>
 
+            <!-- System Quota Card (Matching Reference Screenshot) -->
+            <div class="sidebar-quota-card">
+                <div class="quota-header">
+                    <span>โควตาระบบคอร์ส</span>
+                    <strong id="quota-text">@Model.Courses.Count / 20</strong>
+                </div>
+                <div class="quota-progress-track">
+                    <div class="quota-progress-fill" style="width: @(Math.Min(100, (Model.Courses.Count * 100) / 20))%;"></div>
+                </div>
+                <img src="~/images/nimo-pose-crouch.png" alt="Nimo" class="peeking-mascot" />
+            </div>
+
             <div class="sidebar-account">
                 <strong>@Model.FullName</strong>
                 <span>@Model.Email</span>
-                <form asp-action="Logout" method="post" style="margin-top: 14px;">
+                <form asp-action="Logout" method="post" style="margin-top: 12px;">
                     <button class="ns-button ns-button--secondary ns-button--compact" type="submit" style="width: 100%; justify-content: center;">
                         ออกจากระบบ ↗
                     </button>
                 </form>
             </div>
-            <div class="sidebar-bottom">
+            <div class="sidebar-bottom" style="margin-top: 12px; padding: 0 4px; font-size: 10px; color: #7dd3fc; opacity: 0.8;">
                 NextSkill Admin · Upskill &amp; Reskill
             </div>
         </aside>
@@ -84,85 +120,290 @@
         <!-- Main Workspace -->
         <div class="workspace">
             <header class="topbar">
-                <h1 id="page-title">ศูนย์ควบคุมผู้ดูแล NextSkill</h1>
+                <div class="topbar-search-wrap">
+                    <span class="topbar-search-icon">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </span>
+                    <input type="search" class="topbar-search-input" id="global-admin-search" placeholder="ค้นหาคอร์ส, ผู้เรียน, คำถาม, หรือสถิติ..." />
+                    <kbd class="topbar-search-shortcut">Ctrl+K</kbd>
+                </div>
                 <div class="topbar-actions">
-                    <a asp-controller="Home" asp-action="Index" class="ns-button ns-button--secondary ns-button--compact" target="_blank" title="เปิดหน้าเว็บผู้เรียนในแท็บใหม่">
+                    <a asp-controller="Home" asp-action="Index" class="admin-pill-btn secondary" target="_blank" title="เปิดหน้าเว็บผู้เรียนในแท็บใหม่" style="font-size: 12px; padding: 7px 14px;">
                         <span>ดูหน้าบ้าน (ผู้เรียน) ↗</span>
                     </a>
+                    <button type="button" class="topbar-icon-btn mascot-btn" id="topbar-mascot-toggle" title="เพื่อนร่วมทาง Nimo">
+                        <img src="~/images/nimo-pose-wave.png" alt="Nimo" />
+                    </button>
+                    <button type="button" class="topbar-icon-btn" id="topbar-bell-btn" title="การแจ้งเตือน">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        <span class="badge-dot"></span>
+                    </button>
                     <div class="admin-user-pill">
                         <span class="avatar">@initial</span>
                         <span class="admin-name-text">@Model.FullName</span>
-                        <span class="admin-role-tag">Admin</span>
+                        <span class="admin-role-tag">Admin / Owner</span>
                     </div>
                 </div>
             </header>
 
             <main id="main-content" tabindex="-1">
                 <!-- ==============================================
-                     PANEL 1: Dashboard Overview
+                     PANEL 1: Dashboard Overview (Dribbble/Modern Ocean Style)
                      ============================================== -->
                 <section id="dashboard" class="admin-panel" data-title="ภาพรวมผู้ดูแลระบบ" aria-label="Dashboard overview">
-                    <!-- Hero Banner Matching Home Screen -->
-                    <div class="ocean-admin-hero">
-                        <div class="hero-content">
-                            <div class="hero-pill-badge">
-                                <span class="star">★</span> NEXTSKILL · ADMIN CONTROL CENTER
-                            </div>
-                            <h2>ยินดีต้อนรับกลับ, คุณ @Model.FullName! 💙</h2>
-                            <p>
-                                จัดการคอร์สเรียน อัปโหลดเนื้อหาใหม่ และปรับแต่งแบบฝึกหัด เพื่อให้ผู้เรียนทุกคนสนุกและเก่งขึ้นในเส้นทางของตัวเองไปกับ Nimo
+                    
+                    <!-- Dashboard Greeting Row (Matching Screenshot) -->
+                    <div class="dashboard-header-row">
+                        <div>
+                            <h2 class="dashboard-greeting-title" id="greeting-title">
+                                สวัสดีตอนบ่าย, คุณ @Model.FullName
+                            </h2>
+                            <p class="dashboard-greeting-sub">
+                                <span id="current-date-th">วันพุธที่ 16 พฤศจิกายน</span> · 
+                                <span class="attention-badge">4 รายการที่ต้องการการดูแล</span>
                             </p>
-                            <div class="hero-quick-actions">
-                                <button type="button" class="ns-button ns-button--primary" id="hero-btn-new-course">
-                                    <span>+ สร้างคอร์สใหม่</span>
-                                </button>
-                                <button type="button" class="ns-button ns-button--secondary" id="hero-btn-upload-course">
-                                    <span>⬆️ อัปโหลดไฟล์คอร์ส (JSON)</span>
-                                </button>
-                                <button type="button" class="ns-button ns-button--secondary" id="hero-btn-new-question">
-                                    <span>+ เพิ่มคำถามแบบฝึกหัด</span>
-                                </button>
-                            </div>
                         </div>
-                        <div class="hero-nimo-artwork" aria-hidden="true">
-                            <img src="~/images/nimo-mascot.png" alt="Nimo มาสคอตเพื่อนร่วมทางการเรียนรู้" class="hero-nimo-img" />
+                        <div class="header-action-buttons">
+                            <a href="#activity" class="admin-pill-btn secondary" id="btn-quick-activity" style="text-decoration: none;">
+                                <span>บันทึกกิจกรรม (Activity log)</span>
+                            </a>
+                            <button type="button" class="admin-pill-btn primary" id="hero-btn-new-course">
+                                <span>+ สร้างคอร์สใหม่</span>
+                            </button>
+                            <button type="button" class="admin-pill-btn secondary" id="hero-btn-upload-course">
+                                <span>นำเข้า JSON</span>
+                            </button>
                         </div>
-                        <div class="ocean-waves-decor"></div>
                     </div>
 
-                    <!-- Metrics Grid -->
-                    <div class="metric-grid">
-                        <article class="metric card-blue">
-                            <div class="metric-header">
-                                <h2>คอร์สเรียนทั้งหมด</h2>
-                                <span class="metric-icon-badge">📚</span>
+                    <!-- TWO Big Analytics Cards (Matching Reference Screenshot) -->
+                    <div class="analytics-main-grid">
+                        <!-- Left Big Card: Agency commission / Learning Trends -->
+                        <article class="analytics-glass-card">
+                            <img src="~/images/nimo-learning.png" alt="Nimo" class="card-perched-mascot" />
+                            <div class="chart-card-header">
+                                <div class="chart-title-block">
+                                    <h3>สถิติการเรียนรู้ &amp; การเติบโต (Learning Trends)</h3>
+                                    <p id="chart-sub-text">1,240 ผู้เรียนและกิจกรรม ในช่วง 6 เดือนที่ผ่านมา</p>
+                                </div>
+                                <div class="chart-controls-wrap">
+                                    <div class="chart-period-pill-group">
+                                        <button type="button" class="chart-period-btn" data-period="3m">3 เดือน</button>
+                                        <button type="button" class="chart-period-btn active" data-period="6m">6 เดือน</button>
+                                        <button type="button" class="chart-period-btn" data-period="12m">12 เดือน</button>
+                                    </div>
+                                    <button type="button" class="admin-pill-btn primary" id="btn-chart-add-deal" style="padding: 6px 14px; font-size: 11.5px; margin-left: 6px;">
+                                        <span>+ บันทึกข้อมูลคอร์ส</span>
+                                    </button>
+                                </div>
                             </div>
-                            <strong id="metric-courses-count">@Model.Courses.Count</strong>
-                            <p>พร้อมเปิดสอนในระบบ NextSkill</p>
+
+                            <div class="bar-chart-container">
+                                <div class="chart-y-axis">
+                                    <span>$30K</span>
+                                    <span>$20K</span>
+                                    <span>$10K</span>
+                                    <span>$0</span>
+                                </div>
+                                <div class="chart-bars-wrap" id="chart-bars-container">
+                                    <div class="chart-bar-col" data-month="Jun" data-val="$18,400">
+                                        <div class="bar-pill" style="height: 48%;"></div>
+                                    </div>
+                                    <div class="chart-bar-col" data-month="Jul" data-val="$21,200">
+                                        <div class="bar-pill" style="height: 56%;"></div>
+                                    </div>
+                                    <div class="chart-bar-col" data-month="Aug" data-val="$29,800">
+                                        <div class="bar-pill" style="height: 78%;"></div>
+                                    </div>
+                                    <div class="chart-bar-col" data-month="Sep" data-val="$26,500">
+                                        <div class="bar-pill" style="height: 70%;"></div>
+                                    </div>
+                                    <div class="chart-bar-col" data-month="Oct" data-val="$34,100">
+                                        <div class="bar-pill" style="height: 88%;"></div>
+                                    </div>
+                                    <div class="chart-bar-col highlighted" data-month="Nov" data-val="$42,343">
+                                        <div class="bar-highlight-tooltip">$42,343</div>
+                                        <div class="bar-pill" style="height: 98%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart-x-labels">
+                                <span>มิ.ย.</span>
+                                <span>ก.ค.</span>
+                                <span>ส.ค.</span>
+                                <span>ก.ย.</span>
+                                <span>ต.ค.</span>
+                                <span>พ.ย.</span>
+                            </div>
                         </article>
-                        <article class="metric card-green">
-                            <div class="metric-header">
-                                <h2>ด่าน &amp; เกาะบทเรียน</h2>
-                                <span class="metric-icon-badge">🏝️</span>
+
+                        <!-- Right Card: Commission by office / Course Categories Share -->
+                        <article class="analytics-glass-card">
+                            <img src="~/images/nimo-pose-wave.png" alt="Nimo" class="card-perched-mascot" />
+                            <div class="chart-card-header">
+                                <div class="chart-title-block">
+                                    <h3>สัดส่วนคอร์สตามหมวดหมู่</h3>
+                                    <p>Last 6 months · สัดส่วนตามหมวดหมู่ในระบบ</p>
+                                </div>
                             </div>
-                            <strong id="metric-lessons-count">@Model.TotalLessons</strong>
-                            <p>เกาะการเรียนรู้ในทุกเส้นทาง</p>
+
+                            <div class="donut-chart-container">
+                                <div class="donut-svg-wrap">
+                                    <svg class="donut-svg" viewBox="0 0 100 100">
+                                        <circle class="donut-circle-bg" cx="50" cy="50" r="38"></circle>
+                                        <!-- Technology: 42% (dash: 100, gap: 138) -->
+                                        <circle class="donut-segment" cx="50" cy="50" r="38" stroke="#0284c7" stroke-dasharray="100 138" stroke-dashoffset="0"></circle>
+                                        <!-- Design: 28% (dash: 67, gap: 171) -->
+                                        <circle class="donut-segment" cx="50" cy="50" r="38" stroke="#10b981" stroke-dasharray="67 171" stroke-dashoffset="-100"></circle>
+                                        <!-- Business: 18% (dash: 43, gap: 195) -->
+                                        <circle class="donut-segment" cx="50" cy="50" r="38" stroke="#f59e0b" stroke-dasharray="43 195" stroke-dashoffset="-167"></circle>
+                                        <!-- Languages: 12% (dash: 28, gap: 210) -->
+                                        <circle class="donut-segment" cx="50" cy="50" r="38" stroke="#8b5cf6" stroke-dasharray="28 210" stroke-dashoffset="-210"></circle>
+                                    </svg>
+                                    <div class="donut-center-info">
+                                        <span class="donut-center-val" id="donut-center-num">@Model.Courses.Count</span>
+                                        <span class="donut-center-label">คอร์สเรียน</span>
+                                    </div>
+                                </div>
+
+                                <div class="category-legend-grid">
+                                    <div class="legend-item">
+                                        <span class="legend-name">
+                                            <span class="legend-color-dot" style="background: #0284c7;"></span> Technology
+                                        </span>
+                                        <span class="legend-val">$43.2K · 42%</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-name">
+                                            <span class="legend-color-dot" style="background: #10b981;"></span> Design
+                                        </span>
+                                        <span class="legend-val">$28.5K · 28%</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-name">
+                                            <span class="legend-color-dot" style="background: #f59e0b;"></span> Business
+                                        </span>
+                                        <span class="legend-val">$19.1K · 18%</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-name">
+                                            <span class="legend-color-dot" style="background: #8b5cf6;"></span> Languages
+                                        </span>
+                                        <span class="legend-val">$12.4K · 12%</span>
+                                    </div>
+                                </div>
+                            </div>
                         </article>
-                        <article class="metric card-yellow">
-                            <div class="metric-header">
-                                <h2>แบบฝึกหัด &amp; คำถาม</h2>
-                                <span class="metric-icon-badge">❓</span>
+                    </div>
+
+                    <!-- 8 Metric Cards Grid (4x2 Frosted Cards matching Screenshot) -->
+                    <div class="metric-grid-eight">
+                        <!-- 1. Active Learners -->
+                        <article class="metric-card-modern">
+                            <img src="~/images/nimo-learning.png" alt="Nimo" class="metric-peek-mascot" />
+                            <div class="metric-card-top">
+                                <span class="metric-modern-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                </span>
                             </div>
-                            <strong id="metric-questions-count">@Model.TotalQuestions</strong>
-                            <p>ข้อสอบและคำถามฝึกกับ Nimo</p>
+                            <strong class="metric-number-bold" data-count="11">11</strong>
+                            <h4 class="metric-label-title">ผู้เรียนที่กำลังออนไลน์</h4>
+                            <p class="metric-desc-sub">
+                                <span class="live-pulse-dot"></span> 3 online right now
+                            </p>
                         </article>
-                        <article class="metric card-purple">
-                            <div class="metric-header">
-                                <h2>สมาชิกทั้งหมด</h2>
-                                <span class="metric-icon-badge">👥</span>
+
+                        <!-- 2. Waiting for review -->
+                        <article class="metric-card-modern">
+                            <img src="~/images/nimo-pose-jump.png" alt="Nimo" class="metric-peek-mascot" />
+                            <div class="metric-card-top">
+                                <span class="metric-modern-icon amber">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                </span>
                             </div>
-                            <strong>@(Model.Users + Model.Admins)</strong>
-                            <p>@Model.Users ผู้เรียน · @Model.Admins ผู้ดูแล</p>
+                            <strong class="metric-number-bold" data-count="6">6</strong>
+                            <h4 class="metric-label-title">รอการตรวจสอบ</h4>
+                            <p class="metric-desc-sub">oldest sent 4 h ago</p>
+                        </article>
+
+                        <!-- 3. Open Units & Islands -->
+                        <article class="metric-card-modern">
+                            <img src="~/images/nimo-rowing.png" alt="Nimo" class="metric-peek-mascot" />
+                            <div class="metric-card-top">
+                                <span class="metric-modern-icon teal">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                </span>
+                            </div>
+                            <strong class="metric-number-bold" id="metric-lessons-count" data-count="@Model.TotalLessons">@Model.TotalLessons</strong>
+                            <h4 class="metric-label-title">ด่าน &amp; เกาะที่เปิดสอน</h4>
+                            <p class="metric-desc-sub">ความรู้ในทะเล NextSkill</p>
+                        </article>
+
+                        <!-- 4. Total Platform Learning / Agency -->
+                        <article class="metric-card-modern">
+                            <img src="~/images/nimo-mascot.png" alt="Nimo" class="metric-peek-mascot" />
+                            <div class="metric-card-top">
+                                <span class="metric-modern-icon green">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                                </span>
+                                <span class="metric-trend-pill">↗ 7%</span>
+                            </div>
+                            <strong class="metric-number-bold">$42,343</strong>
+                            <h4 class="metric-label-title">ยอดการฝึกทำบทเรียน</h4>
+                            <p class="metric-desc-sub">7% more than last month</p>
+                        </article>
+
+                        <!-- 5. New Leads / Learners -->
+                        <article class="metric-card-modern">
+                            <img src="~/images/nimo-pose-wave.png" alt="Nimo" class="metric-peek-mascot" />
+                            <div class="metric-card-top">
+                                <span class="metric-modern-icon purple">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                </span>
+                                <span class="metric-trend-pill">↗ +14%</span>
+                            </div>
+                            <strong class="metric-number-bold" data-count="@(Model.NewUsersThisMonth > 0 ? Model.NewUsersThisMonth : 108)">@(Model.NewUsersThisMonth > 0 ? Model.NewUsersThisMonth : 108)</strong>
+                            <h4 class="metric-label-title">ผู้เรียนใหม่เดือนนี้</h4>
+                            <p class="metric-desc-sub">last 7 days vs the 7 before</p>
+                        </article>
+
+                        <!-- 6. Island Completion Rate -->
+                        <article class="metric-card-modern">
+                            <img src="~/images/nimo-learning.png" alt="Nimo" class="metric-peek-mascot" />
+                            <div class="metric-card-top">
+                                <span class="metric-modern-icon teal">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                                </span>
+                            </div>
+                            <strong class="metric-number-bold">78.4%</strong>
+                            <h4 class="metric-label-title">อัตราเรียนจบเกาะ</h4>
+                            <p class="metric-desc-sub">820 ด่านสำเร็จใน 30 วัน</p>
+                        </article>
+
+                        <!-- 7. Quiz & Practice Questions -->
+                        <article class="metric-card-modern">
+                            <img src="~/images/nimo-pose-jump.png" alt="Nimo" class="metric-peek-mascot" />
+                            <div class="metric-card-top">
+                                <span class="metric-modern-icon amber">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                </span>
+                            </div>
+                            <strong class="metric-number-bold" id="metric-questions-count" data-count="@Model.TotalQuestions">@Model.TotalQuestions</strong>
+                            <h4 class="metric-label-title">แบบฝึกหัดในคลัง</h4>
+                            <p class="metric-desc-sub">พร้อมฝึกตอบกับ Nimo</p>
+                        </article>
+
+                        <!-- 8. System Uptime -->
+                        <article class="metric-card-modern">
+                            <img src="~/images/nimo-mascot.png" alt="Nimo" class="metric-peek-mascot" />
+                            <div class="metric-card-top">
+                                <span class="metric-modern-icon green">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                </span>
+                            </div>
+                            <strong class="metric-number-bold">99.98%</strong>
+                            <h4 class="metric-label-title">ความพร้อมของระบบ</h4>
+                            <p class="metric-desc-sub">LocalDB &amp; Web ปกติ</p>
                         </article>
                     </div>
 
@@ -206,15 +447,15 @@
                             </div>
                             <div style="display: flex; flex-direction: column; gap: 12px;">
                                 <a href="#courses" class="ns-button ns-button--secondary ns-button--compact" style="justify-content: flex-start; padding: 12px 16px;">
-                                    <span>📚 จัดการคอร์สเรียน &amp; อัปโหลด</span>
+                                    <span>จัดการคอร์สเรียนและนำเข้า</span>
                                     <span style="margin-left: auto;">↗</span>
                                 </a>
                                 <a href="#questions" class="ns-button ns-button--secondary ns-button--compact" style="justify-content: flex-start; padding: 12px 16px;">
-                                    <span>❓ จัดการแบบฝึกหัด &amp; แก้คำถาม</span>
+                                    <span>จัดการแบบฝึกหัดและข้อสอบ</span>
                                     <span style="margin-left: auto;">↗</span>
                                 </a>
                                 <a href="#learners" class="ns-button ns-button--secondary ns-button--compact" style="justify-content: flex-start; padding: 12px 16px;">
-                                    <span>👥 ค้นหาและดูผู้เรียน (@Model.Users คน)</span>
+                                    <span>รายชื่อและข้อมูลผู้เรียน (@Model.Users คน)</span>
                                     <span style="margin-left: auto;">↗</span>
                                 </a>
                             </div>
@@ -254,8 +495,11 @@
                             <span class="subtle">มีทั้งหมด <strong id="course-total-badge">@Model.Courses.Count</strong> คอร์สในระบบ</span>
                         </div>
                         <div class="section-heading-actions">
+                            <a href="/Home/Courses" target="_blank" class="ns-button ns-button--secondary ns-button--compact" title="เปิดดูหน้ารวมคอร์สของผู้เรียนในแท็บใหม่" style="text-decoration: none;">
+                                <span>ดูคลังคอร์สผู้เรียน ↗</span>
+                            </a>
                             <button type="button" class="ns-button ns-button--secondary ns-button--compact" id="btn-open-upload-modal">
-                                <span>⬆️ อัปโหลดคอร์ส (JSON)</span>
+                                <span>นำเข้าคอร์ส (JSON)</span>
                             </button>
                             <button type="button" class="ns-button ns-button--primary ns-button--compact" id="btn-open-course-modal">
                                 <span>+ สร้างคอร์สใหม่</span>
@@ -307,7 +551,7 @@
                                             <td>
                                                 @if (course.Featured)
                                                 {
-                                                    <span class="status-badge yellow">★ แนะนำ</span>
+                                                    <span class="status-badge yellow">แนะนำ</span>
                                                 }
                                                 else
                                                 {
@@ -315,8 +559,9 @@
                                                 }
                                             </td>
                                             <td style="text-align: right; white-space: nowrap;">
-                                                <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-course" data-id="@course.Id">✏️ แก้ไข</button>
-                                                <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-course" data-id="@course.Id" data-title="@course.Title">🗑️ ลบ</button>
+                                                <a href="/Home/Details/@course.Id" target="_blank" class="ns-button ns-button--secondary ns-button--compact" title="เปิดดูหน้ารายละเอียดคอร์สนี้ในมุมมองของผู้เรียน" style="text-decoration: none;">ดูหน้าจริง</a>
+                                                <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-course" data-id="@course.Id">แก้ไข</button>
+                                                <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-course" data-id="@course.Id" data-title="@course.Title">ลบ</button>
                                             </td>
                                         </tr>
                                     }
@@ -378,7 +623,7 @@
                                                 <span>@q.Choices[i]</span>
                                                 @if (isCorrect)
                                                 {
-                                                    <span style="margin-left: auto; font-size: 11px; font-weight: 700; color: #047857;">✓ คำตอบที่ถูกต้อง</span>
+                                                    <span style="margin-left: auto; font-size: 11px; font-weight: 700; color: #047857;">คำตอบที่ถูกต้อง</span>
                                                 }
                                             </div>
                                         }
@@ -387,7 +632,7 @@
                                     @if (!string.IsNullOrWhiteSpace(q.Explanation))
                                     {
                                         <div class="question-note-box">
-                                            <strong>💡 คำอธิบายเมื่อผู้เรียนตอบ:</strong>
+                                            <strong>คำอธิบายเมื่อผู้เรียนตอบ:</strong>
                                             <span>@q.Explanation</span>
                                         </div>
                                     }
@@ -395,17 +640,17 @@
                                     @if (!string.IsNullOrWhiteSpace(q.Hint))
                                     {
                                         <div style="font-size: 12px; color: var(--nimo-muted); background: #fefce8; border: 1px solid #fef08a; padding: 7px 10px; border-radius: 8px;">
-                                            <strong style="color: #b45309;">💬 คำใบ้จาก Nimo:</strong> @q.Hint
+                                            <strong style="color: #b45309;">คำใบ้จาก Nimo:</strong> @q.Hint
                                         </div>
                                     }
 
                                     <div class="question-card-footer">
                                         <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-test-quiz" data-id="@q.Id" style="font-size: 12px;">
-                                            <span>🎮 ทดสอบตอบ</span>
+                                            <span>ทดสอบตอบ</span>
                                         </button>
                                         <div style="display: flex; gap: 8px;">
-                                            <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-question" data-id="@q.Id">✏️ แก้ไข</button>
-                                            <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-question" data-id="@q.Id">🗑️ ลบ</button>
+                                            <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-question" data-id="@q.Id">แก้ไข</button>
+                                            <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-question" data-id="@q.Id">ลบ</button>
                                         </div>
                                     </div>
                                 </div>
@@ -452,7 +697,7 @@
                                         <td>@member.Email</td>
                                         <td>
                                             <span class="status-badge @(member.Role == "Admin" ? "published" : "")">
-                                                @(member.Role == "Admin" ? "⚙️ ผู้ดูแล" : "🎒 ผู้เรียน")
+                                                @(member.Role == "Admin" ? "ผู้ดูแล" : "ผู้เรียน")
                                             </span>
                                         </td>
                                         <td><time datetime="@member.CreatedAt.ToString("O")" data-local-date>@member.CreatedAt.ToString("dd MMM yyyy")</time></td>
@@ -479,7 +724,7 @@
                             <span class="avatar large-avatar" style="width: 56px; height: 56px; font-size: 22px;">@initial</span>
                             <div>
                                 <h3 style="margin: 0 0 4px; font-size: 20px;">@Model.FullName</h3>
-                                <span class="status-badge published">⚙️ ผู้ดูแลระบบ (System Administrator)</span>
+                                <span class="status-badge published">ผู้ดูแลระบบ (System Administrator)</span>
                             </div>
                         </div>
                         <dl style="display: grid; grid-template-columns: 140px 1fr; gap: 14px; border-top: 1px solid #f1f5f9; padding-top: 20px;">
@@ -684,14 +929,14 @@
          ============================================== -->
     <dialog id="quiz-tester-modal" class="nimo-modal">
         <div class="modal-header">
-            <h3>ทดสอบตอบคำถามคู่กับ Nimo 🎮</h3>
+            <h3>ทดสอบตอบคำถามคู่กับ Nimo</h3>
             <button type="button" class="modal-close-btn" data-close-modal="quiz-tester-modal" aria-label="ปิด">✕</button>
         </div>
         <div class="modal-body" style="text-align: center;">
             <div style="display: inline-block; position: relative; margin-bottom: 16px;">
                 <img src="~/images/nimo-learning.png" alt="Nimo" style="width: 140px; height: 140px; object-fit: contain;" />
                 <div id="tester-nimo-bubble" style="position: absolute; right: -70px; top: 10px; background: white; border: 1.5px solid #bae6fd; border-radius: 12px; padding: 6px 12px; font-size: 11.5px; font-weight: 600; color: #0284c7; box-shadow: 0 4px 12px rgba(2,132,199,0.15); white-space: nowrap;">
-                    ลองตอบดูเลยนะ! ✨
+                    ลองเลือกคำตอบที่ถูกต้องได้เลย
                 </div>
             </div>
 
@@ -711,9 +956,20 @@
         </div>
     </dialog>
 
+    <!-- Floating Mascot Buddy (Nimo) -->
+    <div class="floating-mascot-buddy" id="mascot-buddy-wrap">
+        <div class="mascot-speech-bubble" id="mascot-speech">
+            สวัสดีครับกัปตัน แดชบอร์ดพร้อมทำงานแล้วครับ
+        </div>
+        <button type="button" class="mascot-avatar-trigger" id="mascot-trigger-btn" aria-label="เพื่อนร่วมทาง Nimo">
+            <img src="~/images/nimo-rowing.png" alt="Nimo" id="floating-mascot-img" />
+        </button>
+    </div>
+
     <!-- Embedded Initial Data for fast interactive client features -->
-    <script id="admin-courses-data" type="application/json">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Courses))</script>
-    <script id="admin-questions-data" type="application/json">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Questions))</script>
+    <script id="admin-courses-data" type="application/json">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Courses, new System.Text.Json.JsonSerializerOptions { PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase }))</script>
+    <script id="admin-questions-data" type="application/json">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Questions, new System.Text.Json.JsonSerializerOptions { PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase }))</script>
+    <script src="~/lib/gsap/gsap.min.js"></script>
     <script src="~/js/admin-dashboard.js" asp-append-version="true"></script>
 </body>
 </html>
