@@ -74,24 +74,5 @@
         page.querySelectorAll('[data-catalog-reveal]').forEach(card => reveal.observe(card));
     }
 
-    // Use the same stored preference as Home without loading its voyage controller.
-    const themeButtons = [...document.querySelectorAll('[data-theme-toggle]')];
-    function theme(value) {
-        const dark = value === 'dark';
-        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-        themeButtons.forEach(button => {
-            button.hidden = false;
-            button.setAttribute('aria-pressed', String(dark));
-            button.title = dark ? 'เปิดธีมกลางวัน' : 'เปิดธีมกลางคืน';
-        });
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#112b43' : '#9bddec');
-        document.dispatchEvent(new CustomEvent('nextskill:theme-change', { detail: { theme: dark ? 'dark' : 'light' } }));
-    }
-    themeButtons.forEach(button => button.addEventListener('click', () => {
-        const value = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-        try { localStorage.setItem('nextskill.theme.v1', value); } catch {}
-        theme(value);
-    }));
-    window.addEventListener('storage', event => { if (event.key === 'nextskill.theme.v1') theme(event.newValue); });
-    theme(document.documentElement.dataset.theme);
+    // Day/night, storage sync and the celestial orbit belong to journey-theme.js.
 })();

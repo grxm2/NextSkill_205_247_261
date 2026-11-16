@@ -79,3 +79,39 @@ html[data-theme="dark"] .ocean-ship-lights{opacity:1;filter:drop-shadow(0 0 3px 
  .ocean-boat-ripple,.ocean-buoy-ripple{opacity:.2;transform:none}
  .ocean-backdrop-whale-water{display:none}
 }
+
+/* A slightly larger island keeps its existing painted waterline in place. */
+.ow-start-land>.ow-island-art{transform:scale(1.05);transform-origin:50% 80%}
+[data-island-wildlife]{pointer-events:none;user-select:none}
+[data-island-animal],.island-life-motion{transform-box:view-box;transform-origin:0 0}
+.island-life-motion{animation-play-state:paused}
+.island-crab-walk{animation:island-crab-walk 20s var(--ns-ease-in-out) infinite}
+.island-crab-feet{animation:island-crab-feet 20s var(--ns-ease-in-out) infinite}
+.island-crab-claw{animation:island-crab-claw 20s var(--ns-ease-in-out) infinite}
+.island-crab-claw--right{animation-delay:-.5s}
+.island-tortoise-route{animation:island-tortoise-route 24s var(--ns-ease-in-out) infinite}
+.island-tortoise-facing{animation:island-tortoise-turn 24s var(--ns-ease-in-out) infinite}
+.island-tortoise-leg{animation:island-tortoise-step 1.8s var(--ns-ease-in-out) infinite}
+.island-tortoise-leg--opposite{animation-delay:-.9s}
+.island-tortoise-leg--far{animation-direction:reverse}
+.island-tortoise-body{animation:island-tortoise-weight 1.8s var(--ns-ease-in-out) infinite}
+[data-island-wildlife] .island-life-motion{animation-play-state:paused}
+[data-island-wildlife][data-wildlife-motion="active"] .island-life-motion{animation-play-state:running}
+.ow-motion-paused [data-island-wildlife] .island-life-motion{animation-play-state:paused}
+/* Shorter steps and lower lift keep the small animals grounded and unhurried. */
+@keyframes island-crab-walk{0%,18%,90%,100%{transform:translate3d(0,0,0)}28%,64%{transform:translate3d(14px,-.4px,0)}78%{transform:translate3d(0,0,0)}}
+@keyframes island-crab-feet{0%,18%,28%,64%,78%,100%{transform:rotate(0deg)}20%,24%,66%,70%,74%{transform:rotate(6deg)}22%,26%,68%,72%,76%{transform:rotate(-6deg)}}
+@keyframes island-crab-claw{0%,32%,65%,100%{transform:rotate(0deg)}40%,48%{transform:rotate(-10deg)}44%,54%{transform:rotate(4deg)}}
+@keyframes island-tortoise-route{0%,3%,100%{transform:translate3d(0,0,0)}46%,51%{transform:translate3d(var(--tortoise-walk-end,-24px),0,0)}94%{transform:translate3d(0,0,0)}}
+@keyframes island-tortoise-turn{0%,46%,100%{transform:scaleX(1)}51%,94%{transform:scaleX(-1)}99%{transform:scaleX(1)}}
+@keyframes island-tortoise-step{0%,100%{transform:translate3d(0,0,0) rotate(-6deg)}35%{transform:translate3d(0,0,0) rotate(6deg)}65%{transform:translate3d(0,-.9px,0) rotate(3deg)}}
+@keyframes island-tortoise-weight{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,.35px,0)}}
+@media(max-width:1100px){
+ [data-island-animal="turtle"]{--tortoise-walk-end:-14px;transform:translate(573px,390px) scale(.68)}
+}
+@media(max-width:360px){
+ [data-island-animal="turtle"]{transform:translate(600px,372px) scale(.528,.44)}
+}
+@media(prefers-reduced-motion:reduce){
+ [data-island-wildlife] .island-life-motion{animation:none!important;transform:none}
+}

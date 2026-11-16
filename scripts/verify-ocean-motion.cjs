@@ -135,27 +135,26 @@ async function cameraSamples(duration) {
         return { samples, reversedFinal:last, world:await page.evaluate(() => window.NextSkillOceanWorldTest?.snapshot() || null) };
     });
 
-    await check('all five wave tiles cover viewport throughout their loop and parallax', async () => {
+    await check('live water covers its surface throughout camera travel', async () => {
         const geometry = [];
         for (const width of [390,1440]) {
             await open(width);
             for (const travel of [0,1]) {
                 await scrollToFraction(travel);
                 await sleep(800);
-                for (const phase of [0,.5,.99999]) {
-                    const planes = await page.evaluate(phase => [...document.querySelectorAll('.ow-swell-drift')].map(element => {
-                        const animation = element.getAnimations()[0];
-                        animation.pause();
-                        const timing = animation.effect.getTiming();
-                        animation.currentTime = Number(timing.delay) + Number(timing.duration) * phase;
+                for (const sample of [0,1,2]) {
+                    await sleep(180);
+                    const planes = await page.evaluate(() => [...document.querySelectorAll('.ow-water-live')].map(element => {
                         const rect = element.getBoundingClientRect();
-                        return { name:element.parentElement.className, left:rect.left, right:rect.right, viewport:innerWidth };
-                    }), phase);
-                    assert.equal(planes.length, 5);
-                    assert.ok(planes.every(plane => plane.left <= .5 && plane.right >= plane.viewport-.5), `Wave coverage gap: ${JSON.stringify({width,travel,phase,planes})}`);
-                    geometry.push({ width,travel,phase,planes });
+                        const water = element.parentElement.getBoundingClientRect();
+                        return { left:rect.left, right:rect.right, top:rect.top, bottom:rect.bottom,
+                            water:{left:water.left,right:water.right,top:water.top,bottom:water.bottom} };
+                    }));
+                    assert.equal(planes.length, 1);
+                    assert.ok(planes.every(plane => plane.left <= plane.water.left && plane.right >= plane.water.right && plane.top <= plane.water.top && plane.bottom >= plane.water.bottom), `Water coverage gap: ${JSON.stringify({width,travel,sample,planes})}`);
+                    geometry.push({ width,travel,sample,planes });
                 }
-                await capture(`wave-coverage-${width}-${travel}`);
+                await capture(`painted-water-${width}-${travel}`);
             }
         }
         return geometry;
@@ -256,7 +255,7 @@ async function cameraSamples(duration) {
         const state = await snapshot();
         assert.equal(state.active, true); assert.equal(state.animationCount, 0); assert.equal(state.timerCount, 0);
         assert.deepEqual(after, before);
-        assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.ow-swell-drift')).animationPlayState), 'paused');
+        assert.equal(await page.evaluate(() => window.NextSkillHomeWaterTest.snapshot().running), false);
         assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.ow-palm')).animationPlayState), 'paused');
         assert.equal(await page.evaluate(() => window.NextSkillOceanLifeTest.force(7).started), false);
         await capture('paused');

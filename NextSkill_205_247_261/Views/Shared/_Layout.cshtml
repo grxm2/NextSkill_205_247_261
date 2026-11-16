@@ -42,6 +42,7 @@
         <link rel="preload" href="~/images/journey/underwater-journey-background-v1.png" as="image" />
         <link rel="preload" href="~/images/journey/clouds-reference-v1.png" as="image" />
     }
+    <link rel="stylesheet" href="~/css/nimo-speech.css" asp-append-version="true" />
 </head>
 <body class="ocean-theme ns-site-shell @(oceanCatalog ? "ns-catalog-shell" : null)">
     <partial name="_Navbar" />
@@ -63,11 +64,13 @@
     <partial name="_FloatingBuddy" />
     @if (oceanCatalog) { <partial name="_CatalogVoyage" /><partial name="_JourneyCloudTransition" /> }
     <script src="~/js/motion-state.js" asp-append-version="true" defer></script>
+    @if (oceanCatalog) { <script src="~/js/journey-theme.js" asp-append-version="true" defer></script> }
     <script src="~/js/buddy-agent.js" asp-append-version="true" defer></script>
     <script src="~/js/buddy-motion.js" asp-append-version="true" defer></script>
     @if (oceanCatalog) { <script src="~/js/island-water-motion.js" asp-append-version="true" defer></script><script src="~/js/course-island-voyage.js" asp-append-version="true" defer></script> }
     @await RenderSectionAsync("Scripts", required: false)
     @if (oceanCatalog) { <script src="~/js/catalog-voyage.js" asp-append-version="true" defer></script> }
     <script src="~/js/navbar.js" asp-append-version="true" defer></script>
+    <script src="~/js/nimo-speech.js" asp-append-version="true" defer></script>
 </body>
 </html>

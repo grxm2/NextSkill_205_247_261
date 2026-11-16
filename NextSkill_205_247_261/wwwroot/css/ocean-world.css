@@ -45,11 +45,25 @@
 .ow-motion-paused .ow-palm{animation-play-state:paused}
 @keyframes ow-palm-sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2.4deg)}}
 /* Only foliage moves: roots and shadows stay planted in the beach plane. */
-.ow-shrub-foliage{transform-box:fill-box;transform-origin:50% 100%;animation:ow-shrub-sway 7.6s var(--ease-in-out) -1.8s infinite}
-.ow-shrub--left .ow-shrub-foliage{animation-duration:8.8s;animation-delay:-4.6s}
-.ow-shrub--front .ow-shrub-foliage{animation-duration:6.8s;animation-delay:-3.2s}
-.ow-motion-paused .ow-shrub-foliage{animation-play-state:paused}
-@keyframes ow-shrub-sway{0%,100%{transform:rotate(-1.2deg) skewX(-1deg)}50%{transform:rotate(1.8deg) skewX(1.5deg)}}
+.ow-shrub{--shrub-period:8s;--shrub-phase:-1.8s}
+.ow-shrub--left{--shrub-phase:-2.05s}
+.ow-shrub--front{--shrub-phase:-2.35s}
+.ow-shrub-wind{transform-box:view-box;transform-origin:34px 0;animation-duration:var(--shrub-period);animation-delay:var(--shrub-phase);animation-timing-function:var(--ns-ease-in-out);animation-iteration-count:infinite;animation-play-state:paused}
+.ow-shrub-foliage{animation-name:ow-shrub-sway}
+.ow-shrub-branch--back{animation-name:ow-shrub-back;animation-delay:calc(var(--shrub-phase) - .12s)}
+.ow-shrub-branch--middle{animation-name:ow-shrub-middle;animation-delay:calc(var(--shrub-phase) - .28s)}
+.ow-shrub-branch--front{animation-name:ow-shrub-front;animation-delay:calc(var(--shrub-phase) - .4s)}
+.ow-shrub-tip{transform-origin:0 0;animation-name:ow-shrub-tip;animation-duration:7.6s}
+.ow-shrub-tip--late{animation-delay:calc(var(--shrub-phase) - .65s)}
+.ow-shrub-tip--middle{animation-delay:calc(var(--shrub-phase) - .35s)}
+.ow-island-art[data-island-wind="active"] .ow-shrub-wind{animation-play-state:running}
+.ow-motion-paused .ow-shrub-wind{animation-play-state:paused}
+@keyframes ow-shrub-sway{0%,100%{transform:rotate(-.7deg) skewX(-.4deg)}47%{transform:rotate(2.1deg) skewX(.8deg)}76%{transform:rotate(.3deg) skewX(.1deg)}}
+@keyframes ow-shrub-back{0%,100%{transform:rotate(-.5deg)}49%{transform:rotate(2.2deg)}78%{transform:rotate(.2deg)}}
+@keyframes ow-shrub-middle{0%,100%{transform:rotate(.2deg)}53%{transform:rotate(1.3deg)}82%{transform:rotate(-.3deg)}}
+@keyframes ow-shrub-front{0%,100%{transform:rotate(-.2deg)}54%{transform:rotate(.7deg)}81%{transform:rotate(-.4deg)}}
+@keyframes ow-shrub-tip{0%,100%{transform:rotate(-1deg)}30%{transform:rotate(.8deg)}56%{transform:rotate(2.8deg)}82%{transform:rotate(-.6deg)}}
+@media(prefers-reduced-motion:reduce){.ow-shrub-wind{animation:none!important;transform:none}}
 .ow-shore-ripples{opacity:.3}
 .ow-shore-wash{transform-box:view-box;transform-origin:384px 420px;animation:ow-shore 7.6s ease-in-out infinite;opacity:.3}
 .ow-shore-wash--return{animation-name:ow-shore-return;animation-delay:-3.8s}
