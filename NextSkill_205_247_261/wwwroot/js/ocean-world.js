@@ -9,6 +9,9 @@
     const vessel = scene.querySelector('.ow-vessel');
     const track = scene.closest('.ow-track');
     const seaEffects = scene.querySelector('.ow-open-sea-effects');
+    const backdrop = scene.querySelector('.ocean-backdrop');
+    const waterSurface = scene.querySelector('.ow-sea');
+    let backdropWaterline = null;
     let seaMotions = [], seaIntensity = -1;
     let context, timeline, travelScroll, lastStage = -1;
     let paused = guide?.dataset.motion === 'paused';
@@ -41,9 +44,6 @@
     }
     function collectSeaMotions() {
         seaMotions = [
-            ['.ocean-backdrop-boat-track', 12],
-            ['.ocean-backdrop-boat', 2.4],
-            ['.ocean-boat-ripple', 1.8],
             ['.ow-swell-drift', 2.2]
         ].flatMap(([selector, maximum]) => [...scene.querySelectorAll(selector)].flatMap(element =>
             element.getAnimations().map(animation => ({ animation, maximum }))));
@@ -90,10 +90,23 @@
         const hullTop = vessel.offsetTop + vessel.offsetHeight * .45;
         return fitVesselOffset(Math.max(0, beachBottom - hullTop + 12));
     }
+    function alignBackdrop() {
+        if (!backdrop || !waterSurface || !backdrop.offsetHeight) return;
+        // The sea can rise at the harbor and the backdrop has its own parallax.
+        // Use the rendered water plane, including the depth scene's scale.
+        const water = waterSurface.getBoundingClientRect(), bounds = backdrop.getBoundingClientRect();
+        const scale = bounds.height / backdrop.offsetHeight || 1;
+        const level = Math.round((water.top - bounds.top) / scale * 10) / 10;
+        if (level === backdropWaterline) return;
+        backdropWaterline = level;
+        backdrop.style.setProperty('--sea-level', `${level}px`);
+    }
     function announce(progress) {
         setOpenSea(progress);
         // Re-measure the mooring after responsive layout settles.
         if (progress >= harborStop - .0001) gsap.set(vessel, { x: arrivalX(), y: arrivalOffset() });
+        alignBackdrop();
+        document.dispatchEvent(new Event('nextskill:ocean-view'));
         if (progress > .025 && !boarded) { boarded = true; window.NextSkillVoyage?.board(); }
         else if (progress <= .025 && boarded) { boarded = false; window.NextSkillVoyage?.returnToShore(); }
         const stage = progress < .16 ? 0 : progress < .48 ? 1 : 2;
@@ -114,6 +127,7 @@
     }
     function destroy() {
         stopTravel(); context?.revert(); context = null; timeline = null;
+        backdropWaterline = null;
         setOpenSea(0); seaMotions = [];
         lastStage = -1;
         root.classList.remove('ow-enhanced');
@@ -132,12 +146,16 @@
         root.classList.toggle('ow-static', isStatic);
         if (isStatic || suspended) {
             scene.querySelector('.ow-harbor').inert = false;
+            alignBackdrop();
             if (isStatic && !suspended) dock();
             return;
         }
         root.classList.add('ow-enhanced');
         gsap.registerPlugin(ScrollTrigger);
         shoreSeaTop = scene.querySelector('.ow-sea').offsetTop;
+        // The horizon can rise later, but the material's world origin stays at
+        // the original waterline. Resizing the visible sea must not stretch it.
+        waterSurface.dataset.worldTop = String(shoreSeaTop);
         context = gsap.context(() => {
             timeline = gsap.timeline({
                 defaults:{ease:'none'},
@@ -152,7 +170,6 @@
                 .to('.ow-intro',{x:()=>-innerWidth*.65,autoAlpha:0,duration:.23},0)
                 .to('.ow-distance',{x:()=>-innerWidth*.24,duration:harborStop},0)
                 .to('.ow-clouds',{x:()=>-innerWidth*.5,duration:harborStop},0)
-                .to('.ocean-backdrop',{x:()=>innerWidth*.36,y:-4,duration:harborStop},0)
                 .to('.ow-sea-mist--far',{xPercent:-5,y:-6,duration:harborStop},0)
                 .to('.ow-sea-mist--mid',{xPercent:-14,y:12,duration:harborStop},0)
                 .to('.ow-sea-mist--near',{xPercent:-23,y:22,duration:harborStop},0)
@@ -173,8 +190,7 @@
             // its 48px sky-to-water blend ends at the back of the timber deck.
             const start = harborStop * .62, duration = harborStop * .38;
             timeline.to('.ow-sea', { top: harborSeaTop, duration }, start)
-                .to('.ow-distance', { top: () => harborSeaTop() - scene.querySelector('.ow-distance').offsetHeight, duration }, start)
-                .to('.ocean-backdrop', { '--sea-level': () => `${harborSeaTop() / scene.clientHeight * 100}%`, duration }, start);
+                .to('.ow-distance', { top: () => harborSeaTop() - scene.querySelector('.ow-distance').offsetHeight, duration }, start);
         }, scene);
         directScroll = paused;
         collectSeaMotions();
@@ -278,6 +294,7 @@
     window.addEventListener('pagehide',()=>{suspended=true;navigationArmed=false;clearTimeout(resizeTimer);destroy();});
     window.addEventListener('pageshow',()=>{if(suspended){suspended=false;navigationArmed=false;build();}});
     document.fonts.ready.then(()=>window.ScrollTrigger?.refresh());
+    new ResizeObserver(alignBackdrop).observe(waterSurface);
     build();
     window.NextSkillOceanWorld = {
         async travelToHarbor() {
