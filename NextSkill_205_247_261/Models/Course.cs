@@ -13,6 +13,7 @@ namespace NextSkill_205_247_261.Models
         public string Description { get; set; } = string.Empty;
         public string Instructor { get; set; } = string.Empty;
         public List<string> Skills { get; set; } = new List<string>();
+        public string? VideoUrl { get; set; }
         public List<Lesson> Lessons { get; set; } = new List<Lesson>();
     }
 }

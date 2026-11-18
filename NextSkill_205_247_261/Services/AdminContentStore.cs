@@ -322,6 +322,7 @@ public static class AdminContentStore
         Featured = c.Featured,
         Description = c.Description,
         Instructor = c.Instructor,
+        VideoUrl = c.VideoUrl,
         Skills = new List<string>(c.Skills ?? new()),
         Lessons = c.Lessons?.Select(l => new Lesson { Id = l.Id, Title = l.Title, DurationMinutes = l.DurationMinutes }).ToList() ?? new()
     };
@@ -355,6 +356,7 @@ public static class AdminContentStore
             Units = 6,
             Featured = true,
             Instructor = "Alex Kim",
+            VideoUrl = "https://www.youtube.com/watch?v=c9Wg6Cb_YlU",
             Description = "เรียนรู้วิธีการทำวิจัยผู้ใช้ สัมภาษณ์ และทดสอบการใช้งานจริง",
             Skills = new() { "Research", "UX", "Interviewing" },
             Lessons = new()

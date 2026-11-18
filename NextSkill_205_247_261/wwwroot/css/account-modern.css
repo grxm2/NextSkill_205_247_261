@@ -159,38 +159,13 @@ body.nimo-account-theme {
     100% { transform: translateX(calc(100vw + 380px)); }
 }
 
-/* Floating Milestone Badges (Duolingo Tactile Game Style) */
-.ambient-float-card {
-    position: absolute;
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 2px solid rgba(255, 255, 255, 0.95);
-    border-bottom: 4px solid #bae6fd;
-    border-radius: 22px;
-    padding: 11px 18px;
-    box-shadow: 0 14px 34px rgba(2, 132, 199, 0.16), 0 3px 0 rgba(186, 230, 253, 0.6);
-    user-select: none;
-    z-index: 2;
-    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
-}
-
-.ambient-float-card.duo-interactive-badge {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-}
-
-.ambient-float-card.duo-interactive-badge:hover {
-    transform: scale(1.08) translateY(-6px) !important;
-    box-shadow: 0 20px 40px rgba(2, 132, 199, 0.25), 0 4px 0 rgba(186, 230, 253, 0.8) !important;
-}
-
-.ambient-float-card.duo-interactive-badge:active {
-    transform: scale(0.96) translateY(2px) !important;
-    border-bottom-width: 2px !important;
+/* Floating Milestone Badges (Removed upon user request) */
+.ambient-float-card,
+.duo-interactive-badge {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
 }
 
 .badge-title-row {
@@ -588,6 +563,78 @@ body.nimo-account-theme {
 .mascot-character-art:hover img.main-mascot-img {
     transform: scale(1.09) rotate(3deg) translateY(-4px);
     filter: drop-shadow(0 20px 36px rgba(2, 132, 199, 0.38));
+}
+
+/* Page load swoop fly-in entrance */
+.mascot-character-art.mascot-fly-in-entrance img.main-mascot-img {
+    animation: nimoSwoopFlyIn 1.35s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+@keyframes nimoSwoopFlyIn {
+    0% {
+        transform: translate(-140px, -180px) scale(0.2) rotate(-22deg);
+        opacity: 0;
+        filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+    }
+    60% {
+        transform: translate(15px, 12px) scale(1.08) rotate(4deg);
+        opacity: 1;
+    }
+    80% {
+        transform: translate(-6px, -4px) scale(0.97) rotate(-2deg);
+    }
+    100% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        opacity: 1;
+        filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.24));
+    }
+}
+
+/* Air acrobat loop when user clicks "คลิกให้นิโมบิน!" */
+.mascot-character-art.nimo-flying-loop img.main-mascot-img {
+    animation: nimoAirAcrobat 1.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards !important;
+}
+
+@keyframes nimoAirAcrobat {
+    0% {
+        transform: scale(1) translateY(0) rotate(0deg);
+    }
+    20% {
+        transform: scale(0.88, 1.12) translateY(10px) rotate(-6deg);
+    }
+    40% {
+        transform: scale(1.15) translateY(-90px) rotate(-35deg);
+        filter: drop-shadow(0 28px 36px rgba(2, 132, 199, 0.45));
+    }
+    65% {
+        transform: scale(1.22) translateY(-140px) rotate(-360deg);
+        filter: drop-shadow(0 34px 44px rgba(2, 132, 199, 0.55));
+    }
+    85% {
+        transform: scale(0.95) translateY(12px) rotate(-370deg);
+    }
+    100% {
+        transform: scale(1) translateY(0) rotate(-360deg);
+    }
+}
+
+/* Cloud pedestal beneath mascot */
+.mascot-cloud-pedestal {
+    position: absolute;
+    bottom: -6px;
+    width: 210px;
+    height: 42px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.95) 0%, rgba(224, 242, 254, 0.8) 60%, rgba(186, 230, 253, 0) 100%);
+    border-radius: 50%;
+    filter: drop-shadow(0 10px 18px rgba(2, 132, 199, 0.28));
+    pointer-events: none;
+    z-index: 1;
+    animation: cloudPedestalFloat 4s ease-in-out infinite alternate;
+}
+
+@keyframes cloudPedestalFloat {
+    0% { transform: scale(0.94) translateY(0); opacity: 0.75; }
+    100% { transform: scale(1.06) translateY(-4px); opacity: 0.95; }
 }
 
 /* Star sparkle orbit around Nimo */
@@ -1879,5 +1926,168 @@ a.btn-skip-outline:active {
     20%, 60% { transform: translateX(-8px); }
     40%, 80% { transform: translateX(8px); }
 }
+
+/* ==========================================
+   Home-matching Island Ocean Navbar Support
+   ========================================== */
+body.nimo-account-theme .ns-navbar.sj-header {
+    background: rgba(255, 255, 255, 0.45) !important;
+    backdrop-filter: blur(20px) saturate(1.35) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.35) !important;
+    border: 1px solid rgba(255, 255, 255, 0.65) !important;
+    box-shadow: 0 10px 30px rgba(2, 132, 199, 0.08) !important;
+}
+
+html[data-theme="dark"] body.nimo-account-theme .ns-navbar.sj-header {
+    background: rgba(15, 37, 56, 0.65) !important;
+    border-color: rgba(56, 189, 248, 0.25) !important;
+    box-shadow: 0 10px 30px rgba(0, 10, 20, 0.4) !important;
+}
+
+html[data-theme="dark"] {
+    --acc-sky-bg: radial-gradient(circle at 75% 15%, rgba(56, 189, 248, 0.14) 0%, transparent 45%),
+                   linear-gradient(180deg, #071426 0%, #0d2238 35%, #143552 70%, #0d2840 100%);
+    --acc-navy-dark: #f0f9ff;
+    --acc-slate: #94a3b8;
+    --acc-muted: #94a3b8;
+    --acc-border: rgba(56, 189, 248, 0.25);
+}
+
+html[data-theme="dark"] .auth-form.nimo-auth-card {
+    background: rgba(15, 37, 56, 0.94) !important;
+    border-color: rgba(56, 189, 248, 0.28) !important;
+    color: #f0f9ff !important;
+    box-shadow: 0 20px 50px rgba(0, 10, 20, 0.5) !important;
+}
+
+html[data-theme="dark"] .form-header-badge {
+    background: rgba(2, 132, 199, 0.2) !important;
+    color: #38bdf8 !important;
+    border-color: rgba(56, 189, 248, 0.3) !important;
+}
+
+html[data-theme="dark"] .nimo-auth-card h1,
+html[data-theme="dark"] .nimo-auth-card h2,
+html[data-theme="dark"] .nimo-auth-card label,
+html[data-theme="dark"] .input-label-text {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .nimo-auth-card .form-intro {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .input-wrapper input {
+    background: rgba(11, 28, 44, 0.85) !important;
+    border-color: rgba(56, 189, 248, 0.3) !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .account-types {
+    background: rgba(11, 28, 44, 0.75) !important;
+    border-color: rgba(56, 189, 248, 0.25) !important;
+}
+
+html[data-theme="dark"] .account-types a {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .account-types a.active {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+}
+
+/* ==========================================
+   Dark Mode Full-Screen Loading Screen
+   ========================================== */
+html[data-theme="dark"] .nimo-loading-overlay.full-screen-mode {
+    background: radial-gradient(circle at 50% 25%, #0e2b47 0%, #071729 45%, #030a13 100%) !important;
+}
+
+html[data-theme="dark"] .fs-cloud {
+    background: rgba(255, 255, 255, 0.08) !important;
+    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.4)) !important;
+}
+
+html[data-theme="dark"] .fs-orb-top {
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(2, 132, 199, 0.15) 60%, transparent 80%) !important;
+}
+
+html[data-theme="dark"] .fs-orb-center {
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, rgba(14, 165, 233, 0.08) 50%, transparent 75%) !important;
+}
+
+html[data-theme="dark"] .fs-top-brand-pill {
+    background: rgba(15, 37, 56, 0.88) !important;
+    border-color: rgba(56, 189, 248, 0.35) !important;
+    border-bottom-color: rgba(56, 189, 248, 0.6) !important;
+    color: #38bdf8 !important;
+    box-shadow: 0 10px 24px rgba(0, 10, 20, 0.5) !important;
+}
+
+html[data-theme="dark"] .fs-top-brand-pill span:last-child {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .fs-portal-aura {
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, rgba(2, 132, 199, 0.25) 50%, transparent 80%) !important;
+}
+
+html[data-theme="dark"] .fs-speech-bubble {
+    background: rgba(15, 37, 56, 0.95) !important;
+    border-color: rgba(56, 189, 248, 0.4) !important;
+    border-bottom-color: #0284c7 !important;
+    box-shadow: 0 14px 32px rgba(0, 10, 20, 0.55) !important;
+}
+
+html[data-theme="dark"] .fs-quote-text {
+    color: #f0f9ff !important;
+}
+
+html[data-theme="dark"] .fs-quote-mark,
+html[data-theme="dark"] .fs-quote-mark-end {
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .fs-speech-tail {
+    background: #0f2538 !important;
+    border-left-color: rgba(56, 189, 248, 0.4) !important;
+    border-top-color: rgba(56, 189, 248, 0.4) !important;
+}
+
+html[data-theme="dark"] .fs-progress-console {
+    background: rgba(15, 37, 56, 0.94) !important;
+    border-color: rgba(56, 189, 248, 0.35) !important;
+    border-bottom-color: #0284c7 !important;
+    box-shadow: 0 20px 50px rgba(0, 10, 20, 0.6) !important;
+}
+
+html[data-theme="dark"] .fs-stage-label {
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .fs-percent-number {
+    color: #ffffff !important;
+    text-shadow: 0 2px 10px rgba(56, 189, 248, 0.4) !important;
+}
+
+html[data-theme="dark"] .fs-progress-track {
+    background: #091a29 !important;
+    border-color: rgba(56, 189, 248, 0.3) !important;
+}
+
+html[data-theme="dark"] .fs-tip-capsule {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .fs-wave-svg.wave-back path {
+    fill: rgba(15, 37, 56, 0.35) !important;
+}
+
+html[data-theme="dark"] .fs-wave-svg.wave-front path {
+    fill: rgba(15, 37, 56, 0.65) !important;
+}
+
+
 
 
