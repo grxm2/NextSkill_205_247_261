@@ -20,7 +20,10 @@
         else
         { <button type="button" data-agent-action="tour">แนะนำเส้นทางเรียน</button> }
         <details class="agent-expression-picker"><summary>ลองท่าทางและสีหน้า <span id="agent-feeling">พร้อมเรียน</span></summary><div id="agent-pose-options" class="agent-pose-grid" role="group" aria-label="ลองท่าทางคู่หู"></div></details>
-        <button type="button" id="agent-pause" aria-pressed="false">พักการเคลื่อนไหว</button>
+        @if (ViewData["OceanCatalog"] is not true)
+        {
+            <button type="button" id="agent-pause" aria-pressed="false">พักการเคลื่อนไหว</button>
+        }
     </div>
     <span id="agent-status" class="agent-sr" role="status" aria-live="polite"></span>
 </div>

@@ -6,14 +6,14 @@
     const scene = document.querySelector('[data-catalog-departure]');
     const catalog = document.querySelector('[data-catalog-ocean]');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    const key = 'nextskill.catalog-voyage.v1';
+    const catalogKey = 'nextskill.catalog-voyage.v1';
+    const islandKey = 'nextskill.journey-arrival';
     const status = overlay.querySelector('.cv-status');
     const skip = overlay.querySelector('.cv-skip');
     const recovery = overlay.querySelector('.cv-recovery');
     const animations = new Set(), delays = new Map();
     let busy = false, fastForward = false, generation = 0, transport, deadline;
-    let source, destination, inertBefore = [];
-    let requestedDestination, requestedSource;
+    let source, inertBefore = [], requested;
     const portalClips = new Map();
 
     function portalPoint(art, x, y, track) {
@@ -63,6 +63,8 @@
     }
     function unlock() { inertBefore.forEach(([node, inert]) => { node.inert = inert; }); inertBefore = []; }
     function cleanup(focus = false) {
+        const fallback = requested?.courseId ? '/Learning/Island' : '/Home/Courses';
+        const previousScroll = focus && requested?.courseId ? requested.scroll : null;
         generation++; busy = false;
         clearTimeout(deadline); transport?.abort(); transport = null;
         finishMotion(); animations.forEach(animation => animation.cancel()); animations.clear();
@@ -76,13 +78,14 @@
             scene.dataset.voyage = scene.dataset.stage === '2' ? 'docked' : 'shore';
             window.NextSkillOceanWorld?.release();
         }
-        requestedDestination = null; requestedSource = null;
+        requested = null;
         unlock();
+        if (previousScroll !== null) window.scrollTo({ top: previousScroll, behavior: 'instant' });
         if (focus) {
             // At the harbor the hero CTA has already left the camera. Return
             // keyboard focus to a visible navigation control instead.
             const visible = node => node && node.getClientRects().length && getComputedStyle(node).visibility !== 'hidden';
-            const target = [source, document.querySelector('.ns-navbar__link[href="/Home/Courses"]'), document.querySelector('[data-navbar-toggle]')].find(visible);
+            const target = [source, document.querySelector(`.ns-navbar__link[href="${fallback}"]`), document.querySelector('[data-navbar-toggle]')].find(visible);
             target?.focus({ preventScroll: true });
         }
         window.NextSkillMotion?.refresh();
@@ -147,25 +150,28 @@
         // clouds cover the final disappearance at the far end of the corridor.
         await Promise.all([travel, cover(run)]);
     }
-    function fail() {
+    function fail(url, courseId) {
         clearTimeout(deadline);
         overlay.dataset.phase = 'error';
         overlay.classList.add('cv-is-covered', 'cv-is-opaque');
-        status.textContent = 'ยังเปิดหน้าคอร์สไม่ได้ ลองอีกครั้งได้เลย';
+        status.textContent = courseId ? 'ยังเปิดเกาะบทเรียนไม่ได้ ลองอีกครั้งได้เลย' : 'ยังเปิดหน้าคอร์สไม่ได้ ลองอีกครั้งได้เลย';
         skip.hidden = true; recovery.hidden = false;
         const retry = recovery.querySelector('[data-cv-retry]');
-        retry.href = destination.href; retry.focus({ preventScroll: true });
+        retry.href = url.href;
+        retry.textContent = courseId ? 'ลองเปิดเกาะของฉันอีกครั้ง' : 'ลองเปิดหน้าคอร์สอีกครั้ง';
+        retry.focus({ preventScroll: true });
     }
-    async function depart(url, trigger) {
+    async function depart({ url, trigger, courseId }) {
         if (busy) return;
-        busy = true; fastForward = false; source = trigger; destination = url;
+        busy = true; fastForward = false; source = trigger;
         const run = ++generation;
         show();
         transport = new AbortController();
         deadline = setTimeout(() => transport?.abort(), 12000);
         // Warm the real GET while sailing; never select a course or change progress here.
+        const targetMarkup = courseId ? 'id="learning-initial-state"' : 'data-catalog-ocean';
         const ready = fetch(url.href, { credentials: 'same-origin', signal: transport.signal, headers: { Accept: 'text/html' } })
-            .then(async response => ({ ok: response.ok && !response.redirected && (await response.text()).includes('data-catalog-ocean') }))
+            .then(async response => ({ ok: response.ok && !response.redirected && (await response.text()).includes(targetMarkup) }))
             .catch(() => ({ ok: false }));
         if (!gentle()) await sail(run);
         if (run !== generation) return;
@@ -173,13 +179,15 @@
         const result = await ready;
         if (run !== generation) return;
         clearTimeout(deadline);
-        if (!result.ok) { fail(); return; }
-        try { sessionStorage.setItem(key, JSON.stringify({ url: url.pathname + url.search, at: Date.now(), skip: fastForward })); } catch {}
+        if (!result.ok) { fail(url, courseId); return; }
+        const marker = { url: url.pathname + url.search, at: Date.now(), skip: courseId ? gentle() : fastForward };
+        if (courseId) Object.assign(marker, { courseId, source: 'home' });
+        try { sessionStorage.setItem(courseId ? islandKey : catalogKey, JSON.stringify(marker)); } catch {}
         location.assign(url.href);
     }
     async function arrive() {
         let marker;
-        try { marker = JSON.parse(sessionStorage.getItem(key)); sessionStorage.removeItem(key); } catch {}
+        try { marker = JSON.parse(sessionStorage.getItem(catalogKey)); sessionStorage.removeItem(catalogKey); } catch {}
         const age = Date.now() - marker?.at;
         if (!catalog || !marker || marker.url !== location.pathname + location.search || age < 0 || age >= 30000) {
             root.classList.remove('cv-arrival-pending'); return;
@@ -243,16 +251,20 @@
             const link = event.target.closest('a[href]');
             if (!link || overlay.contains(link) || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || link.hasAttribute('download') || link.target && link.target !== '_self') return;
             const url = new URL(link.href, location.href);
-            if (url.origin !== location.origin || !/^\/Home\/Courses\/?$/i.test(url.pathname)) return;
+            if (url.origin !== location.origin) return;
+            const courseId = Number(url.searchParams.get('courseId'));
+            const resume = link.hasAttribute('data-continue-voyage') && url.pathname.toLowerCase() === '/learning/island' && Number.isSafeInteger(courseId) && courseId > 0;
+            if (!resume && !/^\/Home\/Courses\/?$/i.test(url.pathname)) return;
             event.preventDefault();
             if (busy) return;
-            requestedDestination = url; requestedSource = link;
+            const trip = { url, trigger: link, courseId: resume ? courseId : null, scroll: requested?.scroll ?? scrollY };
+            requested = trip;
             scene.dataset.cvPhase = 'traveling';
-            if (!await window.NextSkillOceanWorld?.travelToHarbor()) depart(url, link);
+            if (!await window.NextSkillOceanWorld?.travelToHarbor() && requested === trip) depart(trip);
         });
         document.addEventListener('nextskill:ocean-docked', () => {
             if (busy) return;
-            depart(requestedDestination || new URL('/Home/Courses', location.origin), requestedSource || scene.querySelector('[data-catalog-voyage]'));
+            depart(requested || { url: new URL('/Home/Courses', location.origin), trigger: scene.querySelector('[data-catalog-voyage]') });
         });
         window.NextSkillMotion?.subscribe(state => {
             scene.classList.toggle('ow-motion-paused', !state.ambientAllowed);
@@ -262,7 +274,11 @@
     reduced.addEventListener('change', () => { if (busy && reduced.matches) finishMotion(); });
     document.addEventListener('visibilitychange', () => { if (busy && document.hidden) finishMotion(); });
     window.addEventListener('resize', () => { if (busy) finishMotion(); });
-    window.addEventListener('pagehide', () => cleanup());
+    window.addEventListener('pagehide', () => {
+        const previousScroll = requested?.courseId ? requested.scroll : null;
+        cleanup();
+        if (previousScroll !== null) window.scrollTo({ top: previousScroll, behavior: 'instant' });
+    });
     window.addEventListener('pageshow', event => { if (event.persisted) cleanup(); });
     if (catalog) arrive();
     if (catalog) {

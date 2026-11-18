@@ -76,6 +76,10 @@
     <script src="~/js/journey-clouds.js" asp-append-version="true" defer></script>
     <script src="~/js/island-details.js" asp-append-version="true" defer></script>
     <script src="~/js/archipelago.js" asp-append-version="true" defer></script>
+    @if (ViewData["JourneyMode"] as string == "practice")
+    {
+        <script src="~/js/lesson-video.js" asp-append-version="true" defer></script>
+    }
     <script src="~/js/smart-journey.js" asp-append-version="true" defer></script>
     <script src="~/js/course-harbor.js" asp-append-version="true" defer></script>
 @if (ViewData["JourneyMode"]?.ToString() == "learn") { <script src="~/js/island-water-motion.js" asp-append-version="true" defer></script><script src="~/js/underwater-journey.js" asp-append-version="true" defer></script> }

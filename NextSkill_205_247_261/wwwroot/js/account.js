@@ -612,6 +612,8 @@
     // Dynamic Navbar Upgrade (Matches Home Page)
     // ==========================================
     function initHomeNavbar() {
+        if (document.querySelector('[data-navbar]')) return;
+
         // Ensure navbar CSS files are loaded
         if (!document.querySelector('link[href*="navbar.css"]')) {
             const link = document.createElement('link');

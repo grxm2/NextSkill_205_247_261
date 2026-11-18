@@ -1,6 +1,23 @@
     <div id="lesson-loading" class="sj-lesson-loading" role="status">กำลังเตรียมบทเรียนและบันทึกจุดที่เรียนค้างไว้…</div>
     <div id="lesson-content" hidden>
         <div class="lesson-step-status"><span id="lesson-step-caption">อ่านตัวอย่าง</span><progress id="lesson-step-progress" value="0" max="4" aria-label="ขั้นตอนการฝึก"></progress><div id="practice-question-steps" class="practice-question-steps" aria-hidden="true"></div></div>
+        @if (ViewData["JourneyMode"] as string == "practice")
+        {
+            <section id="lesson-video" class="lesson-video" aria-labelledby="lesson-video-title" hidden>
+                <div class="lesson-video-heading">
+                    <h3 id="lesson-video-title">วิดีโอบทเรียน</h3>
+                    <span id="lesson-video-source"></span>
+                </div>
+                <div class="lesson-video-frame">
+                    <div id="lesson-video-player"></div>
+                    <div id="lesson-video-placeholder">
+                        <button id="lesson-video-play" class="ns-button ns-button--primary" type="button">เล่นวิดีโอจาก YouTube</button>
+                    </div>
+                </div>
+                <p id="lesson-video-status" role="status"></p>
+                <button id="lesson-video-retry" class="ns-button ns-button--secondary" type="button" hidden>บันทึกการดูอีกครั้ง</button>
+            </section>
+        }
         <div id="lesson-reading" class="sj-lesson-reading"></div>
         <form id="lesson-quiz" novalidate>
             <div id="lesson-questions"></div>

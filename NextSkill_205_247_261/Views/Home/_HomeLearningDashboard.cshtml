@@ -1,0 +1,90 @@
+@model HomeDashboardViewModel
+@{
+    var signedIn = User.Identity?.IsAuthenticated == true;
+    var recommendation = Model.PopularCourses.OrderBy(course => course.Id != 5)
+        .ThenByDescending(course => course.Featured).FirstOrDefault();
+}
+<section class="ow-intro learning-dashboard" data-home-dashboard
+         data-status="@(signedIn ? "loading" : "guest")" aria-labelledby="home-dashboard-title">
+    <h1 class="sr-only" id="home-dashboard-title">แดชบอร์ดการเรียน</h1>
+
+    <section class="hd-card hd-glass hd-current" aria-labelledby="hd-course-label">
+        <h2 id="hd-course-label"><span class="hd-icon hd-icon--book" aria-hidden="true"></span><span data-dashboard-course-label>เริ่มเรียน</span></h2>
+        <div id="hd-active-course" class="hd-active-course" data-dashboard-active-course hidden>
+            <h3 data-dashboard-active-title></h3>
+            <div class="hd-progress">
+                <div class="hd-ring" data-dashboard-ring aria-hidden="true"><strong data-dashboard-percent></strong></div>
+                <div class="hd-progress-copy">
+                    <p data-dashboard-progress></p>
+                    <p class="hd-next-lesson" data-dashboard-next hidden><span data-dashboard-next-label>บทถัดไป</span> <strong data-dashboard-next-title></strong></p>
+                    <progress class="hd-meter" data-dashboard-meter max="100" value="0" aria-label="ความคืบหน้าของคอร์สปัจจุบัน"></progress>
+                </div>
+            </div>
+        </div>
+        <div class="hd-start" data-dashboard-start>
+            <p data-dashboard-message role="status">@(signedIn ? "กำลังโหลดคอร์สของคุณ…" : "เลือกคอร์สแรก แล้วเริ่มเรียนไปกับ Nimo")</p>
+            <div data-dashboard-recommendations hidden="@signedIn">
+                @if (recommendation is not null)
+                {
+                    <a class="hd-recommendation" asp-controller="Home" asp-action="Details" asp-route-id="@recommendation.Id">
+                        <span>แนะนำ</span> <strong>@recommendation.Title</strong>
+                    </a>
+                }
+            </div>
+        </div>
+
+        <nav class="hd-actions" aria-label="เริ่มหรือเรียนต่อ">
+            <a class="hd-button hd-button--resume" aria-describedby="hd-active-course" data-continue-voyage hidden>
+                <span data-dashboard-continue-label>เริ่มเรียน</span><span aria-hidden="true">→</span>
+            </a>
+            <a class="hd-button hd-button--catalog" asp-controller="Home" asp-action="Courses" data-catalog-voyage>
+                <span data-dashboard-catalog-label>เริ่มเลือกคอร์ส</span>
+            </a>
+        </nav>
+    </section>
+
+    <section class="hd-card hd-glass hd-mission-card" aria-labelledby="hd-today-title">
+        <h2 id="hd-today-title"><span class="hd-icon hd-icon--mission" aria-hidden="true"></span>ภารกิจวันนี้</h2>
+        <ul class="hd-missions hd-missions--preview">
+            @foreach (var goal in LearningDailyGoals.All)
+            {
+                <li data-dashboard-goal="@goal.Key" data-target="@goal.Target">
+                    <span>@goal.Title</span>
+                    <span class="hd-goal-state" data-dashboard-goal-state hidden>
+                        <span class="hd-goal-check" aria-hidden="true" hidden></span><span data-dashboard-goal-count></span>
+                    </span>
+                    <progress class="hd-meter hd-goal-meter" max="@goal.Target" value="0" aria-label="@goal.Title" hidden></progress>
+                </li>
+            }
+        </ul>
+        <button class="hd-mission-button" type="button" aria-haspopup="dialog" aria-controls="hd-mission-dialog" data-dashboard-missions-open>
+            ดูทั้งหมด<span class="hd-chevron" aria-hidden="true"></span>
+        </button>
+    </section>
+
+    <dl class="hd-stats hd-glass" aria-label="สถิติการเรียนรวม">
+        <div><dt><span class="hd-icon hd-icon--fire" aria-hidden="true"></span>ต่อเนื่อง</dt><dd><strong data-dashboard-stat="streak">—</strong> วัน</dd></div>
+        <div><dt><span class="hd-icon hd-icon--trophy" aria-hidden="true"></span>เรียนจบ</dt><dd><strong data-dashboard-stat="complete">—</strong> คอร์ส</dd></div>
+        <div><dt><span class="hd-icon hd-icon--star" aria-hidden="true"></span>XP รวม</dt><dd><strong data-dashboard-stat="xp">—</strong></dd></div>
+    </dl>
+    <span class="hd-preview-note" data-dashboard-preview hidden>ความคืบหน้าในโหมดทดลอง</span>
+
+    <dialog class="hd-glass hd-mission-dialog" id="hd-mission-dialog" aria-labelledby="hd-missions-title">
+        <div class="hd-card-heading">
+            <h2 id="hd-missions-title">ภารกิจวันนี้</h2>
+            <form method="dialog"><button class="hd-dialog-close" type="submit" aria-label="ปิดภารกิจวันนี้" autofocus>×</button></form>
+        </div>
+        <ul class="hd-missions">
+            @foreach (var goal in LearningDailyGoals.All)
+            {
+                <li data-dashboard-goal="@goal.Key" data-target="@goal.Target">
+                    <span>@goal.Title</span>
+                    <span class="hd-goal-state" data-dashboard-goal-state hidden>
+                        <span class="hd-goal-check" aria-hidden="true" hidden></span><span data-dashboard-goal-count></span>
+                    </span>
+                    <progress class="hd-meter hd-goal-meter" max="@goal.Target" value="0" aria-label="@goal.Title" hidden></progress>
+                </li>
+            }
+        </ul>
+    </dialog>
+</section>

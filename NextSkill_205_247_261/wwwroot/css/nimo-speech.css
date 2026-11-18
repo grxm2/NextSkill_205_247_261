@@ -23,6 +23,21 @@
     border-bottom: 1px solid #ffffffb0; border-right: 1px solid #ffffffb0;
     background: #e6f9ffed; border-radius: 0 0 4px 0;
 }
+#nimo-speech[data-placement="below"] .nimo-speech-card { transform-origin: var(--nimo-tail,50%) 0; }
+#nimo-speech[data-placement="below"] .nimo-speech-card::after {
+    bottom: auto; top: -6px; transform: translateX(-50%) rotate(225deg);
+}
+#nimo-speech:is([data-placement="left"], [data-placement="right"]) .nimo-speech-card::after {
+    bottom: auto; top: var(--nimo-tail-y,50%);
+}
+#nimo-speech[data-placement="left"] .nimo-speech-card { transform-origin: right var(--nimo-tail-y,50%); }
+#nimo-speech[data-placement="left"] .nimo-speech-card::after {
+    left: auto; right: -6px; transform: translateY(-50%) rotate(-45deg);
+}
+#nimo-speech[data-placement="right"] .nimo-speech-card { transform-origin: left var(--nimo-tail-y,50%); }
+#nimo-speech[data-placement="right"] .nimo-speech-card::after {
+    left: -6px; transform: translateY(-50%) rotate(135deg);
+}
 #nimo-speech[data-open="true"] .nimo-speech-card { opacity: 1; transform: none; }
 .nimo-speech-heading { display: flex; align-items: center; gap: 7px; min-height: 22px; padding-right: 24px; }
 .nimo-speech-heading strong { font-size: 13px; font-weight: 600; color: #087b99; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

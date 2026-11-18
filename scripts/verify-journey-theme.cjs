@@ -49,7 +49,7 @@ const output = path.resolve('artifacts/journey-theme');
                 await page.locator('.sj-lesson-island').first().waitFor();
                 assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
                 assert.equal(await page.locator('.learning-celestial .journey-moon').count(),1);
-                const colors=await page.evaluate(()=>['#lesson-map-title','.learning-heading h1','#course-progress-caption'].map(selector=>getComputedStyle(document.querySelector(selector)).color));
+                const colors=await page.evaluate(()=>['#locate-current','.learning-heading h1','#course-progress-caption'].map(selector=>getComputedStyle(document.querySelector(selector)).color));
                 const luminance=color=>{
                     const channels=color.match(/[\d.]+/g).slice(0,3).map(x=>Number(x)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4);
                     return channels[0]*.2126+channels[1]*.7152+channels[2]*.0722;

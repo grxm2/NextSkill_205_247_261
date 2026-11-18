@@ -63,6 +63,7 @@ public string CoverArt => "/images/courses/" + (Id switch
     13 => "english-for-work",
     1 => "ux-research",
     5 => "javascript-basics",
+    Services.LearningCatalog.JavaScriptDomCourseId => "javascript-for-the-web",
     2 => "design-systems",
     3 => "product-strategy",
     4 => "no-code-prototyping",

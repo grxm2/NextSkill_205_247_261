@@ -5,11 +5,14 @@ namespace NextSkill_205_247_261.Services;
 // Assessment keys stay server-side; the public API projects Questions without CorrectChoice.
 public sealed record LearningQuizDefinition(int Id, string Prompt, string[] Choices, int CorrectChoice, string Explanation);
 public sealed record LearningLessonDefinition(int Id, string Title, string IslandName, string Summary,
-    LearningReading[] Reading, LearningQuizDefinition[] Questions, int Minutes = 8, int Xp = 50);
+    LearningReading[] Reading, LearningQuizDefinition[] Questions, int Minutes = 8, int Xp = 50, LearningLessonVideo? Video = null)
+{
+    public int RequiredCorrect => Video is null ? Questions.Length : (Questions.Length + 1) / 2;
+}
 public sealed record LearningCourseDefinition(int Id, string Title, string Category, string Description,
     string IslandKind, LearningLessonDefinition[] Lessons);
 
-public static class LearningCatalog
+public static partial class LearningCatalog
 {
     private static LearningQuizDefinition Q(int id, string prompt, int answer, string explanation, params string[] choices)
         => new(id, prompt, choices, answer, explanation);
@@ -17,6 +20,7 @@ public static class LearningCatalog
 
     public static IReadOnlyList<LearningCourseDefinition> Courses { get; } =
     [
+        CreateJavaScriptDomCourse(),
         new(13, "English for Work", "Languages", "ฝึกภาษาอังกฤษที่ใช้จริงในการแนะนำตัว อีเมล การประชุม และข้อเสนอแนะ", "english",
         [
             new(1, "แนะนำตัวในที่ทำงาน", "เกาะเริ่มบทสนทนา", "แนะนำชื่อ บทบาท และสิ่งที่รับผิดชอบให้คู่สนทนาเข้าใจในสามประโยค",
@@ -131,8 +135,7 @@ public static class LearningCatalog
                     var dynamicQuiz = lQuestions.Select((q, qIdx) => new LearningQuizDefinition(
                         qIdx + 1, q.Prompt, q.Choices.ToArray(), q.CorrectChoice, q.Explanation ?? ""
                     )).ToArray();
-                    return new LearningLessonDefinition(lesson.Id, lesson.Title, lesson.IslandName, lesson.Summary,
-                        lesson.Reading, dynamicQuiz, lesson.Minutes, lesson.Xp);
+                    return lesson with { Questions = dynamicQuiz };
                 }
                 return lesson;
             }).ToList();
@@ -200,7 +203,8 @@ public static class LearningCatalog
 
     public static LearningLessonSummary Summary(LearningLessonDefinition lesson, string status)
         => new(lesson.Id, lesson.Title, lesson.IslandName, lesson.Xp, lesson.Minutes, status);
-    public static LearningLessonContent PublicLesson(int courseId, LearningLessonDefinition lesson, string status)
+    public static LearningLessonContent PublicLesson(int courseId, LearningLessonDefinition lesson, string status, bool videoUnlocked)
         => new(courseId, lesson.Id, lesson.Title, lesson.IslandName, lesson.Summary, lesson.Reading,
-            lesson.Questions.Select(q => new LearningQuestion(q.Id, q.Prompt, q.Choices)).ToArray(), lesson.Xp, lesson.Minutes, status);
+            videoUnlocked ? lesson.Questions.Select(q => new LearningQuestion(q.Id, q.Prompt, q.Choices)).ToArray() : [],
+            lesson.Xp, lesson.Minutes, status, lesson.Questions.Length, lesson.RequiredCorrect, lesson.Video, videoUnlocked);
 }

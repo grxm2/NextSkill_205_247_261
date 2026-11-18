@@ -115,7 +115,6 @@ html[data-theme="dark"] .knowledge-sanctum .sanctum-art{filter:brightness(.85) s
  .catalog-page .catalog-hero h1{font-size:26px;letter-spacing:-.5px;line-height:1.5}
  .catalog-page .catalog-intro{font-size:13px}
  .catalog-page .catalog-desktop-break{display:none}
- .catalog-page .ns-course-eyebrow{font-size:11px}
  .cv-caption{padding:10px 16px}
 }
 @media(max-width:390px){

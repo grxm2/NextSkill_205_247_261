@@ -221,5 +221,21 @@
         "DurationMinutes": 10
       }
     ]
+  },
+  {
+    "Id": 16,
+    "Title": "JavaScript สำหรับหน้าเว็บ",
+    "Category": "Technology",
+    "Level": "Beginner",
+    "Units": 3,
+    "Featured": true,
+    "Description": "ต่อ JavaScript เข้ากับ HTML เพิ่มเนื้อหาลงใน DOM และควบคุมหน้าตาด้วยคลาส CSS ผ่านคลิปสั้น 3 บท",
+    "Instructor": "CodeWithHarry",
+    "Skills": ["JavaScript", "HTML", "DOM", "CSS"],
+    "Lessons": [
+      { "Id": 1, "Title": "เชื่อม JavaScript เข้ากับ HTML", "DurationMinutes": 9 },
+      { "Id": 2, "Title": "เพิ่มข้อความและองค์ประกอบใน DOM", "DurationMinutes": 7 },
+      { "Id": 3, "Title": "เปลี่ยนคลาส CSS ด้วย JavaScript", "DurationMinutes": 10 }
+    ]
   }
 ]

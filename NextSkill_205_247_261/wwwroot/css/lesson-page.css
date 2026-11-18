@@ -40,6 +40,15 @@ body[data-journey-mode="practice"] .skip-link:focus{visibility:visible;top:12px;
 .practice-panel #lesson-reading .sj-reading-section{border:0;border-bottom:1px solid #d6e8f2;border-radius:0;background:transparent;padding:0 0 18px}
 .practice-panel #lesson-reading h3{font-size:18px;font-weight:500;margin-bottom:8px}
 .practice-panel #lesson-reading p{font-size:16px;line-height:1.9;color:#416b81}
+.lesson-video{margin-bottom:24px}
+.lesson-video-heading{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;margin-bottom:10px}
+.lesson-video-heading h3{margin:0;font-size:18px;font-weight:600}
+.lesson-video-heading span,#lesson-video-status{color:var(--ns-muted);font-size:14px}
+.lesson-video-frame{position:relative;aspect-ratio:16/9;min-height:200px;overflow:hidden;border:1px solid var(--ns-border);border-radius:16px;background:#102f48}
+#lesson-video-player,#lesson-video-player iframe,#lesson-video-placeholder{position:absolute;inset:0;width:100%;height:100%;border:0}
+#lesson-video-placeholder{display:grid;place-items:center;padding:14px;background:linear-gradient(#092a4266,#092a427a),url("../images/courses/javascript-for-the-web.jpg") center/cover}
+#lesson-video-status{margin:10px 0 0;line-height:1.65}
+#lesson-video-retry{margin-top:8px}
 .practice-panel #lesson-result{margin:0;padding:22px}
 .practice-panel #lesson-result h3{font-size:25px}
 .practice-panel #lesson-result p,.practice-panel .lesson-feedback-item{font-size:15px}

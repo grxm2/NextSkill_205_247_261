@@ -5,6 +5,8 @@
     const body = document.body;
     const signedIn = body.dataset.authenticated === 'true';
     const authenticated = signedIn || body.dataset.guestPreview === 'true';
+    const dashboard = $('[data-home-dashboard]');
+    const stateEndpoint = dashboard ? 'State?includeActivity=true' : 'State';
     const initial = $('#learning-initial-state');
     const boot = initial ? JSON.parse(initial.textContent) : null;
     let state = boot?.state || null;
@@ -27,6 +29,8 @@
     const courseDialog = $('#course-harbor-dialog');
     const lessonDialog = $('#lesson-dialog');
     const lessonPage = !!lessonDialog?.hasAttribute('data-lesson-page');
+    const videoPlayer = window.NextSkillLessonVideo;
+    const videoLocked = () => !!lesson?.video && !lesson.videoUnlocked;
     const lessonOpen = () => lessonPage || lessonDialog.open;
     const leaveDialog = $('#leave-lesson-dialog');
     const reduce = matchMedia('(prefers-reduced-motion: reduce)');
@@ -69,6 +73,7 @@
         if (!response.ok) {
             const error = new Error(result?.message || (response.status === 400 ? 'ข้อมูลหรือสิทธิ์การส่งไม่ครบ กรุณารีเฟรชแล้วลองใหม่' : 'ยังเชื่อมต่อข้อมูลการเรียนไม่ได้ กรุณาลองอีกครั้ง'));
             error.status = response.status;
+            error.code = result?.code;
             throw error;
         }
         if (!result) throw new Error('ข้อมูลตอบกลับไม่สมบูรณ์ กรุณาลองเชื่อมต่ออีกครั้ง');
@@ -90,6 +95,7 @@
         $$('.sj-nav-xp').forEach(element => { element.hidden = false; });
         if (courseId) renderIsland();
         renderCourses();
+        dashboard?.dispatchEvent(new CustomEvent('nextskill:dashboard-state', { detail: state }));
     }
     function renderIsland() {
         if (!$('#lesson-route')) return;
@@ -97,7 +103,6 @@
         if (!course) return;
         const current = targetLesson(course);
         const hasProgress = course.completedLessons.length > 0;
-        const hasHistory = state.courses.some(item => item.completedLessons.length > 0);
         $('#current-course-title').textContent = course.title;
         $('#current-island-number').textContent = `ด่าน ${course.currentIslandId} / ${course.totalLessons}`;
         $('#current-island-title').textContent = course.isComplete ? 'ครบทุกด่านแล้ว เก่งขึ้นอีกขั้น!' : current.title;
@@ -106,7 +111,6 @@
             ? 'ทบทวนบทเรียนที่อยากฝึกเพิ่ม หรือเปิดตู้เลือกเส้นทางใหม่ได้ทุกเมื่อ'
             : hasProgress ? 'บทเรียนที่ค้างไว้พร้อมแล้ว เรียนต่อได้เลย ไม่ต้องเริ่มการเดินทางใหม่'
                 : 'พร้อมเริ่มด่านแรกแล้ว';
-        $('#learner-greeting').textContent = `${hasHistory ? 'กลับมาแล้ว' : 'ยินดีต้อนรับ'}, ${boot?.learnerName || 'ผู้เรียน'}`;
         $('#current-lesson-minutes').textContent = `${current.minutes} นาที · มีแบบฝึกท้ายบท`;
         $('#current-lesson-xp').textContent = course.isComplete ? 'ทบทวนได้ ไม่เพิ่ม XP ซ้ำ' : `ผ่านบทเรียน รับ ${current.xp} XP`;
         $('#resume-learning').replaceChildren(document.createTextNode(course.isComplete ? 'ทบทวนบทเรียน' : hasProgress ? 'เรียนต่อ' : 'เริ่มเรียน'), node('span', '', '→'));
@@ -251,6 +255,7 @@
         lessonDirty = false;
         lessonRequest++;
         lessonController?.abort();
+        videoPlayer?.reset();
         uncertainAttempt = null;
         recoveryBusy = false;
         if (lessonDialog.open) lessonDialog.close();
@@ -258,6 +263,7 @@
         if (lessonPage && navigate) location.assign(`/Learning/Island?courseId=${courseId}`);
     }
     function clearLesson() {
+        videoPlayer?.reset();
         lesson = null; lessonDirty = false; nextLessonId = null;
         selections = new Map(); lastFeedback = []; uncertainAttempt = null; stepIndex = -1;
         $('#lesson-loading').hidden = false;
@@ -301,7 +307,16 @@
             setState(checkpoint);
             const content = await api(`Lesson?courseId=${id}&lessonId=${lessonId}`, undefined, signal);
             if (requestId !== lessonRequest) return;
-            lesson = content; renderLesson();
+            lesson = content;
+            if (content.video) videoPlayer?.mount(content, async () => {
+                const unlocked = await api('CompleteVideo', {
+                    courseId: id, lessonId, videoId: content.video.youTubeId
+                }, signal);
+                if (requestId !== lessonRequest) return;
+                lesson = unlocked;
+                renderLesson(false);
+            });
+            renderLesson();
         } catch (error) {
             if (error.name === 'AbortError' || requestId !== lessonRequest) return;
             $('#lesson-loading').hidden = true;
@@ -310,7 +325,7 @@
             $('#retry-lesson').hidden = error.status === 401;
         }
     }
-    function renderLesson() {
+    function renderLesson(focus = true) {
         $('#lesson-loading').hidden = true;
         $('#lesson-content').hidden = false;
         $('#lesson-location').textContent = `ด่าน ${lesson.id} · ${lesson.islandName} · ${lesson.minutes} นาที`;
@@ -338,26 +353,31 @@
         }));
         if (lessonPage) $('#practice-question-steps').replaceChildren(...lesson.questions.map(() => node('span')));
         showStep(-1, false);
-        $('#lesson-title').focus({ preventScroll: true });
-        window.NextSkillBuddyMotion?.play('read');
+        if (focus) {
+            $('#lesson-title').focus({ preventScroll: true });
+            window.NextSkillBuddyMotion?.play('read');
+        }
     }
     function showStep(index, focus = true) {
         if (!lesson) return;
-        stepIndex = Math.max(-1, Math.min(index, lesson.questions.length - 1));
+        stepIndex = videoLocked() ? -1 : Math.max(-1, Math.min(index, lesson.questions.length - 1));
         $('#lesson-result').hidden = true;
         $('#lesson-content').hidden = false;
         $('#lesson-reading').hidden = stepIndex !== -1;
+        videoPlayer?.setVisible(stepIndex < 0);
         $$('#lesson-questions fieldset').forEach((field, i) => { field.hidden = i !== stepIndex; });
-        $('#lesson-step-caption').textContent = stepIndex < 0 ? 'อ่านตัวอย่างก่อนเริ่ม' : `ข้อที่ ${stepIndex + 1} จาก ${lesson.questions.length}`;
-        $('#lesson-step-progress').max = lesson.questions.length + 1;
+        $('#lesson-step-caption').textContent = stepIndex < 0 ? (lesson.video ? 'วิดีโอและสรุปบทเรียน' : 'อ่านตัวอย่างก่อนเริ่ม') : `ข้อที่ ${stepIndex + 1} จาก ${lesson.questions.length}`;
+        $('#lesson-step-progress').max = (lesson.questionCount ?? lesson.questions.length) + 1;
         $('#lesson-step-progress').value = stepIndex + 1;
         $('#lesson-step-back').hidden = stepIndex < 0;
         if (lessonPage) $('#lesson-step-back').disabled = stepIndex <= 0;
         $('#lesson-reading-again').hidden = stepIndex < 0;
-        $('#lesson-step-next').hidden = stepIndex === lesson.questions.length - 1;
+        $('#lesson-step-next').hidden = stepIndex >= 0 && stepIndex === lesson.questions.length - 1;
+        $('#lesson-step-next').disabled = videoLocked();
         $('#lesson-step-next').textContent = stepIndex < 0 ? 'เริ่มแบบทดสอบ →' : 'ข้อต่อไป →';
-        $('#submit-lesson').hidden = stepIndex !== lesson.questions.length - 1;
-        $('#lesson-nimo-message').textContent = stepIndex < 0 ? 'ค่อย ๆ อ่านตัวอย่าง แล้วลองใช้ไปด้วยกันนะ' : 'เลือกคำตอบที่เหมาะที่สุด เปลี่ยนคำตอบก่อนส่งได้เสมอ';
+        $('#submit-lesson').hidden = stepIndex < 0 || stepIndex !== lesson.questions.length - 1;
+        $('#lesson-nimo-message').textContent = videoLocked() ? 'ดูวิดีโอให้ถึงตอนจบ แล้วค่อยเริ่มตอบคำถามนะ'
+            : stepIndex < 0 ? 'ค่อย ๆ อ่านตัวอย่าง แล้วลองใช้ไปด้วยกันนะ' : 'เลือกคำตอบที่เหมาะที่สุด เปลี่ยนคำตอบก่อนส่งได้เสมอ';
         lessonDialog.scrollTop = 0;
         if (lessonPage) {
             $('#lesson-page-heading').textContent = stepIndex < 0 ? 'เตรียมตัวก่อนทำแบบทดสอบ' : 'แบบทดสอบท้ายบท';
@@ -374,12 +394,14 @@
     }
     function updatePracticeProgress() {
         if (!lessonPage || !lesson) return;
-        const total = lesson.questions.length;
+        const total = lesson.questionCount ?? lesson.questions.length;
+        const required = lesson.requiredCorrect ?? total;
         $('#practice-answered-count').textContent = `${selections.size} / ${total}`;
         $('#practice-answer-progress').max = total;
         $('#practice-answer-progress').value = selections.size;
         $('#practice-question-count').textContent = `${total} ข้อ`;
         $('#practice-total-score').textContent = `${total} คะแนน`;
+        $('#practice-pass-rule').textContent = required === total ? 'ตอบถูกทุกข้อ' : `ถูกอย่างน้อย ${required} จาก ${total} ข้อ`;
         $$('#practice-question-steps span').forEach((segment,index) => {
             segment.classList.toggle('is-current', index === stepIndex);
             segment.classList.toggle('is-answered', selections.has(lesson.questions[index].id));
@@ -400,7 +422,10 @@
         ['submit-lesson','close-lesson','lesson-step-back','lesson-step-next','lesson-reading-again','check-save-status','retry-submission','leave-unconfirmed'].forEach(id => { $('#'+id).disabled = busy; });
         $('#submit-lesson').textContent = busy ? 'กำลังตรวจและบันทึกผล…' : 'ตรวจคำตอบ →';
         $('#lesson-quiz').setAttribute('aria-busy', String(busy));
-        if (lessonPage && !busy) $('#lesson-step-back').disabled = stepIndex <= 0;
+        if (!busy) {
+            $('#lesson-step-next').disabled = videoLocked();
+            if (lessonPage) $('#lesson-step-back').disabled = stepIndex <= 0;
+        }
     }
     function renderResult(result, wasCourseComplete) {
         lastFeedback = result.feedback;
@@ -409,12 +434,16 @@
         $('#submission-recovery').hidden = true;
         $('#lesson-error').hidden = true;
         $('#lesson-content').hidden = true;
+        videoPlayer?.setVisible(false);
+        const requiresReview = !result.passed && !!lesson.video;
         const panel = $('#lesson-result'); panel.hidden = false; panel.dataset.passed = String(result.passed);
         if (lessonPage) { $('#lesson-page-heading').textContent = 'ผลแบบทดสอบ'; $('#lesson-summary').hidden = true; }
         $('.sj-result-symbol').textContent = result.passed ? '✓' : '↻';
         $('#lesson-result-eyebrow').textContent = `${result.score} / ${result.totalQuestions} ข้อ · ผ่านเมื่อถูก ${result.requiredCorrect} ข้อ`;
         $('#lesson-result-title').textContent = result.passed ? (result.alreadyCompleted ? 'ทบทวนเรียบร้อยแล้ว' : 'ทำได้แล้ว อีกด่านที่คุณผ่าน!') : 'อีกนิดเดียว ลองใช้คำแนะนำดูนะ';
-        $('#lesson-result-message').textContent = result.passed ? (result.alreadyCompleted ? 'ผลการเรียนเดิมอยู่ครบ บทเรียนนี้รับรางวัลแล้ว จึงไม่เพิ่ม XP ซ้ำ' : result.reward) : 'ดูคำอธิบาย แล้วกลับไปแก้คำตอบได้ คำตอบเดิมของคุณยังอยู่ครบ';
+        $('#lesson-result-message').textContent = requiresReview ? result.reward
+            : result.passed ? (result.alreadyCompleted ? 'ผลการเรียนเดิมอยู่ครบ บทเรียนนี้รับรางวัลแล้ว จึงไม่เพิ่ม XP ซ้ำ' : result.reward)
+            : 'ดูคำอธิบาย แล้วกลับไปแก้คำตอบได้ คำตอบเดิมของคุณยังอยู่ครบ';
         $('#lesson-result-feedback').replaceChildren(...result.feedback.map(item => {
             const box = node('article', 'lesson-feedback-item'); box.dataset.correct = String(item.correct);
             const question = lesson.questions.find(q => q.id === item.questionId);
@@ -422,25 +451,27 @@
             return box;
         }));
         const saveCopy = signedIn ? 'บันทึกกับบัญชีแล้ว' : 'บันทึกในโหมดทดลองของเซสชันนี้';
-        $('#lesson-reward').textContent = result.awardedXp ? `+${result.awardedXp} XP · ${saveCopy}` : result.passed ? `ทบทวนแล้ว · ${saveCopy}` : 'ยังไม่ได้รับ XP · ลองแก้คำตอบได้';
+        $('#lesson-reward').textContent = result.awardedXp ? `+${result.awardedXp} XP · ${saveCopy}`
+            : result.passed ? `ทบทวนแล้ว · ${saveCopy}` : requiresReview ? 'ยังไม่ได้รับ XP ในรอบนี้' : 'ยังไม่ได้รับ XP · ลองแก้คำตอบได้';
         const progress = viewedCourse();
         nextLessonId = result.passed && !progress.isComplete ? targetLesson(progress).id : null;
         $('#next-island').hidden = !nextLessonId;
         $('#choose-next-course').hidden = !(result.passed && progress.isComplete);
         $('#edit-lesson-answers').hidden = result.passed;
+        $('#edit-lesson-answers').textContent = requiresReview ? 'กลับไปทบทวนและสอบใหม่ →' : 'แก้คำตอบ →';
         $('#finish-learning').textContent = result.passed ? 'กลับไปแผนที่เกาะ' : 'พักไว้ แล้วลองอีกครั้งภายหลัง';
         $('#lesson-nimo-message').textContent = result.passed ? (result.alreadyCompleted ? 'ได้ฝึกอีกครั้งแล้ว เก่งขึ้นทีละก้าวนะ' : 'เห็นความตั้งใจของคุณแล้ว ไปด้วยกันต่อได้เลย') : 'ลองดูคำอธิบาย เราค่อย ๆ แก้ไปด้วยกันนะ';
         if (!result.passed) window.NextSkillBuddyMotion?.play('retry');
         else if (!result.alreadyCompleted) window.NextSkillBuddyMotion?.play(progress.isComplete && !wasCourseComplete ? 'proud' : 'celebrate');
         else window.NextSkillBuddyMotion?.play('nod');
-        tell(result.passed ? `ยืนยันผลแล้ว ${saveCopy}` : `ตอบถูก ${result.score} ข้อ ดูคำอธิบายและแก้คำตอบได้`);
+        tell(result.passed ? `ยืนยันผลแล้ว ${saveCopy}` : requiresReview ? result.reward : `ตอบถูก ${result.score} ข้อ ดูคำอธิบายและแก้คำตอบได้`);
         $('#lesson-result-title').focus({preventScroll:true});
         if (lessonPage) positionPractice();
         else panel.scrollIntoView({behavior:'instant',block:'nearest'});
     }
     async function submitLesson(event) {
         event.preventDefault();
-        if (submitting || recoveryBusy || !lesson) return;
+        if (submitting || recoveryBusy || !lesson || videoLocked() || stepIndex < 0) return;
         for (let i=0;i<lesson.questions.length;i++) if (!validateStep(i)) return;
         await submitAttempt({courseId:lesson.courseId,lessonId:lesson.id,answers:lesson.questions.map(q=>selections.get(q.id))});
     }
@@ -465,7 +496,14 @@
                 uncertainAttempt = snapshot;
                 showError($('#lesson-error'), new Error('ยังยืนยันผลการบันทึกไม่ได้ คำตอบของคุณยังอยู่ในหน้านี้'));
                 $('#submission-recovery').hidden = false;
-            } else showError($('#lesson-error'), error);
+            } else {
+                showError($('#lesson-error'), error);
+                if (error.code === 'video_required') {
+                    lesson.videoUnlocked = false;
+                    $('#submit-lesson').hidden = true;
+                    $('#retry-lesson').hidden = false;
+                }
+            }
             $('#lesson-nimo-message').textContent = 'ไม่ต้องเริ่มใหม่ คำตอบยังอยู่ เราลองเชื่อมต่ออีกครั้งได้';
         }
         finally {
@@ -520,10 +558,14 @@
     lessonDialog.addEventListener('close', () => { lessonDirty = false; window.NextSkillAgent?.refresh(); });
     $('#lesson-quiz').addEventListener('change', () => { lessonDirty = true; });
     $('#lesson-quiz').addEventListener('submit', submitLesson);
-    $('#lesson-step-next').addEventListener('click', () => { if (!lesson || (stepIndex>=0 && !validateStep(stepIndex))) return; showStep(stepIndex+1); });
+    $('#lesson-step-next').addEventListener('click', () => { if (!lesson || videoLocked() || (stepIndex>=0 && !validateStep(stepIndex))) return; showStep(stepIndex+1); });
     $('#lesson-step-back').addEventListener('click', () => showStep(stepIndex-1));
     $('#lesson-reading-again').addEventListener('click', () => showStep(-1));
     $('#edit-lesson-answers').addEventListener('click', () => {
+        if (lesson.video) {
+            openLesson(lesson.courseId, lesson.id);
+            return;
+        }
         const wrong = lastFeedback.find(item=>!item.correct);
         const index = wrong ? lesson.questions.findIndex(q=>q.id===wrong.questionId) : 0;
         showStep(index); window.NextSkillBuddyMotion?.play('retry');
@@ -532,9 +574,13 @@
     $('#retry-submission').addEventListener('click',()=> { if(uncertainAttempt&&!recoveryBusy) submitAttempt(uncertainAttempt); });
     $('#leave-unconfirmed').addEventListener('click',()=>guarded(closeLesson));
     $('#choose-next-course').addEventListener('click',()=> { closeLesson(false); openCourses(); });
+    async function refreshState() {
+        setState(await api(stateEndpoint));
+        $('#learning-status').hidden = true;
+    }
     $('#retry-learning-state').addEventListener('click',async()=> {
         const button=$('#retry-learning-state'); button.disabled=true;
-        try { setState(await api('State')); $('#learning-status').hidden=true; }
+        try { await refreshState(); }
         catch(error) { pageError(error); }
         finally { button.disabled=false; }
     });
@@ -616,6 +662,11 @@
     window.addEventListener('resize', queueScene, { passive: true });
     document.addEventListener('visibilitychange', queueScene);
     window.addEventListener('pageshow', queueScene);
+    if (dashboard && authenticated) {
+        window.addEventListener('pageshow', event => {
+            if (event.persisted) refreshState().catch(pageError);
+        });
+    }
     syncMotion(); queueScene();
     window.NextSkillMotion?.subscribe(() => { syncMotion(); queueScene(); });
 
@@ -624,7 +675,7 @@
         const catalogWork = loadCatalog().catch(error => { failed=true; pageError(error); });
         if (state) setState(state);
         if (authenticated && !state) {
-            try { setState(await api('State')); }
+            try { setState(await api(stateEndpoint)); }
             catch (error) { failed=true; pageError(error); tell(error.message); }
         }
         let pending = null;

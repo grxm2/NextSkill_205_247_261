@@ -9,6 +9,7 @@ using NextSkill_205_247_261.Models;
 namespace NextSkill_205_247_261.Services;
 
 public record Account(Guid Id, string FullName, string Email, string PasswordHash, DateTime? LockoutEnd);
+public enum ProfileUpdateStatus { Updated, PasswordRequired, EmailTaken, Unavailable }
 
 public class AccountStore(IConfiguration configuration, IPasswordHasher<Account> hasher)
 {
@@ -30,6 +31,53 @@ public class AccountStore(IConfiguration configuration, IPasswordHasher<Account>
     }
     private static Account Read(SqlDataReader r) => new(r.GetGuid(0), r.GetString(1), r.GetString(2),
         r.GetString(3), r.IsDBNull(4) ? null : DateTime.SpecifyKind(r.GetDateTime(4), DateTimeKind.Utc));
+
+    public async Task<LearnerProfile?> GetLearnerProfileAsync(Guid id, CancellationToken token)
+    {
+        await using var db = await OpenAsync();
+        await using var query = new SqlCommand("""
+            SELECT FullName, Email, CreatedAt FROM dbo.Users
+            WHERE Id=@id AND (LockoutEnd IS NULL OR LockoutEnd<=SYSUTCDATETIME())
+            """, db);
+        Add(query, "@id", SqlDbType.UniqueIdentifier, id);
+        await using var reader = await query.ExecuteReaderAsync(token);
+        return await reader.ReadAsync(token)
+            ? new(reader.GetString(0), reader.GetString(1), DateTime.SpecifyKind(reader.GetDateTime(2), DateTimeKind.Utc))
+            : null;
+    }
+
+    public async Task<ProfileUpdateStatus> UpdateLearnerProfileAsync(Guid id, string fullName, string email,
+        string? currentPassword, CancellationToken token)
+    {
+        await using var db = await OpenAsync();
+        await using var transaction = (SqlTransaction)await db.BeginTransactionAsync(token);
+        await using var query = new SqlCommand("""
+            SELECT Id, FullName, Email, PasswordHash, LockoutEnd FROM dbo.Users WITH (UPDLOCK)
+            WHERE Id=@id AND (LockoutEnd IS NULL OR LockoutEnd<=SYSUTCDATETIME())
+            """, db, transaction);
+        Add(query, "@id", SqlDbType.UniqueIdentifier, id);
+        Account? account;
+        await using (var reader = await query.ExecuteReaderAsync(token))
+            account = await reader.ReadAsync(token) ? Read(reader) : null;
+        if (account is null) return ProfileUpdateStatus.Unavailable;
+        if (!string.Equals(account.Email, email, StringComparison.Ordinal) &&
+            (string.IsNullOrEmpty(currentPassword) ||
+             hasher.VerifyHashedPassword(account, account.PasswordHash, currentPassword) == PasswordVerificationResult.Failed))
+            return ProfileUpdateStatus.PasswordRequired;
+
+        await using var update = new SqlCommand("""
+            UPDATE dbo.Users SET FullName=@name, Email=@email, NormalizedEmail=@normalized WHERE Id=@id
+            """, db, transaction);
+        Add(update, "@id", SqlDbType.UniqueIdentifier, id);
+        Add(update, "@name", SqlDbType.NVarChar, fullName, 100);
+        Add(update, "@email", SqlDbType.NVarChar, email, 254);
+        Add(update, "@normalized", SqlDbType.NVarChar, email.ToUpperInvariant(), 254);
+        try { await update.ExecuteNonQueryAsync(token); }
+        catch (SqlException ex) when (ex.Number is 2601 or 2627) { return ProfileUpdateStatus.EmailTaken; }
+
+        await transaction.CommitAsync(token);
+        return ProfileUpdateStatus.Updated;
+    }
 
     public async Task<Account?> AuthenticateAsync(string role, string email, string password)
     {
