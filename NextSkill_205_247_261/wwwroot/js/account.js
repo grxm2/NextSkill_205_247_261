@@ -144,6 +144,13 @@
     ];
     let quoteIndex = 0;
 
+    // Clean up entrance fly-in class after animation finishes so idle float can run
+    if (mascotWrap && mascotWrap.classList.contains('mascot-fly-in-entrance')) {
+        setTimeout(() => {
+            mascotWrap.classList.remove('mascot-fly-in-entrance');
+        }, 1400);
+    }
+
     if (mascotWrap) {
         mascotWrap.addEventListener('click', (e) => {
             quoteIndex = (quoteIndex + 1) % cheerQuotes.length;
@@ -175,33 +182,9 @@
         });
     }
 
-    // Interactive Floating Badges (Duolingo Style Click Response)
-    document.querySelectorAll('.duo-interactive-badge').forEach(badge => {
-        badge.addEventListener('click', (e) => {
-            const rect = badge.getBoundingClientRect();
-            spawnDuoConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2, 16);
-
-            // Mascot reacts with cheerful celebration!
-            if (badge.classList.contains('float-card-top-right')) {
-                setMascotSpeech("มุ่งสู่ใบประกาศนียบัตร NextSkill กัน!", true, 3500);
-            } else if (badge.classList.contains('float-card-mid-left')) {
-                setMascotSpeech("สะสม XP ให้เต็มหลอดทุกวันนะ!", true, 3500);
-            } else {
-                setMascotSpeech("ก้าวไปอีกขั้น ทักษะใหม่รออยู่!", true, 3500);
-            }
-
-            setMascotPose(POSE_JUMP);
-            if (mascotImg) {
-                mascotImg.classList.remove('mascot-click-jump');
-                void mascotImg.offsetWidth;
-                mascotImg.classList.add('mascot-click-jump');
-            }
-
-            clearTimeout(restorePoseTimer);
-            restorePoseTimer = setTimeout(() => {
-                setMascotPose(POSE_DEFAULT);
-            }, 1800);
-        });
+    // Remove any ambient floating cards/milestone badges per user request
+    document.querySelectorAll('.ambient-float-card, .duo-interactive-badge').forEach(badge => {
+        try { badge.remove(); } catch (_) { }
     });
 
     // ==========================================
@@ -386,12 +369,6 @@
         return overlay;
     }
 
-    let loadingOverlay = document.getElementById('nimoLoginLoadingOverlay') || ensureFullScreenOverlay();
-    let quoteTextEl = document.getElementById('loadingQuoteText');
-    let stageLabelEl = document.getElementById('loadingStageLabel');
-    let percentNumberEl = document.getElementById('loadingPercentNumber');
-    let progressFillEl = document.getElementById('loadingProgressFill');
-
     // Inspiring quotes pool, featuring the user's favorite quote!
     const motivationalQuotes = [
         "ความพยายามอยู่ที่ไหน ความสำเร็จอยู่ที่นั่น",
@@ -413,7 +390,6 @@
         "บทเรียนสั้น เข้าใจง่าย เรียนได้ทุกที่ ทุกเวลา",
         "ทบทวนแบบฝึกหัดอย่างสม่ำเสมอ ช่วยให้จำแม่นยำยิ่งขึ้น"
     ];
-    const subTipEl = document.getElementById('loadingSubTip');
 
     let lastQuoteIndex = -1;
     function pickRandomQuote() {
@@ -429,184 +405,327 @@
         return motivationalQuotes[index];
     }
 
+    // Unified Cinematic Full-Screen Loading Screen Function
+    function triggerCinematicLoading(options = {}) {
+        const { isDemo = false, form = null } = options;
+        const overlay = document.getElementById('nimoLoginLoadingOverlay') || ensureFullScreenOverlay();
+        const quoteEl = document.getElementById('loadingQuoteText');
+        const stageEl = document.getElementById('loadingStageLabel');
+        const pctEl = document.getElementById('loadingPercentNumber');
+        const fillEl = document.getElementById('loadingProgressFill');
+        const tipEl = document.getElementById('loadingSubTip');
+
+        if (!overlay) return;
+
+        // Set motivational quote & tip
+        if (quoteEl) quoteEl.textContent = pickRandomQuote();
+        if (tipEl) tipEl.textContent = learnerTips[Math.floor(Math.random() * learnerTips.length)];
+
+        // Reset progress state
+        let currentPct = 0;
+        if (pctEl) pctEl.textContent = '0%';
+        if (fillEl) fillEl.style.width = '0%';
+        if (stageEl) stageEl.textContent = 'กำลังเชื่อมต่อระบบบัญชี NextSkill...';
+
+        // Add or toggle close preview button
+        let closeBtn = overlay.querySelector('.fs-preview-close-btn');
+        if (isDemo) {
+            if (!closeBtn) {
+                closeBtn = document.createElement('button');
+                closeBtn.type = 'button';
+                closeBtn.className = 'fs-preview-close-btn';
+                closeBtn.innerHTML = `<span>ปิดหน้าตัวอย่าง</span> <span aria-hidden="true">&times;</span>`;
+                overlay.appendChild(closeBtn);
+            }
+            closeBtn.style.display = 'inline-flex';
+            closeBtn.onclick = () => {
+                overlay.classList.remove('is-active');
+                overlay.setAttribute('aria-hidden', 'true');
+            };
+        } else if (closeBtn) {
+            closeBtn.style.display = 'none';
+        }
+
+        // Show overlay with spring entrance
+        overlay.classList.add('is-active');
+        overlay.setAttribute('aria-hidden', 'false');
+
+        const startTime = performance.now();
+        const totalDuration = isDemo ? 2400 : 1850;
+        let isDone = false;
+        let animationFrameId;
+
+        function updateProgress(now) {
+            const elapsed = now - startTime;
+            const fraction = Math.min(elapsed / totalDuration, 1);
+
+            let targetPct;
+            if (isDemo) {
+                targetPct = Math.round((1 - Math.pow(1 - fraction, 3)) * 100);
+            } else {
+                targetPct = isDone ? 100 : Math.min(Math.round((1 - Math.pow(1 - fraction, 2)) * 92), 92);
+            }
+
+            if (targetPct > currentPct) {
+                currentPct = targetPct;
+                if (pctEl) pctEl.textContent = `${currentPct}%`;
+                if (fillEl) fillEl.style.width = `${currentPct}%`;
+
+                if (stageEl) {
+                    if (currentPct < 25) {
+                        stageEl.textContent = 'กำลังเชื่อมต่อระบบบัญชี NextSkill...';
+                    } else if (currentPct < 55) {
+                        stageEl.textContent = 'กำลังโหลดข้อมูลและทักษะ...';
+                    } else if (currentPct < 85) {
+                        stageEl.textContent = 'จัดเตรียมด่านการเรียนรู้ของคุณ...';
+                    } else if (currentPct < 100) {
+                        stageEl.textContent = 'เกือบพร้อมแล้ว! กำลังเข้าสู่ระบบ...';
+                    } else {
+                        stageEl.textContent = 'เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับสู่ NextSkill';
+                    }
+                }
+            }
+
+            if (currentPct < 100) {
+                animationFrameId = requestAnimationFrame(updateProgress);
+            } else if (isDemo) {
+                // Multi-cannon celebratory confetti blast at 100%
+                const nimoHero = overlay.querySelector('.fs-nimo-hero') || overlay;
+                const rect = nimoHero.getBoundingClientRect();
+                spawnDuoConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2, 40);
+                spawnDuoConfetti(window.innerWidth * 0.22, window.innerHeight * 0.45, 26);
+                spawnDuoConfetti(window.innerWidth * 0.78, window.innerHeight * 0.45, 26);
+
+                // Auto dismiss smoothly after 2.8s in demo mode
+                setTimeout(() => {
+                    if (overlay.classList.contains('is-active') && isDemo) {
+                        overlay.classList.remove('is-active');
+                        overlay.setAttribute('aria-hidden', 'true');
+                    }
+                }, 2800);
+            }
+        }
+
+        animationFrameId = requestAnimationFrame(updateProgress);
+
+        // Real form submission async logic
+        if (!isDemo && form) {
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin'
+            }).then(async (res) => {
+                const elapsed = performance.now() - startTime;
+                if (elapsed < totalDuration) {
+                    await new Promise(r => setTimeout(r, totalDuration - elapsed));
+                }
+
+                const curPath = window.location.pathname.toLowerCase();
+                const resPath = res.url ? new URL(res.url).pathname.toLowerCase() : '';
+                const isSuccess = res.redirected || (resPath && resPath !== curPath && !resPath.includes('/login'));
+
+                if (isSuccess) {
+                    isDone = true;
+                    if (pctEl) pctEl.textContent = '100%';
+                    if (fillEl) fillEl.style.width = '100%';
+                    if (stageEl) stageEl.textContent = 'เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับสู่ NextSkill';
+
+                    const nimoHero = overlay.querySelector('.fs-nimo-hero') || overlay;
+                    const rect = nimoHero.getBoundingClientRect();
+                    spawnDuoConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2, 40);
+                    spawnDuoConfetti(window.innerWidth * 0.22, window.innerHeight * 0.45, 26);
+                    spawnDuoConfetti(window.innerWidth * 0.78, window.innerHeight * 0.45, 26);
+
+                    setTimeout(() => {
+                        window.location.href = res.url;
+                    }, 500);
+                } else {
+                    cancelAnimationFrame(animationFrameId);
+                    const html = await res.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newErr = doc.querySelector('.validation-summary-errors, .validation-summary');
+                    const targetSummary = form.querySelector('.validation-summary-errors, .validation-summary');
+
+                    overlay.classList.remove('is-active');
+                    overlay.setAttribute('aria-hidden', 'true');
+
+                    if (targetSummary && newErr && newErr.innerHTML.trim()) {
+                        targetSummary.innerHTML = newErr.innerHTML;
+                        targetSummary.classList.add('validation-summary-errors');
+                    } else if (targetSummary) {
+                        targetSummary.innerHTML = '<ul><li>อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง</li></ul>';
+                        targetSummary.classList.add('validation-summary-errors');
+                    }
+
+                    const authCard = document.querySelector('.nimo-auth-card');
+                    if (authCard) {
+                        authCard.classList.remove('form-shake');
+                        void authCard.offsetWidth;
+                        authCard.classList.add('form-shake');
+                    }
+
+                    const pwd = form.querySelector('input[type="password"]');
+                    if (pwd) {
+                        pwd.value = '';
+                        pwd.focus();
+                    }
+                }
+            }).catch(err => {
+                console.warn('Network error during auth fetch, falling back to native submission:', err);
+                isDone = true;
+                if (pctEl) pctEl.textContent = '100%';
+                if (fillEl) fillEl.style.width = '100%';
+                setTimeout(() => {
+                    HTMLFormElement.prototype.submit.call(form);
+                }, 300);
+            });
+        }
+    }
+
+    // Attach to Login Core Forms
     const authForms = document.querySelectorAll('form.login-core-form');
     authForms.forEach(form => {
-        form.addEventListener('submit', async (e) => {
-            loadingOverlay = ensureFullScreenOverlay();
-            quoteTextEl = document.getElementById('loadingQuoteText');
-            stageLabelEl = document.getElementById('loadingStageLabel');
-            percentNumberEl = document.getElementById('loadingPercentNumber');
-            progressFillEl = document.getElementById('loadingProgressFill');
-            if (!loadingOverlay) return;
-
-            // 1. Check HTML5 form validation first
+        form.addEventListener('submit', (e) => {
             if (!form.checkValidity()) {
                 form.reportValidity();
                 return;
             }
-
             e.preventDefault();
-
-            // 2. Set random quote in mascot speech bubble
-            const quote = pickRandomQuote();
-            if (quoteTextEl) {
-                quoteTextEl.textContent = quote;
-            }
-            if (subTipEl) {
-                subTipEl.textContent = learnerTips[Math.floor(Math.random() * learnerTips.length)];
-            }
-
-            // 3. Reset progress state
-            let currentPct = 0;
-            if (percentNumberEl) percentNumberEl.textContent = '0%';
-            if (progressFillEl) progressFillEl.style.width = '0%';
-            if (stageLabelEl) stageLabelEl.textContent = 'กำลังเชื่อมต่อระบบบัญชี...';
-
-            // 4. Activate loading overlay with smooth spring animation
-            loadingOverlay.classList.add('is-active');
-            loadingOverlay.setAttribute('aria-hidden', 'false');
-
-            // 5. Concurrently submit credentials to server
-            const formData = new FormData(form);
-            const startTime = performance.now();
-            const minDuration = 1800; // 1.8 seconds total for smooth reading & progress feel
-
-            let serverResponse = null;
-            let networkError = null;
-
-            const authPromise = fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                credentials: 'same-origin'
-            }).then(res => {
-                serverResponse = res;
-                return res;
-            }).catch(err => {
-                networkError = err;
-                console.warn('Auth fetch error, fallback will trigger:', err);
-            });
-
-            // 6. Smooth progress counter animation (0% -> 92% -> 100%)
-            let isComplete = false;
-            let animationFrameId;
-
-            function stepProgress(timestamp) {
-                const elapsed = timestamp - startTime;
-                const timeFraction = Math.min(elapsed / minDuration, 1);
-
-                let target;
-                if (!isComplete) {
-                    // Quad ease-out towards 92%
-                    target = Math.min(Math.round((1 - Math.pow(1 - timeFraction, 2)) * 92), 92);
-                } else {
-                    target = 100;
-                }
-
-                if (target > currentPct) {
-                    currentPct = target;
-                    if (percentNumberEl) percentNumberEl.textContent = `${currentPct}%`;
-                    if (progressFillEl) progressFillEl.style.width = `${currentPct}%`;
-
-                    // Dynamic status messages
-                    if (stageLabelEl) {
-                        if (currentPct < 28) {
-                            stageLabelEl.textContent = 'กำลังเชื่อมต่อระบบบัญชี...';
-                        } else if (currentPct < 58) {
-                            stageLabelEl.textContent = 'กำลังโหลดข้อมูลและทักษะ...';
-                        } else if (currentPct < 88) {
-                            stageLabelEl.textContent = 'จัดเตรียมด่านการเรียนรู้ของคุณ...';
-                        } else if (currentPct < 100) {
-                            stageLabelEl.textContent = 'เกือบพร้อมแล้ว! กำลังเข้าสู่ระบบ...';
-                        } else {
-                            stageLabelEl.textContent = 'เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับสู่ NextSkill';
-                        }
-                    }
-                }
-
-                if (currentPct < 100) {
-                    animationFrameId = requestAnimationFrame(stepProgress);
-                }
-            }
-
-            animationFrameId = requestAnimationFrame(stepProgress);
-
-            // Await both server response and minimum duration
-            await authPromise;
-            const elapsed = performance.now() - startTime;
-            if (elapsed < minDuration) {
-                await new Promise(res => setTimeout(res, minDuration - elapsed));
-            }
-
-            // Fallback for unexpected network error: standard native submit
-            if (networkError || !serverResponse) {
-                isComplete = true;
-                if (percentNumberEl) percentNumberEl.textContent = '100%';
-                if (progressFillEl) progressFillEl.style.width = '100%';
-                setTimeout(() => {
-                    HTMLFormElement.prototype.submit.call(form);
-                }, 300);
-                return;
-            }
-
-            // Check if authentication succeeded:
-            const curPath = window.location.pathname.toLowerCase();
-            const resPath = serverResponse.url ? new URL(serverResponse.url).pathname.toLowerCase() : '';
-            const isSuccess = serverResponse.redirected || (resPath && resPath !== curPath && !resPath.includes('/login'));
-
-            if (isSuccess) {
-                isComplete = true;
-                currentPct = 100;
-                if (percentNumberEl) percentNumberEl.textContent = '100%';
-                if (progressFillEl) progressFillEl.style.width = '100%';
-                if (stageLabelEl) stageLabelEl.textContent = 'เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับสู่ NextSkill';
-
-                // Full-screen celebratory multi-cannon confetti shower!
-                const nimoHero = loadingOverlay.querySelector('.fs-nimo-hero') || loadingOverlay;
-                const rect = nimoHero.getBoundingClientRect();
-                spawnDuoConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2, 35);
-                spawnDuoConfetti(window.innerWidth * 0.22, window.innerHeight * 0.42, 24);
-                spawnDuoConfetti(window.innerWidth * 0.78, window.innerHeight * 0.42, 24);
-
-                setTimeout(() => {
-                    window.location.href = serverResponse.url;
-                }, 500);
-            } else {
-                // Login failed: credentials incorrect or account locked
-                cancelAnimationFrame(animationFrameId);
-
-                const html = await serverResponse.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const newErr = doc.querySelector('.validation-summary-errors, .validation-summary');
-                const targetSummary = form.querySelector('.validation-summary-errors, .validation-summary');
-
-                // Dismiss loading overlay smoothly
-                loadingOverlay.classList.remove('is-active');
-                loadingOverlay.setAttribute('aria-hidden', 'true');
-
-                if (targetSummary && newErr && newErr.innerHTML.trim()) {
-                    targetSummary.innerHTML = newErr.innerHTML;
-                    targetSummary.classList.add('validation-summary-errors');
-                } else if (targetSummary) {
-                    targetSummary.innerHTML = '<ul><li>อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง</li></ul>';
-                    targetSummary.classList.add('validation-summary-errors');
-                }
-
-                // Shake form card to signal error
-                const authCard = document.querySelector('.nimo-auth-card');
-                if (authCard) {
-                    authCard.classList.remove('form-shake');
-                    void authCard.offsetWidth;
-                    authCard.classList.add('form-shake');
-                }
-
-                // Clear & refocus password input
-                const pwd = form.querySelector('input[type="password"]');
-                if (pwd) {
-                    pwd.value = '';
-                    pwd.focus();
-                }
-            }
+            triggerCinematicLoading({ isDemo: false, form: form });
         });
     });
+
+    // Escape Key Dismiss for Demo Preview
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const overlay = document.getElementById('nimoLoginLoadingOverlay');
+            if (overlay && overlay.classList.contains('is-active')) {
+                overlay.classList.remove('is-active');
+                overlay.setAttribute('aria-hidden', 'true');
+            }
+        }
+    });
+
+    // ==========================================
+    // Dynamic Navbar Upgrade (Matches Home Page)
+    // ==========================================
+    function initHomeNavbar() {
+        // Ensure navbar CSS files are loaded
+        if (!document.querySelector('link[href*="navbar.css"]')) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = '/css/navbar.css';
+            document.head.appendChild(link);
+        }
+        if (!document.querySelector('link[href*="journey-theme.css"]')) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = '/css/journey-theme.css';
+            document.head.appendChild(link);
+        }
+
+        // Check if legacy .site-header is still present and upgrade it
+        const oldHeader = document.querySelector('.site-header');
+        if (oldHeader && !document.querySelector('[data-navbar]')) {
+            const newHeader = document.createElement('header');
+            newHeader.className = 'ns-navbar sj-header';
+            newHeader.setAttribute('data-navbar', '');
+            newHeader.innerHTML = `
+                <div class="ns-navbar__inner site-nav__inner">
+                    <a class="ns-navbar__brand" href="/" aria-label="NextSkill กลับหน้าแรก">
+                        <img src="/images/nextskill-navbar-logo.webp" alt="NextSkill" width="54" height="54" />
+                        <span class="ns-navbar__wordmark" aria-hidden="true">
+                            <svg class="ns-wordmark-art" viewBox="0 0 8114.20 1840.00" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+                                <g transform="translate(50 1640.00) scale(1 -1)">
+                                    <g class="ns-wordmark-next">
+                                        <path transform="translate(0.00 0)" d="M140.00 69.72L140.00 1370.28Q140.00 1440.00 209.72 1440.00L269.48 1440.00Q339.20 1440.00 377.79 1381.94L1020.72 414.63Q1065.00 348.00 1065.00 428.00L1065.00 1370.28Q1065.00 1440.00 1134.72 1440.00L1194.48 1440.00Q1264.20 1440.00 1264.20 1370.28L1264.20 69.72Q1264.20 0.00 1194.48 0.00L1134.72 0.00Q1065.00 0.00 1026.43 58.08L383.45 1026.36Q339.20 1093.00 339.20 1013.00L339.20 69.72Q339.20 0.00 269.48 0.00L209.72 0.00Q140.00 0.00 140.00 69.72Z" />
+                                        <path transform="translate(1360.20 0)" d="M614.6 -30.0Q454.2 -30.0 333.9 40.4Q213.6 110.8 146.8 237.4Q80.0 364.0 80.0 531.8Q80.0 708.8 145.8 838.6Q211.6 968.4 329.7 1039.2Q447.8 1110.0 605.4 1110.0Q769.4 1110.0 884.8 1034.1Q1000.2 958.2 1057.8 818.0Q1115.4 677.8 1104.8 484.6H907.6V555.8Q905.2 748.2 832.3 841.6Q759.4 935.0 612.6 935.0Q452.2 935.0 370.5 833.2Q288.8 731.4 288.8 540.0Q288.8 356.8 370.5 256.3Q452.2 155.8 605.4 155.8Q707.0 155.8 781.5 202.1Q856.0 248.4 898.0 335.0L1089.4 272.4Q1026.2 128.2 898.9 49.1Q771.6 -30.0 614.6 -30.0ZM224.0 484.6V639.6H1005.8V484.6Z" />
+                                        <path transform="translate(2500.40 0)" d="M67.86 64.11L379.74 481.89Q427.60 546.00 379.75 610.11L76.85 1015.89Q29.00 1080.00 109.00 1080.00L182.60 1080.00Q262.60 1080.00 309.95 1015.52L495.05 763.48Q542.40 699.00 589.42 763.72L772.18 1015.28Q819.20 1080.00 899.20 1080.00L972.80 1080.00Q1052.80 1080.00 1004.95 1015.89L702.05 610.11Q654.20 546.00 702.13 481.95L1014.87 64.05Q1062.80 0.00 982.80 0.00L908.20 0.00Q828.20 0.00 781.15 64.70L589.45 328.30Q542.40 393.00 495.13 328.46L301.87 64.54Q254.60 0.00 174.60 0.00L100.00 0.00Q20.00 0.00 67.86 64.11Z" />
+                                        <path transform="translate(3519.20 0)" d="M752.0 0.0Q652.2 -19.8 556.1 -16.6Q460.0 -13.4 384.5 21.4Q309.0 56.2 270.6 130.6Q236.8 196.2 234.3 264.1Q231.8 332.0 231.8 418.2V1380.0H429.0V427.4Q429.0 361.8 430.5 314.3Q432.0 266.8 451.0 233.4Q487.0 170.4 565.5 161.0Q644.0 151.6 752.0 167.4ZM20.0 920.4V1080.0H752.0V920.4Z" />
+                                    </g>
+                                    <g class="ns-wordmark-skill">
+                                        <path transform="translate(4431.40 0)" d="M657.6 -30.0Q503.4 -30.0 379.7 22.9Q256.0 75.8 175.9 174.0Q95.8 272.2 71.8 407.4L276.2 438.8Q309.8 305.2 417.0 230.5Q524.2 155.8 668.4 155.8Q759.2 155.8 834.4 184.5Q909.6 213.2 954.8 266.8Q1000.0 320.4 1000.0 395.0Q1000.0 437.4 985.2 469.3Q970.4 501.2 945.0 524.4Q919.6 547.6 885.0 564.3Q850.4 581.0 811.0 592.8L442.8 701.8Q386.4 718.4 330.4 744.7Q274.4 771.0 228.9 812.5Q183.4 854.0 155.6 914.4Q127.8 974.8 127.8 1059.6Q127.8 1190.4 195.4 1282.2Q263.0 1374.0 378.8 1421.6Q494.6 1469.2 639.0 1469.0Q784.6 1467.4 899.7 1417.2Q1014.8 1367.0 1090.8 1273.3Q1166.8 1179.6 1194.8 1047.4L984.8 1011.4Q969.8 1095.0 919.8 1155.6Q869.8 1216.2 796.3 1248.9Q722.8 1281.6 636.4 1282.6Q553.0 1284.2 484.7 1256.9Q416.4 1229.6 376.0 1180.8Q335.6 1132.0 335.6 1068.8Q335.6 1006.2 371.7 967.8Q407.8 929.4 460.9 907.2Q514.0 885.0 566.0 870.6L835.2 794.0Q884.0 780.4 946.7 757.1Q1009.4 733.8 1068.3 691.9Q1127.2 650.0 1165.8 581.0Q1204.4 512.0 1204.4 407.4Q1204.4 300.2 1161.3 218.4Q1118.2 136.6 1042.7 81.4Q967.2 26.2 868.1 -1.9Q769.0 -30.0 657.6 -30.0Z" />
+                                        <path transform="translate(5667.60 0)" d="M139.05 70.07L139.95 1370.28Q140.00 1440.00 209.72 1440.00L269.48 1440.00Q339.20 1440.00 339.20 1370.28L339.20 640.00Q339.20 560.00 390.57 621.33L723.43 1018.67Q774.80 1080.00 854.80 1080.00L946.80 1080.00Q1026.80 1080.00 974.95 1019.08L619.05 600.92Q567.20 540.00 622.11 481.82L1021.89 58.18Q1076.80 0.00 996.80 0.00L886.80 0.00Q806.80 0.00 753.31 59.49L392.69 460.51Q339.20 520.00 339.20 440.00L339.20 70.07Q339.20 0.00 269.13 0.00L209.07 0.00Q139.00 0.00 139.05 70.07Z" />
+                                        <path transform="translate(6672.40 0)" d="M160.00 1330.99L160.00 1389.61Q160.00 1458.00 228.39 1458.00L288.21 1458.00Q356.60 1458.00 356.60 1389.61L356.60 1330.99Q356.60 1262.60 288.21 1262.60L228.39 1262.60Q160.00 1262.60 160.00 1330.99ZM160.00 68.81L160.00 1011.19Q160.00 1080.00 228.81 1080.00L287.79 1080.00Q356.60 1080.00 356.60 1011.19L356.60 68.81Q356.60 0.00 287.79 0.00L228.81 0.00Q160.00 0.00 160.00 68.81Z" />
+                                        <path transform="translate(7165.00 0)" d="M160.00 68.81L160.00 1401.19Q160.00 1470.00 228.81 1470.00L287.79 1470.00Q356.60 1470.00 356.60 1401.19L356.60 68.81Q356.60 0.00 287.79 0.00L228.81 0.00Q160.00 0.00 160.00 68.81Z" />
+                                        <path transform="translate(7657.60 0)" d="M160.00 68.81L160.00 1401.19Q160.00 1470.00 228.81 1470.00L287.79 1470.00Q356.60 1470.00 356.60 1401.19L356.60 68.81Q356.60 0.00 287.79 0.00L228.81 0.00Q160.00 0.00 160.00 68.81Z" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </span>
+                    </a>
+                    <button class="ns-navbar__toggle" type="button" aria-expanded="false" aria-controls="nextskill-main-menu" aria-label="เปิดเมนูหลัก" data-navbar-toggle hidden><span aria-hidden="true"></span></button>
+                    <nav class="ns-navbar__menu" id="nextskill-main-menu" aria-label="เมนูหลัก">
+                        <a class="ns-navbar__link" href="/"><span class="ns-navbar__icon ns-navbar__icon--home" aria-hidden="true"></span>หน้าแรก</a>
+                        <a class="ns-navbar__link" href="/Home/Courses"><span class="ns-navbar__icon ns-navbar__icon--book" aria-hidden="true"></span>คอร์สเรียน</a>
+                        <a class="ns-navbar__link" href="/Learning/Island"><span class="ns-navbar__icon ns-navbar__icon--boat" aria-hidden="true"></span>เกาะของฉัน</a>
+                    </nav>
+                    <div class="ns-navbar__account">
+                        <button class="journey-theme-toggle" type="button" data-theme-toggle aria-label="ธีมกลางคืน" aria-pressed="false" title="เปิดธีมกลางคืน">
+                            <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+                            <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 13.3A8.5 8.5 0 0 1 10.7 3.5a8.5 8.5 0 1 0 9.8 9.8Z"/></svg>
+                        </button>
+                        <a class="ns-navbar__login glass" href="/Account/Login">เข้าสู่ระบบ</a>
+                    </div>
+                </div>
+            `;
+            oldHeader.replaceWith(newHeader);
+        }
+
+        // Mobile menu toggle handling
+        const navToggle = document.querySelector('[data-navbar-toggle]');
+        const navMenu = document.querySelector('#nextskill-main-menu');
+        const navbarEl = document.querySelector('[data-navbar]');
+        if (navToggle && navMenu) {
+            const narrow = matchMedia('(max-width: 959.98px)');
+            let menuOpen = false;
+            function setMenuOpen(val) {
+                menuOpen = val && narrow.matches;
+                navToggle.setAttribute('aria-expanded', String(menuOpen));
+                navToggle.setAttribute('aria-label', menuOpen ? 'ปิดเมนูหลัก' : 'เปิดเมนูหลัก');
+                navMenu.hidden = narrow.matches && !menuOpen;
+            }
+            navToggle.hidden = false;
+            navToggle.addEventListener('click', () => setMenuOpen(!menuOpen));
+            document.addEventListener('click', (e) => {
+                if (menuOpen && navbarEl && !navbarEl.contains(e.target)) setMenuOpen(false);
+            });
+            narrow.addEventListener('change', () => { if (!narrow.matches) navMenu.hidden = false; });
+            if (narrow.matches) navMenu.hidden = true;
+        }
+
+        // Initialize Theme Toggle on account page if present
+        const toggleButtons = document.querySelectorAll('[data-theme-toggle]');
+        const root = document.documentElement;
+        const storageKey = 'nextskill.theme.v1';
+        let currentTheme = 'light';
+        try {
+            currentTheme = localStorage.getItem(storageKey) || 'light';
+        } catch {}
+        root.dataset.theme = currentTheme;
+
+        toggleButtons.forEach(btn => {
+            btn.hidden = false;
+            btn.setAttribute('aria-pressed', String(currentTheme === 'dark'));
+            btn.title = currentTheme === 'dark' ? 'เปิดธีมกลางวัน' : 'เปิดธีมกลางคืน';
+
+            btn.addEventListener('click', () => {
+                const isDark = root.dataset.theme === 'dark';
+                const nextTheme = isDark ? 'light' : 'dark';
+                root.dataset.theme = nextTheme;
+                try { localStorage.setItem(storageKey, nextTheme); } catch {}
+                btn.setAttribute('aria-pressed', String(nextTheme === 'dark'));
+                btn.title = nextTheme === 'dark' ? 'เปิดธีมกลางวัน' : 'เปิดธีมกลางคืน';
+                document.dispatchEvent(new CustomEvent('nextskill:theme-change', { detail: { theme: nextTheme } }));
+            });
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initHomeNavbar);
+    } else {
+        initHomeNavbar();
+    }
 })();

@@ -18,6 +18,45 @@ public string Category => !string.IsNullOrWhiteSpace(Metadata.Category)
 public bool CanStart => Curriculum.CanStart ||
     (Metadata.Lessons != null && Metadata.Lessons.Count > 0);
 
+public string? VideoUrl => Metadata.VideoUrl;
+
+public string? VideoEmbedUrl => ToEmbedUrl(Metadata.VideoUrl);
+
+public bool HasDirectVideo => IsDirectVideo(Metadata.VideoUrl);
+
+public static string? ToEmbedUrl(string? url)
+{
+    if (string.IsNullOrWhiteSpace(url)) return null;
+    url = url.Trim();
+    if (url.Contains("youtube.com/watch", StringComparison.OrdinalIgnoreCase))
+    {
+        var match = System.Text.RegularExpressions.Regex.Match(url, @"[?&]v=([^&#]+)");
+        if (match.Success) return $"https://www.youtube.com/embed/{match.Groups[1].Value}?rel=0";
+    }
+    if (url.Contains("youtu.be/", StringComparison.OrdinalIgnoreCase))
+    {
+        var match = System.Text.RegularExpressions.Regex.Match(url, @"youtu\.be/([^?&#]+)");
+        if (match.Success) return $"https://www.youtube.com/embed/{match.Groups[1].Value}?rel=0";
+    }
+    if (url.Contains("youtube.com/embed/", StringComparison.OrdinalIgnoreCase))
+    {
+        return url;
+    }
+    if (url.Contains("vimeo.com/", StringComparison.OrdinalIgnoreCase) && !url.Contains("player.vimeo.com"))
+    {
+        var match = System.Text.RegularExpressions.Regex.Match(url, @"vimeo\.com/(\d+)");
+        if (match.Success) return $"https://player.vimeo.com/video/{match.Groups[1].Value}";
+    }
+    return url;
+}
+
+public static bool IsDirectVideo(string? url)
+{
+    if (string.IsNullOrWhiteSpace(url)) return false;
+    var clean = url.Split('?')[0].ToLowerInvariant();
+    return clean.EndsWith(".mp4") || clean.EndsWith(".webm") || clean.EndsWith(".ogg");
+}
+
 // ภาพหน้าปกคอร์สจาก admin-dashboard
 public string CoverArt => "/images/courses/" + (Id switch
 {

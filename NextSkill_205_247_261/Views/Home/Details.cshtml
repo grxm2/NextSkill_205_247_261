@@ -16,6 +16,40 @@
     <div class="ns-catalog-status ns-status" data-catalog-status role="status" aria-live="polite" hidden></div>
     <div class="ns-course-details-grid">
         <div class="ns-course-description">
+            @if (!string.IsNullOrWhiteSpace(course.Metadata.VideoUrl))
+            {
+                var embedUrl = CourseBrowseItem.ToEmbedUrl(course.Metadata.VideoUrl);
+                var isDirect = CourseBrowseItem.IsDirectVideo(course.Metadata.VideoUrl);
+                <section class="ns-surface ns-course-video-section" aria-labelledby="course-video-title">
+                    <div class="ns-video-header">
+                        <span class="ns-video-pill">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            สื่อการเรียนรู้วิดีโอ (Learning Video)
+                        </span>
+                        <h2 id="course-video-title">วิดีโอบทเรียนและสื่อการเรียนรู้</h2>
+                        <p class="ns-video-subtitle">รับชมวิดีโอเพื่อเตรียมความพร้อมและทำความเข้าใจทักษะสำคัญของคอร์สนี้ก่อนออกเดินทาง</p>
+                    </div>
+                    <div class="ns-video-player-frame">
+                        @if (isDirect)
+                        {
+                            <video controls class="ns-video-media" preload="metadata" playsinline>
+                                <source src="@course.Metadata.VideoUrl" type="video/mp4" />
+                                เบราว์เซอร์ของคุณไม่รองรับการเล่นวิดีโอ HTML5
+                            </video>
+                        }
+                        else
+                        {
+                            <iframe class="ns-video-media"
+                                    src="@embedUrl"
+                                    title="สื่อการเรียนรู้ @course.Title"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen>
+                            </iframe>
+                        }
+                    </div>
+                </section>
+            }
             <section class="ns-surface" aria-labelledby="course-lessons-title"><h2 id="course-lessons-title">@(course.CanStart ? "เกาะที่เราจะไปด้วยกัน" : "เส้นทางนี้กำลังเตรียมพร้อม")</h2>
             @if (course.CanStart)
             {
