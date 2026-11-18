@@ -1,23 +1,70 @@
 /* Painted water matches the illustrated learning sea. The existing camera,
    shoreline, landing anchors and water-contact effects retain their geometry. */
+/* The heading leads the hero; retain this rule for already compiled Home views. */
+.ocean-home .ow-intro>.cv-eyebrow{display:none}
+.smart-journey .ocean-home .ow-intro{padding-top:clamp(16px,2.7vh,24px)}
+.smart-journey .ocean-home .ow-intro h1{margin:0}
+.smart-journey .ocean-home .cv-home .ow-intro>p:not(.cv-eyebrow){margin:20px 0 0}
+.smart-journey .ocean-home .ow-intro-actions{margin-top:24px}
+/* Use the navbar's shared liquid material, including its night and solid
+   fallbacks, on the existing departure link and its behavioral hooks. */
+html[data-theme] .ocean-home .ow-intro-actions .ns-button--primary{
+ min-height:56px;padding:14px 24px;gap:20px;border-radius:28px;
+ background:var(--ns-liquid-bg);border-color:var(--ns-liquid-border);color:var(--ns-liquid-ink);
+ box-shadow:var(--ns-liquid-shadow),0 6px 24px #173e5612;
+ -webkit-backdrop-filter:var(--ns-liquid-filter);backdrop-filter:var(--ns-liquid-filter);
+ font-size:15px;font-weight:600
+}
+html[data-theme] .ocean-home .ow-intro-actions .ns-button--primary:focus-visible{outline-color:var(--ns-liquid-ink)}
+@media(hover:hover) and (pointer:fine){
+ html[data-theme] .ocean-home .ow-intro-actions .ns-button--primary:hover{
+  background:var(--ns-liquid-control);border-color:var(--ns-liquid-control-border);color:var(--ns-liquid-ink)
+ }
+}
+@media(max-width:700px){
+ .smart-journey .ocean-home .ow-intro{padding-top:16px}
+ .smart-journey .ocean-home .cv-home .ow-intro>p:not(.cv-eyebrow){margin-top:16px}
+ .smart-journey .ocean-home .ow-intro-actions{margin-top:20px}
+ html[data-theme] .ocean-home .ow-intro-actions .ns-button--primary{min-height:52px;padding:12px 20px;font-size:14px;gap:16px}
+}
+@media(forced-colors:active){
+ html[data-theme] .ocean-home .ow-intro-actions .ns-button--primary{background:ButtonFace;border-color:ButtonText;color:ButtonText;box-shadow:none;backdrop-filter:none}
+}
 .ocean-home .ow-sea{
  background:linear-gradient(180deg,#77e3e3,#10bbd6 30%,#0089bd);
+ -webkit-mask-image:linear-gradient(to bottom,transparent,#000 14px);
+ mask-image:linear-gradient(to bottom,transparent,#000 14px);
 }
 /* The painted wave volumes replace the old flat wave bands and line grid. */
 .ocean-home .ow-swell,.ocean-home .ow-water-lines{display:none}
 .ocean-home .ow-swell-drift{animation:none;background:none;will-change:auto}
 .ow-water-detail{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;user-select:none;contain:layout paint}
+/* A narrow waterline and low-contrast distant ripples replace the broad fog
+   gap. The same blend covers the GPU material and its static fallback. */
+.ocean-home .ow-water-detail:after{content:'';position:absolute;inset:0 0 auto;height:clamp(40px,7vh,64px);background:linear-gradient(#d9e6dfeb,#c0e7e77a 35%,#ade5e426 70%,transparent);pointer-events:none}
+.ocean-home .ow-distance{opacity:.45;-webkit-mask-image:linear-gradient(#000 76%,transparent);mask-image:linear-gradient(#000 76%,transparent)}
+/* Place the immersed keel below the horizon's blend, with the contact line
+   covering its lower edge. Large independent bobbing exposes a gap at this scale. */
+.ocean-home .ocean-backdrop-boat-track{top:calc(var(--sea-level) - var(--boat-width) * .48 + 30px)}
+.ocean-home .ocean-backdrop-boat{--boat-bob:.35px;--boat-roll:.65deg;clip-path:inset(0 0 10%)}
+.ocean-home .ocean-backdrop-boat-water>ellipse{opacity:.28}
+.ocean-home .ocean-backdrop-boat-contact path:first-child{opacity:.42}
+.ocean-home .ocean-backdrop-boat-contact path:last-child{opacity:.85;stroke-width:1.8}
+/* The material owns wave motion; the older looping foam sheets would slide
+   independently across it during the voyage. */
+.ocean-home :is(.ow-sea-mist,.ow-sea-foam){display:none}
 .ow-water-surface{position:absolute;inset:0;background:url('/images/journey/home-ocean-painted-v2.webp') center/100% 100% no-repeat}
 .ow-water-live,.ow-water-foam{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none}
 .ow-water-detail[data-water-renderer="webgl"] .ow-water-surface{opacity:0}
 .ow-water-detail:not([data-water-renderer="webgl"]) :is(.ow-water-live,.ow-water-foam){visibility:hidden}
-.ocean-home .ow-sun-path{z-index:2;left:calc(var(--journey-light-x,82%) - 16%);width:32%;opacity:.12;clip-path:none;background:radial-gradient(ellipse 40% 100% at 50% 0,#fff3c975,transparent 85%)}
-.ocean-home .ow-sea:before{z-index:6}
+.ocean-home .ow-sun-path{z-index:2;left:calc(var(--journey-light-x,82%) - 16%);width:32%;opacity:.10;clip-path:none;background:radial-gradient(ellipse 40% 100% at 50% 0,#fff3c975,transparent 85%)}
+.ocean-home .ow-sea:before{z-index:6;opacity:.85}
 .ocean-home .ow-sea:after{z-index:5}
 .ocean-home .hero-water-glints{display:none}
 .ocean-home .hero-water-glints span{animation:none}
 /* Reflections follow the shared sun/moon transition; dark water keeps its detail. */
 html[data-theme="dark"] .ocean-home .ow-sea:after{background:linear-gradient(#0b3855b8,#062b49c4)}
+html[data-theme="dark"] .ocean-home .ow-water-detail:after{background:linear-gradient(#668c9c99,#86bac52b 55%,transparent)}
 @media(max-width:700px){
  .ow-water-surface{background-size:cover;background-position:66% 50%}
 }
