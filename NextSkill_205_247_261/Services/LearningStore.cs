@@ -73,16 +73,16 @@ public sealed class LearningStore(IConfiguration configuration)
     }
 
     private static async Task<LearningState> ReadStateAsync(SqlConnection db, SqlTransaction transaction,
-        Guid accountId, string role, CancellationToken token)
+        Guid accountId, string role, CancellationToken token, bool includeActivity = false)
     {
         await using var command = Command(db, transaction, """
             SELECT ActiveCourseId,HasCompletedOnboarding,Xp FROM dbo.LearningProfiles
                 WHERE AccountId=@account AND AccountRole=@role;
             SELECT CourseId,LastLessonId FROM dbo.LearningCourseProgress
                 WHERE AccountId=@account AND AccountRole=@role;
-            SELECT CourseId,LessonId FROM dbo.LearningLessonCompletions
+            SELECT CourseId,LessonId,CompletedAt,AwardedXp FROM dbo.LearningLessonCompletions
                 WHERE AccountId=@account AND AccountRole=@role;
-            SELECT AchievementKey FROM dbo.LearningAchievements
+            SELECT AchievementKey,EarnedAt FROM dbo.LearningAchievements
                 WHERE AccountId=@account AND AccountRole=@role ORDER BY EarnedAt,AchievementKey;
             """, accountId, role);
         await using var reader = await command.ExecuteReaderAsync(token);
@@ -92,16 +92,34 @@ public sealed class LearningStore(IConfiguration configuration)
         var xp = reader.GetInt32(2);
         var started = new Dictionary<int, int?>();
         var complete = new HashSet<(int Course, int Lesson)>();
-        var achievements = new List<string>();
+        var awards = new List<LearningAward>();
+        // Daily learning goals use the calendar day in Thailand (UTC+07:00).
+        var today = DateOnly.FromDateTime(DateTime.UtcNow.AddHours(7));
+        var historyStart = today.AddDays(-LearningDailyGoals.HistoryDays);
+        var learningDays = includeActivity ? new HashSet<DateOnly>() : null;
+        var dayTotals = new Dictionary<DateOnly, (int Lessons, int Xp, HashSet<int> Courses)>();
         await reader.NextResultAsync(token);
         while (await reader.ReadAsync(token)) started[reader.GetInt32(0)] = reader.IsDBNull(1) ? null : reader.GetInt32(1);
         await reader.NextResultAsync(token);
-        while (await reader.ReadAsync(token)) complete.Add((reader.GetInt32(0), reader.GetInt32(1)));
-        await reader.NextResultAsync(token);
-        while (await reader.ReadAsync(token)) achievements.Add(reader.GetString(0));
+        while (await reader.ReadAsync(token))
+        {
+            var completedCourse = reader.GetInt32(0);
+            complete.Add((completedCourse, reader.GetInt32(1)));
+            if (learningDays is null) continue;
 
-        var allCourseIds = CourseCatalog.GetCourses().Select(c => c.Id).Union(LearningCatalog.Courses.Select(c => c.Id)).Distinct();
-        var courses = allCourseIds.Select(id => LearningCatalog.Find(id)!).Where(c => c is not null).Select(course =>
+            var completedDay = DateOnly.FromDateTime(reader.GetDateTime(2).AddHours(7));
+            learningDays.Add(completedDay);
+            if (completedDay < historyStart || completedDay > today) continue;
+
+            var totals = dayTotals.GetValueOrDefault(completedDay);
+            totals.Courses ??= [];
+            totals.Courses.Add(completedCourse);
+            dayTotals[completedDay] = (totals.Lessons + 1, totals.Xp + reader.GetInt32(3), totals.Courses);
+        }
+        await reader.NextResultAsync(token);
+        while (await reader.ReadAsync(token)) awards.Add(new LearningAward(reader.GetString(0), reader.GetDateTime(1)));
+
+        var courses = LearningCatalog.Published().Select(course =>
         {
             var done = course.Lessons.Where(l => complete.Contains((course.Id, l.Id))).Select(l => l.Id).ToArray();
             var next = course.Lessons.FirstOrDefault(l => !complete.Contains((course.Id, l.Id)));
@@ -118,12 +136,31 @@ public sealed class LearningStore(IConfiguration configuration)
                     done.Contains(l.Id) ? "completed" : l.Id == current ? "current" : "locked")).ToArray());
         }).ToArray();
         var activeProgress = courses.FirstOrDefault(c => c.CourseId == active && c.HasStarted);
+        LearningActivity? activity = null;
+        if (learningDays is not null)
+        {
+            var day = learningDays.Contains(today) ? today : today.AddDays(-1);
+            var streakDays = 0;
+            while (learningDays.Contains(day))
+            {
+                streakDays++;
+                day = day.AddDays(-1);
+            }
+            var totals = dayTotals.GetValueOrDefault(today);
+            dayTotals.Remove(today);
+            activity = new LearningActivity(streakDays, totals.Lessons, totals.Xp, totals.Courses?.Count ?? 0)
+            {
+                RecentDays = dayTotals.ToDictionary(entry => entry.Key,
+                    entry => new LearningDayProgress(entry.Value.Lessons, entry.Value.Xp, entry.Value.Courses.Count))
+            };
+        }
         return new LearningState(activeProgress?.CourseId, activeProgress?.CurrentIslandId, activeProgress?.LastLessonId,
-            onboarded, xp, 1 + xp / 200, achievements, courses);
+            onboarded, xp, 1 + xp / LearningState.XpPerLevel, awards.Select(award => award.Key).ToArray(), courses)
+        { Activity = activity, Awards = awards };
     }
 
-    public Task<LearningState> StateAsync(Guid accountId, string role, CancellationToken token = default)
-        => WithProfileAsync(accountId, role, (db, transaction, ct) => ReadStateAsync(db, transaction, accountId, role, ct), token);
+    public Task<LearningState> StateAsync(Guid accountId, string role, CancellationToken token = default, bool includeActivity = false)
+        => WithProfileAsync(accountId, role, (db, transaction, ct) => ReadStateAsync(db, transaction, accountId, role, ct, includeActivity), token);
 
     public Task<LearningState> SelectCourseAsync(Guid accountId, string role, int courseId, CancellationToken token = default)
     {
@@ -166,38 +203,156 @@ public sealed class LearningStore(IConfiguration configuration)
         }, token);
     }
 
-    public async Task<LearningLessonContent> LessonAsync(Guid accountId, string role, int courseId, int lessonId, CancellationToken token = default)
+    private static SqlCommand VideoCommand(SqlConnection db, SqlTransaction transaction, string sql,
+        Guid accountId, string role, int courseId, LearningLessonDefinition lesson)
+    {
+        var command = Command(db, transaction, sql, accountId, role);
+        command.Parameters.Add("@course", SqlDbType.Int).Value = courseId;
+        command.Parameters.Add("@lesson", SqlDbType.Int).Value = lesson.Id;
+        command.Parameters.Add("@video", SqlDbType.VarChar, 11).Value = lesson.Video!.YouTubeId;
+        return command;
+    }
+
+    private static async Task<bool> CanTakeQuizAsync(SqlConnection db, SqlTransaction transaction, Guid accountId,
+        string role, int courseId, LearningLessonDefinition lesson, CancellationToken token)
+    {
+        if (lesson.Video is null) return false;
+        await using var command = VideoCommand(db, transaction, """
+            SELECT 1 FROM dbo.LearningLessonVideos
+            WHERE AccountId=@account AND AccountRole=@role AND CourseId=@course AND LessonId=@lesson AND VideoId=@video;
+            """, accountId, role, courseId, lesson);
+        return await command.ExecuteScalarAsync(token) is not null;
+    }
+
+    public Task<LearningLessonContent> LessonAsync(Guid accountId, string role, int courseId, int lessonId, CancellationToken token = default)
     {
         var lesson = RequireLesson(courseId, lessonId);
-        var state = await StateAsync(accountId, role, token);
-        var progress = RequireAccess(state, courseId, lessonId);
-        return LearningCatalog.PublicLesson(courseId, lesson, progress.CompletedLessons.Contains(lessonId) ? "completed" : "current");
+        return WithProfileAsync(accountId, role, async (db, transaction, ct) =>
+        {
+            var state = await ReadStateAsync(db, transaction, accountId, role, ct);
+            var progress = RequireAccess(state, courseId, lessonId);
+            var unlocked = await CanTakeQuizAsync(db, transaction, accountId, role, courseId, lesson, ct);
+            return LearningCatalog.PublicLesson(courseId, lesson,
+                progress.CompletedLessons.Contains(lessonId) ? "completed" : "current", unlocked);
+        }, token);
+    }
+
+    private static LearningLessonDefinition RequireVideo(LearningVideoRequest request)
+    {
+        var lesson = RequireLesson(request.CourseId, request.LessonId);
+        if (lesson.Video is null || !string.Equals(lesson.Video.YouTubeId, request.VideoId, StringComparison.Ordinal))
+            throw new LearningRuleException("video_unavailable", "วิดีโอของบทเรียนเปลี่ยนแล้ว กรุณาเปิดบทเรียนใหม่", 409);
+        return lesson;
+    }
+
+    public Task<bool> StartVideoAsync(Guid accountId, string role, LearningVideoRequest request,
+        CancellationToken token = default)
+    {
+        var lesson = RequireVideo(request);
+        return WithProfileAsync(accountId, role, async (db, transaction, ct) =>
+        {
+            var state = await ReadStateAsync(db, transaction, accountId, role, ct);
+            RequireAccess(state, request.CourseId, request.LessonId);
+            await using var command = VideoCommand(db, transaction, """
+                IF NOT EXISTS (SELECT 1 FROM dbo.LearningVideoWatchStarts
+                    WHERE AccountId=@account AND AccountRole=@role AND CourseId=@course AND LessonId=@lesson)
+                    INSERT INTO dbo.LearningVideoWatchStarts (AccountId,AccountRole,CourseId,LessonId,VideoId)
+                    VALUES (@account,@role,@course,@lesson,@video);
+                ELSE
+                    UPDATE dbo.LearningVideoWatchStarts SET VideoId=@video,StartedAt=SYSUTCDATETIME()
+                    WHERE AccountId=@account AND AccountRole=@role AND CourseId=@course AND LessonId=@lesson AND VideoId<>@video;
+                """, accountId, role, request.CourseId, lesson);
+            await command.ExecuteNonQueryAsync(ct);
+            return true;
+        }, token);
+    }
+
+    public Task<LearningLessonContent> CompleteVideoAsync(Guid accountId, string role, CompleteLearningVideoRequest request,
+        CancellationToken token = default)
+    {
+        var lesson = RequireVideo(request);
+        var video = lesson.Video!;
+        var positionSeconds = request.PositionSeconds ?? request.WatchedSeconds;
+
+        return WithProfileAsync(accountId, role, async (db, transaction, ct) =>
+        {
+            var state = await ReadStateAsync(db, transaction, accountId, role, ct);
+            var progress = RequireAccess(state, request.CourseId, request.LessonId);
+            var status = progress.CompletedLessons.Contains(request.LessonId) ? "completed" : "current";
+            if (await CanTakeQuizAsync(db, transaction, accountId, role, request.CourseId, lesson, ct))
+                return LearningCatalog.PublicLesson(request.CourseId, lesson, status, true);
+
+            if (!request.SkipVideo && (positionSeconds < video.RequiredPositionSeconds || positionSeconds > video.DurationSeconds))
+                throw new LearningRuleException("video_required", "เลื่อนวิดีโอไปช่วงท้าย หรือกดข้ามเพื่อเริ่มแบบทดสอบ", 403);
+            await using var watch = VideoCommand(db, transaction, """
+                SELECT 1 FROM dbo.LearningVideoWatchStarts
+                WHERE AccountId=@account AND AccountRole=@role AND CourseId=@course AND LessonId=@lesson AND VideoId=@video;
+                """, accountId, role, request.CourseId, lesson);
+            if (await watch.ExecuteScalarAsync(ct) is null)
+                throw new LearningRuleException("video_required", "เปิดวิดีโอก่อนเริ่มแบบทดสอบ", 403);
+
+            await using var command = VideoCommand(db, transaction, """
+                UPDATE dbo.LearningLessonVideos SET VideoId=@video, ReachedEndAt=SYSUTCDATETIME()
+                WHERE AccountId=@account AND AccountRole=@role AND CourseId=@course AND LessonId=@lesson;
+                IF @@ROWCOUNT=0
+                    INSERT INTO dbo.LearningLessonVideos (AccountId,AccountRole,CourseId,LessonId,VideoId)
+                    VALUES (@account,@role,@course,@lesson,@video);
+                """, accountId, role, request.CourseId, lesson);
+            await command.ExecuteNonQueryAsync(ct);
+            return LearningCatalog.PublicLesson(request.CourseId, lesson, status, true);
+        }, token);
+    }
+
+    public Task<LearningLessonContent> RestartVideoAsync(Guid accountId, string role, LearningVideoRequest request,
+        CancellationToken token = default)
+    {
+        var lesson = RequireVideo(request);
+        return WithProfileAsync(accountId, role, async (db, transaction, ct) =>
+        {
+            var state = await ReadStateAsync(db, transaction, accountId, role, ct);
+            var progress = RequireAccess(state, request.CourseId, request.LessonId);
+            await using var command = VideoCommand(db, transaction, """
+                DELETE FROM dbo.LearningLessonVideos
+                WHERE AccountId=@account AND AccountRole=@role AND CourseId=@course AND LessonId=@lesson;
+                DELETE FROM dbo.LearningVideoWatchStarts
+                WHERE AccountId=@account AND AccountRole=@role AND CourseId=@course AND LessonId=@lesson;
+                """, accountId, role, request.CourseId, lesson);
+            await command.ExecuteNonQueryAsync(ct);
+            return LearningCatalog.PublicLesson(request.CourseId, lesson,
+                progress.CompletedLessons.Contains(request.LessonId) ? "completed" : "current", false);
+        }, token);
     }
 
     public Task<LearningCompletion> CompleteAsync(Guid accountId, string role, CompleteLearningLessonRequest request, CancellationToken token = default)
     {
         var lesson = RequireLesson(request.CourseId, request.LessonId);
-        if (request.Answers is null || request.Answers.Length != lesson.Questions.Length ||
-            request.Answers.Where((choice, index) => choice < 0 || choice >= lesson.Questions[index].Choices.Length).Any())
-            throw new LearningRuleException("invalid_answers", "กรุณาตอบคำถามทุกข้อให้ครบ", 400);
-        var feedback = lesson.Questions.Select((question, index) => new LearningFeedback(question.Id,
-            request.Answers[index] == question.CorrectChoice, question.Explanation)).ToArray();
-        var score = feedback.Count(item => item.Correct);
-        var passed = score == lesson.Questions.Length;
         return WithProfileAsync(accountId, role, async (db, transaction, ct) =>
         {
             var state = await ReadStateAsync(db, transaction, accountId, role, ct);
             var progress = RequireAccess(state, request.CourseId, request.LessonId);
-            if (progress.CompletedLessons.Contains(request.LessonId))
-                return new LearningCompletion(passed, true, score, lesson.Questions.Length, lesson.Questions.Length, 0,
-                    "ทบทวนบทเรียนแล้ว — ได้รับ XP ของบทนี้ไปแล้ว", feedback, state);
+            if (!await CanTakeQuizAsync(db, transaction, accountId, role, request.CourseId, lesson, ct))
+                throw new LearningRuleException("video_required", "เปิดวิดีโอแล้วเลื่อนไปช่วงท้ายหรือกดข้ามก่อนทำแบบทดสอบ", 403);
+            if (request.Answers is null || request.Answers.Length != lesson.Questions.Length ||
+                request.Answers.Where((choice, index) => choice < 0 || choice >= lesson.Questions[index].Choices.Length).Any())
+                throw new LearningRuleException("invalid_answers", "กรุณาตอบคำถามทุกข้อให้ครบ", 400);
+
+            var feedback = lesson.Questions.Select((question, index) => new LearningFeedback(question.Id,
+                request.Answers[index] == question.CorrectChoice, question.Explanation)).ToArray();
+            var score = feedback.Count(item => item.Correct);
+            var passed = score >= lesson.RequiredCorrect;
+            var alreadyCompleted = progress.CompletedLessons.Contains(request.LessonId);
             if (!passed)
-                return new LearningCompletion(false, false, score, lesson.Questions.Length, lesson.Questions.Length, 0,
-                    "ลองอีกครั้งได้ อ่านคำอธิบายแล้วกลับไปทบทวนบทเรียน", feedback, state);
+                return new LearningCompletion(false, alreadyCompleted, score, lesson.Questions.Length, lesson.RequiredCorrect, 0,
+                    "ดูคำอธิบาย แล้วเลือกเรียนใหม่หรือสอบใหม่ได้", feedback, state);
+            if (alreadyCompleted)
+                return new LearningCompletion(passed, true, score, lesson.Questions.Length, lesson.RequiredCorrect, 0,
+                    "ทบทวนบทเรียนแล้ว — ได้รับ XP ของบทนี้ไปแล้ว", feedback, state);
 
             var completingCourse = progress.CompletedLessons.Count + 1 == progress.TotalLessons;
-            var reward = lesson.Xp + (completingCourse ? CourseCompletionBonus : 0);
-            var next = LearningCatalog.Find(request.CourseId)!.Lessons.FirstOrDefault(l => l.Id > request.LessonId)?.Id;
+            var courseAwardKey = $"course-{request.CourseId}";
+            var earnCourseAward = completingCourse && !state.Achievements.Contains(courseAwardKey);
+            var reward = lesson.Xp + (earnCourseAward ? CourseCompletionBonus : 0);
+            var next = progress.Lessons.FirstOrDefault(l => l.Id > request.LessonId)?.Id;
             await using (var command = Command(db, transaction, """
                 INSERT INTO dbo.LearningLessonCompletions (AccountId,AccountRole,CourseId,LessonId,AwardedXp)
                     VALUES (@account,@role,@course,@lesson,@reward);
@@ -217,7 +372,7 @@ public sealed class LearningStore(IConfiguration configuration)
                 command.Parameters.Add("@next", SqlDbType.Int).Value = (object?)next ?? DBNull.Value;
                 await command.ExecuteNonQueryAsync(ct);
             }
-            if (completingCourse)
+            if (earnCourseAward)
             {
                 await using var command = Command(db, transaction, """
                     IF NOT EXISTS (SELECT 1 FROM dbo.LearningAchievements
@@ -225,23 +380,30 @@ public sealed class LearningStore(IConfiguration configuration)
                         INSERT INTO dbo.LearningAchievements (AccountId,AccountRole,AchievementKey)
                         VALUES (@account,@role,@key);
                     """, accountId, role);
-                command.Parameters.Add("@key", SqlDbType.VarChar, 80).Value = $"course-{request.CourseId}";
+                command.Parameters.Add("@key", SqlDbType.VarChar, 80).Value = courseAwardKey;
                 await command.ExecuteNonQueryAsync(ct);
             }
-            return new LearningCompletion(true, false, score, lesson.Questions.Length, lesson.Questions.Length, reward,
-                completingCourse ? "เรียนจบเส้นทางแล้ว! รับตราความสำเร็จและโบนัส 100 XP" : "ผ่านด่านแล้ว! เกาะถัดไปพร้อมให้สำรวจ",
-                feedback, await ReadStateAsync(db, transaction, accountId, role, ct));
+            var message = (completingCourse, earnCourseAward) switch
+            {
+                (_, true) => "เรียนจบคอร์สแล้ว! ได้รับเหรียญ ใบประกาศ และโบนัส 100 XP",
+                (true, false) => "ผ่านครบทุกด่านในคอร์สแล้ว!",
+                _ => "ผ่านด่านแล้ว! เกาะถัดไปพร้อมให้สำรวจ"
+            };
+            return new LearningCompletion(true, false, score, lesson.Questions.Length, lesson.RequiredCorrect, reward,
+                message, feedback, await ReadStateAsync(db, transaction, accountId, role, ct));
         }, token);
     }
 
     public static LearningCourseDefinition RequireCourse(int courseId)
-        => LearningCatalog.Find(courseId) ?? throw new LearningRuleException("course_unavailable", "เส้นทางนี้ยังไม่เปิดให้เรียน", 404);
+        => LearningCatalog.Find(courseId) is { CanStart: true } course
+            ? course : throw new LearningRuleException("course_unavailable", "เส้นทางนี้ยังไม่เปิดให้เรียน", 404);
     public static LearningLessonDefinition RequireLesson(int courseId, int lessonId)
         => RequireCourse(courseId).Lessons.FirstOrDefault(l => l.Id == lessonId)
             ?? throw new LearningRuleException("lesson_not_found", "ไม่พบบทเรียนนี้", 404);
     public static LearningCourseProgress RequireAccess(LearningState state, int courseId, int lessonId)
     {
-        var course = state.Courses.First(c => c.CourseId == courseId);
+        var course = state.Courses.FirstOrDefault(c => c.CourseId == courseId)
+            ?? throw new LearningRuleException("course_unavailable", "เส้นทางนี้ยังไม่เปิดให้เรียน", 404);
         if (!course.HasStarted) throw new LearningRuleException("course_not_selected", "เลือกคอร์สนี้ก่อนเริ่มเรียน", 409);
         if (!course.UnlockedIslands.Contains(lessonId)) throw new LearningRuleException("lesson_locked", "เรียนด่านก่อนหน้าให้ผ่านเพื่อเปิดเกาะนี้", 403);
         return course;

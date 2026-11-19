@@ -52,6 +52,34 @@ public static class LearningSchema
                     REFERENCES dbo.LearningCourseProgress(AccountId,AccountRole,CourseId)
             );
         END;
+        IF OBJECT_ID(N'dbo.LearningLessonVideos', N'U') IS NULL
+        BEGIN
+            CREATE TABLE dbo.LearningLessonVideos (
+                AccountId uniqueidentifier NOT NULL,
+                AccountRole varchar(10) NOT NULL,
+                CourseId int NOT NULL,
+                LessonId int NOT NULL,
+                VideoId varchar(11) COLLATE Latin1_General_100_BIN2 NOT NULL,
+                ReachedEndAt datetime2 NOT NULL CONSTRAINT DF_LearningVideo_ReachedEnd DEFAULT SYSUTCDATETIME(),
+                CONSTRAINT PK_LearningLessonVideos PRIMARY KEY (AccountId,AccountRole,CourseId,LessonId),
+                CONSTRAINT FK_LearningVideo_Course FOREIGN KEY (AccountId,AccountRole,CourseId)
+                    REFERENCES dbo.LearningCourseProgress(AccountId,AccountRole,CourseId)
+            );
+        END;
+        IF OBJECT_ID(N'dbo.LearningVideoWatchStarts', N'U') IS NULL
+        BEGIN
+            CREATE TABLE dbo.LearningVideoWatchStarts (
+                AccountId uniqueidentifier NOT NULL,
+                AccountRole varchar(10) NOT NULL,
+                CourseId int NOT NULL,
+                LessonId int NOT NULL,
+                VideoId varchar(11) COLLATE Latin1_General_100_BIN2 NOT NULL,
+                StartedAt datetime2 NOT NULL CONSTRAINT DF_LearningWatch_Started DEFAULT SYSUTCDATETIME(),
+                CONSTRAINT PK_LearningVideoWatchStarts PRIMARY KEY (AccountId,AccountRole,CourseId,LessonId),
+                CONSTRAINT FK_LearningWatch_Course FOREIGN KEY (AccountId,AccountRole,CourseId)
+                    REFERENCES dbo.LearningCourseProgress(AccountId,AccountRole,CourseId)
+            );
+        END;
         IF OBJECT_ID(N'dbo.LearningAchievements', N'U') IS NULL
         BEGIN
             CREATE TABLE dbo.LearningAchievements (

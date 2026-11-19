@@ -54,7 +54,6 @@ html[data-theme="dark"] .catalog-page .catalog-search select option{background:#
  .catalog-page .catalog-heading h1{font-size:28px;line-height:1.45;letter-spacing:-.5px}
  .catalog-page .catalog-heading h1>span{display:inline;margin-left:.2em}
  .catalog-page .catalog-intro{font-size:13px;line-height:1.75;margin-top:8px}
- .catalog-page .ns-course-eyebrow{font-size:11px}
  .catalog-page .catalog-boat-nimo{width:53px;height:61px;left:calc(48% - 26.5px)}
  .catalog-page .catalog-tools{grid-column:1/-1;grid-row:2;padding:12px;border-radius:18px}
  .catalog-page .catalog-search{grid-template-columns:minmax(0,1fr) 132px;gap:8px}
@@ -66,14 +65,12 @@ html[data-theme="dark"] .catalog-page .catalog-search select option{background:#
  .catalog-page .ns-course-section-heading>div:first-child{display:block}
  .catalog-page .ns-course-section-heading h2{font-size:20px}
  .catalog-page .ns-course-section-heading p{font-size:13px;margin-top:4px}
- .catalog-page .catalog-motion-toggle{font-size:11px;min-height:40px}
  .catalog-page .ns-course-grid{gap:18px}
  .catalog-page .ns-course-card-art{height:auto;aspect-ratio:16/9}
  .catalog-page .ns-course-card-copy{padding:18px}
 }
 @media(max-width:359px){
  .catalog-page .catalog-heading h1{font-size:26px}
- .catalog-page .catalog-heading .ns-course-eyebrow{font-size:10px}
  .catalog-page .catalog-search{grid-template-columns:minmax(0,1fr) 120px}
  .catalog-page .catalog-search-submit{font-size:13px;padding:10px 12px}
 }

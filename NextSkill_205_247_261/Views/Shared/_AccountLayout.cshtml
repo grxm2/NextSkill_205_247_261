@@ -1,5 +1,6 @@
 @{
     ViewData["JourneyMode"] = ViewData["JourneyMode"] ?? "account";
+    var hasBackdrop = IsSectionDefined("Backdrop");
 }
 <!DOCTYPE html>
 <html lang="th">
@@ -20,24 +21,28 @@
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/journey-theme.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/account-modern.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
-<body class="nimo-account-theme ns-site-shell">
-    <!-- Ambient Modern Glassmorphic Floating Decor -->
-    <div class="account-ambient-decor" aria-hidden="true">
-        <!-- Duolingo Daylight Floating Clouds -->
-        <div class="duo-clouds-container">
-            <div class="duo-cloud duo-cloud-1"></div>
-            <div class="duo-cloud duo-cloud-2"></div>
-            <div class="duo-cloud duo-cloud-3"></div>
+<body class="nimo-account-theme ns-site-shell @ViewData["AccountPageClass"]">
+    @if (hasBackdrop)
+    {
+        @await RenderSectionAsync("Backdrop")
+    }
+    else
+    {
+        <div class="account-ambient-decor" aria-hidden="true">
+            <div class="duo-clouds-container">
+                <div class="duo-cloud duo-cloud-1"></div>
+                <div class="duo-cloud duo-cloud-2"></div>
+                <div class="duo-cloud duo-cloud-3"></div>
+            </div>
+            <div class="ambient-glow-orb orb-1"></div>
+            <div class="ambient-glow-orb orb-2"></div>
+            <div class="ambient-glow-orb orb-3"></div>
+            <div class="bg-dot-matrix dot-top-left"></div>
+            <div class="bg-dot-matrix dot-mid-right"></div>
         </div>
-
-        <!-- Soft glowing aurora orbs -->
-        <div class="ambient-glow-orb orb-1"></div>
-        <div class="ambient-glow-orb orb-2"></div>
-        <div class="ambient-glow-orb orb-3"></div>
-        <div class="bg-dot-matrix dot-top-left"></div>
-        <div class="bg-dot-matrix dot-mid-right"></div>
-    </div>
+    }
 
     <!-- Shared Frosted Island Ocean Navbar matching Home Page -->
     <partial name="_Navbar" />
@@ -181,6 +186,10 @@
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="~/js/navbar.js" asp-append-version="true" defer></script>
+    @if (hasBackdrop)
+    {
+        <script src="~/js/motion-state.js" asp-append-version="true" defer></script>
+    }
     <script src="~/js/journey-theme.js" asp-append-version="true" defer></script>
     <script src="~/js/account.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

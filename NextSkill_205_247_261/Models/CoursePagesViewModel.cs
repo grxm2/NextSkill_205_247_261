@@ -15,8 +15,7 @@ public string Description => !string.IsNullOrWhiteSpace(Metadata.Description)
 public string Category => !string.IsNullOrWhiteSpace(Metadata.Category)
     ? Metadata.Category : Curriculum.Category;
 
-public bool CanStart => Curriculum.CanStart ||
-    (Metadata.Lessons != null && Metadata.Lessons.Count > 0);
+public bool CanStart => Curriculum.CanStart;
 
 public string? VideoUrl => Metadata.VideoUrl;
 
@@ -57,24 +56,7 @@ public static bool IsDirectVideo(string? url)
     return clean.EndsWith(".mp4") || clean.EndsWith(".webm") || clean.EndsWith(".ogg");
 }
 
-// ภาพหน้าปกคอร์สจาก admin-dashboard
-public string CoverArt => "/images/courses/" + (Id switch
-{
-    13 => "english-for-work",
-    1 => "ux-research",
-    5 => "javascript-basics",
-    2 => "design-systems",
-    3 => "product-strategy",
-    4 => "no-code-prototyping",
-    6 => "advanced-css",
-    _ => Category switch
-    {
-        "Languages" or "Language" => "english-for-work",
-        "Design" => "design-systems",
-        "Technology" or "Development" => "javascript-basics",
-        _ => "product-strategy"
-    }
-}) + ".jpg";
+public CourseCover Cover => CourseCover.For(Id, Category);
 
 // ภาพเกาะจาก master
 public string Art => Curriculum.IslandKind switch
@@ -88,16 +70,74 @@ public string Art => Curriculum.IslandKind switch
 // ชื่อหมวดหมู่ภาษาไทยจาก master
 public string CategoryLabel => Category switch
 {
-    "Design" => "ออกแบบ",
-    "Technology" or "Development" => "เทคโนโลยี",
+    "Design" => "UX/UI",
+    "AI" => "การใช้ AI",
+    "Development" => "โค้ด",
+    "Technology" => "เทคโนโลยี",
     "Business" => "ธุรกิจ",
-    "Language" or "Languages" => "ภาษา",
+    "Language" or "Languages" => "ภาษาอังกฤษ",
     "Marketing" => "การตลาด",
     "Data" or "Data Science" => "ข้อมูล",
     _ => Category
 };
 
   
+}
+
+public sealed record CourseCover(string Path, string? Topic)
+{
+    public static CourseCover For(int courseId, string category)
+    {
+        var topic = courseId switch
+        {
+            1 => "UX Research",
+            101 => "Greetings",
+            102 => "Tenses",
+            103 => "Networking",
+            104 => "Email",
+            105 => "Interview",
+            106 => "HTML",
+            107 => "CSS",
+            108 => "JavaScript",
+            109 => "Python",
+            110 => "Git",
+            111 => "Figma",
+            112 => "Buttons",
+            113 => "Auto Layout",
+            114 => "Navigation",
+            115 => "Prototype",
+            116 => "AI Limits",
+            117 => "Delegation",
+            118 => "Prompting",
+            119 => "Fact-Check",
+            120 => "Responsible AI",
+            _ => null
+        };
+
+        if (topic is not null)
+        {
+            return new CourseCover($"/images/courses/topic-covers/{courseId}.webp", topic);
+        }
+
+        var fallback = courseId switch
+        {
+            13 => "english-for-work",
+            5 => "javascript-basics",
+            2 => "design-systems",
+            3 => "product-strategy",
+            4 => "no-code-prototyping",
+            6 => "advanced-css",
+            _ => category switch
+            {
+                "Languages" or "Language" => "english-for-work",
+                "Design" => "design-systems",
+                "Technology" or "Development" => "javascript-basics",
+                _ => "product-strategy"
+            }
+        };
+
+        return new CourseCover($"/images/courses/{fallback}.jpg", null);
+    }
 }
 
 public sealed class CourseCatalogPageViewModel
@@ -113,8 +153,8 @@ public sealed class CourseCatalogPageViewModel
     public int TotalPages { get; init; }
     public static string CategoryLabel(string category) => category switch
     {
-        "Design" => "ออกแบบ", "Technology" or "Development" => "เทคโนโลยี",
-        "Business" => "ธุรกิจ", "Language" or "Languages" => "ภาษา",
+        "Design" => "UX/UI", "Development" => "โค้ด", "Technology" => "เทคโนโลยี", "AI" => "การใช้ AI",
+        "Business" => "ธุรกิจ", "Language" or "Languages" => "ภาษาอังกฤษ",
         "Marketing" => "การตลาด", "Data" or "Data Science" => "ข้อมูล", _ => category
     };
 }

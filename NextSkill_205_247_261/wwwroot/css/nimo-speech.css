@@ -23,6 +23,21 @@
     border-bottom: 1px solid #ffffffb0; border-right: 1px solid #ffffffb0;
     background: #e6f9ffed; border-radius: 0 0 4px 0;
 }
+#nimo-speech[data-placement="below"] .nimo-speech-card { transform-origin: var(--nimo-tail,50%) 0; }
+#nimo-speech[data-placement="below"] .nimo-speech-card::after {
+    bottom: auto; top: -6px; transform: translateX(-50%) rotate(225deg);
+}
+#nimo-speech:is([data-placement="left"], [data-placement="right"]) .nimo-speech-card::after {
+    bottom: auto; top: var(--nimo-tail-y,50%);
+}
+#nimo-speech[data-placement="left"] .nimo-speech-card { transform-origin: right var(--nimo-tail-y,50%); }
+#nimo-speech[data-placement="left"] .nimo-speech-card::after {
+    left: auto; right: -6px; transform: translateY(-50%) rotate(-45deg);
+}
+#nimo-speech[data-placement="right"] .nimo-speech-card { transform-origin: left var(--nimo-tail-y,50%); }
+#nimo-speech[data-placement="right"] .nimo-speech-card::after {
+    left: -6px; transform: translateY(-50%) rotate(135deg);
+}
 #nimo-speech[data-open="true"] .nimo-speech-card { opacity: 1; transform: none; }
 .nimo-speech-heading { display: flex; align-items: center; gap: 7px; min-height: 22px; padding-right: 24px; }
 .nimo-speech-heading strong { font-size: 13px; font-weight: 600; color: #087b99; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -35,6 +50,14 @@
 }
 #nimo-speech-close:hover { background: #ffffff80; color: #07536f; }
 #nimo-speech-close:focus-visible { outline: 3px solid #0583aa; outline-offset: -5px; }
+#nimo-missions-open {
+    display: inline-flex; align-items: center; min-height: 36px; padding: 4px 11px; margin-top: 7px;
+    border: 1px solid #0b77994a; border-radius: 999px; background: #ffffff62;
+    color: #07536f; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; pointer-events: auto;
+}
+#nimo-missions-open[hidden] { display: none; }
+#nimo-missions-open:hover { background: #ffffffbd; }
+#nimo-missions-open:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .nimo-speech-copy { position: relative; display: grid; margin: 7px 0 0; font-size: 14px; font-weight: 500; line-height: 1.85; overflow-wrap: anywhere; text-wrap: pretty; }
 .nimo-speech-copy > span { grid-area: 1/1; }
 #nimo-speech-text { position: absolute; inset: 0; }
@@ -47,6 +70,18 @@
 #nimo-speech[data-compact="true"] .nimo-speech-caption { display: none; }
 #nimo-speech[data-compact="true"] .nimo-speech-card { padding: 10px 13px 12px; border-radius: 19px; }
 #nimo-speech[data-compact="true"] .nimo-speech-copy { font-size: 13px; line-height: 1.8; margin-top: 4px; }
+@media (max-width: 700px) and (max-height: 640px) {
+    #nimo-speech[data-mission] .nimo-speech-card {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 0 8px;
+        padding: 8px 11px;
+    }
+    #nimo-speech[data-mission] .nimo-speech-heading { grid-column: 1 / -1; padding-right: 34px; }
+    #nimo-speech[data-mission] .nimo-speech-copy { margin: 0; font-size: 13px; line-height: 1.55; }
+    #nimo-speech[data-mission] #nimo-missions-open { margin: 0; padding-inline: 7px; white-space: nowrap; }
+}
 .nimo-speaking-face { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; z-index: 6; }
 .skill-buddy[data-text-speaking="true"]:not([data-voyage-pose]):not([data-posing="wave"]) .nimo-speaking-face { opacity: 1; }
 .nimo-speaking-mouth { transform-origin: 622px 450px; }
@@ -70,6 +105,8 @@ html[data-theme="dark"] .nimo-speech-card::after { background: #163a51f5; border
 html[data-theme="dark"] .nimo-speech-heading strong { color: #8fe7fa; }
 html[data-theme="dark"] :is(.nimo-speech-caption,#nimo-speech-close) { color: #c0e1ec; }
 html[data-theme="dark"] #nimo-speech-close:hover { background: #d2f4ff20; }
+html[data-theme="dark"] #nimo-missions-open { color: #caf3ff; background: #d2f4ff16; border-color: #8fe7fa65; }
+html[data-theme="dark"] #nimo-missions-open:hover { background: #d2f4ff2c; }
 html[data-theme="dark"] .nimo-speech-meter i { background: #8fe7fa; }
 #nimo-speech[data-still="true"] .nimo-speech-card { transition: none; transform: none; }
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {

@@ -1,8 +1,24 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace NextSkill_205_247_261.Models;
 
-public sealed record LearningLessonSummary(int Id, string Title, string IslandName, int Xp, int Minutes, string Status);
+public sealed record LearningLessonSummary(int Id, string Title, string IslandName, int Xp, int Minutes, string Status)
+{
+    public string DisplayTitle
+    {
+        get
+        {
+            var separator = Title.IndexOfAny([':', '：']);
+            if (separator <= 0) return Title;
+            var prefix = Title[..separator].TrimEnd();
+            if (prefix != $"บทเรียนที่ {Id}" && prefix != $"บทที่ {Id}") return Title;
+
+            var name = Title[(separator + 1)..].Trim();
+            return name.Length > 0 ? name : Title;
+        }
+    }
+}
 public sealed record LearningCatalogCourse(int Id, string Title, string Category, string Description,
     string IslandKind, int TotalLessons, bool CanStart, IReadOnlyList<LearningLessonSummary> Lessons)
 {
@@ -14,12 +30,38 @@ public sealed record LearningCourseProgress(int CourseId, string Title, string C
     IReadOnlyList<LearningLessonSummary> Lessons);
 public sealed record LearningState(int? ActiveCourseId, int? CurrentIslandId, int? LastLessonId,
     bool HasCompletedOnboarding, int Xp, int Level, IReadOnlyList<string> Achievements,
-    IReadOnlyList<LearningCourseProgress> Courses);
+    IReadOnlyList<LearningCourseProgress> Courses)
+{
+    public const int XpPerLevel = 200;
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public LearningActivity? Activity { get; init; }
+
+    [JsonIgnore]
+    public IReadOnlyList<LearningAward> Awards { get; init; } = [];
+}
+
+public sealed record LearningAward(string Key, DateTime EarnedAt);
+public sealed record LearningDayProgress(int Lessons, int Xp, int Courses);
+public sealed record LearningActivity(int StreakDays, int LessonsToday, int XpToday, int CoursesToday)
+{
+    [JsonIgnore]
+    public LearningDayProgress Today => new(LessonsToday, XpToday, CoursesToday);
+
+    [JsonIgnore]
+    public IReadOnlyDictionary<DateOnly, LearningDayProgress> RecentDays { get; init; } =
+        new Dictionary<DateOnly, LearningDayProgress>();
+}
 public sealed record LearningReading(string Heading, string Text, string? Example = null);
-public sealed record LearningQuestion(int Id, string Prompt, IReadOnlyList<string> Choices);
+public sealed record LearningQuestion(int Id, string Prompt, IReadOnlyList<string> Choices, string? Hint, string? Coaching);
+public sealed record LearningLessonVideo(string YouTubeId, int DurationSeconds, string Creator, string? Title)
+{
+    public int RequiredPositionSeconds => (int)Math.Ceiling(DurationSeconds * 0.9m);
+    public int RequiredWatchSeconds => RequiredPositionSeconds;
+}
 public sealed record LearningLessonContent(int CourseId, int Id, string Title, string IslandName,
     string Summary, IReadOnlyList<LearningReading> Reading, IReadOnlyList<LearningQuestion> Questions,
-    int Xp, int Minutes, string Status);
+    int Xp, int Minutes, string Status, int QuestionCount, int RequiredCorrect, LearningLessonVideo? Video, bool VideoUnlocked);
 public sealed record LearningFeedback(int QuestionId, bool Correct, string Explanation);
 public sealed record LearningCompletion(bool Passed, bool AlreadyCompleted, int Score, int TotalQuestions,
     int RequiredCorrect, int AwardedXp, string Reward, IReadOnlyList<LearningFeedback> Feedback, LearningState State);
@@ -43,4 +85,14 @@ public class LearningCheckpointRequest
 public sealed class CompleteLearningLessonRequest : LearningCheckpointRequest
 {
     [Required, MinLength(1), MaxLength(20)] public int[] Answers { get; set; } = [];
+}
+public class LearningVideoRequest : LearningCheckpointRequest
+{
+    [Required, StringLength(11, MinimumLength = 11)] public string VideoId { get; set; } = "";
+}
+public sealed class CompleteLearningVideoRequest : LearningVideoRequest
+{
+    [Range(0, 7200)] public int? PositionSeconds { get; set; }
+    [Range(0, 7200)] public int WatchedSeconds { get; set; }
+    public bool SkipVideo { get; set; }
 }

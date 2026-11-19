@@ -35,6 +35,7 @@
             correctChoice: q.correctChoice ?? q.CorrectChoice ?? 0,
             explanation: q.explanation ?? q.Explanation ?? '',
             hint: q.hint ?? q.Hint ?? '',
+            coaching: q.coaching ?? q.Coaching ?? '',
             updatedAt: q.updatedAt ?? q.UpdatedAt ?? ''
         };
     }
@@ -365,6 +366,7 @@
 
         document.getElementById('q-explanation').value = qToEdit ? (qToEdit.explanation || '') : '';
         document.getElementById('q-hint').value = qToEdit ? (qToEdit.hint || '') : '';
+        document.getElementById('q-coaching').value = qToEdit ? qToEdit.coaching : '';
 
         questionModal.showModal();
     }
@@ -401,7 +403,8 @@
             choices,
             correctChoice: Math.min(correctChoice, choices.length - 1),
             explanation: document.getElementById('q-explanation').value.trim(),
-            hint: document.getElementById('q-hint').value.trim()
+            hint: document.getElementById('q-hint').value.trim(),
+            coaching: document.getElementById('q-coaching').value.trim()
         };
 
         try {

@@ -50,7 +50,8 @@
  }
  function sail(id){
   finishEntry();
-  if(!island(id)||island(id).disabled)return Promise.resolve();
+  const target=island(id);
+  if(!target||target.disabled||target.classList.contains('is-locked'))return Promise.resolve();
   surfaceDock=false;
   if(active)finish(active);
   const fromId=dockId,from={...position},to=destination(id);dockId=id;select();

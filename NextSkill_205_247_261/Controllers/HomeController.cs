@@ -15,7 +15,7 @@ namespace NextSkill_205_247_261.Controllers
             return View(new HomeDashboardViewModel
             {
                 LearnerName = User.Identity?.IsAuthenticated == true ? User.Identity.Name ?? "ผู้เรียน" : "นักผจญภัย",
-                PopularCourses = GetCourses().Where(c => new[] { 1, 5, 6, 9 }.Contains(c.Id)).ToArray()
+                PopularCourses = GetCourses().Where(course => course.Featured).Take(4).ToArray()
             });
         }
 

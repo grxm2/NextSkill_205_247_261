@@ -25,8 +25,6 @@ body.ns-catalog-shell {
 .catalog-page .catalog-cloud--near {left:82%;top:105px;transform:scale(.65);animation-delay:-12s;opacity:.55}
 .catalog-page [data-catalog-ambient="active"] :is(.catalog-water-drift,.catalog-cloud) {animation-play-state:running}
 .catalog-page .catalog-hero {display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;min-height:176px;margin-bottom:12px}
-.catalog-page .ns-course-eyebrow {display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ns-ink);margin:0 0 6px!important;line-height:1.5}
-.catalog-page .catalog-wave-mark {font:600 26px/1 var(--ns-font-number);color:var(--ns-primary-hover)}
 .catalog-page h1 {font-size:clamp(30px,2.8vw,36px);font-weight:600;line-height:1.35;letter-spacing:-.8px;text-wrap:balance}
 .catalog-page h1>span {color:var(--ns-primary-hover)}
 .catalog-page .catalog-intro {margin-top:10px;font-size:14px;line-height:1.8;color:var(--ns-muted)}
@@ -57,10 +55,7 @@ body.ns-catalog-shell {
 .catalog-page .ns-course-section-heading>div:first-child {display:flex;align-items:baseline;gap:14px;min-width:0}
 .catalog-page .ns-course-section-heading h2 {font-size:21px;font-weight:500;line-height:1.5;color:var(--ns-ink)}
 .catalog-page .ns-course-section-heading p {font-size:13px;line-height:1.6;color:var(--ns-muted);overflow-wrap:anywhere}
-.catalog-page .catalog-results-actions {display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:10px;flex-shrink:0}
-.catalog-page .catalog-clear {display:inline-flex;align-items:center;gap:8px;min-height:36px;font-size:13px;color:var(--ns-ink);text-underline-offset:4px;white-space:nowrap}
-.catalog-page .catalog-motion-toggle {display:inline-flex;align-items:center;gap:5px;min-height:36px;padding:6px 8px;border:1px solid transparent;border-radius:12px;background:transparent;color:var(--ns-muted);font:400 12px/1.5 var(--ns-font);cursor:pointer;white-space:nowrap}
-.catalog-page .catalog-motion-toggle svg {width:18px;height:18px;flex-shrink:0}
+.catalog-page .catalog-clear {display:inline-flex;flex-shrink:0;align-items:center;gap:8px;min-height:36px;font-size:13px;color:var(--ns-ink);text-underline-offset:4px;white-space:nowrap}
 .catalog-page .ns-course-grid {grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
 .catalog-page .ns-course-card {display:flex;flex-direction:column;overflow:clip;min-width:0;border:1px solid var(--catalog-edge);border-radius:24px;background:var(--catalog-glass);box-shadow:var(--catalog-shadow);-webkit-backdrop-filter:blur(18px) saturate(1.25);backdrop-filter:blur(18px) saturate(1.25)}
 .catalog-page .ns-course-card-art {display:block;position:relative;height:164px;flex-shrink:0;padding:0;overflow:clip;background:#b7dce4;text-decoration:none}
@@ -97,7 +92,6 @@ body.ns-catalog-shell {
 .ns-catalog-shell .journey-theme-toggle svg {grid-area:1/1;width:21px;height:21px}
 .ns-catalog-shell .theme-icon-sun {display:none}
 .catalog-page :is(input,select):focus-visible {outline:3px solid var(--ns-primary-hover);outline-offset:3px}
-.catalog-page .catalog-motion-toggle:focus-visible {outline:3px solid var(--ns-primary-hover);outline-offset:2px}
 .catalog-page .catalog-hero[data-catalog-ambient="paused"] .harbor-door {transition:none}
 @media(min-width:1400px) { .catalog-page .ns-course-card-art {height:210px} }
 @keyframes catalog-water-drift {from{transform:translate3d(-20px,-4px,0)}to{transform:translate3d(35px,8px,0)}}
@@ -106,7 +100,7 @@ body.ns-catalog-shell {
 @media(hover:hover) and (pointer:fine) {
     .catalog-page .ns-course-card-art:hover>img {transform:scale(1.035)}
     .catalog-page .catalog-course-link:hover>span {transform:translate(2px,-2px);background:#ffffff94}
-    .catalog-page .ns-course-tags a:not([aria-current="true"]):hover,.catalog-page .catalog-motion-toggle:hover {background:#ffffff66;color:var(--ns-ink)}
+    .catalog-page .ns-course-tags a:not([aria-current="true"]):hover {background:#ffffff66;color:var(--ns-ink)}
     .catalog-page .ns-course-card h3 a:hover {text-decoration:underline;text-underline-offset:4px}
     .ns-catalog-shell .journey-theme-toggle:hover {background:#ffffff70}
 }
@@ -141,9 +135,6 @@ body.ns-catalog-shell {
     .catalog-page .ns-course-tags a {min-height:44px;padding:7px 11px;font-size:12px}
     .catalog-page .ns-course-section-heading {flex-direction:row;align-items:center;gap:8px;margin-top:24px;scroll-margin-top:calc(var(--nav-h) + 230px)}
     .catalog-page .ns-course-section-heading h2 {font-size:20px}
-    .catalog-page .catalog-results-actions {gap:2px;flex-direction:column;align-items:flex-end}
-    .catalog-page .catalog-motion-toggle {min-height:44px;padding:5px;font-size:11px}
-    .catalog-page .catalog-motion-toggle>svg {width:16px;height:16px}
     .catalog-page .catalog-clear {min-height:36px;font-size:12px}
     .catalog-page .ns-course-grid {grid-template-columns:1fr;gap:20px}
     .catalog-page .ns-course-card {border-radius:22px}
@@ -158,7 +149,6 @@ body.ns-catalog-shell {
     .catalog-page .catalog-search-submit {padding-inline:12px}
     .catalog-page .ns-course-tags a {padding-inline:8px;font-size:11px}
     .catalog-page .ns-course-section-heading {flex-direction:column;gap:2px}
-    .catalog-page .catalog-results-actions {flex-direction:row;width:100%;justify-content:space-between;align-items:center}
     .ns-catalog-shell .journey-theme-toggle {width:36px;height:36px;flex-basis:36px;margin-right:4px}
     .ns-catalog-shell .journey-theme-toggle:before {inset:-4px}
 }

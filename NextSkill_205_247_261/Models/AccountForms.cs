@@ -34,4 +34,17 @@ public class RegisterForm
     public string? InvitationCode { get; set; }
 }
 
-public record DashboardModel(string FullName, string Email, string Role, int Users, int Admins);
+public sealed class ProfileEditForm
+{
+    [Required(ErrorMessage = "กรุณากรอกชื่อที่แสดง")]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "ชื่อที่แสดงต้องมี 2–100 ตัวอักษร")]
+    public string FullName { get; set; } = "";
+
+    [Required(ErrorMessage = "กรุณากรอกอีเมล")]
+    [EmailAddress(ErrorMessage = "กรุณากรอกอีเมลให้ถูกต้อง")]
+    [StringLength(254, ErrorMessage = "อีเมลต้องยาวไม่เกิน 254 ตัวอักษร")]
+    public string Email { get; set; } = "";
+
+    [StringLength(128, ErrorMessage = "รหัสผ่านต้องยาวไม่เกิน 128 ตัวอักษร")]
+    public string? CurrentPassword { get; set; }
+}

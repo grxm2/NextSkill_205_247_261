@@ -11,7 +11,7 @@ using NextSkill_205_247_261.Services;
 namespace NextSkill_205_247_261.Controllers;
 
 [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-public class AccountController(AccountStore store, ILogger<AccountController> logger) : Controller
+public class AccountController(AccountStore store, LearningStore learning, ILogger<AccountController> logger) : Controller
 {
     [HttpGet] public IActionResult Register(string? returnUrl) => RegistrationPage("User", new() { ReturnUrl = SafeReturnUrl(returnUrl) });
     [HttpGet] public IActionResult AdminRegister(string? returnUrl) => RegistrationPage("Admin", new() { ReturnUrl = SafeReturnUrl(returnUrl) });
@@ -129,14 +129,103 @@ public class AccountController(AccountStore store, ILogger<AccountController> lo
     private IActionResult ContinueLearning(string? returnUrl)
         => SafeReturnUrl(returnUrl) is string local ? LocalRedirect(local) : RedirectToAction("Entry", "Learning");
 
-    [Authorize]
-    public IActionResult Dashboard()
+    [HttpGet, Authorize]
+    public async Task<IActionResult> Dashboard(CancellationToken token)
     {
         if (User.IsInRole("Admin"))
             return RedirectToAction(nameof(AdminDashboard));
 
-        return View("Dashboard", new DashboardModel(User.Identity!.Name!,
-            User.FindFirstValue(ClaimTypes.Email)!, "User", 0, 0));
+        return Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var id)
+            ? await RenderProfile(id, null, token)
+            : Challenge();
+    }
+
+    [HttpGet, Authorize(Roles = "User")]
+    public async Task<IActionResult> Certificate(int courseId, CancellationToken token)
+    {
+        if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var id)) return Challenge();
+        if (courseId <= 0) return NotFound();
+
+        try
+        {
+            var state = await learning.StateAsync(id, "User", token);
+            var certificate = LearningCertificates.EarnedBy(state).FirstOrDefault(item => item.CourseId == courseId);
+            if (certificate is null) return NotFound();
+
+            var profile = await store.GetLearnerProfileAsync(id, token);
+            return profile is null ? Challenge() : View(new LearningCertificateViewModel(profile.FullName, certificate));
+        }
+        catch (SqlException ex)
+        {
+            logger.LogError(ex, "Could not read learner certificate for course {CourseId}", courseId);
+            return StatusCode(503, "เปิดใบประกาศไม่ได้ กรุณาลองใหม่อีกครั้ง");
+        }
+    }
+
+    [HttpPost, Authorize(Roles = "User"), EnableRateLimiting("authentication")]
+    public async Task<IActionResult> UpdateProfile([Bind(Prefix = "Edit")] ProfileEditForm form, CancellationToken token)
+    {
+        if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var id)) return Challenge();
+        var fullName = form.FullName?.Trim() ?? "";
+        var email = form.Email?.Trim() ?? "";
+        if (ModelState.IsValid && fullName.Length < 2)
+            ModelState.AddModelError("Edit.FullName", "ชื่อที่แสดงต้องมีอย่างน้อย 2 ตัวอักษร");
+
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                var result = await store.UpdateLearnerProfileAsync(id, fullName, email, form.CurrentPassword, token);
+                switch (result)
+                {
+                    case ProfileUpdateStatus.Updated:
+                        var session = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                        var identity = new ClaimsIdentity(User.Identity);
+                        identity.TryRemoveClaim(identity.FindFirst(ClaimTypes.Name));
+                        identity.TryRemoveClaim(identity.FindFirst(ClaimTypes.Email));
+                        identity.AddClaim(new Claim(ClaimTypes.Name, fullName));
+                        identity.AddClaim(new Claim(ClaimTypes.Email, email));
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                            new ClaimsPrincipal(identity), session.Properties);
+                        TempData["ProfileSuccess"] = "บันทึกโปรไฟล์เรียบร้อยแล้ว";
+                        return RedirectToAction(nameof(Dashboard), null, null, "profile-edit");
+                    case ProfileUpdateStatus.PasswordRequired:
+                        ModelState.AddModelError("Edit.CurrentPassword", "กรุณากรอกรหัสผ่านปัจจุบันให้ถูกต้องเพื่อเปลี่ยนอีเมล");
+                        break;
+                    case ProfileUpdateStatus.EmailTaken:
+                        ModelState.AddModelError("Edit.Email", "อีเมลนี้ถูกใช้กับบัญชีผู้เรียนอื่นแล้ว");
+                        break;
+                    case ProfileUpdateStatus.Unavailable:
+                        return Challenge();
+                }
+            }
+            catch (SqlException ex)
+            {
+                logger.LogError(ex, "Could not update learner profile");
+                ModelState.AddModelError("", "บันทึกข้อมูลโปรไฟล์ไม่ได้ กรุณาลองใหม่อีกครั้ง");
+            }
+        }
+
+        return await RenderProfile(id, form, token);
+    }
+
+    private async Task<IActionResult> RenderProfile(Guid id, ProfileEditForm? edit, CancellationToken token)
+    {
+        LearnerProfile? profile;
+        try { profile = await store.GetLearnerProfileAsync(id, token); }
+        catch (SqlException ex)
+        {
+            logger.LogError(ex, "Could not read learner profile");
+            return StatusCode(503, "เปิดโปรไฟล์ไม่ได้ กรุณาลองใหม่อีกครั้ง");
+        }
+        if (profile is null) return Challenge();
+
+        LearningState? state = null;
+        try { state = await learning.StateAsync(id, "User", token, includeActivity: true); }
+        catch (SqlException ex) { logger.LogError(ex, "Could not read learner profile progress"); }
+        return View("Dashboard", new LearnerProfileViewModel(profile,
+            edit ?? new ProfileEditForm { FullName = profile.FullName, Email = profile.Email }, state,
+            LearningCertificates.EarnedBy(state)));
     }
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AdminDashboard()

@@ -4,298 +4,595 @@
     "Title": "UX Research",
     "Category": "Design",
     "Level": "Beginner",
-    "Units": 6,
+    "Units": 4,
     "Featured": true,
-    "Description": "\u0E40\u0E23\u0E35\u0E22\u0E19\u0E23\u0E39\u0E49\u0E27\u0E34\u0E18\u0E35\u0E01\u0E32\u0E23\u0E17\u0E33\u0E27\u0E34\u0E08\u0E31\u0E22\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49 \u0E2A\u0E31\u0E21\u0E20\u0E32\u0E29\u0E13\u0E4C \u0E41\u0E25\u0E30\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E08\u0E23\u0E34\u0E07",
-    "Instructor": "Alex Kim",
+    "Description": "เรียนรู้วิธีการทำวิจัยผู้ใช้ สัมภาษณ์ และทดสอบการใช้งานจริง",
+    "Instructor": "Nielsen Norman Group",
     "Skills": [
       "Research",
       "UX",
       "Interviewing"
     ],
-    "VideoUrl": "https://www.youtube.com/watch?v=c9Wg6Cb_YlU",
     "Lessons": [
       {
         "Id": 1,
-        "Title": "\u0E15\u0E31\u0E49\u0E07\u0E04\u0E33\u0E16\u0E32\u0E21\u0E27\u0E34\u0E08\u0E31\u0E22",
-        "DurationMinutes": 10
+        "Title": "ตั้งคำถามวิจัย",
+        "Summary": "ตั้งเป้าหมายวิจัยให้ตอบการตัดสินใจของทีม แล้วเชื่อมคำถามวิจัยกับวิธีเก็บหลักฐานที่เหมาะสม",
+        "DurationMinutes": 5,
+        "VideoId": "VKl8X16GoiY",
+        "VideoDurationSeconds": 261,
+        "VideoCreator": "Nielsen Norman Group",
+        "VideoTitle": "Creating a UX Research Plan"
       },
       {
         "Id": 2,
-        "Title": "\u0E2A\u0E31\u0E21\u0E20\u0E32\u0E29\u0E13\u0E4C\u0E42\u0E14\u0E22\u0E44\u0E21\u0E48\u0E0A\u0E35\u0E49\u0E19\u0E33",
-        "DurationMinutes": 10
+        "Title": "สัมภาษณ์โดยไม่ชี้นำ",
+        "Summary": "ฟังตัวอย่างคำถามชี้นำและคำถามติดตามผล แล้วฝึกขอให้ผู้ใช้เล่าเหตุการณ์จริงด้วยภาษาของตัวเอง",
+        "DurationMinutes": 6,
+        "VideoId": "yBYd5USasXg",
+        "VideoDurationSeconds": 353,
+        "VideoCreator": "Nielsen Norman Group",
+        "VideoTitle": "Five User Interview Mistakes to Avoid (in 5 Minutes)"
       },
       {
         "Id": 3,
-        "Title": "\u0E08\u0E32\u0E01\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E2A\u0E39\u0E48\u0E02\u0E49\u0E2D\u0E04\u0E49\u0E19\u0E1E\u0E1A",
-        "DurationMinutes": 10
+        "Title": "จากข้อมูลสู่ข้อค้นพบ",
+        "Summary": "แยกบันทึกเป็นข้อสังเกตสั้น ๆ จัดกลุ่มหลักฐานที่เกี่ยวข้องกัน และตั้งชื่อกลุ่มเพื่อสื่อข้อค้นพบ",
+        "DurationMinutes": 5,
+        "VideoId": "L49s5ZYbVa8",
+        "VideoDurationSeconds": 264,
+        "VideoCreator": "Nielsen Norman Group",
+        "VideoTitle": "Affinity Diagramming in Workshops"
       },
       {
         "Id": 4,
-        "Title": "\u0E27\u0E32\u0E07\u0E41\u0E1C\u0E19\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19",
-        "DurationMinutes": 10
+        "Title": "วางแผนทดสอบการใช้งาน",
+        "Summary": "ตั้งภารกิจที่ผู้ใช้มีโอกาสทำจริง สังเกตการใช้ต้นแบบโดยไม่บอกคำตอบ และใช้สิ่งที่พบวางแผนแก้ไข",
+        "DurationMinutes": 4,
+        "VideoId": "v8JJrDvQDF4",
+        "VideoDurationSeconds": 193,
+        "VideoCreator": "Nielsen Norman Group",
+        "VideoTitle": "User Testing: Why & How (Jakob Nielsen)"
       }
     ]
   },
   {
-    "Id": 2,
-    "Title": "Design Systems",
-    "Category": "Design",
-    "Level": "Intermediate",
-    "Units": 8,
-    "Featured": false,
-    "Description": "\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E41\u0E25\u0E30\u0E14\u0E39\u0E41\u0E25\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23\u0E23\u0E30\u0E1A\u0E1A Design System \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E2D\u0E07\u0E04\u0E4C\u0E01\u0E23",
-    "Instructor": "Maya Li",
-    "Skills": [
-      "Design",
-      "System",
-      "Figma"
-    ],
-    "VideoUrl": null,
-    "Lessons": [
-      {
-        "Id": 1,
-        "Title": "Tokenization",
-        "DurationMinutes": 8
-      },
-      {
-        "Id": 2,
-        "Title": "Components \u0026 Variants",
-        "DurationMinutes": 12
-      },
-      {
-        "Id": 3,
-        "Title": "Documentation \u0026 Hand-off",
-        "DurationMinutes": 10
-      }
-    ]
-  },
-  {
-    "Id": 3,
-    "Title": "Product Strategy",
-    "Category": "Business",
-    "Level": "Beginner",
-    "Units": 5,
-    "Featured": true,
-    "Description": "\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E01\u0E25\u0E22\u0E38\u0E17\u0E18\u0E4C\u0E1C\u0E25\u0E34\u0E15\u0E20\u0E31\u0E13\u0E11\u0E4C \u0E27\u0E32\u0E07\u0E42\u0E23\u0E14\u0E41\u0E21\u0E1B \u0E41\u0E25\u0E30\u0E27\u0E31\u0E14\u0E1C\u0E25\u0E25\u0E31\u0E1E\u0E18\u0E4C\u0E18\u0E38\u0E23\u0E01\u0E34\u0E08",
-    "Instructor": "John Doe",
-    "Skills": [
-      "Product",
-      "Strategy",
-      "Roadmap"
-    ],
-    "VideoUrl": null,
-    "Lessons": [
-      {
-        "Id": 1,
-        "Title": "Product Vision \u0026 Goals",
-        "DurationMinutes": 10
-      },
-      {
-        "Id": 2,
-        "Title": "Roadmaps \u0026 Prioritization",
-        "DurationMinutes": 15
-      }
-    ]
-  },
-  {
-    "Id": 4,
-    "Title": "No-code Prototyping",
-    "Category": "Technology",
-    "Level": "Intermediate",
-    "Units": 7,
-    "Featured": false,
-    "Description": "\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E42\u0E1B\u0E23\u0E42\u0E15\u0E44\u0E17\u0E1B\u0E4C\u0E41\u0E25\u0E30\u0E40\u0E27\u0E47\u0E1A\u0E41\u0E2D\u0E1B\u0E1E\u0E25\u0E34\u0E40\u0E04\u0E0A\u0E31\u0E19\u0E42\u0E14\u0E22\u0E44\u0E21\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E40\u0E02\u0E35\u0E22\u0E19\u0E42\u0E04\u0E49\u0E14",
-    "Instructor": "Sara Park",
-    "Skills": [
-      "Prototyping",
-      "No-code"
-    ],
-    "VideoUrl": null,
-    "Lessons": [
-      {
-        "Id": 1,
-        "Title": "No-code Tools Overview",
-        "DurationMinutes": 8
-      },
-      {
-        "Id": 2,
-        "Title": "Interactive User Flows",
-        "DurationMinutes": 12
-      }
-    ]
-  },
-  {
-    "Id": 5,
-    "Title": "JavaScript Basics",
-    "Category": "Technology",
-    "Level": "Beginner",
-    "Units": 10,
-    "Featured": true,
-    "Description": "\u0E40\u0E23\u0E35\u0E22\u0E19\u0E23\u0E39\u0E49\u0E1E\u0E37\u0E49\u0E19\u0E10\u0E32\u0E19 JavaScript \u0E15\u0E31\u0E49\u0E07\u0E41\u0E15\u0E48\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23 \u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02 \u0E1F\u0E31\u0E07\u0E01\u0E4C\u0E0A\u0E31\u0E19 \u0E08\u0E19\u0E16\u0E36\u0E07 DOM",
-    "Instructor": "Lee Chan",
-    "Skills": [
-      "JavaScript",
-      "Frontend",
-      "Web"
-    ],
-    "VideoUrl": null,
-    "Lessons": [
-      {
-        "Id": 1,
-        "Title": "\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23\u0E41\u0E25\u0E30\u0E0A\u0E19\u0E34\u0E14\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25",
-        "DurationMinutes": 8
-      },
-      {
-        "Id": 2,
-        "Title": "\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02\u0E41\u0E25\u0E30\u0E01\u0E32\u0E23\u0E40\u0E1B\u0E23\u0E35\u0E22\u0E1A\u0E40\u0E17\u0E35\u0E22\u0E1A",
-        "DurationMinutes": 10
-      },
-      {
-        "Id": 3,
-        "Title": "\u0E1F\u0E31\u0E07\u0E01\u0E4C\u0E0A\u0E31\u0E19\u0E41\u0E25\u0E30\u0E2D\u0E32\u0E23\u0E4C\u0E40\u0E23\u0E22\u0E4C",
-        "DurationMinutes": 10
-      },
-      {
-        "Id": 4,
-        "Title": "\u0E1B\u0E38\u0E48\u0E21\u0E41\u0E25\u0E30 DOM Manipulation",
-        "DurationMinutes": 10
-      }
-    ]
-  },
-  {
-    "Id": 6,
-    "Title": "Advanced CSS",
-    "Category": "Design",
-    "Level": "Intermediate",
-    "Units": 8,
-    "Featured": false,
-    "Description": "\u0E40\u0E17\u0E04\u0E19\u0E34\u0E04 CSS \u0E02\u0E31\u0E49\u0E19\u0E2A\u0E39\u0E07 Flexbox, Grid, Animations \u0E41\u0E25\u0E30 Responsive Design",
-    "Instructor": "Nina Rossi",
-    "Skills": [
-      "CSS",
-      "UI",
-      "Flexbox"
-    ],
-    "VideoUrl": null,
-    "Lessons": [
-      {
-        "Id": 1,
-        "Title": "Modern CSS Layouts",
-        "DurationMinutes": 10
-      },
-      {
-        "Id": 2,
-        "Title": "Micro-interactions \u0026 Keyframes",
-        "DurationMinutes": 12
-      }
-    ]
-  },
-  {
-    "Id": 13,
-    "Title": "English for Work",
+    "Id": 101,
+    "Title": "ทักทายและแนะนำตัวภาษาอังกฤษ",
     "Category": "Languages",
     "Level": "Beginner",
-    "Units": 4,
+    "Units": 1,
     "Featured": true,
-    "Description": "\u0E1D\u0E36\u0E01\u0E20\u0E32\u0E29\u0E32\u0E2D\u0E31\u0E07\u0E01\u0E24\u0E29\u0E17\u0E35\u0E48\u0E43\u0E0A\u0E49\u0E08\u0E23\u0E34\u0E07\u0E43\u0E19\u0E01\u0E32\u0E23\u0E17\u0E33\u0E07\u0E32\u0E19 \u0E41\u0E19\u0E30\u0E19\u0E33\u0E15\u0E31\u0E27 \u0E2D\u0E35\u0E40\u0E21\u0E25 \u0E41\u0E25\u0E30\u0E01\u0E32\u0E23\u0E1B\u0E23\u0E30\u0E0A\u0E38\u0E21",
-    "Instructor": "NextSkill Team",
+    "Description": "เลือกคำทักทายและประโยคแนะนำตัวให้เหมาะกับคู่สนทนาในชีวิตประจำวันและที่ทำงาน",
+    "Instructor": "Oxford Online English",
     "Skills": [
-      "English",
-      "Communication",
-      "Workplace"
+      "ทักทาย",
+      "แนะนำตัว",
+      "ระดับภาษา"
     ],
-    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "\u0E41\u0E19\u0E30\u0E19\u0E33\u0E15\u0E31\u0E27\u0E43\u0E19\u0E17\u0E35\u0E48\u0E17\u0E33\u0E07\u0E32\u0E19",
-        "DurationMinutes": 8
-      },
-      {
-        "Id": 2,
-        "Title": "\u0E40\u0E02\u0E35\u0E22\u0E19\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E43\u0E2B\u0E49\u0E0A\u0E31\u0E14\u0E40\u0E08\u0E19",
-        "DurationMinutes": 10
-      },
-      {
-        "Id": 3,
-        "Title": "\u0E2A\u0E37\u0E48\u0E2D\u0E2A\u0E32\u0E23\u0E43\u0E19\u0E01\u0E32\u0E23\u0E1B\u0E23\u0E30\u0E0A\u0E38\u0E21",
-        "DurationMinutes": 10
-      },
-      {
-        "Id": 4,
-        "Title": "\u0E43\u0E2B\u0E49\u0E02\u0E49\u0E2D\u0E40\u0E2A\u0E19\u0E2D\u0E41\u0E19\u0E30\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E2A\u0E23\u0E23\u0E04\u0E4C",
-        "DurationMinutes": 10
+        "Title": "เลือกคำทักทายให้เหมาะกับสถานการณ์",
+        "Summary": "ฟังบทสนทนาแบบเป็นทางการ เป็นกลาง และเป็นกันเอง แล้วสังเกตว่าคำทักทายและรูปประโยคเปลี่ยนอย่างไร",
+        "DurationMinutes": 12,
+        "VideoId": "sp3xU5WvRjA",
+        "VideoDurationSeconds": 684,
+        "VideoCreator": "Oxford Online English",
+        "VideoTitle": "English Greetings and Introductions - Spoken English"
       }
     ]
   },
   {
-    "Id": 14,
-    "Title": "Test 1",
-    "Category": "Technology",
+    "Id": 102,
+    "Title": "พื้นฐาน 12 Tenses ภาษาอังกฤษ",
+    "Category": "Languages",
     "Level": "Beginner",
-    "Units": 4,
-    "Featured": true,
-    "Description": "\u0E17\u0E14\u0E25\u0E2D\u0E25\u0E23\u0E30\u0E1A\u0E1A 1",
-    "Instructor": "\u0E19\u0E32\u0E22 \u0E44\u0E21\u0E48\u0E44\u0E2B\u0E27\u0E41\u0E25\u0E49\u0E27\u0E19\u0E49\u0E33\u0E08\u0E32\u0E41\u0E15\u0E01",
-    "Skills": [],
-    "VideoUrl": null,
+    "Units": 1,
+    "Featured": false,
+    "Description": "จับคู่เวลาและลักษณะของเหตุการณ์กับรูปกริยาในประโยคภาษาอังกฤษ",
+    "Instructor": "Learn English | Let's Talk - Free English Lessons",
+    "Skills": [
+      "Verb tenses",
+      "ไวยากรณ์",
+      "การเล่าเหตุการณ์"
+    ],
     "Lessons": [
       {
         "Id": 1,
-        "Title": "\u0E1A\u0E17\u0E40\u0E23\u0E35\u0E22\u0E19\u0E17\u0E35\u0E48 1: Test 1",
-        "DurationMinutes": 10
-      },
-      {
-        "Id": 2,
-        "Title": "\u0E1A\u0E17\u0E40\u0E23\u0E35\u0E22\u0E19\u0E17\u0E35\u0E48 2: Test 1",
-        "DurationMinutes": 10
-      },
-      {
-        "Id": 3,
-        "Title": "\u0E1A\u0E17\u0E40\u0E23\u0E35\u0E22\u0E19\u0E17\u0E35\u0E48 3: Test 1",
-        "DurationMinutes": 10
-      },
-      {
-        "Id": 4,
-        "Title": "\u0E1A\u0E17\u0E40\u0E23\u0E35\u0E22\u0E19\u0E17\u0E35\u0E48 4: Test 1",
-        "DurationMinutes": 10
+        "Title": "แยกเวลาและลักษณะของเหตุการณ์",
+        "Summary": "ทบทวนรูปกริยา 12 แบบ และฝึกสังเกตว่าเหตุการณ์เกิดเมื่อใด เป็นกิจวัตร กำลังเกิด หรือเกี่ยวข้องกับอีกช่วงเวลาหนึ่ง",
+        "DurationMinutes": 11,
+        "VideoId": "Z7jiJpW_-C0",
+        "VideoDurationSeconds": 658,
+        "VideoCreator": "Learn English | Let's Talk - Free English Lessons",
+        "VideoTitle": "Master 12 English Tenses In  Just 10 Minutes | English Grammar Lesson To Learn All Verb Tenses"
       }
     ]
   },
   {
-    "Id": 15,
-    "Title": "Test v1",
-    "Category": "Technology",
+    "Id": 103,
+    "Title": "ชวนคุยและสร้างเครือข่ายในงาน",
+    "Category": "Languages",
     "Level": "Beginner",
-    "Units": 4,
-    "Featured": true,
-    "Description": "test111",
-    "Instructor": "\u0E19\u0E32\u0E22 \u0E2D\u0E2A\u0E38\u0E08\u0E35\u0E49",
+    "Units": 1,
+    "Featured": false,
+    "Description": "เริ่ม Small Talk ถามต่ออย่างเป็นธรรมชาติ และจบบทสนทนาอย่างสุภาพในงานอาชีพ",
+    "Instructor": "BBC Learning English",
     "Skills": [
-      "0"
+      "Small talk",
+      "Networking",
+      "ถามต่อ"
     ],
-    "VideoUrl": "https://youtu.be/rgI1XcSBfiE?si=K919TbeHpPB60_2x",
     "Lessons": [
       {
         "Id": 1,
-        "Title": "\u0E1A\u0E17\u0E40\u0E23\u0E35\u0E22\u0E19\u0E17\u0E35\u0E48 1: Test v1",
-        "DurationMinutes": 10
-      },
+        "Title": "ฝึกคุยสั้น ๆ ในงานอาชีพ",
+        "Summary": "เรียนรู้การชวนคุยในงานเลี้ยงหรือการประชุม เลือกจุดเริ่มต้นที่มีร่วมกันและฝึกพาบทสนทนาไปต่อ",
+        "DurationMinutes": 13,
+        "VideoId": "AbnYjwQoIvU",
+        "VideoDurationSeconds": 722,
+        "VideoCreator": "BBC Learning English",
+        "VideoTitle": "Business events: Office English episode 6"
+      }
+    ]
+  },
+  {
+    "Id": 104,
+    "Title": "เขียนอีเมลภาษาอังกฤษในที่ทำงาน",
+    "Category": "Languages",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "วางเรื่องสำคัญไว้ต้นอีเมล เลือกระดับความเป็นทางการ และบอกสิ่งที่ต้องการจากผู้รับ",
+    "Instructor": "BBC Learning English",
+    "Skills": [
+      "อีเมลธุรกิจ",
+      "คำขอสุภาพ",
+      "เลือกน้ำเสียง"
+    ],
+    "Lessons": [
       {
-        "Id": 2,
-        "Title": "\u0E1A\u0E17\u0E40\u0E23\u0E35\u0E22\u0E19\u0E17\u0E35\u0E48 2: Test v1",
-        "DurationMinutes": 10
-      },
+        "Id": 1,
+        "Title": "เขียนอีเมลสั้นให้ตรงจุด",
+        "Summary": "พิจารณาความสัมพันธ์กับผู้รับและจุดประสงค์ของอีเมล เพื่อเลือกคำขึ้นต้น น้ำเสียง และคำขอที่เหมาะสม",
+        "DurationMinutes": 13,
+        "VideoId": "k188_aGDklQ",
+        "VideoDurationSeconds": 778,
+        "VideoCreator": "BBC Learning English",
+        "VideoTitle": "Work emails: Office English episode 1"
+      }
+    ]
+  },
+  {
+    "Id": 105,
+    "Title": "สัมภาษณ์งานภาษาอังกฤษสำหรับมือใหม่",
+    "Category": "Languages",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "เตรียมตอบคำถามสัมภาษณ์งานด้วยข้อมูลที่เกี่ยวข้องกับตำแหน่งและตัวอย่างจากประสบการณ์ของตนเอง",
+    "Instructor": "Learn English | Let's Talk - Free English Lessons",
+    "Skills": [
+      "สัมภาษณ์งาน",
+      "แนะนำตัวมืออาชีพ",
+      "ตอบด้วยตัวอย่าง"
+    ],
+    "Lessons": [
       {
-        "Id": 3,
-        "Title": "\u0E1A\u0E17\u0E40\u0E23\u0E35\u0E22\u0E19\u0E17\u0E35\u0E48 3: Test v1",
-        "DurationMinutes": 10
-      },
+        "Id": 1,
+        "Title": "เตรียมคำตอบสัมภาษณ์งาน",
+        "Summary": "ฟังตัวอย่างวิธีตอบคำถามยอดนิยมสำหรับผู้สมัครงานใหม่ แล้วฝึกปรับคำตอบให้ตรงกับตำแหน่งและประสบการณ์จริงของคุณ",
+        "DurationMinutes": 8,
+        "VideoId": "gnqzM6FWgTE",
+        "VideoDurationSeconds": 444,
+        "VideoCreator": "Learn English | Let's Talk - Free English Lessons",
+        "VideoTitle": "Job Interview Question & Answers for freshers - Free Job Interview tips & English Lessons"
+      }
+    ]
+  },
+  {
+    "Id": 106,
+    "Title": "HTML สำหรับหน้าเว็บแรก",
+    "Category": "Development",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": true,
+    "Description": "สร้างหน้าเว็บง่าย ๆ ด้วยหัวเรื่อง ย่อหน้า และลิงก์ พร้อมเข้าใจส่วนประกอบของไฟล์ HTML",
+    "Instructor": "Jake Wright",
+    "Skills": [
+      "โครงสร้างเอกสาร HTML",
+      "หัวเรื่องและย่อหน้า",
+      "ลิงก์"
+    ],
+    "Lessons": [
       {
-        "Id": 4,
-        "Title": "\u0E1A\u0E17\u0E40\u0E23\u0E35\u0E22\u0E19\u0E17\u0E35\u0E48 4: Test v1",
-        "DurationMinutes": 10
+        "Id": 1,
+        "Title": "ประกอบหน้าเว็บด้วยแท็กพื้นฐาน",
+        "Summary": "เปิดไฟล์ HTML ในเบราว์เซอร์ แล้วลองสร้างหน้ากิจกรรมที่มีหัวเรื่อง ย่อหน้า และลิงก์ไปยังหน้ากำหนดการ",
+        "DurationMinutes": 13,
+        "VideoId": "bWPMSSsVdPk",
+        "VideoDurationSeconds": 736,
+        "VideoCreator": "Jake Wright",
+        "VideoTitle": "Learn HTML in 12 Minutes"
+      }
+    ]
+  },
+  {
+    "Id": 107,
+    "Title": "จัดสไตล์หน้าเว็บด้วย CSS",
+    "Category": "Development",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "เชื่อมไฟล์ CSS กับ HTML แล้วใช้ตัวเลือกและคุณสมบัติปรับหน้าตาเว็บโดยแก้กฎจากที่เดียว",
+    "Instructor": "Jake Wright",
+    "Skills": [
+      "CSS Selectors",
+      "External Stylesheet",
+      "สีและพื้นหลัง"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "เลือกองค์ประกอบและเขียนกฎ CSS",
+        "Summary": "ลองกำหนดสีข้อความและพื้นหลังแยกกัน แล้วใช้ class เพื่อให้การ์ดหลายใบใช้สไตล์ร่วมกัน",
+        "DurationMinutes": 13,
+        "VideoId": "0afZj1G0BIE",
+        "VideoDurationSeconds": 731,
+        "VideoCreator": "Jake Wright",
+        "VideoTitle": "Learn CSS in 12 Minutes"
+      }
+    ]
+  },
+  {
+    "Id": 108,
+    "Title": "JavaScript จากตัวแปรถึงเงื่อนไข",
+    "Category": "Development",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "ลองเก็บข้อมูลในตัวแปรและอาร์เรย์ แล้วใช้เงื่อนไขกับลูปเพื่อให้โปรแกรมตัดสินใจและทำงานซ้ำ",
+    "Instructor": "Jake Wright",
+    "Skills": [
+      "JavaScript Variables",
+      "Arrays",
+      "เงื่อนไขและลูป"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "อ่านค่าและควบคุมลำดับคำสั่ง",
+        "Summary": "ลองสร้างรายการคะแนน และเขียนโค้ดให้แสดงข้อความต่างกันเมื่อคะแนนถึงเกณฑ์",
+        "DurationMinutes": 12,
+        "VideoId": "Ukg_U3CnJWI",
+        "VideoDurationSeconds": 720,
+        "VideoCreator": "Jake Wright",
+        "VideoTitle": "Learn JavaScript in 12 Minutes"
+      }
+    ]
+  },
+  {
+    "Id": 109,
+    "Title": "ตัวแปร Python สำหรับมือใหม่",
+    "Category": "Development",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "ฝึกตั้งตัวแปรและนำค่าที่เก็บไว้ไปคำนวณหรือเรียกใช้ต่อใน Python",
+    "Instructor": "Telusko",
+    "Skills": [
+      "Python Variables",
+      "Assignment",
+      "ตัวเลขและข้อความ"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "เก็บค่า คำนวณ และใช้ตัวแปรซ้ำ",
+        "Summary": "ลองเก็บจำนวนชิ้นกับราคาต่อชิ้นในตัวแปร แล้วคำนวณยอดรวมหลังปรับค่า",
+        "DurationMinutes": 11,
+        "VideoId": "TqPzwenhMj0",
+        "VideoDurationSeconds": 622,
+        "VideoCreator": "Telusko",
+        "VideoTitle": "#4 Python Tutorial for Beginners | Variables in Python"
+      }
+    ]
+  },
+  {
+    "Id": 110,
+    "Title": "Git และ GitHub ตั้งแต่ Commit แรก",
+    "Category": "Development",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "เริ่มเก็บประวัติการแก้ไขในเครื่องด้วย Git และส่งโปรเจกต์แรกขึ้น GitHub",
+    "Instructor": "LearnLabX",
+    "Skills": [
+      "git init",
+      "Staging และ Commit",
+      "git push"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "จากโฟลเดอร์งานสู่ GitHub",
+        "Summary": "เดินตามตัวอย่างเริ่ม repository เลือกไฟล์ที่จะบันทึก สร้าง commit และส่งประวัติไปยัง repository บน GitHub",
+        "DurationMinutes": 9,
+        "VideoId": "71qaJdThAUE",
+        "VideoDurationSeconds": 531,
+        "VideoCreator": "LearnLabX",
+        "VideoTitle": "Git & GitHub in 10 Minutes 🚀 | Complete Beginner Guide (2026)"
+      }
+    ]
+  },
+  {
+    "Id": 111,
+    "Title": "เริ่มใช้ Figma และจัดระเบียบไฟล์",
+    "Category": "Design",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": true,
+    "Description": "ทำความรู้จัก Canvas, Layers, Pages และแผงคุณสมบัติสำหรับเริ่มทำงานใน Figma",
+    "Instructor": "Figma",
+    "Skills": [
+      "Figma",
+      "Layers",
+      "Pages"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "นำทางในไฟล์ Figma Design",
+        "Summary": "เดินสำรวจแผงด้านซ้าย ขวา และ Canvas พร้อมดูวิธีใช้ Pages แยกขอบเขตงาน",
+        "DurationMinutes": 9,
+        "VideoId": "zt-Zr57Vfzs",
+        "VideoDurationSeconds": 527,
+        "VideoCreator": "Figma",
+        "VideoTitle": "Navigate Figma Design files: Figma Design for beginners [3 of 13]"
+      }
+    ]
+  },
+  {
+    "Id": 112,
+    "Title": "ออกแบบปุ่มที่ยืดตามข้อความ",
+    "Category": "Design",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "สร้างปุ่ม UI ใน Figma แล้วปรับพื้นที่รอบข้อความให้ปุ่มรองรับคำสั้นและคำยาว",
+    "Instructor": "Figma",
+    "Skills": [
+      "ปุ่ม UI",
+      "Auto Layout",
+      "Padding"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "สร้างปุ่มด้วยข้อความและ Auto Layout",
+        "Summary": "ใช้ข้อความเป็นจุดเริ่มต้นของปุ่ม เพิ่ม Auto Layout แล้วกำหนดสีและ Padding เพื่อให้ปุ่มจัดขนาดได้ตามป้ายข้อความ",
+        "DurationMinutes": 11,
+        "VideoId": "PZaBmmI0s4M",
+        "VideoDurationSeconds": 623,
+        "VideoCreator": "Figma",
+        "VideoTitle": "Create the button: Figma Design for beginners [6 of 13]"
+      }
+    ]
+  },
+  {
+    "Id": 113,
+    "Title": "จัดเลย์เอาต์ด้วย Figma Auto Layout",
+    "Category": "Design",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "ใช้ทิศทาง ระยะห่าง และขนาดที่สัมพันธ์กับกรอบ เพื่อให้หน้าจอปรับตามเนื้อหาได้",
+    "Instructor": "Figma",
+    "Skills": [
+      "Auto Layout",
+      "Gap",
+      "Resizing"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "ให้เลย์เอาต์ปรับเมื่อเนื้อหาเปลี่ยน",
+        "Summary": "แยกการวางแนว ระยะห่างระหว่างรายการกับพื้นที่ด้านใน และเลือกว่าจะให้ชิ้นงานยืดตามกรอบหรือเนื้อหา",
+        "DurationMinutes": 9,
+        "VideoId": "aaZsP7AYi2w",
+        "VideoDurationSeconds": 510,
+        "VideoCreator": "Figma",
+        "VideoTitle": "Figma Design for beginners: Advocate sidebar — Auto layout"
+      }
+    ]
+  },
+  {
+    "Id": 114,
+    "Title": "ออกแบบแถบนำทางและส่วนท้ายใน Figma",
+    "Category": "Design",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "ประกอบเมนูนำทางและ Footer จากชิ้นส่วนที่นำไปใช้ซ้ำได้ พร้อมจัดระยะด้วย Auto Layout",
+    "Instructor": "Figma",
+    "Skills": [
+      "Navigation",
+      "Footer",
+      "Components"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "ประกอบเมนูและสร้าง Component ที่ใช้ซ้ำ",
+        "Summary": "สร้างชื่อแบรนด์และรายการเมนู จัดแถบด้วย Auto Layout และแปลงส่วนที่ใช้ร่วมกันเป็น Components",
+        "DurationMinutes": 14,
+        "VideoId": "zo7FVhjOq68",
+        "VideoDurationSeconds": 823,
+        "VideoCreator": "Figma",
+        "VideoTitle": "Create the navigation bar and footer: Figma design for beginners [9 of 13]"
+      }
+    ]
+  },
+  {
+    "Id": 115,
+    "Title": "ทำต้นแบบที่กดได้ใน Figma",
+    "Category": "Design",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "เชื่อมหน้าจอให้กดทดลองได้ และเตรียมต้นแบบสำหรับรับข้อเสนอแนะก่อนเริ่มพัฒนา",
+    "Instructor": "Figma",
+    "Skills": [
+      "Prototype",
+      "Interactions",
+      "Flow"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "เชื่อมหน้าจอและทดลองเส้นทาง",
+        "Summary": "เพิ่มการตอบสนองเมื่อคลิก เชื่อมไปยัง Frame ปลายทาง และเปิดตัวเล่นเพื่อทดสอบว่าผู้ใช้ไปถึงเป้าหมายได้หรือไม่",
+        "DurationMinutes": 8,
+        "VideoId": "lTIeZ2ahEkQ",
+        "VideoDurationSeconds": 466,
+        "VideoCreator": "Figma",
+        "VideoTitle": "Figma For Beginners: Build prototypes (3/4)"
+      }
+    ]
+  },
+  {
+    "Id": 116,
+    "Title": "รู้ข้อจำกัดของ Generative AI",
+    "Category": "AI",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "แยกงานที่ AI ช่วยร่างหรือสรุปได้ออกจากข้อเท็จจริงที่ต้องตรวจสอบ และลดความเสี่ยงเมื่อทำงานกับเอกสารยาว",
+    "Instructor": "Anthropic",
+    "Skills": [
+      "Generative AI",
+      "การตรวจแหล่งข้อมูล",
+      "Context Window"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "เลือกใช้ความสามารถของ AI ให้เหมาะกับงาน",
+        "Summary": "พิจารณาว่าเมื่อไรควรขอให้ AI ร่างคำตอบ เมื่อไรควรเปิดแหล่งอ้างอิง และจะจัดข้อมูลยาวให้ตรวจสอบได้อย่างไร",
+        "DurationMinutes": 8,
+        "VideoId": "W5cga7xipRI",
+        "VideoDurationSeconds": 440,
+        "VideoCreator": "Anthropic",
+        "VideoTitle": "Lesson 3B: Capabilities & limitations | AI Fluency: Framework & Foundations Course"
+      }
+    ]
+  },
+  {
+    "Id": 117,
+    "Title": "แบ่งงานให้ AI อย่างมีเป้าหมาย",
+    "Category": "AI",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "ตั้งเป้าหมายก่อนเลือกเครื่องมือ และตัดสินใจว่างานส่วนใดให้ AI ช่วยได้หรือควรเก็บไว้ให้คนตัดสินใจ",
+    "Instructor": "Anthropic",
+    "Skills": [
+      "ตั้งเป้าหมายงาน",
+      "เลือกเครื่องมือ AI",
+      "แบ่งงานระหว่างคนและ AI"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "มอบหมายงานโดยพิจารณาความเสี่ยงและบทบาท",
+        "Summary": "ใช้สถานการณ์ทำงานจริงเพื่อแยกส่วนที่ให้ AI ร่างได้จากส่วนที่ต้องใช้ความรู้และความรับผิดชอบของคน",
+        "DurationMinutes": 6,
+        "VideoId": "EljzyfdYkrc",
+        "VideoDurationSeconds": 349,
+        "VideoCreator": "Anthropic",
+        "VideoTitle": "Lesson 4: A closer look at Delegation | AI Fluency: Framework & Foundations Course"
+      }
+    ]
+  },
+  {
+    "Id": 118,
+    "Title": "เขียน Prompt ให้ได้คำตอบตรงงาน",
+    "Category": "AI",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": true,
+    "Description": "ระบุบริบท รูปแบบ และข้อจำกัดใน Prompt พร้อมเลือกตัวอย่างและแบ่งงานยากเป็นขั้นตอน",
+    "Instructor": "Anthropic",
+    "Skills": [
+      "ออกแบบ Prompt",
+      "ระบุรูปแบบคำตอบ",
+      "ปรับคำสั่งซ้ำ"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "เปลี่ยนคำสั่งกว้างให้เป็นโจทย์ที่ลงมือทำได้",
+        "Summary": "ฝึกเปลี่ยนคำสั่งคลุมเครือเป็นคำขอที่บอกผู้รับ เป้าหมาย รูปแบบ และเงื่อนไขของงานชัดเจน",
+        "DurationMinutes": 12,
+        "VideoId": "2YCaBqP8muw",
+        "VideoDurationSeconds": 714,
+        "VideoCreator": "Anthropic",
+        "VideoTitle": "Lesson 7: Effective prompting techniques (Deep Dive) | AI Fluency: Framework & Foundations Course"
+      }
+    ]
+  },
+  {
+    "Id": 119,
+    "Title": "ตรวจคำตอบ AI ก่อนนำไปใช้",
+    "Category": "AI",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "ใช้เกณฑ์ด้านความถูกต้อง ตรวจขั้นตอนทำงาน และดูว่าการโต้ตอบกับ AI ช่วยให้งานดีขึ้นอย่างไร",
+    "Instructor": "Anthropic",
+    "Skills": [
+      "ตรวจผลงาน",
+      "ตรวจวิธีดำเนินงาน",
+      "ให้ข้อเสนอแนะ AI"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "ประเมินผลงาน วิธีทำงาน และการตอบสนอง",
+        "Summary": "พิจารณาทั้งตัวคำตอบ วิธีที่ AI ใช้หาคำตอบ และพฤติกรรมระหว่างทำงาน แล้วตัดสินใจว่าจะปรับคำสั่งหรือตรวจเพิ่ม",
+        "DurationMinutes": 6,
+        "VideoId": "Y0KidGr9Z2Y",
+        "VideoDurationSeconds": 323,
+        "VideoCreator": "Anthropic",
+        "VideoTitle": "Lesson 8: A closer look at Discernment | AI Fluency: Framework & Foundations Course"
+      }
+    ]
+  },
+  {
+    "Id": 120,
+    "Title": "ใช้ AI อย่างรับผิดชอบ",
+    "Category": "AI",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "Description": "ตัดสินใจอย่างรอบคอบว่าจะให้ข้อมูลอะไรกับ AI แจ้งบทบาทของเครื่องมือ และตรวจผลก่อนเผยแพร่",
+    "Instructor": "Anthropic",
+    "Skills": [
+      "ความเป็นส่วนตัว",
+      "ความโปร่งใส",
+      "ตรวจสอบก่อนเผยแพร่"
+    ],
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "ดูแลข้อมูล ผู้รับ และงานที่เผยแพร่",
+        "Summary": "วางขั้นตอนรับผิดชอบตั้งแต่เลือกเครื่องมือและข้อมูล ไปจนถึงการบอกบทบาทของ AI และตรวจข้อเท็จจริงก่อนส่งงาน",
+        "DurationMinutes": 7,
+        "VideoId": "QbLf2zb3oPc",
+        "VideoDurationSeconds": 411,
+        "VideoCreator": "Anthropic",
+        "VideoTitle": "Lesson 10: A closer look at Diligence | AI Fluency: Framework & Foundations Course"
       }
     ]
   }

@@ -56,9 +56,11 @@
         positionMenu();
     }
     function sync() {
-        pause.disabled = reduce.matches;
-        pause.setAttribute('aria-pressed', String(paused || reduce.matches));
-        pause.textContent = reduce.matches ? 'ลดการเคลื่อนไหวตามอุปกรณ์' : paused ? 'ขยับต่อได้เลย' : 'พักการเคลื่อนไหว';
+        if (pause) {
+            pause.disabled = reduce.matches;
+            pause.setAttribute('aria-pressed', String(paused || reduce.matches));
+            pause.textContent = reduce.matches ? 'ลดการเคลื่อนไหวตามอุปกรณ์' : paused ? 'ขยับต่อได้เลย' : 'พักการเคลื่อนไหว';
+        }
         if (!motionAllowed()) delete robot.dataset.speaking;
         window.NextSkillBuddyMotion?.refresh();
     }
@@ -90,7 +92,7 @@
         positionMenu();
         if (!menu.hidden) menu.querySelector('button:not([hidden]):not(:disabled)')?.focus({ preventScroll: true });
     });
-    pause.addEventListener('click', () => {
+    pause?.addEventListener('click', () => {
         if (window.NextSkillMotion) { window.NextSkillMotion.togglePaused(); return; }
         const control = document.getElementById('buddy-motion');
         if (control) control.click();

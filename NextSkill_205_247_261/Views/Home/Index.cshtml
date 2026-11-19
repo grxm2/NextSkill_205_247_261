@@ -1,10 +1,11 @@
 @model HomeDashboardViewModel
-@{ Layout = "_SmartJourneyLayout"; ViewData["Title"] = "ออกเดินทางสู่ทักษะใหม่"; ViewData["JourneyMode"] = "home"; }
+@{ Layout = "_SmartJourneyLayout"; ViewData["Title"] = "แดชบอร์ดการเรียน"; ViewData["JourneyMode"] = "home"; }
 <link rel="preload" href="~/images/hero/sky-clouds.webp" as="image" type="image/webp" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/hero-sunset.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/ocean-voyage.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/shooting-star.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/home-ocean.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/home-dashboard.css" asp-append-version="true" />
 <link rel="preload" href="~/images/journey/home-ocean-painted-v2.webp" as="image" type="image/webp" />
 <link rel="preload" href="~/images/journey/home-island-terrain-v2.webp" as="image" type="image/webp" />
 <main id="journey-main" class="ocean-home">
@@ -30,14 +31,9 @@
     </div>
     <div class="ow-vessel" aria-label="Nimo เดินทางบนเรือลำเดียวกัน"><div class="ow-arrival-motion"><partial name="_VesselWater" /><div class="ow-boat-idle"><span class="ow-boat-anchor sj-mascot-anchor buddy-slot" data-buddy-anchor="arrival"></span><img class="ow-boat-art" asp-append-version="true" src="~/images/journey/rowing-hull-waterline.svg" width="480" height="280" alt="เรือของ Nimo" /><img class="voyage-oar" src="~/images/journey/rowing-oar.svg" alt="" /></div><partial name="_VesselWaterContact" /></div></div>
     </div>
-    <div class="ow-intro">
-        <h1><span id="hero-highlight">ทักษะใหม่</span>ของคุณ<br /><em>เริ่มที่เกาะนี้</em></h1>
-        <p>ฝึกภาษา ออกแบบ และเขียนโค้ด<br />ออกเดินทางไปกับ Nimo ในจังหวะของคุณ</p>
-        <div class="ow-intro-actions">
-            <a class="ns-button ns-button--primary" asp-controller="Home" asp-action="Courses" data-catalog-voyage>ออกเดินทางเลือกคอร์ส <span aria-hidden="true">→</span></a>
-        </div>
-    </div>
+    <partial name="_HomeLearningDashboard" model="Model" />
 </section>
 </div>
 <noscript><p>เลือกคอร์สได้ที่ <a href="/Home/Courses">รายการคอร์สทั้งหมด</a></p></noscript>
 </main>
+<script src="~/js/home-dashboard.js" asp-append-version="true" defer></script>

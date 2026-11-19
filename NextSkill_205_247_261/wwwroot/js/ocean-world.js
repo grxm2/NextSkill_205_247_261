@@ -260,12 +260,20 @@
             event.preventDefault(); event.stopImmediatePropagation(); go(link.hash==='#journey-world'?.78:link.hash==='#course-harbor'?.62:0,event.detail>0);
         }
     },true);
+    const stationaryControls = '[data-theme-toggle], [data-home-dashboard], #nextskill-agent, #buddy-agent-menu, #nimo-speech';
     ['wheel','touchstart','pointerdown'].forEach(type=>window.addEventListener(type,event=>{
-        if (event.target instanceof Element && event.target.closest('[data-theme-toggle]')) return;
+        if (event.target instanceof Element && event.target.closest(stationaryControls)) return;
         if (!portalLocked) navigationArmed = true;
         stopTravel();
     },{passive:true}));
-    window.addEventListener('keydown',event=>{if(event.target instanceof Element && event.target.closest('[data-theme-toggle]'))return;if(['Escape','ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key)){if(!portalLocked)navigationArmed=true;stopTravel();}});
+    window.addEventListener('keydown', event => {
+        if (event.defaultPrevented) return;
+        if (event.target instanceof Element && event.target.closest(stationaryControls)) return;
+        if (['Escape', 'ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) {
+            if (!portalLocked) navigationArmed = true;
+            stopTravel();
+        }
+    });
     const observer = new MutationObserver(() => { paused = guide?.dataset.motion === 'paused'; syncIdle(); });
     if (guide) observer.observe(guide,{attributes:true,attributeFilter:['data-motion']});
     document.querySelectorAll('dialog').forEach(dialog=>observer.observe(dialog,{attributes:true,attributeFilter:['open']}));

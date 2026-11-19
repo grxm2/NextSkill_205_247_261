@@ -8,6 +8,10 @@
     const measure = document.getElementById('nimo-speech-measure');
     const announcement = document.getElementById('nimo-speech-announcement');
     const close = document.getElementById('nimo-speech-close');
+    const missionButton = document.getElementById('nimo-missions-open');
+    const dashboard = document.querySelector('[data-home-dashboard]');
+    const islandSheet = document.getElementById('island-sheet-toggle');
+    const islandCourseMenu = document.getElementById('island-course-menu');
     const menu = document.getElementById('buddy-agent-menu');
     const reduce = matchMedia('(prefers-reduced-motion: reduce)');
     const scene = document.getElementById('ocean-journey');
@@ -54,6 +58,8 @@
     }
     function eligible() {
         if (!active || document.hidden || root.hidden || (!menu.hidden && !lessonCoach) || robot.dataset.voyagePose) return false;
+        if (islandSheet?.getAttribute('aria-expanded') === 'true' && islandSheet.getClientRects().length) return false;
+        if (islandCourseMenu && !islandCourseMenu.hidden) return false;
         if (root.dataset.context === 'in-flight' || root.closest('[data-voyage="rowing"],[data-voyage="boarding"],[data-voyage="diving"],[data-boarding="true"]')) return false;
         if (scene?.dataset.arrival || scene?.dataset.cvPhase) return false;
         if (document.documentElement.matches('.cv-arrival-pending,.cv-arrival-running,.cv-departure-active,.journey-arrival-prepaint')) return false;
@@ -98,6 +104,11 @@
             ['เรียนทีละนิดก็มีความหมาย วันนี้แค่ได้ลองสิ่งใหม่หนึ่งอย่าง ก็คุ้มกับการออกเรือแล้ว', 'วันนี้ลองสิ่งใหม่ด้วยกันสักอย่างนะ', 'cheer']
         ];
     }
+    function homeMission() {
+        const message = dashboard?.dataset.missionText;
+        if (!missionButton || !message || root.dataset.context !== 'shore') return null;
+        return { key: `${context}:mission:${message}`, text: message, priority: 2, pose: 'nod', mission: true };
+    }
     function automatic() {
         if (context.startsWith('lesson:')) {
             if (recovery && !recovery.hidden) return { key: `${context}:recovery`, text: 'คำตอบยังอยู่ตรงนี้นะ กด “ตรวจสถานะการบันทึก” ก่อน เพื่อดูผลที่ยืนยันจากระบบได้เลย', compact: 'กด “ตรวจสถานะการบันทึก” เพื่อเช็กผลนะ', priority: 5 };
@@ -106,13 +117,14 @@
             const message = clean(lessonMessage?.textContent);
             if (message) return { key: `${context}:${result && !result.hidden ? `result:${result.dataset.passed}` : 'hint'}:${message}`, text: message, compact: message, priority: result && !result.hidden ? 4 : 2 };
         }
+        const mission = homeMission();
+        if (mission) return mission;
         const [message, compact, pose] = tips()[0];
         return { key: `${context}:welcome`, text: message, compact, pose, priority: 1 };
     }
 
-    // Only use free space above Nimo. Narrow layouts can use a shorter tip next
-    // to the hero controls; no tooltip may sit on a course/lesson action.
-    const protectedSelectors = '.ns-navbar,.ow-intro h1,.ow-intro > p,.ow-intro-actions a,.catalog-hero-copy,.catalog-tools,.catalog-search,#lesson-reading,#lesson-questions,.lesson-step-actions,.sj-current-actions,.practice-overview-heading,.practice-facts,.practice-coach > p,.practice-coach > ul';
+    // Keep advice clear of the course controls and the Home dashboard.
+    const protectedSelectors = '.ns-navbar,.ow-intro h1,.ow-intro > p,.ow-intro-actions a,[data-home-dashboard],.catalog-hero-copy,.catalog-tools,.catalog-search,#lesson-reading,#lesson-questions,.lesson-step-actions,.island-dashboard,.practice-overview-heading,.practice-facts,.practice-coach > p,.practice-coach > ul';
     function placement(message) {
         const anchor = root.getBoundingClientRect();
         const obstacles = [...document.querySelectorAll(protectedSelectors)].filter(node => node.getClientRects().length).map(node => node.getBoundingClientRect()).filter(box => box.width > 0 && box.height > 0);
@@ -120,27 +132,54 @@
         const left = (viewport?.offsetLeft || 0) + 12;
         const right = Math.min(innerWidth, (viewport?.offsetLeft || 0) + (viewport?.width || innerWidth)) - 12;
         const top = (viewport?.offsetTop || 0) + 12;
-        const bottom = Math.min(anchor.top - 10, (viewport?.offsetTop || 0) + (viewport?.height || innerHeight) - 12);
+        const viewportBottom = (viewport?.offsetTop || 0) + (viewport?.height || innerHeight) - 12;
+        const anchorTop = Math.min(anchor.top - 10, viewportBottom);
         const center = (anchor.left + anchor.right) / 2;
         const fullWidth = Math.min(280, right - left);
+        const fits = (x, y, width, height) => y >= top && y + height <= viewportBottom &&
+            !obstacles.some(box => x < box.right + 4 && x + width > box.left - 4 && y < box.bottom + 4 && y + height > box.top - 4);
         const candidates = [{ x: clamp(center - fullWidth / 2, left, right - fullWidth), width: fullWidth, compact: false }, { x: clamp(center - fullWidth / 2, left, right - fullWidth), width: fullWidth, compact: true }];
         for (const box of obstacles) {
             const rightX = Math.max(left, box.right + 8), leftEdge = Math.min(right, box.left - 8);
             if (right - rightX >= 132) candidates.push({ x: rightX, width: Math.min(240, right - rightX), compact: true });
             if (leftEdge - left >= 132) candidates.push({ x: Math.max(left, leftEdge - 240), width: Math.min(240, leftEdge - left), compact: true });
         }
-        for (const candidate of candidates) {
-            const copy = candidate.compact ? message.compact || message.text : message.text;
-            bubble.dataset.compact = String(candidate.compact);
-            bubble.style.width = `${candidate.width}px`;
-            measure.textContent = copy;
-            const height = bubble.offsetHeight;
-            const y = bottom - height;
-            if (y < top || Math.abs(candidate.x + candidate.width / 2 - center) > 210) continue;
-            if (obstacles.some(box => candidate.x < box.right + 4 && candidate.x + candidate.width > box.left - 4 && y < box.bottom + 4 && bottom > box.top - 4)) continue;
-            bubble.style.transform = `translate3d(${candidate.x}px,${y}px,0)`;
-            bubble.style.setProperty('--nimo-tail', `${clamp(center - candidate.x, 20, candidate.width - 20)}px`);
-            return copy;
+        for (const side of dashboard ? ['above', 'below'] : ['above']) {
+            for (const candidate of candidates) {
+                const copy = candidate.compact ? message.compact || message.text : message.text;
+                bubble.dataset.compact = String(candidate.compact);
+                bubble.style.width = `${candidate.width}px`;
+                measure.textContent = copy;
+                const height = bubble.offsetHeight;
+                const y = side === 'above' ? anchorTop - height : anchor.bottom + 10;
+                if (Math.abs(candidate.x + candidate.width / 2 - center) > 210 || !fits(candidate.x, y, candidate.width, height)) continue;
+                bubble.dataset.placement = side;
+                bubble.style.transform = `translate3d(${candidate.x}px,${y}px,0)`;
+                bubble.style.setProperty('--nimo-tail', `${clamp(center - candidate.x, 20, candidate.width - 20)}px`);
+                return copy;
+            }
+        }
+        if (dashboard) {
+            const dashboardBottom = dashboard.getBoundingClientRect().bottom;
+            const beside = [
+                { side: 'left', edge: anchor.left - 10, width: Math.min(220, anchor.left - 10 - left) },
+                { side: 'right', edge: anchor.right + 10, width: Math.min(220, right - anchor.right - 10) }
+            ];
+            const copy = message.compact || message.text;
+            for (const { side, edge, width } of beside) {
+                if (width < 124) continue;
+                bubble.dataset.compact = 'true';
+                bubble.style.width = `${width}px`;
+                measure.textContent = copy;
+                const height = bubble.offsetHeight;
+                const x = side === 'left' ? edge - width : edge;
+                const y = Math.max(top, dashboardBottom + 8, Math.min(anchor.top, viewportBottom - height));
+                if (!fits(x, y, width, height)) continue;
+                bubble.dataset.placement = side;
+                bubble.style.transform = `translate3d(${x}px,${y}px,0)`;
+                bubble.style.setProperty('--nimo-tail-y', `${clamp((anchor.top + anchor.bottom) / 2 - y, 15, height - 15)}px`);
+                return copy;
+            }
         }
         return '';
     }
@@ -175,7 +214,9 @@
             bubble.setAttribute('popover', 'manual');
         }
         bubble.dataset.inline = String(Boolean(inline));
+        bubble.toggleAttribute('data-mission', current.mission === true);
         bubble.hidden = false;
+        if (missionButton) missionButton.hidden = !current.mission;
         // A manual popover escapes the scene's clipping without trapping focus.
         if (!inline && typeof bubble.showPopover === 'function' && !bubble.matches(':popover-open')) bubble.showPopover();
         const copy = inline ? current.text : placement(current);
@@ -201,7 +242,7 @@
     }
     function evaluate() {
         timer = 0;
-        if (!eligible()) { hide(); return; }
+        if (!eligible() || dashboard?.dataset.status === 'loading' && !current?.manual) { hide(); return; }
         const nextContext = contextKey();
         if (context !== nextContext) { context = nextContext; current = null; renderedKey = ''; lastAutoKey = ''; }
         const next = automatic();
@@ -232,11 +273,13 @@
         if (context !== nextContext) { context = nextContext; renderedKey = ''; }
         lastAutoKey = automatic().key;
         seen.add(lastAutoKey);
-        current = { key: `${context}:manual:${++generation}`, text: message, compact: clean(options.compact) || message, priority: 2, pose: options.pose || 'nod', motion: options.motion, focus: options.focus === true, manual: true };
+        current = { key: `${context}:manual:${++generation}`, text: message, compact: clean(options.compact) || message, priority: 2, pose: options.pose || 'nod', motion: options.motion, focus: options.focus === true, manual: true, mission: options.mission === true };
         return present();
     }
     function help(options = {}) {
         context = contextKey();
+        const mission = homeMission();
+        if (mission) return say(mission.text, { ...options, mission: true });
         const index = tipIndices.get(context) || 0;
         const [message, compact, pose] = tips()[index % tips().length];
         tipIndices.set(context, index + 1);
@@ -258,6 +301,9 @@
         observer.observe(robot, { attributes: true, attributeFilter: ['data-voyage-pose'] });
         observer.observe(menu, { attributes: true, attributeFilter: ['hidden'] });
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        if (islandSheet) observer.observe(islandSheet, { attributes: true, attributeFilter: ['aria-expanded'] });
+        if (islandCourseMenu) observer.observe(islandCourseMenu, { attributes: true, attributeFilter: ['hidden'] });
+        if (dashboard) observer.observe(dashboard, { attributes: true, attributeFilter: ['data-mode', 'data-status', 'data-mission-text'] });
         document.querySelectorAll('dialog,#catalog-voyage,#buddy-coach,[data-voyage],#ocean-journey').forEach(node => observer.observe(node, { attributes: true, attributeFilter: ['open', 'hidden', 'data-voyage', 'data-arrival', 'data-cv-phase', 'data-boarding'] }));
         if (lessonMessage) observer.observe(lessonMessage, { childList: true, characterData: true, subtree: true });
         [result, recovery].filter(Boolean).forEach(node => observer.observe(node, { attributes: true, attributeFilter: ['hidden', 'data-passed'] }));

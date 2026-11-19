@@ -47,6 +47,9 @@
     <link rel="stylesheet" href="~/css/catalog-voyage.css" asp-append-version="true" />
 }
     <link rel="stylesheet" href="~/css/nimo-speech.css" asp-append-version="true" />
+@if (ViewData["JourneyMode"] as string == "learn") {
+    <link rel="stylesheet" href="~/css/island-dashboard.css" asp-append-version="true" />
+}
 </head>
 <body data-guest-preview="@((JourneyEnvironment.EnvironmentName == "Development" && JourneyConfiguration.GetValue("Learning:GuestPreview", true)).ToString().ToLowerInvariant())" id="nextskill-home" class="smart-journey" data-companion-theme="learning-club" data-journey-mode="@ViewData["JourneyMode"]" data-authenticated="@(User.Identity?.IsAuthenticated == true ? "true" : "false")">
     <a class="skip-link" href="#journey-main">ข้ามไปเนื้อหา</a>
@@ -76,6 +79,10 @@
     <script src="~/js/journey-clouds.js" asp-append-version="true" defer></script>
     <script src="~/js/island-details.js" asp-append-version="true" defer></script>
     <script src="~/js/archipelago.js" asp-append-version="true" defer></script>
+    @if (ViewData["JourneyMode"] as string == "practice")
+    {
+        <script src="~/js/lesson-video.js" asp-append-version="true" defer></script>
+    }
     <script src="~/js/smart-journey.js" asp-append-version="true" defer></script>
     <script src="~/js/course-harbor.js" asp-append-version="true" defer></script>
 @if (ViewData["JourneyMode"]?.ToString() == "learn") { <script src="~/js/island-water-motion.js" asp-append-version="true" defer></script><script src="~/js/underwater-journey.js" asp-append-version="true" defer></script> }

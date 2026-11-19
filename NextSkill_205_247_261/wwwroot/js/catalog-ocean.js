@@ -6,7 +6,6 @@
     const ocean = page.querySelector('[data-sea-world]');
     const hero = page.querySelector('[data-catalog-hero]');
     const harbor = hero.querySelector('[data-harbor-model]');
-    const motionButton = page.querySelector('[data-catalog-motion]');
     const layers = [...page.querySelectorAll('[data-catalog-parallax]')];
     let frame = 0, ambientAllowed = !reduced.matches, origin = 0, entered = false;
 
@@ -44,10 +43,6 @@
         window.NextSkillMotion.subscribe(state => {
             ambientAllowed = state.ambientAllowed;
             ocean.dataset.catalogAmbient = ambientAllowed ? 'active' : 'paused';
-            motionButton.hidden = false;
-            motionButton.disabled = state.reduced;
-            motionButton.setAttribute('aria-pressed', String(state.paused));
-            motionButton.querySelector('span').textContent = state.reduced ? 'ลดการเคลื่อนไหว' : state.paused ? 'เปิดการเคลื่อนไหว' : 'พักการเคลื่อนไหว';
             queue();
         }, { element: page, kind: 'ambient' });
         window.NextSkillMotion.subscribe(state => {
@@ -55,7 +50,6 @@
             hero.dataset.catalogAmbient = active ? 'active' : 'paused';
             harbor.dataset.harborMotion = active ? 'active' : 'paused';
         }, { element: hero, kind: 'ambient' });
-        motionButton.addEventListener('click', () => window.NextSkillMotion.togglePaused());
     }
 
     // Default HTML stays visible without JavaScript or motion support.

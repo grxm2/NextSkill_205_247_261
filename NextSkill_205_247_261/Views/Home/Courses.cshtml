@@ -14,9 +14,10 @@
     <div class="catalog-wrap">
         <header class="catalog-hero" data-catalog-hero data-catalog-ambient="paused">
             <div class="catalog-hero-copy">
-                <div class="catalog-heading"><p class="ns-course-eyebrow"><span class="catalog-wave-mark" aria-hidden="true">≈</span> อ่าวแห่งการเรียนรู้ · NextSkill</p>
-                <h1 id="catalog-title">เลือกคอร์สที่ใช่<span>สำหรับคุณ</span></h1>
-                <p class="catalog-intro">เลือกทักษะที่อยากฝึก แล้วออกเดินทางไปเกาะบทเรียนกับ Nimo</p></div>
+                <div class="catalog-heading">
+                    <h1 id="catalog-title">เลือกคอร์สที่ใช่<span>สำหรับคุณ</span></h1>
+                    <p class="catalog-intro">เลือกทักษะที่อยากฝึก แล้วออกเดินทางไปเกาะบทเรียนกับ Nimo</p>
+                </div>
         <div class="catalog-tools" data-catalog-tools>
             <form method="get" asp-action="Courses" class="catalog-search" role="search" aria-label="ค้นหาคอร์สเรียน">
                 <label class="catalog-search-field" for="course-query"><span class="visually-hidden">อยากฝึกเรื่องอะไร? ค้นหาชื่อคอร์ส ทักษะ หรือผู้สอน</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input id="course-query" name="q" value="@Model.Query" type="search" maxlength="200" placeholder="อยากฝึกเรื่องอะไร? ค้นหาคอร์สหรือทักษะ" /></label>
@@ -44,10 +45,7 @@
         <div class="ns-catalog-status ns-status" data-catalog-status role="status" aria-live="polite" hidden></div>
         <div class="ns-course-section-heading" id="catalog-results">
             <div><h2>@(filtered ? "คอร์สที่ตรงกับคุณ" : "คอร์สทั้งหมด")</h2><p>พบ @Model.TotalCount คอร์ส@(string.IsNullOrWhiteSpace(Model.Query) ? "" : $" สำหรับ “{Model.Query}”")</p></div>
-            <div class="catalog-results-actions">
-                @if (filtered) { <a class="catalog-clear" asp-action="Courses" asp-route-pageSize="@Model.PageSize">ล้างตัวกรอง <span aria-hidden="true">×</span></a> }
-                <button class="catalog-motion-toggle" type="button" data-catalog-motion aria-pressed="false" hidden><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7 5v10m6-10v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>พักการเคลื่อนไหว</span></button>
-            </div>
+            @if (filtered) { <a class="catalog-clear" asp-action="Courses" asp-route-pageSize="@Model.PageSize">ล้างตัวกรอง <span aria-hidden="true">×</span></a> }
         </div>
         @if (Model.Courses.Count == 0)
         {
@@ -59,11 +57,25 @@
             @for (var index = 0; index < Model.Courses.Count; index++)
             {
                 var item = Model.Courses[index];
+                var cover = item.Cover;
                 <article class="ns-course-card" data-course-id="@item.Id" data-can-start="@item.CanStart.ToString().ToLowerInvariant()" data-catalog-reveal>
-                    <a class="ns-course-card-art" asp-action="Details" asp-route-id="@item.Id" tabindex="-1" aria-hidden="true"><img src="@item.CoverArt" asp-append-version="true" alt="" width="960" height="540" loading="@(index < 3 ? "eager" : "lazy")" fetchpriority="@(index == 0 ? "high" : "auto")" /><span class="ns-badge @(item.CanStart ? "" : "ns-badge--upcoming")"><span class="catalog-status-dot"></span>@(item.CanStart ? "พร้อมออกเดินทาง" : "เร็ว ๆ นี้")</span></a>
+                    <a class="ns-course-card-art@(cover.Topic is null ? "" : " ns-topic-cover")" asp-action="Details" asp-route-id="@item.Id" tabindex="-1" aria-hidden="true">
+                        <img src="@cover.Path" asp-append-version="true" alt="" width="960" height="540" loading="@(index < 3 ? "eager" : "lazy")" fetchpriority="@(index == 0 ? "high" : "auto")" />
+                        @if (cover.Topic is not null)
+                        {
+                            <span class="ns-topic-cover-label" lang="en" dir="ltr">@cover.Topic</span>
+                        }
+                        @if (!item.CanStart)
+                        {
+                            <span class="ns-badge ns-badge--upcoming"><span class="catalog-status-dot"></span>เร็ว ๆ นี้</span>
+                        }
+                    </a>
                     <div class="ns-course-card-copy">
                         <div class="ns-course-meta"><span>@item.CategoryLabel</span>@if (item.CanStart) { <span class="catalog-lesson-count">@item.Curriculum.TotalLessons บทเรียน</span> }</div>
-                        <span class="visually-hidden">@(item.CanStart ? "พร้อมออกเดินทาง" : "เร็ว ๆ นี้ ยังไม่เปิดให้เรียน")</span>
+                        @if (!item.CanStart)
+                        {
+                            <span class="visually-hidden">เร็ว ๆ นี้ ยังไม่เปิดให้เรียน</span>
+                        }
                         <h3><a asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h3><p>@item.Description</p>
                         <div class="ns-course-card-footer">
                             <div class="ns-course-progress" data-course-progress hidden><span data-progress-label></span><progress max="100" value="0" aria-label="ความก้าวหน้า @item.Title"></progress></div>

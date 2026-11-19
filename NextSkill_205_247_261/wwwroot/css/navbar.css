@@ -33,6 +33,7 @@ html[data-theme="dark"] .ns-navbar__wordmark{--wordmark-next:#d3e7f0;--wordmark-
 .ns-navbar__profile{position:relative}
 .ns-navbar__avatar{display:flex;align-items:center;gap:9px;min-width:64px;min-height:48px;padding:0;border:0;background:none;color:#fff;font:inherit;cursor:pointer}
 .ns-navbar__avatar>img{width:36px;height:36px;object-fit:contain;border:1px solid #ffffffbb;border-radius:50%;background:#bce8ff}
+.ns-navbar__chevron{width:14px;height:14px;flex:none}
 .ns-navbar__dropdown{display:none;position:absolute;inset:auto 0 auto auto;z-index:10;min-width:190px;margin:10px 0 0;padding:8px;list-style:none;border:1px solid var(--ns-border);border-radius:16px;background:#f0f9ff;box-shadow:var(--ns-shadow)}
 .ns-navbar__dropdown.show{display:block}
 .ns-navbar__dropdown a,.ns-navbar__dropdown button{display:flex;align-items:center;width:100%;min-height:44px;padding:9px 12px;border:0;border-radius:8px;background:none;color:var(--ns-ink);font:400 14px/1.5 var(--ns-font);text-decoration:none;cursor:pointer}
