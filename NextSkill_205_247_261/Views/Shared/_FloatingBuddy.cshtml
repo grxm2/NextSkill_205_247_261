@@ -4,6 +4,10 @@
             <div class="nimo-speech-heading"><strong data-buddy-name>Nimo</strong><span class="nimo-speech-meter" aria-hidden="true"><i></i><i></i><i></i></span><span class="nimo-speech-caption">อยู่ข้าง ๆ ทุกก้าว</span></div>
             <button type="button" id="nimo-speech-close" aria-label="ปิดคำพูดของ Nimo">×</button>
             <p class="nimo-speech-copy"><span id="nimo-speech-measure" aria-hidden="true"></span><span id="nimo-speech-text" aria-hidden="true"></span></p>
+            @if (ViewData["JourneyMode"] as string == "home")
+            {
+                <button type="button" id="nimo-missions-open" aria-haspopup="dialog" aria-controls="hd-mission-dialog" hidden>ดูภารกิจวันนี้</button>
+            }
         </div>
         <span id="nimo-speech-announcement" class="agent-sr" role="status" aria-live="polite" aria-atomic="true"></span>
     </section>

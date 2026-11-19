@@ -15,6 +15,7 @@
         const start = surfaceOffset + innerHeight * .265 - innerHeight * .3;
         const depth = Math.max(0, Math.min(1, (window.scrollY - start) / (innerHeight * .9)));
         deepDecor.style.opacity = String(reduced.matches ? (depth >= .5 ? 1 : 0) : depth);
+        document.body.classList.toggle('is-underwater', depth >= .5);
     }
     function measureSurface() {
         const first = route.querySelector('[data-lesson-id="1"] img');

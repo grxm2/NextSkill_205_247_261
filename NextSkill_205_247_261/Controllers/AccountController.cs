@@ -140,6 +140,28 @@ public class AccountController(AccountStore store, LearningStore learning, ILogg
             : Challenge();
     }
 
+    [HttpGet, Authorize(Roles = "User")]
+    public async Task<IActionResult> Certificate(int courseId, CancellationToken token)
+    {
+        if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var id)) return Challenge();
+        if (courseId <= 0) return NotFound();
+
+        try
+        {
+            var state = await learning.StateAsync(id, "User", token);
+            var certificate = LearningCertificates.EarnedBy(state).FirstOrDefault(item => item.CourseId == courseId);
+            if (certificate is null) return NotFound();
+
+            var profile = await store.GetLearnerProfileAsync(id, token);
+            return profile is null ? Challenge() : View(new LearningCertificateViewModel(profile.FullName, certificate));
+        }
+        catch (SqlException ex)
+        {
+            logger.LogError(ex, "Could not read learner certificate for course {CourseId}", courseId);
+            return StatusCode(503, "เปิดใบประกาศไม่ได้ กรุณาลองใหม่อีกครั้ง");
+        }
+    }
+
     [HttpPost, Authorize(Roles = "User"), EnableRateLimiting("authentication")]
     public async Task<IActionResult> UpdateProfile([Bind(Prefix = "Edit")] ProfileEditForm form, CancellationToken token)
     {
@@ -202,7 +224,8 @@ public class AccountController(AccountStore store, LearningStore learning, ILogg
         try { state = await learning.StateAsync(id, "User", token, includeActivity: true); }
         catch (SqlException ex) { logger.LogError(ex, "Could not read learner profile progress"); }
         return View("Dashboard", new LearnerProfileViewModel(profile,
-            edit ?? new ProfileEditForm { FullName = profile.FullName, Email = profile.Email }, state));
+            edit ?? new ProfileEditForm { FullName = profile.FullName, Email = profile.Email }, state,
+            LearningCertificates.EarnedBy(state)));
     }
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AdminDashboard()

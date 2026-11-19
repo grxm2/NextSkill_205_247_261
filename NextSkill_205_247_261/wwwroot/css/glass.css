@@ -41,3 +41,26 @@ html[data-theme="dark"]{--ns-liquid-ink:#e2f1ff;--ns-liquid-control:rgba(209,233
  :root{--ns-liquid-bg:#edf9ff;--ns-liquid-border:#577b91;--ns-liquid-filter:none;--ns-liquid-control:#f5fcff}
  html[data-theme="dark"]{--ns-liquid-bg:#16344d;--ns-liquid-border:#87acc5;--ns-liquid-control:#23465f}
 }
+
+/* Tinted liquid glass for reading over the illustrated ocean. */
+:root {
+    --ns-liquid-panel-tint: #def5ff;
+    --ns-liquid-panel-glass-weight: 72%;
+    --ns-liquid-panel-solid: #f0faff;
+    --ns-liquid-panel-edge: #e9f9ff99;
+    --ns-liquid-panel-night-edge: #b1dff667;
+    --ns-liquid-panel-shadow: var(--ns-liquid-shadow), 0 6px 18px #15394f24;
+    --ns-liquid-panel-bg: color-mix(in srgb, var(--ns-liquid-bg) var(--ns-liquid-panel-glass-weight), var(--ns-liquid-panel-tint));
+}
+html[data-theme="dark"] {
+    --ns-liquid-panel-tint: #0c2840;
+    --ns-liquid-panel-glass-weight: 60%;
+    --ns-liquid-panel-solid: #17374e;
+    --ns-liquid-panel-edge: var(--ns-liquid-panel-night-edge);
+}
+@supports not (((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) and (background: color-mix(in srgb, white, black))) {
+    :root { --ns-liquid-panel-bg: var(--ns-liquid-panel-solid); }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+    :root { --ns-liquid-panel-bg: var(--ns-liquid-panel-solid); }
+}

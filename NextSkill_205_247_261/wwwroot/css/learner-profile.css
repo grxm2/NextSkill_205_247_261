@@ -199,6 +199,7 @@ html[data-theme="dark"] .lp {
 .lp-icon--xp { --lp-icon: url("../icons/lightning.svg"); }
 .lp-icon--book { --lp-icon: url("../icons/book-open-text.svg"); }
 .lp-icon--trophy { --lp-icon: url("../icons/trophy.svg"); }
+.lp-icon--certificate { --lp-icon: url("../icons/book-open-text.svg"); }
 .lp-icon--check { --lp-icon: url("../icons/check.svg"); }
 .lp-count { margin-inline-start: auto; color: var(--lp-muted); font-size: 13px; }
 .lp-empty { padding-block: 11px 1px; }
@@ -257,6 +258,9 @@ html[data-theme="dark"] .lp {
 .lp-course-meter { text-align: end; font-variant-numeric: tabular-nums; }
 .lp-course-meter .lp-meter { height: 4px; }
 .lp-course-arrow { font-size: 24px; line-height: 1; }
+#certificates { scroll-margin-top: 112px; }
+.lp-certificates .lp-course { grid-template-columns: minmax(0, 1fr) max-content auto; gap: 8px; }
+.lp-certificate-link { font-size: 12px; }
 
 .lp-awards > li { display: flex; align-items: center; gap: 11px; padding-block: 7px; overflow-wrap: anywhere; }
 .lp-awards > li + li, .lp-goals > li + li { border-top: 1px solid var(--lp-line); }

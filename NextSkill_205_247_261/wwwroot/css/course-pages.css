@@ -7,7 +7,9 @@
 .ns-course-hero h1{font-size:clamp(28px,4vw,44px);font-weight:600;line-height:1.5;text-wrap:balance;letter-spacing:-.5px}
 .ns-course-hero p:not(.ns-course-eyebrow){max-width:660px;color:var(--ns-muted);margin-top:14px;line-height:1.9}
 .ns-course-hero img{width:100%;height:180px;object-fit:contain;filter:drop-shadow(0 12px 14px #237ba01c)}
-.ns-course-hero img.ns-course-intro-cover{display:block;aspect-ratio:16/9;height:auto;max-width:360px;border-radius:18px;object-fit:cover}
+.ns-course-hero--with-cover{grid-template-columns:minmax(0,1fr) minmax(260px,37%)}
+.ns-course-hero-cover{width:100%;max-width:480px;aspect-ratio:16/9;border:1px solid var(--ns-border);border-radius:20px;box-shadow:0 14px 34px #102d4b26}
+.ns-course-hero .ns-course-hero-cover img{display:block;filter:none}
 .ns-course-page .ns-course-back{display:inline-flex;min-height:44px;align-items:center;font-size:14px;text-decoration:none;gap:8px}
 .ns-course-filter{display:grid;grid-template-columns:minmax(0,1fr) 180px auto;gap:16px;align-items:end;padding:24px;background:#f6fcff}
 .ns-course-filter .ns-button{margin-bottom:1px}
@@ -21,6 +23,12 @@
 .ns-course-card-art{height:170px;position:relative;display:grid;place-items:center;background:linear-gradient(180deg,#e9f8ff,#d9f2fb)}
 .ns-course-card-art img{max-width:85%;height:145px;object-fit:contain}
 .ns-course-card-art .ns-badge{position:absolute;left:14px;top:14px;background:#fffef2}
+.ns-topic-cover{position:relative;isolation:isolate;overflow:hidden;container-type:inline-size;background:#bedceb}
+.catalog-page .ns-course-card-art.ns-topic-cover{height:auto;aspect-ratio:16/9;background:#bedceb}
+.ns-topic-cover > img{position:absolute;inset:0;display:block;width:100%;max-width:none;height:100%;object-fit:cover}
+.ns-topic-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#ffffff72,#ffffff80 38%,#ffffff00 58%);pointer-events:none}
+.ns-topic-cover-label{position:absolute;z-index:1;left:6%;top:50%;transform:translateY(-50%);max-width:37%;color:#0b2740;font-family:var(--ns-font-number);font-size:1rem;font-size:clamp(.875rem,4.9cqi,1.5rem);font-weight:800;line-height:1.1;letter-spacing:.025em;text-transform:uppercase;text-wrap:balance}
+.ns-topic-cover .ns-badge{z-index:1}
 .ns-course-card-copy{padding:24px;display:flex;flex-direction:column;gap:12px;flex:1}
 .ns-course-card-copy h3{font-size:20px;line-height:1.5;font-weight:600}.ns-course-card-copy h3 a{color:var(--ns-ink);text-decoration:none}
 .ns-course-card-copy>p{font-size:14px;line-height:1.9;color:var(--ns-muted)}

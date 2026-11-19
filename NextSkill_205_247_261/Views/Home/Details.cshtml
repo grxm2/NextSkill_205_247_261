@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = Model.Course.Title;
     var course = Model.Course;
-    var videoCourse = course.Id == NextSkill_205_247_261.Services.LearningCatalog.JavaScriptDomCourseId;
+    var cover = course.Cover;
     var authenticated = User.Identity?.IsAuthenticated == true;
     var preview = !authenticated && CourseEnvironment.EnvironmentName == "Development" && CourseConfiguration.GetValue("Learning:GuestPreview", true);
     var eligible = authenticated || preview;
@@ -13,11 +13,14 @@
 }
 <section class="ns-course-page" data-course-page data-progress-eligible="@eligible.ToString().ToLowerInvariant()" data-course-id="@course.Id" data-can-start="@course.CanStart.ToString().ToLowerInvariant()" id="course-content">
     <a asp-action="Courses" class="ns-course-back">← กลับไปคลังคอร์ส</a>
-    <header class="ns-course-hero">
+    <header class="ns-course-hero@(cover.Topic is null ? "" : " ns-course-hero--with-cover")">
         <div><p class="ns-course-eyebrow">@course.CategoryLabel · เส้นทางแห่งทักษะ</p><h1>@course.Title</h1><p>@course.Description</p><div class="ns-course-meta">@if (course.CanStart) { <span>@course.Curriculum.TotalLessons เกาะบทเรียน</span><span>ฝึกทีละขั้น พร้อมแบบฝึกท้ายบท</span> } else { <span>กำลังเตรียมบทเรียนสำหรับเส้นทางนี้</span> }</div></div>
-        @if (videoCourse)
+        @if (cover.Topic is not null)
         {
-            <img class="ns-course-intro-cover" src="@course.CoverArt" asp-append-version="true" width="960" height="540" alt="" />
+            <div class="ns-course-hero-cover ns-topic-cover" aria-hidden="true">
+                <img src="@cover.Path" asp-append-version="true" alt="" width="960" height="540" fetchpriority="high" />
+                <span class="ns-topic-cover-label" lang="en" dir="ltr">@cover.Topic</span>
+            </div>
         }
         else
         {
@@ -75,14 +78,7 @@
             @if (course.Metadata.Skills.Count > 0)
             { <section class="ns-surface"><h2>ทักษะที่จะได้รู้จัก</h2><ul class="ns-course-skills">@foreach (var skill in course.Metadata.Skills) { <li class="ns-badge">@skill</li> }</ul></section> }
             <section class="ns-surface"><h2>เรียนในจังหวะของคุณ</h2>
-                @if (videoCourse)
-                {
-                    <p>แต่ละบทมีคลิปสั้นภาษาฮินดีจาก CodeWithHarry และสรุปภาษาไทย เล่นหรือเลื่อนไปจนจบคลิปเพื่อเปิดแบบทดสอบ ตอบถูกอย่างน้อย 2 จาก 4 ข้อเพื่อไปเกาะถัดไป</p>
-                }
-                else
-                {
-                    <p>อ่านเนื้อหา ลองตอบคำถาม แล้วดูคำอธิบายจาก Nimo เมื่อผ่านบทเรียนจะเปิดเกาะถัดไป บทที่ผ่านแล้วกลับมาทบทวนได้ โดยไม่เพิ่ม XP ซ้ำ</p>
-                }
+                <p>เปิดวิดีโอบทเรียน แล้วดูหรือเลื่อนไปช่วงท้ายคลิป หรือกดข้ามเพื่อเริ่มแบบทดสอบได้ทันที หากยังไม่ผ่าน คุณเลือกเรียนใหม่หรือสอบใหม่ได้ ผ่านครบทุกบทเพื่อรับเหรียญและใบรับรองของคอร์ส</p>
             </section>
         </div>
         <aside class="ns-course-start ns-surface" aria-labelledby="course-start-title"><img src="~/images/nimo-learning.png" width="180" height="135" alt="Nimo คู่หูการเรียนรู้" /><h2 id="course-start-title">@(course.CanStart ? "พร้อมออกเดินทางไหม?" : "แล้วพบกันเร็ว ๆ นี้")</h2>

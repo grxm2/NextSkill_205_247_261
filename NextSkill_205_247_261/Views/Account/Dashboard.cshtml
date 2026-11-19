@@ -91,7 +91,7 @@
                     <dl class="lp-stats">
                         <div><dt>XP สะสม</dt><dd>@state.Xp.ToString("N0")</dd></div>
                         <div><dt>เรียนต่อเนื่อง</dt><dd>@activity.StreakDays <small>วัน</small></dd></div>
-                        <div><dt>จบแล้ว</dt><dd>@courses.Count(course => course.IsComplete) <small>คอร์ส</small></dd></div>
+                        <div><dt>จบแล้ว</dt><dd>@Model.Certificates.Count <small>คอร์ส</small></dd></div>
                     </dl>
                 </section>
 
@@ -144,6 +144,36 @@
                                 <li>
                                     <span class="lp-medal @(award.Key == "first-lesson" ? "lp-medal--first" : "lp-medal--course")" aria-hidden="true"></span>
                                     <span><strong>@Model.AwardTitle(award.Key)</strong><time class="lp-muted" datetime="@IsoDate(award.EarnedAt)">@ThaiDate(award.EarnedAt)</time></span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </section>
+
+                <section class="lp-panel lp-glass" id="certificates" aria-labelledby="lp-certificates-title">
+                    <div class="lp-heading">
+                        <span class="lp-icon lp-icon--certificate" aria-hidden="true"></span>
+                        <h2 id="lp-certificates-title">ใบประกาศของฉัน</h2>
+                        <span class="lp-count">@Model.Certificates.Count ใบ</span>
+                    </div>
+                    @if (Model.Certificates.Count == 0)
+                    {
+                        <p class="lp-muted lp-empty">เรียนและผ่านแบบทดสอบครบทุกบทในคอร์สเพื่อรับใบประกาศ</p>
+                    }
+                    else
+                    {
+                        <ul class="lp-list lp-course-list lp-certificates">
+                            @foreach (var certificate in Model.Certificates)
+                            {
+                                <li>
+                                    <a class="lp-course" asp-action="Certificate" asp-route-courseId="@certificate.CourseId">
+                                        <span class="lp-course-main">
+                                            <strong dir="auto">@certificate.CourseTitle</strong>
+                                            <time class="lp-muted" datetime="@IsoDate(certificate.EarnedAt)">@ThaiDate(certificate.EarnedAt)</time>
+                                        </span>
+                                        <span class="lp-certificate-link">เปิดใบประกาศ</span>
+                                        <span class="lp-course-arrow" aria-hidden="true">›</span>
+                                    </a>
                                 </li>
                             }
                         </ul>

@@ -75,7 +75,7 @@ public sealed class LearningController(LearningStore store, ILogger<LearningCont
     {
         try
         {
-            var state = await store.StateAsync(AccountId, Role, token);
+            var state = await store.StateAsync(AccountId, Role, token, includeActivity: !practice);
             courseId ??= state.ActiveCourseId;
             if (courseId is null) return RedirectToAction("Index", "Home", new { chooseCourse = true });
             LearningStore.RequireCourse(courseId.Value);
@@ -118,6 +118,14 @@ public sealed class LearningController(LearningStore store, ILogger<LearningCont
     [HttpGet]
     public Task<IActionResult> Lesson(int courseId, int lessonId, CancellationToken token)
         => Api(async () => await store.LessonAsync(AccountId, Role, courseId, lessonId, token));
+
+    [HttpPost]
+    public Task<IActionResult> StartVideo([FromBody] LearningVideoRequest? request, CancellationToken token)
+        => Body(request, () => store.StartVideoAsync(AccountId, Role, request!, token));
+
+    [HttpPost]
+    public Task<IActionResult> RestartVideo([FromBody] LearningVideoRequest? request, CancellationToken token)
+        => Body(request, () => store.RestartVideoAsync(AccountId, Role, request!, token));
 
     [HttpPost]
     public Task<IActionResult> CompleteVideo([FromBody] CompleteLearningVideoRequest? request, CancellationToken token)

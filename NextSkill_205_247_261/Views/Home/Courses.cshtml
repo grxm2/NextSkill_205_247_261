@@ -57,9 +57,14 @@
             @for (var index = 0; index < Model.Courses.Count; index++)
             {
                 var item = Model.Courses[index];
+                var cover = item.Cover;
                 <article class="ns-course-card" data-course-id="@item.Id" data-can-start="@item.CanStart.ToString().ToLowerInvariant()" data-catalog-reveal>
-                    <a class="ns-course-card-art" asp-action="Details" asp-route-id="@item.Id" tabindex="-1" aria-hidden="true">
-                        <img src="@item.CoverArt" asp-append-version="true" alt="" width="960" height="540" loading="@(index < 3 ? "eager" : "lazy")" fetchpriority="@(index == 0 ? "high" : "auto")" />
+                    <a class="ns-course-card-art@(cover.Topic is null ? "" : " ns-topic-cover")" asp-action="Details" asp-route-id="@item.Id" tabindex="-1" aria-hidden="true">
+                        <img src="@cover.Path" asp-append-version="true" alt="" width="960" height="540" loading="@(index < 3 ? "eager" : "lazy")" fetchpriority="@(index == 0 ? "high" : "auto")" />
+                        @if (cover.Topic is not null)
+                        {
+                            <span class="ns-topic-cover-label" lang="en" dir="ltr">@cover.Topic</span>
+                        }
                         @if (!item.CanStart)
                         {
                             <span class="ns-badge ns-badge--upcoming"><span class="catalog-status-dot"></span>เร็ว ๆ นี้</span>

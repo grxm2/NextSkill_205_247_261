@@ -6,7 +6,12 @@
     const signedIn = body.dataset.authenticated === 'true';
     const authenticated = signedIn || body.dataset.guestPreview === 'true';
     const dashboard = $('[data-home-dashboard]');
-    const stateEndpoint = dashboard ? 'State?includeActivity=true' : 'State';
+    const islandRoute = $('#lesson-route');
+    const islandCourseToggle = $('#island-course-toggle');
+    const islandCourseMenu = $('#island-course-menu');
+    const islandCourseOptions = $('#island-course-options');
+    const lockedHint = 'เรียนด่านก่อนหน้าเพื่อเปิดด่านนี้';
+    const stateEndpoint = dashboard || islandRoute ? 'State?includeActivity=true' : 'State';
     const initial = $('#learning-initial-state');
     const boot = initial ? JSON.parse(initial.textContent) : null;
     let state = boot?.state || null;
@@ -21,9 +26,8 @@
     let lessonController;
     let pendingLeave = null;
     let nextLessonId = null;
-    let stepIndex = -1;
+    let quizOpen = false;
     let selections = new Map();
-    let lastFeedback = [];
     let uncertainAttempt = null;
     let recoveryBusy = false;
     const courseDialog = $('#course-harbor-dialog');
@@ -36,7 +40,7 @@
     const reduce = matchMedia('(prefers-reduced-motion: reduce)');
     const guide = $('.map-guide');
     const csrf = $('#smart-antiforgery input')?.value;
-    const categoryNames = { 'Development': 'พัฒนาเว็บไซต์', 'Technology': 'เทคโนโลยี', 'Design': 'ออกแบบ', 'Business': 'ธุรกิจ', 'Language': 'ภาษา', 'Languages': 'ภาษา', 'Marketing': 'การตลาด', 'Data': 'ข้อมูล', 'Data Science': 'วิทยาการข้อมูล' };
+    const categoryNames = { 'Development': 'โค้ด', 'Technology': 'เทคโนโลยี', 'Design': 'UX/UI', 'AI': 'การใช้ AI', 'Business': 'ธุรกิจ', 'Language': 'ภาษาอังกฤษ', 'Languages': 'ภาษาอังกฤษ', 'Marketing': 'การตลาด', 'Data': 'ข้อมูล', 'Data Science': 'วิทยาการข้อมูล' };
     const pendingCourseKey = 'nextskill.pending-course';
     const number = value => new Intl.NumberFormat('th-TH').format(value || 0);
 
@@ -98,32 +102,27 @@
         dashboard?.dispatchEvent(new CustomEvent('nextskill:dashboard-state', { detail: state }));
     }
     function renderIsland() {
-        if (!$('#lesson-route')) return;
+        if (!islandRoute) return;
         const course = viewedCourse();
         if (!course) return;
         const current = targetLesson(course);
         const hasProgress = course.completedLessons.length > 0;
-        $('#current-course-title').textContent = course.title;
-        $('#current-island-number').textContent = `ด่าน ${course.currentIslandId} / ${course.totalLessons}`;
-        $('#current-island-title').textContent = course.isComplete ? 'ครบทุกด่านแล้ว เก่งขึ้นอีกขั้น!' : current.title;
-        $('.sj-island-scene>img').src = islandArt(course.currentIslandId);
-        $('#current-island-description').textContent = course.isComplete
-            ? 'ทบทวนบทเรียนที่อยากฝึกเพิ่ม หรือเปิดตู้เลือกเส้นทางใหม่ได้ทุกเมื่อ'
-            : hasProgress ? 'บทเรียนที่ค้างไว้พร้อมแล้ว เรียนต่อได้เลย ไม่ต้องเริ่มการเดินทางใหม่'
-                : 'พร้อมเริ่มด่านแรกแล้ว';
-        $('#current-lesson-minutes').textContent = `${current.minutes} นาที · มีแบบฝึกท้ายบท`;
-        $('#current-lesson-xp').textContent = course.isComplete ? 'ทบทวนได้ ไม่เพิ่ม XP ซ้ำ' : `ผ่านบทเรียน รับ ${current.xp} XP`;
-        $('#resume-learning').replaceChildren(document.createTextNode(course.isComplete ? 'ทบทวนบทเรียน' : hasProgress ? 'เรียนต่อ' : 'เริ่มเรียน'), node('span', '', '→'));
-        $('#course-progress-caption').textContent = `สำเร็จ ${course.completedLessons.length} จาก ${course.totalLessons} ด่าน`;
-        $('#course-progress-value').textContent = `${course.progress}%`;
-        $('#course-progress').value = course.completedLessons.length;
-        $('#course-progress').max = course.totalLessons;
-        $('#island-status-tag').replaceChildren(node('i'), document.createTextNode(course.isComplete ? 'สำรวจครบทุกด่านแล้ว' : `ด่าน ${course.currentIslandId} · ${current.islandName}`));
-        $('#niko-learning-message').textContent = course.isComplete ? 'ทำได้แล้ว! จะพักหรือไปเส้นทางใหม่ ฉันไปด้วยนะ' : hasProgress ? 'ฉันจำเกาะเดิมได้ พร้อมเมื่อไรก็ไปต่อกันนะ' : 'เริ่มจากบทสั้น ๆ แล้วค่อยไปเกาะถัดไปด้วยกัน';
-        $('#achievement-count').textContent = number(state.achievements.length);
-        const achievementNames = { 'first-lesson': 'สำเร็จบทเรียนแรก', 'course-13': 'จบเส้นทางอังกฤษเพื่อการทำงาน', 'course-1': 'จบเส้นทาง UX Research', 'course-5': 'จบเส้นทาง JavaScript' };
-        $('#achievement-description').textContent = state.achievements.length ? state.achievements.map(id => achievementNames[id] || 'ความสำเร็จใหม่').join(' · ') : 'ผ่านบทเรียนแรก เพื่อรับความสำเร็จแรกของคุณ';
-        const route = $('#lesson-route');
+        $('#current-island-number').textContent = course.isComplete ? `ผ่านครบ ${course.totalLessons} ด่าน` : `บทที่ ${current.id}`;
+        $('#current-island-title').textContent = course.isComplete ? 'เรียนจบคอร์สแล้ว' : current.displayTitle || current.title;
+        $('#current-lesson-minutes').textContent = `${current.minutes} นาที`;
+        const reward = $('#current-lesson-xp');
+        reward.textContent = `+${current.xp} XP`;
+        reward.parentElement.hidden = course.isComplete;
+        $('#resume-learning-label').textContent = course.isComplete ? 'ทบทวนบทเรียน' : hasProgress ? 'เรียนต่อ' : 'เริ่มเรียน';
+        $('#island-stages').replaceChildren(...course.lessons.map(item => {
+            const marker = node('li', `island-stage is-${item.status}`);
+            const status = item.status === 'completed' ? 'ผ่านแล้ว' : item.status === 'current' ? 'ด่านปัจจุบัน' : 'ล็อกอยู่';
+            if (item.status === 'current') marker.setAttribute('aria-current', 'step');
+            marker.append(node('span', 'sr-only', `ด่าน ${item.id} ${status}`));
+            return marker;
+        }));
+        renderIslandStats();
+
         const routeLine = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         routeLine.setAttribute('viewBox', '0 0 600 1000');
         routeLine.setAttribute('preserveAspectRatio', 'none');
@@ -132,18 +131,69 @@
         const routePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         routePath.setAttribute('d', 'M430 105C500 220 100 230 170 355S500 480 430 605 100 740 170 855');
         routeLine.append(routePath);
-        route.replaceChildren(...course.lessons.map(item => {
+        islandRoute.replaceChildren(routeLine, ...course.lessons.map(item => {
             const button = node('button', `sj-lesson-island is-${item.status}`);
+            const title = item.displayTitle || item.title;
             button.type = 'button'; button.dataset.lessonId = item.id;
-            button.disabled = item.status === 'locked';
-            button.setAttribute('aria-label', `ด่าน ${item.id}: ${item.title} — ${item.status === 'locked' ? 'ยังไม่ปลดล็อก' : item.status === 'completed' ? 'สำเร็จแล้ว กดทบทวน' : 'ดูรายละเอียดด่านปัจจุบัน'}`);
+            const locked = item.status === 'locked';
+            button.setAttribute('aria-label', `ด่าน ${item.id} ${title} · ${locked ? 'ดูวิธีปลดล็อก' : item.status === 'completed' ? 'สำเร็จแล้ว กดทบทวน' : 'ดูรายละเอียดด่านปัจจุบัน'}`);
             if (item.status === 'current') button.setAttribute('aria-current', 'step');
             const art = node('img'); art.src = islandArt(item.id); art.alt = ''; art.width = 1448; art.height = 1086;
-            button.append(node('span', 'sj-island-index', String(item.id).padStart(2, '0')), art, node('h3', '', item.title), node('span', 'sj-island-status', item.status === 'locked' ? 'เรียนด่านก่อนหน้าเพื่อเปิดด่านนี้' : item.status === 'completed' ? '✓ สำเร็จแล้ว · ทบทวน' : 'ดูรายละเอียดด่าน'));
-            button.addEventListener('click', () => guarded(() => window.NextSkillIslandDetails ? window.NextSkillIslandDetails.show(item, course.courseId, () => openLesson(course.courseId, item.id)) : openLesson(course.courseId, item.id)));
+            const label = node('h3', '', title);
+            button.append(node('span', 'sj-island-index', String(item.id).padStart(2, '0')), art, label);
+            if (locked) {
+                const lock = node('span', 'icon icon-lock');
+                lock.setAttribute('aria-hidden', 'true');
+                label.prepend(lock);
+                const hint = node('span', 'island-map-lock-hint', lockedHint);
+                hint.id = `island-lock-hint-${item.id}`;
+                hint.hidden = true;
+                button.title = lockedHint;
+                button.setAttribute('aria-controls', hint.id);
+                button.setAttribute('aria-expanded', 'false');
+                button.append(hint);
+                button.addEventListener('click', () => {
+                    const open = hint.hidden;
+                    closeIslandLockHint();
+                    if (open) {
+                        hint.hidden = false;
+                        button.setAttribute('aria-expanded', 'true');
+                        tell(lockedHint);
+                    }
+                });
+                return button;
+            }
+            button.append(node('span', 'sj-island-status', item.status === 'completed' ? '✓ สำเร็จแล้ว · ทบทวน' : 'ดูรายละเอียดด่าน'));
+            button.addEventListener('click', () => guarded(() => {
+                const launch = () => openLesson(course.courseId, item.id);
+                if (window.NextSkillIslandDetails) window.NextSkillIslandDetails.show(item, launch, button);
+                else launch();
+            }));
             return button;
         }));
-        route.prepend(routeLine);
+    }
+    function closeIslandLockHint(target) {
+        const expanded = islandRoute?.querySelector('.is-locked[aria-expanded="true"]');
+        if (!expanded || (target && expanded.contains(target))) return;
+        expanded.setAttribute('aria-expanded', 'false');
+        document.getElementById(expanded.getAttribute('aria-controls')).hidden = true;
+    }
+    function renderIslandStats() {
+        const meter = $('#island-level-meter');
+        meter.value = state.xp % meter.max;
+        $('#island-level-xp').textContent = `${number(meter.value)}/${number(meter.max)} XP`;
+        meter.title = `ถึงเลเวล ${number(state.level + 1)}`;
+        meter.setAttribute('aria-label', `XP ${meter.title}`);
+        if (!state.activity) return;
+
+        const streak = $('#island-streak-days');
+        streak.textContent = number(state.activity.streakDays);
+        streak.parentElement.title = `streak ${streak.textContent} วัน`;
+        const goals = Object.entries(boot.goalTargets);
+        const completed = goals.filter(([key, target]) => state.activity[key] >= target).length;
+        const goalTotal = $('#island-goals-total');
+        goalTotal.textContent = `${number(completed)}/${number(goals.length)}`;
+        goalTotal.parentElement.title = `ภารกิจวันนี้ ${goalTotal.textContent}`;
     }
     function categoryLabel(value) { return categoryNames[value] || value; }
     function courseCard(course) {
@@ -216,6 +266,38 @@
         requestAnimationFrame(() => { if (courseDialog.open) courseDialog.dataset.containerOpen = 'true'; });
         loadCatalog().catch(error => showError($('#course-picker-error'), error));
     }
+    function setIslandCourseMenu(open, restoreFocus = false) {
+        islandCourseMenu.hidden = !open;
+        islandCourseToggle.setAttribute('aria-expanded', String(open));
+        if (restoreFocus) islandCourseToggle.focus({ preventScroll: true });
+    }
+    async function loadIslandCourseOptions() {
+        islandCourseOptions.replaceChildren(node('li', '', 'กำลังโหลดคอร์ส…'));
+        try {
+            await loadCatalog();
+            const alternatives = catalog.filter(course => course.canStart && course.id !== courseId);
+            islandCourseOptions.replaceChildren(...alternatives.map(course => {
+                const item = node('li');
+                const button = node('button', '', course.title);
+                button.type = 'button';
+                button.disabled = selectionBusy;
+                button.addEventListener('click', () => guarded(() => {
+                    setIslandCourseMenu(false, true);
+                    selectCourse(course.id);
+                }));
+                item.append(button);
+                return item;
+            }));
+            if (!alternatives.length) islandCourseOptions.append(node('li', '', 'ยังไม่มีคอร์สอื่นที่เปิดให้เรียน'));
+        } catch {
+            const retry = node('button', '', 'ลองโหลดรายชื่อคอร์สอีกครั้ง');
+            retry.type = 'button';
+            retry.addEventListener('click', loadIslandCourseOptions);
+            const item = node('li');
+            item.append(retry);
+            islandCourseOptions.replaceChildren(item);
+        }
+    }
     async function selectCourse(id) {
         if (selectionBusy) return;
         if (!authenticated) {
@@ -265,19 +347,20 @@
     function clearLesson() {
         videoPlayer?.reset();
         lesson = null; lessonDirty = false; nextLessonId = null;
-        selections = new Map(); lastFeedback = []; uncertainAttempt = null; stepIndex = -1;
+        selections = new Map(); uncertainAttempt = null; quizOpen = false;
         $('#lesson-loading').hidden = false;
         $('#lesson-content').hidden = true;
         $('#lesson-result').hidden = true;
         $('#submission-recovery').hidden = true;
         $('#edit-lesson-answers').hidden = true;
+        $('#review-lesson').hidden = true;
         $('#choose-next-course').hidden = true;
         $('#lesson-result-feedback').replaceChildren();
         $('#lesson-error').hidden = true;
         $('#retry-lesson').hidden = true;
         $('#submit-lesson').disabled = false;
-        $('#submit-lesson').hidden = false;
-        $('#submit-lesson').textContent = 'ส่งคำตอบ →';
+        $('#submit-lesson').hidden = true;
+        $('#submit-lesson').textContent = 'ตรวจคำตอบ →';
         $('#lesson-title').textContent = 'กำลังเปิดบทเรียน…';
         $('#lesson-summary').textContent = '';
         $('#lesson-questions').replaceChildren();
@@ -308,14 +391,7 @@
             const content = await api(`Lesson?courseId=${id}&lessonId=${lessonId}`, undefined, signal);
             if (requestId !== lessonRequest) return;
             lesson = content;
-            if (content.video) videoPlayer?.mount(content, async () => {
-                const unlocked = await api('CompleteVideo', {
-                    courseId: id, lessonId, videoId: content.video.youTubeId
-                }, signal);
-                if (requestId !== lessonRequest) return;
-                lesson = unlocked;
-                renderLesson(false);
-            });
+            mountLessonVideo(content, requestId, signal);
             renderLesson();
         } catch (error) {
             if (error.name === 'AbortError' || requestId !== lessonRequest) return;
@@ -324,6 +400,35 @@
             showError($('#lesson-error'), error);
             $('#retry-lesson').hidden = error.status === 401;
         }
+    }
+    function mountLessonVideo(content, requestId, signal) {
+        if (!content.video) return;
+        const watch = { courseId: content.courseId, lessonId: content.id, videoId: content.video.youTubeId };
+        videoPlayer?.mount(content, () => api('StartVideo', watch, signal), async ({ positionSeconds, skipVideo }) => {
+            const unlocked = await api('CompleteVideo', { ...watch, positionSeconds, skipVideo }, signal);
+            if (requestId !== lessonRequest) return;
+            lesson = unlocked;
+            renderLesson(false);
+            showLessonMode(true);
+        });
+    }
+    function createQuizHelp(question, questionNumber) {
+        const help = node('details', 'practice-nimo-help');
+        help.setAttribute('name', 'quiz-nimo-help');
+        const trigger = node('summary', 'practice-nimo-trigger');
+        trigger.setAttribute('aria-label', `ถาม Nimo ข้อที่ ${questionNumber}`);
+        trigger.append($('#quiz-nimo-avatar').content.cloneNode(true), node('span', '', 'ถาม Nimo'));
+
+        const reply = node('div', 'practice-nimo-reply');
+        const hint = question.hint?.trim() || 'ลองสรุปว่าโจทย์ถามหาอะไร แล้วเทียบแต่ละตัวเลือกกับเงื่อนไขในโจทย์นะ';
+        reply.append(node('strong', '', 'คำใบ้'), node('p', '', hint));
+        if (question.coaching?.trim()) {
+            const coaching = node('details', 'practice-nimo-coaching');
+            coaching.append(node('summary', '', 'อธิบายแนวคิดเพิ่ม'), node('p', '', question.coaching));
+            reply.append(coaching);
+        }
+        help.append(trigger, reply);
+        return help;
     }
     function renderLesson(focus = true) {
         $('#lesson-loading').hidden = true;
@@ -339,12 +444,14 @@
         }));
         $('#lesson-questions').replaceChildren(...lesson.questions.map((question, questionIndex) => {
             const field = node('fieldset', 'sj-quiz-question'); field.dataset.questionId = question.id;
-            const legend = node('legend', '', lessonPage ? question.prompt : `${questionIndex + 1}. ${question.prompt}`); legend.tabIndex = -1;
+            const legend = node('legend', '', `${questionIndex + 1}. ${question.prompt}`); legend.tabIndex = -1;
             field.append(legend);
+            if (lessonPage) field.append(createQuizHelp(question, questionIndex + 1));
             question.choices.forEach((choice, index) => {
                 const label = node('label', 'sj-quiz-choice');
                 const radio = node('input'); radio.type = 'radio'; radio.name = `question-${question.id}`; radio.value = index; radio.required = true;
-                radio.addEventListener('change', () => { selections.set(question.id, index); lessonDirty = true; updatePracticeProgress(); });
+                radio.checked = selections.get(question.id) === index;
+                radio.addEventListener('change', () => { selections.set(question.id, index); lessonDirty = true; updateLessonProgress(); });
                 label.append(radio);
                 if (lessonPage) label.append(node('span', 'practice-choice-letter', `${String.fromCharCode(65 + index)}.`));
                 label.append(node('span', '', choice)); field.append(label);
@@ -352,49 +459,49 @@
             return field;
         }));
         if (lessonPage) $('#practice-question-steps').replaceChildren(...lesson.questions.map(() => node('span')));
-        showStep(-1, false);
+        showLessonMode(false, false);
         if (focus) {
             $('#lesson-title').focus({ preventScroll: true });
             window.NextSkillBuddyMotion?.play('read');
         }
     }
-    function showStep(index, focus = true) {
+    function showLessonMode(openQuiz, focus = true) {
         if (!lesson) return;
-        stepIndex = videoLocked() ? -1 : Math.max(-1, Math.min(index, lesson.questions.length - 1));
+        const total = lesson.questionCount ?? lesson.questions.length;
+        quizOpen = openQuiz && !videoLocked() && lesson.questions.length > 0;
         $('#lesson-result').hidden = true;
         $('#lesson-content').hidden = false;
-        $('#lesson-reading').hidden = stepIndex !== -1;
-        videoPlayer?.setVisible(stepIndex < 0);
-        $$('#lesson-questions fieldset').forEach((field, i) => { field.hidden = i !== stepIndex; });
-        $('#lesson-step-caption').textContent = stepIndex < 0 ? (lesson.video ? 'วิดีโอและสรุปบทเรียน' : 'อ่านตัวอย่างก่อนเริ่ม') : `ข้อที่ ${stepIndex + 1} จาก ${lesson.questions.length}`;
-        $('#lesson-step-progress').max = (lesson.questionCount ?? lesson.questions.length) + 1;
-        $('#lesson-step-progress').value = stepIndex + 1;
-        $('#lesson-step-back').hidden = stepIndex < 0;
-        if (lessonPage) $('#lesson-step-back').disabled = stepIndex <= 0;
-        $('#lesson-reading-again').hidden = stepIndex < 0;
-        $('#lesson-step-next').hidden = stepIndex >= 0 && stepIndex === lesson.questions.length - 1;
+        $('#lesson-reading').hidden = quizOpen || !lesson.reading.length;
+        videoPlayer?.setVisible(!quizOpen);
+        $('#lesson-questions').hidden = !quizOpen;
+        $('#practice-question-steps').hidden = !quizOpen;
+        $('#lesson-reading-again').hidden = !quizOpen;
+        $('#lesson-step-next').hidden = quizOpen;
         $('#lesson-step-next').disabled = videoLocked();
-        $('#lesson-step-next').textContent = stepIndex < 0 ? 'เริ่มแบบทดสอบ →' : 'ข้อต่อไป →';
-        $('#submit-lesson').hidden = stepIndex < 0 || stepIndex !== lesson.questions.length - 1;
-        $('#lesson-nimo-message').textContent = videoLocked() ? 'ดูวิดีโอให้ถึงตอนจบ แล้วค่อยเริ่มตอบคำถามนะ'
-            : stepIndex < 0 ? 'ค่อย ๆ อ่านตัวอย่าง แล้วลองใช้ไปด้วยกันนะ' : 'เลือกคำตอบที่เหมาะที่สุด เปลี่ยนคำตอบก่อนส่งได้เสมอ';
+        $('#lesson-step-next').textContent = `เริ่มแบบทดสอบ ${total} ข้อ →`;
+        $('#submit-lesson').hidden = !quizOpen;
+        $('#lesson-nimo-message').textContent = videoLocked() ? 'เปิดวิดีโอก่อนนะ จะเลื่อนไปช่วงท้ายหรือกดข้ามก็ได้'
+            : quizOpen ? 'ตอบให้ครบทุกข้อ เปลี่ยนคำตอบก่อนส่งได้เสมอ' : 'พร้อมแล้วเริ่มทำแบบทดสอบได้เลย';
+        updateLessonProgress();
         lessonDialog.scrollTop = 0;
         if (lessonPage) {
-            $('#lesson-page-heading').textContent = stepIndex < 0 ? 'เตรียมตัวก่อนทำแบบทดสอบ' : 'แบบทดสอบท้ายบท';
-            $('#practice-breadcrumb-current').textContent = stepIndex < 0 ? 'บทเรียนและตัวอย่าง' : 'แบบทดสอบท้ายบท';
-            $('#lesson-summary').hidden = stepIndex >= 0;
-            updatePracticeProgress();
+            $('#lesson-page-heading').textContent = quizOpen ? 'แบบทดสอบท้ายบท' : 'วิดีโอบทเรียน';
+            $('#practice-breadcrumb-current').textContent = $('#lesson-page-heading').textContent;
+            $('#lesson-summary').hidden = quizOpen;
             if (focus) positionPractice();
         }
-        if (focus) (stepIndex < 0 ? $('#lesson-title') : $$('#lesson-questions legend')[stepIndex]).focus({preventScroll:true});
+        if (focus) (quizOpen ? $('#lesson-questions legend') : $('#lesson-title')).focus({preventScroll:true});
     }
     function positionPractice() {
         if (innerWidth > 800) window.scrollTo({top:0,behavior:'instant'});
         else $('#practice-panel').scrollIntoView({behavior:'instant',block:'start'});
     }
-    function updatePracticeProgress() {
-        if (!lessonPage || !lesson) return;
+    function updateLessonProgress() {
         const total = lesson.questionCount ?? lesson.questions.length;
+        $('#lesson-step-caption').textContent = quizOpen ? `ตอบแล้ว ${selections.size} / ${total} ข้อ` : `แบบทดสอบ ${total} ข้อ`;
+        $('#lesson-step-progress').max = total;
+        $('#lesson-step-progress').value = selections.size;
+        if (!lessonPage) return;
         const required = lesson.requiredCorrect ?? total;
         $('#practice-answered-count').textContent = `${selections.size} / ${total}`;
         $('#practice-answer-progress').max = total;
@@ -403,47 +510,33 @@
         $('#practice-total-score').textContent = `${total} คะแนน`;
         $('#practice-pass-rule').textContent = required === total ? 'ตอบถูกทุกข้อ' : `ถูกอย่างน้อย ${required} จาก ${total} ข้อ`;
         $$('#practice-question-steps span').forEach((segment,index) => {
-            segment.classList.toggle('is-current', index === stepIndex);
             segment.classList.toggle('is-answered', selections.has(lesson.questions[index].id));
         });
-    }
-    function validateStep(index) {
-        const question = lesson?.questions[index];
-        if (!question || selections.has(question.id)) return true;
-        showStep(index);
-        const input = $$('#lesson-questions fieldset')[index].querySelector('input');
-        input.focus(); input.reportValidity();
-        tell('เลือกคำตอบหนึ่งข้อก่อน แล้วไปต่อได้เลย');
-        return false;
     }
     function setSubmissionBusy(busy) {
         submitting = busy;
         $$('#lesson-questions input').forEach(input => { input.disabled = busy; });
-        ['submit-lesson','close-lesson','lesson-step-back','lesson-step-next','lesson-reading-again','check-save-status','retry-submission','leave-unconfirmed'].forEach(id => { $('#'+id).disabled = busy; });
+        ['submit-lesson','close-lesson','lesson-step-next','lesson-reading-again','check-save-status','retry-submission','leave-unconfirmed'].forEach(id => { $('#'+id).disabled = busy; });
         $('#submit-lesson').textContent = busy ? 'กำลังตรวจและบันทึกผล…' : 'ตรวจคำตอบ →';
         $('#lesson-quiz').setAttribute('aria-busy', String(busy));
-        if (!busy) {
-            $('#lesson-step-next').disabled = videoLocked();
-            if (lessonPage) $('#lesson-step-back').disabled = stepIndex <= 0;
-        }
+        if (!busy) $('#lesson-step-next').disabled = videoLocked();
     }
     function renderResult(result, wasCourseComplete) {
-        lastFeedback = result.feedback;
+        const hadFirstLessonAward = state?.achievements.includes('first-lesson') === true;
+        const hadCourseAward = state?.achievements.includes(`course-${lesson.courseId}`) === true;
         lessonDirty = false; uncertainAttempt = null;
         setState(result.state);
         $('#submission-recovery').hidden = true;
         $('#lesson-error').hidden = true;
         $('#lesson-content').hidden = true;
         videoPlayer?.setVisible(false);
-        const requiresReview = !result.passed && !!lesson.video;
         const panel = $('#lesson-result'); panel.hidden = false; panel.dataset.passed = String(result.passed);
         if (lessonPage) { $('#lesson-page-heading').textContent = 'ผลแบบทดสอบ'; $('#lesson-summary').hidden = true; }
         $('.sj-result-symbol').textContent = result.passed ? '✓' : '↻';
         $('#lesson-result-eyebrow').textContent = `${result.score} / ${result.totalQuestions} ข้อ · ผ่านเมื่อถูก ${result.requiredCorrect} ข้อ`;
         $('#lesson-result-title').textContent = result.passed ? (result.alreadyCompleted ? 'ทบทวนเรียบร้อยแล้ว' : 'ทำได้แล้ว อีกด่านที่คุณผ่าน!') : 'อีกนิดเดียว ลองใช้คำแนะนำดูนะ';
-        $('#lesson-result-message').textContent = requiresReview ? result.reward
-            : result.passed ? (result.alreadyCompleted ? 'ผลการเรียนเดิมอยู่ครบ บทเรียนนี้รับรางวัลแล้ว จึงไม่เพิ่ม XP ซ้ำ' : result.reward)
-            : 'ดูคำอธิบาย แล้วกลับไปแก้คำตอบได้ คำตอบเดิมของคุณยังอยู่ครบ';
+        $('#lesson-result-message').textContent = result.passed && result.alreadyCompleted
+            ? 'ผลการเรียนเดิมอยู่ครบ บทเรียนนี้รับรางวัลแล้ว จึงไม่เพิ่ม XP ซ้ำ' : result.reward;
         $('#lesson-result-feedback').replaceChildren(...result.feedback.map(item => {
             const box = node('article', 'lesson-feedback-item'); box.dataset.correct = String(item.correct);
             const question = lesson.questions.find(q => q.id === item.questionId);
@@ -452,27 +545,35 @@
         }));
         const saveCopy = signedIn ? 'บันทึกกับบัญชีแล้ว' : 'บันทึกในโหมดทดลองของเซสชันนี้';
         $('#lesson-reward').textContent = result.awardedXp ? `+${result.awardedXp} XP · ${saveCopy}`
-            : result.passed ? `ทบทวนแล้ว · ${saveCopy}` : requiresReview ? 'ยังไม่ได้รับ XP ในรอบนี้' : 'ยังไม่ได้รับ XP · ลองแก้คำตอบได้';
+            : result.passed ? `ทบทวนแล้ว · ${saveCopy}` : 'ยังไม่ได้รับ XP ในรอบนี้';
         const progress = viewedCourse();
         nextLessonId = result.passed && !progress.isComplete ? targetLesson(progress).id : null;
         $('#next-island').hidden = !nextLessonId;
         $('#choose-next-course').hidden = !(result.passed && progress.isComplete);
         $('#edit-lesson-answers').hidden = result.passed;
-        $('#edit-lesson-answers').textContent = requiresReview ? 'กลับไปทบทวนและสอบใหม่ →' : 'แก้คำตอบ →';
+        $('#review-lesson').hidden = result.passed || !lesson.video;
         $('#finish-learning').textContent = result.passed ? 'กลับไปแผนที่เกาะ' : 'พักไว้ แล้วลองอีกครั้งภายหลัง';
         $('#lesson-nimo-message').textContent = result.passed ? (result.alreadyCompleted ? 'ได้ฝึกอีกครั้งแล้ว เก่งขึ้นทีละก้าวนะ' : 'เห็นความตั้งใจของคุณแล้ว ไปด้วยกันต่อได้เลย') : 'ลองดูคำอธิบาย เราค่อย ๆ แก้ไปด้วยกันนะ';
         if (!result.passed) window.NextSkillBuddyMotion?.play('retry');
         else if (!result.alreadyCompleted) window.NextSkillBuddyMotion?.play(progress.isComplete && !wasCourseComplete ? 'proud' : 'celebrate');
         else window.NextSkillBuddyMotion?.play('nod');
-        tell(result.passed ? `ยืนยันผลแล้ว ${saveCopy}` : requiresReview ? result.reward : `ตอบถูก ${result.score} ข้อ ดูคำอธิบายและแก้คำตอบได้`);
+        tell(result.passed ? `ยืนยันผลแล้ว ${saveCopy}` : `ตอบถูก ${result.score} ข้อ ${result.reward}`);
         $('#lesson-result-title').focus({preventScroll:true});
         if (lessonPage) positionPractice();
         else panel.scrollIntoView({behavior:'instant',block:'nearest'});
+        window.NextSkillCourseAward?.show(result, lesson.courseId, hadCourseAward, hadFirstLessonAward);
     }
     async function submitLesson(event) {
         event.preventDefault();
-        if (submitting || recoveryBusy || !lesson || videoLocked() || stepIndex < 0) return;
-        for (let i=0;i<lesson.questions.length;i++) if (!validateStep(i)) return;
+        if (submitting || recoveryBusy || !quizOpen || videoLocked()) return;
+        const firstUnanswered = lesson.questions.findIndex(question => !selections.has(question.id));
+        if (firstUnanswered !== -1) {
+            const input = $$('#lesson-questions fieldset')[firstUnanswered].querySelector('input');
+            input.focus();
+            input.reportValidity();
+            tell(`กรุณาเลือกคำตอบข้อที่ ${firstUnanswered + 1} ก่อนส่ง`);
+            return;
+        }
         await submitAttempt({courseId:lesson.courseId,lessonId:lesson.id,answers:lesson.questions.map(q=>selections.get(q.id))});
     }
     async function submitAttempt(attempt) {
@@ -517,6 +618,8 @@
         try {
             const latest = await api('State', undefined, null, 10000);
             if (requestId !== lessonRequest) return;
+            const hadCourseAward = state?.achievements.includes(`course-${attempt.courseId}`) === true;
+            const hadFirstLessonAward = state?.achievements.includes('first-lesson') === true;
             setState(latest);
             const course = latest.courses.find(c=>c.courseId===attempt.courseId);
             if (course?.completedLessons.includes(attempt.lessonId)) {
@@ -531,10 +634,12 @@
                 $('#lesson-reward').textContent = `XP สะสมปัจจุบัน ${number(latest.xp)} · ${signedIn?'ข้อมูลบัญชี':'โหมดทดลองของเซสชันนี้'}`;
                 $('#lesson-result-feedback').replaceChildren();
                 $('#edit-lesson-answers').hidden = true;
+                $('#review-lesson').hidden = true;
                 nextLessonId = !course.isComplete ? targetLesson(course).id : null;
                 $('#next-island').hidden = !nextLessonId;
                 $('#choose-next-course').hidden = !course.isComplete;
                 $('#lesson-result-title').focus({preventScroll:true});
+                window.NextSkillCourseAward?.show({ passed: true, state: latest }, attempt.courseId, hadCourseAward, hadFirstLessonAward);
             } else showError($('#lesson-error'),new Error('ยังไม่พบผลผ่านของบทเรียนนี้ ส่งคำตอบเดิมอีกครั้งเพื่อยืนยันผลได้'));
         } catch(error) { if(requestId===lessonRequest) showError($('#lesson-error'),error); }
         finally { if(requestId===lessonRequest) { recoveryBusy=false; $('#check-save-status').disabled=false; } }
@@ -546,7 +651,45 @@
         openLesson(course.courseId, targetLesson(course).id);
     }
 
-    $$('[data-smart-action="choose-course"]').forEach(button => button.addEventListener('click', () => guarded(openCourses)));
+    $$('[data-smart-action="choose-course"]').forEach(button => button.addEventListener('click', () => guarded(() => {
+        if (islandCourseMenu?.contains(button)) setIslandCourseMenu(false, true);
+        openCourses();
+    })));
+    if (islandCourseToggle) {
+        const switcher = islandCourseToggle.closest('.island-course-switch');
+        islandCourseToggle.addEventListener('click', () => {
+            const open = islandCourseMenu.hidden;
+            setIslandCourseMenu(open);
+            if (open) loadIslandCourseOptions();
+        });
+        switcher.addEventListener('keydown', event => {
+            if (event.key !== 'Escape' || islandCourseMenu.hidden) return;
+            setIslandCourseMenu(false, true);
+            event.preventDefault();
+        });
+        switcher.addEventListener('focusout', event => {
+            if (!islandCourseMenu.hidden && event.relatedTarget && !switcher.contains(event.relatedTarget)) setIslandCourseMenu(false);
+        });
+        document.addEventListener('click', event => {
+            if (!islandCourseMenu.hidden && !switcher.contains(event.target)) setIslandCourseMenu(false);
+            closeIslandLockHint(event.target);
+        });
+        const videoDialog = $('#island-course-video-modal');
+        const embed = videoDialog?.querySelector('iframe[data-src]');
+        $('#island-video-open')?.addEventListener('click', () => {
+            setIslandCourseMenu(false, true);
+            if (embed) embed.src = embed.dataset.src;
+            videoDialog.showModal();
+        });
+        videoDialog?.addEventListener('close', () => {
+            if (videoDialog.open) return;
+            embed?.removeAttribute('src');
+            videoDialog.querySelector('video')?.pause();
+        });
+        islandRoute.addEventListener('keydown', event => {
+            if (event.key === 'Escape') closeIslandLockHint();
+        });
+    }
     $('#course-search').addEventListener('input', renderCourses);
     $('#course-category').addEventListener('change', renderCourses);
     $$('[data-close-dialog]').forEach(button => button.addEventListener('click', () => document.getElementById(button.dataset.closeDialog)?.close()));
@@ -558,17 +701,38 @@
     lessonDialog.addEventListener('close', () => { lessonDirty = false; window.NextSkillAgent?.refresh(); });
     $('#lesson-quiz').addEventListener('change', () => { lessonDirty = true; });
     $('#lesson-quiz').addEventListener('submit', submitLesson);
-    $('#lesson-step-next').addEventListener('click', () => { if (!lesson || videoLocked() || (stepIndex>=0 && !validateStep(stepIndex))) return; showStep(stepIndex+1); });
-    $('#lesson-step-back').addEventListener('click', () => showStep(stepIndex-1));
-    $('#lesson-reading-again').addEventListener('click', () => showStep(-1));
+    $('#lesson-step-next').addEventListener('click', () => showLessonMode(true));
+    $('#lesson-reading-again').addEventListener('click', () => showLessonMode(false));
     $('#edit-lesson-answers').addEventListener('click', () => {
-        if (lesson.video) {
-            openLesson(lesson.courseId, lesson.id);
-            return;
+        if (!lesson || videoLocked()) return;
+        selections.clear();
+        $$('#lesson-questions input').forEach(input => { input.checked = false; });
+        lessonDirty = false;
+        showLessonMode(true);
+    });
+    $('#review-lesson').addEventListener('click', async event => {
+        if (!lesson?.video) return;
+        const button = event.currentTarget;
+        const retake = $('#edit-lesson-answers');
+        const requestId = lessonRequest;
+        const signal = lessonController.signal;
+        button.disabled = retake.disabled = true;
+        $('#lesson-error').hidden = true;
+        try {
+            const restarted = await api('RestartVideo', {
+                courseId: lesson.courseId, lessonId: lesson.id, videoId: lesson.video.youTubeId
+            }, signal);
+            if (requestId !== lessonRequest) return;
+            lesson = restarted;
+            selections.clear();
+            lessonDirty = false;
+            mountLessonVideo(lesson, requestId, signal);
+            renderLesson();
+        } catch (error) {
+            if (requestId === lessonRequest) showError($('#lesson-error'), error);
+        } finally {
+            button.disabled = retake.disabled = false;
         }
-        const wrong = lastFeedback.find(item=>!item.correct);
-        const index = wrong ? lesson.questions.findIndex(q=>q.id===wrong.questionId) : 0;
-        showStep(index); window.NextSkillBuddyMotion?.play('retry');
     });
     $('#check-save-status').addEventListener('click',checkSaveStatus);
     $('#retry-submission').addEventListener('click',()=> { if(uncertainAttempt&&!recoveryBusy) submitAttempt(uncertainAttempt); });
@@ -662,7 +826,7 @@
     window.addEventListener('resize', queueScene, { passive: true });
     document.addEventListener('visibilitychange', queueScene);
     window.addEventListener('pageshow', queueScene);
-    if (dashboard && authenticated) {
+    if ((dashboard || islandRoute) && authenticated) {
         window.addEventListener('pageshow', event => {
             if (event.persisted) refreshState().catch(pageError);
         });
