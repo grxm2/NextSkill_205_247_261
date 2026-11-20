@@ -11,7 +11,7 @@
 .ocean-life-ripple{width:72px;height:26px}
 .ow-seabirds{overflow:visible}
 .ow-bird-glide,.ow-bird-wing{transform-box:view-box;transform-origin:0 0}
-@media(max-width:700px),(pointer:coarse){.ocean-life-fish{width:30px;height:18px}.ocean-life-splash{width:28px;height:19px}.ocean-life-ripple{width:50px;height:19px}}
+@media(width < 768px),(pointer:coarse){.ocean-life-fish{width:30px;height:18px}.ocean-life-splash{width:28px;height:19px}.ocean-life-ripple{width:50px;height:19px}}
 @media(prefers-reduced-motion:reduce){.ocean-life{display:none}.ow-bird-glide,.ow-bird-wing{transform:none!important}}
 
 /* Distant scenery uses its own layers so it cannot cover the learning UI. */
@@ -60,7 +60,7 @@ html[data-theme="dark"] .ocean-ship-lights{opacity:1;filter:drop-shadow(0 0 3px 
 @keyframes ocean-whale-contact{0%,16%,70%,100%{opacity:0}28%,45%{opacity:.45}}
 @keyframes ocean-whale-spout{0%,29%,50%,100%{opacity:0;transform:translateY(2px)}35%,40%{opacity:.5;transform:translateY(0)}}
 .ow-motion-paused :is(.ocean-backdrop-boat-track,.ocean-backdrop-boat,.ocean-backdrop-buoy img,.ocean-backdrop-whale,.ocean-backdrop-spout,.ocean-boat-ripple,.ocean-buoy-ripple,.ocean-whale-ripple,.ocean-whale-meniscus){animation-play-state:paused}
-@media(max-width:700px){
+@media(width < 768px){
  .ocean-backdrop-boat-track--1{left:8vw;--boat-width:48px}
  .ocean-backdrop-boat-track--2{left:43vw;--boat-width:44px}
  .ocean-backdrop-boat-track--3{left:79vw;--boat-width:39px}

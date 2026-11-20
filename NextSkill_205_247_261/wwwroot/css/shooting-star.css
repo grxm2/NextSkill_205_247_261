@@ -22,7 +22,7 @@
 }
 html[data-theme="dark"] .shooting-star{--star-core:#fff;--star-light:#d3efff;--star-tail:rgba(133,204,255,.8)}
 .ocean-home .ow-intro .shooting-star--behind{position:absolute;z-index:0}
-.ocean-home .ow-intro h1{position:relative;z-index:1}
+.ocean-home .ow-intro :is(.hd-hero,.hd-greeting,.hd-current,.hd-stats){position:relative;z-index:1}
 #hero-highlight{transition:text-shadow 650ms ease-out}
 /* Use a restrained metallic highlight on the glyphs; keep a solid-color fallback. */
 @supports ((-webkit-background-clip:text) or (background-clip:text)){
@@ -39,7 +39,7 @@ html[data-theme="dark"] .shooting-star{--star-core:#fff;--star-light:#d3efff;--s
 }
 #hero-highlight.is-star-lit{text-shadow:0 0 6px #ffe4a855,0 0 18px #ffd78a44}
 html[data-theme="dark"] #hero-highlight.is-star-lit{text-shadow:0 0 8px #fff9,0 0 22px #9edfff88}
-@media(max-width:959.98px),(prefers-reduced-motion:reduce){
+@media(width < 1024px),(prefers-reduced-motion:reduce){
     .shooting-star{display:none}
     #hero-highlight{transition:none}
     #hero-highlight.is-star-lit{text-shadow:none}

@@ -10,6 +10,7 @@
 <link rel="preload" href="~/images/journey/home-island-terrain-v2.webp" as="image" type="image/webp" />
 <main id="journey-main" class="ocean-home">
 <div class="ow-track">
+<div class="ow-stage">
 <section id="ocean-journey" class="ow-scene cv-home" data-catalog-departure aria-label="เดินทางผ่านโลกทะเลกับ Nimo">
     <partial name="_OceanBirds" />
     <div class="ow-sky" aria-hidden="true"><div class="hero-sky-texture"></div><div class="journey-night-sky"></div><partial name="_JourneyCelestial" /></div>
@@ -26,13 +27,15 @@
         <div class="ow-harbor cv-departure-harbor" id="course-harbor" aria-hidden="true">
             <div class="ow-dock">
                 <partial name="_KnowledgeSanctumArt" model="false" />
+                <span class="ow-dock-arch" data-nimo-speech-obstacle></span>
             </div>
         </div>
     </div>
-    <div class="ow-vessel" aria-label="Nimo เดินทางบนเรือลำเดียวกัน"><div class="ow-arrival-motion"><partial name="_VesselWater" /><div class="ow-boat-idle"><span class="ow-boat-anchor sj-mascot-anchor buddy-slot" data-buddy-anchor="arrival"></span><img class="ow-boat-art" asp-append-version="true" src="~/images/journey/rowing-hull-waterline.svg" width="480" height="280" alt="เรือของ Nimo" /><img class="voyage-oar" src="~/images/journey/rowing-oar.svg" alt="" /></div><partial name="_VesselWaterContact" /></div></div>
+    <div class="ow-vessel" aria-label="Nimo เดินทางบนเรือลำเดียวกัน"><div class="ow-arrival-motion"><partial name="_VesselWater" /><div class="ow-boat-idle"><span class="ow-boat-anchor sj-mascot-anchor buddy-slot" data-buddy-anchor="arrival"></span><img class="ow-boat-art" data-nimo-speech-obstacle asp-append-version="true" src="~/images/journey/rowing-hull-waterline.svg" width="480" height="280" alt="เรือของ Nimo" /><img class="voyage-oar" src="~/images/journey/rowing-oar.svg" alt="" /></div><partial name="_VesselWaterContact" /></div></div>
     </div>
     <partial name="_HomeLearningDashboard" model="Model" />
 </section>
+</div>
 </div>
 <noscript><p>เลือกคอร์สได้ที่ <a href="/Home/Courses">รายการคอร์สทั้งหมด</a></p></noscript>
 </main>

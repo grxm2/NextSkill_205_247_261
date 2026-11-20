@@ -196,7 +196,15 @@
  document.querySelectorAll('dialog').forEach(el=>new MutationObserver(sync).observe(el,{attributes:true,attributeFilter:['open']}));
  document.addEventListener('visibilitychange',sync);reduce.addEventListener('change',sync);
  window.NextSkillMotion?.subscribe(sync, { element:scene || document.querySelector('.skill-buddy'),kind:'reaction' });
- window.addEventListener('resize',()=>{cancelIntro(true);cancelJump(true);flight?.cancel();});
+ const settleOnResize = () => { cancelIntro(true); cancelJump(true); flight?.cancel(); };
+ if(scene){
+  let sceneSize;
+  new ResizeObserver(([{contentRect}])=>{
+   const size=`${contentRect.width}/${contentRect.height}`;
+   if(sceneSize && sceneSize!==size)settleOnResize();
+   sceneSize=size;
+  }).observe(scene);
+ } else window.addEventListener('resize',settleOnResize);
  window.addEventListener('pagehide',()=>{generation++;cancelIntro(true);cancelJump(true);flight?.cancel();});
  window.NextSkillVoyage={board,returnToShore,cloudBoat,descend,finishArrival};
  // Home's catalog destination does not change its entrance: sail in, then

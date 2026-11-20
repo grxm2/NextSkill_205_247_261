@@ -216,7 +216,7 @@ public sealed class LearningStore(IConfiguration configuration)
     private static async Task<bool> CanTakeQuizAsync(SqlConnection db, SqlTransaction transaction, Guid accountId,
         string role, int courseId, LearningLessonDefinition lesson, CancellationToken token)
     {
-        if (lesson.Video is null) return false;
+        if (lesson.Video is null) return lesson.Reading.Length > 0;
         await using var command = VideoCommand(db, transaction, """
             SELECT 1 FROM dbo.LearningLessonVideos
             WHERE AccountId=@account AND AccountRole=@role AND CourseId=@course AND LessonId=@lesson AND VideoId=@video;

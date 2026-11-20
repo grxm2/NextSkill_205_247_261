@@ -15,7 +15,8 @@ public sealed record LearningCourseDefinition(int Id, string Title, string Categ
     string IslandKind, LearningLessonDefinition[] Lessons)
 {
     public bool CanStart => Lessons.Length > 0 &&
-        Lessons.All(lesson => lesson.Video is not null && lesson.Questions.Length is >= 1 and <= 20);
+        Lessons.All(lesson => (lesson.Video is not null || lesson.Reading.Length > 0) &&
+            lesson.Questions.Length is >= 1 and <= 20);
 }
 
 public static partial class LearningCatalog
@@ -66,8 +67,10 @@ public static partial class LearningCatalog
                 .ToArray();
             var summary = lesson.Summary ?? course.Description;
             var minutes = video is null ? Math.Max(1, lesson.DurationMinutes) : (video.DurationSeconds + 59) / 60;
+            var reading = lesson.Reading.Where(section => !string.IsNullOrWhiteSpace(section?.Heading) &&
+                !string.IsNullOrWhiteSpace(section.Text)).ToArray();
             return new LearningLessonDefinition(lesson.Id, lesson.Title, $"เกาะบทที่ {lesson.Id}", summary,
-                [], quiz, minutes, 50, video);
+                reading, quiz, minutes, 50, video);
         }).ToArray();
 
         return new LearningCourseDefinition(course.Id, course.Title, course.Category, course.Description, islandKind, lessons);
@@ -82,9 +85,10 @@ public static partial class LearningCatalog
     public static LearningLessonSummary Summary(LearningLessonDefinition lesson, string status)
         => new(lesson.Id, lesson.Title, lesson.IslandName, lesson.Xp, lesson.Minutes, status);
 
-    // Answer keys are only used on the server. Send quiz prompts after viewing is confirmed.
-    public static LearningLessonContent PublicLesson(int courseId, LearningLessonDefinition lesson, string status, bool videoUnlocked)
+    // Answer keys stay on the server. Only the lesson's quiz access rule controls when prompts are sent.
+    public static LearningLessonContent PublicLesson(int courseId, LearningLessonDefinition lesson, string status, bool quizUnlocked)
         => new(courseId, lesson.Id, lesson.Title, lesson.IslandName, lesson.Summary, lesson.Reading,
-            videoUnlocked ? lesson.Questions.Select(q => new LearningQuestion(q.Id, q.Prompt, q.Choices, q.Hint, q.Coaching)).ToArray() : [],
-            lesson.Xp, lesson.Minutes, status, lesson.Questions.Length, lesson.RequiredCorrect, lesson.Video, videoUnlocked);
+            quizUnlocked ? lesson.Questions.Select(q => new LearningQuestion(q.Id, q.Prompt, q.Choices, q.Hint, q.Coaching)).ToArray() : [],
+            lesson.Xp, lesson.Minutes, status, lesson.Questions.Length, lesson.RequiredCorrect, lesson.Video,
+            lesson.Video is not null && quizUnlocked);
 }

@@ -43,7 +43,7 @@ JSON uses camelCase. All account state responses use `Cache-Control: no-store`. 
 | GET `/Learning/State` | Authenticated | Persisted LearningState |
 | POST `/Learning/SelectCourse` | Authenticated | `{ courseId }` → LearningState; creates only that course if new, changes active pointer, never clears old course |
 | GET `/Learning/Island?courseId=N&lessonId=M` | Authenticated | Island Razor view; optional course defaults to active, optional lesson deep link is validated |
-| GET `/Learning/Lesson?courseId=N&lessonId=M` | Authenticated | Lesson and video information. Quiz prompts appear after a video confirmation. |
+| GET `/Learning/Lesson?courseId=N&lessonId=M` | Authenticated | Reading or video content for an unlocked lesson. Reading lessons include the quiz prompts immediately. Video lessons include prompts after playback confirmation. |
 | POST `/Learning/StartVideo` | Authenticated | `{ courseId, lessonId, videoId }` → records an allowed session's playback start |
 | POST `/Learning/CompleteVideo` | Authenticated | Adds `positionSeconds` and `skipVideo` to the playback request. Returns the unlocked lesson after a recorded start and a qualifying position or explicit skip. Accepts `watchedSeconds` as a position alias for older clients. |
 | POST `/Learning/RestartVideo` | Authenticated | Clears confirmation and resets playback time for the selected lesson |

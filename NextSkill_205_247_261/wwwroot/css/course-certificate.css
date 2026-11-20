@@ -1,11 +1,16 @@
 .certificate-page {
     margin: 0;
-    padding: clamp(16px, 4vw, 56px);
-    min-height: 100vh;
+    --certificate-gutter: clamp(16px, 4vw, 56px);
+    padding: max(var(--certificate-gutter), env(safe-area-inset-top)) max(var(--certificate-gutter), env(safe-area-inset-right)) max(var(--certificate-gutter), env(safe-area-inset-bottom)) max(var(--certificate-gutter), env(safe-area-inset-left));
+    min-height: 100svh;
     box-sizing: border-box;
     background: #dceef4;
     color: var(--ns-ink);
     font: 400 16px/1.65 var(--ns-font);
+}
+
+html[data-theme="dark"] .certificate-page {
+    background: #0b2035;
 }
 
 .certificate-page main {
@@ -67,7 +72,7 @@
 
 .course-award-dialog {
     width: min(440px, calc(100% - 28px));
-    max-height: calc(100% - 24px);
+    max-height: calc(100dvh - max(24px, env(safe-area-inset-top) + env(safe-area-inset-bottom)));
     box-sizing: border-box;
     padding: clamp(16px, 4vw, 30px);
     border: 1px solid var(--ns-border);
@@ -76,6 +81,7 @@
     box-shadow: 0 20px 52px #0b304840;
     color: var(--ns-ink);
     font: 400 15px/1.6 var(--ns-font);
+    overscroll-behavior: contain;
 }
 
 .course-award-dialog::backdrop { background: #0b273d91; }
@@ -118,7 +124,7 @@
 @page nextskill-certificate { size: A4 landscape; margin: 12mm; }
 
 @media print {
-    .certificate-page {
+    .certificate-page, html[data-theme="dark"] .certificate-page {
         page: nextskill-certificate;
         padding: 0;
         background: #fff;

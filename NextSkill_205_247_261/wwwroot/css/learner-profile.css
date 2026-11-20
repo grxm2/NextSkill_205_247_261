@@ -258,7 +258,6 @@ html[data-theme="dark"] .lp {
 .lp-course-meter { text-align: end; font-variant-numeric: tabular-nums; }
 .lp-course-meter .lp-meter { height: 4px; }
 .lp-course-arrow { font-size: 24px; line-height: 1; }
-#certificates { scroll-margin-top: 112px; }
 .lp-certificates .lp-course { grid-template-columns: minmax(0, 1fr) max-content auto; gap: 8px; }
 .lp-certificate-link { font-size: 12px; }
 
@@ -301,7 +300,6 @@ html[data-theme="dark"] .lp {
     grid-template-columns: minmax(0, .65fr) minmax(0, 1.7fr);
     align-items: start;
     gap: 16px 28px;
-    scroll-margin-top: 112px;
 }
 .lp-edit > div p { margin-top: 5px; font-size: 13px; }
 .lp-form { display: grid; gap: 12px; justify-items: start; min-width: 0; }
@@ -329,24 +327,24 @@ html[data-theme="dark"] .lp {
 .lp-field .field-validation-valid, .lp-validation.validation-summary-valid { display: none; }
 .lp-success { color: var(--lp-success); font-size: 14px; }
 
-@media (max-width: 800px) {
+@media (width < 1024px) {
     .lp-hero { flex-wrap: wrap; }
     .lp-hero-actions { width: 100%; justify-content: flex-end; }
     .lp-edit { grid-template-columns: minmax(0, 1fr); }
 }
 
-@media (max-width: 660px) {
-    .lp-scenery { --lp-light-x: 89%; --lp-light-y: 82px; }
-    .ns-profile-page .account-main { padding: 44px 12px 56px; }
+@media (width < 768px) {
+    .lp-scenery { --lp-light-x: 89%; --lp-light-y: 75px; }
+    .ns-profile-page .account-main { padding: 28px var(--ns-gutter-end) 48px var(--ns-gutter-start); }
     .lp-overview { grid-template-columns: minmax(0, 1fr); }
     .lp-hero { gap: 14px; border-radius: 24px; }
-    .lp-edit { scroll-margin-top: 89px; }
     .lp-form-fields { grid-template-columns: minmax(0, 1fr); width: min(100%, 440px); }
 }
 
-@media (max-width: 380px) {
+@media (width < 480px) {
     .lp-hero-actions { flex-wrap: wrap; justify-content: flex-start; }
     .lp .lp-button { padding-inline: 12px; }
-    .lp-count { font-size: 12px; }
-    .lp-goals > li { font-size: 13px; }
+    .lp-count,.lp-goals > li { font-size: 14px; }
+    .lp-course,.lp-certificates .lp-course { grid-template-columns:minmax(0,1fr) auto; }
+    .lp-certificates .lp-course time { grid-row:2; }
 }

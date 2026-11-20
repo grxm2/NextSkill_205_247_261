@@ -2,12 +2,11 @@
 @{
     Layout = "_AccountLayout";
     var admin = (string?)ViewData["Role"] == "Admin";
+    const string emailHint = "กรอกอีเมลของคุณ เช่น name@example.com";
     ViewData["Title"] = admin ? "เข้าสู่ระบบผู้ดูแล (Admin)" : "ยินดีต้อนรับกลับมา";
 }
 
 <div class="auth-grid">
-    <partial name="_AccountStory" />
-
     <section class="auth-form nimo-auth-card" aria-labelledby="form-heading">
         <div class="form-header-badge">
             <span class="badge-dot" aria-hidden="true"></span>
@@ -56,8 +55,9 @@
                             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                         </svg>
                     </span>
-                    <input asp-for="Email" type="email" autocomplete="username" placeholder="กรอกอีเมลของคุณ เช่น name@example.com" required maxlength="254" />
+                    <input asp-for="Email" type="email" autocomplete="username" placeholder="@emailHint" aria-describedby="auth-email-hint" required maxlength="254" />
                 </div>
+                <small id="auth-email-hint" class="auth-field-placeholder">@emailHint</small>
             </div>
 
             <div class="field">
@@ -106,4 +106,5 @@
             </a>
         </p>
     </section>
+    <partial name="_AccountStory" />
 </div>

@@ -328,6 +328,7 @@ public static class AdminContentStore
             Title = l.Title,
             DurationMinutes = l.DurationMinutes,
             Summary = l.Summary,
+            Reading = [.. l.Reading ?? []],
             VideoId = l.VideoId,
             VideoDurationSeconds = l.VideoDurationSeconds,
             VideoCreator = l.VideoCreator,

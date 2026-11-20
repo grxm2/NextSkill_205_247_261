@@ -8,7 +8,13 @@
  --ns-primary:#087faa;--ns-primary-hover:#086189;--ns-success:#176a52;--ns-success-surface:#eaf8f0;
  --ns-danger:#aa3041;--ns-danger-surface:#fff0f2;--ns-warning:#795914;--ns-warning-surface:#fff6d8;
  --ns-radius-control:14px;--ns-radius-surface:20px;--ns-space-1:4px;--ns-space-2:8px;--ns-space-3:12px;--ns-space-4:16px;--ns-space-6:24px;--ns-space-8:32px;--ns-space-12:48px;
+ --ns-page-gutter:16px;--ns-gutter-start:max(var(--ns-page-gutter), env(safe-area-inset-left));--ns-gutter-end:max(var(--ns-page-gutter), env(safe-area-inset-right));
  --ns-font:Prompt,'Leelawadee UI',system-ui,sans-serif;--ns-font-number:Manrope,Prompt,sans-serif;
  --ns-ease-out:cubic-bezier(.23,1,.32,1);--ns-ease-in-out:cubic-bezier(.77,0,.175,1);--ns-ease-drawer:cubic-bezier(.32,.72,0,1);
  --ns-shadow:0 12px 32px #173e560d;
+}
+
+/* Responsive widths: 480, 768, 1024, 1280 and 1536 CSS pixels. */
+@media (min-width: 1024px) {
+ :root { --ns-page-gutter:24px; }
 }

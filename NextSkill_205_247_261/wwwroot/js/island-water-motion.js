@@ -7,9 +7,13 @@
     const waves = sea.querySelector('.surface-ocean-waves');
     const anchor = sea.querySelector('.ocean-horizon-anchor');
     const hero = document.querySelector('[data-catalog-hero]');
+    const catalogTrack = hero?.querySelector('.catalog-boat-track');
+    const catalogBoat = catalogTrack?.querySelector('.catalog-boat');
     const layers = [...sea.querySelectorAll('.island-water-layer')];
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    const compactIsland = matchMedia('(width < 768px)');
     let frame = 0, shore = anchor.getBoundingClientRect().top;
+    let displayedHeight = 0, resizeTimer = 0;
     let enabled = false;
     // Both documents use wall-clock phase, so crests do not restart at navigation.
     function phase() {
@@ -21,23 +25,29 @@
     function update() {
         frame = 0;
         const y = window.scrollY;
-        const height = Math.max(innerHeight, innerWidth * 941 / 1672);
-        waves.style.top = `${height * .265}px`;
-        surface.style.transform = `translate3d(0, ${shore - height * .265 - y}px, 0)`;
+        surface.style.transform = `translate3d(0, ${shore - displayedHeight * .265 - y}px, 0)`;
         if (enabled) {
-            layers[0].style.transform = `translate3d(0, ${Math.sin(y / 1250) * 32}px, 0)`;
-            layers[1].style.transform = `translate3d(0, ${Math.sin(y / 700) * -48}px, 0)`;
+            if (!compactIsland.matches) {
+                layers[0].style.transform = `translate3d(0, ${Math.sin(y / 1250) * 32}px, 0)`;
+            }
+            const amplitude = compactIsland.matches ? 18 : 48;
+            layers[1].style.transform = `translate3d(0, ${Math.sin(y / 700) * -amplitude}px, 0)`;
         }
     }
     function queue() { if (!frame) frame = requestAnimationFrame(update); }
     function measure() {
-        if (hero) {
-            const controls = hero.querySelector('.catalog-hero-copy').getBoundingClientRect();
-            shore = Math.max(anchor.getBoundingClientRect().top, controls.bottom + scrollY + 64);
-            const top = hero.getBoundingClientRect().top + scrollY;
-            hero.style.setProperty('--catalog-shore-local', `${shore - top}px`);
+        displayedHeight = Math.max(surface.offsetHeight, sea.clientWidth * 941 / 1672);
+        waves.style.top = `${displayedHeight * .265}px`;
+        if (catalogBoat && catalogBoat.parentElement === catalogTrack) {
+            // The vessel can move to a fixed transition stage. Keep its last
+            // real shore coordinate until it returns to the harbor track.
+            shore = catalogTrack.getBoundingClientRect().top + scrollY + catalogBoat.offsetTop - 2;
         }
         update();
+    }
+    function queueMeasure() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(measure, 90);
     }
     function sync(state) {
         enabled = state ? state.ambientAllowed : !reduced.matches && !document.hidden;
@@ -46,7 +56,11 @@
         queue();
     }
     window.addEventListener('scroll', queue, { passive: true });
-    window.addEventListener('resize', measure, { passive: true });
+    window.addEventListener('resize', hero ? queueMeasure : measure, { passive: true });
+    if (hero) {
+        new ResizeObserver(queueMeasure).observe(hero);
+        screen.orientation?.addEventListener('change', queueMeasure);
+    }
     document.addEventListener('visibilitychange', () => sync(window.NextSkillMotion?.snapshot({ element: main, kind: 'ambient' })));
     reduced.addEventListener('change', () => sync(window.NextSkillMotion?.snapshot({ element: main, kind: 'ambient' })));
     if (window.NextSkillMotion) window.NextSkillMotion.subscribe(sync, { element: main, kind: 'ambient' });
@@ -66,5 +80,5 @@
     document.fonts.ready.then(measure);
     phase();measure();
     window.addEventListener('pageshow', () => { phase();measure(); });
-    window.addEventListener('pagehide', () => { cancelAnimationFrame(frame);frame=0; });
+    window.addEventListener('pagehide', () => { cancelAnimationFrame(frame); clearTimeout(resizeTimer); frame=0; });
 })();

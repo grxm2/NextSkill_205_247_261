@@ -713,6 +713,7 @@
     // Smooth Number Counter Animation
     // ==========================================
     function animateCounters() {
+        const reduced = matchMedia('(prefers-reduced-motion: reduce)');
         document.querySelectorAll('[data-count]').forEach(elem => {
             const target = parseInt(elem.getAttribute('data-count'), 10);
             if (isNaN(target)) return;
@@ -720,7 +721,7 @@
             const startTime = performance.now();
             function update(now) {
                 const elapsed = now - startTime;
-                const progress = Math.min(elapsed / duration, 1);
+                const progress = reduced.matches ? 1 : Math.min(elapsed / duration, 1);
                 const ease = 1 - Math.pow(1 - progress, 3);
                 const current = Math.floor(ease * target);
                 elem.textContent = current.toLocaleString('th-TH');
@@ -857,6 +858,7 @@
     const mascotSpeech = document.getElementById('mascot-speech');
     const mascotImg = document.getElementById('floating-mascot-img');
     const topbarMascotToggle = document.getElementById('topbar-mascot-toggle');
+    const reducedMascotMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
     const mascotPoses = [
         '/images/nimo-rowing.png',
@@ -884,9 +886,11 @@
         poseIdx = (poseIdx + 1) % mascotPoses.length;
 
         if (mascotSpeech) {
-            mascotSpeech.style.animation = 'none';
-            void mascotSpeech.offsetWidth;
-            mascotSpeech.style.animation = 'popBubble 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+            if (!reducedMascotMotion.matches) {
+                mascotSpeech.style.animation = 'none';
+                void mascotSpeech.offsetWidth;
+                mascotSpeech.style.animation = 'popBubble 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+            }
             mascotSpeech.textContent = mascotQuotes[quoteIdx];
             mascotSpeech.style.display = 'block';
         }
@@ -895,7 +899,7 @@
             mascotImg.src = mascotPoses[poseIdx];
         }
 
-        if (mascotTrigger) {
+        if (mascotTrigger && !reducedMascotMotion.matches) {
             mascotTrigger.style.transform = 'translateY(-14px) scale(1.18) rotate(8deg)';
             setTimeout(() => {
                 mascotTrigger.style.transform = '';
@@ -906,7 +910,7 @@
     mascotTrigger?.addEventListener('click', triggerMascotCheer);
     topbarMascotToggle?.addEventListener('click', () => {
         triggerMascotCheer();
-        mascotSpeech?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        mascotSpeech?.scrollIntoView({ behavior: reducedMascotMotion.matches ? 'instant' : 'smooth', block: 'nearest' });
     });
 
     // ==========================================

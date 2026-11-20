@@ -9,7 +9,7 @@
     const current = byId('island-current-card');
     const detailStart = byId('detail-start');
     const sheetToggle = byId('island-sheet-toggle');
-    const compact = matchMedia('(max-width: 850px), (max-height: 520px)');
+    const compact = matchMedia('(width < 1024px), (height < 480px)');
     let launch;
     let selectedIsland;
 

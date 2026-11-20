@@ -1,5 +1,5 @@
 body[data-journey-mode="learn"] {
-    --island-sidebar-top: calc(var(--nav-h) + 20px);
+    --island-sidebar-top: calc(var(--nav-sticky-inset, var(--nav-h)) + 20px);
     --island-glass: var(--ns-liquid-panel-bg);
     --island-border: var(--ns-liquid-panel-edge);
     --island-rule: #4b789337;
@@ -62,6 +62,20 @@ html[data-theme="dark"] body[data-journey-mode="learn"].is-underwater .ns-navbar
     align-items: center;
     justify-content: space-between;
     gap: 12px 24px;
+    padding-block: 12px 20px;
+}
+.smart-journey[data-journey-mode="learn"] .sj-learn {
+    --map-gutter-start: max(var(--page-gutter, 16px), env(safe-area-inset-left, 0px));
+    --map-gutter-end: max(var(--page-gutter, 16px), env(safe-area-inset-right, 0px));
+    width: min(1280px, calc(100% - var(--map-gutter-start) - var(--map-gutter-end)));
+    margin-inline: max(var(--map-gutter-start), calc((100% - 1280px) / 2)) auto;
+    padding-bottom: calc(clamp(32px, 5vw, 64px) + env(safe-area-inset-bottom, 0px));
+}
+.island-heading h1 {
+    color: var(--island-ink);
+    font-size: clamp(1.55rem, 2.5vw, 2.125rem);
+    font-weight: 600;
+    line-height: 1.4;
 }
 .island-course-switch { position: relative; z-index: 6; min-width: 0; max-width: 100%; }
 #current-course-title { margin: 0; }
@@ -84,7 +98,7 @@ html[data-theme="dark"] body[data-journey-mode="learn"].is-underwater .ns-navbar
 .island-course-menu {
     position: absolute;
     inset: calc(100% + 8px) auto auto 0;
-    width: max(100%, min(300px, calc(100vw - 40px)));
+    width: max(100%, min(300px, calc(100vw - var(--map-gutter-start) - var(--map-gutter-end))));
     box-sizing: border-box;
     padding: 8px;
     border: 1px solid var(--island-border);
@@ -119,7 +133,7 @@ html[data-theme="dark"] body[data-journey-mode="learn"].is-underwater .ns-navbar
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 4px 12px;
+    gap: 6px 10px;
     margin: 0;
     color: var(--island-ink);
     font: 500 .875rem/1.5 var(--ns-font);
@@ -127,16 +141,34 @@ html[data-theme="dark"] body[data-journey-mode="learn"].is-underwater .ns-navbar
 }
 .island-progress-strip dd { display: flex; align-items: center; gap: 5px; margin: 0; white-space: nowrap; }
 .island-progress-strip dd[title] { cursor: help; }
-.island-progress-strip > div + div { display: flex; align-items: center; gap: 12px; }
+.island-progress-strip > div + div { display: flex; align-items: center; gap: 10px; }
 .island-progress-strip > div + div::before { content: "·"; color: var(--island-muted); }
 .island-progress-strip :is(.icon, svg) { flex: none; width: 16px; height: 16px; }
 .island-progress-strip .icon-lightning { color: var(--island-gold); }
 .island-streak-icon { color: var(--island-gold); mask-image: url('../icons/fire.svg'); }
 
-.smart-journey .learning-workspace #lesson-map .sj-learning-map-heading { justify-content: flex-start; }
+.learning-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(20px, 3vw, 40px);
+}
+.smart-journey #lesson-map {
+    position: relative;
+    min-width: 0;
+    isolation: isolate;
+    border: 0;
+    padding: 0;
+}
+.smart-journey #lesson-map .sj-learning-map-heading {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0 0 16px;
+}
 .smart-journey .learning-workspace #lesson-map #locate-current {
     margin: 0;
     padding-inline: 14px;
+    min-height: 44px;
     border-radius: 999px;
     background: var(--island-control);
     color: var(--island-link);
@@ -145,8 +177,7 @@ html[data-theme="dark"] body[data-journey-mode="learn"].is-underwater .ns-navbar
 .smart-journey .learning-workspace #lesson-map #locate-current:hover { background: var(--island-control-hover); }
 
 .island-dashboard {
-    position: sticky;
-    top: var(--island-sidebar-top);
+    position: relative;
     z-index: 3;
     min-width: 0;
     font-family: var(--ns-font);
@@ -154,14 +185,13 @@ html[data-theme="dark"] body[data-journey-mode="learn"].is-underwater .ns-navbar
 }
 
 .island-dashboard [hidden] { display: none; }
-.island-current-card {
-    padding: 26px;
+.island-current-card,
+#island-detail {
+    padding: clamp(16px, 2.25vw, 26px);
     border: 1px solid var(--island-border);
     border-radius: var(--ns-radius-surface);
     background: var(--island-glass);
     box-shadow: var(--ns-liquid-panel-shadow);
-    -webkit-backdrop-filter: var(--ns-liquid-filter);
-    backdrop-filter: var(--ns-liquid-filter);
 }
 
 html[data-theme] body.smart-journey[data-journey-mode="learn"] :is(#island-detail, #island-detail-dialog) {
@@ -181,13 +211,47 @@ html[data-theme] body.smart-journey[data-journey-mode="learn"] #island-detail-di
 }
 html[data-theme] body.smart-journey[data-journey-mode="learn"] #island-detail :is(h2, p) { color: inherit; }
 #island-detail #detail-start { width: 100%; }
+#island-detail h2 {
+    margin: 8px 0;
+    font-size: clamp(1.25rem, 3vw, 1.4375rem);
+    font-weight: 600;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+#island-detail p { margin: 8px 0 14px; font-size: .875rem; line-height: 1.75; }
+.island-detail-dialog {
+    position: fixed;
+    inset: auto 0 0;
+    box-sizing: border-box;
+    width: min(100%, 36rem);
+    max-width: none;
+    max-height: 85dvh;
+    margin: 0 auto;
+    padding: 48px max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    border: 0;
+    border-radius: 24px 24px 0 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+}
+.island-detail-dialog #detail-back { display: none; }
+#detail-sheet-close {
+    position: absolute;
+    top: 8px;
+    right: max(12px, env(safe-area-inset-right));
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--island-control);
+    color: var(--island-ink);
+}
 
 .island-text-button {
     display: inline-flex;
     align-items: center;
     justify-content: flex-start;
     gap: 6px;
-    min-height: 32px;
+    min-height: 44px;
     padding: 0;
     border: 0;
     border-radius: 4px;
@@ -302,7 +366,135 @@ body[data-journey-mode="learn"].is-underwater :is(#resume-learning, #detail-star
     transform: rotate(45deg);
 }
 .island-sheet-toggle[aria-expanded="false"] .island-chevron { margin-top: 3px; transform: rotate(225deg); }
-.island-sheet-toggle { display: none; }
+.island-sheet-toggle { margin-bottom: 12px; color: var(--island-ink); font-size: .875rem; font-weight: 500; }
+.island-current-card:has(.island-sheet-toggle[aria-expanded="false"]) .island-current-info { display: none; }
+.island-current-card:has(.island-sheet-toggle[aria-expanded="false"]) .island-current-actions { margin-top: 0; }
+
+.smart-journey .learning-workspace #lesson-route {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(24px, 5vw, 56px);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.smart-journey #lesson-route::before { display: none; }
+.smart-journey #lesson-route .sj-learning-route-line {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: #efffff;
+    stroke-width: 2;
+    stroke-dasharray: 4 10;
+    stroke-linecap: round;
+    opacity: .8;
+    pointer-events: none;
+}
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island {
+    position: relative;
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    gap: 10px;
+    width: min(100%, 380px);
+    min-width: 0;
+    min-height: 44px;
+    padding: 0 0 8px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    text-align: center;
+    isolation: isolate;
+    scroll-margin-block: 8px;
+}
+.smart-journey #lesson-route .sj-lesson-island.is-locked::after { display: none; }
+.smart-journey #lesson-route .sj-lesson-island:focus-visible { outline: none; }
+.smart-journey #lesson-route .sj-lesson-island:focus-visible h3 {
+    outline: 2px solid var(--island-link);
+    outline-offset: 3px;
+}
+.island-stop-picture { display: block; position: relative; width: 100%; }
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: saturate(.88) brightness(.98) drop-shadow(0 7px 8px #07556a30);
+}
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island.is-locked img {
+    opacity: .72;
+    filter: grayscale(.7) saturate(.45) drop-shadow(0 10px 9px #1767851c);
+}
+.smart-journey .learning-workspace #lesson-route .sj-island-index {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    z-index: 2;
+    inset: 8% auto auto 12%;
+    width: 32px;
+    height: 32px;
+    background: #efffffe6;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    font: 600 .875rem/1 Manrope, sans-serif;
+    color: #367487;
+    box-shadow: 0 4px 12px #1262780d;
+}
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island h3,
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island .sj-island-status {
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    max-width: 100%;
+    min-height: 0;
+    margin: 0;
+    padding: 4px 12px;
+    border-radius: 18px;
+    background: #d9f5f5ed;
+    color: #073a50;
+    font: 500 .875rem/1.65 var(--ns-font);
+    overflow-wrap: anywhere;
+}
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island .sj-island-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island h3 { font-size: 1rem; }
+.smart-journey .learning-workspace #lesson-route .is-current .sj-island-status {
+    min-height: 44px;
+    padding: 8px 16px;
+    border-bottom: 4px solid #085c76;
+    background: #087e9c;
+    color: #fff;
+}
+.island-underwater-route {
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(14px, 3vw, 24px);
+    width: 100%;
+    padding: 8px 8px 12px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: 8px;
+    scroll-snap-type: inline proximity;
+    scrollbar-width: thin;
+}
+.island-underwater-route[hidden] { display: none; }
+.smart-journey .learning-workspace #lesson-route .island-underwater-route .sj-lesson-island {
+    width: min(19rem, 82%);
+    align-self: flex-start;
+    scroll-snap-align: center;
+}
 
 .smart-journey .learning-workspace #lesson-route .is-current .sj-island-index {
     border-color: #ffd98e;
@@ -317,12 +509,9 @@ body[data-journey-mode="learn"].is-underwater :is(#resume-learning, #detail-star
     gap: 6px;
 }
 .is-locked h3 .icon-lock { flex: none; width: 15px; height: 15px; }
-.smart-journey #lesson-route .is-locked:focus-visible h3 { outline: 3px solid var(--island-link); outline-offset: 3px; }
 .island-map-lock-hint {
-    position: absolute;
-    z-index: 3;
-    inset: auto auto -18px 50%;
-    transform: translateX(-50%);
+    position: relative;
+    z-index: 1;
     box-sizing: border-box;
     width: max-content;
     max-width: 100%;
@@ -331,47 +520,137 @@ body[data-journey-mode="learn"].is-underwater :is(#resume-learning, #detail-star
     background: #123c54;
     color: #fff;
     font: 400 .875rem/1.5 var(--ns-font);
+    overflow-wrap: anywhere;
 }
 .archipelago-boat #buddy-agent-handle { border-radius: 50%; }
+.archipelago-boat.is-off-map-strip { visibility: hidden; }
 .archipelago-boat #buddy-agent-handle:focus-visible {
     outline: 4px solid #b3eeff;
     outline-offset: 2px;
     box-shadow: 0 0 18px 6px #57c7ef9c;
 }
 
-@media (max-width: 850px), (max-height: 520px) {
-    body[data-journey-mode="learn"] { padding-bottom: calc(75px + env(safe-area-inset-bottom, 0px)); }
-    .smart-journey .island-dashboard {
-        --island-sheet-gutter: 12px;
-        position: fixed;
-        inset: auto 0 0;
-        width: min(100%, 460px);
-        box-sizing: border-box;
-        max-height: min(82dvh, calc(100dvh - var(--nav-h) - 14px));
-        margin-inline: auto;
-        padding: 9px max(var(--island-sheet-gutter), env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(var(--island-sheet-gutter), env(safe-area-inset-left, 0px));
-        overflow: auto;
-        overscroll-behavior: contain;
-        border: 1px solid var(--island-border);
-        border-bottom: 0;
-        border-radius: 20px 20px 0 0;
-        background: var(--island-glass);
-        box-shadow: var(--ns-liquid-panel-shadow);
+
+.learning-celestial {
+    position: absolute;
+    inset: 0 calc(-1 * var(--map-gutter-end)) auto calc(-1 * var(--map-gutter-start));
+    height: 100svh;
+}
+.learning-celestial :is(.hero-sun, .journey-moon) {
+    left: 87%;
+    top: clamp(8.5rem, 24svh, 16rem);
+    width: clamp(28px, 4vw, 40px);
+}
+.learning-celestial .hero-sun { box-shadow: 0 0 24px 8px #fff0b280, 0 0 52px 16px #ffe3a338; }
+.learning-celestial .journey-moon { box-shadow: 0 0 24px 6px #e4f2ff45, 0 0 52px 16px #b5d9ff20; }
+
+#island-course-video-modal {
+    box-sizing: border-box;
+    width: min(820px, calc(100% - var(--map-gutter-start) - var(--map-gutter-end)));
+    max-height: calc(100dvh - max(16px, env(safe-area-inset-top)) - max(16px, env(safe-area-inset-bottom)));
+    padding: clamp(16px, 3vw, 22px);
+    border: 1.5px solid #38bdf859;
+    border-radius: 22px;
+    background: #0d2238f5;
+    box-shadow: 0 24px 60px #000a1a99;
+    color: #fff;
+    overflow: auto;
+    overscroll-behavior: contain;
+}
+.island-course-video-header,
+.island-course-video-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.island-course-video-header { margin-bottom: 16px; }
+.island-course-video-title { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; min-width: 0; }
+.island-course-video-title > strong { color: #fff; font-size: 1.0625rem; overflow-wrap: anywhere; }
+.island-course-video-title > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0284c7, #06b6d4);
+    box-shadow: 0 3px 10px #0284c759;
+    color: #fff;
+    font-size: .875rem;
+    font-weight: 700;
+}
+.island-course-video .modal-close-btn {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #ffffff26;
+    border-radius: 50%;
+    background: #ffffff14;
+    color: #bae6fd;
+    font-size: 1.125rem;
+    cursor: pointer;
+}
+.island-course-video-player {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid #38bdf833;
+    border-radius: 16px;
+    background: #000;
+    box-shadow: 0 10px 30px #0008;
+}
+.island-course-video-player :is(video, iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: contain;
+}
+.island-course-video-footer { flex-wrap: wrap; margin-top: 16px; }
+.island-course-video-footer > span { flex: 1 1 15rem; color: #94a3b8; font-size: .875rem; line-height: 1.65; }
+.island-course-video-footer .ns-button { min-height: 44px; background: #ffffff14; color: #fff; border-color: #38bdf84d; }
+
+@media (width < 1024px), (height < 480px) {
+    .smart-journey .island-current-card,
+    html[data-theme] body.smart-journey[data-journey-mode="learn"] #island-detail-dialog {
+        background: var(--island-glass-solid, var(--ns-liquid-panel-solid));
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+    .smart-journey #lesson-map { overflow: clip; }
+    .archipelago-boat { width: clamp(92px, 27vw, 110px); }
+    .archipelago-boat .voyage-seat { width: 53px; height: 61px; left: calc(48% - 26.5px); top: calc(38% - 61px); }
+}
+@media (width < 768px) {
+    .island-heading { align-items: flex-start; }
+    .smart-journey .island-heading { justify-content: flex-start; }
+    .island-progress-strip { flex-basis: 100%; }
+    .learning-celestial :is(.hero-sun, .journey-moon) { top: clamp(10rem, 26svh, 16rem); }
+    .ocean-surface-world :is(.island-water-layer--far, .surface-ocean-wave--far) { display: none; }
+}
+@media (width < 480px) {
+    .island-course-video-footer .ns-button { width: 100%; }
+}
+@media (width >= 1024px) and (height >= 480px) {
+    .learning-workspace { grid-template-columns: minmax(0, 1fr) minmax(17rem, 25%); }
+    .island-dashboard { position: sticky; top: var(--island-sidebar-top); }
+    .island-current-card {
         -webkit-backdrop-filter: var(--ns-liquid-filter);
         backdrop-filter: var(--ns-liquid-filter);
     }
-    .island-dashboard:has(.island-sheet-toggle[aria-expanded="true"]) { --island-sheet-gutter: 24px; }
-    .island-current-card { padding: 0; border: 0; background: none; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
-    .island-sheet-toggle { display: inline-flex; min-height: 44px; color: var(--island-ink); font-size: .875rem; font-weight: 500; }
-    .island-sheet-toggle[aria-expanded="true"] { margin-bottom: 12px; }
-    .island-current-card:has(.island-sheet-toggle[aria-expanded="false"]) {
-        display: grid;
-        grid-template-columns: auto minmax(0, 1fr);
-        align-items: center;
-        gap: 12px;
+    .island-sheet-toggle { display: none; }
+    .island-current-card:has(.island-sheet-toggle[aria-expanded="false"]) .island-current-info { display: block; }
+    .island-current-card:has(.island-sheet-toggle[aria-expanded="false"]) .island-current-actions { margin-top: 24px; }
+    .smart-journey #lesson-route .sj-learning-route-line { display: block; }
+    .island-underwater-route:not([hidden]) { display: contents; }
+    .smart-journey .learning-workspace #lesson-route .sj-lesson-island {
+        width: min(64%, 380px);
+        align-self: flex-end;
     }
-    .island-current-card:has(.island-sheet-toggle[aria-expanded="false"]) .island-current-info { display: none; }
-    .island-current-card:has(.island-sheet-toggle[aria-expanded="false"]) .island-current-actions { margin-top: 0; }
-    .island-current-actions #resume-learning { min-height: 45px; padding: 7px 9px; font-size: .9rem; }
+    .smart-journey .learning-workspace #lesson-route .island-underwater-route .sj-lesson-island {
+        width: min(64%, 380px);
+        align-self: flex-end;
+    }
+    .smart-journey .learning-workspace #lesson-route .island-underwater-route .sj-lesson-island:nth-child(odd) {
+        align-self: flex-start;
+    }
+    .learning-celestial :is(.hero-sun, .journey-moon) { left: 55%; width: 54px; }
 }
-

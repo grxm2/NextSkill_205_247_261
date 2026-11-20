@@ -1,7 +1,7 @@
 /* One speech surface follows the shared mascot, outside its placement scale. */
 #nimo-speech {
     position: fixed; inset: auto; top: 0; left: 0; margin: 0; padding: 0;
-    width: 280px; max-width: calc(100vw - 24px); overflow: visible;
+    width: 280px; max-width: calc(100dvw - 32px); overflow: visible;
     border: 0; background: transparent; color: #173f51; z-index: 1003;
     font-family: var(--ns-font-body, 'Prompt', sans-serif); pointer-events: none;
 }
@@ -39,8 +39,8 @@
     left: -6px; transform: translateY(-50%) rotate(135deg);
 }
 #nimo-speech[data-open="true"] .nimo-speech-card { opacity: 1; transform: none; }
-.nimo-speech-heading { display: flex; align-items: center; gap: 7px; min-height: 22px; padding-right: 24px; }
-.nimo-speech-heading strong { font-size: 13px; font-weight: 600; color: #087b99; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nimo-speech-heading { display: flex; align-items: center; gap: 7px; min-height: 24px; padding-right: 28px; }
+.nimo-speech-heading strong { font-size: 14px; font-weight: 600; color: #087b99; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .nimo-speech-caption { color: #416878; font-size: 10px; line-height: 1.5; white-space: nowrap; }
 #nimo-speech-close {
     position: absolute; right: 0; top: 0; width: 44px; height: 44px; padding: 0;
@@ -51,16 +51,17 @@
 #nimo-speech-close:hover { background: #ffffff80; color: #07536f; }
 #nimo-speech-close:focus-visible { outline: 3px solid #0583aa; outline-offset: -5px; }
 #nimo-missions-open {
-    display: inline-flex; align-items: center; min-height: 36px; padding: 4px 11px; margin-top: 7px;
+    display: inline-flex; align-items: center; min-height: 44px; padding: 4px 11px; margin-top: 7px;
     border: 1px solid #0b77994a; border-radius: 999px; background: #ffffff62;
-    color: #07536f; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; pointer-events: auto;
+    color: #07536f; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; pointer-events: auto;
 }
 #nimo-missions-open[hidden] { display: none; }
 #nimo-missions-open:hover { background: #ffffffbd; }
 #nimo-missions-open:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-.nimo-speech-copy { position: relative; display: grid; margin: 7px 0 0; font-size: 14px; font-weight: 500; line-height: 1.85; overflow-wrap: anywhere; text-wrap: pretty; }
+.nimo-speech-copy { position: relative; display: grid; margin: 7px 0 0; font-size: 14px; font-weight: 500; line-height: 1.8; overflow-wrap: anywhere; }
 .nimo-speech-copy > span { grid-area: 1/1; }
 #nimo-speech-text { position: absolute; inset: 0; }
+#nimo-speech[data-speaking="true"] #nimo-speech-text { overflow: hidden; }
 #nimo-speech-measure { visibility: hidden; }
 .nimo-speech-meter { display: inline-flex; align-items: center; justify-content: center; gap: 2px; width: 13px; height: 14px; flex: 0 0 13px; }
 .nimo-speech-meter i { width: 2px; height: 4px; border-radius: 2px; background: #0996af; }
@@ -68,9 +69,9 @@
 #nimo-speech[data-speaking="true"] .nimo-speech-meter i:nth-child(2) { animation-delay: -220ms; }
 #nimo-speech[data-speaking="true"] .nimo-speech-meter i:nth-child(3) { animation-delay: -410ms; }
 #nimo-speech[data-compact="true"] .nimo-speech-caption { display: none; }
-#nimo-speech[data-compact="true"] .nimo-speech-card { padding: 10px 13px 12px; border-radius: 19px; }
-#nimo-speech[data-compact="true"] .nimo-speech-copy { font-size: 13px; line-height: 1.8; margin-top: 4px; }
-@media (max-width: 700px) and (max-height: 640px) {
+#nimo-speech[data-compact="true"] .nimo-speech-card { padding: 10px 12px 12px; border-radius: 19px; -webkit-backdrop-filter: none; backdrop-filter: none; }
+#nimo-speech[data-compact="true"] .nimo-speech-copy { margin-top: 4px; }
+@media (max-width: 767px) and (max-height: 640px) {
     #nimo-speech[data-mission] .nimo-speech-card {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
@@ -79,7 +80,7 @@
         padding: 8px 11px;
     }
     #nimo-speech[data-mission] .nimo-speech-heading { grid-column: 1 / -1; padding-right: 34px; }
-    #nimo-speech[data-mission] .nimo-speech-copy { margin: 0; font-size: 13px; line-height: 1.55; }
+    #nimo-speech[data-mission] .nimo-speech-copy { margin: 0; line-height: 1.65; }
     #nimo-speech[data-mission] #nimo-missions-open { margin: 0; padding-inline: 7px; white-space: nowrap; }
 }
 .nimo-speaking-face { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; z-index: 6; }
@@ -87,16 +88,9 @@
 .nimo-speaking-mouth { transform-origin: 622px 450px; }
 .skill-buddy[data-text-speaking="true"] .nimo-speaking-mouth { animation: nimo-mouth-talk 720ms linear infinite; }
 .nimo-speech-visible .sj-island-speech { visibility: hidden; }
-/* Make real room in the compact hero; the island and all its inhabitants move
-   together, so the original landing and shore contact still share one anchor. */
-@media (max-width:700px) {
-    .nimo-speech-ready .ocean-home .cv-home .ow-start-land { margin-top: 88px; }
-}
 /* The lesson coach participates in layout so advice never covers a question. */
-#nimo-speech[data-inline="true"] { position: relative; inset: auto; width: 100% !important; max-width: none; transform: none !important; margin: 12px 0 16px; }
-.nimo-speech-ready .practice-coach { padding-right: 18px; padding-bottom: 20px; }
+#nimo-speech[data-inline="true"] { position: relative; inset: auto; grid-column: 1 / -1; width: 100%; max-width: none; margin: 4px 0 8px; }
 .nimo-speech-visible .practice-coach > #lesson-nimo-message { display: none; }
-.nimo-speech-ready .practice-coach > ul { padding-right: 100px; }
 @keyframes nimo-mouth-talk { 0%,100% { transform: scaleY(.75); } 15%,48%,78% { transform: scaleY(.35); } 30%,64%,90% { transform: scaleY(1); } }
 @keyframes nimo-speech-beat { 0%,100% { transform: scaleY(.6); } 45% { transform: scaleY(2.5); } }
 html[data-theme="dark"] #nimo-speech { color: #f0faff; }
