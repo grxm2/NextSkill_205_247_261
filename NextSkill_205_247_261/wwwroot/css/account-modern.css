@@ -3078,7 +3078,8 @@ a.btn-skip-outline:active {
 }
 
 @media (height < 480px) and (orientation: landscape) {
-    .fs-nimo-hero { width: min(120px, 30svh); height: auto; aspect-ratio: 1; }
+    .fs-loading-content { gap: 8px; padding-block: 8px; }
+    .fs-hero-diorama { width: min(460px, 42svh); }
     .fs-progress-console { padding-block: 10px; }
 }
 
