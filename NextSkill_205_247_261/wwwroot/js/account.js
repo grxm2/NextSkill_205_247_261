@@ -705,9 +705,12 @@
 
                     if (targetSummary && newErr && newErr.innerHTML.trim()) {
                         targetSummary.innerHTML = newErr.innerHTML;
-                        targetSummary.classList.add('validation-summary-errors');
                     } else if (targetSummary) {
                         targetSummary.innerHTML = '<ul><li>อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง</li></ul>';
+                    }
+
+                    if (targetSummary) {
+                        targetSummary.classList.remove('validation-summary-valid');
                         targetSummary.classList.add('validation-summary-errors');
                     }
 
