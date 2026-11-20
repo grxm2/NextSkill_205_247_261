@@ -848,65 +848,6 @@
     });
 
     // ==========================================
-    // Floating Interactive Mascot Buddy (Nimo)
-    // ==========================================
-    const mascotTrigger = document.getElementById('mascot-trigger-btn');
-    const mascotSpeech = document.getElementById('mascot-speech');
-    const mascotImg = document.getElementById('floating-mascot-img');
-    const topbarMascotToggle = document.getElementById('topbar-mascot-toggle');
-
-    const mascotPoses = [
-        '/images/nimo-rowing.png',
-        '/images/nimo-learning.png',
-        '/images/nimo-pose-wave.png',
-        '/images/nimo-pose-jump.png',
-        '/images/nimo-mascot.png'
-    ];
-
-    const mascotQuotes = [
-        'ยินดีต้อนรับครับกัปตัน แดชบอร์ดพร้อมทำงานเต็มที่แล้วครับ',
-        `คอร์สเรียนทั้ง ${courses.length || 24} คอร์สพร้อมเปิดสอนอย่างราบรื่นครับ`,
-        'มีผู้เรียนกำลังเข้าใช้งานอยู่ในระบบอย่างต่อเนื่องครับ',
-        'สามารถเพิ่มคอร์สใหม่หรือปรับคำถามได้จากเมนูด้านบนครับ',
-        'ระบบฐานข้อมูลและเซิร์ฟเวอร์ทำงานได้อย่างราบรื่นครับ',
-        'สถิติการเรียนรู้เพิ่มขึ้น 7% เทียบกับเดือนก่อนหน้า',
-        'กัปตันสามารถตรวจสอบข้อมูลและกิจกรรมทั้งหมดได้จากแผงควบคุมนี้ครับ'
-    ];
-
-    let quoteIdx = 0;
-    let poseIdx = 0;
-
-    function triggerMascotCheer() {
-        quoteIdx = (quoteIdx + 1) % mascotQuotes.length;
-        poseIdx = (poseIdx + 1) % mascotPoses.length;
-
-        if (mascotSpeech) {
-            mascotSpeech.style.animation = 'none';
-            void mascotSpeech.offsetWidth;
-            mascotSpeech.style.animation = 'popBubble 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
-            mascotSpeech.textContent = mascotQuotes[quoteIdx];
-            mascotSpeech.style.display = 'block';
-        }
-
-        if (mascotImg) {
-            mascotImg.src = mascotPoses[poseIdx];
-        }
-
-        if (mascotTrigger) {
-            mascotTrigger.style.transform = 'translateY(-14px) scale(1.18) rotate(8deg)';
-            setTimeout(() => {
-                mascotTrigger.style.transform = '';
-            }, 300);
-        }
-    }
-
-    mascotTrigger?.addEventListener('click', triggerMascotCheer);
-    topbarMascotToggle?.addEventListener('click', () => {
-        triggerMascotCheer();
-        mascotSpeech?.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    });
-
-    // ==========================================
     // Global Search Shortcut (Ctrl+K)
     // ==========================================
     const globalSearch = document.getElementById('global-admin-search');

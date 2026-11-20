@@ -272,33 +272,139 @@
             if (overlay) overlay.remove();
             overlay = document.createElement('div');
             overlay.id = 'nimoLoginLoadingOverlay';
-            overlay.className = 'nimo-loading-overlay full-screen-mode';
+            overlay.className = 'nimo-loading-overlay full-screen-mode island-theme-mode';
             overlay.setAttribute('aria-hidden', 'true');
             overlay.setAttribute('role', 'dialog');
             overlay.setAttribute('aria-modal', 'true');
             overlay.setAttribute('aria-label', 'กำลังเข้าสู่ระบบ');
             overlay.innerHTML = `
-                <div class="fs-loading-sky" aria-hidden="true">
-                    <div class="fs-cloud fs-c1"></div>
-                    <div class="fs-cloud fs-c2"></div>
-                    <div class="fs-cloud fs-c3"></div>
-                    <div class="fs-cloud fs-c4"></div>
-                    <div class="fs-aurora-orb fs-orb-top"></div>
-                    <div class="fs-aurora-orb fs-orb-center"></div>
-                    <div class="fs-float-prop prop-cap">
-                        <img src="/images/float-grad-cap.png" alt="" width="95" height="102" />
-                    </div>
-                    <div class="fs-float-prop prop-book">
-                        <img src="/images/float-book.png" alt="" width="90" height="75" />
-                    </div>
-                    <div class="fs-float-prop prop-cube">
-                        <img src="/images/float-play-cube.png" alt="" width="52" height="56" />
-                    </div>
-                    <span class="fs-xp-star xps-1">✦</span>
-                    <span class="fs-xp-star xps-2">★</span>
-                    <span class="fs-xp-star xps-3">✦</span>
-                    <span class="fs-xp-star xps-4">★</span>
-                    <span class="fs-xp-star xps-5">✦</span>
+                <div class="fs-loading-sky fs-island-world" aria-hidden="true">
+                    <svg class="ow-seabirds" viewBox="0 0 400 120" focusable="false">
+                        <g transform="translate(48 55)"><g class="ow-bird-glide" fill="currentColor"><path d="M-2 0Q0-4 2 0L1 5H-1Z"/><g class="ow-bird-wing" data-ocean-wing="left"><path d="M-1 0C-8-7-17-10-29-7-19-5-10-3-2 2Z"/></g><g class="ow-bird-wing" data-ocean-wing="right"><path d="M1 0C8-7 17-10 29-7 19-5 10-3 2 2Z"/></g></g></g>
+                        <g transform="translate(190 28) scale(0.7)"><g class="ow-bird-glide" fill="currentColor"><path d="M-2 0Q0-4 2 0L1 5H-1Z"/><g class="ow-bird-wing" data-ocean-wing="left"><path d="M-1 0C-8-7-17-10-29-7-19-5-10-3-2 2Z"/></g><g class="ow-bird-wing" data-ocean-wing="right"><path d="M1 0C8-7 17-10 29-7 19-5 10-3 2 2Z"/></g></g></g>
+                        <g transform="translate(320 80) scale(1.05)"><g class="ow-bird-glide" fill="currentColor"><path d="M-2 0Q0-4 2 0L1 5H-1Z"/><g class="ow-bird-wing" data-ocean-wing="left"><path d="M-1 0C-8-7-17-10-29-7-19-5-10-3 2 2Z"/></g><g class="ow-bird-wing" data-ocean-wing="right"><path d="M1 0C8-7 17-10 29-7 19-5 10-3 2 2Z"/></g></g></g>
+                        </svg>
+                        <div class="ow-sky">
+                            <div class="hero-sky-texture"></div>
+                            <div class="journey-night-sky"></div>
+                            <div class="journey-stars"></div>
+                            <div class="hero-sun journey-sun"><span class="hero-sun-rays"></span><span class="hero-sun-disc"></span></div>
+                            <div class="journey-moon"><span></span><span></span><span></span></div>
+                            <div class="fs-shooting-stars">
+                                <span class="fs-shooting-star fs-star-1"></span>
+                                <span class="fs-shooting-star fs-star-2"></span>
+                            </div>
+                        </div>
+                        <div class="ow-distance">
+                            <img src="/images/journey/distant-coast.svg" width="1200" height="140" alt="" />
+                        </div>
+                        <div class="fs-left-lighthouse-cliff">
+                            <svg viewBox="0 0 360 320" fill="none" xmlns="http://www.w3.org/2000/svg" width="360" height="320">
+                                <path d="M0 200C40 185 88 182 142 195C192 206 238 225 278 235H0V200Z" fill="#b8d9a6" fill-opacity="0.72" />
+                                <path d="M0 165C26 152 68 148 112 158C152 167 188 190 218 228C226 238 232 246 236 254H0V165Z" fill="#d9be92" />
+                                <path d="M98 164L126 254H205C186 218 156 178 98 164Z" fill="#c2a376" fill-opacity="0.7" />
+                                <path d="M0 144C38 130 88 128 134 142C168 152 192 178 205 198C170 192 138 188 104 190C64 192 28 186 0 182Z" fill="#84bc4e" />
+                                <path d="M0 136C44 122 92 122 132 138C154 147 166 164 176 176C140 172 95 168 0 168Z" fill="#a2d262" />
+                                <rect x="44" y="106" width="44" height="32" rx="3" fill="#fffaf0" stroke="#7d9088" stroke-width="1.8" />
+                                <path d="M36 110L66 84L96 110H36Z" fill="#eb755b" stroke="#b94e38" stroke-width="2" stroke-linejoin="round" />
+                                <rect x="60" y="118" width="12" height="20" rx="2" fill="#a97042" />
+                                <rect x="49" y="115" width="8" height="9" rx="1.5" fill="#93d5eb" stroke="#648896" stroke-width="1.2" />
+                                <path d="M104 144L112 66H134L142 144H104Z" fill="#ffffff" stroke="#7c8f88" stroke-width="2" />
+                                <path d="M109 92H137L139 109H107L109 92Z" fill="#ef6f59" />
+                                <path d="M106 121H140L142 136H104L106 121Z" fill="#ef6f59" />
+                                <rect x="108" y="61" width="30" height="7" rx="3" fill="#d95843" />
+                                <rect x="113" y="45" width="20" height="17" rx="2" fill="#fef08a" stroke="#7c8f88" stroke-width="1.8" />
+                                <path d="M108 46L123 30L138 46H108Z" fill="#ef6f59" stroke="#b94e38" stroke-width="1.8" stroke-linejoin="round" />
+                                <circle cx="123" cy="28" r="2.5" fill="#fde047" />
+                                <path d="M30 142C28 118 22 98 16 82" stroke="#9a683a" stroke-width="7" stroke-linecap="round" />
+                                <g class="fs-cliff-palm">
+                                    <path d="M16 82C-4 72 -14 82 -18 92C-4 88 6 86 16 82Z" fill="#77b849" />
+                                    <path d="M16 82C4 62 12 48 22 44C20 58 18 70 16 82Z" fill="#90cb54" />
+                                    <path d="M16 82C32 68 48 74 56 84C42 82 28 82 16 82Z" fill="#77b849" />
+                                    <path d="M16 82C26 92 32 106 30 116C24 104 20 92 16 82Z" fill="#64a43b" />
+                                </g>
+                                <g class="fs-wooden-pier">
+                                    <rect x="18" y="218" width="9" height="48" rx="3" fill="#8b5a34" />
+                                    <rect x="64" y="220" width="9" height="52" rx="3" fill="#8b5a34" />
+                                    <rect x="110" y="222" width="9" height="48" rx="3" fill="#8b5a34" />
+                                    <rect x="150" y="224" width="8" height="44" rx="3" fill="#8b5a34" />
+                                    <path d="M0 228H168L162 238H0V228Z" fill="#d3965b" stroke="#855228" stroke-width="2" />
+                                    <path d="M0 222H165" stroke="#ebc08c" stroke-width="2.2" stroke-linecap="round" />
+                                </g>
+                                <path class="fs-cliff-foam" d="M14 252C68 260 148 258 238 253" stroke="#ebfff9" stroke-width="3.5" stroke-linecap="round" stroke-opacity="0.72" />
+                            </svg>
+                            <div class="fs-lighthouse-beacon">
+                                <span class="fs-lighthouse-beam"></span>
+                                <span class="fs-lighthouse-core"></span>
+                            </div>
+                        </div>
+                        <div class="ow-sea">
+                            <div class="ow-water-detail">
+                                <div class="ow-water-surface"></div>
+                            </div>
+                            <div class="fs-sea-foam-layer">
+                                <div class="fs-sea-foam-band fs-sea-foam-band--far"><div class="fs-sea-foam-bob"><div class="fs-sea-foam-drift"></div></div></div>
+                                <div class="fs-sea-foam-band fs-sea-foam-band--near"><div class="fs-sea-foam-bob"><div class="fs-sea-foam-drift"></div></div></div>
+                            </div>
+                            <div class="ow-sun-path"></div>
+                            <div class="hero-water-glints">
+                                <span></span><span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <div class="ow-clouds">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="fs-island-camera">
+                            <div class="fs-jumping-fish-group">
+                                <svg class="fs-jumping-fish-svg" viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg" width="110" height="82">
+                                    <g class="fs-fish-splash-rings" transform="translate(62 72)" stroke="#e8fcff" stroke-width="1.8" stroke-linecap="round">
+                                        <ellipse class="fs-splash-ring-1" rx="22" ry="5" />
+                                        <ellipse class="fs-splash-ring-2" rx="14" ry="3" />
+                                        <path d="M-12 -4L-16 -12M12 -4L16 -12M0 -6V-14" />
+                                    </g>
+                                    <g class="fs-jumping-fish-arc" transform="translate(54 58)">
+                                        <path d="M-10 -2L-20 -12L-19 6L-9 2Z" fill="#ed9d40" />
+                                        <path d="M-11 -5C-2 -15 13 -12 21 -1C11 10 -3 10 -11 -5Z" fill="#ffd166" />
+                                        <path d="M0 -10L6 -17L11 -9" fill="#f59e0b" />
+                                        <path d="M-6 1L5 4" stroke="#fff3c4" stroke-width="1.6" stroke-linecap="round" />
+                                        <circle cx="14" cy="-2" r="1.7" fill="#1e4d63" />
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="ow-vessel fs-island-vessel">
+                                <div class="ow-arrival-motion">
+                                    <div class="ow-boat-idle">
+                                        <img class="ow-boat-art" src="/images/journey/rowing-hull-waterline.svg" width="480" height="280" alt="" />
+                                        <img class="voyage-oar fs-loading-oar" src="/images/journey/rowing-oar.svg" alt="" />
+                                        <div class="fs-hanging-lantern">
+                                            <span class="fs-lantern-cord"></span>
+                                            <span class="fs-lantern-lamp"><span class="fs-lantern-glow"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fs-foreground-reef-layer">
+                            <div class="fs-reef-corner fs-reef-corner-left">
+                                <svg viewBox="0 0 260 160" fill="none" xmlns="http://www.w3.org/2000/svg" width="260" height="160">
+                                    <path class="fs-kelp-blade fs-kelp-1" d="M22 158C12 118 32 82 18 44C12 28 24 14 34 6C42 26 28 54 38 86C48 118 32 140 36 158Z" fill="#2dd4bf" fill-opacity="0.72" />
+                                    <path class="fs-kelp-blade fs-kelp-2" d="M62 158C54 126 70 98 62 66C57 46 68 32 76 24C80 44 68 68 75 96C82 122 68 140 72 158Z" fill="#34d399" fill-opacity="0.7" />
+                                    <path d="M18 158C18 134 30 116 44 114C56 112 64 126 68 136C74 118 90 108 106 114C120 120 128 138 132 158H18Z" fill="#7c6fd6" fill-opacity="0.78" />
+                                    <path d="M98 158C104 138 118 126 134 128C148 130 158 144 162 158H98Z" fill="#f472b6" fill-opacity="0.76" />
+                                </svg>
+                            </div>
+                            <div class="fs-reef-corner fs-reef-corner-right">
+                                <svg viewBox="0 0 260 160" fill="none" xmlns="http://www.w3.org/2000/svg" width="260" height="160">
+                                    <path class="fs-kelp-blade fs-kelp-1" d="M234 158C244 116 222 82 236 42C242 26 230 14 220 6C212 26 226 54 216 86C206 118 222 140 218 158Z" fill="#34d399" fill-opacity="0.72" />
+                                    <path class="fs-kelp-blade fs-kelp-2" d="M186 158C194 126 178 98 186 66C191 46 180 32 172 24C168 44 180 68 173 96C166 122 180 140 176 158Z" fill="#38bdf8" fill-opacity="0.65" />
+                                    <path d="M124 158C130 136 146 120 164 122C176 124 184 134 190 144C198 122 216 110 232 118C246 124 252 140 254 158H124Z" fill="#f472b6" fill-opacity="0.74" />
+                                </svg>
+                            </div>
+                            <div class="fs-underwater-bubbles">
+                                <span></span><span></span><span></span><span></span><span></span>
+                                <span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                        </div>
                 </div>
                 <div class="fs-loading-content">
                     <div class="fs-top-brand-pill">
@@ -312,15 +418,55 @@
                         <span>ก้าวสู่โลกแห่งการเรียนรู้</span>
                     </div>
                     <div class="fs-mascot-stage">
-                        <div class="fs-portal-aura" aria-hidden="true"></div>
-                        <div class="fs-book-sparkles" aria-hidden="true">
-                            <span class="fb-spark fb-1">✦</span>
-                            <span class="fb-spark fb-2">★</span>
-                            <span class="fb-spark fb-3">✦</span>
-                            <span class="fb-spark fb-4">★</span>
-                        </div>
-                        <div class="fs-nimo-hero">
-                            <img src="/images/nimo-learning.png" alt="มาสคอตนิโมกำลังอ่านหนังสือเตรียมความพร้อม" class="fs-nimo-img" id="loadingNimoImg" width="260" height="260" />
+                        <div class="fs-hero-diorama">
+                            <div class="fs-portal-aura" aria-hidden="true"></div>
+                            <div class="fs-duo-sunburst" aria-hidden="true"></div>
+                            <figure class="ow-land ow-start-land fs-center-island" aria-hidden="true">
+                                <img class="ow-island-art" src="/images/journey/home-island-terrain-v2.webp" width="760" height="520" alt="" />
+                            </figure>
+                            <div class="fs-island-starfish" aria-hidden="true">
+                                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="54" height="54">
+                                    <ellipse cx="32" cy="52" rx="18" ry="5" fill="#9a5c22" fill-opacity="0.28" />
+                                    <path d="M32 9L38.4 23.2L53.8 25.1L42.2 35.6L45.3 50.8L32 43.2L18.7 50.8L21.8 35.6L10.2 25.1L25.6 23.2L32 9Z" fill="#fb923c" stroke="#c2410c" stroke-width="2.5" stroke-linejoin="round" />
+                                    <path d="M32 14L36.5 24.5L47.5 26L39.5 33.4L41.6 44.2L32 38.8L22.4 44.2L24.5 33.4L16.5 26L27.5 24.5L32 14Z" fill="#fdba74" fill-opacity="0.48" />
+                                    <circle cx="32" cy="30" r="2.2" fill="#ea580c" />
+                                    <circle cx="28" cy="26" r="1.4" fill="#ea580c" />
+                                    <circle cx="36" cy="26" r="1.4" fill="#ea580c" />
+                                </svg>
+                            </div>
+                            <div class="fs-island-chest" aria-hidden="true">
+                                <svg viewBox="0 0 92 78" fill="none" xmlns="http://www.w3.org/2000/svg" width="84" height="72">
+                                    <ellipse cx="46" cy="68" rx="34" ry="6" fill="#7c4a1d" fill-opacity="0.34" />
+                                    <rect x="14" y="34" width="64" height="32" rx="5" fill="#b45309" stroke="#5c2d0c" stroke-width="2.6" />
+                                    <path d="M12 34C12 20 24 14 46 14C68 14 80 20 80 34H12Z" fill="#d97706" stroke="#5c2d0c" stroke-width="2.6" stroke-linejoin="round" />
+                                    <path d="M22 15V66M70 15V66" stroke="#fbbf24" stroke-width="5.5" />
+                                    <path d="M13 34H79" stroke="#fbbf24" stroke-width="4" />
+                                    <rect x="39" y="29" width="14" height="16" rx="4" fill="#fde047" stroke="#92400e" stroke-width="2.2" />
+                                    <circle cx="46" cy="36" r="2.3" fill="#78350f" />
+                                    <path class="fs-chest-glint" d="M72 10L74 15L79 17L74 19L72 24L70 19L65 17L70 15L72 10Z" fill="#fef08a" />
+                                </svg>
+                            </div>
+                            <div class="fs-island-beachball" aria-hidden="true">
+                                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="52" height="52">
+                                    <ellipse cx="32" cy="56" rx="18" ry="4.5" fill="#1e3a5f" fill-opacity="0.28" />
+                                    <circle cx="32" cy="30" r="22" fill="#ffffff" stroke="#0284c7" stroke-width="2.5" />
+                                    <path d="M32 8C21 15 16 28 21 48C28 52 36 52 43 48C48 28 43 15 32 8Z" fill="#0ea5e9" />
+                                    <path d="M32 8C42 12 52 21 54 30C47 26 39 25 32 25C25 25 17 26 10 30C12 21 22 12 32 8Z" fill="#38bdf8" fill-opacity="0.72" />
+                                    <circle cx="32" cy="24" r="4.5" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.6" />
+                                    <path d="M18 19C20 15 24 12 28 11" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.8" />
+                                </svg>
+                            </div>
+                            <div class="fs-book-sparkles" aria-hidden="true">
+                                <span class="fb-spark fb-1">✦</span>
+                                <span class="fb-spark fb-2">★</span>
+                                <span class="fb-spark fb-3">✦</span>
+                                <span class="fb-spark fb-4">★</span>
+                                <span class="fb-spark fb-5">✦</span>
+                            </div>
+                            <div class="fs-nimo-hero">
+                                <span class="fs-nimo-sand-shadow" aria-hidden="true"></span>
+                                <img src="/images/nimo-learning.png" alt="มาสคอตนิโมกำลังอ่านหนังสือเตรียมความพร้อมบนเกาะ" class="fs-nimo-img" id="loadingNimoImg" width="250" height="250" />
+                            </div>
                         </div>
                         <div class="fs-speech-bubble" id="loadingSpeechBubble">
                             <div class="fs-speech-inner">
@@ -354,14 +500,6 @@
                             <span id="loadingSubTip">เรียนรู้วันละนิด สะสมทักษะชีวิตทีละก้าวไปกับ NextSkill</span>
                         </div>
                     </div>
-                </div>
-                <div class="fs-waves-landscape" aria-hidden="true">
-                    <svg class="fs-wave-svg wave-back" viewBox="0 0 1440 120" preserveAspectRatio="none">
-                        <path d="M0,45 C320,85 480,15 760,50 C1040,85 1200,20 1440,48 L1440,120 L0,120 Z" fill="rgba(255,255,255,0.2)"></path>
-                    </svg>
-                    <svg class="fs-wave-svg wave-front" viewBox="0 0 1440 120" preserveAspectRatio="none">
-                        <path d="M0,60 C360,20 540,90 880,55 C1180,25 1320,70 1440,58 L1440,120 L0,120 Z" fill="rgba(255,255,255,0.45)"></path>
-                    </svg>
                 </div>
             `;
             document.body.appendChild(overlay);
@@ -449,6 +587,11 @@
         // Show overlay with spring entrance
         overlay.classList.add('is-active');
         overlay.setAttribute('aria-hidden', 'false');
+
+        const islandArt = overlay.querySelector('.ow-island-art');
+        if (islandArt) islandArt.dataset.islandWind = 'active';
+        const wildlife = overlay.querySelector('[data-island-wildlife]');
+        if (wildlife) wildlife.dataset.wildlifeMotion = 'active';
 
         const startTime = performance.now();
         const totalDuration = isDemo ? 2400 : 1850;
