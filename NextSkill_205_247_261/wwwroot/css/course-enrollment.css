@@ -6,23 +6,23 @@
 #nextskill-home .enrollment-grid { display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 30px; align-items: start; }
 #nextskill-home :is(.course-detail-main,.enrollment-rail) { min-width: 0; }
 #nextskill-home .enrollment-hero { display: grid; grid-template-columns: minmax(0,1fr) 200px; gap: 12px; align-items: center; min-height: 280px; padding: 28px 30px; border: 1px solid #eb7d4c; border-radius: 21px; background: #f98a56; color: #482c1d; }
-#nextskill-home #course-title { font-size: clamp(33px,3.15vw,45px); line-height: 1.15; letter-spacing: -1.6px; font-weight: 600; color: #36271e; }
+#nextskill-home #course-title { font-size: clamp(28px,3.15vw,45px); line-height: 1.4; letter-spacing: -1px; font-weight: 600; color: #36271e; overflow-wrap: anywhere; }
 #nextskill-home .course-title-dot { color: #fff0ce; }
 #nextskill-home .enrollment-tagline { font-size: 15px; margin-top: 17px; color: #532e1c; line-height: 1.8; }
 #nextskill-home .course-facts { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 12px; font-size: 13px; color: #58311d; }
 #nextskill-home .enrollment-cover { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
-#nextskill-home .course-book-illustration { width: 205px; max-width: 110%; }
+#nextskill-home .course-book-illustration { width: min(100%,205px); }
 #nextskill-home .course-book-illustration svg { display: block; width: 100%; }
 #nextskill-home .course-preview-trigger { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 7px 12px; gap: 9px; color: #5f361f; background: #fff3dba6; border: 1px solid #cc683b; border-radius: 9px; font-size: 13px; font-weight: 500; white-space: nowrap; }
 #nextskill-home .course-preview-trigger>.icon { width: 17px; height: 17px; }
-#nextskill-home .course-tabs { display: flex; gap: 28px; border-bottom: 1px solid var(--club-line); padding-top: 14px; margin-bottom: 25px; scroll-margin-top: 18px; }
+#nextskill-home .course-tabs { display: flex; flex-wrap: wrap; gap: 0 clamp(16px,3vw,28px); border-bottom: 1px solid var(--club-line); padding-top: 14px; margin-bottom: 25px; scroll-margin-top: 18px; }
 #nextskill-home .course-tabs>button { position: relative; display: flex; align-items: center; gap: 7px; min-height: 54px; padding: 10px 0 14px; background: none; border: 0; color: var(--course-secondary); font-size: 14px; white-space: nowrap; }
 #nextskill-home .course-tabs>button[aria-selected=true] { color: #8f4225; font-weight: 500; }
 #nextskill-home .course-tabs>button[aria-selected=true]::after { content: ''; position: absolute; bottom: -1px; inset-inline: 0; height: 3px; border-radius: 3px; background: #d76737; }
 #nextskill-home .course-tabs>button>span { font-size: 11px; color: #79634b; background: #eee8de; padding: 0 5px; border-radius: 4px; }
 #nextskill-home .course-tab-panel { outline-offset: 7px; }
 #nextskill-home .course-section-title,#nextskill-home .course-section-heading h2 { font-size: 19px; line-height: 1.6; font-weight: 500; letter-spacing: -.4px; }
-#nextskill-home .course-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+#nextskill-home .course-section-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px 12px; }
 #nextskill-home .course-section-meta { font-size: 13px; color: #7a6754; white-space: nowrap; }
 #nextskill-home .course-outcome-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); list-style: none; gap: 21px 18px; margin: 21px 0 27px; padding: 0; }
 #nextskill-home .course-outcome-list>li { display: flex; align-items: start; gap: 10px; }
@@ -46,7 +46,7 @@
 #nextskill-home .course-niko-character .buddy-slot { display: block; width: 100%; height: 100%; }
 #nextskill-home .course-niko-speech>strong { display: block; color: #6c522b; font-size: 13px; font-weight: 500; margin-bottom: 4px; }
 #nextskill-home .course-niko-speech p { color: #6a5534; font-size: 13px; line-height: 1.8; }
-#nextskill-home :is(.enroll-course-button,.enrollment-continue) { width: 100%; margin-top: 0; font-size: 14px; white-space: nowrap; }
+#nextskill-home :is(.enroll-course-button,.enrollment-continue) { width: 100%; margin-top: 0; font-size: 14px; white-space: normal; }
 #nextskill-home .enrollment-continue { background: #e6edda; border-color: #acbf94; border-bottom-color: #8ca575; color: #3d623e; }
 #nextskill-home .enrollment-save-note { font-size: 11px; color: #796340; text-align: center; margin-top: 9px; line-height: 1.8; }
 #nextskill-home .course-coach-tools { border-top: 1px solid var(--club-line); margin-top: 17px; }
@@ -75,7 +75,7 @@
 #nextskill-home .syllabus-expand { margin-left: auto; font-size: 22px; line-height: 1; color: #8d7255; }
 #nextskill-home .syllabus-unit[open] .syllabus-expand { transform: rotate(45deg); }
 #nextskill-home .syllabus-unit ol { list-style: none; margin: 0; padding: 0 16px 8px; }
-#nextskill-home .syllabus-unit li { display: flex; align-items: center; gap: 11px; min-height: 55px; border-top: 1px solid #eee7dd; padding: 8px 0; font-size: 13px; line-height: 1.6; }
+#nextskill-home .syllabus-unit li { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 11px; min-height: 55px; border-top: 1px solid #eee7dd; padding: 8px 0; font-size: 14px; line-height: 1.6; }
 #nextskill-home .syllabus-lesson-number { color: #7c634d; font-size: 11px; width: 22px; flex: 0 0 22px; }
 #nextskill-home .syllabus-duration { margin-left: auto; color: #75644f; font-size: 11px; white-space: nowrap; }
 #nextskill-home .syllabus-sample { margin-left: auto; min-height: 44px; padding: 6px 10px; border: 1px solid #dfb495; border-radius: 8px; background: #fff0e4; color: #98532d; font-size: 12px; white-space: nowrap; }
@@ -95,7 +95,7 @@
     #nextskill-home :is(.course-coach-help,.course-text-action):hover { color: #a54724; text-decoration: underline; text-underline-offset: 4px; }
     #nextskill-home :is(.course-more-details,.course-coach-tools,.course-reward-details)>summary:hover { color: #984b29; }
 }
-@media(max-width:1279.98px) {
+@media(max-width:1279px) {
     #nextskill-home .enrollment-grid { grid-template-columns: minmax(0,1fr) 282px; gap: 23px; }
     #nextskill-home .enrollment-hero { grid-template-columns: minmax(0,1fr) 160px; padding: 25px; }
     #nextskill-home #course-title { font-size: 37px; }
@@ -104,7 +104,7 @@
     #nextskill-home .enrollment-niko-stage { grid-template-columns: 98px minmax(0,1fr); gap: 8px; }
     #nextskill-home .course-niko-character { width: 98px; height: 113px; }
 }
-@media(max-width:1000px) and (min-width:761px) {
+@media(max-width:1023px) and (min-width:768px) {
     #nextskill-home .enrollment-grid { grid-template-columns: minmax(0,1fr) 260px; gap: 20px; }
     #nextskill-home .enrollment-hero { grid-template-columns: minmax(0,1fr); gap: 18px; }
     #nextskill-home .enrollment-cover { align-items: start; }
@@ -112,7 +112,7 @@
     #nextskill-home .course-outcome-list { grid-template-columns: 1fr; gap: 16px; }
     #nextskill-home #enrollment-start-title { font-size: 19px; }
 }
-@media(max-width:760px) {
+@media(max-width:767px) {
     #nextskill-home .enrollment-page { padding-top: 23px; }
     #nextskill-home .enrollment-grid { display: flex; flex-direction: column; gap: 0; }
     #nextskill-home :is(.course-detail-main,.enrollment-rail) { display: contents; }
@@ -128,15 +128,15 @@
     #nextskill-home .course-tab-panel { order: 3; width: 100%; }
     #nextskill-home .course-reward-details { order: 4; width: 100%; border-top: 1px solid var(--club-line); margin-top: 8px; padding: 0; }
 }
-@media(max-width:480px) {
+@media(max-width:479px) {
     #nextskill-home .enrollment-page { padding-top: 19px; }
-    #nextskill-home .enrollment-hero { grid-template-columns: minmax(0,1fr) 108px; min-height: 248px; gap: 0; padding: 23px 19px; border-radius: 18px; }
-    #nextskill-home #course-title { font-size: 33px; letter-spacing: -1px; }
-    #nextskill-home .enrollment-tagline { font-size: 13px; line-height: 1.8; margin-top: 14px; }
-    #nextskill-home .course-facts { display: block; font-size: 11px; line-height: 1.8; margin-top: 11px; }
+    #nextskill-home .enrollment-hero { grid-template-columns: minmax(0,1fr); min-height: 0; gap: 16px; padding: 23px 19px; border-radius: 18px; }
+    #nextskill-home #course-title { font-size: clamp(28px,8vw,36px); }
+    #nextskill-home .enrollment-tagline { font-size: 14px; line-height: 1.8; margin-top: 14px; }
+    #nextskill-home .course-facts { font-size: 14px; line-height: 1.8; margin-top: 11px; }
     #nextskill-home .course-facts>span { margin: 0 3px; }
-    #nextskill-home .course-book-illustration { width: 140px; max-width: 140%; }
-    #nextskill-home .course-preview-trigger { font-size: 12px; padding: 7px 8px; gap: 5px; }
+    #nextskill-home .course-book-illustration { width: min(100%,140px); }
+    #nextskill-home .course-preview-trigger { font-size: 14px; padding: 7px 10px; gap: 6px; }
     #nextskill-home .course-preview-trigger>.icon { width: 14px; height: 14px; }
     #nextskill-home .enrollment-start-card { padding: 16px 17px 5px; }
     #nextskill-home #enrollment-start-title { font-size: 19px; }
@@ -144,17 +144,10 @@
     #nextskill-home .course-section-title,#nextskill-home .course-section-heading h2 { font-size: 18px; }
     #nextskill-home .syllabus-unit>summary { padding: 13px; gap: 10px; }
     #nextskill-home .syllabus-unit ol { padding-inline: 13px; }
-    #nextskill-home .syllabus-unit li { gap: 8px; font-size: 12px; }
-    #nextskill-home .syllabus-duration { font-size: 10px; }
+    #nextskill-home .syllabus-unit li { gap: 8px; }
+    #nextskill-home .syllabus-duration { font-size: 14px; }
     #nextskill-home .syllabus-unit-number { width: 33px; flex-basis: 33px; height: 37px; font-size: 15px; }
     #nextskill-home .preview-dialog-heading { grid-template-columns: minmax(0,1fr) 75px; gap: 6px; padding-right: 8px; }
     #nextskill-home .preview-dialog-heading h2 { font-size: 23px; }
     #nextskill-home .preview-niko-character { width: 75px; height: 87px; }
-}
-@media(max-width:359px) {
-    #nextskill-home .enrollment-hero { grid-template-columns: minmax(0,1fr); min-height: 0; gap: 17px; padding: 23px; }
-    #nextskill-home #course-title { font-size: 36px; }
-    #nextskill-home .course-book-illustration { display: none; }
-    #nextskill-home .enrollment-cover { align-items: start; }
-    #nextskill-home .course-facts { font-size: 12px; }
 }

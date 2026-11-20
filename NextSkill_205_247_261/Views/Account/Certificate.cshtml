@@ -1,0 +1,40 @@
+@using System.Globalization
+@model LearningCertificateViewModel
+@{
+    Layout = null;
+    var localDate = Model.Certificate.EarnedAt.AddHours(7);
+    var thaiDate = localDate.ToString("d MMMM yyyy", CultureInfo.GetCultureInfo("th-TH"));
+    var isoDate = localDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>try { document.documentElement.dataset.theme = localStorage.getItem('nextskill.theme.v1') === 'dark' ? 'dark' : 'light'; } catch { document.documentElement.dataset.theme = 'light'; }</script>
+    <title>ใบประกาศนียบัตร @Model.Certificate.CourseTitle — NextSkill</title>
+    <link rel="icon" href="~/home-favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="~/css/nextskill-tokens.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/nextskill-components.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/course-certificate.css" asp-append-version="true" />
+    <script src="~/js/course-certificate.js" asp-append-version="true" defer></script>
+</head>
+<body class="certificate-page">
+    <main>
+        <nav class="certificate-actions" aria-label="จัดการใบประกาศ">
+            <a class="ns-button ns-button--compact" asp-action="Dashboard" asp-fragment="certificates">← กลับโปรไฟล์</a>
+            <button type="button" class="ns-button ns-button--primary" id="print-certificate">พิมพ์ใบประกาศ</button>
+        </nav>
+        <article class="certificate-paper" aria-labelledby="certificate-title">
+            <p class="certificate-brand">NextSkill</p>
+            <span class="certificate-seal" aria-hidden="true"></span>
+            <h1 id="certificate-title">ใบประกาศนียบัตร</h1>
+            <p>ขอมอบให้แก่</p>
+            <strong class="certificate-recipient" dir="auto">@Model.LearnerName</strong>
+            <p>ผู้เรียนและผ่านแบบทดสอบครบทุกบทในคอร์ส</p>
+            <h2 class="certificate-course" dir="auto">@Model.Certificate.CourseTitle</h2>
+            <p class="certificate-date">ออกเมื่อ <time datetime="@isoDate">@thaiDate</time></p>
+        </article>
+    </main>
+</body>
+</html>

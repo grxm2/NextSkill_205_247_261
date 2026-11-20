@@ -90,11 +90,11 @@ function pass(name) { checks.push(name); console.log('PASS ' + name); }
    await responsive.goto(base+'/Home/Index', {waitUntil:'networkidle'}); await visible(responsive);
    const boxes = await responsive.evaluate(() => {
     const rect = e => e.getBoundingClientRect().toJSON();
-    return { bubble:rect(document.querySelector('#nimo-speech')), agent:rect(document.querySelector('#nextskill-agent')), protected:[...document.querySelectorAll('.ns-navbar,.ow-intro h1,.ow-intro > p,.ow-intro-actions a')].map(rect) };
+    return { bubble:rect(document.querySelector('#nimo-speech')), agent:rect(document.querySelector('#nextskill-agent')), protected:[...document.querySelectorAll('.ns-navbar,[data-home-dashboard]')].map(rect) };
    });
    assert.ok(boxes.bubble.left >= 11 && boxes.bubble.right <= width-11);
-   assert.ok(boxes.bubble.bottom <= boxes.agent.top-8);
-   assert.ok(boxes.protected.every(box => !overlap(boxes.bubble,box)), 'Speech leaves hero controls and text clear');
+   assert.equal(overlap(boxes.bubble, boxes.agent), false, 'Speech leaves Nimo visible');
+   assert.ok(boxes.protected.every(box => !overlap(boxes.bubble,box)), 'Speech leaves the dashboard and navigation clear');
    assert.equal(await responsive.locator('#nimo-speech').getAttribute('data-speaking'), 'false');
    await snapshot(responsive, `home-${width}`);
    await responsive.close();

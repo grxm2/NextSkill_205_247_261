@@ -46,21 +46,21 @@
             const matrix = new DOMMatrixReadOnly(style.transform === 'none' ? undefined : style.transform);
             return { element, x:matrix.m41, y:matrix.m42, box:element.getBoundingClientRect() };
         }) : [];
+        const sun = positions.find(item => item.element.classList.contains('journey-sun'));
         const previousProgress = orbit && celestialAnimations[0]
             ? Math.max(0, Math.min(1, Number(celestialAnimations[0].currentTime || 0) / orbit.duration)) : 0;
         const previousAngle = orbit ? orbit.start + orbit.distance * previousProgress : null;
         celestialAnimations.forEach(animation => animation.cancel());
         celestialAnimations = [];
         cancelAnimationFrame(lightFrame);
-        if (animate && changed && !reduced.matches && !document.hidden && !window.NextSkillMotion?.snapshot().paused) {
+        if (sun) {
             root.classList.add('theme-transitioning');
             // Enable transitions before changing their targets, including reversals.
             void root.offsetWidth;
             clearTimeout(cleanup);
         } else settle();
         root.dataset.theme = dark ? 'dark' : 'light';
-        if (canAnimate) {
-            const sun = positions.find(item => item.element.classList.contains('journey-sun'));
+        if (sun) {
             const sky = sun.element.parentElement.getBoundingClientRect();
             const sunLayoutX = sun.box.left - sun.x, sunLayoutY = sun.box.top - sun.y;
             const anchor = Math.max(.05, Math.min(.95, (sunLayoutX - sky.left) / sky.width));

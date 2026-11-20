@@ -1,200 +1,3224 @@
 [
   {
-    "Id": "en-q1",
-    "CourseId": 13,
-    "CourseTitle": "English for Work",
-    "LessonId": 1,
-    "LessonTitle": "\u0E41\u0E19\u0E30\u0E19\u0E33\u0E15\u0E31\u0E27\u0E43\u0E19\u0E17\u0E35\u0E48\u0E17\u0E33\u0E07\u0E32\u0E19",
-    "Prompt": "\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04\u0E43\u0E14\u0E43\u0E0A\u0E49\u0E41\u0E19\u0E30\u0E19\u0E33\u0E1A\u0E17\u0E1A\u0E32\u0E17\u0E41\u0E25\u0E30\u0E15\u0E33\u0E41\u0E2B\u0E19\u0E48\u0E07\u0E07\u0E32\u0E19\u0E44\u0E14\u0E49\u0E40\u0E2B\u0E21\u0E32\u0E30\u0E2A\u0E21\u0E17\u0E35\u0E48\u0E2A\u0E38\u0E14?",
-    "Choices": [
-      "I am work developer.",
-      "I work as a developer.",
-      "I works a developer.",
-      "I do developer work."
-    ],
-    "CorrectChoice": 1,
-    "Explanation": "\u0E43\u0E0A\u0E49 I work as a... \u0E15\u0E32\u0E21\u0E14\u0E49\u0E27\u0E22\u0E0A\u0E37\u0E48\u0E2D\u0E2D\u0E32\u0E0A\u0E35\u0E1E \u0E40\u0E1B\u0E47\u0E19\u0E23\u0E39\u0E1B\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04\u0E2A\u0E32\u0E01\u0E25\u0E17\u0E35\u0E48\u0E2A\u0E38\u0E20\u0E32\u0E1E\u0E41\u0E25\u0E30\u0E40\u0E1B\u0E47\u0E19\u0E21\u0E37\u0E2D\u0E2D\u0E32\u0E0A\u0E35\u0E1E",
-    "Hint": "\u0E42\u0E04\u0E23\u0E07\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E04\u0E37\u0E2D I work as a / an \u002B [\u0E15\u0E33\u0E41\u0E2B\u0E19\u0E48\u0E07\u0E07\u0E32\u0E19]",
-    "UpdatedAt": "2026-10-25T17:48:16.866695Z"
-  },
-  {
-    "Id": "en-q2",
-    "CourseId": 13,
-    "CourseTitle": "English for Work",
-    "LessonId": 1,
-    "LessonTitle": "\u0E41\u0E19\u0E30\u0E19\u0E33\u0E15\u0E31\u0E27\u0E43\u0E19\u0E17\u0E35\u0E48\u0E17\u0E33\u0E07\u0E32\u0E19",
-    "Prompt": "\u0E40\u0E15\u0E34\u0E21\u0E04\u0E33\u0E43\u0E19\u0E0A\u0E48\u0E2D\u0E07\u0E27\u0E48\u0E32\u0E07: \u0022I\u2019m responsible for ___ customers.\u0022",
-    "Choices": [
-      "interviewing",
-      "interview",
-      "interviewed",
-      "to interview"
-    ],
-    "CorrectChoice": 0,
-    "Explanation": "\u0E2B\u0E25\u0E31\u0E07\u0E04\u0E33\u0E1A\u0E38\u0E1E\u0E1A\u0E17 (preposition) \u0E40\u0E0A\u0E48\u0E19 \u0027for\u0027 \u0E01\u0E23\u0E34\u0E22\u0E32\u0E15\u0E49\u0E2D\u0E07\u0E40\u0E15\u0E34\u0E21 -ing (Gerund)",
-    "Hint": "\u0E04\u0E33\u0E1A\u0E38\u0E1E\u0E1A\u0E17 \u002B V-ing \u0E40\u0E2A\u0E21\u0E2D\u0E04\u0E23\u0E31\u0E1A",
-    "UpdatedAt": "2026-10-25T17:48:16.8685541Z"
-  },
-  {
-    "Id": "en-q3",
-    "CourseId": 13,
-    "CourseTitle": "English for Work",
-    "LessonId": 1,
-    "LessonTitle": "\u0E41\u0E19\u0E30\u0E19\u0E33\u0E15\u0E31\u0E27\u0E43\u0E19\u0E17\u0E35\u0E48\u0E17\u0E33\u0E07\u0E32\u0E19",
-    "Prompt": "\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E41\u0E19\u0E30\u0E19\u0E33\u0E15\u0E31\u0E27\u0E40\u0E2A\u0E23\u0E47\u0E08\u0E2A\u0E34\u0E49\u0E19\u0E43\u0E19\u0E01\u0E32\u0E23\u0E1E\u0E1A\u0E01\u0E31\u0E19\u0E04\u0E23\u0E31\u0E49\u0E07\u0E41\u0E23\u0E01 \u0E04\u0E27\u0E23\u0E1B\u0E34\u0E14\u0E17\u0E49\u0E32\u0E22\u0E14\u0E49\u0E27\u0E22\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04\u0E43\u0E14?",
-    "Choices": [
-      "Give me your tasks.",
-      "You must know me.",
-      "Nice to meet you.",
-      "See you yesterday."
-    ],
-    "CorrectChoice": 2,
-    "Explanation": "\u0027Nice to meet you.\u0027 \u0E40\u0E1B\u0E47\u0E19\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04\u0E1B\u0E34\u0E14\u0E17\u0E49\u0E32\u0E22\u0E17\u0E35\u0E48\u0E2A\u0E38\u0E20\u0E32\u0E1E\u0E41\u0E25\u0E30\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E04\u0E27\u0E32\u0E21\u0E1B\u0E23\u0E30\u0E17\u0E31\u0E1A\u0E43\u0E08\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E1E\u0E1A\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E19\u0E23\u0E48\u0E27\u0E21\u0E07\u0E32\u0E19\u0E43\u0E2B\u0E21\u0E48",
-    "Hint": "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04\u0E17\u0E35\u0E48\u0E41\u0E1B\u0E25\u0E27\u0E48\u0E32\u0E22\u0E34\u0E19\u0E14\u0E35\u0E17\u0E35\u0E48\u0E44\u0E14\u0E49\u0E23\u0E39\u0E49\u0E08\u0E31\u0E01",
-    "UpdatedAt": "2026-10-25T17:48:16.8685568Z"
-  },
-  {
-    "Id": "en-q4",
-    "CourseId": 13,
-    "CourseTitle": "English for Work",
-    "LessonId": 2,
-    "LessonTitle": "\u0E40\u0E02\u0E35\u0E22\u0E19\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E43\u0E2B\u0E49\u0E0A\u0E31\u0E14\u0E40\u0E08\u0E19",
-    "Prompt": "\u0E2B\u0E31\u0E27\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E2D\u0E35\u0E40\u0E21\u0E25 (Subject Line) \u0E43\u0E19\u0E02\u0E49\u0E2D\u0E43\u0E14\u0E0A\u0E31\u0E14\u0E40\u0E08\u0E19\u0E41\u0E25\u0E30\u0E0A\u0E48\u0E27\u0E22\u0E43\u0E2B\u0E49\u0E1C\u0E39\u0E49\u0E23\u0E31\u0E1A\u0E40\u0E02\u0E49\u0E32\u0E43\u0E08\u0E20\u0E32\u0E23\u0E01\u0E34\u0E08\u0E44\u0E14\u0E49\u0E17\u0E31\u0E19\u0E17\u0E35?",
-    "Choices": [
-      "Request for feedback on the homepage",
-      "Hello!!!",
-      "Urgent please help",
-      "Something important"
-    ],
-    "CorrectChoice": 0,
-    "Explanation": "\u0E2B\u0E31\u0E27\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E04\u0E27\u0E23\u0E23\u0E30\u0E1A\u0E38\u0E40\u0E1B\u0E49\u0E32\u0E2B\u0E21\u0E32\u0E22 (Request for feedback) \u0E41\u0E25\u0E30\u0E0A\u0E34\u0E49\u0E19\u0E07\u0E32\u0E19 (homepage) \u0E2D\u0E22\u0E48\u0E32\u0E07\u0E40\u0E09\u0E1E\u0E32\u0E30\u0E40\u0E08\u0E32\u0E30\u0E08\u0E07",
-    "Hint": "\u0E2B\u0E31\u0E27\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E17\u0E35\u0E48\u0E14\u0E35\u0E15\u0E49\u0E2D\u0E07\u0E1A\u0E2D\u0E01 \u0027\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E2D\u0E30\u0E44\u0E23\u0027 \u0E41\u0E25\u0E30 \u0027\u0E0A\u0E34\u0E49\u0E19\u0E07\u0E32\u0E19\u0E44\u0E2B\u0E19\u0027",
-    "UpdatedAt": "2026-10-25T17:48:16.868558Z"
-  },
-  {
-    "Id": "en-q5",
-    "CourseId": 13,
-    "CourseTitle": "English for Work",
-    "LessonId": 2,
-    "LessonTitle": "\u0E40\u0E02\u0E35\u0E22\u0E19\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E43\u0E2B\u0E49\u0E0A\u0E31\u0E14\u0E40\u0E08\u0E19",
-    "Prompt": "\u0E43\u0E19\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E18\u0E38\u0E23\u0E01\u0E34\u0E08 \u0E04\u0E33\u0E27\u0E48\u0E32 \u0027by Friday\u0027 \u0E21\u0E35\u0E04\u0E27\u0E32\u0E21\u0E2B\u0E21\u0E32\u0E22\u0E15\u0E23\u0E07\u0E01\u0E31\u0E1A\u0E02\u0E49\u0E2D\u0E43\u0E14?",
-    "Choices": [
-      "\u0E40\u0E23\u0E34\u0E48\u0E21\u0E17\u0E33\u0E2B\u0E25\u0E31\u0E07\u0E27\u0E31\u0E19\u0E28\u0E38\u0E01\u0E23\u0E4C",
-      "\u0E2A\u0E48\u0E07\u0E07\u0E32\u0E19\u0E43\u0E2B\u0E49\u0E40\u0E2A\u0E23\u0E47\u0E08\u0E20\u0E32\u0E22\u0E43\u0E19\u0E44\u0E21\u0E48\u0E40\u0E01\u0E34\u0E19\u0E27\u0E31\u0E19\u0E28\u0E38\u0E01\u0E23\u0E4C",
-      "\u0E17\u0E33\u0E40\u0E09\u0E1E\u0E32\u0E30\u0E17\u0E38\u0E01\u0E27\u0E31\u0E19\u0E28\u0E38\u0E01\u0E23\u0E4C",
-      "\u0E40\u0E25\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E1B\u0E27\u0E31\u0E19\u0E28\u0E38\u0E01\u0E23\u0E4C\u0E2B\u0E19\u0E49\u0E32"
-    ],
-    "CorrectChoice": 1,
-    "Explanation": "\u0E04\u0E33\u0E27\u0E48\u0E32 \u0027by\u0027 \u0E43\u0E0A\u0E49\u0E23\u0E30\u0E1A\u0E38\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E40\u0E27\u0E25\u0E32\u0E2A\u0E48\u0E07 (Deadline) \u0E2B\u0E21\u0E32\u0E22\u0E16\u0E36\u0E07\u0E44\u0E21\u0E48\u0E40\u0E01\u0E34\u0E19\u0E40\u0E27\u0E25\u0E32\u0E19\u0E31\u0E49\u0E19",
-    "Hint": "\u0027by\u0027 \u0E41\u0E2A\u0E14\u0E07\u0E40\u0E2A\u0E49\u0E19\u0E15\u0E32\u0E22 (Deadline) \u0E02\u0E2D\u0E07\u0E20\u0E32\u0E23\u0E01\u0E34\u0E08",
-    "UpdatedAt": "2026-10-25T17:48:16.8685912Z"
-  },
-  {
-    "Id": "ux-q1",
+    "Id": "course-1-lesson-1-question-1",
     "CourseId": 1,
     "CourseTitle": "UX Research",
     "LessonId": 1,
-    "LessonTitle": "\u0E15\u0E31\u0E49\u0E07\u0E04\u0E33\u0E16\u0E32\u0E21\u0E27\u0E34\u0E08\u0E31\u0E22",
-    "Prompt": "\u0E02\u0E49\u0E2D\u0E43\u0E14\u0E04\u0E37\u0E2D\u0E04\u0E33\u0E16\u0E32\u0E21\u0E27\u0E34\u0E08\u0E31\u0E22\u0E17\u0E35\u0E48\u0E44\u0E21\u0E48\u0E0A\u0E35\u0E49\u0E19\u0E33 (Unbiased Research Question)?",
+    "LessonTitle": "ตั้งคำถามวิจัย",
+    "Prompt": "ทีมกำลังตัดสินใจว่าจะปรับฟอร์มสมัครตรงไหน คำถามวิจัยข้อใดช่วยตัดสินใจได้ดีที่สุด?",
     "Choices": [
-      "\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E0A\u0E2D\u0E1A\u0E1B\u0E38\u0E48\u0E21\u0E2A\u0E35\u0E1F\u0E49\u0E32\u0E02\u0E2D\u0E07\u0E40\u0E23\u0E32\u0E43\u0E0A\u0E48\u0E44\u0E2B\u0E21?",
-      "\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E15\u0E34\u0E14\u0E02\u0E31\u0E14\u0E15\u0E23\u0E07\u0E44\u0E2B\u0E19\u0E43\u0E19\u0E01\u0E32\u0E23\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E04\u0E2D\u0E23\u0E4C\u0E2A\u0E41\u0E23\u0E01?",
-      "\u0E17\u0E33\u0E44\u0E21\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E44\u0E21\u0E48\u0E40\u0E02\u0E49\u0E32\u0E43\u0E08\u0E14\u0E35\u0E44\u0E0B\u0E19\u0E4C\u0E17\u0E35\u0E48\u0E14\u0E35\u0E02\u0E2D\u0E07\u0E40\u0E23\u0E32?",
-      "\u0E04\u0E34\u0E14\u0E27\u0E48\u0E32\u0E40\u0E27\u0E47\u0E1A\u0E02\u0E2D\u0E07\u0E40\u0E23\u0E32\u0E2A\u0E27\u0E22\u0E17\u0E35\u0E48\u0E2A\u0E38\u0E14\u0E43\u0E0A\u0E48\u0E2B\u0E23\u0E37\u0E2D\u0E44\u0E21\u0E48?"
+      "เราควรทำปุ่มให้ใหญ่ขึ้นใช่ไหม",
+      "ผู้ใช้ติดขัดที่ขั้นตอนไหนของการสมัคร และเพราะอะไร",
+      "หน้าฟอร์มใช้สีอะไรดี"
     ],
     "CorrectChoice": 1,
-    "Explanation": "\u0E04\u0E33\u0E16\u0E32\u0E21\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E15\u0E34\u0E14\u0E02\u0E31\u0E14\u0E40\u0E1B\u0E34\u0E14\u0E01\u0E27\u0E49\u0E32\u0E07\u0E43\u0E2B\u0E49\u0E04\u0E49\u0E19\u0E1E\u0E1A\u0E1B\u0E31\u0E0D\u0E2B\u0E32\u0E08\u0E23\u0E34\u0E07 \u0E42\u0E14\u0E22\u0E44\u0E21\u0E48\u0E14\u0E48\u0E27\u0E19\u0E2A\u0E23\u0E38\u0E1B\u0E2B\u0E23\u0E37\u0E2D\u0E0A\u0E35\u0E49\u0E19\u0E33\u0E27\u0E48\u0E32\u0E23\u0E30\u0E1A\u0E1A\u0E14\u0E35\u0E2B\u0E23\u0E37\u0E2D\u0E44\u0E21\u0E48\u0E14\u0E35",
-    "Hint": "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E04\u0E33\u0E16\u0E32\u0E21\u0E1B\u0E25\u0E32\u0E22\u0E40\u0E1B\u0E34\u0E14\u0E17\u0E35\u0E48\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E1A\u0E31\u0E07\u0E04\u0E31\u0E1A\u0E43\u0E2B\u0E49\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E0A\u0E21\u0E2B\u0E23\u0E37\u0E2D\u0E15\u0E34",
-    "UpdatedAt": "2026-10-25T17:48:16.868595Z"
+    "Explanation": "คำถามที่ดีเจาะปัญหาและบริบทของผู้ใช้ก่อนเลือกวิธีแก้",
+    "Hint": "ทีมต้องใช้คำตอบจากงานวิจัยไปตัดสินใจเรื่องอะไรนะ",
+    "Coaching": "ลองนึกถึงร้านที่มีคนวางสินค้าแล้วเดินออก การรู้เพียงว่าร้านสวยไหมยังไม่พอ ต้องรู้ว่าคนลังเลตรงไหนและอะไรทำให้เปลี่ยนใจ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
   },
   {
-    "Id": "ux-q2",
+    "Id": "course-1-lesson-1-question-2",
     "CourseId": 1,
     "CourseTitle": "UX Research",
     "LessonId": 1,
-    "LessonTitle": "\u0E15\u0E31\u0E49\u0E07\u0E04\u0E33\u0E16\u0E32\u0E21\u0E27\u0E34\u0E08\u0E31\u0E22",
-    "Prompt": "\u0E2B\u0E32\u0E01\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E17\u0E23\u0E32\u0E1A\u0E27\u0E48\u0E32\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E2B\u0E32\u0E1B\u0E38\u0E48\u0E21\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E04\u0E2D\u0E23\u0E4C\u0E2A\u0E40\u0E08\u0E2D\u0E2B\u0E23\u0E37\u0E2D\u0E44\u0E21\u0E48 \u0E04\u0E27\u0E23\u0E43\u0E0A\u0E49\u0E27\u0E34\u0E18\u0E35\u0E27\u0E34\u0E08\u0E31\u0E22\u0E43\u0E14?",
+    "LessonTitle": "ตั้งคำถามวิจัย",
+    "Prompt": "ก่อนชวนผู้เข้าร่วมมาทดสอบ เราควรระบุอะไรในแผนวิจัย?",
     "Choices": [
-      "\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E14\u0E49\u0E27\u0E22\u0E20\u0E32\u0E23\u0E01\u0E34\u0E08\u0E08\u0E23\u0E34\u0E07 (Usability Test)",
-      "\u0E19\u0E31\u0E1A\u0E08\u0E33\u0E19\u0E27\u0E19\u0E01\u0E32\u0E23\u0E04\u0E25\u0E34\u0E01\u0E42\u0E14\u0E22\u0E23\u0E27\u0E21\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E40\u0E14\u0E35\u0E22\u0E27",
-      "\u0E2A\u0E48\u0E07\u0E41\u0E1A\u0E1A\u0E2A\u0E2D\u0E1A\u0E16\u0E32\u0E21\u0E16\u0E32\u0E21\u0E04\u0E27\u0E32\u0E21\u0E0A\u0E2D\u0E1A\u0E2A\u0E35\u0E1B\u0E38\u0E48\u0E21",
-      "\u0E16\u0E32\u0E21\u0E04\u0E27\u0E32\u0E21\u0E40\u0E2B\u0E47\u0E19\u0E43\u0E19\u0E17\u0E35\u0E21\u0E14\u0E35\u0E44\u0E0B\u0E19\u0E4C\u0E01\u0E31\u0E19\u0E40\u0E2D\u0E07"
-    ],
-    "CorrectChoice": 0,
-    "Explanation": "\u0E01\u0E32\u0E23\u0E43\u0E2B\u0E49\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E17\u0E33\u0E20\u0E32\u0E23\u0E01\u0E34\u0E08\u0E08\u0E23\u0E34\u0E07\u0E08\u0E30\u0E0A\u0E48\u0E27\u0E22\u0E43\u0E2B\u0E49\u0E2A\u0E31\u0E07\u0E40\u0E01\u0E15\u0E40\u0E2B\u0E47\u0E19\u0E1E\u0E24\u0E15\u0E34\u0E01\u0E23\u0E23\u0E21\u0E41\u0E25\u0E30\u0E01\u0E32\u0E23\u0E21\u0E2D\u0E07\u0E2B\u0E32\u0E1B\u0E38\u0E48\u0E21\u0E08\u0E23\u0E34\u0E07 \u0E46 \u0E42\u0E14\u0E22\u0E44\u0E21\u0E48\u0E04\u0E32\u0E14\u0E40\u0E14\u0E32",
-    "Hint": "\u0E01\u0E32\u0E23\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E42\u0E14\u0E22\u0E43\u0E2B\u0E49\u0E25\u0E2D\u0E07\u0E17\u0E33\u0E08\u0E23\u0E34\u0E07\u0E43\u0E2B\u0E49\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E1E\u0E24\u0E15\u0E34\u0E01\u0E23\u0E23\u0E21\u0E17\u0E35\u0E48\u0E0A\u0E31\u0E14\u0E40\u0E08\u0E19\u0E17\u0E35\u0E48\u0E2A\u0E38\u0E14",
-    "UpdatedAt": "2026-10-25T17:48:16.8685989Z"
-  },
-  {
-    "Id": "js-q1",
-    "CourseId": 5,
-    "CourseTitle": "JavaScript Basics",
-    "LessonId": 1,
-    "LessonTitle": "\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23\u0E41\u0E25\u0E30\u0E0A\u0E19\u0E34\u0E14\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25",
-    "Prompt": "\u0E2B\u0E32\u0E01\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23\u0E04\u0E30\u0E41\u0E19\u0E19 xp \u0E17\u0E35\u0E48\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E04\u0E48\u0E32\u0E44\u0E14\u0E49\u0E43\u0E19\u0E20\u0E32\u0E22\u0E2B\u0E25\u0E31\u0E07 \u0E04\u0E27\u0E23\u0E1B\u0E23\u0E30\u0E01\u0E32\u0E28\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E44\u0E23?",
-    "Choices": [
-      "const xp = 0;",
-      "fixed xp = 0;",
-      "let xp = 0;",
-      "val xp = 0;"
+      "สีของสไลด์นำเสนอ",
+      "ผลลัพธ์ที่อยากให้ผู้ใช้พูด",
+      "เราต้องรู้อะไร และควรเรียนรู้จากผู้ใช้กลุ่มไหน"
     ],
     "CorrectChoice": 2,
-    "Explanation": "\u0027let\u0027 \u0E2D\u0E19\u0E38\u0E0D\u0E32\u0E15\u0E43\u0E2B\u0E49\u0E17\u0E33\u0E01\u0E32\u0E23 Re-assign \u0E01\u0E33\u0E2B\u0E19\u0E14\u0E04\u0E48\u0E32\u0E43\u0E2B\u0E21\u0E48\u0E44\u0E14\u0E49 \u0E43\u0E19\u0E02\u0E13\u0E30\u0E17\u0E35\u0E48 \u0027const\u0027 \u0E40\u0E1B\u0E47\u0E19\u0E04\u0E48\u0E32\u0E04\u0E07\u0E17\u0E35\u0E48\u0E2B\u0E49\u0E32\u0E21\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19",
-    "Hint": "\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23\u0E17\u0E35\u0E48\u0E04\u0E48\u0E32\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E44\u0E14\u0E49\u0E43\u0E19 JS \u0E43\u0E0A\u0E49 \u0027let\u0027",
-    "UpdatedAt": "2026-10-25T17:48:16.8686009Z"
+    "Explanation": "การระบุเป้าหมายและกลุ่มผู้เข้าร่วมช่วยเลือกหลักฐานที่ตอบโจทย์ได้",
+    "Hint": "แยกสิ่งที่อยากรู้จากคนที่ให้ข้อมูลนั้นได้",
+    "Coaching": "ถ้าอยากเข้าใจการเดินทางด้วยรถเมล์ครั้งแรก การกำหนดว่าจะศึกษาเรื่องอะไรและคุยกับผู้โดยสารแบบไหนช่วยควบคุมขอบเขตงาน",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
   },
   {
-    "Id": "js-q2",
-    "CourseId": 5,
-    "CourseTitle": "JavaScript Basics",
+    "Id": "course-1-lesson-1-question-3",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
     "LessonId": 1,
-    "LessonTitle": "\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23\u0E41\u0E25\u0E30\u0E0A\u0E19\u0E34\u0E14\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25",
-    "Prompt": "\u0E43\u0E19 JavaScript \u0E19\u0E34\u0E1E\u0E08\u0E19\u0E4C \u002750\u0027 \u002B 10 \u0E08\u0E30\u0E44\u0E14\u0E49\u0E1C\u0E25\u0E25\u0E31\u0E1E\u0E18\u0E4C\u0E40\u0E1B\u0E47\u0E19\u0E04\u0E48\u0E32\u0E2D\u0E30\u0E44\u0E23?",
+    "LessonTitle": "ตั้งคำถามวิจัย",
+    "Prompt": "ถ้าต้องการรู้ว่าผู้ใช้หาปุ่มเปลี่ยนคอร์สเจอหรือไม่ วิธีใดตอบโจทย์?",
     "Choices": [
-      "\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21 \u00275010\u0027",
-      "\u0E15\u0E31\u0E27\u0E40\u0E25\u0E02 60",
-      "\u0E15\u0E31\u0E27\u0E40\u0E25\u0E02 500",
-      "NaN (Not a Number)"
+      "ให้ผู้ใช้ลองเปลี่ยนคอร์สแล้วสังเกต",
+      "ถามทีมพัฒนาว่าปุ่มดูชัดไหม",
+      "นับยอดสมัครสมาชิกทั้งหมด"
     ],
     "CorrectChoice": 0,
-    "Explanation": "\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E15\u0E31\u0E27\u0E16\u0E39\u0E01\u0E14\u0E33\u0E40\u0E19\u0E34\u0E19\u0E01\u0E32\u0E23\u0E02\u0E49\u0E32\u0E07\u0E43\u0E14\u0E02\u0E49\u0E32\u0E07\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E40\u0E1B\u0E47\u0E19 String \u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E2B\u0E21\u0E32\u0E22 \u002B \u0E08\u0E30\u0E17\u0E33\u0E2B\u0E19\u0E49\u0E32\u0E17\u0E35\u0E48\u0E15\u0E48\u0E2D\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21 (Concatenation)",
-    "Hint": "String \u002B Number \u0E08\u0E30\u0E16\u0E39\u0E01\u0E41\u0E1B\u0E25\u0E07\u0E40\u0E1B\u0E47\u0E19 String \u0E15\u0E48\u0E2D\u0E01\u0E31\u0E19",
-    "UpdatedAt": "2026-10-25T17:48:16.8686025Z"
+    "Explanation": "การให้ผู้ใช้ทำภารกิจช่วยให้เห็นว่าหาปุ่มพบจริงหรือไม่",
+    "Hint": "การถามความเห็นกับการเห็นคนลงมือให้หลักฐานคนละแบบ",
+    "Coaching": "ถ้าอยากรู้ว่าป้ายทางออกหาเจอไหม ลองคิดถึงหลักฐานที่ได้จากการเห็นคนเดินหาจริง เทียบกับการถามว่าเขาคิดว่าป้ายอ่านง่ายไหม",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
   },
   {
-    "Id": "js-q3",
-    "CourseId": 5,
-    "CourseTitle": "JavaScript Basics",
-    "LessonId": 2,
-    "LessonTitle": "\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02\u0E41\u0E25\u0E30\u0E01\u0E32\u0E23\u0E40\u0E1B\u0E23\u0E35\u0E22\u0E1A\u0E40\u0E17\u0E35\u0E22\u0E1A",
-    "Prompt": "\u0E1C\u0E25\u0E25\u0E31\u0E1E\u0E18\u0E4C\u0E02\u0E2D\u0E07 5 === \u00275\u0027 \u0E43\u0E19 JavaScript \u0E04\u0E37\u0E2D\u0E2D\u0E30\u0E44\u0E23 \u0E41\u0E25\u0E30\u0E40\u0E1E\u0E23\u0E32\u0E30\u0E40\u0E2B\u0E15\u0E38\u0E43\u0E14?",
+    "Id": "course-1-lesson-1-question-4",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
+    "LessonId": 1,
+    "LessonTitle": "ตั้งคำถามวิจัย",
+    "Prompt": "ทีมกำลังเลือกระหว่างคู่มือเริ่มเรียนกับการปรับเมนู คำถามวิจัยข้อใดช่วยให้ทีมแยกสองปัญหานี้ได้?",
     "Choices": [
-      "true \u0E40\u0E1E\u0E23\u0E32\u0E30\u0E21\u0E35\u0E04\u0E48\u0E32\u0E40\u0E25\u0E02 5 \u0E40\u0E2B\u0E21\u0E37\u0E2D\u0E19\u0E01\u0E31\u0E19",
-      "false \u0E40\u0E1E\u0E23\u0E32\u0E30 Type \u0E15\u0E48\u0E32\u0E07\u0E01\u0E31\u0E19 (Number \u0E01\u0E31\u0E1A String)",
-      "undefined \u0E40\u0E1E\u0E23\u0E32\u0E30\u0E40\u0E1B\u0E23\u0E35\u0E22\u0E1A\u0E40\u0E17\u0E35\u0E22\u0E1A\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49",
-      "\u00275\u0027 \u0E04\u0E37\u0E19\u0E04\u0E48\u0E32\u0E15\u0E31\u0E27\u0E2B\u0E25\u0E31\u0E07"
+      "ผู้ใช้ชอบเมนูแบบเดิมหรือแบบใหม่มากกว่า",
+      "ผู้ใช้ให้คะแนนหน้าแรกเท่าไร",
+      "คู่มือที่มีภาพประกอบน่าอ่านกว่าหรือไม่",
+      "ผู้ใช้ที่เริ่มเรียนไม่สำเร็จเข้าใจว่าต้องทำอะไรต่อ และพยายามหาทางไปต่อจากที่ไหน"
+    ],
+    "CorrectChoice": 3,
+    "Explanation": "คำถามนี้แยกสิ่งที่ผู้ใช้เข้าใจออกจากสิ่งที่ผู้ใช้หาเจอ จึงช่วยชี้ว่าควรปรับคำแนะนำหรือการนำทาง",
+    "Hint": "ลองแยกปัญหาเรื่องเข้าใจสิ่งที่ต้องทำออกจากเรื่องหาทางไปต่อ",
+    "Coaching": "คนหาตั๋วรถไม่เจออาจไม่รู้ว่าต้องกดรับตั๋ว หรือรู้วิธีแต่หาเครื่องไม่พบ ลองมองหาคำถามที่เก็บหลักฐานได้ทั้งสองกรณี",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-1-lesson-2-question-1",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
+    "LessonId": 2,
+    "LessonTitle": "สัมภาษณ์โดยไม่ชี้นำ",
+    "Prompt": "คำถามใดเปิดโอกาสให้ผู้ใช้เล่าประสบการณ์จริงโดยไม่ชี้นำ?",
+    "Choices": [
+      "หน้าที่ออกแบบใหม่ใช้ง่ายขึ้นใช่ไหม",
+      "คุณชอบปุ่มสีฟ้ามากกว่าสีขาวหรือเปล่า",
+      "ช่วยเล่าตั้งแต่ต้นได้ไหมว่าครั้งล่าสุดคุณเปลี่ยนคอร์สอย่างไร"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "การถามถึงสิ่งที่ทำในครั้งล่าสุดช่วยให้ได้รายละเอียดที่ผู้ใช้จำได้",
+    "Hint": "ลองหาคำถามที่ชวนเล่าเหตุการณ์ครั้งหนึ่งโดยไม่บอกว่าควรรู้สึกอย่างไร",
+    "Coaching": "คำถามเรื่องประสบการณ์จริงมักยึดเหตุการณ์ที่ผ่านมาและให้ผู้เล่าเลือกคำอธิบายเอง เช่น ชวนให้เล่าการจองรถครั้งล่าสุด",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-1-lesson-2-question-2",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
+    "LessonId": 2,
+    "LessonTitle": "สัมภาษณ์โดยไม่ชี้นำ",
+    "Prompt": "ผู้เข้าร่วมบอกว่า “หน้านี้สับสน” ควรถามติดตามอย่างไร?",
+    "Choices": [
+      "ตรงไหนที่ทำให้คุณรู้สึกสับสน ช่วยเล่าเพิ่มได้ไหม",
+      "เพราะปุ่มเล็กเกินไปใช่ไหม",
+      "จริง ๆ แล้วหน้าไม่ได้ซับซ้อนนะ"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "ขอให้เล่าเพิ่มด้วยคำเป็นกลางเพื่อให้เขาอธิบายมุมมองของตัวเอง",
+    "Hint": "คำว่า «สับสน» ยังไม่บอกว่าเกิดอะไรขึ้นระหว่างใช้งาน",
+    "Coaching": "เวลาผู้ใช้ใช้คำกว้าง ๆ ลองชวนให้เขาขยายด้วยคำของตัวเองและเล่าสิ่งที่สังเกตเห็น โดยเว้นพื้นที่ให้ข้อมูลที่เราไม่ได้คาดไว้",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-1-lesson-2-question-3",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
+    "LessonId": 2,
+    "LessonTitle": "สัมภาษณ์โดยไม่ชี้นำ",
+    "Prompt": "เมื่อผู้เข้าร่วมเงียบเพื่อคิด ผู้สัมภาษณ์ควรทำอย่างไร?",
+    "Choices": [
+      "เติมคำตอบให้ทันที",
+      "เว้นจังหวะให้คิดแล้วถามต่อเมื่อเหมาะสม",
+      "ยกตัวอย่างคำตอบที่อยากได้"
     ],
     "CorrectChoice": 1,
-    "Explanation": "\u0E15\u0E31\u0E27\u0E14\u0E33\u0E40\u0E19\u0E34\u0E19\u0E01\u0E32\u0E23 === (Strict Equality) \u0E08\u0E30\u0E15\u0E23\u0E27\u0E08\u0E2A\u0E2D\u0E1A\u0E17\u0E31\u0E49\u0E07\u0E0A\u0E19\u0E34\u0E14\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25 (Type) \u0E41\u0E25\u0E30\u0E04\u0E48\u0E32 (Value)",
-    "Hint": "Strict equality (===) \u0E08\u0E30\u0E44\u0E21\u0E48\u0E41\u0E1B\u0E25\u0E07 Type \u0E43\u0E2B\u0E49\u0E2D\u0E31\u0E15\u0E42\u0E19\u0E21\u0E31\u0E15\u0E34",
-    "UpdatedAt": "2026-10-25T17:48:16.8686037Z"
+    "Explanation": "การรอช่วยให้ผู้เข้าร่วมคิดและตอบเอง ผลจึงสะท้อนประสบการณ์ของเขามากขึ้น",
+    "Hint": "บางทีความเงียบคือเวลาที่อีกฝ่ายกำลังเรียบเรียงความคิด",
+    "Coaching": "เมื่อคนกำลังนึกภาพเหตุการณ์ การรีบเสนอคำตอบอาจทำให้เขาหยุดเล่าจากความจำและหันมาตามสมมติฐานของเรา",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
   },
   {
-    "Id": "js-q4",
-    "CourseId": 5,
-    "CourseTitle": "JavaScript Basics",
+    "Id": "course-1-lesson-2-question-4",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
+    "LessonId": 2,
+    "LessonTitle": "สัมภาษณ์โดยไม่ชี้นำ",
+    "Prompt": "ผู้ใช้บอกว่าเคยละทิ้งการสมัครกลางทาง ข้อใดช่วยถามถึงสาเหตุโดยยังไม่เสนอคำตอบให้เขา?",
+    "Choices": [
+      "ฟอร์มยาวเกินไปจนคุณไม่อยากกรอกต่อใช่ไหม",
+      "ครั้งนั้นคุณหยุดที่ขั้นตอนไหน และเกิดอะไรขึ้นก่อนที่จะหยุด",
+      "คุณเลิกสมัครเพราะไม่มีเวลาหรือเพราะระบบช้า",
+      "ถ้าเหลือแค่สองช่อง คุณคงสมัครจนจบใช่ไหม"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "การขอให้ผู้ใช้เล่าลำดับเหตุการณ์ครั้งนั้นช่วยเก็บรายละเอียดจากประสบการณ์จริง โดยไม่จำกัดคำตอบไว้ตามสมมติฐานของผู้วิจัย",
+    "Hint": "มองหาคำถามที่ถามถึงเหตุการณ์ก่อนหยุด โดยยังเปิดให้มีหลายสาเหตุ",
+    "Coaching": "ถ้าคนหยุดระหว่างจองตั๋ว ลองเก็บลำดับเหตุการณ์ก่อนจุดที่หยุด แล้วค่อยสังเกตว่าปัญหาที่เขาพูดออกมาตรงกับที่ทีมเดาไว้ไหม",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-1-lesson-3-question-1",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
     "LessonId": 3,
-    "LessonTitle": "\u0E1F\u0E31\u0E07\u0E01\u0E4C\u0E0A\u0E31\u0E19\u0E41\u0E25\u0E30\u0E2D\u0E32\u0E23\u0E4C\u0E40\u0E23\u0E22\u0E4C",
-    "Prompt": "\u0E08\u0E32\u0E01\u0E42\u0E04\u0E49\u0E14: const skills = [\u0027UX\u0027, \u0027JavaScript\u0027, \u0027Design\u0027]; \u0E04\u0E48\u0E32 skills[0] \u0E04\u0E37\u0E2D\u0E2D\u0E30\u0E44\u0E23?",
+    "LessonTitle": "จากข้อมูลสู่ข้อค้นพบ",
+    "Prompt": "บันทึกแบบไหนเหมาะกับการจัดกลุ่มหลักฐาน?",
     "Choices": [
-      "\u0027UX\u0027",
-      "\u0027JavaScript\u0027",
-      "\u0027Design\u0027",
+      "หนึ่งบันทึกมีหนึ่งข้อสังเกตที่ตรวจย้อนกลับได้",
+      "รวบทุกสิ่งที่พบไว้ในบันทึกแผ่นเดียว",
+      "เขียนแต่ข้อเสนอแนะแล้วลบข้อมูลที่สังเกตได้"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "หนึ่งข้อสังเกตต่อบันทึกทำให้ย้ายและจัดกลุ่มตามความหมายได้ง่าย",
+    "Hint": "คิดถึงบันทึกที่ย้ายไปอยู่กลุ่มอื่นได้โดยยังรู้ว่ามาจากไหน",
+    "Coaching": "ถ้ากระดาษหนึ่งแผ่นเขียนทั้งเรื่องหาปุ่มไม่พบและเรื่องอ่านเงื่อนไขไม่เข้าใจ การจัดกลุ่มจะแม่นขึ้นเมื่อแยกพฤติกรรมแต่ละเรื่องเป็นชิ้นเล็ก ๆ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-1-lesson-3-question-2",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
+    "LessonId": 3,
+    "LessonTitle": "จากข้อมูลสู่ข้อค้นพบ",
+    "Prompt": "หลังจากเขียนข้อสังเกตแยกแล้ว ขั้นตอนใดช่วยหาแนวโน้ม?",
+    "Choices": [
+      "เรียงตามตัวอักษรอย่างเดียว",
+      "เลือกเฉพาะบันทึกที่ตรงกับสมมติฐาน",
+      "จัดกลุ่มข้อสังเกตที่เกี่ยวข้องกันแล้วตั้งชื่อให้แต่ละกลุ่ม"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "การจัดกลุ่มตามความหมายทำให้เห็นรูปแบบของปัญหาหรือพฤติกรรม",
+    "Hint": "ลองนึกถึงการจัดโพสต์อิทที่เล่าปัญหาคล้ายกัน",
+    "Coaching": "เมื่อมีหลักฐานหลายชิ้น ให้มองหาพฤติกรรมหรืออุปสรรคที่เกิดซ้ำก่อนตั้งชื่อประเด็น เช่น สิ่งที่ทำให้คนหลงระหว่างขั้นตอนจอง",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-1-lesson-3-question-3",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
+    "LessonId": 3,
+    "LessonTitle": "จากข้อมูลสู่ข้อค้นพบ",
+    "Prompt": "ชื่อกลุ่มใดอธิบายหลักฐานได้ชัดเจนที่สุด?",
+    "Choices": [
+      "ผู้ใช้ไม่ตั้งใจ",
+      "หาทางเปลี่ยนคอร์สจากหน้าเกาะไม่เจอ",
+      "แก้หน้าทั้งหมดทันที"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "ชื่อกลุ่มควรบอกพฤติกรรมหรืออุปสรรคที่พบจริง เพื่อให้ทีมกลับไปตรวจหลักฐานได้",
+    "Hint": "ชื่อที่ดีช่วยให้คนที่ไม่ได้อยู่ในห้องวิจัยเข้าใจว่าเกิดอะไรขึ้น",
+    "Coaching": "ป้ายอย่าง «หาตั๋วที่จ่ายแล้วไม่เจอในแอป» ระบุทั้งสิ่งที่คนพยายามหาและบริบทได้ชัดกว่าคำว่า «ใช้งานยาก»",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-1-lesson-3-question-4",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
+    "LessonId": 3,
+    "LessonTitle": "จากข้อมูลสู่ข้อค้นพบ",
+    "Prompt": "บันทึกแรกระบุว่าผู้ใช้เปิดอีเมลหาใบประกาศ ส่วนอีกฉบับระบุว่าผู้ใช้ค้นหาในหน้าโปรไฟล์ ทั้งคู่ไม่ได้ใบประกาศ ข้อใดจัดกลุ่มได้เหมาะที่สุด?",
+    "Choices": [
+      "จัดทั้งคู่ไว้ในกลุ่มหาตำแหน่งใบประกาศไม่พบ และเก็บบันทึกต้นฉบับของแต่ละคนไว้",
+      "จัดแยกเสมอเพราะผู้ใช้เปิดคนละหน้า",
+      "รวมเป็นกลุ่มผู้ใช้ไม่ต้องการใบประกาศ",
+      "รวมเป็นกลุ่มระบบไม่ได้ออกใบประกาศให้ผู้ใช้"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "สองเหตุการณ์มีอุปสรรคร่วมคือผู้ใช้หาตำแหน่งใบประกาศไม่พบ การเก็บบันทึกแยกช่วยให้ตรวจเส้นทางที่แต่ละคนลองได้",
+    "Hint": "มองที่อุปสรรคร่วม แม้แต่ละคนจะพยายามแก้คนละทาง",
+    "Coaching": "คนหนึ่งหาใบเสร็จในกล่องข้อความ อีกคนหาในประวัติคำสั่งซื้อ ทั้งคู่สะท้อนเป้าหมายเดียวกัน แต่รายละเอียดของเส้นทางยังมีประโยชน์เวลาตรวจหลักฐาน",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-1-lesson-4-question-1",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
+    "LessonId": 4,
+    "LessonTitle": "วางแผนทดสอบการใช้งาน",
+    "Prompt": "ข้อใดเป็นภารกิจทดสอบการใช้งานที่เขียนอย่างเป็นกลาง?",
+    "Choices": [
+      "กดปุ่มด้านขวาบนเพื่อเปลี่ยนคอร์ส",
+      "สมมติว่าคุณอยากเรียนคอร์สอื่น ลองเปลี่ยนคอร์สดู",
+      "คุณชอบเมนูเปลี่ยนคอร์สไหม"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "ภารกิจที่ดีอธิบายเป้าหมายโดยให้ผู้ใช้ตัดสินใจว่าจะไปที่เมนูใด",
+    "Hint": "ภารกิจควรบอกจุดหมาย แต่ให้ผู้ทดสอบเลือกทางเดินเอง",
+    "Coaching": "ลองเทียบการมอบหมายให้หาตั๋วรถที่ซื้อไว้กับการสั่งให้กดไอคอนขวาบน วิธีที่เปิดให้เลือกทางเองจะเผยให้เห็นว่าป้ายและเมนูสื่อความหมายแค่ไหน",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-1-lesson-4-question-2",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
+    "LessonId": 4,
+    "LessonTitle": "วางแผนทดสอบการใช้งาน",
+    "Prompt": "ผู้เข้าร่วมค้นหาเมนูไม่เจอ สิ่งที่ควรทำระหว่างทดสอบคืออะไร?",
+    "Choices": [
+      "บอกที่อยู่เมนูทันทีเมื่อเขาหยุด",
+      "กดเมนูแทนเพื่อให้ทดสอบเร็วขึ้น",
+      "สังเกตสิ่งที่เขาลองและถามว่าเขาคาดว่าจะเจอเมนูที่ไหน"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "เก็บพฤติกรรมที่เกิดขึ้น และให้ผู้ใช้เล่าความคิดของตนโดยไม่ชี้ทาง",
+    "Hint": "ก่อนช่วยบอกทาง ให้ลองเก็บข้อมูลจากสิ่งที่ผู้ทดสอบกำลังทำ",
+    "Coaching": "ถ้าคนค้นหาเงื่อนไขคืนเงิน คุณจะได้หลักฐานจากตำแหน่งที่เขามองและสิ่งที่เขาคาดว่าจะพบ การบอกทางเร็วเกินไปทำให้เสียโอกาสนี้",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-1-lesson-4-question-3",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
+    "LessonId": 4,
+    "LessonTitle": "วางแผนทดสอบการใช้งาน",
+    "Prompt": "หลักฐานข้อใดมีประโยชน์ที่สุดในการแก้ปัญหาการใช้งาน?",
+    "Choices": [
+      "ผู้ใช้เปิดโปรไฟล์และค้นหาสองครั้ง แต่หาเมนูเปลี่ยนคอร์สไม่พบ",
+      "ผู้ใช้บอกว่าสีฟ้าดูดี",
+      "ทีมคิดว่าผู้ใช้น่าจะเข้าใจอยู่แล้ว"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "พฤติกรรมที่สังเกตได้พร้อมบริบททำให้ทีมระบุตำแหน่งและลักษณะของอุปสรรค",
+    "Hint": "หลักฐานที่นำไปแก้ได้ดีมักเล่าพฤติกรรมที่สังเกตได้จริง",
+    "Coaching": "แทนที่จะเขียนว่า «ผู้ใช้ไม่คุ้นกับเว็บไซต์» ลองจดว่าเขาเปิดหน้าใด ลองทำอะไร และทำภารกิจสำเร็จหรือยัง",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-1-lesson-4-question-4",
+    "CourseId": 1,
+    "CourseTitle": "UX Research",
+    "LessonId": 4,
+    "LessonTitle": "วางแผนทดสอบการใช้งาน",
+    "Prompt": "ผู้ทดสอบบอกว่าหน้าเว็บใช้ง่าย แต่ระหว่างทำภารกิจเลือกคอร์ส เขาเปิดผิดเมนูหลายครั้ง ทีมควรสรุปอย่างไร?",
+    "Choices": [
+      "สรุปว่าไม่มีปัญหา เพราะผู้ทดสอบบอกว่าใช้ง่าย",
+      "สรุปว่าหน้าเว็บทั้งหมดใช้งานยากจากจำนวนครั้งที่กดผิด",
+      "บันทึกทั้งความเห็นและการกดผิด แล้วตรวจว่าป้ายเมนูหรือโครงสร้างส่วนใดทำให้คลาดเคลื่อน",
+      "ตัดการกดผิดออกจากผลเพราะผู้ทดสอบทำภารกิจสำเร็จในที่สุด"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "คำบอกเล่าและพฤติกรรมให้หลักฐานคนละมุม การกดผิดซ้ำช่วยระบุจุดที่ควรตรวจแม้ผู้ใช้จะทำภารกิจสำเร็จ",
+    "Hint": "ความรู้สึกที่ผู้ใช้บอกกับสิ่งที่เขาทำให้ข้อมูลคนละด้าน",
+    "Coaching": "ถ้าคนชอบหน้าตาเว็บแต่กดปุ่มผิดระหว่างหาตั๋ว ความเห็นบอกเรื่องการรับรู้ ส่วนเส้นทางการกดช่วยระบุตำแหน่งที่ควรตรวจเพิ่ม",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-101-lesson-1-question-1",
+    "CourseId": 101,
+    "CourseTitle": "ทักทายและแนะนำตัวภาษาอังกฤษ",
+    "LessonId": 1,
+    "LessonTitle": "เลือกคำทักทายให้เหมาะกับสถานการณ์",
+    "Prompt": "คุณพบลูกค้าใหม่ครั้งแรกตอนเช้า ข้อใดเป็นการทักทายและแนะนำตัวที่เหมาะสมที่สุด",
+    "Choices": [
+      "Good morning. My name is Fern.",
+      "Hey, what's up?",
+      "Good night. I'm Fern."
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "Good morning และ My name is … เหมาะกับการพบกันครั้งแรกในบริบทที่เป็นทางการ ส่วน Good night มักใช้เมื่อลาจากกัน",
+    "Hint": "ดูทั้งช่วงเวลาที่พบกันและระดับความเป็นทางการ",
+    "Coaching": "การทักในที่ทำงานมักเริ่มด้วยคำสุภาพตามช่วงเวลา แล้วตามด้วยการบอกชื่อสั้น ๆ คำว่า Hey อาจเป็นกันเองกว่าที่สถานการณ์นี้ต้องการ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-101-lesson-1-question-2",
+    "CourseId": 101,
+    "CourseTitle": "ทักทายและแนะนำตัวภาษาอังกฤษ",
+    "LessonId": 1,
+    "LessonTitle": "เลือกคำทักทายให้เหมาะกับสถานการณ์",
+    "Prompt": "เพื่อนพาเพื่อนของเขามาให้รู้จักกันในงานวันเกิด ประโยคใดฟังเป็นกันเองที่สุด",
+    "Choices": [
+      "How do you do? Please allow me to introduce myself.",
+      "Hi, I'm Pond. Nice to meet you!",
+      "To whom it may concern, my name is Pond."
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "Hi และ I'm … เป็นคำทักทายและรูปแนะนำตัวแบบสั้นที่เหมาะกับบรรยากาศเป็นกันเอง",
+    "Hint": "งานวันเกิดกับการพบลูกค้าใช้ระดับภาษาต่างกัน",
+    "Coaching": "ในวงเพื่อน คำทักสั้น ๆ และรูปย่ออย่าง I'm ฟังเป็นธรรมชาติ ถ้าประโยคฟังเหมือนจดหมายทางการ ลองอ่านอีกครั้งในบริบทของงานปาร์ตี้",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-101-lesson-1-question-3",
+    "CourseId": 101,
+    "CourseTitle": "ทักทายและแนะนำตัวภาษาอังกฤษ",
+    "LessonId": 1,
+    "LessonTitle": "เลือกคำทักทายให้เหมาะกับสถานการณ์",
+    "Prompt": "เพื่อนร่วมทีมใหม่พูดว่า “Nice to meet you” ประโยคใดตอบได้ตรงเจตนาที่สุด",
+    "Choices": [
+      "Good evening and goodbye.",
+      "Yes, I meet you yesterday.",
+      "Nice to meet you too."
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "Nice to meet you too เป็นการตอบกลับเพื่อแสดงความยินดีที่ได้รู้จักเช่นกัน",
+    "Hint": "อีกฝ่ายกำลังแสดงความยินดีที่ได้รู้จัก ลองตอบความรู้สึกในทำนองเดียวกัน",
+    "Coaching": "ภาษาอังกฤษมักใช้ too เพื่อสื่อว่าเรารู้สึกหรือเห็นด้วยเหมือนอีกฝ่าย เช่น I enjoyed it too เมื่อตอบคนที่บอกว่าชอบกิจกรรม",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-101-lesson-1-question-4",
+    "CourseId": 101,
+    "CourseTitle": "ทักทายและแนะนำตัวภาษาอังกฤษ",
+    "LessonId": 1,
+    "LessonTitle": "เลือกคำทักทายให้เหมาะกับสถานการณ์",
+    "Prompt": "คุณกลับมาเจอเพื่อนร่วมทีมที่เคยรู้จักกันแล้ว ประโยคใดเหมาะกับการทักกันอีกครั้งแบบเป็นกันเองที่สุด?",
+    "Choices": [
+      "Hello. My name is Nida. Nice to meet you.",
+      "Hi! Good to see you again.",
+      "Good night. See you tomorrow.",
+      "Let me introduce myself. I'm Nida."
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "Good to see you again ใช้เมื่อได้พบคนที่รู้จักอยู่แล้ว ส่วน Nice to meet you และการแนะนำชื่อตัวเองเหมาะกับการพบกันครั้งแรก",
+    "Hint": "โจทย์บอกว่าเคยเจอกันแล้ว คิดถึงคำที่สื่อว่าได้พบอีกครั้ง",
+    "Coaching": "ภาษาอังกฤษมักใช้ meet ตอนเริ่มทำความรู้จัก ส่วน see ฟังเป็นธรรมชาติ เมื่อพูดถึงการได้พบหน้าคนที่รู้จักกันอยู่แล้ว",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-102-lesson-1-question-1",
+    "CourseId": 102,
+    "CourseTitle": "พื้นฐาน 12 Tenses ภาษาอังกฤษ",
+    "LessonId": 1,
+    "LessonTitle": "แยกเวลาและลักษณะของเหตุการณ์",
+    "Prompt": "ตอนนี้มินกำลังเขียนอีเมล ประโยคใดสื่อว่าการเขียนกำลังเกิดขึ้นขณะพูด",
+    "Choices": [
+      "Min wrote an email.",
+      "Min is writing an email.",
+      "Min writes an email every week."
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "Present continuous ใช้ am/is/are + กริยาเติม -ing เพื่อบอกการกระทำที่กำลังเกิดขึ้น",
+    "Hint": "สังเกตคำว่า «กำลัง» และ «ตอนนี้» ก่อนดูรูปกริยา",
+    "Coaching": "เหตุการณ์ที่ดำเนินอยู่ขณะพูดใช้ am/is/are ร่วมกับกริยาลงท้าย -ing เช่น The team is preparing lunch.",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-102-lesson-1-question-2",
+    "CourseId": 102,
+    "CourseTitle": "พื้นฐาน 12 Tenses ภาษาอังกฤษ",
+    "LessonId": 1,
+    "LessonTitle": "แยกเวลาและลักษณะของเหตุการณ์",
+    "Prompt": "ประโยคใดเหมาะกับการเล่างานที่ทำเสร็จเมื่อคืน โดยระบุเวลาชัดเจน",
+    "Choices": [
+      "I have finished the report last night.",
+      "I finish the report last night.",
+      "I finished the report last night."
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "Past simple ใช้กับเหตุการณ์ที่จบแล้ว ณ เวลาหนึ่งในอดีต เช่น last night",
+    "Hint": "เมื่อคืนเป็นเวลาที่จบไปแล้ว และงานก็ทำเสร็จแล้ว",
+    "Coaching": "ถ้าเหตุการณ์จบแล้วและมีเวลาชัดเจนอย่าง yesterday หรือ last week ให้ลองเทียบกับ I called the office yesterday.",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-102-lesson-1-question-3",
+    "CourseId": 102,
+    "CourseTitle": "พื้นฐาน 12 Tenses ภาษาอังกฤษ",
+    "LessonId": 1,
+    "LessonTitle": "แยกเวลาและลักษณะของเหตุการณ์",
+    "Prompt": "ถ้าจะบอกว่าเมื่อไปถึงสถานี รถไฟออกไปก่อนแล้ว ควรใช้ประโยคใด",
+    "Choices": [
+      "The train had left when I arrived.",
+      "The train will leave when I arrived.",
+      "The train is leaving yesterday."
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "Past perfect ใช้ had + กริยาช่องสามเพื่อชี้ว่าเหตุการณ์หนึ่งเกิดก่อนอีกเหตุการณ์ในอดีต",
+    "Hint": "วางเหตุการณ์ทั้งสองบนเส้นเวลา แล้ววงสิ่งที่เกิดก่อน",
+    "Coaching": "เมื่อเล่าอดีตสองเหตุการณ์และต้องการย้ำว่าเหตุการณ์หนึ่งเสร็จก่อน ให้มองหารูป had + กริยาช่องสาม เช่น The shop had closed before we got there.",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-102-lesson-1-question-4",
+    "CourseId": 102,
+    "CourseTitle": "พื้นฐาน 12 Tenses ภาษาอังกฤษ",
+    "LessonId": 1,
+    "LessonTitle": "แยกเวลาและลักษณะของเหตุการณ์",
+    "Prompt": "ตอนสิบโมงวันพรุ่งนี้คุณจะกำลังคุยกับลูกค้า ประโยคใดสื่อว่าการคุยจะดำเนินอยู่ในเวลานั้น?",
+    "Choices": [
+      "I spoke to the client at ten yesterday.",
+      "I speak to the client at ten every day.",
+      "At ten tomorrow, I'll be talking to the client.",
+      "I'll have spoken to the client by ten tomorrow."
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "Future continuous ใช้ will be ตามด้วยกริยาเติม -ing เพื่อบอกว่าการกระทำจะกำลังเกิด ณ เวลาหนึ่งในอนาคต ส่วน will have spoken บอกว่าการคุยจะเสร็จแล้วภายในเวลานั้น",
+    "Hint": "นึกภาพว่าคุณมองเวลาในอนาคตแล้วพบว่ากิจกรรมยังดำเนินอยู่",
+    "Coaching": "รูป will be + กริยา -ing ใช้พูดถึงการกระทำที่กำลังเกิดขึ้น ณ เวลาในอนาคต เช่น At noon tomorrow, we will be travelling.",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-103-lesson-1-question-1",
+    "CourseId": 103,
+    "CourseTitle": "ชวนคุยและสร้างเครือข่ายในงาน",
+    "LessonId": 1,
+    "LessonTitle": "ฝึกคุยสั้น ๆ ในงานอาชีพ",
+    "Prompt": "คุณเพิ่งพบคนที่นั่งข้างกันในงานสัมมนา คำถามใดเริ่มบทสนทนาได้เหมาะที่สุด",
+    "Choices": [
+      "How much money do you earn?",
+      "What did you think of the opening session?",
+      "Why didn't you get promoted?"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "การถามถึงกิจกรรมเดียวกันเริ่มคุยได้ง่ายและเปิดโอกาสให้อีกฝ่ายแสดงความคิดเห็น",
+    "Hint": "เลือกหัวข้อที่ทั้งคู่มีประสบการณ์ร่วมกันอยู่แล้ว",
+    "Coaching": "การเริ่มจากเรื่องที่ทั้งสองคนเพิ่งเห็นหรือเพิ่งฟัง ทำให้อีกฝ่ายตอบง่าย และเปิดให้เล่าได้มากกว่าตอบเพียง yes หรือ no",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-103-lesson-1-question-2",
+    "CourseId": 103,
+    "CourseTitle": "ชวนคุยและสร้างเครือข่ายในงาน",
+    "LessonId": 1,
+    "LessonTitle": "ฝึกคุยสั้น ๆ ในงานอาชีพ",
+    "Prompt": "อีกฝ่ายบอกว่านี่เป็นครั้งแรกที่มาเวิร์กช็อป ประโยคใดช่วยให้บทสนทนาไปต่อ",
+    "Choices": [
+      "Okay. No more questions.",
+      "Tell me your home address.",
+      "What made you sign up for this workshop?"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "คำถามปลายเปิดที่ต่อจากสิ่งที่อีกฝ่ายเพิ่งพูดช่วยให้เขาเล่าต่อได้โดยไม่ล่วงเรื่องส่วนตัว",
+    "Hint": "ลองต่อยอดจากเรื่องที่เขาเพิ่งเล่า",
+    "Coaching": "คำถามติดตามที่ดีหยิบข้อมูลล่าสุดมาเป็นจุดเริ่ม แล้วเปิดโอกาสให้อีกฝ่ายขยายเหตุผล เช่น What brought you here today?",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-103-lesson-1-question-3",
+    "CourseId": 103,
+    "CourseTitle": "ชวนคุยและสร้างเครือข่ายในงาน",
+    "LessonId": 1,
+    "LessonTitle": "ฝึกคุยสั้น ๆ ในงานอาชีพ",
+    "Prompt": "คุณต้องไปเข้าห้องสัมมนาแล้ว ประโยคใดบอกลาอย่างสุภาพ",
+    "Choices": [
+      "It was nice talking with you. I need to get to my next session.",
+      "I am leaving now. Don't talk to me.",
+      "Why are you still here?"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "กล่าวขอบคุณหรือแสดงความยินดีที่ได้คุยก่อนบอกเหตุผลสั้น ๆ ช่วยจบบทสนทนาอย่างสุภาพ",
+    "Hint": "คิดถึงคำปิดบทสนทนาที่มีทั้งความขอบคุณและเหตุผลสั้น ๆ",
+    "Coaching": "ถ้าจำเป็นต้องออกไป คำปิดอย่าง Thanks for chatting ตามด้วยกิจกรรมที่ต้องไปช่วยให้อีกฝ่ายเข้าใจจังหวะโดยไม่รู้สึกว่าถูกตัดบท",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-103-lesson-1-question-4",
+    "CourseId": 103,
+    "CourseTitle": "ชวนคุยและสร้างเครือข่ายในงาน",
+    "LessonId": 1,
+    "LessonTitle": "ฝึกคุยสั้น ๆ ในงานอาชีพ",
+    "Prompt": "หลังคุยกับคนที่เพิ่งรู้จักในงานอาชีพ คุณอยากติดต่อกันต่อ ประโยคใดขอแลกช่องทางติดต่อได้สุภาพและชัดเจน?",
+    "Choices": [
+      "Have you been to this event before?",
+      "I'll leave you to enjoy the rest of the event.",
+      "Did you enjoy the morning session?",
+      "It was great talking with you. Would you like to exchange contact details?"
+    ],
+    "CorrectChoice": 3,
+    "Explanation": "การกล่าวถึงบทสนทนาก่อนแล้วตามด้วย Would you like to… ช่วยชวนแลกช่องทางติดต่อโดยเปิดโอกาสให้อีกฝ่ายเลือก",
+    "Hint": "มองหาประโยคที่อีกฝ่ายเลือกตอบรับหรือปฏิเสธได้",
+    "Coaching": "คำขึ้นต้นอย่าง Would you be open to…? เหมาะกับการชวนติดต่อ เพราะชัดเจนว่าชวนทำอะไรและยังให้อีกฝ่ายตัดสินใจ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-104-lesson-1-question-1",
+    "CourseId": 104,
+    "CourseTitle": "เขียนอีเมลภาษาอังกฤษในที่ทำงาน",
+    "LessonId": 1,
+    "LessonTitle": "เขียนอีเมลสั้นให้ตรงจุด",
+    "Prompt": "คุณเขียนถึงผู้จัดงานที่ไม่เคยติดต่อมาก่อนเพื่อยืนยันวันที่ ข้อใดขึ้นต้นเหมาะที่สุด",
+    "Choices": [
+      "Hey!!! Answer me now.",
+      "Dear Ms Lee, I'm writing to confirm the date of the workshop.",
+      "Yo, when's the thing?"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "คำทักทายสุภาพและประโยคระบุจุดประสงค์ช่วยให้ผู้รับคนใหม่เข้าใจเรื่องได้ตั้งแต่ต้น",
+    "Hint": "ผู้รับยังไม่รู้จักคุณ ลองหาประโยคที่บอกจุดประสงค์ตั้งแต่ต้น",
+    "Coaching": "อีเมลเรื่องงานถึงคนที่ไม่คุ้นเคยมักมีคำทักสุภาพและระบุเหตุผลที่ติดต่อ เช่น I'm writing to ask about registration.",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-104-lesson-1-question-2",
+    "CourseId": 104,
+    "CourseTitle": "เขียนอีเมลภาษาอังกฤษในที่ทำงาน",
+    "LessonId": 1,
+    "LessonTitle": "เขียนอีเมลสั้นให้ตรงจุด",
+    "Prompt": "ต้องการให้เพื่อนร่วมทีมส่งรายการแก้ไขภายในวันพุธ ประโยคใดทำให้ผู้รับรู้ว่าต้องทำอะไร",
+    "Choices": [
+      "Thanks for everything.",
+      "Please send something when you can.",
+      "Could you send the revised list by Wednesday, please?"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "คำขอนี้ระบุทั้งสิ่งที่ต้องส่งและกำหนดเวลาโดยใช้รูปประโยคสุภาพ",
+    "Hint": "ลองถามว่าผู้รับสามารถอ่านครั้งเดียวแล้วรู้ทั้งงานและวันส่งไหม",
+    "Coaching": "เวลาขอความช่วยเหลือ ให้ระบุสิ่งที่ต้องการและกำหนดเวลาในคำขอเดียวกัน คำว่า by ก่อนวันหมายถึงไม่เกินวันนั้น",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-104-lesson-1-question-3",
+    "CourseId": 104,
+    "CourseTitle": "เขียนอีเมลภาษาอังกฤษในที่ทำงาน",
+    "LessonId": 1,
+    "LessonTitle": "เขียนอีเมลสั้นให้ตรงจุด",
+    "Prompt": "จะส่งอีเมลถึงลูกค้าและเพื่อนร่วมงานที่สนิทกัน หลักใดช่วยเลือกน้ำเสียงได้เหมาะกว่า",
+    "Choices": [
+      "พิจารณาความสัมพันธ์กับผู้รับและจุดประสงค์ของอีเมล",
+      "ใช้อีโมจิและอัศเจรีย์จำนวนมากในทุกฉบับ",
+      "ใช้คำขึ้นต้นลงท้ายเดียวกันเสมอโดยไม่สนผู้รับ"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "ระดับภาษาและความเป็นกันเองขึ้นกับผู้รับและบริบทของการติดต่อ",
+    "Hint": "ลองนึกว่าคุณกำลังเขียนถึงใคร และอยากให้เขาทำอะไรหลังอ่าน",
+    "Coaching": "ข้อความขอความร่วมมือกับคนที่เพิ่งรู้จักอาจต้องระบุบริบทมากกว่าข้อความสั้น ๆ ถึงเพื่อนร่วมทีมที่รู้เรื่องอยู่แล้ว",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-104-lesson-1-question-4",
+    "CourseId": 104,
+    "CourseTitle": "เขียนอีเมลภาษาอังกฤษในที่ทำงาน",
+    "LessonId": 1,
+    "LessonTitle": "เขียนอีเมลสั้นให้ตรงจุด",
+    "Prompt": "ลูกค้ารายใหม่ส่งกำหนดการมาให้ และคุณต้องการแจ้งชัด ๆ ว่าจะตอบกลับภายในวันศุกร์ อีเมลข้อใดเหมาะที่สุด?",
+    "Choices": [
+      "Thank you for sending the schedule. I'll review it and get back to you by Friday.",
+      "Thanks for the schedule. I'll be in touch when I have time.",
+      "Could you get back to me by Friday about the schedule?",
+      "I'll send the schedule to you on Friday. Thanks!"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "ฉบับนี้รับทราบว่าได้รับกำหนดการแล้ว บอกสิ่งที่ผู้ส่งจะทำ และกำหนดวันตอบกลับไว้ชัดเจน",
+    "Hint": "นอกจากรับทราบแล้ว ผู้รับควรรู้ด้วยว่าจะได้รับข่าวเมื่อไหร่",
+    "Coaching": "อีเมลตอบกลับช่วยลดการเดาได้ด้วยการบอกขั้นตอนถัดไปและวันที่ให้ชัด คำว่า get back to someone ใช้เมื่อจะติดต่อกลับหลังตรวจเรื่องหนึ่ง",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-105-lesson-1-question-1",
+    "CourseId": 105,
+    "CourseTitle": "สัมภาษณ์งานภาษาอังกฤษสำหรับมือใหม่",
+    "LessonId": 1,
+    "LessonTitle": "เตรียมคำตอบสัมภาษณ์งาน",
+    "Prompt": "ในการตอบ “Tell me about yourself” สำหรับตำแหน่งฝึกงานด้านออกแบบ ควรเริ่มจากอะไร",
+    "Choices": [
+      "เล่าเรื่องชีวิตทุกช่วงตามลำดับโดยไม่เชื่อมกับงาน",
+      "แนะนำพื้นฐานและเล่าโครงการออกแบบที่เกี่ยวข้องสั้น ๆ",
+      "อ่านข้อมูลหน้าประวัติบริษัทแทนการแนะนำตัว"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "คำตอบควรสั้นและตรงบริบท ผู้สัมภาษณ์จะเห็นว่าพื้นฐานหรือผลงานชิ้นใดเกี่ยวข้องกับตำแหน่ง",
+    "Hint": "เลือกเรื่องที่ช่วยให้ผู้สัมภาษณ์เห็นว่าคุณเหมาะกับงานนี้อย่างไร",
+    "Coaching": "ลองสรุปพื้นฐานหนึ่งอย่างและผลงานหนึ่งชิ้นที่เกี่ยวกับตำแหน่ง ถ้าเป็นงานข้อมูล อาจเริ่มจากวิชาที่เรียนแล้วเล่าการทำแดชบอร์ดให้ชมรม",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-105-lesson-1-question-2",
+    "CourseId": 105,
+    "CourseTitle": "สัมภาษณ์งานภาษาอังกฤษสำหรับมือใหม่",
+    "LessonId": 1,
+    "LessonTitle": "เตรียมคำตอบสัมภาษณ์งาน",
+    "Prompt": "ถ้าบอกว่าการทำงานเป็นทีมคือจุดแข็ง ข้อใดทำให้คำตอบมีน้ำหนักมากขึ้น",
+    "Choices": [
+      "ให้ตัวอย่างโครงการจริงพร้อมอธิบายสิ่งที่คุณทำและผลลัพธ์",
+      "กล่าวว่าทำงานได้ดีกว่าทุกคนโดยไม่ให้ตัวอย่าง",
+      "เปลี่ยนไปพูดเรื่องเงินเดือนทันที"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "ตัวอย่างที่บอกบทบาทและผลลัพธ์ทำให้ผู้สัมภาษณ์เห็นหลักฐานของจุดแข็งนั้น",
+    "Hint": "คำว่า «ทำงานเป็นทีมได้ดี» น่าเชื่อขึ้นด้วยหลักฐานแบบไหน",
+    "Coaching": "ใช้หลัก STAR แบบสั้น ๆ คือบอกสถานการณ์ งานที่ต้องทำ สิ่งที่คุณลงมือ และผลที่เกิดขึ้น ให้ผู้ฟังเห็นบทบาทจริงของคุณ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-105-lesson-1-question-3",
+    "CourseId": 105,
+    "CourseTitle": "สัมภาษณ์งานภาษาอังกฤษสำหรับมือใหม่",
+    "LessonId": 1,
+    "LessonTitle": "เตรียมคำตอบสัมภาษณ์งาน",
+    "Prompt": "ผู้สัมภาษณ์ถามถึงจุดที่ต้องพัฒนา ข้อใดเป็นแนวตอบที่สร้างสรรค์",
+    "Choices": [
+      "ตอบว่าไม่มีเรื่องที่ต้องพัฒนา",
+      "เลือกข้อเสียขึ้นมาแต่ไม่บอกว่ากำลังทำอะไรกับมัน",
+      "บอกจุดที่ต้องพัฒนาตามจริงและยกตัวอย่างสิ่งที่กำลังทำเพื่อปรับปรุง"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "ตอบตามจริงและแสดงขั้นตอนที่กำลังทำช่วยสื่อถึงการรู้จักตนเองและความตั้งใจพัฒนา",
+    "Hint": "มองหาคำตอบที่พูดถึงทั้งสิ่งที่ยังพัฒนาและก้าวที่กำลังลงมือทำ",
+    "Coaching": "เมื่อเล่าทักษะที่ยังไม่คล่อง ให้ยกพฤติกรรมที่กำลังฝึกให้ชัด เช่น ตั้งเป้าซ้อมนำเสนอครั้งละห้านาทีแล้วขอข้อเสนอแนะ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-105-lesson-1-question-4",
+    "CourseId": 105,
+    "CourseTitle": "สัมภาษณ์งานภาษาอังกฤษสำหรับมือใหม่",
+    "LessonId": 1,
+    "LessonTitle": "เตรียมคำตอบสัมภาษณ์งาน",
+    "Prompt": "เมื่อถูกถามว่า Why do you want this job? ในการสัมภาษณ์ตำแหน่งผู้ช่วยออกแบบ คำตอบใดเชื่อมแรงจูงใจกับงานได้ชัดที่สุด?",
+    "Choices": [
+      "I want to work for any company that is hiring.",
+      "I enjoyed building prototypes in my student project, and I'd like to support your design team in testing new ideas.",
+      "I have several hobbies and I'm interested in many different jobs.",
+      "I think this job would be a good experience for anyone."
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "คำตอบที่ระบุทั้งประสบการณ์จริงและงานที่อยากช่วยในตำแหน่งนั้นทำให้ผู้สัมภาษณ์เห็นเหตุผลเฉพาะเจาะจงที่ผู้สมัครสนใจ",
+    "Hint": "ลองเชื่อมสิ่งที่คุณเคยสนุกกับการทำเข้ากับสิ่งที่ทีมต้องการ",
+    "Coaching": "คำตอบที่เฉพาะตำแหน่งมักบอกว่าอะไรจากประสบการณ์เราทำให้อยากทำงานนี้ และเราจะช่วยทีมด้วยทักษะไหน",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-106-lesson-1-question-1",
+    "CourseId": 106,
+    "CourseTitle": "HTML สำหรับหน้าเว็บแรก",
+    "LessonId": 1,
+    "LessonTitle": "ประกอบหน้าเว็บด้วยแท็กพื้นฐาน",
+    "Prompt": "ถ้าต้องการให้ข้อความ «งานนิทรรศการ» แสดงเป็นหัวเรื่องหลักบนตัวหน้า ควรวางโค้ดไว้ที่ไหน",
+    "Choices": [
+      "ในส่วน <head> ภายในแท็ก <title>",
+      "ในส่วน <body> ภายในแท็ก <h1>",
+      "ในส่วน <head> ภายในแท็ก <meta>",
+      "ในส่วน <body> ภายในแท็ก <a>"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "<h1> แสดงหัวเรื่องหลักของเนื้อหาใน <body> ส่วน <title> ใช้ตั้งชื่อเอกสารที่ปรากฏบนแท็บ",
+    "Hint": "แยกข้อความที่อยู่บนตัวหน้าออกจากชื่อที่แสดงบนแท็บเบราว์เซอร์",
+    "Coaching": "HTML แยกข้อมูลของเอกสาร เช่น ชื่อแท็บ ออกจากส่วนเนื้อหาที่คนอ่านเห็นบนหน้า และแท็กหัวเรื่องลำดับต้นใช้ระบุหัวข้อหลักของเนื้อหา",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-106-lesson-1-question-2",
+    "CourseId": 106,
+    "CourseTitle": "HTML สำหรับหน้าเว็บแรก",
+    "LessonId": 1,
+    "LessonTitle": "ประกอบหน้าเว็บด้วยแท็กพื้นฐาน",
+    "Prompt": "เมื่อคลิกคำว่า «ดูกำหนดการ» ต้องไปยัง schedule.html ข้อใดสร้างลิงก์ตามโจทย์",
+    "Choices": [
+      "<a href=\"schedule.html\">ดูกำหนดการ</a>",
+      "<a src=\"schedule.html\">ดูกำหนดการ</a>",
+      "<p href=\"schedule.html\">ดูกำหนดการ</p>",
+      "<a>schedule.html</a>"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "แท็ก <a> ใช้ href ระบุปลายทาง ส่วนข้อความระหว่างแท็กเปิดและแท็กปิดคือข้อความที่ผู้ใช้เห็น",
+    "Hint": "ลองแยกข้อความที่คนเห็นออกจากชื่อไฟล์ที่จะเปิดเมื่อกด",
+    "Coaching": "ลิงก์ HTML มีปลายทางเป็นแอตทริบิวต์และมีข้อความระหว่างแท็กเปิดกับแท็กปิด เช่น ลิงก์ไป gallery.html กับข้อความ «ดูรูป» เป็นข้อมูลคนละส่วนกัน",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-106-lesson-1-question-3",
+    "CourseId": 106,
+    "CourseTitle": "HTML สำหรับหน้าเว็บแรก",
+    "LessonId": 1,
+    "LessonTitle": "ประกอบหน้าเว็บด้วยแท็กพื้นฐาน",
+    "Prompt": "ถ้าต้องการให้ผู้ใช้อ่านคำเกริ่นกับรายละเอียดแยกเป็นสองย่อหน้า ควรใช้โครงสร้างใด",
+    "Choices": [
+      "แท็ก <h1> สองตัว",
+      "แท็ก <title> สองตัว",
+      "แท็ก <p> แยกสำหรับข้อความแต่ละย่อหน้า",
+      "แท็ก <a> ครอบทั้งสองข้อความ"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "<p> ระบุหน่วยเนื้อหาที่เป็นย่อหน้า แต่ละย่อหน้าจึงมีแท็กเปิดและปิดของตัวเอง",
+    "Hint": "ถ้าข้อความสองช่วงเป็นคนละย่อหน้า ควรแทนแต่ละช่วงเป็นคนละหน่วย",
+    "Coaching": "HTML มีองค์ประกอบสำหรับย่อหน้าโดยเฉพาะ การกดขึ้นบรรทัดใหม่ในไฟล์ต้นฉบับอย่างเดียวมักถูกเบราว์เซอร์แสดงเป็นช่องว่างธรรมดา",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-106-lesson-1-question-4",
+    "CourseId": 106,
+    "CourseTitle": "HTML สำหรับหน้าเว็บแรก",
+    "LessonId": 1,
+    "LessonTitle": "ประกอบหน้าเว็บด้วยแท็กพื้นฐาน",
+    "Prompt": "ต้องการแสดงข้อความ «อ่านกำหนดการได้ที่นี่» ในย่อหน้าเดียว โดยให้คลิกไปยัง schedule.html ได้เฉพาะคำว่า «ที่นี่» ข้อใดตรงโจทย์?",
+    "Choices": [
+      "<p><a href=\"schedule.html\">อ่านกำหนดการได้ที่นี่</a></p>",
+      "<p>อ่านกำหนดการได้<a href=\"ที่นี่\">schedule.html</a></p>",
+      "<p>อ่านกำหนดการได้</p><p><a href=\"schedule.html\">ที่นี่</a></p>",
+      "<p>อ่านกำหนดการได้<a href=\"schedule.html\">ที่นี่</a></p>"
+    ],
+    "CorrectChoice": 3,
+    "Explanation": "โค้ดนี้ใช้แท็ก p เดียว และวางเฉพาะคำว่า ที่นี่ ภายในแท็ก a ที่ระบุปลายทางด้วย href",
+    "Hint": "ดูว่าตัวเลือกไหนล้อมแท็กลิงก์รอบเฉพาะส่วนที่อยากให้กดได้",
+    "Coaching": "แท็กลิงก์วางอยู่ภายในย่อหน้าได้ ข้อความก่อนและหลังแท็กปิดยังเป็นข้อความธรรมดา ลองคิดภาพประโยคที่กดได้เฉพาะคำว่า «แผนที่»",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-107-lesson-1-question-1",
+    "CourseId": 107,
+    "CourseTitle": "จัดสไตล์หน้าเว็บด้วย CSS",
+    "LessonId": 1,
+    "LessonTitle": "เลือกองค์ประกอบและเขียนกฎ CSS",
+    "Prompt": "มีการ์ดหลายใบใช้ class=\"notice\" และต้องการให้ทุกใบมีพื้นหลังสีเดียวกัน กฎใดเหมาะที่สุด",
+    "Choices": [
+      "notice { color: lightblue; }",
+      "#notice { background-color: lightblue; }",
+      ".notice { background-color: lightblue; }",
+      ".notice { color: lightblue; }"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "จุดนำหน้าชื่อคือ class selector จึงใช้กฎกับหลายองค์ประกอบที่มี class เดียวกัน และ background-color เปลี่ยนสีพื้นหลัง",
+    "Hint": "ดูสองจุดพร้อมกันว่ากฎเลือกได้หลายการ์ดและเปลี่ยนส่วนที่อยู่หลังข้อความหรือไม่",
+    "Coaching": "CSS ใช้ selector ระบุองค์ประกอบที่จะเปลี่ยนและ property ระบุสิ่งที่จะเปลี่ยน คลาสใช้ซ้ำได้ ต่างจาก id ที่ควรระบุองค์ประกอบเดียว",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-107-lesson-1-question-2",
+    "CourseId": 107,
+    "CourseTitle": "จัดสไตล์หน้าเว็บด้วย CSS",
+    "LessonId": 1,
+    "LessonTitle": "เลือกองค์ประกอบและเขียนกฎ CSS",
+    "Prompt": "ถ้าต้องการเปลี่ยนเฉพาะสีตัวหนังสือของทุกย่อหน้า กฎใดตรงกับโจทย์",
+    "Choices": [
+      "p { background-color: navy; }",
+      "p { color: navy; }",
+      "#p { color: navy; }",
+      ".p { color: navy; }"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "p เป็นตัวเลือกตามชื่อแท็กและ color ควบคุมสีข้อความ #p และ .p จะเลือกองค์ประกอบจาก id หรือ class ตามลำดับ",
+    "Hint": "โจทย์ถามสีที่ตัวอักษร ไม่ได้ถามสีแผ่นพื้นหลัง",
+    "Coaching": "ถ้าต้องการเปลี่ยนย่อหน้าทุกย่อหน้าโดยไม่ตั้งคลาสเพิ่ม ให้พิจารณาตัวเลือกที่ใช้ชื่อแท็กและ property สำหรับสีตัวอักษร",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-107-lesson-1-question-3",
+    "CourseId": 107,
+    "CourseTitle": "จัดสไตล์หน้าเว็บด้วย CSS",
+    "LessonId": 1,
+    "LessonTitle": "เลือกองค์ประกอบและเขียนกฎ CSS",
+    "Prompt": "ไฟล์ index.html กับ site.css อยู่ในโฟลเดอร์เดียวกัน ควรเชื่อมสไตล์จากส่วน <head> ด้วยโค้ดใด",
+    "Choices": [
+      "<script src=\"site.css\"></script>",
+      "<a href=\"site.css\">site.css</a>",
+      "<style href=\"site.css\"></style>",
+      "<link rel=\"stylesheet\" href=\"site.css\">"
+    ],
+    "CorrectChoice": 3,
+    "Explanation": "แท็ก <link> ที่มี rel=\"stylesheet\" สั่งให้เบราว์เซอร์โหลดไฟล์ CSS ที่ระบุใน href มาใช้กับหน้าปัจจุบัน",
+    "Hint": "HTML ต้องประกาศเป็นไฟล์ CSS และชี้ไปที่ชื่อไฟล์ในโฟลเดอร์เดียวกัน",
+    "Coaching": "ในส่วน head ของ HTML การอ้างไฟล์แยกมักมีทั้งข้อมูลความสัมพันธ์กับเอกสาร และเส้นทางไปไฟล์ โฟลเดอร์เดียวกันใช้ชื่อไฟล์เป็นเส้นทางสัมพัทธ์ได้",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-107-lesson-1-question-4",
+    "CourseId": 107,
+    "CourseTitle": "จัดสไตล์หน้าเว็บด้วย CSS",
+    "LessonId": 1,
+    "LessonTitle": "เลือกองค์ประกอบและเขียนกฎ CSS",
+    "Prompt": "หน้าเว็บมีการ์ดประกาศทั้งหมดใช้ class=\"notice\" และหนึ่งใบมี id=\"urgent\" ด้วย กฎข้อใดเปลี่ยนสีข้อความเฉพาะใบเร่งด่วน?",
+    "Choices": [
+      ".notice { color: red; }",
+      "#urgent { background-color: red; }",
+      "#urgent { color: red; }",
+      ".urgent { color: red; }"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "เครื่องหมาย # เลือก id ของการ์ดเร่งด่วนเพียงใบเดียว และ color กำหนดสีข้อความ ส่วน background-color จะเปลี่ยนพื้นหลัง",
+    "Hint": "การ์ดใบพิเศษมีตัวระบุเฉพาะเพิ่มจากคลาสที่ใช้ร่วมกัน",
+    "Coaching": "selector แบบคลาสจะจับทุกการ์ดที่เข้ากลุ่ม ถ้าต้องการเปลี่ยนเพียงใบเดียว ให้มองหาสัญลักษณ์ของตัวระบุเฉพาะและ property ของสีข้อความ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-108-lesson-1-question-1",
+    "CourseId": 108,
+    "CourseTitle": "JavaScript จากตัวแปรถึงเงื่อนไข",
+    "LessonId": 1,
+    "LessonTitle": "อ่านค่าและควบคุมลำดับคำสั่ง",
+    "Prompt": "ถ้า scores มีค่า [25, 40, 55] นิพจน์ scores[1] จะได้ค่าอะไร",
+    "Choices": [
+      "25",
+      "40",
+      "55",
+      "3"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "ตำแหน่งของอาร์เรย์เริ่มที่ 0 ดังนั้นตำแหน่ง 1 คือสมาชิกตัวที่สอง",
+    "Hint": "เลขในวงเล็บคือดัชนี เริ่มนับก่อนหนึ่งตำแหน่ง",
+    "Coaching": "ใน JavaScript ให้กำกับช่องแรกของอาร์เรย์ด้วย 0 แล้วไล่ตามลำดับ เช่น ในรายการ [มะม่วง, ส้ม] ส้มอยู่ช่องที่มีดัชนี 1",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-108-lesson-1-question-2",
+    "CourseId": 108,
+    "CourseTitle": "JavaScript จากตัวแปรถึงเงื่อนไข",
+    "LessonId": 1,
+    "LessonTitle": "อ่านค่าและควบคุมลำดับคำสั่ง",
+    "Prompt": "เงื่อนไข score >= 70 คืนค่าจริงเมื่อ score เป็น 70 หรือไม่",
+    "Choices": [
+      "จริง เพราะเครื่องหมาย >= รวมกรณีเท่ากับด้วย",
+      "เท็จ เพราะต้องมากกว่า 70 เท่านั้น",
+      "จริงเฉพาะเมื่อ score เป็นข้อความ",
+      "ขึ้นอยู่กับจำนวนสมาชิกในอาร์เรย์"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "เครื่องหมาย >= หมายถึงมากกว่าหรือเท่ากับ เกณฑ์นี้จึงนับคะแนน 70 ด้วย",
+    "Hint": "ดูว่าเครื่องหมายมีขีดสำหรับกรณีที่สองค่าตรงกันหรือไม่",
+    "Coaching": "ลองแทนค่าตัวอย่างในนิพจน์ 5 > 5 กับ 5 >= 5 แล้วสังเกตว่าเครื่องหมายที่เพิ่ม = ทำให้กรณีขอบเขตเปลี่ยนอย่างไร",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-108-lesson-1-question-3",
+    "CourseId": 108,
+    "CourseTitle": "JavaScript จากตัวแปรถึงเงื่อนไข",
+    "LessonId": 1,
+    "LessonTitle": "อ่านค่าและควบคุมลำดับคำสั่ง",
+    "Prompt": "ต้องการพิมพ์ชื่อสมาชิกทุกรายการในอาร์เรย์ที่ความยาวเปลี่ยนได้ ควรใช้วิธีใด",
+    "Choices": [
+      "เขียนคำสั่งสำหรับสมาชิกสามตัวแรกไว้ตายตัว",
+      "ใช้ if ตรวจแค่สมาชิกตัวแรก",
+      "แปลงชื่อทั้งหมดเป็นตัวเลขก่อนพิมพ์",
+      "ใช้ลูปที่วนจากตำแหน่ง 0 จนก่อนถึงความยาวของอาร์เรย์"
+    ],
+    "CorrectChoice": 3,
+    "Explanation": "เงื่อนไขตำแหน่งน้อยกว่าความยาวช่วยให้ลูปอ่านทุกสมาชิก โดยจำนวนรอบปรับตามข้อมูลจริง",
+    "Hint": "จุดหยุดของลูปควรปรับได้เมื่อจำนวนรายการเปลี่ยน",
+    "Coaching": "อาร์เรย์ยาวสามช่องมีดัชนี 0, 1 และ 2 ถ้าใช้จำนวนสมาชิกเป็นขอบเขตในการวน จงหยุดก่อนดัชนีที่เท่ากับจำนวนนั้น",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-108-lesson-1-question-4",
+    "CourseId": 108,
+    "CourseTitle": "JavaScript จากตัวแปรถึงเงื่อนไข",
+    "LessonId": 1,
+    "LessonTitle": "อ่านค่าและควบคุมลำดับคำสั่ง",
+    "Prompt": "ให้ const scores = [68, 72, 70]; ถ้าเงื่อนไขผ่านคือ scores[2] >= 70 โปรแกรมควรแสดง «ผ่าน» หรือ «ยังไม่ผ่าน» เพราะอะไร?",
+    "Choices": [
+      "ผ่าน เพราะ scores[2] คือ 70 และเกณฑ์รวมค่าที่เท่ากัน",
+      "ยังไม่ผ่าน เพราะ scores[2] คือ 70 แต่เกณฑ์รับเฉพาะค่าที่มากกว่า",
+      "ผ่าน เพราะ scores[2] คือ 72",
+      "ยังไม่ผ่าน เพราะ scores[2] คือ 68"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "อาร์เรย์เริ่มนับที่ 0 จึงอ่านสมาชิกตัวที่สามเป็น 70 และเครื่องหมาย >= ให้ผลจริงเมื่อสองค่าเท่ากัน",
+    "Hint": "แยกเป็นสองขั้น หาเลขที่ดัชนีระบุก่อน แล้วค่อยเทียบกับเกณฑ์",
+    "Coaching": "ลองเขียนดัชนี 0, 1, 2 ใต้ค่าทีละตัว จากนั้นนำค่าช่องที่โจทย์ชี้ไปทดสอบกับเครื่องหมายเปรียบเทียบ โดยระวังกรณีค่าตรงกับขอบ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-109-lesson-1-question-1",
+    "CourseId": 109,
+    "CourseTitle": "ตัวแปร Python สำหรับมือใหม่",
+    "LessonId": 1,
+    "LessonTitle": "เก็บค่า คำนวณ และใช้ตัวแปรซ้ำ",
+    "Prompt": "price = 40 แล้วตามด้วย quantity = 3 นิพจน์ price * quantity ให้ค่าอะไร",
+    "Choices": [
+      "43",
+      "403",
+      "120",
+      "12"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "ทั้งสองตัวแปรอ้างถึงตัวเลข เครื่องหมาย * จึงคูณ 40 กับ 3 และได้ 120",
+    "Hint": "ลองแทนค่าของตัวแปรทั้งสองฝั่งของเครื่องหมาย *",
+    "Coaching": "ชื่อตัวแปรแทนค่าที่เก็บไว้ ถ้า a เก็บ 5 และ b เก็บ 2 ให้คิด a * b เหมือน 5 × 2",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-109-lesson-1-question-2",
+    "CourseId": 109,
+    "CourseTitle": "ตัวแปร Python สำหรับมือใหม่",
+    "LessonId": 1,
+    "LessonTitle": "เก็บค่า คำนวณ และใช้ตัวแปรซ้ำ",
+    "Prompt": "ถ้าเขียน score = 10 แล้วเขียน score = score + 2 ตัวแปร score จะมีค่าเท่าไร",
+    "Choices": [
+      "10",
+      "12",
+      "20",
+      "2"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "Python คำนวณนิพจน์ด้านขวาด้วยค่าเดิมก่อน จากนั้นกำหนดผลลัพธ์ 12 ให้ตัวแปรชื่อเดิม",
+    "Hint": "เริ่มคิดจากด้านขวาของเครื่องหมาย = ก่อนนะ",
+    "Coaching": "การกำหนดค่าครั้งใหม่อ่านค่าเดิมมาคำนวณก่อน เช่น n = 4 แล้ว n = n + 1 จะเก็บผลใหม่กลับเข้า n",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-109-lesson-1-question-3",
+    "CourseId": 109,
+    "CourseTitle": "ตัวแปร Python สำหรับมือใหม่",
+    "LessonId": 1,
+    "LessonTitle": "เก็บค่า คำนวณ และใช้ตัวแปรซ้ำ",
+    "Prompt": "ต้องการเก็บชื่อเล่น Noon เป็นข้อความ คำสั่งใดถูกต้อง",
+    "Choices": [
+      "Noon = nickname",
+      "nickname = Noon",
+      "nickname == 'Noon'",
+      "nickname = 'Noon'"
+    ],
+    "CorrectChoice": 3,
+    "Explanation": "เครื่องหมายคำพูดทำให้ Noon เป็นค่าข้อความ ส่วนเครื่องหมาย = กำหนดค่านั้นให้ตัวแปร nickname",
+    "Hint": "ลองดูว่า Python จะแยกชื่อคนออกจากชื่อตัวแปรอย่างไร",
+    "Coaching": "ข้อความต้องมีเครื่องหมายคำพูดครอบ เช่น city = 'Bangkok' ส่วนชื่อด้านซ้ายของ = เป็นป้ายสำหรับเรียกค่าที่เก็บ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-109-lesson-1-question-4",
+    "CourseId": 109,
+    "CourseTitle": "ตัวแปร Python สำหรับมือใหม่",
+    "LessonId": 1,
+    "LessonTitle": "เก็บค่า คำนวณ และใช้ตัวแปรซ้ำ",
+    "Prompt": "ใน Python กำหนด unit_price = 25, count = 2 แล้วคำนวณ total = unit_price * count หากเปลี่ยน count เป็น 3 โดยไม่ได้คำนวณ total ใหม่ คำสั่ง print(total) จะแสดงอะไร?",
+    "Choices": [
+      "75",
+      "25",
+      "3",
+      "50"
+    ],
+    "CorrectChoice": 3,
+    "Explanation": "total เก็บผลการคูณ 25 × 2 ตั้งแต่ตอนกำหนดค่า การเปลี่ยน count ในภายหลังไม่คำนวณ total ใหม่ให้อัตโนมัติ",
+    "Hint": "ย้อนกลับไปดูว่าแต่ละตัวแปรมีค่าเท่าไรตอนคำนวณ total",
+    "Coaching": "ค่าที่เกิดจากการคำนวณแล้วเป็นเหมือนยอดในใบเสร็จ ถ้าเปลี่ยนจำนวนสินค้าในรายการ แต่ไม่ได้กดคำนวณใหม่ ยอดที่จดไว้จะยังเท่าเดิม",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-110-lesson-1-question-1",
+    "CourseId": 110,
+    "CourseTitle": "Git และ GitHub ตั้งแต่ Commit แรก",
+    "LessonId": 1,
+    "LessonTitle": "จากโฟลเดอร์งานสู่ GitHub",
+    "Prompt": "มีโฟลเดอร์โปรเจกต์ที่ยังไม่ได้ใช้ Git คำสั่งใดใช้เริ่ม repository ที่โฟลเดอร์นี้",
+    "Choices": [
+      "git init",
+      "git push",
+      "git commit",
+      "git clone"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "git init สร้าง repository ในโฟลเดอร์ปัจจุบัน ส่วน git clone ใช้ทำสำเนา repository ที่มีอยู่แล้ว",
+    "Hint": "โจทย์บอกว่าโฟลเดอร์มีอยู่แล้ว แต่ยังไม่เคยถูกติดตาม",
+    "Coaching": "มองหาเครื่องมือสำหรับเริ่มประวัติในที่ที่เรากำลังทำงานอยู่ การทำสำเนาเหมาะเมื่อมีประวัติต้นทางให้คัดลอก",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-110-lesson-1-question-2",
+    "CourseId": 110,
+    "CourseTitle": "Git และ GitHub ตั้งแต่ Commit แรก",
+    "LessonId": 1,
+    "LessonTitle": "จากโฟลเดอร์งานสู่ GitHub",
+    "Prompt": "แก้ไฟล์ index.html และต้องการเลือกไฟล์นี้เข้าสู่ commit ถัดไป ขั้นตอนใดควรมาก่อน git commit",
+    "Choices": [
+      "git push index.html",
+      "git init index.html",
+      "git add index.html",
+      "git log index.html"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "git add นำสถานะของไฟล์เข้าพื้นที่ staging ส่วน git commit จึงบันทึกชุดที่เตรียมไว้เป็นประวัติ",
+    "Hint": "คิดถึงขั้นตอนคัดงานเข้ากล่องก่อนบันทึกเป็นชุด",
+    "Coaching": "Git มีพื้นที่เตรียมการเปลี่ยนแปลงที่เรียกว่า staging การแก้ไฟล์ในโฟลเดอร์งานเพียงอย่างเดียวยังไม่ย้ายการแก้นั้นเข้าชุดที่จะบันทึก",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-110-lesson-1-question-3",
+    "CourseId": 110,
+    "CourseTitle": "Git และ GitHub ตั้งแต่ Commit แรก",
+    "LessonId": 1,
+    "LessonTitle": "จากโฟลเดอร์งานสู่ GitHub",
+    "Prompt": "สร้าง commit ในเครื่องแล้ว และได้ตั้งค่าปลายทาง GitHub เรียบร้อย หากต้องการส่งประวัติขึ้นปลายทางควรใช้คำสั่งใด",
+    "Choices": [
+      "git status",
+      "git push",
+      "git init",
+      "git log"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "git push ส่ง commit ไปยังปลายทางที่ตั้งค่าไว้ ส่วน git status และ git log ใช้ตรวจดูสถานะกับประวัติในเครื่อง",
+    "Hint": "แยกให้ออกว่ากำลังดูของในเครื่องหรือส่งไปอีกที่",
+    "Coaching": "หลังบันทึกประวัติในเครื่องแล้ว คนอื่นยังไม่เห็นจนกว่าจะส่งไปยังปลายทาง มองหาการกระทำที่เปลี่ยนข้อมูลทางฝั่งปลายทางได้",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-110-lesson-1-question-4",
+    "CourseId": 110,
+    "CourseTitle": "Git และ GitHub ตั้งแต่ Commit แรก",
+    "LessonId": 1,
+    "LessonTitle": "จากโฟลเดอร์งานสู่ GitHub",
+    "Prompt": "คุณแก้ index.html กับ style.css แต่ commit นี้ต้องการบันทึกเฉพาะ index.html และยังไม่ได้ stage ไฟล์ใด ควรทำอย่างไร?",
+    "Choices": [
+      "ใช้ git add . แล้วจึง git commit",
+      "ใช้ git push แล้วจึงเลือก index.html",
+      "ใช้ git add index.html แล้วจึง git commit",
+      "ใช้ git commit ก่อน แล้วค่อย git add index.html"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "การ stage เฉพาะ index.html ทำให้ commit บันทึกการเปลี่ยนแปลงของไฟล์นี้ ส่วน style.css ยังอยู่ในโฟลเดอร์งานสำหรับทำ commit ครั้งอื่น",
+    "Hint": "ให้คิดว่าชุดบันทึกรอบนี้ต้องมีรายการกี่ไฟล์",
+    "Coaching": "พื้นที่ staging เหมือนตะกร้าก่อนชำระเงิน ใส่เฉพาะสิ่งที่จะรวมในชุดนี้ ส่วนงานอื่นเก็บไว้ทำเป็นอีกชุดได้",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-111-lesson-1-question-1",
+    "CourseId": 111,
+    "CourseTitle": "เริ่มใช้ Figma และจัดระเบียบไฟล์",
+    "LessonId": 1,
+    "LessonTitle": "นำทางในไฟล์ Figma Design",
+    "Prompt": "ต้องการเลือกเลเยอร์ข้อความที่ซ้อนอยู่ภายใน Frame จากรายการโครงสร้าง ควรมองหาที่ใด",
+    "Choices": [
+      "รายการ Layers ด้านซ้าย",
+      "ปุ่มนำเสนอ Prototype",
+      "หน้าตั้งค่าบัญชี Figma"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "แผง Layers แสดงลำดับชั้นของชิ้นงาน จึงค้นและเลือกเลเยอร์ซ้อนใน Frame ได้",
+    "Hint": "โจทย์กำลังหาชิ้นงานลูกจากโครงสร้างแบบต้นไม้",
+    "Coaching": "เวลาอ่านข้อความซ้อนในกลุ่ม ให้ไล่จากชื่อกรอบแม่ไปยังรายการที่เยื้องอยู่ข้างใต้ เหมือนเปิดโฟลเดอร์แล้วเลือกไฟล์ย่อย",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-111-lesson-1-question-2",
+    "CourseId": 111,
+    "CourseTitle": "เริ่มใช้ Figma และจัดระเบียบไฟล์",
+    "LessonId": 1,
+    "LessonTitle": "นำทางในไฟล์ Figma Design",
+    "Prompt": "หลังเลือกสี่เหลี่ยมแล้ว ต้องการแก้สี Fill และขนาด ควรไปที่ส่วนใด",
+    "Choices": [
+      "แถบรายชื่อ Pages ด้านซ้าย",
+      "แผงคุณสมบัติของเลเยอร์ด้านขวา",
+      "ชื่อไฟล์ด้านบนเท่านั้น"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "เมื่อเลือกเลเยอร์ แผงด้านขวาจะแสดงคุณสมบัติที่แก้ได้ เช่น ขนาดและ Fill",
+    "Hint": "เลือกชิ้นงานได้แล้ว ต่อไปต้องปรับค่าของชิ้นนั้น",
+    "Coaching": "ในเครื่องมือออกแบบ ส่วนที่ใช้หาและเลือกชิ้นงานต่างจากส่วนที่ใช้แก้ค่าของชิ้นที่เลือก ลองมองหาช่องที่รองรับทั้งค่าตัวเลขและตัวเลือกสี",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-111-lesson-1-question-3",
+    "CourseId": 111,
+    "CourseTitle": "เริ่มใช้ Figma และจัดระเบียบไฟล์",
+    "LessonId": 1,
+    "LessonTitle": "นำทางในไฟล์ Figma Design",
+    "Prompt": "การเพิ่ม Page ในไฟล์เดิมมีประโยชน์เมื่อใด",
+    "Choices": [
+      "ต้องการเปลี่ยนสีทุกชิ้นพร้อมกัน",
+      "ต้องการเผยแพร่เว็บที่ใช้งานได้จริงโดยอัตโนมัติ",
+      "ต้องการแยกงานร่างออกจากหน้าจอเวอร์ชันส่งมอบ"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "Pages ช่วยแยกพื้นที่ทำงานที่เกี่ยวข้องกันภายในไฟล์เดียว หางานร่างและงานส่งมอบได้ง่ายขึ้น",
+    "Hint": "คิดถึงการจัดระเบียบหลายชุดงานภายในไฟล์เดียว",
+    "Coaching": "การแบ่งพื้นที่ใหญ่เหมือนใส่แท็บในสมุด แท็บหนึ่งเก็บแนวคิดที่ยังเปลี่ยนได้ อีกแท็บเก็บงานที่ทีมใช้อ้างอิงร่วมกัน",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-111-lesson-1-question-4",
+    "CourseId": 111,
+    "CourseTitle": "เริ่มใช้ Figma และจัดระเบียบไฟล์",
+    "LessonId": 1,
+    "LessonTitle": "นำทางในไฟล์ Figma Design",
+    "Prompt": "คุณเลือก Frame ถูกตัวในรายการ Layers แล้วอยากดูว่าหน้าจอนั้นวางอยู่ส่วนไหนของพื้นที่งานและหน้าตาเป็นอย่างไร ควรดูที่ใด?",
+    "Choices": [
+      "Canvas กลางหน้าจอ",
+      "รายการ Pages ด้านซ้าย",
+      "ตัวควบคุม Fill ด้านขวา",
+      "รายการชื่อเลเยอร์ใน Frame"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "Canvas แสดงชิ้นงานจริงและตำแหน่งสัมพัทธ์ของ Frame ส่วน Layers แสดงโครงสร้างและแผงขวาใช้แก้คุณสมบัติ",
+    "Hint": "คราวนี้โจทย์อยากเห็นหน้าตากับตำแหน่งจริงของชิ้นงาน",
+    "Coaching": "ชื่อในรายการช่วยยืนยันว่าเลือกถูกชิ้น ส่วนการดูว่าชิ้นงานอยู่ข้างหรือล้อมด้วยอะไรต้องใช้บริเวณที่มองเห็นงานตามตำแหน่งจริง",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-112-lesson-1-question-1",
+    "CourseId": 112,
+    "CourseTitle": "ออกแบบปุ่มที่ยืดตามข้อความ",
+    "LessonId": 1,
+    "LessonTitle": "สร้างปุ่มด้วยข้อความและ Auto Layout",
+    "Prompt": "เปลี่ยนข้อความปุ่มจาก “ส่ง” เป็น “ส่งคำขอใหม่” แล้วต้องการให้กรอบกว้างตามข้อความ ควรตั้งค่าอย่างไร",
+    "Choices": [
+      "ล็อกกรอบไว้ที่ความกว้างเดิม",
+      "ตั้งกรอบ Auto Layout ให้กว้างแบบ Hug contents",
+      "ย่อข้อความให้เล็กลงทุกครั้ง"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "Hug contents ให้กรอบคำนวณขนาดจากข้อความและพื้นที่ Padding ที่ตั้งไว้",
+    "Hint": "สังเกตว่าความยาวข้อความเป็นตัวกำหนดขนาดปุ่มหรือเปล่า",
+    "Coaching": "นึกภาพป้ายที่ต้องครอบชื่อหลายความยาว เมื่อชื่อยาวขึ้น ขนาดกรอบที่อิงเนื้อหาจะเพิ่มขึ้นและยังรักษาระยะขอบภายในไว้",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-112-lesson-1-question-2",
+    "CourseId": 112,
+    "CourseTitle": "ออกแบบปุ่มที่ยืดตามข้อความ",
+    "LessonId": 1,
+    "LessonTitle": "สร้างปุ่มด้วยข้อความและ Auto Layout",
+    "Prompt": "ต้องการให้พื้นปุ่มห่างจากข้อความด้านซ้ายและขวาเท่ากัน ควรปรับอะไร",
+    "Choices": [
+      "Padding แนวนอนของกรอบปุ่ม",
+      "ระยะห่างบรรทัดของข้อความ",
+      "ตำแหน่งของ Canvas"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "Padding แนวนอนควบคุมพื้นที่ภายในจากขอบซ้ายและขวาถึงเนื้อหา",
+    "Hint": "เริ่มวัดจากขอบกรอบด้านข้างเข้ามาถึงข้อความ",
+    "Coaching": "ช่องว่างภายในกรอบวัดแยกตามแกนได้ ระยะที่เกี่ยวกับด้านซ้ายและด้านขวาจึงต่างจากช่องระหว่างชิ้นงานสองชิ้น",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-112-lesson-1-question-3",
+    "CourseId": 112,
+    "CourseTitle": "ออกแบบปุ่มที่ยืดตามข้อความ",
+    "LessonId": 1,
+    "LessonTitle": "สร้างปุ่มด้วยข้อความและ Auto Layout",
+    "Prompt": "วิธีใดช่วยทดสอบว่าปุ่มรองรับคำหลายความยาวได้จริง",
+    "Choices": [
+      "ตรวจแค่สีพื้นปุ่ม",
+      "ทดลองกับป้ายข้อความเพียงคำเดียวแล้วประเมินด้วยสายตา",
+      "ลองสลับข้อความสั้นและข้อความยาว แล้วตรวจขอบในและขนาดกรอบ"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "การทดสอบหลายความยาวช่วยเห็นผลการยืดและตรวจว่า Padding ยังสม่ำเสมอ",
+    "Hint": "อย่าดูแค่ตอนใช้คำตัวอย่างคำเดียว",
+    "Coaching": "ลองคิดถึงปุ่มไทยกับอังกฤษที่สื่อความหมายเดียวกันแต่กินพื้นที่ต่างกัน เราต้องเห็นทั้งตอนกรอบเล็กและตอนกรอบถูกดันให้ขยายจึงจะเชื่อว่ารองรับหลายข้อความ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-112-lesson-1-question-4",
+    "CourseId": 112,
+    "CourseTitle": "ออกแบบปุ่มที่ยืดตามข้อความ",
+    "LessonId": 1,
+    "LessonTitle": "สร้างปุ่มด้วยข้อความและ Auto Layout",
+    "Prompt": "ปุ่ม Auto Layout กว้างพอดีแล้ว แต่ข้อความชิดขอบบนและล่างเกินไป ควรเพิ่มค่าใดโดยให้ความกว้างเดิม?",
+    "Choices": [
+      "Padding แนวนอน",
+      "Gap ระหว่างรายการ",
+      "ขนาดตัวอักษร",
+      "Padding แนวตั้ง"
+    ],
+    "CorrectChoice": 3,
+    "Explanation": "Padding แนวตั้งเพิ่มพื้นที่ด้านบนและล่างของกรอบปุ่มโดยตรง โดยไม่ต้องเปลี่ยน Padding ด้านซ้ายและขวา",
+    "Hint": "แยกแกนสูงกับแกนกว้างออกจากกันก่อนปรับ",
+    "Coaching": "ปุ่มจะมีระยะรอบข้อความเป็นคู่ ในกรณีที่ความกว้างดีอยู่แล้ว ให้วัดเฉพาะระยะจากข้อความขึ้นไปถึงขอบบนและลงมาถึงขอบล่าง",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-113-lesson-1-question-1",
+    "CourseId": 113,
+    "CourseTitle": "จัดเลย์เอาต์ด้วย Figma Auto Layout",
+    "LessonId": 1,
+    "LessonTitle": "ให้เลย์เอาต์ปรับเมื่อเนื้อหาเปลี่ยน",
+    "Prompt": "มีการ์ดเรียงลงมาหลายใบ ถ้าจะเพิ่มการ์ดอีกใบโดยให้ระยะห่างคงเดิม ควรเลือกอะไร",
+    "Choices": [
+      "Auto Layout แนวตั้งและตั้ง Gap",
+      "ขยับตำแหน่งแต่ละการ์ดด้วยมือทุกครั้ง",
+      "แปลงการ์ดทั้งหมดเป็นภาพเดียว"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "Auto Layout แนวตั้งจะเรียงลูกจากบนลงล่าง และ Gap ทำให้ระยะระหว่างการ์ดคงที่เมื่อเพิ่มรายการ",
+    "Hint": "ดูทิศที่วางการ์ด แล้วหาวิธีตั้งระยะที่ใช้ซ้ำ",
+    "Coaching": "ถ้าเป็นรายการลงมาด้านล่าง ให้ใช้การวางตามแกนเดียวและกำหนดช่องไฟไว้ที่กรอบแม่ เมื่อเพิ่มลูก กรอบแม่ก็จัดระยะต่อจากชุดเดิมได้",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-113-lesson-1-question-2",
+    "CourseId": 113,
+    "CourseTitle": "จัดเลย์เอาต์ด้วย Figma Auto Layout",
+    "LessonId": 1,
+    "LessonTitle": "ให้เลย์เอาต์ปรับเมื่อเนื้อหาเปลี่ยน",
+    "Prompt": "ต้องการเพิ่มช่องว่างระหว่างไอคอนสองตัว แต่คงระยะจากขอบกรอบเดิม ควรปรับอะไร",
+    "Choices": [
+      "Opacity",
+      "Padding",
+      "Gap ระหว่างรายการ"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "Gap ควบคุมระยะระหว่างชิ้นงาน ส่วน Padding ควบคุมพื้นที่ด้านในจากชิ้นงานถึงขอบกรอบ",
+    "Hint": "โจทย์วัดจากไอคอนไปอีกไอคอนโดยไม่แตะขอบกรอบ",
+    "Coaching": "ลองวาดลูกศรสองแบบ แบบหนึ่งชี้ระหว่างชิ้นงานสองชิ้น อีกแบบชี้จากชิ้นหนึ่งไปถึงขอบกรอบ การปรับแบบแรกไม่จำเป็นต้องแตะระยะของอีกแบบ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-113-lesson-1-question-3",
+    "CourseId": 113,
+    "CourseTitle": "จัดเลย์เอาต์ด้วย Figma Auto Layout",
+    "LessonId": 1,
+    "LessonTitle": "ให้เลย์เอาต์ปรับเมื่อเนื้อหาเปลี่ยน",
+    "Prompt": "ต้องการให้ชิ้นงานลูกกว้างเต็มพื้นที่ที่เหลือในกรอบ Auto Layout ควรเลือกอะไร",
+    "Choices": [
+      "Fixed width",
+      "Fill container",
+      "Hug contents"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "Fill container ให้ลูกกินพื้นที่ว่างในกรอบแม่ ส่วน Hug contents คำนวณขนาดจากเนื้อหาของลูก",
+    "Hint": "คิดว่าลูกควรกว้างตามตัวเองหรือตามพื้นที่ในกรอบแม่",
+    "Coaching": "ในการ์ดที่มีช่องเหลือ ตัวเลือกการปรับขนาดบางแบบใช้พื้นที่ที่กรอบแม่ให้มา ส่วนแบบที่อิงเนื้อหาในตัวลูกจะขยายตามสิ่งที่อยู่ข้างใน",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-113-lesson-1-question-4",
+    "CourseId": 113,
+    "CourseTitle": "จัดเลย์เอาต์ด้วย Figma Auto Layout",
+    "LessonId": 1,
+    "LessonTitle": "ให้เลย์เอาต์ปรับเมื่อเนื้อหาเปลี่ยน",
+    "Prompt": "ในการ์ด Auto Layout ต้องการให้ข้อความห่างจากไอคอนมากขึ้น แต่ให้ทั้งคู่ชิดขอบกรอบมากขึ้นด้วย ควรปรับอย่างไร?",
+    "Choices": [
+      "ลด Gap และเพิ่ม Padding",
+      "เพิ่ม Gap และลด Padding ด้านที่ต้องการให้ชิด",
+      "เพิ่มทั้ง Gap และ Padding",
+      "เปลี่ยนเป็น Hug contents โดยคง Gap กับ Padding เดิม"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "Gap เป็นช่องระหว่างชิ้นงานลูก ส่วน Padding เป็นช่องถึงขอบกรอบ จึงต้องเพิ่มค่าแรกและลดค่าหลังเพื่อให้เกิดผลทั้งสองอย่าง",
+    "Hint": "มีสองระยะที่ต้องเปลี่ยนคนละทิศทาง",
+    "Coaching": "วาดเส้นหนึ่งจากไอคอนไปถึงข้อความ และอีกเส้นจากชุดชิ้นงานไปถึงกรอบ เส้นแรกควรยาวขึ้น ส่วนเส้นหลังควรสั้นลง ลองจับคู่แต่ละเส้นกับค่าควบคุมที่เกี่ยวข้อง",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-114-lesson-1-question-1",
+    "CourseId": 114,
+    "CourseTitle": "ออกแบบแถบนำทางและส่วนท้ายใน Figma",
+    "LessonId": 1,
+    "LessonTitle": "ประกอบเมนูและสร้าง Component ที่ใช้ซ้ำ",
+    "Prompt": "ต้องการแก้แถบนำทางครั้งเดียวแล้วให้ทุกหน้าที่ใช้ชิ้นเดียวกันอัปเดตตาม ควรวางโครงอย่างไร",
+    "Choices": [
+      "คัดลอกแต่ละหน้าจากภาพ PNG",
+      "สร้าง Component หลัก และใช้ Instance บนแต่ละหน้า",
+      "วาดแถบนำทางใหม่แยกกันทุกหน้า"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "Instance เชื่อมกับ Component หลัก จึงรับการเปลี่ยนแปลงร่วมกันได้",
+    "Hint": "มองหาโครงที่มีต้นฉบับเดียวแล้วนำไปใช้ซ้ำ",
+    "Coaching": "ให้คิดถึงแบบฟอร์มที่พิมพ์หลายชุดจากแม่แบบ ถ้าสำเนายังผูกกับแม่แบบ การเปลี่ยนแกนหลักครั้งเดียวก็ส่งผลต่อทุกตำแหน่งที่ใช้งาน",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-114-lesson-1-question-2",
+    "CourseId": 114,
+    "CourseTitle": "ออกแบบแถบนำทางและส่วนท้ายใน Figma",
+    "LessonId": 1,
+    "LessonTitle": "ประกอบเมนูและสร้าง Component ที่ใช้ซ้ำ",
+    "Prompt": "ต้องการให้รายการเมนูอยู่เรียงจากซ้ายไปขวาด้วยระยะเท่ากัน ควรใช้การจัดแบบใด",
+    "Choices": [
+      "Auto Layout แนวตั้ง",
+      "การจัดวางอิสระโดยกะระยะด้วยสายตา",
+      "Auto Layout แนวนอนพร้อมกำหนด Gap"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "แนวนอนวางรายการในแถวเดียว ส่วน Gap กำหนดระยะระหว่างรายการให้สม่ำเสมอ",
+    "Hint": "รายการต้องวิ่งในแถวเดียวและมีช่องไฟสม่ำเสมอ",
+    "Coaching": "แยกสิ่งที่ต้องตั้งเป็นสองอย่าง ทิศของแกนบอกว่ารายการเรียงอย่างไร ส่วนระยะระหว่างลูกบอกว่ารายการแต่ละตัวขยับห่างเท่าไร",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-114-lesson-1-question-3",
+    "CourseId": 114,
+    "CourseTitle": "ออกแบบแถบนำทางและส่วนท้ายใน Figma",
+    "LessonId": 1,
+    "LessonTitle": "ประกอบเมนูและสร้าง Component ที่ใช้ซ้ำ",
+    "Prompt": "ระหว่างสร้างเมนูหลายรายการที่มีรูปแบบเหมือนกัน ควรเริ่มทำอย่างไรเพื่อคงรูปแบบ",
+    "Choices": [
+      "ทำรายการต้นแบบแล้วทำซ้ำ จากนั้นแก้ข้อความแต่ละรายการ",
+      "วาดรายการใหม่ด้วยขนาดตัวอักษรต่างกันทุกอัน",
+      "แปลงรายการแรกเป็นภาพก่อนพิมพ์รายการต่อไป"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "การทำซ้ำชิ้นตั้งต้นช่วยคงขนาด รูปแบบตัวอักษร และโครงสร้างไว้ จากนั้นจึงแก้ข้อความ",
+    "Hint": "สังเกตว่าส่วนไหนเหมือนกันทุกอัน และส่วนไหนต่าง",
+    "Coaching": "เวลาออกแบบป้ายหมวดหมู่ สี ตัวอักษร และขอบในควรเป็นชุดเดียวกัน การมีชิ้นตั้งต้นช่วยให้เราเปลี่ยนเฉพาะเนื้อหาแต่ละป้าย",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-114-lesson-1-question-4",
+    "CourseId": 114,
+    "CourseTitle": "ออกแบบแถบนำทางและส่วนท้ายใน Figma",
+    "LessonId": 1,
+    "LessonTitle": "ประกอบเมนูและสร้าง Component ที่ใช้ซ้ำ",
+    "Prompt": "หน้าแรกกับหน้าบทเรียนต้องใช้แถบนำทางเดียวกัน แต่ใช้ส่วนท้ายคนละแบบ ควรจัด Components อย่างไรให้แก้แถบนำทางพร้อมกันได้?",
+    "Choices": [
+      "สร้าง Component เดียวรวมทั้งหน้า แล้วคัดลอกทั้งก้อน",
+      "สร้างแถบนำทางแยกเป็นสอง Component ที่หน้าตาเหมือนกัน",
+      "สร้าง Component ของแถบนำทางแยกจากส่วนท้าย แล้วใช้ Instance ของแถบนำทางบนทั้งสองหน้า",
+      "วางแถบนำทางเป็นกลุ่มธรรมดาแล้วคัดลอกออกจากกัน"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "การแยกส่วนที่ต้องใช้ร่วมกันเป็น Component ทำให้แก้แถบนำทางครั้งเดียวได้ ขณะที่แต่ละหน้ามีส่วนท้ายของตัวเอง",
+    "Hint": "แยกสิ่งที่ทั้งสองหน้าใช้ร่วมกันจากสิ่งที่เปลี่ยนตามหน้า",
+    "Coaching": "เมื่อมีส่วนที่ต้องแก้พร้อมกันกับส่วนที่แต่ละหน้าจัดต่างกัน ให้นึกถึงการแบ่งชิ้นงานเป็นขอบเขตอิสระ แบบนี้การแก้ชิ้นหนึ่งไม่ต้องลากอีกชิ้นมาผูกด้วย",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-115-lesson-1-question-1",
+    "CourseId": 115,
+    "CourseTitle": "ทำต้นแบบที่กดได้ใน Figma",
+    "LessonId": 1,
+    "LessonTitle": "เชื่อมหน้าจอและทดลองเส้นทาง",
+    "Prompt": "ต้องการให้คลิกปุ่มแล้วไปยังหน้ารายละเอียด ในโหมด Prototype ต้องกำหนดสิ่งใด",
+    "Choices": [
+      "เปลี่ยนสีของปุ่มเพียงอย่างเดียว",
+      "ตั้งการตอบสนองต่อการคลิกเพื่อนำทางไปยัง Frame รายละเอียด",
+      "เปลี่ยนชื่อ Frame ให้ตรงกับข้อความปุ่มเท่านั้น"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "การตอบสนองต้องมีตัวกระตุ้นและการกระทำ เช่น คลิกแล้ว Navigate to ไปยัง Frame ที่ต้องการ",
+    "Hint": "คิดถึงสองอย่างที่ต้องจับคู่กัน เมื่อเกิดอะไร แล้วให้ไปที่ไหน",
+    "Coaching": "การเชื่อมต้นแบบประกอบด้วยเหตุการณ์ที่ผู้ใช้ทำกับผลลัพธ์ที่ตามมา เช่น การแตะรูปแล้วเปิดหน้าที่เกี่ยวข้อง",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-115-lesson-1-question-2",
+    "CourseId": 115,
+    "CourseTitle": "ทำต้นแบบที่กดได้ใน Figma",
+    "LessonId": 1,
+    "LessonTitle": "เชื่อมหน้าจอและทดลองเส้นทาง",
+    "Prompt": "หลังเชื่อมหน้าจอแล้ว วิธีใดเหมาะที่สุดสำหรับตรวจว่าเส้นทางทำงาน",
+    "Choices": [
+      "เปิด Present แล้วกดตามขั้นตอนที่ผู้ใช้จะทำจริง",
+      "ตรวจเพียงว่าชื่อไฟล์สะกดถูก",
+      "ส่งภาพนิ่งหน้าแรกให้ผู้ทดสอบแทน"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "การเปิดต้นแบบและกดตามเส้นทางจริงจะช่วยพบว่ามีลิงก์พาผิดหน้า หรือมีขั้นตอนที่ขาดอยู่",
+    "Hint": "ลองคิดเหมือนเป็นผู้ใช้ที่ไม่รู้ว่าผู้ออกแบบลากเส้นเชื่อมไว้ตรงไหน",
+    "Coaching": "การมองผังช่วยเห็นเส้นเชื่อม แต่ยังไม่รู้ว่าจุดกดและปลายทางจริงตรงกับที่คาดไหม ลองจำลองลำดับการใช้งานตั้งแต่จุดเริ่มจนถึงเป้าหมาย",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-115-lesson-1-question-3",
+    "CourseId": 115,
+    "CourseTitle": "ทำต้นแบบที่กดได้ใน Figma",
+    "LessonId": 1,
+    "LessonTitle": "เชื่อมหน้าจอและทดลองเส้นทาง",
+    "Prompt": "เหตุใดจึงควรแชร์ต้นแบบให้ผู้อื่นลองก่อนเริ่มเขียนโค้ด",
+    "Choices": [
+      "ต้นแบบจะสร้างฐานข้อมูลพร้อมใช้ให้เอง",
+      "ต้นแบบทำให้ทุกการออกแบบผ่านการทดสอบทันที",
+      "เพื่อฟังข้อเสนอแนะเกี่ยวกับเส้นทางและแก้จุดติดขัดได้ก่อนลงมือพัฒนา"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "ต้นแบบช่วยให้คนลองปฏิสัมพันธ์และสังเกตปัญหาได้ตั้งแต่ยังปรับงานได้ง่าย",
+    "Hint": "คิดว่าอะไรปรับได้ง่ายกว่าระหว่างแบบทดลองกับระบบที่สร้างเสร็จ",
+    "Coaching": "ต้นแบบเปิดโอกาสให้เห็นปัญหาจากการลงมือใช้ เช่น คนพยายามกดสิ่งที่ไม่ใช่ปุ่ม ยิ่งพบก่อนเริ่มพัฒนา ยิ่งมีเวลาเปลี่ยนแนวทางโดยไม่ต้องแก้งานที่สร้างเสร็จแล้ว",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-115-lesson-1-question-4",
+    "CourseId": 115,
+    "CourseTitle": "ทำต้นแบบที่กดได้ใน Figma",
+    "LessonId": 1,
+    "LessonTitle": "เชื่อมหน้าจอและทดลองเส้นทาง",
+    "Prompt": "ตอนทดสอบต้นแบบ กดจากหน้ารายการไปหน้ารายละเอียดได้ แต่ปุ่ม «กลับ» บนหน้ารายละเอียดกดแล้วไม่ทำงาน ควรแก้ตรงไหน?",
+    "Choices": [
+      "กำหนดการตอบสนองเมื่อคลิกปุ่ม «กลับ» ให้ไปยัง Frame หน้ารายการ แล้วลองเส้นทางทั้งไปและกลับ",
+      "เพิ่มการเชื่อมจากหน้ารายการไปหน้ารายละเอียดซ้ำอีกครั้ง",
+      "เปลี่ยนปุ่ม «กลับ» ให้ใหญ่ขึ้นโดยคงการเชื่อมหน้าจอเดิม",
+      "ตั้ง Frame หน้ารายละเอียดเป็นจุดเริ่มของต้นแบบแทนหน้ารายการ"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "เส้นทางไปและกลับต้องมีการตอบสนองที่เหมาะกับปุ่มแต่ละตัว การลองกดทั้งสองทิศทางช่วยยืนยันว่าปลายทางถูกต้อง",
+    "Hint": "ทางไปใช้ได้แล้ว ลองไล่เฉพาะชิ้นที่ควบคุมทางย้อนกลับ",
+    "Coaching": "การเชื่อมหน้าจอไม่ได้ทำให้ปุ่มอีกฝั่งทำงานอัตโนมัติ ให้ตรวจว่าจุดกดในหน้าปัจจุบันรับเหตุการณ์หรือยัง และเมื่อเกิดเหตุการณ์ปลายทางเป็นหน้าที่ต้องการหรือเปล่า",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-116-lesson-1-question-1",
+    "CourseId": 116,
+    "CourseTitle": "รู้ข้อจำกัดของ Generative AI",
+    "LessonId": 1,
+    "LessonTitle": "เลือกใช้ความสามารถของ AI ให้เหมาะกับงาน",
+    "Prompt": "AI ตอบด้วยชื่อบทความและลิงก์ที่ดูสมจริง แต่เปิดลิงก์ไม่ได้ ก่อนนำไปอ้างอิงควรทำอย่างไร",
+    "Choices": [
+      "ยอมรับเพราะรูปแบบการอ้างอิงถูกต้อง",
+      "นำชื่อบทความไปใส่ในรายงานแล้วค่อยตรวจถ้าถูกถาม",
+      "ค้นหาแหล่งต้นฉบับและยืนยันว่ารองรับข้อความนั้นจริง",
+      "ให้ AI ยืนยันอีกครั้งแล้วใช้คำตอบเดิม"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "AI สามารถสร้างข้อความอ้างอิงที่ฟังดูสมจริงได้ การพบต้นฉบับและอ่านเนื้อหาที่เกี่ยวข้องช่วยยืนยันทั้งแหล่งและข้ออ้าง",
+    "Hint": "ชื่อที่ฟังดูจริงต่างจากหลักฐานที่ตรวจย้อนกลับได้",
+    "Coaching": "พอเจอข้อมูลอ้างอิงที่เปิดไม่ได้ ให้แยกสองคำถามไว้ก่อนว่าแหล่งนั้นมีอยู่จริงหรือไม่ และเนื้อหาที่พบสนับสนุนประเด็นที่กำลังจะใช้หรือเปล่า",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-116-lesson-1-question-2",
+    "CourseId": 116,
+    "CourseTitle": "รู้ข้อจำกัดของ Generative AI",
+    "LessonId": 1,
+    "LessonTitle": "เลือกใช้ความสามารถของ AI ให้เหมาะกับงาน",
+    "Prompt": "ผู้เรียนให้ AI สรุปเอกสารยาวมาก และผลลัพธ์ข้ามข้อสำคัญช่วงท้าย วิธีใดแก้ปัญหาได้ตรงที่สุด",
+    "Choices": [
+      "แบ่งเอกสารเป็นส่วนที่จัดการได้ สรุปแต่ละส่วนแล้วตรวจข้อสรุปรวมกับต้นฉบับ",
+      "เปลี่ยนภาษาของคำขออย่างเดียว",
+      "ส่งเอกสารฉบับเดิมซ้ำโดยไม่ระบุส่วนที่ตกหล่น",
+      "ขอให้ตอบสั้นลงเพื่อให้ AI อ่านข้อมูลได้ทั้งหมด"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "ขนาดข้อมูลที่ AI ใช้พิจารณาพร้อมกันมีขีดจำกัด การแบ่งงานทำให้ตรวจการตกหล่นและอ้างกลับไปยังส่วนต้นฉบับได้ง่ายขึ้น",
+    "Hint": "ลองคิดว่าข้อมูลส่วนท้ายควรได้รับการตรวจแยกหรือไม่",
+    "Coaching": "เมื่อต้องสรุปข้อมูลมาก ความผิดพลาดจะซ่อนในส่วนที่ไม่ได้ตรวจ ลองนึกถึงการจดหัวข้อสำคัญทีละบทแล้วเทียบภาพรวมกับสารบัญก่อนส่ง",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-116-lesson-1-question-3",
+    "CourseId": 116,
+    "CourseTitle": "รู้ข้อจำกัดของ Generative AI",
+    "LessonId": 1,
+    "LessonTitle": "เลือกใช้ความสามารถของ AI ให้เหมาะกับงาน",
+    "Prompt": "ถ้าต้องใส่วันปิดรับสมัครของรอบปัจจุบันลงประกาศ ควรตรวจข้อมูลจากที่ใดก่อนเผยแพร่",
+    "Choices": [
+      "ข้อความที่ AI จำได้จากข้อมูลเดิม",
+      "ประกาศล่าสุดของหน่วยงานเจ้าของการสมัคร",
+      "วันที่ที่ AI หลายตัวตอบตรงกัน",
+      "ฉบับร่างประกาศของปีก่อน"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "วันปิดรับสมัครเปลี่ยนได้และคำตอบจาก AI อาจใช้ข้อมูลเก่า ประกาศปัจจุบันจากหน่วยงานเจ้าของเรื่องใช้ยืนยันวันได้โดยตรง",
+    "Hint": "ข้อมูลนี้มีวันหมดอายุ ลองหาเจ้าของเรื่องและรอบที่ประกาศ",
+    "Coaching": "ถ้าต้องตรวจเวลาเปิดสถานที่ คำตอบที่ตรงกับวันนี้มาจากผู้มีหน้าที่อัปเดตเวลานั้น พร้อมวันที่หรือรุ่นที่ตรงกับกรณีของเรา",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-116-lesson-1-question-4",
+    "CourseId": 116,
+    "CourseTitle": "รู้ข้อจำกัดของ Generative AI",
+    "LessonId": 1,
+    "LessonTitle": "เลือกใช้ความสามารถของ AI ให้เหมาะกับงาน",
+    "Prompt": "คุณมีประกาศฉบับที่ทีมยืนยันข้อมูลแล้ว และอยากให้คนทั่วไปอ่านง่ายขึ้น วิธีใช้ AI ข้อใดเหมาะกับความสามารถและข้อจำกัดที่สุด?",
+    "Choices": [
+      "ให้ AI ปรับภาษาและเติมสถิติที่คิดว่าเกี่ยวข้อง แล้วนำไปใช้ทันที",
+      "ให้ AI ประเมินเองว่าข้อมูลต้นฉบับยังเป็นปัจจุบันหรือไม่โดยไม่ให้แหล่งตรวจสอบ",
+      "ถาม AI ว่าคนทั่วไปจะเข้าใจประกาศอย่างไร แล้วใช้คำทำนายเป็นผลทดสอบกับผู้อ่าน",
+      "ให้ AI ร่างฉบับภาษาง่ายจากข้อความที่ยืนยันแล้ว จากนั้นเทียบว่าข้อเท็จจริงและเงื่อนไขยังตรงกับต้นฉบับ"
+    ],
+    "CorrectChoice": 3,
+    "Explanation": "การปรับถ้อยคำเป็นงานที่ AI ช่วยร่างได้ แต่ยังต้องเทียบกับข้อความอ้างอิงเพื่อยืนยันว่าไม่ได้บิดความหมายหรือเพิ่มข้อเท็จจริงใหม่",
+    "Hint": "สิ่งที่ต้องเปลี่ยนคือวิธีสื่อสาร ลองหาส่วนที่ต้องรักษาไว้",
+    "Coaching": "ตัวอย่างเช่น ถ้าย่อคู่มือแล้วเงื่อนไขเรื่องอายุเปลี่ยน ความอ่านง่ายจะไม่มีประโยชน์ ให้เทียบส่วนที่มีตัวเลข ข้อยกเว้น และความหมายสำคัญก่อนใช้ร่าง",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-117-lesson-1-question-1",
+    "CourseId": 117,
+    "CourseTitle": "แบ่งงานให้ AI อย่างมีเป้าหมาย",
+    "LessonId": 1,
+    "LessonTitle": "มอบหมายงานโดยพิจารณาความเสี่ยงและบทบาท",
+    "Prompt": "ทีมจะเลือกว่าจะใช้ AI ช่วยทำรายงานหรือไม่ ก้าวแรกควรเป็นอะไร",
+    "Choices": [
+      "ตกลงให้ AI ทำทุกส่วนแล้วมาดูผล",
+      "เลือกเครื่องมือยอดนิยมให้เสร็จก่อน",
+      "เริ่มจากเขียนคำสั่งยาวโดยไม่กำหนดผู้รับรายงาน",
+      "กำหนดเป้าหมาย ผู้รับ และเกณฑ์ว่างานสำเร็จเมื่อไร"
+    ],
+    "CorrectChoice": 3,
+    "Explanation": "การเข้าใจปัญหาก่อนช่วยให้เลือกได้ว่า AI มีประโยชน์ในส่วนใดและควรตรวจผลงานอย่างไร",
+    "Hint": "ก่อนเลือกคนหรือเครื่องมือ ลองอธิบายงานที่อยากให้เกิดขึ้น",
+    "Coaching": "ถ้าจะทำโปสเตอร์ ควรรู้ก่อนว่าคนดูต้องทำอะไรหลังอ่าน และเราจะรู้ได้อย่างไรว่าข้อความทำหน้าที่สำเร็จ เมื่อเห็นจุดหมายแล้วจึงแบ่งงานได้ง่าย",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-117-lesson-1-question-2",
+    "CourseId": 117,
+    "CourseTitle": "แบ่งงานให้ AI อย่างมีเป้าหมาย",
+    "LessonId": 1,
+    "LessonTitle": "มอบหมายงานโดยพิจารณาความเสี่ยงและบทบาท",
+    "Prompt": "ต้องวิเคราะห์ตารางข้อมูล แต่เครื่องมือ AI ที่มีรองรับเฉพาะข้อความ ควรทำอย่างไร",
+    "Choices": [
+      "ทบทวนสิ่งที่เครื่องมือรองรับ แล้วเลือกเครื่องมือที่เหมาะหรือทำส่วนตารางด้วยวิธีอื่น",
+      "ป้อนชื่อไฟล์อย่างเดียวแล้วให้ AI เดาตัวเลข",
+      "สั่งให้เครื่องมือเปิดไฟล์ซ้ำจนกว่าจะตอบ",
+      "ให้ AI ร่างตัวเลขที่เหมาะกับรายงานแทนข้อมูลจริง"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "การรู้ว่าระบบทำอะไรได้ช่วยหลีกเลี่ยงการมอบหมายงานที่เครื่องมือไม่มีข้อมูลหรือความสามารถรองรับ",
+    "Hint": "ตรวจว่าเครื่องมือรับข้อมูลรูปแบบที่โจทย์ต้องใช้ได้จริงไหม",
+    "Coaching": "ความสามารถของเครื่องมือเป็นข้อจำกัดของงานที่มอบให้ ถ้าเครื่องมือเข้าไม่ถึงข้อมูลต้นทาง อย่าถือว่ามันอ่านหรือวิเคราะห์สิ่งนั้นได้จากชื่อไฟล์อย่างเดียว",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-117-lesson-1-question-3",
+    "CourseId": 117,
+    "CourseTitle": "แบ่งงานให้ AI อย่างมีเป้าหมาย",
+    "LessonId": 1,
+    "LessonTitle": "มอบหมายงานโดยพิจารณาความเสี่ยงและบทบาท",
+    "Prompt": "กำลังทำอีเมลแจ้งวันเปิดบริการให้ลูกค้า การแบ่งงานแบบใดเหมาะที่สุด",
+    "Choices": [
+      "ให้ AI เลือกวันที่และส่งอีเมลเอง",
+      "ให้ AI ร่างข้อความจากวันเปิดที่ทีมยืนยันแล้ว แล้วให้คนตรวจฉบับสุดท้ายก่อนส่ง",
+      "เขียนข้อความเองแล้วให้ AI เปลี่ยนวันเปิดให้ดูเหมาะสม",
+      "ให้ AI ประเมินว่าควรเปิดบริการวันใดจากโทนข้อความ"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "AI ช่วยจัดถ้อยคำได้ ส่วนทีมยังคุมข้อเท็จจริงและตัดสินใจว่าข้อความสุดท้ายพร้อมส่งหรือไม่",
+    "Hint": "แยกงานเลือกถ้อยคำกับงานยืนยันข้อเท็จจริงและอนุมัติ",
+    "Coaching": "งานเขียนมีทั้งส่วนที่ใช้ช่วยร่างได้กับส่วนที่ต้องมีผู้รับผิดชอบ เช่น เวลาแจ้งค่าบริการ คนอ่านจะใช้ตัวเลขไปตัดสินใจ จึงต้องรู้ที่มาและตรวจฉบับพร้อมส่ง",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-117-lesson-1-question-4",
+    "CourseId": 117,
+    "CourseTitle": "แบ่งงานให้ AI อย่างมีเป้าหมาย",
+    "LessonId": 1,
+    "LessonTitle": "มอบหมายงานโดยพิจารณาความเสี่ยงและบทบาท",
+    "Prompt": "ทีมมีความคิดเห็นจากผู้เรียนหลายสิบข้อความและต้องเลือกว่าเรื่องไหนควรปรับก่อน การแบ่งงานใดเหมาะสมที่สุด?",
+    "Choices": [
+      "ให้ AI เลือกเรื่องที่จะปรับและประกาศแผนเองจากจำนวนคำที่พบบ่อย",
+      "ให้ AI ช่วยจัดหมวดข้อความเบื้องต้น แล้วให้ทีมเทียบกับข้อมูลเดิมและตัดสินใจตามผลกระทบต่อผู้เรียน",
+      "ให้ทีมจัดหมวดทั้งหมดก่อน แล้วให้ AI อนุมัติว่าจะเปลี่ยนอะไร",
+      "ให้ AI จัดลำดับจากข้อความตัวอย่างเพียงชิ้นเดียว เพื่อให้ทีมเปลี่ยนตามได้เร็ว"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "AI ช่วยจัดระเบียบข้อมูลเพื่อประหยัดเวลาได้ ส่วนทีมยังตรวจความหมายของข้อความและรับผิดชอบการจัดลำดับงาน",
+    "Hint": "อะไรคือการจัดข้อมูล และอะไรคือการตัดสินใจที่มีผลต่อผู้เรียน",
+    "Coaching": "การช่วยรวมความเห็นที่คล้ายกันลดงานอ่านซ้ำ แต่จำนวนข้อความไม่เท่ากับความสำคัญของปัญหา การเลือกลำดับแก้ยังต้องใช้บริบทและผลกระทบจริง",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-118-lesson-1-question-1",
+    "CourseId": 118,
+    "CourseTitle": "เขียน Prompt ให้ได้คำตอบตรงงาน",
+    "LessonId": 1,
+    "LessonTitle": "เปลี่ยนคำสั่งกว้างให้เป็นโจทย์ที่ลงมือทำได้",
+    "Prompt": "ต้องการสรุปบันทึกประชุมให้ผู้จัดการอ่านเร็ว คำสั่งใดให้ข้อมูลที่จำเป็นชัดที่สุด",
+    "Choices": [
+      "ช่วยสรุปข้อมูลทั้งหมดให้ดีที่สุด",
+      "สรุปบันทึกที่แนบสำหรับผู้จัดการเป็น 3 หัวข้อ หัวข้อละไม่เกิน 20 คำ และแยกงานที่ต้องติดตาม",
+      "ช่วยสรุปเป็นภาษาสวย ๆ ใช้ข้อมูลอะไรก็ได้",
+      "เขียนเป็นรายงานฉบับเต็ม ความยาวและรูปแบบตามสะดวก"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "คำสั่งระบุแหล่งข้อมูล ผู้รับ รูปแบบ และความยาว AI จึงมีเงื่อนไขชัดเจนสำหรับจัดคำตอบ",
+    "Hint": "ลองหาโจทย์ที่บอกว่าเอาข้อมูลไหนไปทำอะไร ใครจะอ่าน และอยากได้หน้าตาแบบไหน",
+    "Coaching": "สำหรับสรุปใช้ประชุม ข้อกำหนดเรื่องความยาวและรูปแบบช่วยคุมเวลาอ่าน ถ้ามีรายการที่ผู้อ่านต้องลงมือทำ ระบุให้แยกจากเนื้อหาสรุปด้วย",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-118-lesson-1-question-2",
+    "CourseId": 118,
+    "CourseTitle": "เขียน Prompt ให้ได้คำตอบตรงงาน",
+    "LessonId": 1,
+    "LessonTitle": "เปลี่ยนคำสั่งกว้างให้เป็นโจทย์ที่ลงมือทำได้",
+    "Prompt": "ต้องการให้ AI เขียนป้ายประกาศหลายชิ้นในรูปแบบเดียวกัน วิธีใดสื่อรูปแบบได้ตรงที่สุด",
+    "Choices": [
+      "ให้เพียงชื่อของสถานที่จัดงาน",
+      "กำหนดให้ใช้คำเดิมทุกคำในทุกป้าย",
+      "ขอให้คิดรูปแบบใหม่ในแต่ละชิ้น",
+      "แนบตัวอย่างหนึ่งป้ายและระบุว่าส่วนใดต้องคงรูปแบบและส่วนใดให้เปลี่ยน"
+    ],
+    "CorrectChoice": 3,
+    "Explanation": "ตัวอย่างทำให้โครงสร้างที่คาดหวังเห็นเป็นรูปธรรม การแยกส่วนคงที่กับส่วนเปลี่ยนได้ทำให้ใช้แพตเทิร์นซ้ำได้โดยไม่ลอกเนื้อหา",
+    "Hint": "ตัวอย่างที่จับต้องได้ทำให้คำว่า «รูปแบบเดียวกัน» ชัดขึ้น",
+    "Coaching": "จินตนาการว่าต้องทำป้ายหลายสาขา ตำแหน่งหัวเรื่องอาจเหมือนเดิมทุกชิ้น แต่ชื่อสาขาเปลี่ยนได้ การชี้สองส่วนนี้แยกกันช่วยลดการคัดลอกเนื้อหาผิด",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-118-lesson-1-question-3",
+    "CourseId": 118,
+    "CourseTitle": "เขียน Prompt ให้ได้คำตอบตรงงาน",
+    "LessonId": 1,
+    "LessonTitle": "เปลี่ยนคำสั่งกว้างให้เป็นโจทย์ที่ลงมือทำได้",
+    "Prompt": "ถ้าโจทย์คือวิเคราะห์ข้อความหลายชุดแล้วร่างประกาศ ควรแบ่งคำขออย่างไร",
+    "Choices": [
+      "ขอให้จัดประเด็นก่อน ตรวจประเด็นที่ได้ แล้วจึงให้ร่างประกาศตามข้อมูลที่ยืนยัน",
+      "ให้ร่างประกาศก่อนอ่านข้อมูล แล้วเติมข้อเท็จจริงที่เดาได้",
+      "รวมทุกอย่างในประโยคสั้นโดยไม่ระบุผลลัพธ์ระหว่างทาง",
+      "ขอเฉพาะภาษาที่สละสลวยโดยไม่กำหนดใจความ"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "การแยกงานซับซ้อนเป็นขั้นทำให้ตรวจผลระหว่างทางได้ และช่วยแก้จุดผิดก่อนส่งต่อไปยังขั้นถัดไป",
+    "Hint": "หาจุดตรวจระหว่างทำความเข้าใจข้อมูลกับเขียนข้อความส่งต่อ",
+    "Coaching": "เมื่อผลขั้นแรกเป็นวัตถุดิบของขั้นต่อไป ความผิดในขั้นแรกจะติดไปกับร่างด้วย ลองวางขั้นตอนให้มีจังหวะยืนยันประเด็นก่อนนำไปเขียน",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-118-lesson-1-question-4",
+    "CourseId": 118,
+    "CourseTitle": "เขียน Prompt ให้ได้คำตอบตรงงาน",
+    "LessonId": 1,
+    "LessonTitle": "เปลี่ยนคำสั่งกว้างให้เป็นโจทย์ที่ลงมือทำได้",
+    "Prompt": "คุณจะให้ AI ร่างข้อความแจ้งเปลี่ยนเวลาทำการ แต่ทีมยังไม่ยืนยันเวลาใหม่ คำสั่งใดช่วยให้ได้ร่างที่นำไปทำต่อได้โดยไม่เดาข้อมูล?",
+    "Choices": [
+      "ช่วยเขียนประกาศให้เป็นทางการที่สุด",
+      "เขียนประกาศพร้อมเวลาที่เหมาะสมกับลูกค้าส่วนใหญ่",
+      "ร่างประกาศสั้นสำหรับลูกค้าด้วยภาษาสุภาพ เว้นช่อง [เวลาใหม่] ไว้จนกว่าทีมจะยืนยัน",
+      "เขียนให้เหมือนประกาศครั้งก่อนและใช้เวลาเดิมไปก่อน"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "คำสั่งนี้ระบุผู้รับ รูปแบบ น้ำเสียง และวิธีจัดการข้อมูลที่ยังขาด จึงได้ร่างพร้อมแก้ต่อโดยไม่มีเวลาที่เดาขึ้นมา",
+    "Hint": "คิดก่อนว่าร่างที่ดีควรจัดการกับข้อมูลที่ยังไม่รู้ยังไง",
+    "Coaching": "คำสั่งที่ดีอธิบายวิธีแทนข้อมูลที่ไม่ทราบไว้ด้วย เช่น ให้ทำเครื่องหมายรอเติมในจุดที่ทีมยังต้องตัดสินใจ แบบนี้เราตรวจและแก้ร่างต่อได้โดยไม่เข้าใจผิดว่าเป็นข้อมูลยืนยันแล้ว",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-119-lesson-1-question-1",
+    "CourseId": 119,
+    "CourseTitle": "ตรวจคำตอบ AI ก่อนนำไปใช้",
+    "LessonId": 1,
+    "LessonTitle": "ประเมินผลงาน วิธีทำงาน และการตอบสนอง",
+    "Prompt": "ข้อใดเป็นการประเมินตัวผลงานที่ AI สร้างขึ้น",
+    "Choices": [
+      "สังเกตว่า AI รับฟังคำแก้ไขไหม",
+      "ถามว่า AI จัดลำดับขั้นตอนการทำงานอย่างไร",
+      "เปิดบันทึกต้นฉบับและเทียบว่าชื่อผู้รับผิดชอบในสรุปถูกต้องหรือไม่",
+      "เปลี่ยนเวลาที่ส่งคำขอเพื่อให้ได้คำตอบเร็วขึ้น"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "การเทียบข้อเท็จจริงในสรุปกับต้นฉบับตรวจคุณภาพของผลงานที่ได้โดยตรง",
+    "Hint": "เน้นตรวจสิ่งที่ออกมาเป็นชิ้นงานและอ่านได้จริง",
+    "Coaching": "การประเมินผลลัพธ์คือเช็กว่าสิ่งที่ผู้อ่านเห็นมีข้อมูลตรงและใช้ได้ เช่น ตรวจว่าข้อสรุปเก็บงานที่คนต้องทำครบ ส่วนการไล่ดูขั้นตอนเป็นการตรวจอีกแบบ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-119-lesson-1-question-2",
+    "CourseId": 119,
+    "CourseTitle": "ตรวจคำตอบ AI ก่อนนำไปใช้",
+    "LessonId": 1,
+    "LessonTitle": "ประเมินผลงาน วิธีทำงาน และการตอบสนอง",
+    "Prompt": "ข้อใดเป็นการตรวจวิธีทำงานของ AI",
+    "Choices": [
+      "ตรวจว่ามันนำตัวเลขช่วงเดียวกันมาเปรียบเทียบก่อนสรุปผลหรือไม่",
+      "นับว่าข้อสรุปใช้คำทั้งหมดกี่คำ",
+      "ตรวจว่าคำตอบสุดท้ายสะกดชื่อคนถูกไหม",
+      "เลือกคำตอบที่อ่านง่ายที่สุดโดยไม่ตรวจวิธีคำนวณ"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "การทบทวนฐานเปรียบเทียบช่วยประเมินว่ากระบวนการนำไปสู่ข้อสรุปสมเหตุสมผลหรือไม่",
+    "Hint": "มองหาว่า AI ใช้เหตุผลหรือจัดข้อมูลอย่างไรก่อนสรุป",
+    "Coaching": "ข้อสรุปที่หน้าตาดีอาจเกิดจากวิธีเปรียบเทียบที่ไม่สมเหตุผล ลองตรวจหน่วย กลุ่ม หรือช่วงเวลาที่เอามาเทียบกันเพื่อดูขั้นตอนเบื้องหลัง",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-119-lesson-1-question-3",
+    "CourseId": 119,
+    "CourseTitle": "ตรวจคำตอบ AI ก่อนนำไปใช้",
+    "LessonId": 1,
+    "LessonTitle": "ประเมินผลงาน วิธีทำงาน และการตอบสนอง",
+    "Prompt": "AI ให้รายละเอียดมากเกินไปทุกครั้ง แม้ผู้เรียนขอคำอธิบายสั้นและแจ้งแก้หลายรอบ ควรทำอย่างไร",
+    "Choices": [
+      "ให้ผ่าน เพราะตอบยาวแปลว่ามีข้อมูลครบ",
+      "นำไปใช้แล้วตัดข้อความที่ไม่ต้องการแบบสุ่ม",
+      "ตรวจเฉพาะตัวเลขโดยไม่พิจารณาความเหมาะสม",
+      "ชี้ว่าความยาวไม่ตอบโจทย์ ระบุขอบเขตคำตอบให้ชัด แล้วทดสอบว่าปรับตามได้หรือไม่"
+    ],
+    "CorrectChoice": 3,
+    "Explanation": "คุณภาพการร่วมงานรวมถึงวิธีที่ AI รับฟัง ปรับระดับรายละเอียด และตอบสนองต่อข้อเสนอแนะ",
+    "Hint": "แปลงคำว่า «สั้น» ให้เป็นขอบเขตที่สังเกตได้",
+    "Coaching": "คำติชมที่ตรวจผลได้ เช่น ขอไม่เกินสองประโยค ช่วยให้เห็นว่าเครื่องมือทำตามข้อกำหนดหรือยัง และช่วยให้รู้ว่าควรใช้วิธีอื่นเมื่อปรับแล้วยังไม่ตอบโจทย์",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-119-lesson-1-question-4",
+    "CourseId": 119,
+    "CourseTitle": "ตรวจคำตอบ AI ก่อนนำไปใช้",
+    "LessonId": 1,
+    "LessonTitle": "ประเมินผลงาน วิธีทำงาน และการตอบสนอง",
+    "Prompt": "AI ร่างตารางเปรียบเทียบของสองทีมได้สวย แต่ใช้ยอดรายสัปดาห์ของทีมหนึ่งเทียบกับยอดรายเดือนของอีกทีม ควรทำอะไรก่อนใช้ข้อสรุป?",
+    "Choices": [
+      "ตรวจช่วงเวลาจากข้อมูลต้นฉบับ แล้วให้เปรียบเทียบใหม่บนช่วงเวลาเดียวกัน",
+      "ปรับสีของตารางให้เห็นข้อสรุปชัดขึ้น",
+      "ขอให้ AI เขียนเหตุผลรองรับข้อสรุปเดิมให้ยาวขึ้น",
+      "เลือกใช้ยอดที่ AI จัดไว้เป็นอันดับแรกและระบุว่าตารางเป็นค่าประมาณ"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "ปัญหาอยู่ที่วิธีเปรียบเทียบ การอ้างกลับไปยังต้นฉบับและปรับช่วงเวลาให้ตรงกันช่วยตรวจได้ว่าข้อสรุปใหม่สมเหตุสมผล",
+    "Hint": "ก่อนดูว่าใครมียอดมากกว่า ลองดูว่าทั้งสองยอดนับด้วยมาตรฐานเดียวกันไหม",
+    "Coaching": "การเอาค่าจากคนละช่วงมาเทียบตรง ๆ อาจทำให้ข้อสรุปผิดเหมือนเอาระยะทางต่อวันไปเทียบกับระยะทางทั้งเดือน ลองตรวจตัวตั้งและฐานเปรียบเทียบก่อนคำนวณใหม่",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-120-lesson-1-question-1",
+    "CourseId": 120,
+    "CourseTitle": "ใช้ AI อย่างรับผิดชอบ",
+    "LessonId": 1,
+    "LessonTitle": "ดูแลข้อมูล ผู้รับ และงานที่เผยแพร่",
+    "Prompt": "ต้องการให้ AI ช่วยสรุปแนวโน้มจากข้อเสนอแนะของลูกค้า แต่ข้อมูลมีชื่อและเบอร์โทร ควรเริ่มอย่างไร",
+    "Choices": [
+      "ป้อนทั้งหมดเพราะชื่อช่วยให้ AI สรุปได้เร็ว",
+      "ตรวจนโยบายขององค์กร และตัดข้อมูลระบุตัวบุคคลที่ไม่จำเป็นก่อนใช้เครื่องมือที่ได้รับอนุญาต",
+      "ปิดชื่อผู้ส่งในรายงานสุดท้ายอย่างเดียว",
+      "ขอให้ AI ไม่จำข้อมูลแล้วส่งไฟล์ฉบับเต็มเข้าไป"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "ความรับผิดชอบเริ่มก่อนส่งข้อมูล การลดข้อมูลที่ไม่จำเป็นและเลือกเครื่องมือที่ได้รับอนุญาตช่วยลดการเปิดเผยโดยไม่ตั้งใจ",
+    "Hint": "ก่อนนำข้อมูลเข้าเครื่องมือ ลองถามว่าแต่ละช่องจำเป็นต่อผลสรุปจริงไหม",
+    "Coaching": "งานสรุปแนวโน้มมักต้องการเนื้อหาความเห็นมากกว่าชื่อเจ้าของความเห็น ให้คิดถึงขอบเขตการใช้ข้อมูลและสิทธิของผู้ที่ให้ข้อมูลก่อนเลือกเครื่องมือ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-120-lesson-1-question-2",
+    "CourseId": 120,
+    "CourseTitle": "ใช้ AI อย่างรับผิดชอบ",
+    "LessonId": 1,
+    "LessonTitle": "ดูแลข้อมูล ผู้รับ และงานที่เผยแพร่",
+    "Prompt": "องค์กรกำหนดให้เปิดเผยบทบาทของ AI ในรายงาน และ AI ช่วยร่างบทนำ ควรเขียนอย่างไร",
+    "Choices": [
+      "แจ้งว่า AI ช่วยร่างบทนำและทีมตรวจแก้ก่อนเผยแพร่",
+      "บอกว่า AI เป็นผู้รับผิดชอบเนื้อหาทั้งหมด",
+      "ไม่แจ้ง เพราะหัวหน้าทีมเป็นคนกดส่ง",
+      "แจ้งเพียงชื่อโปรแกรมโดยไม่ระบุว่านำมาใช้ส่วนไหน"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "คำอธิบายที่ระบุงานที่ AI ช่วยและส่วนที่คนตรวจทำให้ผู้อ่านเข้าใจบทบาทของทั้งสองฝ่ายได้",
+    "Hint": "คำเปิดเผยควรทำให้ผู้อ่านรู้ว่าใครทำส่วนไหน",
+    "Coaching": "ถ้าเครื่องมือช่วยจัดโครงหัวข้อ ให้บอกเฉพาะงานนั้นและอธิบายขั้นตอนของคนต่อจากนั้น ความโปร่งใสไม่จำเป็นต้องใช้คำกว้างจนผู้อ่านคิดว่าเครื่องมือเขียนทั้งฉบับ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-120-lesson-1-question-3",
+    "CourseId": 120,
+    "CourseTitle": "ใช้ AI อย่างรับผิดชอบ",
+    "LessonId": 1,
+    "LessonTitle": "ดูแลข้อมูล ผู้รับ และงานที่เผยแพร่",
+    "Prompt": "ก่อนเผยแพร่ข้อความที่ AI ช่วยร่าง ขั้นตอนใดแสดงความรับผิดชอบต่อผลลัพธ์",
+    "Choices": [
+      "ส่งทันทีเพราะใช้เครื่องมือที่มีชื่อเสียง",
+      "ให้ AI ยืนยันเองว่าทุกตัวเลขถูกต้องแล้วเผยแพร่",
+      "ตรวจข้อเท็จจริงและความเหมาะสมกับแหล่งต้นฉบับ แล้วให้ผู้รับผิดชอบอนุมัติ",
+      "ตรวจเพียงการสะกดคำและเก็บแหล่งข้อมูลไว้ตรวจทีหลัง"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "ผู้เผยแพร่ยังต้องตอบได้ว่าข้อเท็จจริงมาจากไหนและผ่านการทบทวนหรือยัง การตรวจและอนุมัติก่อนส่งช่วยคุมความเสี่ยง",
+    "Hint": "มองหาขั้นตอนที่ยืนยันแหล่งข้อมูลและมีคนรับผิดชอบงาน",
+    "Coaching": "ลองนึกถึงการเผยแพร่ตารางกิจกรรม ผู้รับต้องใช้ข้อมูลไปวางแผน ฉบับพร้อมส่งจึงควรผ่านการอ่านทวนโดยคนที่ยืนยันข้อมูลได้และตรวจได้ว่ามีหลักฐานรองรับ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-120-lesson-1-question-4",
+    "CourseId": 120,
+    "CourseTitle": "ใช้ AI อย่างรับผิดชอบ",
+    "LessonId": 1,
+    "LessonTitle": "ดูแลข้อมูล ผู้รับ และงานที่เผยแพร่",
+    "Prompt": "หลังส่งประกาศที่ AI ช่วยร่าง คุณพบว่าวันจัดกิจกรรมผิดและผู้รับอาจวางแผนตามประกาศเดิม ควรจัดการอย่างไร?",
+    "Choices": [
+      "แก้ต้นฉบับเงียบ ๆ เพราะฉบับใหม่มีข้อมูลถูกต้องแล้ว",
+      "ยืนยันวันที่จากผู้รับผิดชอบ แล้วแจ้งผู้รับเดิมอย่างชัดเจนว่าข้อมูลส่วนใดได้รับการแก้ไข",
+      "ให้ AI เขียนคำอธิบายใหม่ แต่รอให้ผู้รับถามก่อนค่อยส่ง",
+      "แจ้งเพียงว่าประกาศร่างโดย AI โดยยังไม่ยืนยันวันที่ที่ถูกต้อง"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "ผู้เผยแพร่รับผิดชอบข้อมูลที่ผู้รับใช้ตัดสินใจ การตรวจแหล่งต้นฉบับแล้วส่งคำแก้ไขถึงผู้รับเดิมช่วยลดผลกระทบจากข้อมูลผิด",
+    "Hint": "คิดว่าคนที่เห็นประกาศแรกจะรู้ว่าต้องเปลี่ยนแผนได้อย่างไร",
+    "Coaching": "ต่อให้เนื้อหาต้นทางกลับมาถูกต้องแล้ว คนที่ได้รับสำเนาเดิมอาจยังทำตามข้อมูลเก่า การแก้ข้อมูลจึงต้องคิดทั้งเรื่องความถูกต้องและวิธีให้ผู้ที่ได้รับผลกระทบทราบ",
+    "UpdatedAt": "2026-11-19T00:00:00Z"
+  },
+  {
+    "Id": "course-101-lesson-2-question-1",
+    "CourseId": 101,
+    "CourseTitle": "ทักทายและแนะนำตัวภาษาอังกฤษ",
+    "LessonId": 2,
+    "LessonTitle": "แนะนำตัวให้เพื่อนร่วมงานรู้จักบทบาท",
+    "Prompt": "คำไหนใช้บอกว่าคุณอยู่ทีมออกแบบ?",
+    "Choices": [
+      "I design the team.",
+      "I’m in charge of every team.",
+      "I’m on the design team."
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "on the design team บอกว่าคุณเป็นสมาชิกของทีม ส่วน in charge of สื่อว่าคุณเป็นผู้รับผิดชอบ",
+    "Hint": "มองหาประโยคที่บอกทีมโดยไม่เพิ่มหน้าที่ที่โจทย์ไม่ได้ระบุ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-101-lesson-2-question-2",
+    "CourseId": 101,
+    "CourseTitle": "ทักทายและแนะนำตัวภาษาอังกฤษ",
+    "LessonId": 2,
+    "LessonTitle": "แนะนำตัวให้เพื่อนร่วมงานรู้จักบทบาท",
+    "Prompt": "ถ้าทั้งสองทีมร่วมกันทดสอบหน้า Checkout ควรเพิ่มรายละเอียดไหน?",
+    "Choices": [
+      "I work on the checkout flow.",
+      "I go to work at nine.",
+      "I was born in June."
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "รายละเอียดเกี่ยวกับ Checkout ช่วยให้คู่สนทนาเข้าใจว่าคุณเกี่ยวข้องกับงานร่วมกันอย่างไร",
+    "Hint": "เลือกข้อมูลที่อีกฝ่ายใช้คุยต่อเรื่องงานได้",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-101-lesson-3-question-1",
+    "CourseId": 101,
+    "CourseTitle": "ทักทายและแนะนำตัวภาษาอังกฤษ",
+    "LessonId": 3,
+    "LessonTitle": "แนะนำเพื่อนร่วมงานและปิดบทสนทนา",
+    "Prompt": "จะแนะนำ Pete ให้ Maya รู้จักในประชุม ควรพูดอย่างไร?",
+    "Choices": [
+      "Maya, I’d like you to meet Pete from QA.",
+      "Maya, did you meet me yesterday?",
+      "Pete, I’d like to leave now."
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "I’d like you to meet เป็นสำนวนแนะนำอีกคนอย่างสุภาพ การบอกทีมช่วยให้รู้ว่าจะคุยเรื่องอะไร",
+    "Hint": "มองหาประโยคที่แนะนำคนและให้บริบท",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-101-lesson-3-question-2",
+    "CourseId": 101,
+    "CourseTitle": "ทักทายและแนะนำตัวภาษาอังกฤษ",
+    "LessonId": 3,
+    "LessonTitle": "แนะนำเพื่อนร่วมงานและปิดบทสนทนา",
+    "Prompt": "ถ้าตกลงกันว่าจะส่งแผนทดสอบช่วงบ่าย ประโยคปิดใดยืนยันได้ชัดที่สุด?",
+    "Choices": [
+      "Thanks. The plan was interesting.",
+      "Thanks for chatting. I’ll send the test plan this afternoon.",
+      "Don’t worry about the plan."
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "ประโยคนี้ระบุทั้งสิ่งที่จะทำและช่วงเวลา อีกฝ่ายจึงรู้ว่าจะได้รับอะไรเมื่อไร",
+    "Hint": "มองหาการกระทำและเวลาในประโยคเดียวกัน",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-102-lesson-2-question-1",
+    "CourseId": 102,
+    "CourseTitle": "พื้นฐาน 12 Tenses ภาษาอังกฤษ",
+    "LessonId": 2,
+    "LessonTitle": "เลือก Past Simple หรือ Present Perfect",
+    "Prompt": "ถ้าระบุว่าประชุมเมื่อวันจันทร์ที่ผ่านมา ประโยคใดเหมาะ?",
+    "Choices": [
+      "We met last Monday.",
+      "We have met last Monday.",
+      "We are meeting last Monday."
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "Last Monday เป็นเวลาที่จบแล้ว จึงใช้กริยาอดีต met",
+    "Hint": "ดูวลีบอกเวลาท้ายประโยคก่อนเลือกกริยา",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-102-lesson-2-question-2",
+    "CourseId": 102,
+    "CourseTitle": "พื้นฐาน 12 Tenses ภาษาอังกฤษ",
+    "LessonId": 2,
+    "LessonTitle": "เลือก Past Simple หรือ Present Perfect",
+    "Prompt": "ต้องการบอกว่ารายงานพร้อมอ่านแล้ว โดยไม่เน้นเวลาที่ทำเสร็จ ใช้ข้อใด?",
+    "Choices": [
+      "I’ll finish the report yesterday.",
+      "I’ve finished the report. You can read it now.",
+      "I’m finishing the report last week."
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "Present Perfect เชื่อมงานที่ทำเสร็จแล้วกับผลตอนนี้ คือรายงานพร้อมให้อ่าน",
+    "Hint": "ในโจทย์ผลของการกระทำยังสำคัญอยู่ตอนนี้",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-102-lesson-3-question-1",
+    "CourseId": 102,
+    "CourseTitle": "พื้นฐาน 12 Tenses ภาษาอังกฤษ",
+    "LessonId": 3,
+    "LessonTitle": "เล่าเหตุการณ์ที่กำลังเกิดและตั้งเส้นตาย",
+    "Prompt": "ข้อใดสื่อว่าทีมกำลังทดสอบฟอร์มอยู่ตอนนี้?",
+    "Choices": [
+      "We tested the form last month.",
+      "We’re testing the form now.",
+      "We’ll test the form next month."
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "are testing ใช้กับสิ่งที่กำลังเกิด ส่วนตัวเลือกอื่นชี้อดีตหรืออนาคต",
+    "Hint": "หาคำช่วย be และกริยา -ing",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-102-lesson-3-question-2",
+    "CourseId": 102,
+    "CourseTitle": "พื้นฐาน 12 Tenses ภาษาอังกฤษ",
+    "LessonId": 3,
+    "LessonTitle": "เล่าเหตุการณ์ที่กำลังเกิดและตั้งเส้นตาย",
+    "Prompt": "We’ll have finished the test by Friday หมายถึงอะไร?",
+    "Choices": [
+      "ทีมจะเริ่มทดสอบหลังวันศุกร์",
+      "ทีมทดสอบทุกวันศุกร์",
+      "การทดสอบจะเสร็จไม่เกินวันศุกร์"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "by Friday กำหนดเวลาสุดท้าย และ will have finished เน้นว่างานจะเสร็จแล้ว ณ จุดนั้น",
+    "Hint": "แยกว่าโจทย์บอกจุดเริ่มหรือกำหนดเสร็จ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-103-lesson-2-question-1",
+    "CourseId": 103,
+    "CourseTitle": "ชวนคุยและสร้างเครือข่ายในงาน",
+    "LessonId": 2,
+    "LessonTitle": "ถามต่อให้บทสนทนาไหลลื่น",
+    "Prompt": "อีกฝ่ายบอกว่าเขาสนใจช่วงเรื่องราคา ควรถามต่อว่าอะไร?",
+    "Choices": [
+      "Is the venue open tomorrow?",
+      "What did you find useful about the pricing case?",
+      "You agree with the speaker, right?"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "คำถามแรกอิงสิ่งที่เขาเพิ่งพูดและเปิดให้ตอบได้อย่างอิสระ",
+    "Hint": "จับคำสำคัญจากคำตอบก่อนหน้า",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-103-lesson-2-question-2",
+    "CourseId": 103,
+    "CourseTitle": "ชวนคุยและสร้างเครือข่ายในงาน",
+    "LessonId": 2,
+    "LessonTitle": "ถามต่อให้บทสนทนาไหลลื่น",
+    "Prompt": "คำถามใดชวนเล่าประสบการณ์จากงานได้มากที่สุด?",
+    "Choices": [
+      "Is your badge blue?",
+      "You work in sales, don’t you?",
+      "What brought you to this conference?"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "What brought you … เปิดให้เล่าที่มา ส่วนคำถามใช่หรือไม่มักได้คำตอบสั้น",
+    "Hint": "เลือกคำถามที่มีคำตอบได้มากกว่าสองแบบ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-103-lesson-3-question-1",
+    "CourseId": 103,
+    "CourseTitle": "ชวนคุยและสร้างเครือข่ายในงาน",
+    "LessonId": 3,
+    "LessonTitle": "สานต่อการรู้จักกันหลังงาน",
+    "Prompt": "ประโยคใดเหมาะสำหรับขอช่องทางติดต่อ?",
+    "Choices": [
+      "I’ll add you to our group now.",
+      "Give me the contacts of your team.",
+      "Would you be open to connecting on LinkedIn?"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "Would you be open to … ให้ผู้ฟังตอบรับหรือปฏิเสธได้สบายใจ",
+    "Hint": "มองหาการขออนุญาตก่อนลงมือ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-103-lesson-3-question-2",
+    "CourseId": 103,
+    "CourseTitle": "ชวนคุยและสร้างเครือข่ายในงาน",
+    "LessonId": 3,
+    "LessonTitle": "สานต่อการรู้จักกันหลังงาน",
+    "Prompt": "ทักติดตามหลังคุยเรื่อง Meetup ข้อใดชัดเจนที่สุด?",
+    "Choices": [
+      "Great meeting you at the workshop. Here’s the design meetup link we discussed.",
+      "Hi. Do you remember me?",
+      "Please reply quickly to my message."
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "ข้อความแรกบอกจุดที่พบ เรื่องที่คุย และส่งสิ่งที่ตกลงกันไว้",
+    "Hint": "ช่วยให้อีกฝ่ายจำบริบทและรู้จุดประสงค์ของข้อความ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-104-lesson-2-question-1",
+    "CourseId": 104,
+    "CourseTitle": "เขียนอีเมลภาษาอังกฤษในที่ทำงาน",
+    "LessonId": 2,
+    "LessonTitle": "ตั้งหัวข้อและขอให้ลงมือทำ",
+    "Prompt": "หัวข้อใดเหมาะกับอีเมลขอรีวิวร่าง Checkout?",
+    "Choices": [
+      "Important",
+      "Hello team",
+      "Review checkout draft by Tuesday"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "หัวข้อแรกบอกการกระทำ เอกสาร และกำหนด จึงตัดสินใจจัดลำดับได้",
+    "Hint": "ผู้รับควรรู้ว่าต้องทำอะไรโดยอ่านจากหัวข้อ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-104-lesson-2-question-2",
+    "CourseId": 104,
+    "CourseTitle": "เขียนอีเมลภาษาอังกฤษในที่ทำงาน",
+    "LessonId": 2,
+    "LessonTitle": "ตั้งหัวข้อและขอให้ลงมือทำ",
+    "Prompt": "ถ้าต้องการคอมเมนต์ก่อนบ่ายสามของวันอังคาร ประโยคใดขอได้ตรงที่สุด?",
+    "Choices": [
+      "Could you leave your comments by Tuesday at 3 p.m. ICT?",
+      "Please take a look when you have time.",
+      "I need it soon."
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "ประโยคแรกบอกงานและเวลาเฉพาะเจาะจง ทำให้จัดเวลาได้",
+    "Hint": "เทียบว่าข้อใดมีทั้งงานที่ขอและเส้นตาย",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-104-lesson-3-question-1",
+    "CourseId": 104,
+    "CourseTitle": "เขียนอีเมลภาษาอังกฤษในที่ทำงาน",
+    "LessonId": 3,
+    "LessonTitle": "ติดตามอีเมลอย่างสุภาพ",
+    "Prompt": "มีเธรดขออนุมัติร่างเดิมอยู่ ควรติดตามอย่างไร?",
+    "Choices": [
+      "ตอบในเธรดเดิม ระบุฉบับร่างและกำหนดล่าสุด",
+      "ส่งอีเมลเปล่าชื่อ Urgent ถึงคนเพิ่ม",
+      "สร้างเธรดใหม่ที่บอกเพียงว่า Please respond"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "การตอบในเธรดเดิมช่วยให้เห็นสิ่งที่คุย การระบุฉบับป้องกันการรีวิวผิดไฟล์",
+    "Hint": "ให้ผู้รับย้อนดูภูมิหลังได้ทันที",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-104-lesson-3-question-2",
+    "CourseId": 104,
+    "CourseTitle": "เขียนอีเมลภาษาอังกฤษในที่ทำงาน",
+    "LessonId": 3,
+    "LessonTitle": "ติดตามอีเมลอย่างสุภาพ",
+    "Prompt": "ประโยคไหนเปิดโอกาสให้ผู้รับแจ้งว่าทำไม่ทัน?",
+    "Choices": [
+      "I assume you will meet the deadline.",
+      "If the timeline is tight, please let me know.",
+      "Please ignore this if you are busy."
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "ประโยคแรกอนุญาตให้แจ้งอุปสรรคอย่างเป็นกลางโดยยังรักษาคำขอไว้",
+    "Hint": "เลือกสำนวนที่ชวนให้อีกฝ่ายแจ้งกลับเมื่อมีปัญหา",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-105-lesson-2-question-1",
+    "CourseId": 105,
+    "CourseTitle": "สัมภาษณ์งานภาษาอังกฤษสำหรับมือใหม่",
+    "LessonId": 2,
+    "LessonTitle": "เล่าประสบการณ์ด้วย STAR",
+    "Prompt": "ส่วนใดใน STAR ควรบอกว่าคุณแบ่ง Checklist ตามฟีเจอร์อย่างไร?",
+    "Choices": [
+      "Action",
+      "Situation",
+      "Result"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "Action คือช่วงอธิบายการลงมือทำและเหตุผลที่เลือกวิธีนั้น",
+    "Hint": "แยกสิ่งที่ทำออกจากปัญหาและผลที่ตามมา",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-105-lesson-2-question-2",
+    "CourseId": 105,
+    "CourseTitle": "สัมภาษณ์งานภาษาอังกฤษสำหรับมือใหม่",
+    "LessonId": 2,
+    "LessonTitle": "เล่าประสบการณ์ด้วย STAR",
+    "Prompt": "ถ้าไม่มีตัวเลขยืนยันผล ควรจบคำตอบอย่างไร?",
+    "Choices": [
+      "ประมาณว่าประสิทธิภาพเพิ่ม 70%",
+      "บอกผลจริง เช่น ทีมทดสอบงานหลักทันก่อนเดโม",
+      "ตัดผลออกแล้วเล่าสถานการณ์อีกครั้ง"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "ผลเชิงคุณภาพใช้ได้เมื่ออธิบายชัดและตรวจสอบได้",
+    "Hint": "เลือกผลที่ยืนยันได้จากประสบการณ์",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-105-lesson-3-question-1",
+    "CourseId": 105,
+    "CourseTitle": "สัมภาษณ์งานภาษาอังกฤษสำหรับมือใหม่",
+    "LessonId": 3,
+    "LessonTitle": "ถามกลับและปิดการสัมภาษณ์",
+    "Prompt": "คำถามใดช่วยให้รู้ว่าทีมคาดหวังอะไรจากผู้เริ่มงาน?",
+    "Choices": [
+      "What color is the meeting room?",
+      "What would success look like in the first three months?",
+      "Can I skip all future feedback?"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "คำตอบจะช่วยให้เห็นเป้าหมายและเกณฑ์ประเมินในช่วงเริ่มงาน",
+    "Hint": "เลือกคำถามที่ช่วยให้ประเมินผลที่ทีมต้องการได้",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-105-lesson-3-question-2",
+    "CourseId": 105,
+    "CourseTitle": "สัมภาษณ์งานภาษาอังกฤษสำหรับมือใหม่",
+    "LessonId": 3,
+    "LessonTitle": "ถามกลับและปิดการสัมภาษณ์",
+    "Prompt": "ยังไม่รู้ว่าทีมจะติดต่อกลับเมื่อไร ควรปิดอย่างไร?",
+    "Choices": [
+      "Please decide now.",
+      "I’ll assume I start on Monday.",
+      "Thank you for your time. What are the next steps?"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "การขอบคุณและถามขั้นตอนถัดไปช่วยวางแผนการติดตาม",
+    "Hint": "มองหาประโยคที่ถามขั้นตอนโดยไม่สรุปผลเอง",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-106-lesson-2-question-1",
+    "CourseId": 106,
+    "CourseTitle": "HTML สำหรับหน้าเว็บแรก",
+    "LessonId": 2,
+    "LessonTitle": "จัดโครงหน้าให้สื่อความหมาย",
+    "Prompt": "ส่วนใดควรครอบหัวเรื่องและกำหนดการของหน้า?",
+    "Choices": [
+      "nav",
+      "main",
+      "title"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "main ระบุส่วนเนื้อหาหลักของหน้า ส่วน nav ใช้จัดกลุ่มลิงก์นำทาง",
+    "Hint": "หาป้ายกำกับที่บอกบทบาทของเนื้อหาหลัก",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-106-lesson-2-question-2",
+    "CourseId": 106,
+    "CourseTitle": "HTML สำหรับหน้าเว็บแรก",
+    "LessonId": 2,
+    "LessonTitle": "จัดโครงหน้าให้สื่อความหมาย",
+    "Prompt": "ถ้า h2 ดูใหญ่ไป ควรแก้อย่างไร?",
+    "Choices": [
+      "เปลี่ยนเป็น h5 ทุกหัวข้อ",
+      "ทำทุกหัวเรื่องเป็นข้อความหนาใน span",
+      "คง h2 ไว้และปรับขนาดด้วย CSS"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "การปรับ CSS ทำให้คงโครงสร้างหัวเรื่องและเลือกหน้าตาให้เหมาะกับงานได้",
+    "Hint": "ลำดับเนื้อหาและขนาดตัวอักษรปรับได้แยกกัน",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-106-lesson-3-question-1",
+    "CourseId": 106,
+    "CourseTitle": "HTML สำหรับหน้าเว็บแรก",
+    "LessonId": 3,
+    "LessonTitle": "ใส่ภาพและลิงก์ที่คนใช้ได้จริง",
+    "Prompt": "ไฟล์ index.html กับโฟลเดอร์ images อยู่ในโฟลเดอร์เดียวกัน จะเรียก map.png อย่างไร?",
+    "Choices": [
+      "../images/map.png",
+      "index.html/map.png",
+      "images/map.png"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "images/map.png เริ่มค้นจากโฟลเดอร์ของ HTML ส่วน ../ ถอยออกไปหนึ่งระดับ",
+    "Hint": "เริ่มนับตำแหน่งจากไฟล์ HTML แล้วตามชื่อโฟลเดอร์",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-106-lesson-3-question-2",
+    "CourseId": 106,
+    "CourseTitle": "HTML สำหรับหน้าเว็บแรก",
+    "LessonId": 3,
+    "LessonTitle": "ใส่ภาพและลิงก์ที่คนใช้ได้จริง",
+    "Prompt": "ภาพแผนที่มีข้อมูลเส้นทางที่จำเป็น ควรใช้ alt แบบไหน?",
+    "Choices": [
+      "แผนที่จากประตูหลักไปห้องประชุมชั้น 2",
+      "ภาพ",
+      "map.png"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "alt ที่ดีถ่ายทอดหน้าที่และข้อมูลสำคัญของภาพได้",
+    "Hint": "ถ้ามองไม่เห็นภาพ ผู้อ่านต้องรู้อะไรจากตำแหน่งนี้",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-107-lesson-2-question-1",
+    "CourseId": 107,
+    "CourseTitle": "จัดสไตล์หน้าเว็บด้วย CSS",
+    "LessonId": 2,
+    "LessonTitle": "เข้าใจขนาดกล่องก่อนจัดวาง",
+    "Prompt": "การ์ดด้านบนกว้างเท่าไรเมื่อวัดถึงขอบนอกของ border?",
+    "Choices": [
+      "274px",
+      "264px",
+      "240px"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "border-box รวม padding และ border ไว้ใน width ส่วน margin ยังอยู่นอกกรอบ",
+    "Hint": "ดูว่า box-sizing กำหนดให้ width วัดถึงตรงไหน",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-107-lesson-2-question-2",
+    "CourseId": 107,
+    "CourseTitle": "จัดสไตล์หน้าเว็บด้วย CSS",
+    "LessonId": 2,
+    "LessonTitle": "เข้าใจขนาดกล่องก่อนจัดวาง",
+    "Prompt": "ถ้าอยากเว้นระหว่างข้อความกับเส้นขอบด้านใน ควรปรับอะไร?",
+    "Choices": [
+      "padding",
+      "margin",
+      "z-index"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "padding คือระยะด้านใน ส่วน margin เว้นพื้นที่ด้านนอก",
+    "Hint": "ลองชี้ตำแหน่งระยะที่จะปรับในกล่อง",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-107-lesson-3-question-1",
+    "CourseId": 107,
+    "CourseTitle": "จัดสไตล์หน้าเว็บด้วย CSS",
+    "LessonId": 3,
+    "LessonTitle": "ทำการ์ดให้เรียงตามขนาดจอ",
+    "Prompt": "ตัวอย่างนี้แสดงกี่คอลัมน์ที่ความกว้าง viewport 390px?",
+    "Choices": [
+      "1 คอลัมน์",
+      "2 คอลัมน์",
+      "0 คอลัมน์"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "เงื่อนไข min-width: 680px ยังไม่ทำงาน Grid จึงใช้คอลัมน์โดยปริยายหนึ่งคอลัมน์",
+    "Hint": "เทียบความกว้างจอกับเงื่อนไข min-width",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-107-lesson-3-question-2",
+    "CourseId": 107,
+    "CourseTitle": "จัดสไตล์หน้าเว็บด้วย CSS",
+    "LessonId": 3,
+    "LessonTitle": "ทำการ์ดให้เรียงตามขนาดจอ",
+    "Prompt": "วิธีไหนช่วยตรวจ responsive ได้เหมาะที่สุด?",
+    "Choices": [
+      "ทดสอบเฉพาะจอที่ออกแบบไว้",
+      "ทดลองย่อจอด้วยข้อความสั้นและยาวแล้วดูว่าการ์ดมีพื้นที่พอ",
+      "ซ่อนทุกการ์ดเมื่อจอแคบ"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "การใช้เนื้อหาหลายความยาวเผยปัญหาตัดคำและล้นที่จอขนาดต่าง ๆ",
+    "Hint": "ทดสอบช่วงใกล้จุดที่เลย์เอาต์จะเปลี่ยนด้วย",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-108-lesson-2-question-1",
+    "CourseId": 108,
+    "CourseTitle": "JavaScript จากตัวแปรถึงเงื่อนไข",
+    "LessonId": 2,
+    "LessonTitle": "เขียนเงื่อนไขที่ครอบคลุมค่าขอบ",
+    "Prompt": "ถ้า score เป็น 60 และ submitted เป็น true ค่า passed เป็นอะไร?",
+    "Choices": [
+      "true",
+      "false",
       "undefined"
     ],
     "CorrectChoice": 0,
-    "Explanation": "Index \u0E02\u0E2D\u0E07 Array \u0E43\u0E19 JavaScript \u0E40\u0E23\u0E34\u0E48\u0E21\u0E15\u0E49\u0E19\u0E17\u0E35\u0E48 0 \u0E40\u0E2A\u0E21\u0E2D \u0E14\u0E31\u0E07\u0E19\u0E31\u0E49\u0E19\u0E2A\u0E21\u0E32\u0E0A\u0E34\u0E01\u0E15\u0E31\u0E27\u0E41\u0E23\u0E01\u0E04\u0E37\u0E2D skills[0] = \u0027UX\u0027",
-    "Hint": "\u0E15\u0E33\u0E41\u0E2B\u0E19\u0E48\u0E07\u0E41\u0E23\u0E01\u0E02\u0E2D\u0E07 Array \u0E40\u0E23\u0E34\u0E48\u0E21\u0E19\u0E31\u0E1A\u0E17\u0E35\u0E48 0",
-    "UpdatedAt": "2026-10-25T17:48:16.8686047Z"
+    "Explanation": ">= รวมค่าที่เท่ากับเกณฑ์ และทั้งสองเงื่อนไขเป็นจริง",
+    "Hint": "ดูว่ามีเครื่องหมายเท่ากับรวมอยู่หรือไม่",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-108-lesson-2-question-2",
+    "CourseId": 108,
+    "CourseTitle": "JavaScript จากตัวแปรถึงเงื่อนไข",
+    "LessonId": 2,
+    "LessonTitle": "เขียนเงื่อนไขที่ครอบคลุมค่าขอบ",
+    "Prompt": "ถ้าคะแนน 80 แต่ยังไม่ได้ส่งงาน ตัวอย่างนี้ให้ผลอะไร?",
+    "Choices": [
+      "true เพราะคะแนนสูงกว่า 60",
+      "false เพราะเงื่อนไขหนึ่งเป็นเท็จ",
+      "true เพราะ submitted ยังไม่ได้ใช้"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "&& ต้องให้ทุกเงื่อนไขเป็นจริง ดังนั้นคะแนนอย่างเดียวไม่พอ",
+    "Hint": "ตรวจค่าทั้งซ้ายและขวาของ &&",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-108-lesson-3-question-1",
+    "CourseId": 108,
+    "CourseTitle": "JavaScript จากตัวแปรถึงเงื่อนไข",
+    "LessonId": 3,
+    "LessonTitle": "ใช้เงื่อนไขกับรายการคะแนน",
+    "Prompt": "ตัวอย่างนี้นับได้กี่คน?",
+    "Choices": [
+      "1",
+      "2",
+      "3"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "60 และ 82 ผ่านเงื่อนไข ส่วน 48 ถูกข้าม",
+    "Hint": "ไล่ตรวจค่าทีละตัวรวมค่าที่เท่ากับเกณฑ์",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-108-lesson-3-question-2",
+    "CourseId": 108,
+    "CourseTitle": "JavaScript จากตัวแปรถึงเงื่อนไข",
+    "LessonId": 3,
+    "LessonTitle": "ใช้เงื่อนไขกับรายการคะแนน",
+    "Prompt": "ถ้าแทน scores ด้วย [] ตอนจบ count จะเป็นเท่าไร?",
+    "Choices": [
+      "1",
+      "undefined",
+      "0"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "ลูปไม่มีสมาชิกให้ประมวลผล ตัวนับจึงยังเป็น 0",
+    "Hint": "ดูค่าที่ตัวนับได้รับก่อนเข้าลูป",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-109-lesson-2-question-1",
+    "CourseId": 109,
+    "CourseTitle": "ตัวแปร Python สำหรับมือใหม่",
+    "LessonId": 2,
+    "LessonTitle": "แปลงข้อความให้พร้อมคำนวณ",
+    "Prompt": "ข้อใดแปลงข้อความ 2.5 เป็นตัวเลขสำหรับคำนวณได้?",
+    "Choices": [
+      "int(\"2.5\")",
+      "float(\"2.5\")",
+      "str(\"2.5\")"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "float รับข้อความที่เป็นเลขทศนิยม ส่วน int รับข้อความเลขจำนวนเต็ม",
+    "Hint": "มองหาชนิดที่รองรับจุดทศนิยม",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-109-lesson-2-question-2",
+    "CourseId": 109,
+    "CourseTitle": "ตัวแปร Python สำหรับมือใหม่",
+    "LessonId": 2,
+    "LessonTitle": "แปลงข้อความให้พร้อมคำนวณ",
+    "Prompt": "ถ้าผู้ใช้พิมพ์ abc ให้กับ int ควรจัดการอย่างไร?",
+    "Choices": [
+      "ต่อ abc เข้ากับชื่อสินค้า",
+      "คูณต่อแล้วให้ผู้ใช้ตีความผลเอง",
+      "จับ ValueError แล้วบอกให้กรอกจำนวนเต็ม"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "ข้อความนี้แปลงไม่ได้ ควรแจ้งให้ทราบก่อนใช้ในสูตร",
+    "Hint": "ป้องกันการนำค่าที่ผิดชนิดไปคำนวณต่อ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-109-lesson-3-question-1",
+    "CourseId": 109,
+    "CourseTitle": "ตัวแปร Python สำหรับมือใหม่",
+    "LessonId": 3,
+    "LessonTitle": "คำนวณยอดและจัดรูปแบบให้คนอ่าน",
+    "Prompt": "ยอด 100 บาทลด 10% ต้องคูณด้วยอะไรเพื่อได้ยอดที่จ่าย?",
+    "Choices": [
+      "0.10",
+      "1.10",
+      "0.90"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "หลังหัก 10% จะเหลือ 90% ของยอดเดิม",
+    "Hint": "แยกยอดส่วนลดออกจากยอดหลังหักส่วนลด",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-109-lesson-3-question-2",
+    "CourseId": 109,
+    "CourseTitle": "ตัวแปร Python สำหรับมือใหม่",
+    "LessonId": 3,
+    "LessonTitle": "คำนวณยอดและจัดรูปแบบให้คนอ่าน",
+    "Prompt": "นิพจน์ f\"{12.5:.2f}\" แสดงอย่างไร?",
+    "Choices": [
+      "12.50",
+      "12.5",
+      "12.500"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": ".2f ทำให้แสดงตัวเลขทศนิยมคงที่สองตำแหน่ง",
+    "Hint": "ดูตัวเลขหน้าตัวอักษร f",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-110-lesson-2-question-1",
+    "CourseId": 110,
+    "CourseTitle": "Git และ GitHub ตั้งแต่ Commit แรก",
+    "LessonId": 2,
+    "LessonTitle": "ทำงานบน Branch และเปิด Pull Request",
+    "Prompt": "จะส่งงานจาก feature/course-layout เข้า master ต้องตั้งค่า PR อย่างไร?",
+    "Choices": [
+      "base เป็น feature/course-layout และ compare เป็น master",
+      "ตั้งทั้งสองเป็น master",
+      "base เป็น master และ compare เป็น feature/course-layout"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "base คือปลายทางที่จะรับโค้ด ส่วน compare คือ Branch ต้นทางของงาน",
+    "Hint": "โค้ดจะไหลจาก Branch ไหนไป Branch ไหน",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-110-lesson-2-question-2",
+    "CourseId": 110,
+    "CourseTitle": "Git และ GitHub ตั้งแต่ Commit แรก",
+    "LessonId": 2,
+    "LessonTitle": "ทำงานบน Branch และเปิด Pull Request",
+    "Prompt": "เมื่อ push Branch งานขึ้น GitHub แล้ว เกิดอะไรขึ้นทันที?",
+    "Choices": [
+      "Branch งานบน GitHub มี commit ใหม่",
+      "master ได้รับทุกไฟล์ทันที",
+      "GitHub ย้าย commit ออกจาก Branch ในเครื่อง"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "Push ส่ง commit ไปยัง Branch ที่กำหนด การรวมเข้า master เกิดเมื่อ Merge PR",
+    "Hint": "Push กับ Merge ทำหน้าที่คนละขั้น",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-110-lesson-3-question-1",
+    "CourseId": 110,
+    "CourseTitle": "Git และ GitHub ตั้งแต่ Commit แรก",
+    "LessonId": 3,
+    "LessonTitle": "ตรวจไฟล์ก่อน Commit และแก้ด้วยประวัติ",
+    "Prompt": "หลัง git add แล้ว อยากดูว่าการเปลี่ยนแปลงใดจะถูก Commit ใช้คำสั่งใด?",
+    "Choices": [
+      "git diff --staged",
+      "git branch",
+      "git remote -v"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "--staged แสดงสิ่งที่อยู่ใน staging area ซึ่งเป็นชุดข้อมูลที่จะถูก commit",
+    "Hint": "มองหาคำสั่งที่อ่านสถานะหลัง stage",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-110-lesson-3-question-2",
+    "CourseId": 110,
+    "CourseTitle": "Git และ GitHub ตั้งแต่ Commit แรก",
+    "LessonId": 3,
+    "LessonTitle": "ตรวจไฟล์ก่อน Commit และแก้ด้วยประวัติ",
+    "Prompt": "ต้องการย้อนผล commit ที่เพื่อนใช้งานร่วมกันโดยเก็บประวัติ ใช้แนวทางไหน?",
+    "Choices": [
+      "ลบ Branch ของเพื่อน",
+      "สร้าง commit ย้อนผลด้วย git revert แล้วตรวจ diff",
+      "แก้ชื่อ remote เพื่อซ่อน commit"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "Revert เพิ่ม commit ใหม่ที่ตรวจสอบได้และรักษาประวัติที่ทีมแชร์ร่วมกัน",
+    "Hint": "เลือกวิธีที่คนอื่นยังติดตามประวัติเดิมได้",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-111-lesson-2-question-1",
+    "CourseId": 111,
+    "CourseTitle": "เริ่มใช้ Figma และจัดระเบียบไฟล์",
+    "LessonId": 2,
+    "LessonTitle": "ใช้ Page และ Frame ให้ตรงกับงาน",
+    "Prompt": "ถ้าต้องสร้างหน้าล็อกอินเพื่อเชื่อม Prototype ควรครอบด้วยอะไร?",
+    "Choices": [
+      "Frame",
+      "Group อย่างเดียว",
+      "Text layer"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "Frame กำหนดขนาดหน้าจอและใช้เป็นจุดหมายของการนำทางได้",
+    "Hint": "เลือกสิ่งที่เป็นขอบเขตของหน้าจอใน Figma",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-111-lesson-2-question-2",
+    "CourseId": 111,
+    "CourseTitle": "เริ่มใช้ Figma และจัดระเบียบไฟล์",
+    "LessonId": 2,
+    "LessonTitle": "ใช้ Page และ Frame ให้ตรงกับงาน",
+    "Prompt": "ถ้าร่างใหม่ยังไม่พร้อมส่งให้ทีม ควรจัดไว้ตรงไหน?",
+    "Choices": [
+      "ซ่อนไว้ใต้ Frame ที่ใช้งานจริงโดยไม่ตั้งชื่อ",
+      "Page สำหรับ Explorations แยกจาก Screens",
+      "กระจายไว้ในทุก Page"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "แยก Explorations ช่วยให้ทีมรู้ว่าหน้าจอไหนใช้งานและร่างไหนกำลังทดลอง",
+    "Hint": "คิดถึงคนที่เปิดไฟล์มาหางานล่าสุด",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-111-lesson-3-question-1",
+    "CourseId": 111,
+    "CourseTitle": "เริ่มใช้ Figma และจัดระเบียบไฟล์",
+    "LessonId": 3,
+    "LessonTitle": "จัดชื่อเลเยอร์ให้หาและแก้ได้ง่าย",
+    "Prompt": "ชื่อใดช่วยให้เพื่อนหาองค์ประกอบกดส่งฟอร์มได้ง่ายที่สุด?",
+    "Choices": [
+      "Rectangle 48",
+      "Primary action",
+      "Layer copy 2"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "ชื่อตามหน้าที่ช่วยค้นหาได้แม้รูปทรงหรือสีของปุ่มจะเปลี่ยน",
+    "Hint": "มองหาชื่อที่บอกว่าชิ้นงานใช้ทำอะไร",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-111-lesson-3-question-2",
+    "CourseId": 111,
+    "CourseTitle": "เริ่มใช้ Figma และจัดระเบียบไฟล์",
+    "LessonId": 3,
+    "LessonTitle": "จัดชื่อเลเยอร์ให้หาและแก้ได้ง่าย",
+    "Prompt": "ปุ่มไม่ขยับเมื่อย้ายหน้าจอ ควรตรวจอะไรเป็นอย่างแรก?",
+    "Choices": [
+      "เปลี่ยนสีปุ่ม",
+      "สร้าง Page ใหม่ทันที",
+      "ดูว่าปุ่มอยู่ใต้ Frame ในแผง Layers หรือไม่"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "ปุ่มอาจวางทับบน Canvas แต่ไม่ได้อยู่ภายใน Frame ตามโครงสร้างจริง",
+    "Hint": "ตำแหน่งที่มองเห็นอาจต่างจากความเป็นลูกใน Layers",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-112-lesson-2-question-1",
+    "CourseId": 112,
+    "CourseTitle": "ออกแบบปุ่มที่ยืดตามข้อความ",
+    "LessonId": 2,
+    "LessonTitle": "ทำปุ่มหลายสถานะด้วย Variants",
+    "Prompt": "ต้องการสลับสถานะปุ่มโดยยังเป็นปุ่มในชุดเดียวกัน ใช้อะไร?",
+    "Choices": [
+      "เปลี่ยนเป็นภาพ PNG ทุกสถานะ",
+      "Variant property ชื่อ State",
+      "สร้าง Page แยกสำหรับปุ่มแต่ละตัว"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "Variant property ให้ Instance สลับสถานะใน Component Set ได้",
+    "Hint": "มองหาวิธีที่ให้ปุ่มยังมีต้นแบบร่วมกัน",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-112-lesson-2-question-2",
+    "CourseId": 112,
+    "CourseTitle": "ออกแบบปุ่มที่ยืดตามข้อความ",
+    "LessonId": 2,
+    "LessonTitle": "ทำปุ่มหลายสถานะด้วย Variants",
+    "Prompt": "ปุ่มยังส่งไม่ได้เพราะตอบคำถามไม่ครบ ควรช่วยผู้ใช้อย่างไร?",
+    "Choices": [
+      "ลดสีอย่างเดียวโดยไม่บอกสาเหตุ",
+      "ใช้ป้ายว่ากำลังส่งทั้งที่ยังไม่ได้ส่ง",
+      "แสดงสถานะ Disabled และบอกว่าต้องตอบให้ครบ"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "ข้อความบอกเงื่อนไขทำให้รู้ว่าจะเปิดใช้ปุ่มได้อย่างไร",
+    "Hint": "คนนอกทีมควรรู้ว่าต้องทำอะไรต่อ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-112-lesson-3-question-1",
+    "CourseId": 112,
+    "CourseTitle": "ออกแบบปุ่มที่ยืดตามข้อความ",
+    "LessonId": 3,
+    "LessonTitle": "ทดสอบปุ่มด้วยป้ายสั้นและยาว",
+    "Prompt": "ค่าวางขนาดใดให้ปุ่มขยายตามคำบนปุ่ม?",
+    "Choices": [
+      "Fixed width 80 px",
+      "ใช้ขนาด Frame ของทั้งหน้า",
+      "Hug contents"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "Hug contents ปรับขนาดตามเนื้อหาและ Padding",
+    "Hint": "คิดว่าความกว้างควรมาจากตัวข้อความหรือจากกรอบตายตัว",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-112-lesson-3-question-2",
+    "CourseId": 112,
+    "CourseTitle": "ออกแบบปุ่มที่ยืดตามข้อความ",
+    "LessonId": 3,
+    "LessonTitle": "ทดสอบปุ่มด้วยป้ายสั้นและยาว",
+    "Prompt": "วิธีใดช่วยตรวจปุ่มในเลย์เอาต์จริง?",
+    "Choices": [
+      "ลองทั้งข้อความสั้นและยาวใน Container แคบ",
+      "ทดสอบเฉพาะคำว่า OK บนจอใหญ่",
+      "ลดขนาดฟอนต์จนข้อความอยู่บรรทัดเดียวทุกกรณี"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "การลองป้ายจริงในกรอบแคบเผยการล้นและปัญหาพื้นที่กด",
+    "Hint": "เลือกกรณีทดสอบที่ท้าทายข้อจำกัดของปุ่ม",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-113-lesson-2-question-1",
+    "CourseId": 113,
+    "CourseTitle": "จัดเลย์เอาต์ด้วย Figma Auto Layout",
+    "LessonId": 2,
+    "LessonTitle": "เลือก Hug, Fill และ Fixed",
+    "Prompt": "กล่องข้อความควรใช้ค่าอะไรถ้าต้องการให้เต็มความกว้างการ์ด?",
+    "Choices": [
+      "Fixed 1 px",
+      "Hug contents ทุกชั้นโดยไม่กำหนดพื้นที่",
+      "Fill container"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "Fill container ทำให้กล่องปรับตามพื้นที่แม่ในทิศที่กำหนด",
+    "Hint": "ขนาดต้องอิงความกว้างแม่หรือความยาวเนื้อหา",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-113-lesson-2-question-2",
+    "CourseId": 113,
+    "CourseTitle": "จัดเลย์เอาต์ด้วย Figma Auto Layout",
+    "LessonId": 2,
+    "LessonTitle": "เลือก Hug, Fill และ Fixed",
+    "Prompt": "ป้ายหมวดหมู่ต้องพอดีกับคำแต่ละคำ ควรตั้งอย่างไร?",
+    "Choices": [
+      "Hug contents",
+      "Fill container เสมอ",
+      "กำหนดกว้างเท่าหน้าจอ"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "Hug contents ให้กรอบพอดีกับข้อความและ Padding",
+    "Hint": "ป้ายแบบนี้ต้องขยายตามคำที่อยู่ข้างใน",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-113-lesson-3-question-1",
+    "CourseId": 113,
+    "CourseTitle": "จัดเลย์เอาต์ด้วย Figma Auto Layout",
+    "LessonId": 3,
+    "LessonTitle": "ซ้อน Auto Layout และลองย่อจอ",
+    "Prompt": "ถ้าจะเพิ่มระยะระหว่างปุ่มกับป้ายใน Footer ควรแก้ที่ใด?",
+    "Choices": [
+      "gap ของ Footer",
+      "padding ภายนอกของการ์ด",
+      "ชื่อของ Frame"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "gap ควบคุมระยะระหว่างลูกใน Frame เดียวกัน",
+    "Hint": "ดูว่าองค์ประกอบสองชิ้นเป็นลูกของ Frame ไหน",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-113-lesson-3-question-2",
+    "CourseId": 113,
+    "CourseTitle": "จัดเลย์เอาต์ด้วย Figma Auto Layout",
+    "LessonId": 3,
+    "LessonTitle": "ซ้อน Auto Layout และลองย่อจอ",
+    "Prompt": "เมื่อทดสอบที่จอแคบ ควรเตรียมข้อมูลแบบใด?",
+    "Choices": [
+      "ใช้ชื่อสั้นหนึ่งคำกับทุกการ์ด",
+      "ชื่อยาวและข้อความหลายบรรทัด",
+      "ลบข้อความทั้งหมดเพื่อให้ย่อได้"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "เนื้อหาจริงที่ยาวช่วยเผยการล้นและตำแหน่งปุ่มที่เบียดกัน",
+    "Hint": "เลือกข้อมูลที่ทำให้ขอบเขตของเลย์เอาต์เห็นชัด",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-114-lesson-2-question-1",
+    "CourseId": 114,
+    "CourseTitle": "ออกแบบแถบนำทางและส่วนท้ายใน Figma",
+    "LessonId": 2,
+    "LessonTitle": "ทำเมนูเป็น Component ที่ใช้ซ้ำ",
+    "Prompt": "อยากแก้ระยะ Padding ของเมนูทุก Instance ควรแก้ที่ไหน?",
+    "Choices": [
+      "Component หลักของ Nav item",
+      "สร้างภาพแทนรายการเดิม",
+      "แก้ทีละหน้าทุกครั้ง"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "การแก้ Component ต้นทางกระจายรูปแบบให้ Instance ที่เชื่อมอยู่",
+    "Hint": "ใช้ประโยชน์จากการมีแม่แบบเดียว",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-114-lesson-2-question-2",
+    "CourseId": 114,
+    "CourseTitle": "ออกแบบแถบนำทางและส่วนท้ายใน Figma",
+    "LessonId": 2,
+    "LessonTitle": "ทำเมนูเป็น Component ที่ใช้ซ้ำ",
+    "Prompt": "กำลังอยู่บนหน้าคอร์สเรียน ควรตั้ง Active ให้รายการไหน?",
+    "Choices": [
+      "หน้าแรกกับคอร์สเรียนพร้อมกัน",
+      "คอร์สเรียน",
+      "รายการล่าสุดที่ผู้ใช้เคยกดเสมอ"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "Active ระบุตำแหน่งปัจจุบันในชุดนำทาง",
+    "Hint": "สถานะต้องตรงกับหน้าที่กำลังแสดง",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-114-lesson-3-question-1",
+    "CourseId": 114,
+    "CourseTitle": "ออกแบบแถบนำทางและส่วนท้ายใน Figma",
+    "LessonId": 3,
+    "LessonTitle": "ปรับ Navbar และ Footer สำหรับมือถือ",
+    "Prompt": "พื้นที่มือถือไม่พอแสดงลิงก์ทุกอัน ควรทำอย่างไร?",
+    "Choices": [
+      "ลบลิงก์ทุกอันยกเว้นโลโก้",
+      "ใช้ปุ่มเมนูที่เปิดรายการหลักได้",
+      "ย่อทุกคำจนอ่านยาก"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "เมนูแบบเปิดได้เก็บปลายทางและรักษาขนาดที่กดได้",
+    "Hint": "คงการเข้าถึงปลายทางไว้แม้จะซ่อนตอนปิด",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-114-lesson-3-question-2",
+    "CourseId": 114,
+    "CourseTitle": "ออกแบบแถบนำทางและส่วนท้ายใน Figma",
+    "LessonId": 3,
+    "LessonTitle": "ปรับ Navbar และ Footer สำหรับมือถือ",
+    "Prompt": "Footer มือถือมีข้อความภาษาไทยยาว ควรลองเปลี่ยนเป็นอะไร?",
+    "Choices": [
+      "ล็อกทุกข้อความให้อยู่บรรทัดเดียว",
+      "ใช้เฉพาะภาพเส้นคั่น",
+      "กลุ่มลิงก์เรียงแนวตั้ง"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "การเรียงแนวตั้งช่วยให้ข้อความห่อบรรทัดและแต่ละลิงก์มีพื้นที่",
+    "Hint": "เลือกการจัดวางที่ใช้ความสูงได้เมื่อความกว้างจำกัด",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-115-lesson-2-question-1",
+    "CourseId": 115,
+    "CourseTitle": "ทำต้นแบบที่กดได้ใน Figma",
+    "LessonId": 2,
+    "LessonTitle": "เลือก Navigate หรือ Overlay",
+    "Prompt": "เปิดกล่องยืนยันให้ยังเห็นรายการด้านหลัง ควรเลือกคำสั่งไหน?",
+    "Choices": [
+      "Navigate to หน้าใหม่ทุกครั้ง",
+      "Open overlay",
+      "ตั้ง Frame เป็นชื่อ Modal อย่างเดียว"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "Overlay วางกล่องเหนือหน้าปัจจุบันให้ผู้ใช้คงบริบทเดิม",
+    "Hint": "ผู้ใช้ต้องอยู่กับรายการเดิมระหว่างตัดสินใจ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-115-lesson-2-question-2",
+    "CourseId": 115,
+    "CourseTitle": "ทำต้นแบบที่กดได้ใน Figma",
+    "LessonId": 2,
+    "LessonTitle": "เลือก Navigate หรือ Overlay",
+    "Prompt": "ปุ่มยกเลิกในกล่องยืนยันควรทำอะไร?",
+    "Choices": [
+      "นำไปหน้าแรกเสมอ",
+      "ข้ามไปหน้าถัดไป",
+      "ปิด Overlay แล้วกลับไปจุดเดิม"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "การปิด Overlay คืนผู้ใช้ไปยังสิ่งที่กำลังทำ",
+    "Hint": "ตรวจทางออกก่อนถือว่าการโต้ตอบเสร็จ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-115-lesson-3-question-1",
+    "CourseId": 115,
+    "CourseTitle": "ทำต้นแบบที่กดได้ใน Figma",
+    "LessonId": 3,
+    "LessonTitle": "ทดสอบ Prototype จากงานที่ผู้ใช้ต้องทำ",
+    "Prompt": "จะแน่ใจได้อย่างไรว่าทดสอบการหาเวลาเรียนได้จริง?",
+    "Choices": [
+      "เปิดเฉพาะ Frame รายละเอียดตรวจสี",
+      "คลิกเฉพาะปุ่มที่ทีมรู้ว่าทำงานแล้ว",
+      "เริ่มจากรายการและทำภารกิจจนพบเวลาแล้วกลับ"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "ภารกิจต่อเนื่องทดสอบทั้งเส้นทางไปและกลับ",
+    "Hint": "เลือกวิธีที่เลียนแบบเป้าหมายของผู้ใช้",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-115-lesson-3-question-2",
+    "CourseId": 115,
+    "CourseTitle": "ทำต้นแบบที่กดได้ใน Figma",
+    "LessonId": 3,
+    "LessonTitle": "ทดสอบ Prototype จากงานที่ผู้ใช้ต้องทำ",
+    "Prompt": "พบปุ่มกลับกดแล้วไม่ทำงาน ควรทำอะไรต่อ?",
+    "Choices": [
+      "เชื่อมปุ่มให้ย้อนหรือกลับรายการ แล้วลองภารกิจซ้ำ",
+      "ลบปุ่มแล้วข้ามการทดสอบ",
+      "เพิ่มแอนิเมชันให้ปุ่มแต่คงปลายทางว่าง"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "แก้ทางตันและทดสอบจากจุดเริ่มเดิมจะยืนยันว่าผู้ใช้ทำงานจบได้",
+    "Hint": "หลังแก้ให้ตรวจผลด้วยภารกิจเดิม",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-116-lesson-2-question-1",
+    "CourseId": 116,
+    "CourseTitle": "รู้ข้อจำกัดของ Generative AI",
+    "LessonId": 2,
+    "LessonTitle": "แยกคำตอบที่ลื่นไหลออกจากหลักฐาน",
+    "Prompt": "AI บอกวันที่ปิดรับสมัครอย่างมั่นใจ ควรทำอะไร?",
+    "Choices": [
+      "ส่งต่อทันทีเพราะสำนวนเป็นทางการ",
+      "ขอให้ AI ใช้น้ำเสียงมั่นใจขึ้น",
+      "เปิดประกาศเจ้าของโครงการฉบับล่าสุดเพื่อตรวจวันที่"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "สำนวนไม่ได้ยืนยันความถูกต้อง ต้องเทียบกับต้นทางที่เป็นปัจจุบัน",
+    "Hint": "ถามว่าใครเป็นผู้ประกาศวันที่จริง",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-116-lesson-2-question-2",
+    "CourseId": 116,
+    "CourseTitle": "รู้ข้อจำกัดของ Generative AI",
+    "LessonId": 2,
+    "LessonTitle": "แยกคำตอบที่ลื่นไหลออกจากหลักฐาน",
+    "Prompt": "หาแหล่งต้นทางของข้ออ้างไม่พบ ควรทำอย่างไร?",
+    "Choices": [
+      "ระบุว่ายังยืนยันไม่ได้และหยุดใช้ข้อมูลนั้นตัดสินใจ",
+      "เปลี่ยนให้เป็นตัวเลขกลม ๆ",
+      "อ้างชื่อแหล่งที่ดูเป็นทางการแทน"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "การระบุสิ่งที่ยังไม่รู้ช่วยป้องกันการส่งต่อข้ออ้างที่ตรวจไม่ได้",
+    "Hint": "การไม่มีหลักฐานควรสะท้อนในสถานะของข้อมูล",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-116-lesson-3-question-1",
+    "CourseId": 116,
+    "CourseTitle": "รู้ข้อจำกัดของ Generative AI",
+    "LessonId": 3,
+    "LessonTitle": "ทำงานกับข้อมูลที่ตรวจย้อนกลับได้",
+    "Prompt": "AI สรุปชื่อผู้รับผิดชอบที่บันทึกไม่ได้ระบุ ควรแก้อย่างไร?",
+    "Choices": [
+      "แทนชื่อด้วย ยังไม่ระบุ และตรวจประเด็นอื่นต่อ",
+      "ใช้ชื่อนั้นเพราะ AI อาจเดาถูก",
+      "ลบเฉพาะหัวข้อแล้วเก็บชื่อไว้"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "การให้ระบบระบุข้อมูลที่ขาดดีกว่าปล่อยให้เติมชื่อจากการคาดเดา",
+    "Hint": "ถ้าต้นฉบับไม่มีข้อมูล ให้แสดงสถานะข้อมูลที่ขาด",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-116-lesson-3-question-2",
+    "CourseId": 116,
+    "CourseTitle": "รู้ข้อจำกัดของ Generative AI",
+    "LessonId": 3,
+    "LessonTitle": "ทำงานกับข้อมูลที่ตรวจย้อนกลับได้",
+    "Prompt": "คำสั่งใดช่วยให้คนตรวจย้อนกลับได้ง่ายที่สุด?",
+    "Choices": [
+      "สรุปให้ดูดีโดยไม่ต้องอ้างอะไร",
+      "สรุปจากข้อความที่ให้และระบุประโยคต้นทางของแต่ละข้อ",
+      "เติมรายละเอียดที่น่าจะใช่"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "การอ้างตำแหน่งต้นทางช่วยตรวจว่าข้อสรุปมีที่มาจริง",
+    "Hint": "เลือกคำสั่งที่ทำให้กลับไปดูหลักฐานได้",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-117-lesson-2-question-1",
+    "CourseId": 117,
+    "CourseTitle": "แบ่งงานให้ AI อย่างมีเป้าหมาย",
+    "LessonId": 2,
+    "LessonTitle": "แบ่งงานเป็นขั้นและกำหนดคนตรวจ",
+    "Prompt": "ขั้นตอนไหนเหมาะให้ AI ช่วยในงานสรุปประชุม?",
+    "Choices": [
+      "ร่างรายการงานจากบันทึกที่อนุญาต",
+      "ตัดสินข้อขัดแย้งแทนเจ้าของงาน",
+      "ส่งถึงทุกคนโดยไม่ต้องตรวจ"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "การร่างจากข้อมูลที่กำหนดขอบเขตช่วยประหยัดเวลาและยังตรวจได้",
+    "Hint": "เลือกขั้นที่ย้อนกลับไปเทียบกับต้นฉบับได้",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-117-lesson-2-question-2",
+    "CourseId": 117,
+    "CourseTitle": "แบ่งงานให้ AI อย่างมีเป้าหมาย",
+    "LessonId": 2,
+    "LessonTitle": "แบ่งงานเป็นขั้นและกำหนดคนตรวจ",
+    "Prompt": "ใครควรยืนยันผู้รับผิดชอบและกำหนดส่งก่อนส่งสรุป?",
+    "Choices": [
+      "ระบบ AI เพียงอย่างเดียว",
+      "คนที่รับผิดชอบการประชุมหรือเจ้าของงาน",
+      "ผู้รับคนแรกหลังอีเมลออกแล้ว"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "ผู้รับผิดชอบมีบริบทและสามารถแก้ข้อผิดพลาดก่อนเผยแพร่ได้",
+    "Hint": "ให้คนที่ทราบข้อเท็จจริงอนุมัติก่อนส่ง",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-117-lesson-3-question-1",
+    "CourseId": 117,
+    "CourseTitle": "แบ่งงานให้ AI อย่างมีเป้าหมาย",
+    "LessonId": 3,
+    "LessonTitle": "ตั้งเกณฑ์รับงานก่อนใช้ผลลัพธ์",
+    "Prompt": "ในร่างมีคนรับผิดชอบที่หาไม่พบในบันทึก ควรทำอย่างไร?",
+    "Choices": [
+      "ให้คะแนนผ่านเพราะหน้าตาดี",
+      "ส่งกลับแก้เป็น ยังไม่ระบุ หรือเช็กกับเจ้าของงาน",
+      "คงไว้เพราะจะได้ครบทุกช่อง"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "เกณฑ์กำหนดให้ข้อมูลมาจากบันทึก ช่องว่างควรแจ้งหรือตรวจเพิ่มเติม",
+    "Hint": "ความครบและความถูกต้องต้องผ่านพร้อมกัน",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-117-lesson-3-question-2",
+    "CourseId": 117,
+    "CourseTitle": "แบ่งงานให้ AI อย่างมีเป้าหมาย",
+    "LessonId": 3,
+    "LessonTitle": "ตั้งเกณฑ์รับงานก่อนใช้ผลลัพธ์",
+    "Prompt": "เกณฑ์ใดทำให้ผู้ตรวจสองคนประเมินได้ใกล้เคียงกัน?",
+    "Choices": [
+      "ต้องรู้สึกว่าเขียนดี",
+      "เลือกแบบที่ดูฉลาดที่สุด",
+      "ไม่เกิน 5 ข้อ และทุกกำหนดส่งตรวจจากบันทึกได้"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "จำนวนและแหล่งที่มาตรวจสอบได้ชัดเจน ลดการตัดสินตามความรู้สึก",
+    "Hint": "มองหาเกณฑ์ที่นับหรือเทียบหลักฐานได้",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-118-lesson-2-question-1",
+    "CourseId": 118,
+    "CourseTitle": "เขียน Prompt ให้ได้คำตอบตรงงาน",
+    "LessonId": 2,
+    "LessonTitle": "กำหนดรูปแบบและขอบเขตคำตอบ",
+    "Prompt": "ข้อใดทำให้ตรวจได้ง่ายว่าคำตอบตรงรูปแบบ?",
+    "Choices": [
+      "บอกว่าเขียนอะไรก็ได้ให้ดูดี",
+      "กำหนดชื่อตารางสามคอลัมน์และจำกัดสี่แถว",
+      "ขอให้ใช้ภาษามั่นใจขึ้น"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "รูปแบบและจำนวนเป็นเกณฑ์ตรวจที่เห็นได้ทันที",
+    "Hint": "เลือกข้อกำหนดที่คนอ่านเทียบกับผลลัพธ์ได้",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-118-lesson-2-question-2",
+    "CourseId": 118,
+    "CourseTitle": "เขียน Prompt ให้ได้คำตอบตรงงาน",
+    "LessonId": 2,
+    "LessonTitle": "กำหนดรูปแบบและขอบเขตคำตอบ",
+    "Prompt": "ถ้าต้นฉบับไม่บอกผลกระทบ ควรสั่งให้ AI ทำอย่างไร?",
+    "Choices": [
+      "เติมตัวเลขเพื่อให้ทุกช่องดูครบ",
+      "ลบทุกปัญหาที่ไม่มีตัวเลข",
+      "ใส่ ยังไม่ทราบ"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "การระบุข้อมูลที่ขาดทำให้ตารางยังใช้งานได้และตรวจย้อนกลับได้",
+    "Hint": "ให้ผลสะท้อนสิ่งที่มีอยู่ในข้อมูล",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-118-lesson-3-question-1",
+    "CourseId": 118,
+    "CourseTitle": "เขียน Prompt ให้ได้คำตอบตรงงาน",
+    "LessonId": 3,
+    "LessonTitle": "ปรับ Prompt ทีละข้อแล้วเปรียบเทียบ",
+    "Prompt": "ทำไมควรใช้บันทึกชุดเดียวกันเมื่อเทียบ Prompt สองรุ่น?",
+    "Choices": [
+      "เพื่อให้ AI ตอบข้อความเดิมทุกคำ",
+      "เพื่อไม่ต้องอ่านผลลัพธ์",
+      "เพื่อแยกผลของคำสั่งจากผลของข้อมูลที่ต่างกัน"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "เมื่อข้อมูลเหมือนกันจะเห็นชัดว่าการเปลี่ยนคำสั่งปรับผลอย่างไร",
+    "Hint": "ควบคุมสิ่งที่ไม่ได้ตั้งใจจะเปลี่ยน",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-118-lesson-3-question-2",
+    "CourseId": 118,
+    "CourseTitle": "เขียน Prompt ให้ได้คำตอบตรงงาน",
+    "LessonId": 3,
+    "LessonTitle": "ปรับ Prompt ทีละข้อแล้วเปรียบเทียบ",
+    "Prompt": "หลังพบรุ่นที่ดีกว่าในตัวอย่างแรก ควรทำอะไรต่อ?",
+    "Choices": [
+      "ลองข้อมูลอีกชุดและประเมินด้วยเกณฑ์เดิม",
+      "สรุปว่ารุ่นนั้นจะถูกต้องเสมอ",
+      "เปลี่ยนทุกเงื่อนไขพร้อมกันทันที"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "ตัวอย่างใหม่ทดสอบว่าคำสั่งทำงานเกินกรณีที่ใช้ปรับครั้งแรก",
+    "Hint": "มองหาวิธีตรวจความทนทานต่อข้อมูลหลายแบบ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-119-lesson-2-question-1",
+    "CourseId": 119,
+    "CourseTitle": "ตรวจคำตอบ AI ก่อนนำไปใช้",
+    "LessonId": 2,
+    "LessonTitle": "อ่านแหล่งอ้างอิงให้ถึงข้อความต้นทาง",
+    "Prompt": "แหล่งอ้างอิงมีจริงแต่ตัวเลขเป็นของปีที่แล้ว ควรสรุปอย่างไร?",
+    "Choices": [
+      "ใช้ตัวเลขเดิมเปลี่ยนเป็นเดือนนี้",
+      "ใช้เพราะชื่อรายงานคล้ายกัน",
+      "ยังยืนยันตัวเลขของเดือนนี้ไม่ได้"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "ปีและช่วงเวลาเป็นส่วนหนึ่งของข้ออ้าง แหล่งปีก่อนยังไม่ยืนยันผลของเดือนนี้",
+    "Hint": "เทียบช่วงเวลาในคำตอบกับต้นทาง",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-119-lesson-2-question-2",
+    "CourseId": 119,
+    "CourseTitle": "ตรวจคำตอบ AI ก่อนนำไปใช้",
+    "LessonId": 2,
+    "LessonTitle": "อ่านแหล่งอ้างอิงให้ถึงข้อความต้นทาง",
+    "Prompt": "ขั้นไหนช่วยเช็กว่าแหล่งรองรับข้ออ้างจริง?",
+    "Choices": [
+      "หาและอ่านประโยคหรือตารางที่เกี่ยวข้องในต้นทาง",
+      "ดูเพียงสีโลโก้",
+      "เช็กว่าลิงก์เปิดได้แล้วจบ"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "ลิงก์ที่เปิดได้ยังอาจพูดคนละประเด็น ต้องอ่านหลักฐานที่เกี่ยวข้อง",
+    "Hint": "แยกการมีอยู่ของแหล่งออกจากการรองรับข้อความ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-119-lesson-3-question-1",
+    "CourseId": 119,
+    "CourseTitle": "ตรวจคำตอบ AI ก่อนนำไปใช้",
+    "LessonId": 3,
+    "LessonTitle": "ทดสอบคำตอบด้วยกรณีขอบและหาข้อผิดพลาด",
+    "Prompt": "กรณีไหนจับการใช้ > แทน >= ได้ตรงที่สุด?",
+    "Choices": [
+      "คะแนนเท่ากับ 60",
+      "คะแนน 12",
+      "คะแนน 90"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "เมื่อคะแนนตรงเกณฑ์ ผลของ > กับ >= ต่างกัน",
+    "Hint": "หาค่าที่อยู่พอดีระหว่างผ่านกับไม่ผ่าน",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-119-lesson-3-question-2",
+    "CourseId": 119,
+    "CourseTitle": "ตรวจคำตอบ AI ก่อนนำไปใช้",
+    "LessonId": 3,
+    "LessonTitle": "ทดสอบคำตอบด้วยกรณีขอบและหาข้อผิดพลาด",
+    "Prompt": "ระบบให้ผ่านเมื่อไม่มีคะแนน ควรทำอย่างไร?",
+    "Choices": [
+      "ปล่อยผ่านเพราะข้อมูลส่วนใหญ่ครบ",
+      "บันทึกกรณีผิด แก้การจัดการค่าว่าง และทดสอบซ้ำ",
+      "เปลี่ยนคำอธิบายแต่คงผลเดิม"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "ค่าว่างไม่ใช่ผลผ่าน การแก้เงื่อนไขและทดสอบซ้ำช่วยยืนยันพฤติกรรมจริง",
+    "Hint": "ตรวจความหมายของข้อมูลที่หายไปก่อนตัดสินผล",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-120-lesson-2-question-1",
+    "CourseId": 120,
+    "CourseTitle": "ใช้ AI อย่างรับผิดชอบ",
+    "LessonId": 2,
+    "LessonTitle": "ลดข้อมูลส่วนตัวก่อนใช้ AI",
+    "Prompt": "ให้ AI ร่างคำตอบเรื่องส่งช้า จำเป็นต้องให้เบอร์ลูกค้าหรือไม่?",
+    "Choices": [
+      "ไม่จำเป็น ใช้บริบทเรื่องส่งช้าและข้อความตัวอย่างได้",
+      "จำเป็นทุกกรณีเพื่อให้ร่างดูจริง",
+      "ส่งทั้งฐานเพื่อให้ AI คัดเอง"
+    ],
+    "CorrectChoice": 0,
+    "Explanation": "เลือกเฉพาะข้อมูลที่จำเป็นต่อการร่างและลดการเปิดเผยข้อมูลส่วนตัว",
+    "Hint": "แยกข้อมูลสำหรับคิดคำตอบออกจากข้อมูลติดต่อ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-120-lesson-2-question-2",
+    "CourseId": 120,
+    "CourseTitle": "ใช้ AI อย่างรับผิดชอบ",
+    "LessonId": 2,
+    "LessonTitle": "ลดข้อมูลส่วนตัวก่อนใช้ AI",
+    "Prompt": "ลบชื่อแล้วแต่ที่อยู่กับเลขออเดอร์ยังระบุตัวได้ ควรทำอย่างไร?",
+    "Choices": [
+      "ถือว่าปลอดภัยเพราะไม่มีชื่อ",
+      "ตัดหรือแทนสองช่องนั้นก่อนใช้ถ้าไม่จำเป็น",
+      "เพิ่มเบอร์โทรเพื่อให้ข้อมูลสมบูรณ์"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "การระบุบุคคลทำได้จากข้อมูลหลายช่องร่วมกัน การเอาชื่อออกอย่างเดียวอาจไม่พอ",
+    "Hint": "ดูว่ารวมข้อมูลหลายช่องแล้วชี้ไปถึงใครได้หรือไม่",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-120-lesson-3-question-1",
+    "CourseId": 120,
+    "CourseTitle": "ใช้ AI อย่างรับผิดชอบ",
+    "LessonId": 3,
+    "LessonTitle": "บอกบทบาทของ AI และรับผิดชอบงานที่ส่ง",
+    "Prompt": "รายวิชาขอให้เปิดเผยการใช้ AI ข้อใดแจ้งได้ชัดเจน?",
+    "Choices": [
+      "บอกเพียงว่าใช้เครื่องมือหลายอย่าง",
+      "บอกว่าใช้ช่วยจัดโครงและตรวจภาษา พร้อมระบุว่าส่วนข้อเท็จจริงตรวจจากต้นทาง",
+      "แจ้งว่า AI รับผิดชอบทุกเนื้อหาแทนผู้ส่ง"
+    ],
+    "CorrectChoice": 1,
+    "Explanation": "การระบุบทบาทของเครื่องมือและขั้นที่คนตรวจช่วยให้ผู้อ่านประเมินงานได้",
+    "Hint": "ระบุขั้นตอนที่ใช้จริงและใครตรวจงาน",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
+  },
+  {
+    "Id": "course-120-lesson-3-question-2",
+    "CourseId": 120,
+    "CourseTitle": "ใช้ AI อย่างรับผิดชอบ",
+    "LessonId": 3,
+    "LessonTitle": "บอกบทบาทของ AI และรับผิดชอบงานที่ส่ง",
+    "Prompt": "หลังเผยแพร่พบตัวเลขจาก AI ผิด ควรทำอย่างไร?",
+    "Choices": [
+      "ปล่อยไว้เพราะระบบเป็นผู้เขียน",
+      "ลบแหล่งอ้างอิงแล้วเก็บตัวเลขเดิม",
+      "ตรวจต้นทาง แก้ตัวเลข และแจ้งผู้อ่านที่ได้รับผล"
+    ],
+    "CorrectChoice": 2,
+    "Explanation": "เจ้าของงานต้องแก้ข้อมูลและชี้แจงตามผลกระทบ",
+    "Hint": "คิดถึงคนที่จะนำข้อมูลผิดไปตัดสินใจต่อ",
+    "Coaching": "",
+    "UpdatedAt": "2026-11-21T00:00:00Z"
   }
 ]

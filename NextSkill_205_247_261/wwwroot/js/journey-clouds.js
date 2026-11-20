@@ -12,8 +12,9 @@
         seen = sessionStorage.getItem(seenKey) === 'true';
     } catch {}
     const age=Date.now()-marker?.at;
-    const isArriving = !!(marker && boot && marker.courseId === boot.course.courseId && age>=0 && age < (marker.source==='catalog'?60000:900000) && (!marker.url||marker.url===location.pathname+location.search));
-    if(isArriving&&marker.source==='catalog'&&!marker.skip)document.documentElement.classList.add('journey-island-arriving');
+    const seaArrival = marker?.source === 'catalog' || marker?.source === 'home';
+    const isArriving = !!(marker && boot && marker.courseId === boot.course.courseId && age>=0 && age < (seaArrival?60000:900000) && (!marker.url||marker.url===location.pathname+location.search));
+    if(isArriving&&seaArrival&&!marker.skip)document.documentElement.classList.add('journey-island-arriving');
     const label = cloud.querySelector('.jc-label');
     const skip = document.createElement('button');
     skip.type = 'button'; skip.className = 'jc-skip'; skip.textContent = 'ข้ามไปเกาะบทเรียน'; skip.hidden = true;
@@ -69,7 +70,7 @@
     }
     function finishReveal() {
         if(!revealing)return;
-        const inbound=marker?.source==='catalog'&&!marker.skip;
+        const inbound=seaArrival&&!marker.skip;
         close(!inbound);
         if(inbound)Promise.resolve(window.NextSkillArchipelago?.arriveFromLeft()).then(focusRoute);
     }
@@ -87,10 +88,10 @@
         const map = document.getElementById('lesson-map');
         await Promise.race([document.fonts?.ready || Promise.resolve(), delay(800)]);
         if (run !== generation) return;
-        if (marker?.source!=='catalog' && map) window.scrollTo({ top: map.getBoundingClientRect().top + scrollY - 24, behavior: 'instant' });
+        if (!seaArrival && map) window.scrollTo({ top: map.getBoundingClientRect().top + scrollY - 24, behavior: 'instant' });
         await Promise.race([Promise.all([...document.querySelectorAll('#lesson-route img')].map(img => img.decode?.().catch(() => {}))), delay(800)]);
         if (run !== generation) return;
-        if(marker?.source==='catalog'){
+        if(seaArrival){
             const route=document.getElementById('lesson-route');
             const first=route?.querySelector('[data-lesson-id="1"] img');
             if(first){
@@ -112,7 +113,7 @@
         if (label) label.textContent = 'เกาะบทเรียนพร้อมแล้ว';
         const policy = window.NextSkillMotion?.snapshot() || { reduced: reduced.matches, paused: false, hidden: document.hidden };
         if (policy.reduced || policy.paused || policy.hidden) { close(true); return; }
-        const duration = marker?.source==='catalog' ? 700 : seen ? 200 : 900;
+        const duration = seaArrival ? 700 : seen ? 200 : 900;
         cloud.style.setProperty('--jc-reveal-duration', `${duration}ms`);
         // Flush the covered state once, then let CSS own the finite reveal.
         void cloud.offsetWidth;

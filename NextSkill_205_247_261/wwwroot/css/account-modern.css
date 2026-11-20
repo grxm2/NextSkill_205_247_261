@@ -21,13 +21,12 @@ body.nimo-account-theme {
     font-family: 'Prompt', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     background: var(--acc-sky-bg) !important;
     background-attachment: fixed !important;
-    min-height: 100vh;
+    min-height: 100svh;
     margin: 0;
     color: var(--acc-navy-dark);
     display: flex;
     flex-direction: column;
     position: relative;
-    overflow-x: hidden;
 }
 
 /* ==========================================
@@ -418,18 +417,32 @@ body.nimo-account-theme {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 28px 18px 48px;
+    padding: clamp(20px, 4vw, 28px) var(--ns-gutter-end) 48px var(--ns-gutter-start);
     position: relative;
     z-index: 1;
     box-sizing: border-box;
 }
 
+.account-main .content-page {
+    width: min(100%, 880px);
+    margin: clamp(16px, 4vw, 60px) auto;
+}
+
+.account-main .legal-copy { max-width: 720px; }
+.account-main .content-page a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+}
+
+html[data-theme="dark"] .account-main .legal-copy p { color: var(--acc-muted); }
+
 .auth-grid {
     width: 100%;
-    max-width: 1120px;
-    display: grid !important;
-    grid-template-columns: 1.08fr 0.92fr !important;
-    gap: 32px !important;
+    max-width: 540px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(20px, 3vw, 32px);
     align-items: stretch;
     margin: 0 auto;
 }
@@ -441,7 +454,7 @@ body.nimo-account-theme {
 .story-card.nimo-story-card {
     background: var(--acc-card-blue) !important;
     border-radius: var(--acc-card-radius) !important;
-    padding: 38px 36px 32px !important;
+    padding: clamp(20px, 4vw, 38px) clamp(18px, 4vw, 36px) 32px;
     color: #ffffff !important;
     box-shadow: 0 24px 50px rgba(2, 132, 199, 0.35) !important;
     position: relative;
@@ -833,7 +846,8 @@ body.nimo-account-theme {
     background: #ffffff !important;
     border: 1.5px solid #bae6fd !important;
     border-radius: var(--acc-card-radius) !important;
-    padding: 38px 36px !important;
+    min-width: 0;
+    padding: clamp(22px, 4vw, 38px) clamp(18px, 4vw, 36px);
     box-shadow: 0 24px 50px rgba(2, 132, 199, 0.12) !important;
     display: flex;
     flex-direction: column;
@@ -887,7 +901,7 @@ body.nimo-account-theme {
 }
 
 .form-intro {
-    font-size: 13px !important;
+    font-size: 14px !important;
     color: #54758b !important;
     line-height: 1.6 !important;
     margin: 0 0 20px !important;
@@ -907,13 +921,17 @@ body.nimo-account-theme {
 
 .account-types a {
     flex: 1;
+    min-width: 0;
+    min-height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 11px 16px;
+    padding: 9px clamp(6px, 1vw, 16px);
     text-decoration: none;
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
     font-weight: 700;
     color: #64748b;
     border-radius: 12px;
@@ -944,7 +962,7 @@ body.nimo-account-theme {
 
 .field label {
     display: block;
-    font-size: 13px !important;
+    font-size: 14px !important;
     font-weight: 700 !important;
     color: #0c2333 !important;
     margin-bottom: 7px !important;
@@ -987,7 +1005,7 @@ body.nimo-account-theme {
     background: #f8fafc !important;
     border: 2px solid #e2e8f0 !important;
     border-radius: 16px !important;
-    font-size: 14px !important;
+    font-size: 16px !important;
     font-family: inherit !important;
     color: #0c2333 !important;
     outline: none !important;
@@ -996,8 +1014,12 @@ body.nimo-account-theme {
 }
 
 .auth-form .input-icon-wrap input::placeholder {
-    color: #94a3b8 !important;
-    font-size: 13px;
+    color: #607489 !important;
+    font-size: 14px;
+}
+
+.auth-form .input-icon-wrap:has(.password-toggle-eye) input {
+    padding-inline-end: 52px !important;
 }
 
 .auth-form .input-icon-wrap input:focus {
@@ -1010,7 +1032,9 @@ body.nimo-account-theme {
 /* Password Toggle Eye Button */
 .password-toggle-eye {
     position: absolute;
-    right: 12px;
+    inset-inline-end: 3px;
+    min-width: 44px;
+    min-height: 44px;
     background: transparent !important;
     border: none !important;
     color: #94a3b8 !important;
@@ -1034,6 +1058,7 @@ body.nimo-account-theme {
     align-items: center;
     gap: 9px;
     margin: 14px 0 20px;
+    min-height: 44px;
     font-size: 13px;
     color: #54758b;
 }
@@ -1055,8 +1080,9 @@ body.nimo-account-theme {
 }
 
 .check-row label {
-    font-size: 13px !important;
-    line-height: 1.4 !important;
+    padding-block: 9px;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
     cursor: pointer;
     user-select: none;
     color: #475569 !important;
@@ -1129,7 +1155,7 @@ button.btn-auth-submit:active {
 .btn-skip-outline,
 a.btn-skip-outline {
     width: 100% !important;
-    height: 48px !important;
+    min-height: 48px;
     padding: 10px 20px !important;
     background: #ffffff !important;
     border: 2px solid #e2e8f0 !important;
@@ -1168,7 +1194,8 @@ a.btn-skip-outline:active {
 .switch-form {
     text-align: center;
     margin-top: 20px;
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 1.7;
     color: #64748b;
     font-weight: 500;
 }
@@ -1278,13 +1305,9 @@ a.btn-skip-outline:active {
    Responsive Breakpoints
    ========================================== */
 
-@media (max-width: 960px) {
-    .auth-grid {
-        grid-template-columns: 1fr !important;
-        gap: 24px !important;
-    }
+@media (width < 1024px) {
     .ambient-float-card {
-        display: none !important;
+        display: none;
     }
     .site-header {
         padding: 10px 16px !important;
@@ -1292,6 +1315,45 @@ a.btn-skip-outline:active {
     .account-nav-center {
         display: none;
     }
+    .duo-cloud:nth-child(n + 4),
+    .ambient-glow-orb.orb-3,
+    .story-sparkles-orbit .sp-3 {
+        display: none;
+    }
+    .ambient-glow-orb {
+        animation: none;
+        filter: blur(48px);
+    }
+    .hero-mascot-scene {
+        padding-block-start: 84px;
+        min-height: 0;
+    }
+    .mascot-character-art {
+        width: clamp(136px, 50vw, 192px);
+        height: auto;
+        aspect-ratio: 1;
+    }
+    .mascot-speech-pill {
+        inset: auto auto calc(100% + 10px) 50%;
+        translate: -50% 0;
+        width: min(200px, 64vw);
+        white-space: normal;
+        text-align: center;
+        line-height: 1.55;
+    }
+    .speech-tail {
+        left: calc(50% - 7px);
+    }
+}
+
+@media (min-width: 1024px) {
+    .auth-grid {
+        max-width: 1120px;
+        grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+        grid-template-areas: "story form";
+    }
+    .auth-grid .story-card { grid-area: story; }
+    .auth-grid .auth-form { grid-area: form; }
 }
 
 /* Crisp Modern SVG Icons */
@@ -1337,8 +1399,8 @@ a.btn-skip-outline:active {
 .nimo-loading-overlay.full-screen-mode {
     position: fixed !important;
     inset: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
+    max-height: 100dvh;
+    padding: env(safe-area-inset-top) var(--ns-gutter-end) env(safe-area-inset-bottom) var(--ns-gutter-start);
     z-index: 999999 !important;
     display: flex !important;
     flex-direction: column !important;
@@ -2458,7 +2520,8 @@ a.btn-skip-outline:active {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: clamp(14px, 2.5vh, 28px) 24px clamp(16px, 3.2vh, 36px);
+    gap: 12px;
+    padding-block: clamp(14px, 2.5svh, 28px) clamp(16px, 3.2svh, 36px);
     box-sizing: border-box;
 }
 
@@ -2987,7 +3050,7 @@ a.btn-skip-outline:active {
 }
 
 @media (max-width: 768px) {
-    .fs-loading-content { padding: 16px 16px 22px; }
+    .fs-loading-content { padding-block: 16px 22px; }
     .fs-hero-diorama { width: min(460px, 95vw, 52vh); }
     .fs-speech-bubble { margin-top: -12px; padding: 11px 18px; }
     .fs-quote-text { font-size: 14px; }
@@ -3014,6 +3077,11 @@ a.btn-skip-outline:active {
     }
 }
 
+@media (height < 480px) and (orientation: landscape) {
+    .fs-nimo-hero { width: min(120px, 30svh); height: auto; aspect-ratio: 1; }
+    .fs-progress-console { padding-block: 10px; }
+}
+
 /* Shake animation on auth card upon error */
 .form-shake {
     animation: formShake 0.45s ease-in-out !important;
@@ -3029,15 +3097,14 @@ a.btn-skip-outline:active {
    Home-matching Island Ocean Navbar Support
    ========================================== */
 body.nimo-account-theme .ns-navbar.sj-header {
-    background: rgba(255, 255, 255, 0.45) !important;
-    backdrop-filter: blur(20px) saturate(1.35) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(1.35) !important;
+    --ns-liquid-bg: rgba(255, 255, 255, 0.45);
+    --ns-liquid-filter: blur(14px) saturate(1.35);
     border: 1px solid rgba(255, 255, 255, 0.65) !important;
     box-shadow: 0 10px 30px rgba(2, 132, 199, 0.08) !important;
 }
 
 html[data-theme="dark"] body.nimo-account-theme .ns-navbar.sj-header {
-    background: rgba(15, 37, 56, 0.65) !important;
+    --ns-liquid-bg: rgba(15, 37, 56, 0.65);
     border-color: rgba(56, 189, 248, 0.25) !important;
     box-shadow: 0 10px 30px rgba(0, 10, 20, 0.4) !important;
 }
@@ -3075,10 +3142,42 @@ html[data-theme="dark"] .nimo-auth-card .form-intro {
     color: #94a3b8 !important;
 }
 
-html[data-theme="dark"] .input-wrapper input {
+html[data-theme="dark"] :is(.input-wrapper,.auth-form .input-icon-wrap) input {
     background: rgba(11, 28, 44, 0.85) !important;
     border-color: rgba(56, 189, 248, 0.3) !important;
     color: #ffffff !important;
+}
+
+html[data-theme="dark"] .auth-form .input-icon-wrap input::placeholder {
+    color: #a9bfd4 !important;
+}
+
+.auth-form .field small {
+    color: var(--acc-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.auth-form .field .auth-field-placeholder { display: none; }
+
+@media (width < 480px) {
+    .auth-form .field .auth-field-placeholder { display: block; overflow-wrap: anywhere; }
+    .auth-form .input-icon-wrap:has(+ .auth-field-placeholder) input::placeholder,
+    html[data-theme="dark"] .auth-form .input-icon-wrap:has(+ .auth-field-placeholder) input::placeholder {
+        opacity: 0;
+    }
+}
+
+html[data-theme="dark"] .auth-form .switch-form { color: var(--acc-muted); }
+html[data-theme="dark"] .auth-form .switch-form a { color: #8fdcff; }
+
+html[data-theme="dark"] .nimo-account-theme .site-footer {
+    background: #0b2035;
+    border-color: #3c5b73;
+}
+
+html[data-theme="dark"] .nimo-account-theme .site-footer :is(.footer-inner,.footer-tagline,a) {
+    color: #c5dcea;
 }
 
 html[data-theme="dark"] .account-types {

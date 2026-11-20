@@ -13,35 +13,38 @@
             <span class="ns-navbar__wordmark" aria-hidden="true"><partial name="_NextSkillWordmark" /></span>
         </a>
         <button class="ns-navbar__toggle" type="button" aria-expanded="false" aria-controls="nextskill-main-menu" aria-label="เปิดเมนูหลัก" data-navbar-toggle hidden><span aria-hidden="true"></span></button>
-        <nav class="ns-navbar__menu" id="nextskill-main-menu" aria-label="เมนูหลัก">
-            <a class="ns-navbar__link @(home ? "glass" : null)" asp-controller="Home" asp-action="Index" aria-current="@(home ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--home" aria-hidden="true"></span>หน้าแรก</a>
-            <a class="ns-navbar__link @(catalog ? "glass" : null)" asp-controller="Home" asp-action="Courses" aria-current="@(catalog ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--book" aria-hidden="true"></span>คอร์สเรียน</a>
-            <a class="ns-navbar__link @(learning ? "glass" : null)" asp-controller="Learning" asp-action="Island" aria-current="@(learning ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--boat" aria-hidden="true"></span>เกาะของฉัน</a>
-        </nav>
-        <div class="ns-navbar__account">
-            @if (ViewData["JourneyMode"] is not null)
-            {
-                <button class="journey-theme-toggle" type="button" data-theme-toggle aria-label="ธีมกลางคืน" aria-pressed="false" title="เปิดธีมกลางคืน" hidden>
-                    <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
-                    <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 13.3A8.5 8.5 0 0 1 10.7 3.5a8.5 8.5 0 1 0 9.8 9.8Z"/></svg>
-                </button>
-            }
-            @if (authenticated)
-            {
-                <div class="dropdown ns-navbar__profile">
-                    <button class="ns-navbar__avatar" type="button" id="nextskill-profile-menu" data-bs-toggle="dropdown" aria-expanded="false" aria-label="เปิดเมนูบัญชี">
-                        <img src="~/images/nimo-learning.png" asp-append-version="true" width="44" height="44" alt="" /><span aria-hidden="true">⌄</span>
+        <div class="ns-navbar__panel" id="nextskill-main-menu">
+            <nav class="ns-navbar__menu" aria-label="เมนูหลัก">
+                <a class="ns-navbar__link @(home ? "glass" : null)" asp-controller="Home" asp-action="Index" aria-current="@(home ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--home" aria-hidden="true"></span>หน้าแรก</a>
+                <a class="ns-navbar__link @(catalog ? "glass" : null)" asp-controller="Home" asp-action="Courses" aria-current="@(catalog ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--book" aria-hidden="true"></span>คอร์สเรียน</a>
+                <a class="ns-navbar__link @(learning ? "glass" : null)" asp-controller="Learning" asp-action="Island" aria-current="@(learning ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--boat" aria-hidden="true"></span>เกาะของฉัน</a>
+            </nav>
+            <div class="ns-navbar__account">
+                @if (ViewData["JourneyMode"] is not null)
+                {
+                    <button class="journey-theme-toggle" type="button" data-theme-toggle aria-label="ธีมกลางคืน" aria-pressed="false" title="เปิดธีมกลางคืน" hidden>
+                        <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+                        <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 13.3A8.5 8.5 0 0 1 10.7 3.5a8.5 8.5 0 1 0 9.8 9.8Z"/></svg>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end ns-navbar__dropdown" aria-labelledby="nextskill-profile-menu">
-                        <li><a class="dropdown-item" asp-controller="Account" asp-action="@(User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard")">โปรไฟล์</a></li>
-                        <li><form asp-controller="Account" asp-action="Logout" method="post"><button class="dropdown-item" type="submit">ออกจากระบบ</button></form></li>
-                    </ul>
-                </div>
-            }
-            else
-            {
-                <a class="ns-navbar__login glass" asp-controller="Account" asp-action="Login">เข้าสู่ระบบ</a>
-            }
+                }
+                @if (authenticated)
+                {
+                    <div class="dropdown ns-navbar__profile">
+                        <button class="ns-navbar__avatar" type="button" id="nextskill-profile-menu" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="เปิดเมนูบัญชี">
+                            <img src="~/images/nimo-learning.png" asp-append-version="true" width="44" height="44" alt="" />
+                            <svg class="ns-navbar__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m4 6 4 4 4-4" /></svg>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end ns-navbar__dropdown" aria-labelledby="nextskill-profile-menu">
+                            <li><a class="dropdown-item" asp-controller="Account" asp-action="@(User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard")">โปรไฟล์</a></li>
+                            <li><form asp-controller="Account" asp-action="Logout" method="post"><button class="dropdown-item" type="submit">ออกจากระบบ</button></form></li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <a class="ns-navbar__login glass" asp-controller="Account" asp-action="Login">เข้าสู่ระบบ</a>
+                }
+            </div>
         </div>
     </div>
 </header>

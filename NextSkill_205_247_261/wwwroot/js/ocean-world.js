@@ -6,20 +6,29 @@
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const guide = document.querySelector('.map-guide');
     const camera = scene.querySelector('.ow-camera');
+    const intro = scene.querySelector('.ow-intro');
     const vessel = scene.querySelector('.ow-vessel');
+    const harbor = scene.querySelector('.ow-harbor');
+    const harborModel = harbor.querySelector('.harbor-model');
+    const harborHorizon = Number(harborModel.dataset.portalHorizonY || .68);
+    const stickyStage = scene.parentElement;
     const track = scene.closest('.ow-track');
+    const navbar = document.querySelector('.ns-navbar');
     const seaEffects = scene.querySelector('.ow-open-sea-effects');
     const backdrop = scene.querySelector('.ocean-backdrop');
     const waterSurface = scene.querySelector('.ow-sea');
+    scene.style.setProperty('--ow-dock-horizon', harborHorizon);
     let backdropWaterline = null;
     let seaMotions = [], seaIntensity = -1;
-    let context, timeline, travelScroll, lastStage = -1;
+    let media, timeline, travelScroll, lastStage = -1;
     let paused = guide?.dataset.motion === 'paused';
     let suspended = false;
     let directScroll = false;
     let boarded = false;
     let navigationArmed = false, dockingNotified = false, portalLocked = false;
-    let viewportWidth = innerWidth, resizeTimer, shoreSeaTop = 0;
+    let sceneSize, resizeTimer, mediaFrame, tideOffset = 0, mediaPosition;
+    let viewportWidth = innerWidth, viewportHeight = innerHeight, stablePosition = null;
+    let compactVoyage = false;
     const touch = matchMedia('(pointer: coarse)');
     const scrubDuration = () => touch.matches ? .32 : .48;
     const harborStop = .62;
@@ -55,30 +64,33 @@
         return Math.max(0, Math.min(offset, available));
     }
     function arrivalOffset() {
-        const model = scene.querySelector('.ow-dock .harbor-model');
-        if (!model) return fitVesselOffset(30);
-        const art = model.getBoundingClientRect();
+        const art = harborModel.getBoundingClientRect();
         const modelTop = art.top - scene.getBoundingClientRect().top;
         // The arrival sits in the open canal, on the same centerline used by
         // the portal animation. There is no deck or timber threshold to cross.
-        const waterline = Number(model.dataset.portalWaterlineY || .94);
+        const waterline = Number(harborModel.dataset.portalWaterlineY || .94);
         const top = modelTop + art.height * waterline - vessel.offsetHeight * .85;
         return Math.min(top, scene.clientHeight - vessel.offsetHeight - 20) - vessel.offsetTop;
     }
     function arrivalX() {
-        const model = scene.querySelector('.ow-dock .harbor-model');
-        if (!model) return -innerWidth * .33;
-        const art = model.getBoundingClientRect();
-        const finalLeft = art.left - camera.getBoundingClientRect().left - innerWidth * 2.2;
-        const center = Number(model.dataset.portalX || .5);
+        const art = harborModel.getBoundingClientRect();
+        const finalLeft = art.left - camera.getBoundingClientRect().left - harbor.offsetLeft;
+        const center = Number(harborModel.dataset.portalX || .5);
         const left = finalLeft + art.width * center - vessel.offsetWidth * .5;
         return Math.max(12, Math.min(scene.clientWidth - vessel.offsetWidth - 12, left)) - vessel.offsetLeft;
     }
-    function harborSeaTop() {
-        const model = scene.querySelector('.ow-dock .harbor-model');
-        const art = model.getBoundingClientRect();
-        const canal = art.top - scene.getBoundingClientRect().top + art.height * Number(model.dataset.portalHorizonY || .68);
-        return Math.min(shoreSeaTop, canal - 48);
+    function measureScene() {
+        scene.style.setProperty('--ow-dashboard-end', `${intro.offsetTop + intro.offsetHeight}px`);
+        const shoreSeaTop = waterSurface.offsetTop;
+        const canal = harbor.offsetTop + harborModel.offsetHeight * harborHorizon;
+        tideOffset = compactVoyage ? 0 : Math.min(0, canal - Math.min(scene.clientHeight * .065, 48) - shoreSeaTop);
+        // On wide scenes reserve the canvas room for the horizon movement once.
+        scene.style.setProperty('--ow-water-reserve', `${-tideOffset}px`);
+        waterSurface.dataset.worldTop = String(shoreSeaTop);
+        sceneSize = sceneDimensions();
+    }
+    function sceneDimensions() {
+        return [scene.clientWidth, scene.clientHeight, intro.offsetHeight, navbar?.offsetHeight, track.offsetHeight].join('/');
     }
     function departureClearance() {
         const island = scene.querySelector('.ow-start-land');
@@ -103,8 +115,6 @@
     }
     function announce(progress) {
         setOpenSea(progress);
-        // Re-measure the mooring after responsive layout settles.
-        if (progress >= harborStop - .0001) gsap.set(vessel, { x: arrivalX(), y: arrivalOffset() });
         alignBackdrop();
         document.dispatchEvent(new Event('nextskill:ocean-view'));
         if (progress > .025 && !boarded) { boarded = true; window.NextSkillVoyage?.board(); }
@@ -121,16 +131,16 @@
         const previousStage = lastStage;
         lastStage = stage;
         scene.dataset.stage = stage;
-        scene.querySelector('.ow-harbor').inert = stage !== 2;
+        harbor.inert = stage !== 2;
         if (stage === 0 && !scene.dataset.arrival) window.NextSkillBuddyMotion?.play('wave', undefined, { motion: !reduced.matches && !paused });
         if (stage === 2 && previousStage !== -1 && !reduced.matches && !paused) window.NextSkillBuddyMotion?.play('cheer');
     }
     function destroy() {
-        stopTravel(); context?.revert(); context = null; timeline = null;
+        stopTravel(); timeline = null;
+        cancelAnimationFrame(mediaFrame);
         backdropWaterline = null;
         setOpenSea(0); seaMotions = [];
         lastStage = -1;
-        root.classList.remove('ow-enhanced');
     }
     function stopTravel() {
         if (!travelScroll) return;
@@ -140,61 +150,50 @@
         scene.classList.remove('ow-tour-traveling');
         timeline?.scrollTrigger?.scrubDuration(paused ? 0 : scrubDuration());
     }
-    function build() {
-        destroy();
-        const isStatic = reduced.matches || !window.gsap || !window.ScrollTrigger;
+    function build(isStatic, compact) {
+        compactVoyage = compact;
         root.classList.toggle('ow-static', isStatic);
-        if (isStatic || suspended) {
-            scene.querySelector('.ow-harbor').inert = false;
+        root.classList.toggle('ow-enhanced', !isStatic);
+        measureScene();
+        if (isStatic) {
+            harbor.inert = false;
             alignBackdrop();
-            if (isStatic && !suspended) dock();
+            dock();
             return;
         }
-        root.classList.add('ow-enhanced');
-        gsap.registerPlugin(ScrollTrigger);
-        shoreSeaTop = scene.querySelector('.ow-sea').offsetTop;
-        // The horizon can rise later, but the material's world origin stays at
-        // the original waterline. Resizing the visible sea must not stretch it.
-        waterSurface.dataset.worldTop = String(shoreSeaTop);
-        context = gsap.context(() => {
-            timeline = gsap.timeline({
-                defaults:{ease:'none'},
-                // Status follows the rendered playhead, including the final scrub frames.
-                onUpdate() { announce(this.progress() * harborStop); },
-                scrollTrigger:{id:'ocean-master',trigger:track || scene,start:'top top',end:()=>`+=${Math.max(scene.clientHeight * 2.9, 2000)}`,scrub:paused ? true : scrubDuration(),invalidateOnRefresh:true}
-            });
-            // Give the boat room to move away from shore before the camera
-            // begins its continuous move across open water.
-            timeline.to(camera,{x:()=>-innerWidth*.074,duration:harborStop*.06,ease:'power1.in',force3D:true},harborStop*.07)
-                .to(camera,{x:()=>-innerWidth*2.2,duration:harborStop*.87,ease:'none',force3D:true},harborStop*.13)
-                .to('.ow-intro',{x:()=>-innerWidth*.65,autoAlpha:0,duration:.23},0)
-                .to('.ow-distance',{x:()=>-innerWidth*.24,duration:harborStop},0)
-                .to('.ow-clouds',{x:()=>-innerWidth*.5,duration:harborStop},0)
-                .to('.ow-sea-mist--far',{xPercent:-5,y:-6,duration:harborStop},0)
-                .to('.ow-sea-mist--mid',{xPercent:-14,y:12,duration:harborStop},0)
-                .to('.ow-sea-mist--near',{xPercent:-23,y:22,duration:harborStop},0)
-                .to('.ow-sea-foam--far',{xPercent:-12,y:12,duration:harborStop},0)
-                .to('.ow-sea-foam--near',{xPercent:-24,y:28,duration:harborStop},0)
-                 .to('.ow-swell-0',{xPercent:-3,y:-8,duration:harborStop},0)
-                .to('.ow-swell-1',{xPercent:-7,y:-14,duration:harborStop},0)
-                .to('.ow-swell-2',{xPercent:-12,y:-22,duration:harborStop},0)
-                .to('.ow-swell-3',{xPercent:-19,y:15,duration:harborStop},0)
-                .to('.ow-swell-4',{xPercent:-27,y:24,duration:harborStop},0)
-                .to('.ow-seabirds',{x:()=>innerWidth*.03,y:-10,duration:harborStop},0)
-                // First move the hull clear of the sand. The camera starts
-                // travelling once that move is complete.
-                .to(vessel,{y:departureClearance,duration:harborStop*.07,ease:'power1.out',force3D:true},0)
-                .to(vessel,{x:arrivalX,duration:harborStop*.93,ease:'sine.inOut',force3D:true},harborStop*.07)
-                .to(vessel,{y:arrivalOffset,duration:harborStop*.62,ease:'sine.inOut'},harborStop*.38);
-            // Bring the horizon up to the pier on compact or tall layouts;
-            // its 48px sky-to-water blend ends at the back of the timber deck.
-            const start = harborStop * .62, duration = harborStop * .38;
-            timeline.to('.ow-sea', { top: harborSeaTop, duration }, start)
-                .to('.ow-distance', { top: () => harborSeaTop() - scene.querySelector('.ow-distance').offsetHeight, duration }, start);
-        }, scene);
+        timeline = gsap.timeline({
+            defaults: { ease: 'none' },
+            // Status follows the rendered playhead, including the final scrub frames.
+            onUpdate() { announce(this.progress() * harborStop); },
+            scrollTrigger: {
+                id: 'ocean-master',
+                trigger: track,
+                start: () => track.getBoundingClientRect().top + scrollY - parseFloat(getComputedStyle(stickyStage).top),
+                end: () => `+=${track.clientHeight - scene.clientHeight}`,
+                scrub: paused ? true : scrubDuration(),
+                invalidateOnRefresh: true
+            }
+        });
+        // Frame the cave before the final part of the boat's approach.
+        const shoreEnd = harborStop * .13;
+        const cameraArrival = harborStop * (compact ? .86 : 1);
+        const approach = harborStop * (compact ? .54 : .62);
+        timeline.to(camera, { x: () => -scene.clientWidth * .074, duration: harborStop * .06, ease: 'power1.in' }, harborStop * .07)
+            .to(camera, { x: () => -harbor.offsetLeft, duration: cameraArrival - shoreEnd, ease: compact ? 'power1.out' : 'none' }, shoreEnd)
+            .to(intro, { x: () => -intro.offsetWidth, autoAlpha: 0, duration: compact ? .17 : .23 }, 0)
+            .to('.ow-distance', { x: () => -scene.clientWidth * .24, duration: harborStop }, 0)
+            .to('.ow-clouds', { x: () => -scene.clientWidth * .5, duration: harborStop }, 0)
+            .to('.ow-seabirds', { x: () => scene.clientWidth * .03, yPercent: -8, duration: harborStop }, 0)
+            // Move the hull clear of the sand before the camera travels.
+            .to(vessel, { y: departureClearance, duration: harborStop * .07, ease: 'power1.out' }, 0)
+            .to(vessel, { x: arrivalX, duration: harborStop * .93, ease: 'sine.inOut' }, harborStop * .07)
+            .to(vessel, { y: arrivalOffset, duration: harborStop - approach, ease: 'sine.inOut' }, approach);
+        if (!compact) {
+            timeline.to([waterSurface, scene.querySelector('.ow-distance')], { y: () => tideOffset, duration: harborStop - approach }, approach);
+        }
         directScroll = paused;
         collectSeaMotions();
-        syncIdle(); ScrollTrigger.refresh(); announce(timeline.progress() * harborStop);
+        syncIdle(); announce(timeline.progress() * harborStop);
     }
     function syncIdle() {
         const state = window.NextSkillMotion?.snapshot({ element: scene, kind: 'ambient' });
@@ -211,7 +210,6 @@
         }
     }
     function go(progress, motion = false, tour = false) {
-        clearTimeout(resizeTimer);
         stopTravel();
         // Islands only exist on the saved course route; scrolling Home cannot
         // reveal an unselected preview, including direct map hash links.
@@ -260,42 +258,106 @@
             event.preventDefault(); event.stopImmediatePropagation(); go(link.hash==='#journey-world'?.78:link.hash==='#course-harbor'?.62:0,event.detail>0);
         }
     },true);
+    const stationaryControls = '[data-theme-toggle], [data-home-dashboard], #nextskill-agent, #buddy-agent-menu, #nimo-speech';
     ['wheel','touchstart','pointerdown'].forEach(type=>window.addEventListener(type,event=>{
-        if (event.target instanceof Element && event.target.closest('[data-theme-toggle]')) return;
+        if (event.target instanceof Element && event.target.closest(stationaryControls)) return;
         if (!portalLocked) navigationArmed = true;
         stopTravel();
     },{passive:true}));
-    window.addEventListener('keydown',event=>{if(event.target instanceof Element && event.target.closest('[data-theme-toggle]'))return;if(['Escape','ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key)){if(!portalLocked)navigationArmed=true;stopTravel();}});
+    window.addEventListener('keydown', event => {
+        if (event.defaultPrevented) return;
+        if (event.target instanceof Element && event.target.closest(stationaryControls)) return;
+        if (['Escape', 'ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) {
+            if (!portalLocked) navigationArmed = true;
+            stopTravel();
+        }
+    });
     const observer = new MutationObserver(() => { paused = guide?.dataset.motion === 'paused'; syncIdle(); });
     if (guide) observer.observe(guide,{attributes:true,attributeFilter:['data-motion']});
     document.querySelectorAll('dialog').forEach(dialog=>observer.observe(dialog,{attributes:true,attributeFilter:['open']}));
-    reduced.addEventListener('change',build);
-    // Recreate the camera's responsive endpoints together after a width change.
-    // Keep the current stop (shore/sea/harbor) instead of retaining a stale scrub.
-    window.addEventListener('resize', () => {
-        if (innerWidth === viewportWidth) return;
-        viewportWidth = innerWidth;
-        const progress = lastStage === 2 ? 1 : timeline?.progress();
+    function journeyPosition() {
+        const trigger = timeline?.scrollTrigger;
+        if (!trigger || trigger.end <= trigger.start || scrollY < trigger.start || scrollY > trigger.end + 1) return null;
+        return Math.min(1, (scrollY - trigger.start) / (trigger.end - trigger.start));
+    }
+    function positionBeforeLayout() {
+        // A smaller viewport can clamp scroll before either ResizeObserver or
+        // GSAP's orientation handler runs. Keep the last pre-resize position.
+        return viewportWidth === innerWidth && viewportHeight === innerHeight ? journeyPosition() : stablePosition;
+    }
+    function rememberPosition() {
+        if (viewportWidth === innerWidth && viewportHeight === innerHeight && !window.ScrollTrigger?.isRefreshing) {
+            stablePosition = journeyPosition();
+        }
+    }
+    function restorePosition(progress) {
+        const trigger = timeline?.scrollTrigger;
+        if (!trigger || progress === null || progress === undefined) return;
+        window.scrollTo({ top: trigger.start + (trigger.end - trigger.start) * progress, behavior: 'instant' });
+        trigger.update();
+        trigger.getTween()?.progress(1);
+        timeline.progress(progress);
+        stablePosition = progress;
+    }
+    const layout = new ResizeObserver(scheduleResize);
+    function scheduleResize() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
-            if (suspended) return;
-            build();
-            const trigger = timeline?.scrollTrigger;
-            if (trigger && progress !== undefined) {
-                window.scrollTo({ top: trigger.start + (trigger.end - trigger.start) * progress, behavior: 'instant' });
-                trigger.update();
-                timeline.progress(progress);
-                announce(progress * harborStop);
+            const position = mediaPosition ?? positionBeforeLayout();
+            mediaPosition = null;
+            viewportWidth = innerWidth; viewportHeight = innerHeight;
+            if (suspended || sceneSize === sceneDimensions()) return;
+            measureScene();
+            if (timeline) {
+                stopTravel();
+                ScrollTrigger.refresh();
+                restorePosition(position);
+                if (navigationArmed && position > 0 && position < 1 && scene.dataset.cvPhase === 'traveling') go(harborStop, true, true);
             }
-        }, 350);
-    }, { passive: true });
+            alignBackdrop();
+        }, 150);
+    }
+    function activate() {
+        if (window.gsap && window.ScrollTrigger) {
+            media = gsap.matchMedia();
+            media.add({
+                motion: '(prefers-reduced-motion: no-preference)',
+                still: '(prefers-reduced-motion: reduce)',
+                compact: '(width < 768px), (width < 1024px) and (orientation: portrait), (orientation: landscape) and (height < 480px)'
+            }, ({ conditions }) => {
+                const position = mediaPosition;
+                mediaPosition = null;
+                build(conditions.still, conditions.compact);
+                if (timeline) mediaFrame = requestAnimationFrame(() => {
+                    ScrollTrigger.refresh();
+                    restorePosition(position);
+                    if (navigationArmed && position > 0 && position < 1 && scene.dataset.cvPhase === 'traveling') go(harborStop, true, true);
+                });
+                return destroy;
+            }, scene);
+        } else build(true, false);
+        [scene, intro, track, navbar].filter(Boolean).forEach(element => layout.observe(element));
+    }
+    if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        // The stable scene size drives refreshes. Mobile address bars can
+        // change the visual viewport without changing any scene dimensions.
+        ScrollTrigger.config({ autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load', ignoreMobileResize: true });
+        gsap.addEventListener('matchMediaInit', () => { mediaPosition = positionBeforeLayout(); });
+    }
+    window.addEventListener('scroll', rememberPosition, { passive: true });
+    window.addEventListener('resize', scheduleResize, { passive: true });
+    window.addEventListener('orientationchange', scheduleResize, { passive: true });
     document.addEventListener('visibilitychange',syncIdle);
     window.NextSkillMotion?.subscribe(state => { paused = state.paused; syncIdle(); }, { element: scene, kind: 'ambient' });
-    window.addEventListener('pagehide',()=>{suspended=true;navigationArmed=false;clearTimeout(resizeTimer);destroy();});
-    window.addEventListener('pageshow',()=>{if(suspended){suspended=false;navigationArmed=false;build();}});
-    document.fonts.ready.then(()=>window.ScrollTrigger?.refresh());
-    new ResizeObserver(alignBackdrop).observe(waterSurface);
-    build();
+    window.addEventListener('pagehide', () => {
+        suspended = true; navigationArmed = false; clearTimeout(resizeTimer);
+        layout.disconnect();
+        media?.revert(); media = null; mediaPosition = null;
+    });
+    window.addEventListener('pageshow', () => { if (suspended) { suspended = false; activate(); } });
+    document.fonts.ready.then(scheduleResize);
+    activate();
     window.NextSkillOceanWorld = {
         async travelToHarbor() {
             if (!timeline || reduced.matches || paused) return false;

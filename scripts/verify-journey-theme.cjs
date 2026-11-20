@@ -44,12 +44,13 @@ const output = path.resolve('artifacts/journey-theme');
             console.log(`PASS Home switch, persistence, reversal and layout ${width}px`);
 
             if(width!==320){
-                const response=await page.goto(`${base}/Learning/Island?courseId=13`,{waitUntil:'load'});
+                const response=await page.goto(`${base}/Learning/Island?courseId=1`,{waitUntil:'load'});
                 assert.equal(response.status(),200,'Island needs the local Development learning database');
                 await page.locator('.sj-lesson-island').first().waitFor();
                 assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
                 assert.equal(await page.locator('.learning-celestial .journey-moon').count(),1);
-                const colors=await page.evaluate(()=>['#lesson-map-title','.learning-heading h1','#course-progress-caption'].map(selector=>getComputedStyle(document.querySelector(selector)).color));
+                if (width <= 850) await page.locator('#island-sheet-toggle').click();
+                const colors=await page.evaluate(()=>['#locate-current','.learning-heading h1','#current-island-number'].map(selector=>getComputedStyle(document.querySelector(selector)).color));
                 const luminance=color=>{
                     const channels=color.match(/[\d.]+/g).slice(0,3).map(x=>Number(x)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4);
                     return channels[0]*.2126+channels[1]*.7152+channels[2]*.0722;
@@ -57,7 +58,8 @@ const output = path.resolve('artifacts/journey-theme');
                 const darkSurface=luminance('rgb(21,47,70)');
                 colors.forEach(color=>assert.ok((luminance(color)+.05)/(darkSurface+.05)>=4.5,`Low contrast text ${color}`));
                 await page.screenshot({path:path.join(output,`island-night-${width}.png`)});
-                await page.locator('[data-smart-action="choose-course"]').first().click();
+                await page.locator('#island-course-toggle').click();
+                await page.locator('#island-course-all').click();
                 await page.locator('#course-harbor-dialog').waitFor({state:'visible'});
                 await page.screenshot({path:path.join(output,`picker-night-${width}.png`)});
                 await page.keyboard.press('Escape');

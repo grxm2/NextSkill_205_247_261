@@ -2,12 +2,12 @@
 @{
     Layout = "_AccountLayout";
     var admin = (string?)ViewData["Role"] == "Admin";
+    const string emailHint = "กรอกอีเมลของคุณ เช่น name@example.com";
+    const string passwordExample = "ตั้งรหัสผ่านของคุณ (อย่างน้อย 8 ตัวอักษร)";
     ViewData["Title"] = admin ? "สร้างบัญชีผู้ดูแล (Admin)" : "สมัครสมาชิกใหม่";
 }
 
 <div class="auth-grid">
-    <partial name="_AccountStory" />
-
     <section class="auth-form nimo-auth-card" aria-labelledby="form-heading">
         <div class="form-header-badge">
             <span class="badge-dot" aria-hidden="true"></span>
@@ -59,8 +59,9 @@
                             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                         </svg>
                     </span>
-                    <input asp-for="Email" type="email" autocomplete="email" placeholder="กรอกอีเมลของคุณ เช่น name@example.com" required maxlength="254" />
+                    <input asp-for="Email" type="email" autocomplete="email" placeholder="@emailHint" aria-describedby="auth-email-hint" required maxlength="254" />
                 </div>
+                <small id="auth-email-hint" class="auth-field-placeholder">@emailHint</small>
             </div>
 
             <div class="field">
@@ -72,7 +73,7 @@
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                         </svg>
                     </span>
-                    <input asp-for="Password" id="Password" type="password" autocomplete="new-password" placeholder="ตั้งรหัสผ่านของคุณ (อย่างน้อย 8 ตัวอักษร)" required minlength="8" maxlength="128" aria-describedby="password-hint" />
+                    <input asp-for="Password" id="Password" type="password" autocomplete="new-password" placeholder="@passwordExample" required minlength="8" maxlength="128" aria-describedby="password-hint password-example" />
                     <button class="password-toggle-eye" type="button" data-target="Password" aria-label="แสดง/ซ่อนรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true">
                             <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/>
@@ -80,7 +81,8 @@
                         </svg>
                     </button>
                 </div>
-                <small id="password-hint" style="color: #64748b; font-size: 11.5px; margin-top: 4px; display: block;">ความยาวอย่างน้อย 8 ตัวอักษร</small>
+                <small id="password-example" class="auth-field-placeholder">@passwordExample</small>
+                <small id="password-hint">ความยาวอย่างน้อย 8 ตัวอักษร</small>
             </div>
 
             <div class="field">
@@ -138,4 +140,5 @@
             </a>
         </p>
     </section>
+    <partial name="_AccountStory" />
 </div>

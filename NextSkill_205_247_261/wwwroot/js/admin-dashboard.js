@@ -35,6 +35,7 @@
             correctChoice: q.correctChoice ?? q.CorrectChoice ?? 0,
             explanation: q.explanation ?? q.Explanation ?? '',
             hint: q.hint ?? q.Hint ?? '',
+            coaching: q.coaching ?? q.Coaching ?? '',
             updatedAt: q.updatedAt ?? q.UpdatedAt ?? ''
         };
     }
@@ -365,6 +366,7 @@
 
         document.getElementById('q-explanation').value = qToEdit ? (qToEdit.explanation || '') : '';
         document.getElementById('q-hint').value = qToEdit ? (qToEdit.hint || '') : '';
+        document.getElementById('q-coaching').value = qToEdit ? qToEdit.coaching : '';
 
         questionModal.showModal();
     }
@@ -401,7 +403,8 @@
             choices,
             correctChoice: Math.min(correctChoice, choices.length - 1),
             explanation: document.getElementById('q-explanation').value.trim(),
-            hint: document.getElementById('q-hint').value.trim()
+            hint: document.getElementById('q-hint').value.trim(),
+            coaching: document.getElementById('q-coaching').value.trim()
         };
 
         try {
@@ -710,6 +713,7 @@
     // Smooth Number Counter Animation
     // ==========================================
     function animateCounters() {
+        const reduced = matchMedia('(prefers-reduced-motion: reduce)');
         document.querySelectorAll('[data-count]').forEach(elem => {
             const target = parseInt(elem.getAttribute('data-count'), 10);
             if (isNaN(target)) return;
@@ -717,7 +721,7 @@
             const startTime = performance.now();
             function update(now) {
                 const elapsed = now - startTime;
-                const progress = Math.min(elapsed / duration, 1);
+                const progress = reduced.matches ? 1 : Math.min(elapsed / duration, 1);
                 const ease = 1 - Math.pow(1 - progress, 3);
                 const current = Math.floor(ease * target);
                 elem.textContent = current.toLocaleString('th-TH');

@@ -1,0 +1,55 @@
+@model LearningIslandViewModel
+@{
+    var course = Model.Course;
+    var current = course.Lessons.First(lesson => lesson.Id == (course.LastLessonId ?? course.CurrentIslandId));
+    var hasProgress = course.CompletedLessons.Count > 0;
+    var action = course.IsComplete ? "ทบทวนบทเรียน" : hasProgress ? "เรียนต่อ" : "เริ่มเรียน";
+}
+
+<aside class="learning-sidebar island-dashboard" aria-label="ข้อมูลการเรียน">
+    <div id="island-detail-slot">
+        <section id="island-detail" class="island-detail" hidden aria-labelledby="detail-title">
+            <button type="button" id="detail-back" class="island-text-button">กลับด่านปัจจุบัน</button>
+            <p class="island-chapter" id="detail-number"></p>
+            <h2 id="detail-title"></h2>
+            <p id="detail-meta"></p>
+            <p id="detail-status"></p>
+            <button type="button" class="ns-button ns-button--primary" id="detail-start">เริ่มเรียน →</button>
+        </section>
+    </div>
+
+    <section class="island-current-card" id="island-current-card" aria-label="ด่านปัจจุบันของคุณ">
+        <button class="island-sheet-toggle island-text-button" id="island-sheet-toggle" type="button"
+                aria-expanded="true" aria-controls="island-current-info">
+            <span>รายละเอียดด่าน</span><span class="island-chevron" aria-hidden="true"></span>
+        </button>
+        <div class="island-current-info" id="island-current-info">
+            <p class="island-chapter" id="current-island-number">@(course.IsComplete ? $"ผ่านครบ {course.TotalLessons} ด่าน" : $"บทที่ {current.Id}")</p>
+            <h2 id="current-island-title">@(course.IsComplete ? "เรียนจบคอร์สแล้ว" : current.DisplayTitle)</h2>
+            <ol class="island-stages" id="island-stages" aria-label="ความคืบหน้าในคอร์ส">
+                @foreach (var lesson in course.Lessons)
+                {
+                    var status = lesson.Status == "completed" ? "ผ่านแล้ว" : lesson.Status == "current" ? "ด่านปัจจุบัน" : "ล็อกอยู่";
+                    <li class="island-stage is-@lesson.Status" aria-current="@(lesson.Status == "current" ? "step" : null)">
+                        <span class="sr-only">ด่าน @lesson.Id @status</span>
+                    </li>
+                }
+            </ol>
+            <div class="island-current-meta">
+                <span>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v4.6l3.2 2.2-1.1 1.7-4.1-2.8V7h2Z"/></svg>
+                    <span id="current-lesson-minutes">@current.Minutes นาที</span>
+                </span>
+                <span class="island-lesson-reward" hidden="@course.IsComplete">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.7 1 4 13h7l-.7 10L20 10h-7l.7-9Z"/></svg>
+                    <span id="current-lesson-xp">@($"+{current.Xp} XP")</span>
+                </span>
+            </div>
+        </div>
+        <div class="island-current-actions">
+            <button class="ns-button ns-button--primary" id="resume-learning" type="button">
+                <span id="resume-learning-label">@action</span><span aria-hidden="true">→</span>
+            </button>
+        </div>
+    </section>
+</aside>

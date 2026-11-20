@@ -6,6 +6,7 @@
     if (!page) return;
     const status = page.querySelector('[data-catalog-status]');
     const eligible = page.dataset.progressEligible === 'true';
+    const details = page.hasAttribute('data-course-details');
     let loading = false;
     let selecting = false;
     let latestState;
@@ -28,9 +29,19 @@
             const course = state.courses.find(item => item.courseId === Number(owner.dataset.courseId));
             if (!course) { wrap.hidden = true; return; }
             wrap.hidden = page.hasAttribute('data-catalog-ocean') && !course.hasStarted;
-            wrap.querySelector('[data-progress-label]').textContent = course.hasStarted
-                ? `ผ่านแล้ว ${course.completedLessons.length} จาก ${course.totalLessons} เกาะ · ${course.progress}%` : 'ยังไม่ได้เริ่มเส้นทางนี้';
-            const bar = wrap.querySelector('progress'); bar.value = course.progress;
+            const ring = wrap.querySelector('[data-progress-ring]');
+            const bar = wrap.querySelector('progress');
+            bar.value = course.progress;
+            bar.hidden = false;
+            const label = wrap.querySelector('[data-progress-label]');
+            if (ring) {
+                label.textContent = course.hasStarted ? `ผ่าน ${course.completedLessons.length}/${course.totalLessons} เกาะ` : 'ยังไม่เริ่ม';
+                ring.style.setProperty('--cj-progress', `${bar.value}%`);
+                ring.querySelector('[data-progress-percent]').textContent = `${bar.value}%`;
+            } else {
+                label.textContent = course.hasStarted
+                    ? `ผ่านแล้ว ${course.completedLessons.length} จาก ${course.totalLessons} เกาะ · ${bar.value}%` : 'ยังไม่ได้เริ่มเส้นทางนี้';
+            }
         });
         page.querySelectorAll('[data-course-start]').forEach(link => {
             const saved=state.courses.find(item=>item.courseId===Number(link.dataset.courseId));
@@ -38,20 +49,20 @@
         });
         const course = state.courses.find(item => item.courseId === Number(page.dataset.courseId));
         if (!course) return;
-        const start = page.querySelector('[data-course-start]');
-        if (start && !selecting) start.textContent = `${course.isComplete ? 'ทบทวนบทเรียน' : course.hasStarted ? 'เรียนต่อจากเกาะเดิม' : 'เริ่มเรียนเกาะแรก'} →`;
         page.querySelectorAll('[data-learning-lesson-id]').forEach(row => {
             const lesson = course.lessons.find(item => item.id === Number(row.dataset.learningLessonId));
             if (!lesson) return;
             const label = row.querySelector('[data-lesson-state]');
-            label.dataset.status = lesson.status;
-            label.textContent = lesson.status === 'completed' ? '✓ ผ่านแล้ว · ทบทวนได้' : lesson.status === 'locked' ? 'ยังไม่ปลดล็อก' : 'เกาะถัดไปของคุณ';
+            row.dataset.status = lesson.status;
+            if (lesson.status === 'current') row.setAttribute('aria-current', 'step');
+            else row.removeAttribute('aria-current');
+            label.textContent = lesson.status === 'completed' ? 'ผ่านแล้ว' : lesson.status === 'locked' ? 'ล็อกอยู่' : course.completedLessons.length ? 'เรียนต่อที่นี่' : 'เริ่มที่นี่';
         });
     }
     async function loadProgress() {
-        if (!eligible || loading) return;
+        if (!eligible || loading || page.dataset.canStart === 'false') return;
         loading = true; page.setAttribute('aria-busy', 'true');
-        message('กำลังโหลดความก้าวหน้าจากระบบการเรียน…');
+        if (!details) message('กำลังโหลดความก้าวหน้าจากระบบการเรียน…');
         try {
             const response = await fetch('/Learning/State', { credentials: 'same-origin', headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(15000) });
             if (!response.ok) throw new Error(response.status === 401 ? 'เซสชันหมดอายุ เข้าสู่ระบบอีกครั้งเพื่อดูความก้าวหน้า' : 'ยังโหลดความก้าวหน้าไม่ได้ ข้อมูลเดิมยังไม่ถูกเปลี่ยน');
@@ -59,6 +70,8 @@
             if (!Array.isArray(state.courses)) throw new Error('ยังโหลดความก้าวหน้าไม่ได้');
             if(!selecting){displayProgress(state);message('');}
         } catch (error) {
+            const progressLabel = details && page.querySelector('[data-progress-label]');
+            if (progressLabel && !latestState) progressLabel.textContent = 'ยังแสดงความคืบหน้าไม่ได้';
             message(error.name === 'TimeoutError' ? 'โหลดความก้าวหน้านานกว่าปกติ ลองอีกครั้งได้โดยไม่เริ่มใหม่' : error.message || 'ยังโหลดความก้าวหน้าไม่ได้', true);
         } finally { loading = false; page.removeAttribute('aria-busy'); }
     }

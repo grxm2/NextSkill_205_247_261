@@ -15,5 +15,6 @@ public class AdminQuizQuestion
     public int CorrectChoice { get; set; } = 0;
     public string Explanation { get; set; } = "";
     public string Hint { get; set; } = "";
+    public string Coaching { get; set; } = "";
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

@@ -10,7 +10,7 @@
     <script>try { const m=JSON.parse(sessionStorage.getItem('nextskill.journey-arrival')); if(location.pathname.toLowerCase()==='/learning/island' && m && Number(new URLSearchParams(location.search).get('courseId'))===m.courseId && Date.now()-m.at<900000) document.documentElement.classList.add('journey-arrival-prepaint'); } catch {}</script>
     <style>.journey-arrival-prepaint:before{content:'';position:fixed;inset:0;z-index:2147483647;background:#ccefff url('/images/journey/clouds-reference-v1.png') center/cover no-repeat}</style>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#d8f4ff" />
     <meta name="description" content="NextSkill — เลือกทักษะที่อยากเรียน ออกเดินทางกับ Nimo และกลับมาเรียนต่อจากเกาะเดิมได้ทันที" />
     <title>@ViewData["Title"] — NextSkill</title>
@@ -47,6 +47,9 @@
     <link rel="stylesheet" href="~/css/catalog-voyage.css" asp-append-version="true" />
 }
     <link rel="stylesheet" href="~/css/nimo-speech.css" asp-append-version="true" />
+@if (ViewData["JourneyMode"] as string == "learn") {
+    <link rel="stylesheet" href="~/css/island-dashboard.css" asp-append-version="true" />
+}
 </head>
 <body data-guest-preview="@((JourneyEnvironment.EnvironmentName == "Development" && JourneyConfiguration.GetValue("Learning:GuestPreview", true)).ToString().ToLowerInvariant())" id="nextskill-home" class="smart-journey" data-companion-theme="learning-club" data-journey-mode="@ViewData["JourneyMode"]" data-authenticated="@(User.Identity?.IsAuthenticated == true ? "true" : "false")">
     <a class="skip-link" href="#journey-main">ข้ามไปเนื้อหา</a>
@@ -76,6 +79,10 @@
     <script src="~/js/journey-clouds.js" asp-append-version="true" defer></script>
     <script src="~/js/island-details.js" asp-append-version="true" defer></script>
     <script src="~/js/archipelago.js" asp-append-version="true" defer></script>
+    @if (ViewData["JourneyMode"] as string == "practice")
+    {
+        <script src="~/js/lesson-video.js" asp-append-version="true" defer></script>
+    }
     <script src="~/js/smart-journey.js" asp-append-version="true" defer></script>
     <script src="~/js/course-harbor.js" asp-append-version="true" defer></script>
 @if (ViewData["JourneyMode"]?.ToString() == "learn") { <script src="~/js/island-water-motion.js" asp-append-version="true" defer></script><script src="~/js/underwater-journey.js" asp-append-version="true" defer></script> }

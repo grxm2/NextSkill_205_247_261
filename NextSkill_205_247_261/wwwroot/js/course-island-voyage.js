@@ -4,10 +4,12 @@
     const page = document.querySelector('[data-catalog-ocean]');
     const cloud = document.getElementById('journey-cloud-transition');
     if (!page || !cloud) return;
+    const surface = page.querySelector('.underwater-surface');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const key = 'nextskill.journey-arrival';
     const animations = new Set(), timers = new Map();
     let generation = 0, covering, navigating = false, fast = false, stage, boat, home, source, sourceScroll=0;
+    let voyageViewport, resizeTimer;
     let inert = [];
     const gentle = () => fast || reduced.matches || document.hidden || window.NextSkillMotion?.snapshot().paused;
     const delay = ms => new Promise(resolve => { const id=setTimeout(()=>{timers.delete(id);resolve();},ms);timers.set(id,resolve); });
@@ -21,6 +23,7 @@
         timers.forEach((resolve,id)=>{clearTimeout(id);resolve();});timers.clear();
     }
     function restore(focus=false) {
+        clearTimeout(resizeTimer);
         generation++;forward();animations.forEach(a=>a.cancel());animations.clear();
         if(boat && home){home.parent.insertBefore(boat,home.next?.parentNode===home.parent?home.next:null);if(home.style===null)boat.removeAttribute('style');else boat.setAttribute('style',home.style);if(home.ambient===null)boat.removeAttribute('data-catalog-ambient');else boat.setAttribute('data-catalog-ambient',home.ambient);}
         stage?.remove();stage=null;boat=null;home=null;
@@ -36,7 +39,9 @@
         // a course was selected further down the catalog. No diagonal boat leg.
         const water=window.NextSkillSeaWorld?.snapshot();
         const vessel=page.querySelector('.catalog-boat');
-        const cameraY=Math.max(0,(water?.horizon||0)+scrollY+(vessel?.offsetHeight||90)+88-innerHeight);
+        const viewportHeight=surface?.offsetHeight || innerHeight;
+        const clearance=Math.max(32,Math.min(88,viewportHeight*.12));
+        const cameraY=Math.max(0,(water?.horizon||0)+scrollY+(vessel?.offsetHeight||90)+clearance-viewportHeight);
         if(Math.abs(scrollY-cameraY)>2){
             let waiting=true;
             const stopped=new Promise(resolve=>{
@@ -91,6 +96,7 @@
     function begin(trigger) {
         if(covering)return covering;
         source=trigger;sourceScroll=scrollY;fast=false;const run=++generation;
+        voyageViewport={width:innerWidth,height:surface?.offsetHeight || innerHeight};
         document.documentElement.classList.add('course-departing');
         covering=(async()=>{await sail(run);if(run===generation&&!cloud.open)await cover(run);})();
         return covering;
@@ -113,7 +119,14 @@
     cloud.addEventListener('cancel',event=>{event.preventDefault();forward();});
     reduced.addEventListener('change',()=>{if(reduced.matches)forward();});
     document.addEventListener('visibilitychange',()=>{if(document.hidden)forward();});
-    window.addEventListener('resize',()=>{if(covering)forward();});
+    window.addEventListener('resize',()=>{
+        if(!covering)return;
+        clearTimeout(resizeTimer);
+        resizeTimer=setTimeout(()=>{
+            const height=surface?.offsetHeight || innerHeight;
+            if(covering && (innerWidth!==voyageViewport.width || height!==voyageViewport.height))forward();
+        },90);
+    },{passive:true});
     window.NextSkillMotion?.subscribe(state=>{if(covering&&(state.reduced||state.paused||state.hidden))forward();});
     window.addEventListener('pagehide',()=>{const departed=!!covering;restore();if(departed)window.scrollTo({top:sourceScroll,behavior:'instant'});});
     window.addEventListener('pageshow',event=>{if(event.persisted)restore();});
