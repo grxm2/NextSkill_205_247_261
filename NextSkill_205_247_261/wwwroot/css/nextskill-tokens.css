@@ -2,6 +2,9 @@
 @font-face{font-family:Prompt;src:url('../fonts/Prompt-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
 @font-face{font-family:Prompt;src:url('../fonts/Prompt-Medium.ttf') format('truetype');font-weight:500;font-display:swap}
 @font-face{font-family:Prompt;src:url('../fonts/Prompt-SemiBold.ttf') format('truetype');font-weight:600;font-display:swap}
+@font-face{font-family:Prompt;src:url('../fonts/Prompt-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+@font-face{font-family:Prompt;src:url('../fonts/Prompt-Bold.ttf') format('truetype');font-weight:800;font-display:swap}
+@font-face{font-family:Prompt;src:url('../fonts/Prompt-Bold.ttf') format('truetype');font-weight:900;font-display:swap}
 @font-face{font-family:Manrope;src:url('../fonts/manrope-600.ttf') format('truetype');font-weight:600;font-display:swap}
 :root{
  --ns-ink:#173e56;--ns-muted:#577b91;--ns-canvas:#e2f6ff;--ns-surface:#fff;--ns-border:#c9e3ef;

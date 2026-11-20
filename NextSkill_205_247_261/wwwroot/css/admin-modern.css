@@ -93,6 +93,83 @@ html[data-theme="dark"] {
 }
 
 /* ==========================================
+   Prompt Typography Foundation (Matches Home Island Theme)
+   ========================================== */
+@font-face {
+    font-family: 'Prompt';
+    src: local('Prompt'), local('Prompt-Regular'),
+         url('../fonts/Prompt-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Prompt';
+    src: local('Prompt Medium'), local('Prompt-Medium'),
+         url('../fonts/Prompt-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Prompt';
+    src: local('Prompt SemiBold'), local('Prompt-SemiBold'),
+         url('../fonts/Prompt-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Prompt';
+    src: local('Prompt Bold'), local('Prompt-Bold'),
+         url('../fonts/Prompt-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Prompt';
+    src: local('Prompt ExtraBold'), local('Prompt-Bold'),
+         url('../fonts/Prompt-Bold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Prompt';
+    src: local('Prompt Black'), local('Prompt-Bold'),
+         url('../fonts/Prompt-Bold.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Global Font Enforcement for Admin Dashboard (Matches Home Island exactly) */
+html,
+body.ns-admin,
+.admin-shell,
+.admin-shell *,
+.workspace,
+.sidebar,
+.topbar,
+.admin-panel,
+.admin-modal,
+dialog,
+button, input, select, textarea, optgroup, option,
+h1, h2, h3, h4, h5, h6,
+p, span, a, label, strong, small, time, table, th, td, kbd {
+    font-family: 'Prompt', -apple-system, BlinkMacSystemFont, 'Leelawadee UI', sans-serif !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    text-rendering: optimizeLegibility !important;
+}
+
+/* ==========================================
    Full Page Base & Living Ocean Background
    ========================================== */
 
@@ -100,7 +177,7 @@ body.ns-admin {
     background: var(--adm-bg-gradient) !important;
     background-attachment: fixed !important;
     color: var(--adm-text-main) !important;
-    font-family: 'Prompt', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-family: 'Prompt', -apple-system, BlinkMacSystemFont, 'Leelawadee UI', sans-serif !important;
     margin: 0;
     min-height: 100svh;
     position: relative;
@@ -1639,4 +1716,14 @@ dialog textarea {
     background: var(--adm-input-bg) !important;
     border: 1px solid var(--adm-input-border) !important;
     color: var(--adm-input-color) !important;
+}
+
+/* Explicitly hide removed mascot elements per design request */
+.floating-mascot-buddy,
+#mascot-buddy-wrap,
+#topbar-mascot-toggle,
+.peeking-mascot,
+.card-perched-mascot,
+.metric-peek-mascot {
+    display: none !important;
 }

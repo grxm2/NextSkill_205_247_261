@@ -1407,7 +1407,7 @@ a.btn-skip-outline:active {
     align-items: center !important;
     justify-content: center !important;
     overflow: hidden !important;
-    background: radial-gradient(circle at 50% 25%, #f0f9ff 0%, #e0f2fe 32%, #bae6fd 68%, #7dd3fc 100%) !important;
+    background: #a4dfed !important;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -1420,170 +1420,1099 @@ a.btn-skip-outline:active {
     pointer-events: auto !important;
 }
 
-/* Full-Screen Daylight Sky Canvas */
-.fs-loading-sky {
+/* ==========================================
+   Live Animated Pastel Sunrise Ocean, Lighthouse Harbor & Starting Island World
+   ========================================== */
+.fs-loading-sky.fs-island-world {
     position: absolute;
     inset: 0;
     pointer-events: none;
     overflow: hidden;
     z-index: 1;
+    isolation: isolate;
+    user-select: none;
 }
 
-/* Drifting Puffy Clouds across the screen */
-.fs-cloud {
+.fs-island-world .ow-sky {
     position: absolute;
-    background: rgba(255, 255, 255, 0.75);
-    border-radius: 120px;
-    filter: drop-shadow(0 14px 28px rgba(2, 132, 199, 0.12));
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse 55% 72% at 100% 0, rgba(255, 229, 164, 0.34), transparent 75%),
+        linear-gradient(145deg, transparent 43%, rgba(255, 231, 175, 0.16) 51%, transparent 65%),
+        radial-gradient(ellipse 32% 12% at 75% 60%, #fff3c994, transparent 75%),
+        linear-gradient(180deg, #6fbce7 0%, #aadbf2 27%, #f9dfd0 51%, #ffebc9 58%, #e4e9d7 64%, #a9dfe7 70%, #54c6df 88%, #1697c2 100%);
 }
 
-.fs-cloud::before, .fs-cloud::after {
+.fs-island-world .hero-sky-texture {
+    position: absolute;
+    inset: 0 -10% 38%;
+    background: url('/images/hero/sky-clouds.webp') center 72% / cover no-repeat;
+    opacity: 0.15;
+    mix-blend-mode: soft-light;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 32px);
+    mask-image: linear-gradient(to bottom, transparent, #000 32px);
+    pointer-events: none;
+    animation: fsSkyPan 38s ease-in-out infinite alternate;
+}
+
+@keyframes fsSkyPan {
+    from { transform: translateX(-2%); }
+    to { transform: translateX(3%); }
+}
+
+/* Golden Diagonal Shooting Stars Matching Home Page */
+.fs-shooting-stars {
+    position: absolute;
+    inset: 0 0 46% 0;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.fs-shooting-star {
+    --star-core: #fffaf0;
+    --star-light: #ffd580;
+    --star-tail: rgba(255, 177, 64, 0.85);
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff 0 15%, var(--star-core) 32%, var(--star-light) 60%, var(--star-tail) 92%);
+    box-shadow: 0 0 10px 3px var(--star-light), 0 0 24px 6px var(--star-tail);
+    opacity: 0;
+}
+
+.fs-shooting-star::before {
     content: '';
     position: absolute;
-    background: inherit;
-    border-radius: 50%;
-}
-
-.fs-c1 {
-    top: 8%;
-    left: -150px;
-    width: 280px;
-    height: 80px;
-    animation: fsCloudDrift1 38s linear infinite;
-}
-.fs-c1::before { width: 110px; height: 110px; top: -50px; left: 45px; }
-.fs-c1::after { width: 85px; height: 85px; top: -35px; left: 135px; }
-
-.fs-c2 {
-    top: 32%;
-    right: -160px;
-    width: 320px;
-    height: 90px;
-    animation: fsCloudDrift2 48s linear infinite;
-}
-.fs-c2::before { width: 125px; height: 125px; top: -55px; left: 55px; }
-.fs-c2::after { width: 95px; height: 95px; top: -40px; left: 165px; }
-
-.fs-c3 {
-    bottom: 22%;
-    left: -180px;
-    width: 360px;
-    height: 100px;
-    animation: fsCloudDrift1 55s linear infinite;
-}
-.fs-c3::before { width: 140px; height: 140px; top: -60px; left: 60px; }
-.fs-c3::after { width: 110px; height: 110px; top: -45px; left: 185px; }
-
-.fs-c4 {
-    top: 60%;
-    right: -140px;
-    width: 250px;
-    height: 70px;
-    animation: fsCloudDrift2 42s linear infinite;
-}
-.fs-c4::before { width: 95px; height: 95px; top: -42px; left: 40px; }
-.fs-c4::after { width: 75px; height: 75px; top: -30px; left: 120px; }
-
-@keyframes fsCloudDrift1 {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(100vw + 380px)); }
-}
-
-@keyframes fsCloudDrift2 {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-100vw - 380px)); }
-}
-
-/* Radiant Ambient Aurora Orbs */
-.fs-aurora-orb {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    filter: blur(40px);
-}
-
-.fs-orb-top {
-    top: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 500px;
-    height: 350px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(186, 230, 253, 0.4) 60%, transparent 80%);
-}
-
-.fs-orb-center {
+    right: 5px;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(56, 189, 248, 0.25) 50%, transparent 75%);
+    width: 155px;
+    height: 6px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(to left, var(--star-core), var(--star-light) 8%, var(--star-tail) 26%, transparent 94%);
 }
 
-/* Floating 3D Learning Artifacts (Cap, Book, Cube) */
-.fs-float-prop {
+.fs-shooting-star.fs-star-1 {
+    left: 28%;
+    top: 12%;
+    animation: fsShootingStar1 5.4s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+}
+
+.fs-shooting-star.fs-star-2 {
+    left: 62%;
+    top: 18%;
+    width: 9px;
+    height: 9px;
+    animation: fsShootingStar2 7.2s cubic-bezier(0.22, 0.61, 0.36, 1) 2.2s infinite;
+}
+
+@keyframes fsShootingStar1 {
+    0% { transform: translate3d(-120px, -70px, 0) rotate(32deg) scale(0.7); opacity: 0; }
+    12% { opacity: 1; }
+    34% { transform: translate3d(260px, 160px, 0) rotate(32deg) scale(1); opacity: 0.95; }
+    44%, 100% { transform: translate3d(340px, 210px, 0) rotate(32deg) scale(0.4); opacity: 0; }
+}
+
+@keyframes fsShootingStar2 {
+    0% { transform: translate3d(-100px, -60px, 0) rotate(28deg) scale(0.65); opacity: 0; }
+    10% { opacity: 0.9; }
+    30% { transform: translate3d(220px, 125px, 0) rotate(28deg) scale(0.95); opacity: 0.85; }
+    40%, 100% { transform: translate3d(280px, 160px, 0) rotate(28deg) scale(0.35); opacity: 0; }
+}
+
+.fs-island-world .hero-sun {
     position: absolute;
+    left: 82%;
+    top: 22%;
+    width: clamp(46px, 4.6vw, 72px);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, #fffef5 0 32%, #fff2bf 46%, #ffd47c99 65%, transparent 72%);
+    box-shadow: 0 0 45px 22px #ffe3a8d9, 0 0 105px 55px #ffd39373;
+    pointer-events: none;
+    transition: transform 1100ms ease-in-out, opacity 700ms ease;
+}
+
+.fs-island-world .hero-sun-rays {
+    position: absolute;
+    inset: -300%;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0 12deg, #fff2c767 15deg, transparent 21deg 45deg,
+        #fff2c750 49deg, transparent 56deg 90deg, #fff2c765 94deg,
+        transparent 101deg 135deg, #fff2c74a 140deg, transparent 146deg 180deg,
+        #fff2c765 184deg, transparent 191deg 225deg, #fff2c750 230deg,
+        transparent 237deg 270deg, #fff2c765 274deg, transparent 281deg 315deg,
+        #fff2c74a 320deg, transparent 327deg
+    );
+    mix-blend-mode: soft-light;
+    animation: fs-hero-rays 72s linear infinite;
+}
+
+.fs-island-world .hero-sun-disc {
+    position: absolute;
+    inset: 18%;
+    border-radius: 50%;
+    background: #fffdf0;
+    box-shadow: 0 0 25px 14px #fff0b6, 0 0 58px 24px #ffdf9a99;
+}
+
+@keyframes fs-hero-rays {
+    to { transform: rotate(360deg); }
+}
+
+.fs-island-world .journey-night-sky {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 42% 50% at 82% 22%, #b6d4f724, transparent 75%),
+        linear-gradient(#071426, #142f4b 52%, #234b63 70%, #173e58);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.fs-island-world .journey-stars {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 9% 13%, #eaf5ff 0 1px, transparent 1.8px),
+        radial-gradient(circle at 22% 8%, #eaf5ff 0 1px, transparent 1.8px),
+        radial-gradient(circle at 42% 18%, #d0e5f9 0 1.3px, transparent 2px),
+        radial-gradient(circle at 57% 10%, #eaf5ff 0 1px, transparent 1.8px),
+        radial-gradient(circle at 70% 32%, #eaf5ff 0 1px, transparent 1.8px),
+        radial-gradient(circle at 93% 17%, #d0e5f9 0 1.4px, transparent 2px),
+        radial-gradient(circle at 34% 34%, #eaf5ff 0 1px, transparent 1.8px);
+}
+
+.fs-island-world .journey-moon {
+    position: absolute;
+    left: 82%;
+    top: 22%;
+    width: clamp(46px, 4.6vw, 72px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 33% 30%, #fffef7, #e8f2fc 58%, #b9cde3);
+    box-shadow: 0 0 32px 12px #e4f2ff50, 0 0 115px 50px #b5d9ff20;
+    transform: translate3d(-50%, 75vh, 0);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.fs-island-world .journey-moon span {
+    position: absolute;
+    border-radius: 50%;
+    background: #a9bdd3;
+    opacity: 0.3;
+    box-shadow: inset 2px 2px 3px #809bb855;
+}
+.fs-island-world .journey-moon span:nth-child(1) { left: 23%; top: 23%; width: 23%; height: 23%; }
+.fs-island-world .journey-moon span:nth-child(2) { right: 18%; bottom: 22%; width: 29%; height: 29%; }
+.fs-island-world .journey-moon span:nth-child(3) { left: 22%; bottom: 23%; width: 12%; height: 12%; }
+
+/* Drifting Soft Clouds */
+.fs-island-world .ow-clouds {
+    position: absolute;
+    inset: 0;
     pointer-events: none;
     z-index: 2;
-    filter: drop-shadow(0 16px 28px rgba(2, 132, 199, 0.28));
 }
 
-.prop-cap {
-    top: 14%;
-    right: 12%;
-    animation: floatPropCap 6s ease-in-out infinite;
-}
-
-.prop-book {
-    top: 36%;
-    left: 8%;
-    animation: floatPropBook 7s ease-in-out infinite;
-}
-
-.prop-cube {
-    bottom: 24%;
-    right: 14%;
-    animation: floatPropCube 5.5s ease-in-out infinite;
-}
-
-@keyframes floatPropCap {
-    0%, 100% { transform: translateY(0) rotate(12deg) scale(1); }
-    50% { transform: translateY(-18px) rotate(18deg) scale(1.05); }
-}
-
-@keyframes floatPropBook {
-    0%, 100% { transform: translateY(0) rotate(-10deg) scale(1); }
-    50% { transform: translateY(-22px) rotate(-4deg) scale(1.06); }
-}
-
-@keyframes floatPropCube {
-    0%, 100% { transform: translateY(0) rotate(22deg) scale(1); }
-    50% { transform: translateY(-16px) rotate(12deg) scale(1.08); }
-}
-
-/* Twinkling Golden XP Stars across the sky */
-.fs-xp-star {
+.fs-island-world .ow-clouds span {
+    --cloud-scale: 1;
     position: absolute;
-    color: #fde047;
-    filter: drop-shadow(0 0 8px rgba(253, 224, 71, 0.95));
-    animation: fsStarTwinkle 3s ease-in-out infinite alternate;
-}
-.xps-1 { top: 18%; left: 22%; font-size: 24px; animation-delay: 0s; }
-.xps-2 { top: 26%; right: 26%; font-size: 18px; animation-delay: -1s; }
-.xps-3 { top: 62%; left: 16%; font-size: 20px; animation-delay: -2s; }
-.xps-4 { bottom: 28%; left: 32%; font-size: 22px; animation-delay: -0.5s; }
-.xps-5 { top: 48%; right: 18%; font-size: 26px; animation-delay: -1.5s; }
-
-@keyframes fsStarTwinkle {
-    0% { transform: scale(0.8) rotate(0deg); opacity: 0.6; }
-    50% { transform: scale(1.3) rotate(45deg); opacity: 1; }
-    100% { transform: scale(0.9) rotate(90deg); opacity: 0.7; }
+    width: 200px;
+    height: 60px;
+    left: 61%;
+    top: 12%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 45px -20px 0 0 rgba(255, 255, 255, 0.78), 90px 10px 0 8px rgba(255, 255, 255, 0.68);
+    filter: blur(3px);
+    opacity: 0.78;
+    animation: fs-hero-cloud 20s ease-in-out infinite alternate;
 }
 
-/* Full-Screen Content Layout */
-.fs-loading-content {
+.fs-island-world .ow-clouds span:first-child { --cloud-scale: 1.5; }
+.fs-island-world .ow-clouds span:nth-child(2) { --cloud-scale: 0.78; left: 88%; top: 32%; animation-delay: -9s; }
+.fs-island-world .ow-clouds span:nth-child(3) { --cloud-scale: 0.72; left: 6%; top: 28%; opacity: 0.58; animation-delay: -15s; }
+
+@keyframes fs-hero-cloud {
+    from { transform: translateX(-28px) scale(var(--cloud-scale)); }
+    to { transform: translateX(32px) scale(var(--cloud-scale)); }
+}
+
+/* Soaring Seabirds */
+.fs-island-world .ow-seabirds {
+    position: absolute;
+    top: 16%;
+    left: 48%;
+    width: 28%;
+    color: #4f8ba3;
+    opacity: 0.74;
+    pointer-events: none;
+    z-index: 2;
+    overflow: visible;
+}
+
+.fs-island-world .ow-bird-glide,
+.fs-island-world .ow-bird-wing {
+    transform-box: view-box;
+    transform-origin: 0 0;
+}
+
+.fs-island-world .ow-bird-glide {
+    animation: fs-bird-glide 6.5s ease-in-out infinite alternate;
+}
+
+.fs-island-world .ow-bird-wing[data-ocean-wing="left"] {
+    animation: fs-wing-flap-left 1.4s ease-in-out infinite alternate;
+}
+
+.fs-island-world .ow-bird-wing[data-ocean-wing="right"] {
+    animation: fs-wing-flap-right 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes fs-bird-glide {
+    0% { transform: translate(-8px, 4px); }
+    100% { transform: translate(20px, -10px); }
+}
+
+@keyframes fs-wing-flap-left {
+    0% { transform: rotate(-12deg) scaleY(0.86); }
+    100% { transform: rotate(15deg) scaleY(1.06); }
+}
+
+@keyframes fs-wing-flap-right {
+    0% { transform: rotate(12deg) scaleY(0.86); }
+    100% { transform: rotate(-15deg) scaleY(1.06); }
+}
+
+/* Distant Horizon */
+.fs-island-world .ow-distance {
+    --ow-distance-height: clamp(48px, 6.5vw, 94px);
+    position: absolute;
+    left: 56%;
+    top: calc(52% - var(--ow-distance-height));
+    width: 69%;
+    height: var(--ow-distance-height);
+    z-index: 1;
+    opacity: 0.48;
+    filter: blur(0.35px);
+    -webkit-mask-image: linear-gradient(#000 76%, transparent);
+    mask-image: linear-gradient(#000 76%, transparent);
+    pointer-events: none;
+}
+
+.fs-island-world .ow-distance img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Left Coastal Peninsula with Pastel Lighthouse, Cottage & Pier */
+.fs-left-lighthouse-cliff {
+    position: absolute;
+    left: -1%;
+    top: calc(52% - clamp(165px, 19.5vw, 275px) * 0.78);
+    width: clamp(210px, 23vw, 340px);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.fs-left-lighthouse-cliff svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.fs-cliff-palm {
+    transform-box: view-box;
+    transform-origin: 16px 82px;
+    animation: fsCliffPalmSway 5.4s ease-in-out infinite alternate;
+}
+
+@keyframes fsCliffPalmSway {
+    0% { transform: rotate(-4deg); }
+    100% { transform: rotate(4.5deg); }
+}
+
+.fs-cliff-foam {
+    animation: fsCliffFoamPulse 4.2s ease-in-out infinite alternate;
+}
+
+@keyframes fsCliffFoamPulse {
+    0% { transform: translateY(1px) scaleX(0.97); opacity: 0.42; }
+    100% { transform: translateY(-2px) scaleX(1.03); opacity: 0.85; }
+}
+
+.fs-lighthouse-beacon {
+    position: absolute;
+    left: 34.2%;
+    top: 16.8%;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+
+.fs-lighthouse-core {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 22px;
+    height: 22px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, #fffbeb 0%, rgba(254, 240, 138, 0.85) 38%, rgba(253, 224, 71, 0) 76%);
+    animation: fsBeaconPulse 2.4s ease-in-out infinite alternate;
+}
+
+.fs-lighthouse-beam {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: clamp(140px, 16vw, 240px);
+    height: clamp(56px, 6.5vw, 96px);
+    transform-origin: 0% 50%;
+    background: linear-gradient(90deg, rgba(254, 249, 195, 0.56) 0%, rgba(254, 240, 138, 0.22) 55%, rgba(254, 240, 138, 0) 100%);
+    clip-path: polygon(0% 44%, 100% 0%, 100% 100%, 0% 56%);
+    filter: blur(4px);
+    mix-blend-mode: screen;
+    animation: fsLighthouseSweep 7.2s ease-in-out infinite alternate;
+}
+
+@keyframes fsBeaconPulse {
+    0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.65; }
+    100% { transform: translate(-50%, -50%) scale(1.25); opacity: 1; }
+}
+
+@keyframes fsLighthouseSweep {
+    0% { transform: translateY(-50%) rotate(-12deg); opacity: 0.44; }
+    50% { opacity: 0.78; }
+    100% { transform: translateY(-50%) rotate(15deg); opacity: 0.48; }
+}
+
+/* Living Painted Sea with Ocean Swell, Moving Sea Foam & Sun Glints */
+.fs-island-world .ow-sea {
+    position: absolute;
+    inset: 52% 0 0;
+    z-index: 1;
+    background: linear-gradient(180deg, #77e3e3, #10bbd6 30%, #0089bd);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14px);
+    mask-image: linear-gradient(to bottom, transparent, #000 14px);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.fs-island-world .ow-sea:before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: clamp(75px, 12vh, 120px);
+    z-index: 4;
+    background: radial-gradient(ellipse 29% 95% at 82% 0, #fff3c99c, #ffe7bc42 45%, transparent 78%);
+    pointer-events: none;
+}
+
+.fs-island-world .ow-sea:after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: linear-gradient(#0c2c4cc9, #09283edb);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.fs-island-world .ow-water-detail {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.fs-island-world .ow-water-detail:after {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: clamp(40px, 7vh, 64px);
+    background: linear-gradient(#d9e6dfeb, #c0e7e77a 35%, #ade5e426 70%, transparent);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.fs-island-world .ow-water-surface {
+    position: absolute;
+    inset: -3% -4%;
+    background: url('/images/journey/home-ocean-painted-v2.webp') center / 100% 100% no-repeat;
+    animation: fsOceanSwell 9s ease-in-out infinite alternate;
+}
+
+@keyframes fsOceanSwell {
+    0% { transform: translate3d(-1.5%, 2px, 0) scale(1.03); }
+    50% { transform: translate3d(0.5%, -3px, 0) scale(1.05); }
+    100% { transform: translate3d(1.8%, 2px, 0) scale(1.03); }
+}
+
+/* Flowing Wave Crest Foam Bands Using ocean-voyage-foam.svg */
+.fs-sea-foam-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.fs-sea-foam-band {
+    --foam-tile: 160vw;
+    position: absolute;
+    left: -20%;
+    width: 150%;
+    pointer-events: none;
+}
+
+.fs-sea-foam-band--far {
+    top: 16%;
+    height: 36%;
+    opacity: 0.36;
+}
+
+.fs-sea-foam-band--near {
+    top: 48%;
+    height: 44%;
+    opacity: 0.46;
+}
+
+.fs-sea-foam-bob {
+    position: absolute;
+    inset: 0;
+    animation: fsSeaFoamBob 4.6s ease-in-out infinite;
+}
+
+.fs-sea-foam-band--near .fs-sea-foam-bob {
+    animation-duration: 3.8s;
+    animation-delay: -1.8s;
+}
+
+.fs-sea-foam-drift {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: calc(100% + var(--foam-tile));
+    background: url('/images/journey/ocean-voyage-foam.svg') 0 0 / var(--foam-tile) 100% repeat-x;
+    animation: fsSeaFoamFlow 30s linear infinite;
+}
+
+.fs-sea-foam-band--near .fs-sea-foam-drift {
+    animation-duration: 21s;
+    animation-delay: -10s;
+}
+
+@keyframes fsSeaFoamFlow {
+    to { transform: translate3d(calc(-1 * var(--foam-tile)), 0, 0); }
+}
+
+@keyframes fsSeaFoamBob {
+    0%, 100% { transform: translate3d(0, 3px, 0); }
+    50% { transform: translate3d(0, -5px, 0); }
+}
+
+.fs-island-world .ow-sun-path {
+    position: absolute;
+    z-index: 2;
+    left: calc(82% - 16%);
+    top: 0;
+    width: 32%;
+    height: 85%;
+    opacity: 0.16;
+    background: radial-gradient(ellipse 40% 100% at 50% 0, #fff3c975, transparent 85%);
+    animation: fs-sunlight 9s ease-in-out infinite;
+}
+
+@keyframes fs-sunlight {
+    0%, 100% { transform: translate3d(-6px, 0, 0) scaleX(0.97); opacity: 0.12; }
+    50% { transform: translate3d(6px, 0, 0) scaleX(1.03); opacity: 0.22; }
+}
+
+.fs-island-world .hero-water-glints {
+    position: absolute;
+    left: 82%;
+    top: 0;
+    width: 28%;
+    height: 92%;
+    transform: translateX(-50%);
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.fs-island-world .hero-water-glints span {
+    position: absolute;
+    left: 50%;
+    height: 3px;
+    border-radius: 50%;
+    background: #fff7c5;
+    box-shadow: 0 0 9px 2px #ffe6a3;
+    animation: fs-hero-glint 4.8s ease-in-out infinite alternate;
+}
+
+.fs-island-world .hero-water-glints span:nth-child(1) { top: 6%; width: 12%; margin-left: -6%; }
+.fs-island-world .hero-water-glints span:nth-child(2) { top: 16%; width: 22%; margin-left: -12%; animation-delay: -2s; }
+.fs-island-world .hero-water-glints span:nth-child(3) { top: 31%; width: 33%; margin-left: -18%; animation-delay: -4s; }
+.fs-island-world .hero-water-glints span:nth-child(4) { top: 47%; width: 27%; margin-left: -11%; animation-delay: -1s; }
+.fs-island-world .hero-water-glints span:nth-child(5) { top: 64%; width: 40%; margin-left: -24%; animation-delay: -3s; }
+.fs-island-world .hero-water-glints span:nth-child(6) { top: 82%; width: 29%; margin-left: -10%; animation-delay: -5s; }
+
+@keyframes fs-hero-glint {
+    from { transform: translate3d(-8px, 0, 0) scaleX(0.85); opacity: 0.38; }
+    to { transform: translate3d(8px, 0, 0) scaleX(1.1); opacity: 0.88; }
+}
+
+/* Camera Layer: Cruising Backdrop Ships, Buoy, Whale, Jumping Fish & Left Rowboat */
+.fs-island-camera {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.fs-island-world .ocean-backdrop {
+    --sea-level: 52%;
+    position: absolute;
+    inset: 0;
+    width: 100vw;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.fs-island-world .ocean-backdrop-boat-track,
+.fs-island-world .ocean-backdrop-buoy,
+.fs-island-world .ocean-backdrop-whale-water {
+    position: absolute;
+    pointer-events: none;
+}
+
+.fs-island-world .ocean-backdrop-boat-track {
+    --boat-width: clamp(46px, 4.8vw, 72px);
+    --water-period: 6.4s;
+    --water-phase: 0s;
+    --sail-from: -32px;
+    --sail-to: 48px;
+    --sail-period: 42s;
+    top: calc(var(--sea-level) - var(--boat-width) * 0.48 + 26px);
+    width: var(--boat-width);
+    opacity: 0.66;
+    animation: fs-distant-sail var(--sail-period) linear infinite alternate;
+}
+
+.fs-island-world .ocean-backdrop-boat-track--1 { left: 24vw; --ship-hull: #507e83; }
+.fs-island-world .ocean-backdrop-boat-track--2 { left: 74vw; --boat-width: clamp(44px, 4.4vw, 64px); --ship-hull: #af8073; --ship-accent: #fff7e6; animation-delay: -17s; opacity: 0.7; }
+.fs-island-world .ocean-backdrop-boat-track--3 { left: 88vw; --boat-width: clamp(38px, 3.6vw, 52px); --ship-hull: #6b8496; animation-delay: -29s; opacity: 0.58; }
+.fs-island-world .ocean-backdrop-boat-track--4,
+.fs-island-world .ocean-backdrop-boat-track--5,
+.fs-island-world .ocean-backdrop-boat-track--7 { display: none; }
+.fs-island-world .ocean-backdrop-boat-track--6 { left: 16vw; --boat-width: clamp(42px, 4.2vw, 62px); --ship-hull: #b97d73; --ship-accent: #d8ad7f; animation-delay: -32s; opacity: 0.6; }
+
+.fs-island-world .ocean-backdrop-boat {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+    transform-origin: 50% 88%;
+    clip-path: inset(0 0 10%);
+    animation: fs-distant-rock var(--water-period) ease-in-out var(--water-phase) infinite;
+}
+
+.fs-island-world .ocean-backdrop-boat-water,
+.fs-island-world .ocean-backdrop-boat-contact {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.fs-island-world .ocean-boat-ripple {
+    transform-box: view-box;
+    transform-origin: 77px 72px;
+    animation: fs-contact-ripple var(--water-period) ease-out var(--water-phase) infinite;
+    opacity: 0;
+}
+
+.fs-island-world .ocean-boat-ripple--following {
+    animation-delay: calc(var(--water-phase) - var(--water-period) / 2);
+}
+
+.fs-island-world .ocean-boat-cruise-wake {
+    transform-box: view-box;
+    transform-origin: 24px 73px;
+    animation: ow-boat-cruise-wake 2.2s linear infinite;
+}
+
+.fs-island-world .ocean-ship-lights { opacity: 0.6; }
+
+.fs-island-world .ocean-backdrop-buoy {
+    left: 19vw;
+    top: 72%;
+    width: clamp(30px, 3vw, 44px);
+    opacity: 0.85;
+}
+
+.fs-island-world .ocean-backdrop-buoy img {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+    transform-origin: 50% 80%;
+    clip-path: inset(0 0 19%);
+    animation: fs-buoy-bob 4.4s ease-in-out infinite;
+}
+
+.fs-island-world .ocean-backdrop-buoy-water,
+.fs-island-world .ocean-backdrop-buoy-contact {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.fs-island-world .ocean-buoy-ripple {
+    transform-box: view-box;
+    transform-origin: 50px 129px;
+    animation: fs-contact-ripple 4.4s ease-out infinite;
+    opacity: 0;
+}
+
+.fs-island-world .ocean-buoy-ripple--following { animation-delay: -2.2s; }
+
+.fs-island-world .ocean-backdrop-whale-water {
+    left: 76vw;
+    top: 76%;
+    width: clamp(68px, 6vw, 94px);
+    height: clamp(38px, 3.4vw, 52px);
+    opacity: 0.56;
+}
+
+.fs-island-world .ocean-backdrop-whale-window {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 0 21%);
+    overflow: hidden;
+}
+
+.fs-island-world .ocean-backdrop-whale {
+    position: absolute;
+    inset: 0;
+    animation: fs-whale-surface 14s ease-in-out infinite;
+}
+
+.fs-island-world .ocean-whale-wake {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.fs-island-world .ocean-whale-ripple {
+    transform-box: view-box;
+    transform-origin: 88px 79px;
+    animation: fs-whale-water 14s ease-in-out infinite;
+    opacity: 0;
+}
+
+.fs-island-world .ocean-whale-meniscus {
+    animation: fs-whale-contact 14s ease-in-out infinite;
+    opacity: 0;
+}
+
+.fs-island-world .ocean-backdrop-whale > svg:first-child { display: block; width: 100%; height: auto; }
+
+.fs-island-world .ocean-backdrop-spout {
+    position: absolute;
+    left: 34%;
+    top: 27%;
+    width: 10%;
+    opacity: 0;
+    animation: fs-whale-spout 14s ease-in-out infinite;
+}
+
+@keyframes fs-distant-sail { from { transform: translate3d(var(--sail-from), 0, 0); } to { transform: translate3d(var(--sail-to), 0, 0); } }
+@keyframes fs-distant-rock { 0%, 100% { transform: translateY(0.8px) rotate(-1.2deg); } 50% { transform: translateY(-0.8px) rotate(1.2deg); } }
+@keyframes fs-buoy-bob { 0%, 100% { transform: translateY(0.9px) rotate(-2.5deg); } 50% { transform: translateY(-0.9px) rotate(2.5deg); } }
+@keyframes fs-contact-ripple { 0% { transform: translateY(-1px) scale(0.78, 0.7); opacity: 0; } 18% { opacity: 0.42; } 100% { transform: translateY(2px) scale(1.22, 1.25); opacity: 0; } }
+@keyframes fs-whale-surface { 0%, 12%, 75%, 100% { transform: translateY(42%); } 28%, 45% { transform: translateY(6%); } 62% { transform: translateY(24%); } }
+@keyframes fs-whale-water { 0%, 12%, 78%, 100% { transform: scale(0.8, 0.8); opacity: 0; } 28% { opacity: 0.36; transform: scale(0.94, 0.9); } 70% { transform: scale(1.2, 1.3); opacity: 0; } }
+@keyframes fs-whale-contact { 0%, 16%, 70%, 100% { opacity: 0; } 28%, 45% { opacity: 0.5; } }
+@keyframes fs-whale-spout { 0%, 29%, 52%, 100% { opacity: 0; transform: translateY(2px); } 36%, 43% { opacity: 0.65; transform: translateY(0); } }
+
+/* Jumping Golden Fish in Right-Midground Sea */
+.fs-jumping-fish-group {
+    position: absolute;
+    right: 12vw;
+    top: 63%;
+    width: clamp(78px, 7.5vw, 114px);
+    z-index: 3;
+    pointer-events: none;
+}
+
+.fs-jumping-fish-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.fs-jumping-fish-arc {
+    transform-origin: 0 0;
+    animation: fsJumpingFishArc 6.4s ease-in-out infinite;
+    opacity: 0;
+}
+
+.fs-fish-splash-rings {
+    transform-origin: 0 0;
+    animation: fsFishSplashRing 6.4s ease-out infinite;
+    opacity: 0;
+}
+
+@keyframes fsJumpingFishArc {
+    0%, 20% { transform: translate(24px, 68px) rotate(-42deg) scale(0.75); opacity: 0; }
+    28% { opacity: 1; }
+    42% { transform: translate(56px, 24px) rotate(0deg) scale(1); opacity: 1; }
+    56% { opacity: 1; }
+    64%, 100% { transform: translate(86px, 72px) rotate(48deg) scale(0.75); opacity: 0; }
+}
+
+@keyframes fsFishSplashRing {
+    0%, 56% { transform: translate(62px, 72px) scale(0.45); opacity: 0; }
+    64% { opacity: 0.85; transform: translate(62px, 72px) scale(0.8); }
+    85%, 100% { transform: translate(62px, 72px) scale(1.45); opacity: 0; }
+}
+
+/* Rocking Wooden Boat on Left Near Pier + Swinging Hanging Bow Lantern */
+.fs-island-world .fs-island-vessel {
+    position: absolute;
+    left: 6vw;
+    top: 56%;
+    width: clamp(165px, 16vw, 235px);
+    z-index: 4;
+    pointer-events: none;
+}
+
+.fs-island-world .ow-arrival-motion,
+.fs-island-world .ow-boat-idle {
+    position: relative;
+}
+
+.fs-island-world .ow-boat-idle {
+    transform-origin: 50% 81%;
+    animation: fs-boat-idle 4.2s ease-in-out infinite;
+}
+
+@keyframes fs-boat-idle {
+    0%, 100% { transform: translateY(2px) rotate(-1.2deg); }
+    50% { transform: translateY(-2.2px) rotate(1.2deg); }
+}
+
+.fs-island-world .ow-boat-art {
     position: relative;
     z-index: 2;
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.fs-island-world .fs-loading-oar {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    transform-origin: 68% 49%;
+    animation: fsOarRow 4.2s ease-in-out infinite alternate;
+}
+
+@keyframes fsOarRow {
+    0% { transform: rotate(-6deg) translateY(0); }
+    100% { transform: rotate(5deg) translateY(2px); }
+}
+
+.fs-hanging-lantern {
+    position: absolute;
+    left: 33%;
+    top: 58%;
+    z-index: 4;
+    transform-origin: 50% 0%;
+    animation: fsHangingLanternSwing 3.4s ease-in-out infinite alternate;
+}
+
+.fs-lantern-cord {
+    display: block;
+    width: 2px;
+    height: clamp(14px, 1.5vw, 20px);
+    margin: 0 auto;
+    background: #8b5a34;
+    border-radius: 2px;
+}
+
+.fs-lantern-lamp {
+    position: relative;
+    display: block;
+    width: clamp(12px, 1.2vw, 16px);
+    height: clamp(16px, 1.6vw, 22px);
+    border-radius: 4px 4px 5px 5px;
+    background: radial-gradient(circle at 50% 55%, #ffffff 0%, #fef08a 45%, #f59e0b 100%);
+    border: 1.8px solid #78350f;
+    box-shadow: 0 0 12px 3px rgba(253, 224, 71, 0.85);
+}
+
+.fs-lantern-glow {
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(254, 240, 138, 0.7) 0%, rgba(251, 191, 36, 0.24) 48%, transparent 75%);
+    animation: fsBeaconPulse 2.1s ease-in-out infinite alternate;
+}
+
+@keyframes fsHangingLanternSwing {
+    0% { transform: rotate(-8deg); }
+    100% { transform: rotate(8deg); }
+}
+
+.fs-island-world .ow-wake { position: absolute; inset: 0; pointer-events: none; }
+.fs-island-world .ow-wake > svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+.fs-island-world .ow-hull-contact {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.fs-island-world .ow-vessel-ripple {
+    transform-box: view-box;
+    transform-origin: 239px 230px;
+    animation: fs-vessel-ripple 4.2s ease-out infinite;
+    opacity: 0;
+}
+
+.fs-island-world .ow-vessel-ripple--following { animation-delay: -2.1s; }
+
+.fs-island-world .ow-paddle-ripple {
+    transform-box: view-box;
+    transform-origin: 414px 246px;
+    animation: fs-paddle-water 4.2s ease-out infinite;
+    opacity: 0;
+}
+
+@keyframes fs-vessel-ripple {
+    0% { transform: translate3d(0, -2px, 0) scale(0.88, 0.75); opacity: 0; }
+    16% { opacity: 0.45; }
+    100% { transform: translate3d(0, 3px, 0) scale(1.22, 1.18); opacity: 0; }
+}
+
+@keyframes fs-paddle-water {
+    0%, 20%, 100% { transform: scale(0.85, 0.8); opacity: 0; }
+    35% { opacity: 0.34; }
+    90% { transform: translateY(2px) scale(1.3, 1.25); opacity: 0; }
+}
+
+/* Foreground Coral Reef Corners, Bubbles & Wooden Signpost */
+.fs-foreground-reef-layer {
+    position: absolute;
+    inset: 66% 0 0 0;
+    z-index: 4;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.fs-reef-corner {
+    position: absolute;
+    bottom: -6px;
+    width: clamp(140px, 16vw, 240px);
+    z-index: 2;
+}
+
+.fs-reef-corner svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.fs-reef-corner-left { left: -12px; }
+.fs-reef-corner-right { right: -12px; }
+
+.fs-kelp-blade {
+    transform-box: view-box;
+    transform-origin: 50% 100%;
+    animation: fsCoralSway 5.4s ease-in-out infinite alternate;
+}
+
+.fs-kelp-blade.fs-kelp-2 {
+    animation-duration: 6.8s;
+    animation-delay: -2.4s;
+}
+
+@keyframes fsCoralSway {
+    0% { transform: skewX(-3deg) rotate(-2deg); }
+    100% { transform: skewX(3.5deg) rotate(2.5deg); }
+}
+
+.fs-underwater-bubbles {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+}
+
+.fs-underwater-bubbles span {
+    position: absolute;
+    bottom: -14px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9) 0%, rgba(186, 230, 253, 0.45) 48%, rgba(56, 189, 248, 0.14) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.68);
+    animation: fsBubbleRise 5.6s linear infinite;
+}
+
+.fs-underwater-bubbles span:nth-child(1) { left: 5%; width: 10px; height: 10px; animation-duration: 5.1s; }
+.fs-underwater-bubbles span:nth-child(2) { left: 10%; width: 15px; height: 15px; animation-duration: 6.3s; animation-delay: -1.8s; }
+.fs-underwater-bubbles span:nth-child(3) { left: 15%; width: 8px; height: 8px; animation-duration: 4.8s; animation-delay: -3.2s; }
+.fs-underwater-bubbles span:nth-child(4) { left: 21%; width: 12px; height: 12px; animation-duration: 5.8s; animation-delay: -2.4s; }
+.fs-underwater-bubbles span:nth-child(5) { left: 32%; width: 9px; height: 9px; animation-duration: 5.4s; animation-delay: -0.9s; }
+.fs-underwater-bubbles span:nth-child(6) { left: 68%; width: 10px; height: 10px; animation-duration: 6.1s; animation-delay: -3.9s; }
+.fs-underwater-bubbles span:nth-child(7) { left: 79%; width: 13px; height: 13px; animation-duration: 5.3s; animation-delay: -1.4s; }
+.fs-underwater-bubbles span:nth-child(8) { left: 85%; width: 9px; height: 9px; animation-duration: 4.7s; animation-delay: -2.8s; }
+.fs-underwater-bubbles span:nth-child(9) { left: 90%; width: 16px; height: 16px; animation-duration: 6.7s; animation-delay: -4.2s; }
+.fs-underwater-bubbles span:nth-child(10) { left: 95%; width: 10px; height: 10px; animation-duration: 5s; animation-delay: -2.1s; }
+
+@keyframes fsBubbleRise {
+    0% { transform: translate(0, 0) scale(0.75); opacity: 0; }
+    18% { opacity: 0.85; }
+    65% { transform: translate(8px, -105px) scale(1); opacity: 0.72; }
+    100% { transform: translate(-6px, -180px) scale(1.1); opacity: 0; }
+}
+
+
+/* Home Page Starting Island Animations (_StartingIslandArt) */
+.island-theme-mode .ow-island-art {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    transform-origin: 50% 80%;
+}
+
+.island-theme-mode .ow-palm {
+    transform-box: view-box;
+    animation: fs-palm-sway 6.2s ease-in-out infinite;
+    transform-origin: 523px 124px;
+}
+
+.island-theme-mode .ow-palm--far {
+    transform-origin: 640px 137px;
+    animation-duration: 7.8s;
+    animation-delay: -2.7s;
+}
+
+@keyframes fs-palm-sway {
+    0%, 100% { transform: rotate(-2.4deg); }
+    50% { transform: rotate(2.8deg); }
+}
+
+.island-theme-mode .ow-shrub { --shrub-period: 7.4s; --shrub-phase: -1.8s; }
+.island-theme-mode .ow-shrub--left { --shrub-phase: -2.05s; }
+.island-theme-mode .ow-shrub--front { --shrub-phase: -2.35s; }
+
+.island-theme-mode .ow-shrub-wind {
+    transform-box: view-box;
+    transform-origin: 34px 0;
+    animation-duration: var(--shrub-period);
+    animation-delay: var(--shrub-phase);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+}
+
+.island-theme-mode .ow-shrub-foliage { animation-name: fs-shrub-sway; }
+.island-theme-mode .ow-shrub-branch--back { animation-name: fs-shrub-back; animation-delay: calc(var(--shrub-phase) - 0.12s); }
+.island-theme-mode .ow-shrub-branch--middle { animation-name: fs-shrub-middle; animation-delay: calc(var(--shrub-phase) - 0.28s); }
+.island-theme-mode .ow-shrub-branch--front { animation-name: fs-shrub-front; animation-delay: calc(var(--shrub-phase) - 0.4s); }
+.island-theme-mode .ow-shrub-tip { transform-origin: 0 0; animation-name: fs-shrub-tip; animation-duration: 7.2s; }
+.island-theme-mode .ow-shrub-tip--late { animation-delay: calc(var(--shrub-phase) - 0.65s); }
+.island-theme-mode .ow-shrub-tip--middle { animation-delay: calc(var(--shrub-phase) - 0.35s); }
+
+@keyframes fs-shrub-sway { 0%, 100% { transform: rotate(-0.8deg) skewX(-0.4deg); } 47% { transform: rotate(2.4deg) skewX(0.9deg); } 76% { transform: rotate(0.3deg) skewX(0.1deg); } }
+@keyframes fs-shrub-back { 0%, 100% { transform: rotate(-0.5deg); } 49% { transform: rotate(2.3deg); } 78% { transform: rotate(0.2deg); } }
+@keyframes fs-shrub-middle { 0%, 100% { transform: rotate(0.2deg); } 53% { transform: rotate(1.4deg); } 82% { transform: rotate(-0.3deg); } }
+@keyframes fs-shrub-front { 0%, 100% { transform: rotate(-0.2deg); } 54% { transform: rotate(0.8deg); } 81% { transform: rotate(-0.4deg); } }
+@keyframes fs-shrub-tip { 0%, 100% { transform: rotate(-1deg); } 30% { transform: rotate(0.9deg); } 56% { transform: rotate(2.9deg); } 82% { transform: rotate(-0.6deg); } }
+
+.island-theme-mode .ow-shore-ripples { opacity: 0.42; }
+.island-theme-mode .ow-shore-wash { transform-box: view-box; transform-origin: 384px 420px; animation: fs-shore 6.8s ease-in-out infinite; opacity: 0.42; }
+.island-theme-mode .ow-shore-wash--return { animation-name: fs-shore-return; animation-delay: -3.4s; }
+.island-theme-mode .ow-wet-sand { animation: fs-wet-sand 6.8s ease-in-out infinite; }
+
+@keyframes fs-shore { 0%, 100% { transform: translate3d(0, 6px, 0) scale(1.01, 1.03); opacity: 0; } 40% { transform: translate3d(0, -1px, 0) scale(0.995, 0.98); opacity: 0.54; } 70% { transform: translate3d(0, 1px, 0); opacity: 0.22; } }
+@keyframes fs-shore-return { 0% { transform: translate3d(0, -9px, 0) scale(0.97, 0.85); opacity: 0; } 20% { opacity: 0.32; } 100% { transform: translate3d(0, 2px, 0) scale(1.025, 1.06); opacity: 0; } }
+@keyframes fs-wet-sand { 0%, 100% { opacity: 0.16; } 45%, 60% { opacity: 0.36; } }
+
+.island-theme-mode [data-island-animal],
+.island-theme-mode .island-life-motion {
+    transform-box: view-box;
+    transform-origin: 0 0;
+}
+
+.island-theme-mode .island-life-motion { animation-play-state: running; }
+.island-theme-mode .island-crab-walk { animation: fs-crab-walk 14s ease-in-out infinite; }
+.island-theme-mode .island-crab-feet { animation: fs-crab-feet 14s ease-in-out infinite; }
+.island-theme-mode .island-crab-claw { animation: fs-crab-claw 14s ease-in-out infinite; }
+.island-theme-mode .island-crab-claw--right { animation-delay: -0.5s; }
+.island-theme-mode .island-tortoise-route { animation: fs-tortoise-route 18s ease-in-out infinite; }
+.island-theme-mode .island-tortoise-facing { animation: fs-tortoise-turn 18s ease-in-out infinite; }
+.island-theme-mode .island-tortoise-leg { animation: fs-tortoise-step 1.6s ease-in-out infinite; }
+.island-theme-mode .island-tortoise-leg--opposite { animation-delay: -0.8s; }
+.island-theme-mode .island-tortoise-leg--far { animation-direction: reverse; }
+.island-theme-mode .island-tortoise-body { animation: fs-tortoise-weight 1.6s ease-in-out infinite; }
+
+@keyframes fs-crab-walk { 0%, 18%, 90%, 100% { transform: translate3d(0, 0, 0); } 28%, 64% { transform: translate3d(16px, -0.4px, 0); } 78% { transform: translate3d(0, 0, 0); } }
+@keyframes fs-crab-feet { 0%, 18%, 28%, 64%, 78%, 100% { transform: rotate(0deg); } 20%, 24%, 66%, 70%, 74% { transform: rotate(6deg); } 22%, 26%, 68%, 72%, 76% { transform: rotate(-6deg); } }
+@keyframes fs-crab-claw { 0%, 32%, 65%, 100% { transform: rotate(0deg); } 40%, 48% { transform: rotate(-10deg); } 44%, 54% { transform: rotate(4deg); } }
+@keyframes fs-tortoise-route { 0%, 3%, 100% { transform: translate3d(0, 0, 0); } 46%, 51% { transform: translate3d(-24px, 0, 0); } 94% { transform: translate3d(0, 0, 0); } }
+@keyframes fs-tortoise-turn { 0%, 46%, 100% { transform: scaleX(1); } 51%, 94% { transform: scaleX(-1); } 99% { transform: scaleX(1); } }
+@keyframes fs-tortoise-step { 0%, 100% { transform: translate3d(0, 0, 0) rotate(-6deg); } 35% { transform: translate3d(0, 0, 0) rotate(6deg); } 65% { transform: translate3d(0, -0.9px, 0) rotate(3deg); } }
+@keyframes fs-tortoise-weight { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, 0.35px, 0); } }
+
+.fs-float-prop,
+.prop-cap,
+.prop-book,
+.prop-cube {
+    display: none !important;
+}
+
+/* ==========================================
+   Full-Screen Centered Hybrid Island Layout & Foreground UI
+   ========================================== */
+.fs-loading-content {
+    position: relative;
+    z-index: 10;
     width: 100%;
     max-width: 960px;
     height: 100%;
@@ -1592,16 +2521,17 @@ a.btn-skip-outline:active {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: clamp(12px, 4svh, 36px) 0 clamp(16px, 5svh, 60px);
+    padding-block: clamp(14px, 2.5svh, 28px) clamp(16px, 3.2svh, 36px);
     box-sizing: border-box;
 }
 
-/* Top Branding Pill */
+/* Top Branding Pill (Original Text) */
 .fs-top-brand-pill {
-    background: rgba(255, 255, 255, 0.88);
-    backdrop-filter: blur(14px);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(18px) saturate(1.3);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
     border: 2px solid #bae6fd;
-    border-bottom: 4px solid #7dd3fc;
+    border-bottom: 4.5px solid #38bdf8;
     border-radius: 40px;
     padding: 8px 24px;
     display: inline-flex;
@@ -1610,8 +2540,9 @@ a.btn-skip-outline:active {
     font-size: 13.5px;
     font-weight: 700;
     color: #0284c7;
-    box-shadow: 0 10px 24px rgba(2, 132, 199, 0.16);
+    box-shadow: 0 12px 28px rgba(14, 74, 107, 0.18);
     user-select: none;
+    flex-shrink: 0;
     animation: fsSlideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1632,17 +2563,17 @@ a.btn-skip-outline:active {
 }
 
 .fs-top-brand-pill span:last-child {
-    color: #54758b;
+    color: #426c82;
     font-weight: 600;
     font-size: 12.5px;
 }
 
 @keyframes fsSlideDown {
-    0% { transform: translateY(-30px); opacity: 0; }
+    0% { transform: translateY(-24px); opacity: 0; }
     100% { transform: translateY(0); opacity: 1; }
 }
 
-/* Center Mascot Stage */
+/* Centered Mascot + Animated Starting Island + Treasures Diorama */
 .fs-mascot-stage {
     position: relative;
     display: flex;
@@ -1651,112 +2582,266 @@ a.btn-skip-outline:active {
     justify-content: center;
     margin: auto 0;
     width: 100%;
-    max-width: 680px;
+    max-width: 720px;
+    z-index: 5;
+}
+
+.fs-hero-diorama {
+    position: relative;
+    width: min(610px, 92vw, 62vh);
+    aspect-ratio: 760 / 480;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
     z-index: 3;
 }
 
 .fs-portal-aura {
     position: absolute;
-    top: 42%;
-    left: 50%;
+    top: 40%;
+    left: 46%;
     transform: translate(-50%, -50%);
-    width: 340px;
-    height: 340px;
+    width: 56%;
+    aspect-ratio: 1;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(56, 189, 248, 0.45) 50%, rgba(2, 132, 199, 0.1) 75%, transparent 100%);
-    filter: blur(22px);
+    background: radial-gradient(circle, rgba(255, 254, 240, 0.92) 0%, rgba(254, 240, 138, 0.42) 48%, transparent 75%);
+    filter: blur(18px);
     animation: auraGlow 3.5s ease-in-out infinite alternate;
     pointer-events: none;
     z-index: 1;
 }
 
+.fs-duo-sunburst {
+    position: absolute;
+    top: 40%;
+    left: 46%;
+    transform: translate(-50%, -50%);
+    width: 66%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg 18deg, rgba(255, 255, 255, 0.34) 22deg 32deg, transparent 36deg 60deg,
+        rgba(255, 255, 255, 0.34) 64deg 74deg, transparent 78deg 105deg,
+        rgba(255, 255, 255, 0.34) 109deg 119deg, transparent 123deg 150deg,
+        rgba(255, 255, 255, 0.34) 154deg 164deg, transparent 168deg 195deg,
+        rgba(255, 255, 255, 0.34) 199deg 209deg, transparent 213deg 240deg,
+        rgba(255, 255, 255, 0.34) 244deg 254deg, transparent 258deg 285deg,
+        rgba(255, 255, 255, 0.34) 289deg 299deg, transparent 303deg 330deg,
+        rgba(255, 255, 255, 0.34) 334deg 344deg, transparent 348deg 360deg
+    );
+    -webkit-mask-image: radial-gradient(circle, #000 20%, transparent 70%);
+    mask-image: radial-gradient(circle, #000 20%, transparent 70%);
+    animation: fs-duo-rays 36s linear infinite;
+    z-index: 1;
+    pointer-events: none;
+}
+
+@keyframes fs-duo-rays {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.fs-center-island {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Starfish Nestled Near Left Coastal Rocks */
+.fs-island-starfish {
+    position: absolute;
+    left: 20%;
+    bottom: 24%;
+    width: clamp(32px, 3.6vw, 44px);
+    z-index: 4;
+    pointer-events: none;
+    animation: fsStarfishWiggle 5.2s ease-in-out infinite alternate;
+}
+
+.fs-island-starfish svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 4px 6px rgba(102, 56, 18, 0.24));
+}
+
+@keyframes fsStarfishWiggle {
+    0% { transform: rotate(-4deg) scale(1); }
+    100% { transform: rotate(3deg) scale(1.04); }
+}
+
+/* Wooden Treasure Chest Next to Palm Base on Sand */
+.fs-island-chest {
+    position: absolute;
+    right: 26%;
+    bottom: 27%;
+    width: clamp(48px, 5vw, 66px);
+    z-index: 4;
+    pointer-events: none;
+}
+
+.fs-island-chest svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 6px 10px rgba(92, 45, 12, 0.28));
+}
+
+.fs-chest-glint {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: fsChestGlint 2.8s ease-in-out infinite;
+}
+
+@keyframes fsChestGlint {
+    0%, 100% { transform: scale(0.55) rotate(0deg); opacity: 0.3; }
+    50% { transform: scale(1.25) rotate(45deg); opacity: 1; }
+}
+
+/* Blue-and-White Beach Ball Rocking on Right Sand */
+.fs-island-beachball {
+    position: absolute;
+    right: 17%;
+    bottom: 23%;
+    width: clamp(32px, 3.6vw, 42px);
+    z-index: 4;
+    pointer-events: none;
+    transform-origin: 50% 85%;
+    animation: fsBeachballRock 4.2s ease-in-out infinite alternate;
+}
+
+.fs-island-beachball svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 5px 8px rgba(14, 74, 107, 0.24));
+}
+
+@keyframes fsBeachballRock {
+    0% { transform: translateX(-2px) rotate(-6deg); }
+    100% { transform: translateX(3px) rotate(6deg); }
+}
+
+/* Big Centered Nimo Grounded on the Open Central Sand Beach */
 .fs-nimo-hero {
-    position: relative;
-    z-index: 3;
-    width: 260px;
-    height: 260px;
+    position: absolute;
+    left: 46%;
+    bottom: 25%;
+    transform: translateX(-50%);
+    width: 39%;
+    aspect-ratio: 1;
+    z-index: 5;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     user-select: none;
 }
 
+.fs-nimo-sand-shadow {
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 68%;
+    height: 15%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(130, 88, 34, 0.5) 0%, rgba(130, 88, 34, 0.22) 55%, transparent 80%);
+    z-index: 1;
+    animation: fsDuoShadowBounce 2.8s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+
 .fs-nimo-img {
+    position: relative;
+    z-index: 2;
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 22px 36px rgba(2, 132, 199, 0.35));
-    animation: fsNimoFloat 4s ease-in-out infinite;
-    transform-origin: bottom center;
+    filter: drop-shadow(0 12px 20px rgba(102, 74, 34, 0.24));
+    transform-origin: 50% 93%;
+    animation: fsDuoMascotBounce 2.8s ease-in-out infinite;
 }
 
-@keyframes fsNimoFloat {
-    0%, 100% {
-        transform: translateY(0px) rotate(0deg) scale(1, 1);
-    }
-    25% {
-        transform: translateY(-10px) rotate(-1.5deg) scale(0.98, 1.02);
-    }
-    50% {
-        transform: translateY(-18px) rotate(0deg) scale(1, 1);
-    }
-    75% {
-        transform: translateY(-8px) rotate(1.5deg) scale(1.02, 0.98);
-    }
+@keyframes fsDuoMascotBounce {
+    0%, 100% { transform: translateY(0) scale(1, 1) rotate(0deg); }
+    18% { transform: translateY(2px) scale(1.045, 0.955) rotate(-1.8deg); }
+    42% { transform: translateY(-9px) scale(0.965, 1.04) rotate(2.2deg); }
+    64% { transform: translateY(1.5px) scale(1.03, 0.97) rotate(0.4deg); }
+    82% { transform: translateY(-3px) scale(0.99, 1.015) rotate(-1deg); }
 }
 
-/* Star Sparkles Rising from the book */
+@keyframes fsDuoShadowBounce {
+    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.92; }
+    18% { transform: translateX(-50%) scale(1.06, 1.05); opacity: 1; }
+    42% { transform: translateX(-50%) scale(0.88, 0.85); opacity: 0.68; }
+    64% { transform: translateX(-50%) scale(1.04, 1.02); opacity: 0.95; }
+    82% { transform: translateX(-50%) scale(0.95); opacity: 0.8; }
+}
+
+/* Star Sparkles Rising Around Nimo */
 .fs-book-sparkles {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    z-index: 4;
+    z-index: 6;
 }
 
 .fb-spark {
     position: absolute;
     color: #fde047;
     filter: drop-shadow(0 0 8px rgba(253, 224, 71, 0.95));
-    animation: fsSparkRise 2.8s ease-in-out infinite;
+    animation: fsSparkRise 2.6s ease-in-out infinite;
 }
-.fb-1 { top: 40%; left: 34%; animation-delay: 0s; font-size: 22px; }
-.fb-2 { top: 32%; right: 35%; animation-delay: -0.7s; font-size: 17px; }
-.fb-3 { top: 48%; right: 32%; animation-delay: -1.4s; font-size: 19px; }
-.fb-4 { top: 22%; left: 48%; animation-delay: -2.1s; font-size: 24px; }
+.fb-1 { top: 42%; left: 24%; animation-delay: 0s; font-size: 20px; }
+.fb-2 { top: 24%; right: 29%; animation-delay: -0.6s; font-size: 16px; }
+.fb-3 { top: 48%; right: 26%; animation-delay: -1.2s; font-size: 18px; }
+.fb-4 { top: 12%; left: 43%; animation-delay: -1.8s; font-size: 22px; }
+.fb-5 { top: 22%; left: 28%; animation-delay: -2.2s; font-size: 15px; }
 
 @keyframes fsSparkRise {
-    0% { transform: translateY(18px) scale(0.5) rotate(0deg); opacity: 0; }
-    40% { opacity: 1; transform: translateY(-8px) scale(1.2) rotate(45deg); }
-    100% { transform: translateY(-45px) scale(0.6) rotate(90deg); opacity: 0; }
+    0% { transform: translateY(16px) scale(0.45) rotate(0deg); opacity: 0; }
+    38% { opacity: 1; transform: translateY(-6px) scale(1.22) rotate(45deg); }
+    100% { transform: translateY(-42px) scale(0.55) rotate(90deg); opacity: 0; }
 }
 
-/* Elegant Duolingo Motivational Speech Bubble */
+/* Centered Duolingo 3D Motivational Speech Bubble Below Island Shore */
 .fs-speech-bubble {
     position: relative;
-    z-index: 4;
+    z-index: 6;
     max-width: 580px;
-    width: 90%;
-    margin-top: 18px;
-    background: #ffffff;
+    width: 92%;
+    margin-top: -16px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(18px) saturate(1.3);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
     border: 2.5px solid #bae6fd;
-    border-bottom: 5px solid #7dd3fc;
+    border-bottom: 5.5px solid #38bdf8;
     border-radius: 26px;
-    padding: 14px 28px;
-    box-shadow: 0 14px 32px rgba(2, 132, 199, 0.18);
+    padding: 12px 26px;
+    box-shadow: 0 16px 36px rgba(2, 84, 138, 0.22);
     text-align: center;
     box-sizing: border-box;
-    animation: speechBubblePop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: speechBubblePop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes speechBubblePop {
+    0% { transform: scale(0.88) translateY(12px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
 .fs-speech-inner {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 7px;
 }
 
 .fs-quote-mark, .fs-quote-mark-end {
-    font-size: 32px;
+    font-size: 30px;
     line-height: 1;
     color: #0284c7;
     font-weight: 800;
@@ -1765,12 +2850,12 @@ a.btn-skip-outline:active {
 }
 
 .fs-quote-text {
-    font-size: 16px;
+    font-size: 15.5px;
     font-weight: 800;
     color: #0369a1;
     line-height: 1.5;
     margin: 0;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.25px;
 }
 
 .fs-speech-tail {
@@ -1778,52 +2863,81 @@ a.btn-skip-outline:active {
     top: -10px;
     left: 50%;
     transform: translateX(-50%) rotate(45deg);
-    width: 18px;
-    height: 18px;
-    background: #ffffff;
+    width: 17px;
+    height: 17px;
+    background: rgba(255, 255, 255, 0.96);
     border-left: 2.5px solid #bae6fd;
     border-top: 2.5px solid #bae6fd;
     border-radius: 3px;
 }
 
-/* Bottom Progress Console */
+/* Bottom Centered Duolingo 3D Progress Console */
 .fs-progress-console {
     width: 100%;
-    max-width: 640px;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(18px);
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(18px) saturate(1.3);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
     border: 2.5px solid #bae6fd;
-    border-bottom: 6px solid #7dd3fc;
+    border-bottom: 6px solid #38bdf8;
     border-radius: 30px;
-    padding: 22px 28px 18px;
-    box-shadow: 0 20px 50px rgba(2, 132, 199, 0.22);
+    padding: 18px 28px 15px;
+    box-shadow: 0 20px 50px rgba(7, 48, 78, 0.28);
     position: relative;
     z-index: 10;
     box-sizing: border-box;
-    animation: fsSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: fsSlideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes fsSlideUp {
-    0% { transform: translateY(40px); opacity: 0; }
+    0% { transform: translateY(36px); opacity: 0; }
     100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes progressStripeSweep {
+    0% { background-position: 0 0; }
+    100% { background-position: 32px 0; }
+}
+
+.fs-preview-close-btn {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    z-index: 20;
+    background: rgba(255, 255, 255, 0.92);
+    color: #0369a1;
+    border: 2px solid #bae6fd;
+    border-bottom: 4px solid #38bdf8;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(2, 84, 138, 0.2);
 }
 
 .fs-progress-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+    gap: 10px;
 }
 
 .fs-status-box {
     display: flex;
     align-items: center;
     gap: 8px;
+    min-width: 0;
 }
 
 .fs-status-dot {
     width: 9px;
     height: 9px;
+    flex-shrink: 0;
     border-radius: 50%;
     background: #0284c7;
     box-shadow: 0 0 10px rgba(2, 132, 199, 0.8);
@@ -1847,7 +2961,6 @@ a.btn-skip-outline:active {
     text-shadow: 0 2px 8px rgba(2, 132, 199, 0.15);
 }
 
-/* 3D Chunky Progress Bar Track */
 .fs-progress-track {
     height: 26px;
     background: #e0f2fe;
@@ -1861,13 +2974,25 @@ a.btn-skip-outline:active {
 .fs-progress-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #0284c7 0%, #38bdf8 50%, #22c55e 100%);
+    background: linear-gradient(90deg, #0284c7 0%, #0ea5e9 55%, #38bdf8 100%);
     border-radius: 20px;
     position: relative;
     transition: width 0.12s linear;
     background-size: 32px 32px;
-    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.28) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.28) 50%, rgba(255, 255, 255, 0.28) 75%, transparent 75%, transparent);
     animation: progressStripeSweep 0.9s linear infinite;
+}
+
+.fs-progress-fill::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 8px;
+    right: 12px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.42);
+    pointer-events: none;
 }
 
 .fs-progress-glow-tip {
@@ -1898,9 +3023,8 @@ a.btn-skip-outline:active {
     100% { transform: translateY(-50%) rotate(360deg); }
 }
 
-/* Tip Capsule */
 .fs-tip-capsule {
-    margin-top: 14px;
+    margin-top: 12px;
     font-size: 13px;
     font-weight: 600;
     color: #54758b;
@@ -1918,69 +3042,44 @@ a.btn-skip-outline:active {
     flex-shrink: 0;
 }
 
-/* Bottom Island Ocean Waves */
-.fs-waves-landscape {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 110px;
-    pointer-events: none;
-    z-index: 1;
+/* Responsive Adjustments */
+@media (max-width: 900px) {
+    .fs-island-world .fs-island-vessel { left: 2vw; top: 57%; width: 145px; opacity: 0.9; }
+    .fs-island-world .ocean-backdrop-whale-water { left: 74vw; top: 74%; }
+    .fs-left-lighthouse-cliff { width: 185px; }
 }
 
-.fs-wave-svg {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.fs-wave-svg.wave-back {
-    animation: waveDriftBack 8s ease-in-out infinite alternate;
-}
-
-.fs-wave-svg.wave-front {
-    animation: waveDriftFront 6s ease-in-out infinite alternate;
-}
-
-@keyframes waveDriftBack {
-    0% { transform: translateX(0) scaleY(1); }
-    100% { transform: translateX(-30px) scaleY(1.15); }
-}
-
-@keyframes waveDriftFront {
-    0% { transform: translateX(0) scaleY(1); }
-    100% { transform: translateX(30px) scaleY(0.9); }
-}
-
-/* Responsive adjust for full screen */
 @media (max-width: 768px) {
-    .fs-nimo-hero {
-        width: 190px;
-        height: 190px;
-    }
-    .fs-speech-bubble {
-        padding: 12px 18px;
-    }
-    .fs-quote-text {
-        font-size: 14px;
-    }
-    .fs-progress-console {
-        padding: 16px 18px 14px;
-    }
-    .fs-percent-number {
-        font-size: 22px;
-    }
-    .prop-cap, .prop-book, .prop-cube {
-        display: none !important;
+    .fs-loading-content { padding-block: 16px 22px; }
+    .fs-hero-diorama { width: min(460px, 95vw, 52vh); }
+    .fs-speech-bubble { margin-top: -12px; padding: 11px 18px; }
+    .fs-quote-text { font-size: 14px; }
+    .fs-progress-console { padding: 16px 18px 14px; }
+    .fs-percent-number { font-size: 22px; }
+    .fs-island-world .hero-sun,
+    .fs-island-world .journey-moon { left: 86%; top: 16%; width: 42px; }
+    .fs-island-world .hero-water-glints span:nth-child(even) { display: none; }
+    .fs-island-world .ow-seabirds { top: 19%; left: 48%; width: 44%; }
+    .fs-island-world .fs-island-vessel,
+    .fs-island-world .ocean-backdrop-whale-water,
+    .fs-left-lighthouse-cliff,
+    .fs-jumping-fish-group { display: none; }
+    .fs-island-world .ocean-backdrop-buoy { left: 6vw; top: 66%; width: 30px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .island-theme-mode *,
+    .fs-duo-sunburst,
+    .fs-nimo-img,
+    .fs-nimo-sand-shadow,
+    .fb-spark {
+        animation: none !important;
     }
 }
 
 @media (height < 480px) and (orientation: landscape) {
-    .fs-nimo-hero { width: min(120px, 30svh); height: auto; aspect-ratio: 1; }
+    .fs-loading-content { gap: 8px; padding-block: 8px; }
+    .fs-hero-diorama { width: min(460px, 42svh); }
     .fs-progress-console { padding-block: 10px; }
 }
 
@@ -2097,29 +3196,79 @@ html[data-theme="dark"] .account-types a.active {
 }
 
 /* ==========================================
-   Dark Mode Full-Screen Loading Screen
+   Dark Mode Full-Screen Loading Screen (Moonlit Pastel Ocean & Harbor)
    ========================================== */
 html[data-theme="dark"] .nimo-loading-overlay.full-screen-mode {
-    background: radial-gradient(circle at 50% 25%, #0e2b47 0%, #071729 45%, #030a13 100%) !important;
+    background: #0b2035 !important;
 }
 
-html[data-theme="dark"] .fs-cloud {
-    background: rgba(255, 255, 255, 0.08) !important;
-    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.4)) !important;
+html[data-theme="dark"] .fs-island-world .hero-sun,
+html[data-theme="dark"] .fs-shooting-star {
+    opacity: 0.72;
 }
 
-html[data-theme="dark"] .fs-orb-top {
-    background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(2, 132, 199, 0.15) 60%, transparent 80%) !important;
+html[data-theme="dark"] .fs-island-world .hero-sun {
+    transform: translate3d(-50%, 75vh, 0);
+    opacity: 0;
 }
 
-html[data-theme="dark"] .fs-orb-center {
-    background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, rgba(14, 165, 233, 0.08) 50%, transparent 75%) !important;
+html[data-theme="dark"] .fs-island-world .journey-moon {
+    transform: translate3d(-50%, -50%, 0);
+    opacity: 1;
+}
+
+html[data-theme="dark"] .fs-island-world :is(.journey-night-sky, .journey-stars, .ow-sea:after) {
+    opacity: 1;
+}
+
+html[data-theme="dark"] .fs-island-world .ow-sea:before {
+    background: radial-gradient(ellipse 35% 95% at 82% 0, #dcefff99, #b1d6f333 45%, transparent 78%);
+}
+
+html[data-theme="dark"] .fs-island-world .ow-water-detail:after {
+    background: linear-gradient(#668c9c99, #86bac52b 55%, transparent);
+}
+
+html[data-theme="dark"] .fs-island-world .ow-sun-path {
+    background: linear-gradient(#e6f4ff88, transparent);
+}
+
+html[data-theme="dark"] .fs-island-world .hero-water-glints span {
+    background: #e5f3ff;
+    box-shadow: 0 0 9px 2px #c9e7ff75;
+}
+
+html[data-theme="dark"] .fs-island-world :is(.ow-clouds, .ow-distance, .ocean-backdrop, .fs-left-lighthouse-cliff svg, .fs-foreground-reef-layer) {
+    filter: brightness(0.68) saturate(0.76);
+}
+
+html[data-theme="dark"] .fs-island-world .ow-seabirds {
+    color: #9dc5d8;
+    opacity: 0.45;
+}
+
+html[data-theme="dark"] .island-theme-mode .ow-island-art {
+    filter: brightness(0.78) saturate(0.72) drop-shadow(0 0 16px #d4ebff18);
+}
+
+html[data-theme="dark"] .fs-island-world .ocean-ship-lights {
+    opacity: 1;
+    filter: drop-shadow(0 0 3px #ffdc75) drop-shadow(0 0 5px #ffe3a0);
+}
+
+html[data-theme="dark"] .fs-island-world .fs-island-vessel {
+    filter: brightness(0.84) saturate(0.82);
+}
+
+html[data-theme="dark"] .fs-lighthouse-beam,
+html[data-theme="dark"] .fs-lantern-glow {
+    opacity: 1;
 }
 
 html[data-theme="dark"] .fs-top-brand-pill {
-    background: rgba(15, 37, 56, 0.88) !important;
-    border-color: rgba(56, 189, 248, 0.35) !important;
-    border-bottom-color: rgba(56, 189, 248, 0.6) !important;
+    background: rgba(15, 37, 56, 0.9) !important;
+    border-color: rgba(56, 189, 248, 0.4) !important;
+    border-bottom-color: #0284c7 !important;
     color: #38bdf8 !important;
     box-shadow: 0 10px 24px rgba(0, 10, 20, 0.5) !important;
 }
@@ -2129,14 +3278,22 @@ html[data-theme="dark"] .fs-top-brand-pill span:last-child {
 }
 
 html[data-theme="dark"] .fs-portal-aura {
-    background: radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, rgba(2, 132, 199, 0.25) 50%, transparent 80%) !important;
+    background: radial-gradient(circle, rgba(186, 230, 253, 0.4) 0%, rgba(56, 189, 248, 0.2) 48%, transparent 75%) !important;
+}
+
+html[data-theme="dark"] .fs-duo-sunburst {
+    opacity: 0.28;
+}
+
+html[data-theme="dark"] .fs-nimo-sand-shadow {
+    background: radial-gradient(ellipse, rgba(12, 30, 46, 0.58) 0%, rgba(12, 30, 46, 0.24) 55%, transparent 80%) !important;
 }
 
 html[data-theme="dark"] .fs-speech-bubble {
-    background: rgba(15, 37, 56, 0.95) !important;
-    border-color: rgba(56, 189, 248, 0.4) !important;
+    background: rgba(15, 37, 56, 0.94) !important;
+    border-color: rgba(56, 189, 248, 0.42) !important;
     border-bottom-color: #0284c7 !important;
-    box-shadow: 0 14px 32px rgba(0, 10, 20, 0.55) !important;
+    box-shadow: 0 16px 36px rgba(0, 10, 20, 0.55) !important;
 }
 
 html[data-theme="dark"] .fs-quote-text {
@@ -2150,13 +3307,13 @@ html[data-theme="dark"] .fs-quote-mark-end {
 
 html[data-theme="dark"] .fs-speech-tail {
     background: #0f2538 !important;
-    border-left-color: rgba(56, 189, 248, 0.4) !important;
-    border-top-color: rgba(56, 189, 248, 0.4) !important;
+    border-left-color: rgba(56, 189, 248, 0.42) !important;
+    border-top-color: rgba(56, 189, 248, 0.42) !important;
 }
 
 html[data-theme="dark"] .fs-progress-console {
     background: rgba(15, 37, 56, 0.94) !important;
-    border-color: rgba(56, 189, 248, 0.35) !important;
+    border-color: rgba(56, 189, 248, 0.4) !important;
     border-bottom-color: #0284c7 !important;
     box-shadow: 0 20px 50px rgba(0, 10, 20, 0.6) !important;
 }
@@ -2177,14 +3334,6 @@ html[data-theme="dark"] .fs-progress-track {
 
 html[data-theme="dark"] .fs-tip-capsule {
     color: #94a3b8 !important;
-}
-
-html[data-theme="dark"] .fs-wave-svg.wave-back path {
-    fill: rgba(15, 37, 56, 0.35) !important;
-}
-
-html[data-theme="dark"] .fs-wave-svg.wave-front path {
-    fill: rgba(15, 37, 56, 0.65) !important;
 }
 
 
