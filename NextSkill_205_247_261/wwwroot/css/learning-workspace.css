@@ -1,13 +1,6 @@
 .smart-journey:has(.sj-learn){background:radial-gradient(ellipse at 12% 30%,#d4f4df60,transparent 35%),radial-gradient(ellipse at 88% 68%,#b7f1e65c,transparent 30%),linear-gradient(180deg,#bceaf1,#7bd2e0 50%,#a7e4e8);background-attachment:fixed}
 .smart-journey .sj-learn:before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.3;background:repeating-linear-gradient(173deg,transparent 0 115px,#eaffff66 117px,transparent 119px 220px)}
 .smart-journey .sj-learn{isolation:isolate;background:transparent;max-width:1440px;width:92%;padding-top:24px}
-.learning-heading{padding:28px 0 32px}.learning-heading .sj-eyebrow{font-size:14px;margin-bottom:8px!important;color:#43768a}.learning-heading h1{font-size:clamp(26px,3vw,38px);font-weight:600;color:#174b61}.learning-heading>p:last-child{font-size:14px;color:#5a7a8a;margin-top:8px}
-.learning-workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,350px);gap:32px;align-items:start}
-.smart-journey .learning-workspace #lesson-map{left:auto;transform:none;width:100%;margin:0;padding:32px 24px 65px;border-radius:0;min-width:0;background:transparent;overflow:visible}
-.smart-journey .learning-workspace #lesson-map:before{display:none}
-.smart-journey .learning-workspace #lesson-map .sj-learning-map-heading{display:block;margin-bottom:18px}.smart-journey .learning-workspace #lesson-map h2{font-size:23px}.smart-journey .learning-workspace #lesson-map .sj-learning-map-heading p{font-size:13px}.smart-journey .learning-workspace #locate-current{margin-top:12px}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island{width:65%;min-height:290px}
-.learning-sidebar{position:sticky;top:24px;min-width:0}.learning-sidebar-inner{display:flex;flex-direction:column;gap:20px}
 .smart-journey .learning-sidebar .sj-current-island{display:block;min-height:0;padding:25px;background:#f7fdfff0;border:1px solid #ffffffb3;border-radius:24px;box-shadow:0 18px 48px #185e7720}
 .smart-journey .learning-sidebar .sj-current-island[hidden]{display:none}
 .learning-sidebar .sj-island-scene{display:none}
@@ -18,9 +11,6 @@
 .smart-journey .learning-sidebar .sj-course-progress{margin-top:22px}.learning-sidebar .sj-course-progress progress{width:100%}
 .smart-journey .learning-sidebar .sj-learning-summary{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:24px;margin:0;background:#eff9fbe8;border:1px solid #ffffffa8;border-radius:24px;box-shadow:0 14px 36px #185e7717}
 .smart-journey .learning-sidebar .sj-learning-summary>p{grid-column:1/-1;margin:0;font-size:13px;line-height:1.8}.learning-sidebar .sj-learning-summary>div:nth-child(3){grid-column:1/-1}
-.island-detail{padding:25px;background:#f7fdfff0;border:1px solid #ffffffb3;border-radius:24px;box-shadow:0 18px 48px #185e7720}.island-detail[hidden]{display:none}.island-detail .sj-eyebrow{margin-top:20px!important}.island-detail p:not(.sj-eyebrow){font-size:14px;line-height:1.8;color:#557888;margin:12px 0}.island-detail .sj-button{width:100%;margin-top:20px;justify-content:space-between}
-.island-detail-dialog{position:fixed;inset:auto 0 0;width:100%;max-width:none;max-height:85dvh;margin:0;padding:40px 12px 20px;border:0;border-radius:25px 25px 0 0;background:#fff;overflow:auto}.island-detail-dialog::backdrop{background:#133f6055}.island-detail-dialog .island-detail{border:0;padding:12px;box-shadow:none}.island-detail-dialog #detail-back{display:none}#detail-sheet-close{position:absolute;right:15px;top:10px;border:0;border-radius:50%;width:44px;height:44px;background:#eff8fb;color:#174b61}
-@media(max-width:850px){.learning-workspace{grid-template-columns:minmax(0,1fr)}.learning-sidebar{position:static;grid-row:1}.learning-sidebar-inner{gap:12px}.smart-journey .learning-sidebar .sj-current-island{padding:20px}.smart-journey .learning-sidebar .sj-current-description,.learning-sidebar .sj-learning-summary{display:none!important}.smart-journey .learning-sidebar .sj-current-actions{grid-template-columns:1fr 1fr}.smart-journey .learning-sidebar .sj-current-copy h2{font-size:20px}.learning-heading{padding:20px 0}.smart-journey .learning-workspace #lesson-map{padding:28px 12px 50px}.smart-journey .learning-workspace #lesson-route .sj-lesson-island{width:82%;min-height:260px}.smart-journey .sj-learn-top{flex-wrap:wrap}.smart-journey .sj-saved{margin-left:0;width:100%}}
 @media(prefers-reduced-motion:reduce){.learning-workspace *{scroll-behavior:auto}}
 
 /* Quiet scenery sits under the route; interactive islands remain the focus. */
@@ -29,19 +19,6 @@
 .scene-reef{width:210px;opacity:.65}.reef-one{left:0;top:230px;transform:rotate(-18deg)}.reef-two{right:0;top:66%;transform:rotate(24deg) scale(.85)}
 .scene-buoy{width:43px;opacity:.85}.buoy-one{left:29%;top:36%}.buoy-two{right:18%;top:79%;transform:scale(.8)}
 .scene-birds{width:150px;right:8%;top:55px;opacity:.85}.scene-far-island{left:6%;top:54%;width:100px;opacity:.32;filter:saturate(.55)}
-.learning-workspace{gap:42px;grid-template-columns:minmax(0,1fr) minmax(300px,330px)}
-.smart-journey .learning-workspace #lesson-map{padding:24px 22px 65px}
-.smart-journey .learning-workspace #lesson-map .sj-learning-map-heading{padding:0 0 8px;margin-bottom:8px;max-width:480px;margin-left:0}
-.smart-journey .learning-workspace #lesson-map h2{font-size:27px;letter-spacing:-.5px}
-.smart-journey .learning-workspace #lesson-map .sj-eyebrow{font-size:11px;color:#387587}
-.smart-journey .learning-workspace #lesson-route{gap:38px}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island{width:62%;max-width:420px;min-height:300px}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island img{filter:drop-shadow(0 12px 7px #236e7920)}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island.is-locked img{opacity:.82;filter:saturate(.7) drop-shadow(0 9px 6px #236e7917)}
-.smart-journey .learning-workspace #lesson-route .sj-island-index{width:32px;height:32px;top:16%;left:18%;background:#efffffe6;border:1px solid #fff;color:#367487;box-shadow:0 4px 12px #1262780d}
-.smart-journey .learning-workspace #lesson-route .is-current .sj-island-index{background:#087f9d;color:white;border-color:#88e2ec}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island h3{font-size:16px;font-weight:500;margin-top:0}
-.smart-journey .learning-workspace #lesson-route .is-current .sj-island-status{padding:9px 23px;font-size:13px;border-radius:22px;box-shadow:0 6px 12px #136b7c16}
 .learning-sidebar-inner{gap:16px}.smart-journey .learning-sidebar .sj-current-island{padding:24px;border-radius:25px;background:#f8fefff0;box-shadow:0 20px 50px #1d71851c}
 .smart-journey .learning-sidebar .sj-current-copy h2{font-size:22px;margin:16px 0 8px}
 .smart-journey .learning-sidebar .sj-current-copy>.sj-eyebrow{font-size:11px;margin-bottom:16px!important;color:#4e8491}
@@ -49,7 +26,6 @@
 .smart-journey .learning-sidebar .sj-current-actions{margin-top:20px}.smart-journey .learning-sidebar .sj-current-meta{font-size:12px;gap:8px}
 .smart-journey .learning-sidebar .sj-learning-summary{background:#ecfbf9de;padding:23px;border-radius:25px;box-shadow:0 12px 35px #1d718510}
 .smart-journey .learning-sidebar .sj-learning-summary strong{font-size:23px;color:#236e7d}
-@media(max-width:850px){.learning-workspace{grid-template-columns:minmax(0,1fr);gap:22px}.smart-journey .learning-workspace #lesson-map{padding:22px 0 45px}.smart-journey .learning-workspace #lesson-map h2{font-size:23px}.smart-journey .learning-workspace #lesson-route .sj-lesson-island{width:82%;min-height:250px}.scene-reef{width:115px;opacity:.45}.reef-one{top:255px;left:-35px}.scene-birds{width:90px;right:0;top:140px}.scene-buoy{width:28px}.scene-far-island{width:65px;left:0}.smart-journey .learning-sidebar .sj-current-island{padding:20px}.smart-journey .learning-workspace #lesson-route .sj-lesson-island h3{font-size:14px}}
 
 /* Shared page edges, readable labels, and clear learning states. */
 .smart-journey{--journey-edge:max(24px,calc((100vw - 1280px)/2));--journey-ink:#28596c}
@@ -57,42 +33,16 @@
 .smart-journey .sj-nav-inner{min-height:80px}
 .smart-journey .ow-intro{left:var(--journey-edge)}
 .smart-journey .sj-learn{padding-top:14px}
-.smart-journey .learning-heading{padding:12px 0 18px}
-.smart-journey .learning-heading h1{font-size:clamp(25px,2.5vw,34px);line-height:1.4}
-.smart-journey .learning-workspace #lesson-map{padding-top:0}
-.smart-journey .learning-workspace #lesson-map .sj-learning-map-heading{display:flex;align-items:center;justify-content:flex-end;max-width:none;margin:0;padding:0 0 6px}
-.smart-journey .learning-workspace #lesson-map .sj-learning-map-heading .sj-eyebrow{display:none}
-.smart-journey .learning-workspace #lesson-map h2{font-size:22px}
-.smart-journey .learning-workspace #locate-current{margin:0;flex-shrink:0;font-size:14px}
-.smart-journey .learning-workspace #lesson-route{padding-top:0}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island{max-width:380px;min-height:275px}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island.is-locked{opacity:1}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island.is-locked img{opacity:.62;filter:grayscale(.85) saturate(.2) contrast(.8)}
-.smart-journey .learning-workspace #lesson-route .is-locked:before{opacity:.22}
-.smart-journey .learning-workspace #lesson-route .is-locked:after{display:block;content:'';position:absolute;inset:27% 4% 28%;pointer-events:none;background:radial-gradient(ellipse at 30% 55%,#effbffbd,transparent 66%),radial-gradient(ellipse at 73% 45%,#effbffcc,transparent 65%);border-radius:50%}
-.smart-journey .learning-workspace #lesson-route .is-current:before{inset:33% -6% 20%;background:radial-gradient(ellipse,#79e5cd8c 24%,#d5fff9c2 48%,#efffff96 56%,transparent 72%)}
-.smart-journey .learning-workspace #lesson-route .is-current img{filter:drop-shadow(0 6px 12px #f5ffecc9)}
-.smart-journey .learning-workspace #lesson-route .sj-island-index{z-index:2;font-size:14px}
 .smart-journey .sj-course-small-meta,.smart-journey .sj-course-description,.smart-journey .sj-learn-top,.smart-journey .sj-saved,
-.smart-journey .learning-workspace #lesson-map .sj-learning-map-heading p,.smart-journey .learning-sidebar .sj-current-description,
+.smart-journey .learning-sidebar .sj-current-description,
 .smart-journey .learning-sidebar .sj-current-meta,.smart-journey .learning-sidebar .sj-current-copy>.sj-eyebrow,
-.smart-journey .learning-sidebar .sj-learning-summary>p,.smart-journey .sj-course-label,
-.smart-journey .learning-workspace #lesson-route .sj-island-status{font-size:14px;color:var(--journey-ink);line-height:1.65}
-.smart-journey .learning-workspace #lesson-route .is-current .sj-island-status{font-size:14px;color:white}
+.smart-journey .learning-sidebar .sj-learning-summary>p,.smart-journey .sj-course-label{font-size:14px;color:var(--journey-ink);line-height:1.65}
 .smart-journey .ow-start-land figcaption{position:absolute;top:13%;right:10%;margin:0;padding:8px 14px;border-radius:16px;background:#f5ffffe8;border:1px solid #fff;color:#22596c;font-size:14px;letter-spacing:0;box-shadow:0 4px 14px #24617412}
 .smart-journey .ow-harbor-board>p:not(.sj-eyebrow),.smart-journey .ow-intro>p:not(.sj-eyebrow){font-size:16px;color:#28596c}
 .smart-journey .ow-controls button,.smart-journey .ow-controls #ocean-location{font-size:14px}
 @media(max-width:850px){
  .smart-journey{--journey-edge:20px}
  .smart-journey .sj-nav-inner{min-height:108px}
- .smart-journey .learning-heading{padding:10px 0 12px}
- .smart-journey .learning-workspace{gap:14px}
- .smart-journey .learning-sidebar{grid-row:auto}
- .smart-journey .learning-workspace #lesson-map .sj-learning-map-heading{flex-wrap:wrap;gap:6px}
- .smart-journey .learning-workspace #lesson-map .sj-learning-map-heading p{margin:4px 0}
- .smart-journey .learning-workspace #lesson-route .sj-lesson-island{min-height:240px}
- .smart-journey .learning-workspace #lesson-map{padding-bottom:20px}
- .smart-journey .learning-sidebar{padding-bottom:24px}
 }
 @media(max-width:700px){
  .smart-journey .ow-intro{width:calc(100% - var(--journey-edge)*2)}
@@ -116,7 +66,6 @@
 }
 
 .smart-journey{overflow-x:clip}
-.smart-journey .learning-workspace #lesson-map .sj-learning-map-heading{top:auto}
 @media(max-width:700px){
  .smart-journey .ow-harbor{left:calc(220vw + 20px);width:calc(100vw - 40px)}
  .smart-journey .ow-scene[data-stage="2"] .ow-journey-caption{display:none}
@@ -124,11 +73,8 @@
  .smart-journey .ow-camera{z-index:1}
  .smart-journey .ow-container-button{font-size:0}
  .smart-journey .ow-container-button:after{font-size:11px}
- .smart-journey .learning-heading{padding-bottom:4px}
- .smart-journey .learning-heading h1{margin-bottom:0}
 }
 
-@media(max-width:700px){.smart-journey .learning-workspace #lesson-map{overflow:clip}}
 
 /* Home hero: keep the copy readable over the horizon and balance the shore scene. */
 
@@ -148,23 +94,10 @@
 @media(max-width:700px){.smart-journey .ow-intro h1{font-size:clamp(38px,9.5vw,46px);line-height:1.3}}
 @media(max-width:700px) and (max-height:740px){.smart-journey .ow-intro h1{font-size:clamp(34px,9vw,40px)}}
 
-/* Align the course heading and map on the same page edge. */
-.smart-journey .learning-heading{padding:16px 0 24px}
-.smart-journey .learning-workspace #lesson-map{padding-inline:0}
-.smart-journey .learning-workspace #lesson-map .sj-learning-map-heading{padding-bottom:14px}
-@media(max-width:700px){
- .smart-journey .learning-heading{padding:16px 0 20px}
- .smart-journey .learning-workspace #lesson-map .sj-learning-map-heading{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px}
- .smart-journey .learning-workspace #locate-current{margin-left:auto}
-}
 
 /* A clear blue sea complements the illustrated learning islands. */
 .smart-journey:has(.sj-learn){background:linear-gradient(180deg,#c2edf1 0%,#8edce9 48%,#6acfe4 100%);background-attachment:fixed}
 .smart-journey .sj-learn:before{opacity:.25;background:url('/images/journey/ocean-swell-0.svg') center center / 100% 100% no-repeat}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island img{filter:drop-shadow(0 10px 9px #17678525)}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island.is-locked img{opacity:.72;filter:grayscale(.7) saturate(.45) drop-shadow(0 10px 9px #1767851c)}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island:before{display:none}
-.smart-journey .learning-workspace #lesson-route .sj-island-index{top:8%;left:12%}
 .smart-journey .learning-workspace .archipelago-scenery img{opacity:.25}
 
 /* Decorative water stays behind the lesson controls. */
@@ -186,43 +119,23 @@
 .underwater-depth{opacity:0;background:radial-gradient(ellipse at 50% -10%,#a5efffc4,transparent 48%),radial-gradient(ellipse at 10% 95%,#55afd47a,transparent 30%),radial-gradient(ellipse at 90% 90%,#55afd47a,transparent 30%),linear-gradient(180deg,#76d7ec,#50c2dd 54%,#4aafd0)}
 .underwater-depth:after{content:'';position:absolute;inset:0;background:url('/images/journey/reef-garden.svg') left bottom / 250px auto no-repeat,url('/images/journey/reef-garden.svg') right bottom / 220px auto no-repeat;opacity:.35}
 .island-water-layer{z-index:1}
-.smart-journey .learning-workspace #lesson-route .sj-learning-route-line{display:none}
-.smart-journey .learning-workspace #lesson-route .underwater-horizontal{position:relative;width:100%;height:calc(70vh + (var(--underwater-pages) - 1) * 85vh);flex:none}
-.smart-journey .learning-workspace #lesson-route .underwater-pin{position:sticky;top:10vh;height:70vh;overflow:hidden;display:flex;align-items:center}
-.smart-journey .learning-workspace #lesson-route .underwater-strip{display:flex;align-items:center;width:100%;height:auto;will-change:transform}
-.smart-journey .learning-workspace #lesson-route .underwater-strip .sj-lesson-island{flex:0 0 100%;width:100%;max-width:none;min-height:0;align-self:center}
-.smart-journey .learning-workspace #lesson-route .underwater-strip .sj-lesson-island img{width:min(100%,420px);margin:auto}
-@media(max-width:700px){.smart-journey .learning-workspace #lesson-route .underwater-pin{top:10vh;height:65vh}.smart-journey .learning-workspace #lesson-route .underwater-horizontal{height:calc(65vh + (var(--underwater-pages) - 1) * 85vh)}}
-@media(prefers-reduced-motion:reduce){.smart-journey .learning-workspace #lesson-route .underwater-horizontal{height:auto}.smart-journey .learning-workspace #lesson-route .underwater-pin{position:static;height:auto;overflow:visible}.smart-journey .learning-workspace #lesson-route .underwater-strip{display:flex;flex-direction:column;gap:38px;transform:none!important;will-change:auto}}
 
 /* Reference-inspired environment, separated from interactive islands. */
 .underwater-surface{background:#83d8ed url('/images/journey/underwater-journey-background-v1.png') center center / cover no-repeat}
 .underwater-depth{background:#29b7d2 url('/images/journey/underwater-journey-background-v1.png') center bottom / 100% 170% no-repeat}
 .underwater-depth:after{display:none}
 .island-water-layer--far{opacity:.12}.island-water-layer--near{opacity:.06}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island h3,.smart-journey .learning-workspace #lesson-route .sj-island-status{color:#073a50}
-.smart-journey .learning-workspace #lesson-route .is-current .sj-island-status{color:#fff}
 
 /* Keep the horizon below the course heading; retain water depth on narrow screens. */
 .underwater-surface{background-position:center calc(50% + 64px);background-color:#6fcff3}
 @media(max-width:700px){.underwater-depth{background-size:auto 170%}}
 
-.smart-journey .learning-workspace #lesson-route .sj-learning-route-line{display:block;stroke:#efffff;opacity:.8}
-.smart-journey .learning-workspace #lesson-route .underwater-pin{overflow:clip}
-@media(prefers-reduced-motion:reduce){.smart-journey .learning-workspace #lesson-route .underwater-pin{overflow:visible}}
 
 /* One continuous illustrated ocean, with islands sharing the same horizontal world. */
 .underwater-surface{inset:auto 0;top:-12vh;height:185vh;background-position:center top;background-size:cover;will-change:transform}
-.smart-journey .learning-workspace #lesson-route .underwater-strip{box-sizing:content-box;gap:12%;padding-inline:14%}
-.smart-journey .learning-workspace #lesson-route .underwater-strip .sj-lesson-island{flex-basis:72%;width:72%}
 @media(prefers-reduced-motion:reduce){
  .underwater-surface{will-change:auto}
- .smart-journey .learning-workspace #lesson-route .underwater-strip{box-sizing:border-box;gap:38px;padding-inline:0}
- .smart-journey .learning-workspace #lesson-route .underwater-strip .sj-lesson-island{width:100%}
 }
-.smart-journey .learning-workspace #lesson-route .underwater-strip .sj-lesson-island{flex-basis:100%;width:100%}
-.smart-journey .learning-workspace #lesson-route .underwater-pin{mask-image:linear-gradient(90deg,transparent,black 8%,black 92%,transparent)}
-@media(prefers-reduced-motion:reduce){.smart-journey .learning-workspace #lesson-route .underwater-pin{mask-image:none}}
 
 /* The sky/waterline is anchored to the first island; the deep sea fills the viewport. */
 .island-water-motion{background:linear-gradient(180deg,#72cdf1 0%,#42c3dd 48%,#128eb8 100%)}
@@ -249,8 +162,6 @@
 @keyframes deep-fish-cross{from{transform:translate3d(0,0,0)}to{transform:translate3d(125vw,0,0)}}
 @keyframes deep-bubble-rise{0%{transform:translate3d(0,0,0);opacity:0}15%{opacity:.75}85%{opacity:.65}100%{transform:translate3d(16px,-110vh,0);opacity:0}}
 .island-water-motion.is-paused .deep-ocean-light,.island-water-motion.is-paused .deep-fish-school,.island-water-motion.is-paused .deep-bubble{animation-play-state:paused}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island:not([data-lesson-id="1"]):before{display:block;inset:48% -10% 22%;background:radial-gradient(ellipse at 50% 70%,#126a84a8 0%,#39a7bd75 48%,transparent 72%);transform:none}
-@media(max-width:700px){.deep-fish-school--far{opacity:.45}.deep-bubble--three{display:none}}
 @media(prefers-reduced-motion:reduce){.deep-ocean-light,.deep-fish-school,.deep-bubble{animation:none!important}}
 .deep-ocean-plant{position:absolute;z-index:2;bottom:-3%;width:clamp(90px,15vw,210px);height:auto;opacity:.6;transform-origin:50% 100%;pointer-events:none;animation:deep-plant-sway 7s ease-in-out infinite alternate}
 .deep-ocean-plant--left{left:-3%}.deep-ocean-plant--right{right:-3%;animation-delay:-3.5s}
@@ -268,31 +179,12 @@
 @keyframes surface-crest-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 .island-water-motion.is-paused .surface-ocean-wave{animation-play-state:paused;will-change:auto}
 @media(prefers-reduced-motion:reduce){.surface-ocean-wave{animation:none;will-change:auto}}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island.is-locked:after{display:none}
-@media(max-width:700px){.deep-ocean-backdrop{background-size:auto 145%}}
+@media(width < 768px){
+ .deep-ocean-backdrop{background-size:auto 145%}
+ .deep-fish-school--far,.deep-bubble--three{display:none}
+ .deep-ocean-plant{animation:none}
+}
 
-/* Fade the underwater landmarks into a shared seabed instead of a hard cutout edge. */
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island:not([data-lesson-id="1"]) img{mask-image:linear-gradient(180deg,#000 0%,#000 75%,#000e 84%,#000a 92%,transparent 100%)}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island:not([data-lesson-id="1"]):before{display:block;inset:auto -18% 9%;height:27%;background:radial-gradient(ellipse at 50% 55%,#70e4e0b8 0%,#34bad09c 42%,#19a5c63a 62%,transparent 76%);transform:none}
-
-/* Match the underwater light while retaining the original locked-state treatment. */
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island:not([data-lesson-id="1"]):not(.is-locked) img{filter:saturate(.88) brightness(.98) drop-shadow(0 7px 8px #07556a30)}
-/* A broad seafloor is attached to each underwater island and moves with it. */
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island:not([data-lesson-id="1"]):before{display:block;inset:auto;position:absolute;top:16%;left:50%;width:clamp(600px,110vw,1600px);height:auto;aspect-ratio:2.8;background:url('/images/journey/underwater-seabed-ground-v1.png') center top / 100% 100% no-repeat;transform:translateX(-50%);mask-image:linear-gradient(90deg,transparent 0%,#000 12%,#000 88%,transparent 100%);pointer-events:none}
-/* Align the ground plane to the visible bottom of each island. */
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island:not([data-lesson-id="1"]):before{top:calc((100vw * -.11) + 100px)}
-@media(min-width:1455px){.smart-journey .learning-workspace #lesson-route .sj-lesson-island:not([data-lesson-id="1"]):before{top:-60px}}
-@media(max-width:700px){.smart-journey .learning-workspace #lesson-route .sj-lesson-island:not([data-lesson-id="1"]):before{top:85px}}
-
-/* Connect underwater landmarks to the landscape with a softly fading rock slope. */
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island:not([data-lesson-id="1"]):before{display:block;inset:auto;top:56%;left:50%;width:135%;height:78%;aspect-ratio:auto;background:radial-gradient(ellipse at 50% 0%,#2586a9aa 0%,#197b9c80 40%,#1d88a54d 70%,transparent 100%);clip-path:polygon(17% 0,83% 0,90% 25%,97% 62%,100% 100%,0 100%,3% 62%,10% 25%);transform:translateX(-50%);mask-image:linear-gradient(#000 0%,#000a 45%,transparent 100%);pointer-events:none}
-
-/* Rock foundations are part of the artwork and blend naturally into the sea. */
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island:not([data-lesson-id="1"]):before{display:none}
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island:not([data-lesson-id="1"]) img{mask-image:none}
-
-/* Keep route markings behind readable labels. */
-.smart-journey .learning-workspace #lesson-route .sj-lesson-island h3,.smart-journey .learning-workspace #lesson-route .sj-lesson-island:not(.is-current) .sj-island-status{position:relative;z-index:1;display:table;margin-left:auto;margin-right:auto;padding:3px 12px;border-radius:18px;background:#d9f5f5ed;color:#073a50;text-shadow:none}
 
 /* Ocean navigation, shared by the landing and learning journey. */
 body.smart-journey .sj-header{isolation:isolate;border:0;background:linear-gradient(115deg,#00518d,#075d9b 58%,#1273ab);backdrop-filter:none;box-shadow:0 5px 20px #00518326}

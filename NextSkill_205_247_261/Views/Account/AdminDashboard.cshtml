@@ -7,7 +7,7 @@
 <html lang="th">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <script>try { document.documentElement.dataset.theme = localStorage.getItem('nextskill.theme.v1') === 'dark' ? 'dark' : 'light'; } catch { document.documentElement.dataset.theme = 'light'; }</script>
     <title>ศูนย์ควบคุมผู้ดูแล NextSkill | NextSkill Admin</title>
     <link rel="icon" href="~/home-favicon.svg" type="image/svg+xml" />
@@ -153,6 +153,16 @@
                     </div>
                 </div>
             </header>
+
+            <!-- Floating Mascot Buddy (Nimo) -->
+            <div class="floating-mascot-buddy" id="mascot-buddy-wrap">
+                <div class="mascot-speech-bubble" id="mascot-speech" aria-live="polite">
+                    สวัสดีครับกัปตัน แดชบอร์ดพร้อมทำงานแล้วครับ
+                </div>
+                <button type="button" class="mascot-avatar-trigger" id="mascot-trigger-btn" aria-label="เพื่อนร่วมทาง Nimo">
+                    <img src="~/images/nimo-rowing.png" alt="Nimo" id="floating-mascot-img" />
+                </button>
+            </div>
 
             <main id="main-content" tabindex="-1">
                 <!-- ==============================================
@@ -517,7 +527,7 @@
 
                     <!-- Search and filters -->
                     <div class="outlined-card" style="margin-bottom: 20px; padding: 16px 20px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;">
-                        <input type="search" id="course-search-input" placeholder="ค้นหาชื่อคอร์ส, ผู้สอน หรือหมวดหมู่..." style="flex: 1; min-width: 240px; padding: 9px 14px; border: 1.5px solid var(--nimo-sky-border); border-radius: 12px; font-size: 13.5px;" />
+                        <input type="search" id="course-search-input" placeholder="ค้นหาชื่อคอร์ส, ผู้สอน หรือหมวดหมู่..." style="padding: 9px 14px; border: 1.5px solid var(--nimo-sky-border); border-radius: 12px;" />
                         <select id="course-category-filter" style="padding: 9px 14px; border: 1.5px solid var(--nimo-sky-border); border-radius: 12px; font-size: 13.5px; background: white;">
                             <option value="">ทุกหมวดหมู่ (All Categories)</option>
                             <option value="Technology">Technology</option>
@@ -603,7 +613,7 @@
                     <div class="outlined-card" style="padding: 0; margin-bottom: 22px;">
                         <div class="quiz-filter-bar">
                             <span style="font-size: 13px; font-weight: 600; color: var(--nimo-slate);">เลือกคอร์ส:</span>
-                            <select id="question-course-filter" style="min-width: 220px;">
+                            <select id="question-course-filter">
                                 <option value="0">ทุกคอร์ส (All Courses)</option>
                                 @foreach (var c in Model.Courses)
                                 {
@@ -611,7 +621,7 @@
                                 }
                             </select>
 
-                            <input type="search" id="question-search-input" placeholder="ค้นหาเนื้อหาคำถามหรือเฉลย..." style="flex: 1; min-width: 220px;" />
+                            <input type="search" id="question-search-input" placeholder="ค้นหาเนื้อหาคำถามหรือเฉลย..." />
                         </div>
 
                         <!-- Questions Grid -->
@@ -739,7 +749,7 @@
                                 <span class="status-badge published">ผู้ดูแลระบบ (System Administrator)</span>
                             </div>
                         </div>
-                        <dl style="display: grid; grid-template-columns: 140px 1fr; gap: 14px; border-top: 1px solid #f1f5f9; padding-top: 20px;">
+                        <dl style="border-top: 1px solid #f1f5f9; padding-top: 20px;">
                             <dt style="font-weight: 600; color: var(--nimo-muted);">อีเมลผู้ดูแล:</dt>
                             <dd style="margin: 0; font-weight: 500;">@Model.Email</dd>
                             <dt style="font-weight: 600; color: var(--nimo-muted);">สิทธิ์การใช้งาน:</dt>
@@ -773,7 +783,7 @@
                     <label for="course-title">ชื่อคอร์สเรียน (Title) <span>*</span></label>
                     <input type="text" id="course-title" required placeholder="เช่น Next.js 15 Fullstack Mastery" />
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                <div class="admin-form-row">
                     <div class="form-group">
                         <label for="course-category">หมวดหมู่ (Category) <span>*</span></label>
                         <select id="course-category" required>
@@ -792,7 +802,7 @@
                         </select>
                     </div>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                <div class="admin-form-row">
                     <div class="form-group">
                         <label for="course-instructor">ชื่อผู้สอน (Instructor) <span>*</span></label>
                         <input type="text" id="course-instructor" required placeholder="เช่น ดร. สมชาย พัฒนา" />
@@ -886,7 +896,7 @@
         <form id="question-form" method="dialog">
             <input type="hidden" id="question-id" value="" />
             <div class="modal-body">
-                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 14px;">
+                <div class="admin-form-row admin-form-row--wide-first">
                     <div class="form-group">
                         <label for="q-course-id">สังกัดคอร์สเรียน <span>*</span></label>
                         <select id="q-course-id" required>
@@ -984,16 +994,6 @@
             <button type="button" class="ns-button ns-button--secondary ns-button--compact" data-close-modal="quiz-tester-modal">ปิดหน้าต่างทดสอบ</button>
         </div>
     </dialog>
-
-    <!-- Floating Mascot Buddy (Nimo) -->
-    <div class="floating-mascot-buddy" id="mascot-buddy-wrap">
-        <div class="mascot-speech-bubble" id="mascot-speech">
-            สวัสดีครับกัปตัน แดชบอร์ดพร้อมทำงานแล้วครับ
-        </div>
-        <button type="button" class="mascot-avatar-trigger" id="mascot-trigger-btn" aria-label="เพื่อนร่วมทาง Nimo">
-            <img src="~/images/nimo-rowing.png" alt="Nimo" id="floating-mascot-img" />
-        </button>
-    </div>
 
     <!-- Embedded Initial Data for fast interactive client features -->
     <script id="admin-courses-data" type="application/json">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Courses, new System.Text.Json.JsonSerializerOptions { PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase }))</script>

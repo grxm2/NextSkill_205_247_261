@@ -131,7 +131,7 @@
         const routePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         routePath.setAttribute('d', 'M430 105C500 220 100 230 170 355S500 480 430 605 100 740 170 855');
         routeLine.append(routePath);
-        islandRoute.replaceChildren(routeLine, ...course.lessons.map(item => {
+        const stops = course.lessons.map(item => {
             const button = node('button', `sj-lesson-island is-${item.status}`);
             const title = item.displayTitle || item.title;
             button.type = 'button'; button.dataset.lessonId = item.id;
@@ -140,7 +140,9 @@
             if (item.status === 'current') button.setAttribute('aria-current', 'step');
             const art = node('img'); art.src = islandArt(item.id); art.alt = ''; art.width = 1448; art.height = 1086;
             const label = node('h3', '', title);
-            button.append(node('span', 'sj-island-index', String(item.id).padStart(2, '0')), art, label);
+            const artFrame = node('span', 'island-stop-picture');
+            artFrame.append(art, node('span', 'sj-island-index', String(item.id).padStart(2, '0')));
+            button.append(artFrame, label);
             if (locked) {
                 const lock = node('span', 'icon icon-lock');
                 lock.setAttribute('aria-hidden', 'true');
@@ -170,7 +172,13 @@
                 else launch();
             }));
             return button;
-        }));
+        });
+        const underwaterRoute = islandRoute.querySelector('.island-underwater-route');
+        const scrollLeft = underwaterRoute.scrollLeft;
+        underwaterRoute.replaceChildren(...stops.slice(1));
+        underwaterRoute.hidden = stops.length < 2;
+        islandRoute.replaceChildren(routeLine, ...stops.slice(0, 1), underwaterRoute);
+        underwaterRoute.scrollLeft = scrollLeft;
     }
     function closeIslandLockHint(target) {
         const expanded = islandRoute?.querySelector('.is-locked[aria-expanded="true"]');
@@ -458,7 +466,13 @@
             });
             return field;
         }));
-        if (lessonPage) $('#practice-question-steps').replaceChildren(...lesson.questions.map(() => node('span')));
+        $('#lesson-reading-again').textContent = lesson.video ? 'ดูวิดีโออีกครั้ง' : 'กลับไปอ่านบทเรียน';
+        if (lessonPage) {
+            $('#practice-question-steps').replaceChildren(...lesson.questions.map(() => node('span')));
+            const tip = $('#practice-study-tip');
+            tip.textContent = lesson.video ? 'เปิดวิดีโอแล้วเลื่อนไปช่วงท้าย หรือกดข้ามเพื่อเริ่มข้อสอบ' : 'ลองทำตามตัวอย่างในบทอ่านก่อนเริ่มแบบทดสอบ';
+            tip.hidden = false;
+        }
         showLessonMode(false, false);
         if (focus) {
             $('#lesson-title').focus({ preventScroll: true });
@@ -485,7 +499,8 @@
         updateLessonProgress();
         lessonDialog.scrollTop = 0;
         if (lessonPage) {
-            $('#lesson-page-heading').textContent = quizOpen ? 'แบบทดสอบท้ายบท' : 'วิดีโอบทเรียน';
+            const studyHeading = lesson.video ? 'วิดีโอบทเรียน' : 'บทอ่าน';
+            $('#lesson-page-heading').textContent = quizOpen ? 'แบบทดสอบท้ายบท' : studyHeading;
             $('#practice-breadcrumb-current').textContent = $('#lesson-page-heading').textContent;
             $('#lesson-summary').hidden = quizOpen;
             if (focus) positionPractice();
@@ -551,7 +566,7 @@
         $('#next-island').hidden = !nextLessonId;
         $('#choose-next-course').hidden = !(result.passed && progress.isComplete);
         $('#edit-lesson-answers').hidden = result.passed;
-        $('#review-lesson').hidden = result.passed || !lesson.video;
+        $('#review-lesson').hidden = result.passed;
         $('#finish-learning').textContent = result.passed ? 'กลับไปแผนที่เกาะ' : 'พักไว้ แล้วลองอีกครั้งภายหลัง';
         $('#lesson-nimo-message').textContent = result.passed ? (result.alreadyCompleted ? 'ได้ฝึกอีกครั้งแล้ว เก่งขึ้นทีละก้าวนะ' : 'เห็นความตั้งใจของคุณแล้ว ไปด้วยกันต่อได้เลย') : 'ลองดูคำอธิบาย เราค่อย ๆ แก้ไปด้วยกันนะ';
         if (!result.passed) window.NextSkillBuddyMotion?.play('retry');
@@ -711,7 +726,14 @@
         showLessonMode(true);
     });
     $('#review-lesson').addEventListener('click', async event => {
-        if (!lesson?.video) return;
+        if (!lesson) return;
+        if (!lesson.video) {
+            selections.clear();
+            lessonDirty = false;
+            renderLesson();
+            if (lessonPage) positionPractice();
+            return;
+        }
         const button = event.currentTarget;
         const retake = $('#edit-lesson-answers');
         const requestId = lessonRequest;

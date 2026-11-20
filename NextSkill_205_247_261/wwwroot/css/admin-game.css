@@ -836,8 +836,9 @@ dialog::backdrop {
 }
 
 .modal-close-btn {
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
+    flex: none;
     border-radius: 50%;
     border: none;
     background: #ffffff;
@@ -850,9 +851,7 @@ dialog::backdrop {
 }
 
 .modal-body {
-    padding: 24px 28px;
-    max-height: 75vh;
-    overflow-y: auto;
+    padding: clamp(16px, 4vw, 24px) clamp(16px, 4vw, 28px);
 }
 
 .form-group {
@@ -873,7 +872,9 @@ dialog::backdrop {
     padding: 10px 14px;
     border-radius: 12px;
     border: 1.5px solid var(--nimo-sky-border);
-    font-size: 13.5px;
+    min-width: 0;
+    min-height: 44px;
+    font-size: 16px;
     font-family: inherit;
     background: #f8fafc;
     color: var(--nimo-navy);
@@ -897,14 +898,16 @@ dialog::backdrop {
 .choice-input-row input[type="radio"] {
     width: 18px;
     height: 18px;
+    min-height: 0;
     accent-color: var(--nimo-blue);
 }
 
 .modal-footer {
     display: flex;
     justify-content: flex-end;
+    flex-wrap: wrap;
     gap: 12px;
-    padding: 18px 28px;
+    padding: 18px clamp(16px, 4vw, 28px);
     border-top: 1px solid #f1f5f9;
     background: #f8fafc;
     border-radius: 0 0 24px 24px;

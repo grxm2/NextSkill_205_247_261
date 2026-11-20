@@ -746,7 +746,7 @@ body.nimo-account-theme {
 
 /* Footer Styling */
 .site-footer {
-    padding: 24px 36px;
+    padding: 20px var(--ns-gutter-end) max(20px, env(safe-area-inset-bottom)) var(--ns-gutter-start);
     border-top: 1px solid rgba(186, 230, 253, 0.6);
     background: rgba(255, 255, 255, 0.65);
     backdrop-filter: blur(8px);
@@ -757,8 +757,10 @@ body.nimo-account-theme {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
-    font-size: 12px;
+    gap: 8px 24px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    line-height: 1.7;
     color: #64748b;
 }
 .footer-brand-copy {
@@ -775,8 +777,12 @@ body.nimo-account-theme {
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
 }
 .footer-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     color: #64748b;
     text-decoration: none;
     transition: color 0.15s ease;
@@ -786,7 +792,7 @@ body.nimo-account-theme {
 }
 
 /* Responsive Breakpoints */
-@media (max-width: 980px) {
+@media (width < 1024px) {
     .auth-grid {
         grid-template-columns: 1fr;
         max-width: 540px;
@@ -803,7 +809,7 @@ body.nimo-account-theme {
     }
 }
 
-@media (max-width: 640px) {
+@media (width < 480px) {
     .site-header {
         padding: 16px 20px;
     }

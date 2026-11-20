@@ -35,7 +35,7 @@
     const birds = [...scene.querySelectorAll('[data-ocean-bird]')];
     const guide = document.querySelector('.map-guide');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    const compact = matchMedia('(max-width:700px), (pointer:coarse)');
+    const compact = matchMedia('(width < 768px), (pointer:coarse)');
     const easeOut = 'cubic-bezier(0.23,1,0.32,1)';
     const exclusionSelector = '.ow-intro h1,.ow-intro > p,.ow-intro-actions,.ow-journey-caption,.ow-controls,.ow-vessel,.ow-harbor,.ow-land,.sj-header,[data-island-animal]';
     const fishDuration = 1200;
@@ -203,7 +203,7 @@
         totalEvents++;
         lastSpawn = zone;
         const zones = [zone];
-        const school = followers.map((follower, index) => {
+        const school = (compact.matches ? followers.slice(0, 1) : followers).map((follower, index) => {
             const preferredDepth = index === 0 ? .25 : .8;
             const next = chooseZone(random, geometry, false, zones.map(item => item.footprint), preferredDepth)
                 || chooseZone(random, geometry, false, [], preferredDepth)

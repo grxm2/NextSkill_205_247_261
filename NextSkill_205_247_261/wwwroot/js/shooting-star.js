@@ -8,7 +8,7 @@
     const intro = target?.closest('.ow-intro');
     if (!target || !scene || !brand || !firstLink || !nav || !intro) return;
 
-    const small = matchMedia('(max-width: 959.98px)');
+    const small = matchMedia('(width < 1024px)');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const star = document.createElement('span');
     star.className = 'shooting-star';

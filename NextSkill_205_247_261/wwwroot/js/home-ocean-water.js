@@ -24,7 +24,7 @@
     const sea = surface.closest('.ow-sea');
 
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    const compact = matchMedia('(max-width:700px)');
+    const compact = matchMedia('(width < 768px), (pointer:coarse)');
     const precision = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT).precision ? 'highp' : 'mediump';
     const image = new Image();
     let ready = false, lost = false, suspended = false, frame = 0, viewFrame = 0, previous = 0, lastPaint = 0;
@@ -295,7 +295,7 @@
         width = nextCssWidth; height = Math.max(1, box.height);
         // The water occupies only the lower scene. Limit its pixel budget on
         // high-DPI devices rather than rendering a full-screen effect at 3x.
-        const ratio = Math.min(devicePixelRatio || 1, 1.5, 2048 / width);
+        const ratio = Math.min(devicePixelRatio || 1, compact.matches ? 1.2 : 1.5, 2048 / width);
         const nextWidth = Math.max(1, Math.round(width * ratio));
         const nextHeight = Math.max(1, Math.round(height * ratio));
         if (canvas.width !== nextWidth || canvas.height !== nextHeight) {

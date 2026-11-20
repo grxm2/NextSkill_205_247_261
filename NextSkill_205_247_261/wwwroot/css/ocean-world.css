@@ -102,12 +102,6 @@
 
 /* Grounded timber harbor. Distant terrain stays in atmospheric perspective. */
 .ow-camera{z-index:5}
-/* Keep the same painted layer throughout the journey. The track provides the
-   scroll distance and CSS sticky holds the scene without a pin/reparent swap. */
-.ow-enhanced .ow-track{height:calc(100svh + max(290svh, 2000px))}
-/* Clipping must not create a hidden scroll container: focusing a dock button
-   otherwise shifts the camera and the boat independently of the voyage. */
-.ow-enhanced .smart-journey .ow-scene{position:sticky;top:0;height:100svh;min-height:0;overflow:clip}
 /* Blur over moving water is costly; use an opaque surface during the boat tour. */
 .ow-tour-traveling .ow-harbor-board,.ow-tour-traveling .ow-journey-caption,.ow-tour-traveling .ow-controls{backdrop-filter:none;background-color:#f2fffff5}
 /* Swell drift stays active during the voyage, alongside the scroll parallax. */

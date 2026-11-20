@@ -25,7 +25,7 @@
                 <input type="hidden" name="tag" value="@Model.Tag" /><input type="hidden" name="pageSize" value="@Model.PageSize" />
                 <button type="submit" class="ns-button ns-button--primary catalog-search-submit">ค้นหาคอร์ส <span aria-hidden="true">→</span></button>
             </form>
-            <nav class="ns-course-tags" aria-label="หมวดหมู่คอร์ส">
+            <nav class="ns-course-tags" data-catalog-chip-scroll aria-label="หมวดหมู่คอร์ส">
                 <a asp-action="Courses" asp-route-q="@Model.Query" asp-route-sort="@Model.Sort" asp-route-tag="All" asp-route-pageSize="@Model.PageSize" aria-current="@(Model.Tag == "All" ? "true" : null)">ทั้งหมด</a>
                 @foreach (var category in Model.Categories)
                 { <a asp-action="Courses" asp-route-q="@Model.Query" asp-route-sort="@Model.Sort" asp-route-tag="@category" asp-route-pageSize="@Model.PageSize" aria-current="@(Model.Tag == category ? "true" : null)">@CourseCatalogPageViewModel.CategoryLabel(category)</a> }
@@ -33,7 +33,7 @@
         </div>
             </div>
             <div class="catalog-harbor-scene" aria-hidden="true">
-                <div class="catalog-harbor"><partial name="_KnowledgeSanctumArt" model="false" /></div>
+                <div class="catalog-harbor" data-nimo-speech-obstacle><partial name="_KnowledgeSanctumArt" model="false" /></div>
                 <div class="catalog-boat-track"><div class="catalog-boat"><div class="catalog-boat-idle">
                     <span class="catalog-boat-nimo buddy-slot" data-buddy-anchor="catalog" data-buddy-home="active"></span>
                     <img class="catalog-boat-hull" src="~/images/journey/rowing-hull.svg" asp-append-version="true" width="480" height="280" alt="" />

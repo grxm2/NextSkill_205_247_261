@@ -14,6 +14,7 @@
     const islandCourseMenu = document.getElementById('island-course-menu');
     const menu = document.getElementById('buddy-agent-menu');
     const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+    const compactViewport = matchMedia('(max-width: 767px), (max-height: 520px)');
     const scene = document.getElementById('ocean-journey');
     const lessonMessage = document.getElementById('lesson-nimo-message');
     const result = document.getElementById('lesson-result');
@@ -25,7 +26,6 @@
     const tipIndices = new Map();
     let current = null, context = '', renderedKey = '', displayed = '', lastAutoKey = '';
     let timer = 0, frame = 0, exitTimer = 0, generation = 0, lessonEvent = 0, active = true;
-    document.documentElement.classList.add('nimo-speech-ready');
     const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
     const clean = value => String(value || '').replace(/[\p{Cc}\p{Cf}]/gu, '').trim().slice(0, 240);
     const policy = () => window.NextSkillMotion?.snapshot({ element: robot, kind: 'reaction' });
@@ -62,7 +62,7 @@
         if (islandCourseMenu && !islandCourseMenu.hidden) return false;
         if (root.dataset.context === 'in-flight' || root.closest('[data-voyage="rowing"],[data-voyage="boarding"],[data-voyage="diving"],[data-boarding="true"]')) return false;
         if (scene?.dataset.arrival || scene?.dataset.cvPhase) return false;
-        if (document.documentElement.matches('.cv-arrival-pending,.cv-arrival-running,.cv-departure-active,.journey-arrival-prepaint')) return false;
+        if (document.documentElement.matches('.cv-arrival-pending,.cv-arrival-running,.cv-departure-active,.journey-arrival-prepaint,.course-departing')) return false;
         const voyage = document.getElementById('catalog-voyage');
         if (voyage && !voyage.hidden) return false;
         const modal = [...document.querySelectorAll('dialog[open]')].at(-1);
@@ -123,62 +123,89 @@
         return { key: `${context}:welcome`, text: message, compact, pose, priority: 1 };
     }
 
-    // Keep advice clear of the course controls and the Home dashboard.
-    const protectedSelectors = '.ns-navbar,.ow-intro h1,.ow-intro > p,.ow-intro-actions a,[data-home-dashboard],.catalog-hero-copy,.catalog-tools,.catalog-search,#lesson-reading,#lesson-questions,.lesson-step-actions,.island-dashboard,.practice-overview-heading,.practice-facts,.practice-coach > p,.practice-coach > ul';
+    const protectedSelectors = [
+        '.ns-navbar', '.ow-intro h1', '.ow-intro > p', '.ow-intro-actions a', '[data-home-dashboard]',
+        '[data-nimo-speech-obstacle]', '.catalog-hero-copy', '.ns-catalog-status', '.ns-course-section-heading', '.ns-course-grid',
+        '#lesson-reading', '#lesson-questions', '.lesson-step-actions', '.island-dashboard', '.practice-overview-heading',
+        '.practice-facts', '.practice-coach > p', '.practice-coach > ul'
+    ].join(',');
     function placement(message) {
         const anchor = root.getBoundingClientRect();
-        const obstacles = [...document.querySelectorAll(protectedSelectors)].filter(node => node.getClientRects().length).map(node => node.getBoundingClientRect()).filter(box => box.width > 0 && box.height > 0);
         const viewport = window.visualViewport;
-        const left = (viewport?.offsetLeft || 0) + 12;
-        const right = Math.min(innerWidth, (viewport?.offsetLeft || 0) + (viewport?.width || innerWidth)) - 12;
-        const top = (viewport?.offsetTop || 0) + 12;
-        const viewportBottom = (viewport?.offsetTop || 0) + (viewport?.height || innerHeight) - 12;
-        const anchorTop = Math.min(anchor.top - 10, viewportBottom);
+        const viewportX = viewport?.offsetLeft || 0;
+        const viewportY = viewport?.offsetTop || 0;
+        const edge = 16;
+        const gap = 12;
+        const left = viewportX + edge;
+        const right = Math.min(document.documentElement.clientWidth, viewportX + (viewport?.width || innerWidth)) - edge;
+        const top = viewportY + edge;
+        const bottom = viewportY + (viewport?.height || innerHeight) - edge;
         const center = (anchor.left + anchor.right) / 2;
-        const fullWidth = Math.min(280, right - left);
-        const fits = (x, y, width, height) => y >= top && y + height <= viewportBottom &&
-            !obstacles.some(box => x < box.right + 4 && x + width > box.left - 4 && y < box.bottom + 4 && y + height > box.top - 4);
-        const candidates = [{ x: clamp(center - fullWidth / 2, left, right - fullWidth), width: fullWidth, compact: false }, { x: clamp(center - fullWidth / 2, left, right - fullWidth), width: fullWidth, compact: true }];
-        for (const box of obstacles) {
-            const rightX = Math.max(left, box.right + 8), leftEdge = Math.min(right, box.left - 8);
-            if (right - rightX >= 132) candidates.push({ x: rightX, width: Math.min(240, right - rightX), compact: true });
-            if (leftEdge - left >= 132) candidates.push({ x: Math.max(left, leftEdge - 240), width: Math.min(240, leftEdge - left), compact: true });
+        const centerY = (anchor.top + anchor.bottom) / 2;
+        const obstacles = [...document.querySelectorAll(protectedSelectors)]
+            .map(node => node.getBoundingClientRect())
+            .filter(box => box.width > 0 && box.height > 0 && box.bottom > top && box.top < bottom);
+        const fits = (x, y, width, height) => x >= left && x + width <= right && y >= top && y + height <= bottom &&
+            !obstacles.some(box => x < box.right + 6 && x + width > box.left - 6 && y < box.bottom + 6 && y + height > box.top - 6);
+        const maxWidth = Math.min(compactViewport.matches ? 224 : 280, right - left);
+        const minWidth = 132;
+        if (maxWidth < minWidth) return '';
+
+        function show(side, x, y, width, height, copy) {
+            bubble.dataset.placement = side;
+            bubble.style.transform = `translate3d(${x}px,${y}px,0)`;
+            bubble.style.setProperty('--nimo-tail', `${clamp(center - x, 17, width - 17)}px`);
+            bubble.style.setProperty('--nimo-tail-y', `${clamp(centerY - y, 15, height - 15)}px`);
+            return copy;
         }
-        for (const side of dashboard ? ['above', 'below'] : ['above']) {
-            for (const candidate of candidates) {
-                const copy = candidate.compact ? message.compact || message.text : message.text;
-                bubble.dataset.compact = String(candidate.compact);
-                bubble.style.width = `${candidate.width}px`;
-                measure.textContent = copy;
-                const height = bubble.offsetHeight;
-                const y = side === 'above' ? anchorTop - height : anchor.bottom + 10;
-                if (Math.abs(candidate.x + candidate.width / 2 - center) > 210 || !fits(candidate.x, y, candidate.width, height)) continue;
-                bubble.dataset.placement = side;
-                bubble.style.transform = `translate3d(${candidate.x}px,${y}px,0)`;
-                bubble.style.setProperty('--nimo-tail', `${clamp(center - candidate.x, 20, candidate.width - 20)}px`);
-                return copy;
+        function reserve(width, compact) {
+            const copy = compact ? message.compact || message.text : message.text;
+            bubble.dataset.compact = String(compact);
+            bubble.style.width = `${width}px`;
+            measure.textContent = copy;
+            return { copy, height: bubble.offsetHeight };
+        }
+
+        const candidates = [];
+        function slot(from, to, compact) {
+            const width = Math.min(maxWidth, to - from);
+            if (width < minWidth) return;
+            const x = clamp(center - width / 2, from, to - width);
+            if (center < x - 48 || center > x + width + 48) return;
+            if (!candidates.some(candidate => candidate.x === x && candidate.width === width && candidate.compact === compact)) {
+                candidates.push({ x, width, compact });
             }
         }
-        if (dashboard) {
-            const dashboardBottom = dashboard.getBoundingClientRect().bottom;
-            const beside = [
-                { side: 'left', edge: anchor.left - 10, width: Math.min(220, anchor.left - 10 - left) },
-                { side: 'right', edge: anchor.right + 10, width: Math.min(220, right - anchor.right - 10) }
-            ];
-            const copy = message.compact || message.text;
-            for (const { side, edge, width } of beside) {
-                if (width < 124) continue;
-                bubble.dataset.compact = 'true';
-                bubble.style.width = `${width}px`;
-                measure.textContent = copy;
-                const height = bubble.offsetHeight;
-                const x = side === 'left' ? edge - width : edge;
-                const y = Math.max(top, dashboardBottom + 8, Math.min(anchor.top, viewportBottom - height));
-                if (!fits(x, y, width, height)) continue;
-                bubble.dataset.placement = side;
-                bubble.style.transform = `translate3d(${x}px,${y}px,0)`;
-                bubble.style.setProperty('--nimo-tail-y', `${clamp((anchor.top + anchor.bottom) / 2 - y, 15, height - 15)}px`);
-                return copy;
+        if (!compactViewport.matches) slot(left, right, false);
+        slot(left, right, true);
+        for (const box of obstacles) {
+            slot(Math.max(left, box.right + gap), right, true);
+            slot(left, Math.min(right, box.left - gap), true);
+        }
+        for (const { x, width, compact } of candidates) {
+            const { copy, height } = reserve(width, compact);
+            const above = Math.min(anchor.top - gap, bottom) - height;
+            const below = anchor.bottom + gap;
+            if (fits(x, above, width, height)) return show('above', x, above, width, height, copy);
+            if (fits(x, below, width, height)) return show('below', x, below, width, height, copy);
+        }
+
+        for (const side of ['left', 'right']) {
+            const onLeft = side === 'left';
+            const anchorEdge = onLeft ? anchor.left - gap : anchor.right + gap;
+            const edges = new Set([anchorEdge]);
+            for (const box of obstacles) {
+                const edge = onLeft ? box.left - gap : box.right + gap;
+                const distance = onLeft ? anchorEdge - edge : edge - anchorEdge;
+                if (distance > 0 && distance <= 48) edges.add(edge);
+            }
+            for (const edge of edges) {
+                const width = Math.min(224, onLeft ? edge - left : right - edge);
+                if (width < minWidth) continue;
+                const x = onLeft ? edge - width : edge;
+                const { copy, height } = reserve(width, true);
+                const y = clamp(centerY - height / 2, top, bottom - height);
+                if (fits(x, y, width, height)) return show(side, x, y, width, height, copy);
             }
         }
         return '';
@@ -221,7 +248,11 @@
         if (!inline && typeof bubble.showPopover === 'function' && !bubble.matches(':popover-open')) bubble.showPopover();
         const copy = inline ? current.text : placement(current);
         if (inline) {
-            measure.textContent = copy; bubble.dataset.compact = 'false';
+            measure.textContent = copy;
+            bubble.dataset.compact = 'false';
+            bubble.dataset.placement = 'above';
+            bubble.style.removeProperty('width');
+            bubble.style.removeProperty('transform');
             const box = bubble.getBoundingClientRect(), anchor = root.getBoundingClientRect();
             bubble.style.setProperty('--nimo-tail', `${clamp((anchor.left + anchor.right) / 2 - box.left, 20, box.width - 20)}px`);
         }

@@ -10,7 +10,7 @@
     <script>try { const m=JSON.parse(sessionStorage.getItem('nextskill.journey-arrival')); if(location.pathname.toLowerCase()==='/learning/island' && m && Number(new URLSearchParams(location.search).get('courseId'))===m.courseId && Date.now()-m.at<900000) document.documentElement.classList.add('journey-arrival-prepaint'); } catch {}</script>
     <style>.journey-arrival-prepaint:before{content:'';position:fixed;inset:0;z-index:2147483647;background:#ccefff url('/images/journey/clouds-reference-v1.png') center/cover no-repeat}</style>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#d8f4ff" />
     <meta name="description" content="NextSkill — เลือกทักษะที่อยากเรียน ออกเดินทางกับ Nimo และกลับมาเรียนต่อจากเกาะเดิมได้ทันที" />
     <title>@ViewData["Title"] — NextSkill</title>

@@ -1,4 +1,5 @@
 (() => {
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
     // ==========================================
     // Password Toggle (Eye icon)
     // ==========================================
@@ -99,6 +100,8 @@
     const confettiColors = ['#58cc02', '#22c55e', '#0284c7', '#38bdf8', '#fde047', '#ff9600', '#ec4899', '#a855f7'];
 
     function spawnDuoConfetti(originX, originY, count = 18) {
+        if (reducedMotion.matches) return;
+        if (matchMedia('(width < 768px)').matches) count = Math.min(count, 8);
         for (let i = 0; i < count; i++) {
             const particle = document.createElement('div');
             particle.className = 'duo-confetti-particle';
@@ -237,30 +240,36 @@
     }
 
     // Subtle 3D Game Tilt Parallax on Auth Grid
-    const authGrid = document.querySelector('.auth-grid');
-    if (authGrid && window.innerWidth > 960) {
-        let isThrottled = false;
-        document.addEventListener('mousemove', (e) => {
-            if (isThrottled) return;
-            isThrottled = true;
-            requestAnimationFrame(() => {
-                const cx = window.innerWidth / 2;
-                const cy = window.innerHeight / 2;
-                const dx = (e.clientX - cx) / cx; // -1 to 1
-                const dy = (e.clientY - cy) / cy; // -1 to 1
-
-                const storyCard = document.querySelector('.nimo-story-card');
-                const authCard = document.querySelector('.nimo-auth-card');
-
-                if (storyCard) {
-                    storyCard.style.transform = `perspective(1000px) rotateY(${dx * 3}deg) rotateX(${-dy * 3}deg) translateY(-2px)`;
-                }
-                if (authCard) {
-                    authCard.style.transform = `perspective(1000px) rotateY(${dx * 2}deg) rotateX(${-dy * 2}deg)`;
-                }
-                isThrottled = false;
+    const storyCard = document.querySelector('.nimo-story-card');
+    const authCard = document.querySelector('.nimo-auth-card');
+    if (storyCard && authCard) {
+        const tiltAllowed = matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+        let tiltFrame = 0;
+        const tilt = event => {
+            if (tiltFrame) return;
+            tiltFrame = requestAnimationFrame(() => {
+                tiltFrame = 0;
+                const halfWidth = innerWidth / 2;
+                const halfHeight = innerHeight / 2;
+                const x = (event.clientX - halfWidth) / halfWidth;
+                const y = (event.clientY - halfHeight) / halfHeight;
+                storyCard.style.transform = `perspective(1000px) rotateY(${x * 3}deg) rotateX(${-y * 3}deg) translateY(-2px)`;
+                authCard.style.transform = `perspective(1000px) rotateY(${x * 2}deg) rotateX(${-y * 2}deg)`;
             });
-        });
+        };
+        function syncTilt() {
+            if (tiltAllowed.matches) {
+                document.addEventListener('pointermove', tilt, { passive: true });
+                return;
+            }
+            document.removeEventListener('pointermove', tilt);
+            cancelAnimationFrame(tiltFrame);
+            tiltFrame = 0;
+            storyCard.style.removeProperty('transform');
+            authCard.style.removeProperty('transform');
+        }
+        tiltAllowed.addEventListener('change', syncTilt);
+        syncTilt();
     }
 
     // ==========================================

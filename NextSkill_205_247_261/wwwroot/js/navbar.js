@@ -4,19 +4,22 @@
     if (!header) return;
     const toggle = header.querySelector('[data-navbar-toggle]');
     const menu = header.querySelector('#nextskill-main-menu');
-    const narrow = matchMedia('(max-width: 959.98px)');
+    const wide = matchMedia('(min-width: 1024px)');
     let open = false;
     function setOpen(value, returnFocus = false) {
-        open = value && narrow.matches;
+        open = value && !wide.matches;
         toggle.setAttribute('aria-expanded', String(open));
         toggle.setAttribute('aria-label', open ? 'ปิดเมนูหลัก' : 'เปิดเมนูหลัก');
-        menu.hidden = narrow.matches && !open;
+        menu.hidden = !wide.matches && !open;
         if (returnFocus) toggle.focus();
     }
     toggle.hidden = false;
     toggle.addEventListener('click', () => setOpen(!open));
     document.addEventListener('keydown', event => {
-        if (event.key === 'Escape' && open) { event.preventDefault(); setOpen(false, true); }
+        if (event.key === 'Escape' && open) {
+            event.preventDefault();
+            setOpen(false, true);
+        }
     });
     document.addEventListener('click', event => {
         if (open && !header.contains(event.target)) {
@@ -24,7 +27,11 @@
             setOpen(false, focusInside);
         }
     });
-    menu.addEventListener('click', event => { if (event.target.closest('a')) setOpen(false); });
-    narrow.addEventListener('change', () => { const focusInside = menu.contains(document.activeElement); setOpen(false, narrow.matches && focusInside); });
+    menu.addEventListener('click', event => { if (event.target.closest('.ns-navbar__link')) setOpen(false); });
+    wide.addEventListener('change', () => {
+        const active = document.activeElement;
+        setOpen(false, !wide.matches && menu.contains(active));
+        if (wide.matches && active === toggle) menu.querySelector('a')?.focus();
+    });
     setOpen(false);
 })();
