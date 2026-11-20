@@ -4,39 +4,43 @@
     const sea = document.querySelector('.island-water-motion');
     if (!route || !sea) return;
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    const compact = matchMedia('(width < 1024px), (height < 480px)');
     const underwaterRoute = route.querySelector('.island-underwater-route');
     const surface = sea.querySelector('.underwater-surface');
     const deepDecor = document.createElement('div'); deepDecor.className = 'underwater-deep-decor';
     deepDecor.innerHTML = '<div class="deep-ocean-backdrop"></div><div class="deep-ocean-light"></div><img class="deep-ocean-plant deep-ocean-plant--left" src="/images/journey/reef-garden.svg" alt=""><img class="deep-ocean-plant deep-ocean-plant--right" src="/images/journey/reef-garden.svg" alt=""><div class="deep-fish-school deep-fish-school--far"><img src="/images/journey/ocean-fish.svg" alt=""><img src="/images/journey/ocean-fish.svg" alt=""><img src="/images/journey/ocean-fish.svg" alt=""></div><div class="deep-fish-school deep-fish-school--near"><img src="/images/journey/ocean-fish.svg" alt=""><img src="/images/journey/ocean-fish.svg" alt=""></div><div class="deep-bubble deep-bubble--one"></div><div class="deep-bubble deep-bubble--two"></div><div class="deep-bubble deep-bubble--three"></div>';
     sea.append(deepDecor);
+    const deepLight = deepDecor.querySelector('.deep-ocean-light');
     let frame = 0;
     let measureTimeout;
-    let depthStart = 0;
-    let depthDistance = 1;
+    let shore = 0;
+    let viewportHeight = 1;
     let hasUnderwaterRoute = false;
     let paused = false;
     function update() {
         frame = 0;
-        const depth = hasUnderwaterRoute ? Math.max(0, Math.min(1, (scrollY - depthStart) / depthDistance)) : 0;
+        const waterline = shore - scrollY;
+        const depth = hasUnderwaterRoute ? Math.max(0, Math.min(1, (.65 - waterline / viewportHeight) / .7)) : 0;
+        const fade = depth * depth * (3 - 2 * depth);
         const instant = reduced.matches || paused;
-        deepDecor.style.opacity = String(instant ? Number(depth >= .5) : depth);
+        deepDecor.style.setProperty('--island-waterline', `${waterline}px`);
+        deepDecor.style.opacity = String(instant ? Number(depth >= .5) : fade);
+        deepLight.style.translate = instant ? '' : `0 ${Math.max(-64, Math.min(0, waterline * .16))}px`;
         document.body.classList.toggle('is-underwater', depth >= .5);
     }
     function measureSurface() {
         const first = route.querySelector('[data-lesson-id="1"] img');
         if (!first) return;
         const world = window.NextSkillSeaWorld;
-        const shore = world.surfaceShore(first);
-        const viewportHeight = surface.offsetHeight;
+        shore = world.surfaceShore(first);
+        viewportHeight = Math.max(1, surface.offsetHeight);
         hasUnderwaterRoute = !underwaterRoute.hidden;
-        depthStart = Math.max(0, shore - viewportHeight * (compact.matches ? .42 : .3));
-        if (compact.matches && hasUnderwaterRoute) {
-            const destination = underwaterRoute.getBoundingClientRect().top + scrollY - viewportHeight * .48;
-            depthDistance = Math.max(viewportHeight * .16, destination - depthStart);
-        } else {
-            depthDistance = viewportHeight * .9;
-        }
+        const frames = [...underwaterRoute.querySelectorAll('.island-stop-picture')];
+        const depths = frames.map(frame => {
+            const rect = frame.getBoundingClientRect();
+            const distance = rect.top + scrollY + rect.height / 2 - shore;
+            return Math.max(0, Math.min(1, distance / (viewportHeight * 2.4)));
+        });
+        frames.forEach((frame, index) => frame.style.setProperty('--island-art-depth', depths[index].toFixed(3)));
         world.setShore(shore);
         queue();
     }

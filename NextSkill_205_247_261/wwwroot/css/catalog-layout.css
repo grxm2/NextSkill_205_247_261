@@ -61,13 +61,6 @@
     left: max(0px, 19% - var(--catalog-vessel-width) / 2);
     top: calc(var(--catalog-shore-local) + 2px);
 }
-.catalog-page .catalog-boat-nimo {
-    width: clamp(49px, 13vw, 65px);
-    aspect-ratio: 70 / 81;
-    left: 48%;
-    translate: -50% 0;
-    bottom: 38%;
-}
 .catalog-page .catalog-tools {
     min-width: 0;
     padding: 12px;
@@ -199,6 +192,39 @@
 @media (min-width: 480px) {
     .catalog-page .catalog-card-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
 }
+
+@media (width < 768px), (width < 1024px) and (height < 480px) {
+    .catalog-page .ns-course-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px clamp(10px, 3vw, 16px);
+    }
+
+    .catalog-page .ns-course-card { border-radius: 14px; }
+    .catalog-page .ns-course-card-copy { gap: 8px; padding: clamp(10px, 3vw, 16px); }
+    .catalog-page .ns-course-card h3 { font-size: clamp(.9375rem, 3.8vw, 1.125rem); letter-spacing: normal; }
+    .catalog-page .ns-course-card h3 a { color: var(--ns-ink); }
+    .catalog-page .ns-course-card-copy > p {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        overflow-wrap: anywhere;
+        line-height: 1.6;
+    }
+    .catalog-page .ns-course-meta { gap: 2px 8px; font-size: .8125rem; }
+    .catalog-page .catalog-lesson-count::before { margin-inline-end: 4px; }
+
+    .catalog-page .ns-topic-cover-label {
+        max-width: 44%;
+        font-size: clamp(.625rem, 6cqi, 1.125rem);
+        overflow-wrap: anywhere;
+    }
+
+    .catalog-page .ns-course-card-footer { padding-top: 10px; }
+    .catalog-page .catalog-card-start { gap: 4px; padding-inline: 7px; font-size: .8125rem; }
+    .catalog-page .catalog-course-link { padding-inline: 0; font-size: .8125rem; }
+}
+
 @media (min-width: 768px) {
     .catalog-page .catalog-hero {
         grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
@@ -217,7 +243,6 @@
         inset: calc(var(--catalog-shore-local) - var(--catalog-art-width) * .64) auto auto 0;
     }
     .catalog-page .catalog-boat { left: calc(var(--catalog-art-width) * .89 - var(--catalog-vessel-width) / 2); }
-    .catalog-page .catalog-boat-nimo { width: clamp(57px, 5.5vw, 70px); }
     .catalog-page .catalog-tools {
         padding: 16px;
         border-radius: 20px;

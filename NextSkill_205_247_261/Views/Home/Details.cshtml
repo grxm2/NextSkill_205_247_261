@@ -35,8 +35,12 @@
         <symbol id="cj-quiz" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2m6 2V2m-6 9 2 2 4-4m-6 8h6"/></symbol>
     </svg>
     <header class="cj-hero">
+        <div class="journey-night-sky cj-night-sky" aria-hidden="true"></div>
         <div class="cj-sky" aria-hidden="true"></div>
         <div class="cj-sea" aria-hidden="true"></div>
+        <div class="cj-celestial" aria-hidden="true">
+            <partial name="_JourneyCelestial" />
+        </div>
         <div class="cj-wrap cj-hero-inner">
             <div class="cj-hero-copy">
                 <nav aria-label="เส้นทางนำทาง">
@@ -60,7 +64,6 @@
                 }
             </div>
             <div class="cj-island-art" aria-hidden="true">
-                <span class="cj-sun"></span>
                 <img src="~/images/journey/learning-island-reference-v2.png" asp-append-version="true" alt="" width="1448" height="1086" fetchpriority="high" />
                 <span class="cj-sparkles"></span>
             </div>

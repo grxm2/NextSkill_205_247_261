@@ -25,16 +25,18 @@
                     <button class="journey-theme-toggle" type="button" data-theme-toggle aria-label="ธีมกลางคืน" aria-pressed="false" title="เปิดธีมกลางคืน" hidden>
                         <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
                         <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 13.3A8.5 8.5 0 0 1 10.7 3.5a8.5 8.5 0 1 0 9.8 9.8Z"/></svg>
+                        <span class="ns-navbar__control-label" aria-hidden="true">ธีม</span>
                     </button>
                 }
                 @if (authenticated)
                 {
                     <div class="dropdown ns-navbar__profile">
-                        <button class="ns-navbar__avatar" type="button" id="nextskill-profile-menu" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="เปิดเมนูบัญชี">
+                        <button class="ns-navbar__avatar" type="button" id="nextskill-profile-menu" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-controls="nextskill-profile-dropdown" aria-label="เปิดเมนูโปรไฟล์">
                             <img src="~/images/nimo-learning.png" asp-append-version="true" width="44" height="44" alt="" />
+                            <span class="ns-navbar__control-label" aria-hidden="true">โปรไฟล์</span>
                             <svg class="ns-navbar__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m4 6 4 4 4-4" /></svg>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end ns-navbar__dropdown" aria-labelledby="nextskill-profile-menu">
+                        <ul class="dropdown-menu dropdown-menu-end ns-navbar__dropdown" id="nextskill-profile-dropdown" aria-labelledby="nextskill-profile-menu">
                             <li><a class="dropdown-item" asp-controller="Account" asp-action="@(User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard")">โปรไฟล์</a></li>
                             <li><form asp-controller="Account" asp-action="Logout" method="post"><button class="dropdown-item" type="submit">ออกจากระบบ</button></form></li>
                         </ul>

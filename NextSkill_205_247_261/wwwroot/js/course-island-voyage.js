@@ -64,14 +64,17 @@
         boat=page.querySelector('.catalog-boat');
         if(!boat)return;
         const rect=boat.getBoundingClientRect();
+        // Keep the current waterline and tilt when moving the boat to the overlay.
+        const bob=getComputedStyle(boat.querySelector('.catalog-boat-idle')).transform;
         home={parent:boat.parentNode,next:boat.nextSibling,style:boat.getAttribute('style'),ambient:boat.getAttribute('data-catalog-ambient')};
-        const width=rect.width,height=width*280/480,x=rect.left,y=rect.top;
+        const {width,height,left:x,top:y}=rect;
         stage=document.createElement('div');stage.className='catalog-page course-voyage-stage';
         Object.assign(stage.style,{position:'fixed',inset:'0',padding:'0',margin:'0',minHeight:'0',zIndex:'200010',pointerEvents:'none'});
         stage.innerHTML='<button type="button" class="course-voyage-skip">ข้ามแอนิเมชัน →</button>';
         document.body.append(stage);stage.append(boat);
         boat.dataset.catalogAmbient='active';
         Object.assign(boat.style,{position:'absolute',left:`${x}px`,top:`${y}px`,bottom:'auto',width:`${width}px`,height:`${height}px`,transform:'none'});
+        boat.style.setProperty('--catalog-departure-bob',bob);
         stage.querySelector('button').addEventListener('click',forward);
         stage.querySelector('button').focus({preventScroll:true});
         inert=[...document.body.children].filter(n=>n!==stage&&n!==cloud&&!['SCRIPT','STYLE','LINK'].includes(n.tagName)).map(n=>[n,n.inert]);

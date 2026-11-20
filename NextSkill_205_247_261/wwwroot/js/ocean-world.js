@@ -117,6 +117,8 @@
         setOpenSea(progress);
         alignBackdrop();
         document.dispatchEvent(new Event('nextskill:ocean-view'));
+        // Cave entry owns the boat and its passenger once the harbor is reached.
+        if (portalLocked) return;
         if (progress > .025 && !boarded) { boarded = true; window.NextSkillVoyage?.board(); }
         else if (progress <= .025 && boarded) { boarded = false; window.NextSkillVoyage?.returnToShore(); }
         const stage = progress < .16 ? 0 : progress < .48 ? 1 : 2;

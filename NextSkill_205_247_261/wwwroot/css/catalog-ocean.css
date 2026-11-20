@@ -29,7 +29,17 @@ body.ns-catalog-shell {
 .catalog-page [data-catalog-ambient="active"] .catalog-boat-idle { animation-play-state: running; }
 .catalog-page :is(.catalog-boat-hull,.catalog-boat-oar) { position: absolute; inset: 0; display: block; width: 100%; height: 100%; z-index: 2; }
 .catalog-page .catalog-boat-oar { z-index: 3; transform: rotate(-6deg); transform-origin: 68% 49%; }
-.catalog-page .catalog-boat-nimo { position: absolute; z-index: 1; }
+.catalog-page .catalog-boat-nimo {
+    position: absolute;
+    z-index: 1;
+    left: 48%;
+    bottom: 29%;
+    width: 42%;
+    height: auto;
+    aspect-ratio: 200 / 230;
+    translate: -50% 0;
+}
+.catalog-page .catalog-boat-nimo .buddy-idle-motion { animation: none; }
 .catalog-page .catalog-boat-water {
     position: absolute;
     left: 16%;

@@ -110,12 +110,10 @@ html[data-theme="dark"] .island-water-motion{background:#09283e}
 .island-water-motion:after{content:'';position:absolute;inset:0;z-index:4;pointer-events:none;background:radial-gradient(ellipse 35% 45% at var(--journey-moon-x,88%) var(--journey-moon-y,20%),#c5e3ff12,transparent 75%),linear-gradient(#071a2ed9,#071e31c9);opacity:0}
 html[data-theme="dark"] .island-water-motion:after{opacity:1}
 .theme-transitioning .island-water-motion:after{transition:opacity 1300ms ease}
-html[data-theme="dark"] .deep-ocean-light{background:linear-gradient(112deg,transparent 20%,#d5eaff30 25%,transparent 30%,transparent 50%,#d5eaff26 55%,transparent 60%)}
 html[data-theme="dark"] .smart-journey .learning-workspace #lesson-route .sj-lesson-island h3,
 html[data-theme="dark"] .smart-journey .learning-workspace #lesson-route .sj-lesson-island:not(.is-current) .sj-island-status{background:#15354bed;color:#e7f3fb}
 html[data-theme="dark"] .smart-journey .learning-workspace #lesson-route .sj-island-index{background:#193e58;color:#e7f3fb;border-color:#6f93aa}
 html[data-theme="dark"] .smart-journey .learning-workspace #lesson-route .is-current .sj-island-index{background:#126b92;color:#fff}
-html[data-theme="dark"] .smart-journey .learning-workspace #lesson-route .sj-lesson-island:not(.is-locked) img{filter:brightness(.85) saturate(.7) drop-shadow(0 0 15px #e1f3ff25)}
 html[data-theme="dark"] #nextskill-home.smart-journey #buddy-agent-menu button{background:#23465f;color:#dbf0ff}
 html[data-theme="dark"] .smart-journey .agent-menu-hint{color:#b4cadb}
 html[data-theme="dark"] #nextskill-home.smart-journey .home-dialog.companion-dialog{background:#152f46;color:#e7f3fb;border-color:#3c5b73}

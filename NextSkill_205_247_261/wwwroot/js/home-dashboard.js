@@ -7,7 +7,8 @@
     const find = selector => dashboard.querySelector(selector);
     const signedIn = document.body.dataset.authenticated === 'true';
     const preview = !signedIn && document.body.dataset.guestPreview === 'true';
-    const continueLink = find('[data-continue-voyage]');
+    const startLink = find('[data-catalog-voyage]');
+    const courseLink = find('[data-dashboard-active-title]');
     const meter = find('[data-dashboard-meter]');
     const next = find('[data-dashboard-next]');
     const format = new Intl.NumberFormat('th-TH');
@@ -61,29 +62,21 @@
         find('[data-dashboard-greeting]').hidden = !returning;
         find('[data-dashboard-active-course]').hidden = !returning;
         find('[data-dashboard-stats]').hidden = !returning;
-        find('[data-dashboard-catalog-label]').textContent = course ? 'เลือกคอร์สใหม่' : 'เริ่มเลือกคอร์ส';
-
-        continueLink.hidden = !course;
-        if (course) {
-            continueLink.href = '/Learning/Island?' + new URLSearchParams({ courseId: course.courseId });
-            find('[data-dashboard-continue-label]').textContent = course.isComplete ? 'ทบทวนคอร์ส'
-                : course.completedLessons.length ? 'เรียนต่อ' : 'เริ่มเรียน';
-        } else continueLink.removeAttribute('href');
+        startLink.hidden = Boolean(course || state.hasCompletedOnboarding);
 
         if (!returning) {
-            continueLink.removeAttribute('aria-describedby');
             delete dashboard.dataset.missionText;
             return;
         }
 
-        continueLink.setAttribute('aria-describedby', 'hd-active-course');
         const completed = course.completedLessons.length;
         const upcoming = !course.isComplete && (course.lessons.find(lesson => lesson.id === course.lastLessonId)
             ?? course.lessons.find(lesson => lesson.id === course.currentIslandId));
         find('[data-dashboard-course-label]').textContent = course.isComplete ? 'คอร์สที่เรียนจบแล้ว'
             : completed ? 'คอร์สที่กำลังเรียน' : 'คอร์สที่เลือกไว้';
         find('[data-dashboard-preview]').hidden = !preview;
-        find('[data-dashboard-active-title]').textContent = course.title;
+        courseLink.href = '/Learning/Island?' + new URLSearchParams({ courseId: course.courseId });
+        courseLink.textContent = course.title;
         find('[data-dashboard-ring]').style.setProperty('--hd-progress', course.progress + '%');
         find('[data-dashboard-percent]').textContent = format.format(course.progress) + '%';
         find('[data-dashboard-progress]').textContent = completed

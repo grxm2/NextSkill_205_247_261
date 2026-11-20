@@ -10,7 +10,6 @@
     const close = document.getElementById('nimo-speech-close');
     const missionButton = document.getElementById('nimo-missions-open');
     const dashboard = document.querySelector('[data-home-dashboard]');
-    const islandSheet = document.getElementById('island-sheet-toggle');
     const islandCourseMenu = document.getElementById('island-course-menu');
     const menu = document.getElementById('buddy-agent-menu');
     const reduce = matchMedia('(prefers-reduced-motion: reduce)');
@@ -58,7 +57,6 @@
     }
     function eligible() {
         if (!active || document.hidden || root.hidden || (!menu.hidden && !lessonCoach) || robot.dataset.voyagePose) return false;
-        if (islandSheet?.getAttribute('aria-expanded') === 'true' && islandSheet.getClientRects().length) return false;
         if (islandCourseMenu && !islandCourseMenu.hidden) return false;
         if (root.dataset.context === 'in-flight' || root.closest('[data-voyage="rowing"],[data-voyage="boarding"],[data-voyage="diving"],[data-boarding="true"]')) return false;
         if (scene?.dataset.arrival || scene?.dataset.cvPhase) return false;
@@ -94,7 +92,7 @@
             ];
         }
         if (context.startsWith('island:')) return [
-            ['กด “เริ่มเรียน” ที่ด่านปัจจุบันได้เลย หรือแตะเกาะเพื่อดูรายละเอียดก่อนออกเดินทางนะ', 'เริ่มจากด่านปัจจุบัน แล้วไปด้วยกันนะ', 'point'],
+            ['แตะด่านปัจจุบันเพื่อดูรายละเอียด แล้วกด “เริ่มเรียน” เพื่อออกเดินทางนะ', 'แตะด่านปัจจุบันเพื่อเริ่มนะ', 'point'],
             ['วันละเกาะก็ไปได้ไกล ลองตั้งเป้าอ่านให้เข้าใจหนึ่งตัวอย่างก่อนทำแบบฝึกนะ', 'วันนี้เข้าใจเพิ่มอีกนิด ก็เป็นก้าวที่ดีแล้ว', 'cheer'],
             ['อยากฝึกเรื่องใหม่? ใช้ “เปลี่ยนคอร์ส” ได้ ความคืบหน้าของแต่ละคอร์สแยกกันนะ', 'ใช้ “เปลี่ยนคอร์ส” เพื่อสำรวจทักษะอื่นได้', 'nod']
         ];
@@ -127,6 +125,7 @@
         '.ns-navbar', '.ow-intro h1', '.ow-intro > p', '.ow-intro-actions a', '[data-home-dashboard]',
         '[data-nimo-speech-obstacle]', '.catalog-hero-copy', '.ns-catalog-status', '.ns-course-section-heading', '.ns-course-grid',
         '#lesson-reading', '#lesson-questions', '.lesson-step-actions', '.island-dashboard', '.practice-overview-heading',
+        '#lesson-route .island-stop-picture', '#lesson-route :is(h3,.sj-island-status)',
         '.practice-facts', '.practice-coach > p', '.practice-coach > ul'
     ].join(',');
     function placement(message) {
@@ -332,7 +331,6 @@
         observer.observe(robot, { attributes: true, attributeFilter: ['data-voyage-pose'] });
         observer.observe(menu, { attributes: true, attributeFilter: ['hidden'] });
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-        if (islandSheet) observer.observe(islandSheet, { attributes: true, attributeFilter: ['aria-expanded'] });
         if (islandCourseMenu) observer.observe(islandCourseMenu, { attributes: true, attributeFilter: ['hidden'] });
         if (dashboard) observer.observe(dashboard, { attributes: true, attributeFilter: ['data-mode', 'data-status', 'data-mission-text'] });
         document.querySelectorAll('dialog,#catalog-voyage,#buddy-coach,[data-voyage],#ocean-journey').forEach(node => observer.observe(node, { attributes: true, attributeFilter: ['open', 'hidden', 'data-voyage', 'data-arrival', 'data-cv-phase', 'data-boarding'] }));

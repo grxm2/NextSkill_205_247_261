@@ -49,14 +49,26 @@ const output = path.resolve('artifacts/journey-theme');
                 await page.locator('.sj-lesson-island').first().waitFor();
                 assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
                 assert.equal(await page.locator('.learning-celestial .journey-moon').count(),1);
-                if (width <= 850) await page.locator('#island-sheet-toggle').click();
-                const colors=await page.evaluate(()=>['#locate-current','.learning-heading h1','#current-island-number'].map(selector=>getComputedStyle(document.querySelector(selector)).color));
+                const compact = width < 1024;
+                if (compact) {
+                    assert.equal(await page.locator('#island-current-card').isVisible(), false);
+                    const stops = page.locator('#lesson-route .sj-lesson-island');
+                    const tops = await stops.evaluateAll(items => items.map(item => item.getBoundingClientRect().top));
+                    assert.ok(tops.every((top, index) => index === 0 || top > tops[index - 1]), 'Compact lessons should run from top to bottom');
+                    await stops.first().click();
+                    await page.locator('#island-detail-dialog[open]').waitFor();
+                }
+                const colors=await page.evaluate(compact=>['#locate-current','.learning-heading h1',compact ? '#detail-number' : '#current-island-number'].map(selector=>getComputedStyle(document.querySelector(selector)).color),compact);
                 const luminance=color=>{
                     const channels=color.match(/[\d.]+/g).slice(0,3).map(x=>Number(x)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4);
                     return channels[0]*.2126+channels[1]*.7152+channels[2]*.0722;
                 };
                 const darkSurface=luminance('rgb(21,47,70)');
                 colors.forEach(color=>assert.ok((luminance(color)+.05)/(darkSurface+.05)>=4.5,`Low contrast text ${color}`));
+                if (compact) {
+                    await page.keyboard.press('Escape');
+                    await page.locator('#island-detail-dialog').waitFor({ state: 'hidden' });
+                }
                 await page.screenshot({path:path.join(output,`island-night-${width}.png`)});
                 await page.locator('#island-course-toggle').click();
                 await page.locator('#island-course-all').click();

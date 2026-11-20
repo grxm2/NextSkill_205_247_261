@@ -4,16 +4,17 @@
     const storageKey = 'nextskill.theme.v1';
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const buttons = [...document.querySelectorAll('[data-theme-toggle]')];
+    const scene = document.querySelector('.ow-scene') || document.querySelector('.sj-learn, .practice-page, [data-catalog-ocean], .cj-hero');
+    const skyLayer = scene?.querySelector('.ow-sky, .learning-celestial, .cj-celestial');
     let cleanup;
     let celestialAnimations = [];
     let lightFrame = 0;
     let orbit = null;
 
     function followLight() {
-        const scene = document.querySelector('.ow-scene') || document.querySelector('.sj-learn, .practice-page, [data-catalog-ocean]');
         const lights = [...document.querySelectorAll('.journey-sun,.journey-moon')];
-        if (!scene || !lights.length) return;
-        const sky = scene.querySelector('.ow-sky, .learning-celestial').getBoundingClientRect();
+        if (!skyLayer || !lights.length) return;
+        const sky = skyLayer.getBoundingClientRect();
         lights.forEach(element => {
             const name = element.classList.contains('journey-sun') ? 'sun' : 'moon';
             const star = element.getBoundingClientRect();
@@ -33,7 +34,6 @@
         celestialAnimations.forEach(animation => animation.cancel());
         celestialAnimations = [];
         orbit = null;
-        const scene = document.querySelector('.ow-scene') || document.querySelector('.sj-learn, .practice-page, [data-catalog-ocean]');
         ['sun','moon'].forEach(name => ['x','y','alpha'].forEach(value => scene?.style.removeProperty(`--journey-${name}-${value}`)));
         root.classList.remove('theme-transitioning');
     }

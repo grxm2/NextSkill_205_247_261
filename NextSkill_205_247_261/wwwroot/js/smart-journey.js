@@ -90,7 +90,8 @@
             || course.lessons.find(item => item.status === 'current') || course.lessons.at(-1);
     }
     function islandArt(id) {
-        return id === 1 ? '/images/journey/learning-island-reference-v2.png' : id === 2 ? '/images/journey/learning-island-camp-seamount-v1.png' : id === 3 ? '/images/journey/learning-island-shipwreck-v1.png' : '/images/journey/learning-island-temple-seamount-v1.png';
+        return id === 1 ? '/images/journey/learning-island-reference-v2.png'
+            : `/images/journey/learning-island-stage-${Math.min(id, 6)}.webp`;
     }
     function setState(value) {
         state = value;
@@ -129,16 +130,21 @@
         routeLine.setAttribute('aria-hidden', 'true');
         routeLine.classList.add('sj-learning-route-line');
         const routePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        routePath.setAttribute('d', 'M430 105C500 220 100 230 170 355S500 480 430 605 100 740 170 855');
         routeLine.append(routePath);
         const stops = course.lessons.map(item => {
             const button = node('button', `sj-lesson-island is-${item.status}`);
             const title = item.displayTitle || item.title;
             button.type = 'button'; button.dataset.lessonId = item.id;
             const locked = item.status === 'locked';
-            button.setAttribute('aria-label', `ด่าน ${item.id} ${title} · ${locked ? 'ดูวิธีปลดล็อก' : item.status === 'completed' ? 'สำเร็จแล้ว กดทบทวน' : 'ดูรายละเอียดด่านปัจจุบัน'}`);
+            button.setAttribute('aria-label', `ด่าน ${item.id} ${title} · ${locked ? 'ล็อกอยู่' : item.status === 'completed' ? 'ผ่านแล้ว' : 'ด่านปัจจุบัน'}`);
+            button.setAttribute('aria-controls', 'island-detail');
             if (item.status === 'current') button.setAttribute('aria-current', 'step');
-            const art = node('img'); art.src = islandArt(item.id); art.alt = ''; art.width = 1448; art.height = 1086;
+            const art = node('img');
+            art.src = islandArt(item.id);
+            art.alt = '';
+            art.width = item.id === 1 ? 1448 : 1104;
+            art.height = item.id === 1 ? 1086 : 800;
+            if (item.id > 2) art.loading = 'lazy';
             const label = node('h3', '', title);
             const artFrame = node('span', 'island-stop-picture');
             artFrame.append(art, node('span', 'sj-island-index', String(item.id).padStart(2, '0')));
@@ -147,44 +153,21 @@
                 const lock = node('span', 'icon icon-lock');
                 lock.setAttribute('aria-hidden', 'true');
                 label.prepend(lock);
-                const hint = node('span', 'island-map-lock-hint', lockedHint);
-                hint.id = `island-lock-hint-${item.id}`;
-                hint.hidden = true;
-                button.title = lockedHint;
-                button.setAttribute('aria-controls', hint.id);
-                button.setAttribute('aria-expanded', 'false');
-                button.append(hint);
-                button.addEventListener('click', () => {
-                    const open = hint.hidden;
-                    closeIslandLockHint();
-                    if (open) {
-                        hint.hidden = false;
-                        button.setAttribute('aria-expanded', 'true');
-                        tell(lockedHint);
-                    }
-                });
-                return button;
+            } else {
+                button.append(node('span', 'sj-island-status', item.status === 'completed' ? '✓ สำเร็จแล้ว · ทบทวน' : 'ดูรายละเอียดด่าน'));
             }
-            button.append(node('span', 'sj-island-status', item.status === 'completed' ? '✓ สำเร็จแล้ว · ทบทวน' : 'ดูรายละเอียดด่าน'));
             button.addEventListener('click', () => guarded(() => {
-                const launch = () => openLesson(course.courseId, item.id);
+                const launch = locked ? null : () => openLesson(course.courseId, item.id);
                 if (window.NextSkillIslandDetails) window.NextSkillIslandDetails.show(item, launch, button);
+                else if (locked) tell(lockedHint);
                 else launch();
             }));
             return button;
         });
         const underwaterRoute = islandRoute.querySelector('.island-underwater-route');
-        const scrollLeft = underwaterRoute.scrollLeft;
         underwaterRoute.replaceChildren(...stops.slice(1));
         underwaterRoute.hidden = stops.length < 2;
         islandRoute.replaceChildren(routeLine, ...stops.slice(0, 1), underwaterRoute);
-        underwaterRoute.scrollLeft = scrollLeft;
-    }
-    function closeIslandLockHint(target) {
-        const expanded = islandRoute?.querySelector('.is-locked[aria-expanded="true"]');
-        if (!expanded || (target && expanded.contains(target))) return;
-        expanded.setAttribute('aria-expanded', 'false');
-        document.getElementById(expanded.getAttribute('aria-controls')).hidden = true;
     }
     function renderIslandStats() {
         const meter = $('#island-level-meter');
@@ -687,7 +670,6 @@
         });
         document.addEventListener('click', event => {
             if (!islandCourseMenu.hidden && !switcher.contains(event.target)) setIslandCourseMenu(false);
-            closeIslandLockHint(event.target);
         });
         const videoDialog = $('#island-course-video-modal');
         const embed = videoDialog?.querySelector('iframe[data-src]');
@@ -700,9 +682,6 @@
             if (videoDialog.open) return;
             embed?.removeAttribute('src');
             videoDialog.querySelector('video')?.pause();
-        });
-        islandRoute.addEventListener('keydown', event => {
-            if (event.key === 'Escape') closeIslandLockHint();
         });
     }
     $('#course-search').addEventListener('input', renderCourses);

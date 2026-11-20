@@ -1,4 +1,6 @@
 body[data-journey-mode="learn"] {
+    --island-art-light: .98;
+    --island-art-saturation: .94;
     --island-sidebar-top: calc(var(--nav-sticky-inset, var(--nav-h)) + 20px);
     --island-glass: var(--ns-liquid-panel-bg);
     --island-border: var(--ns-liquid-panel-edge);
@@ -13,6 +15,11 @@ body[data-journey-mode="learn"] {
     --island-track: #c9dce7;
     --island-meter-track: #205674;
     --island-meter-fill: #ffd457;
+}
+
+html[data-theme="dark"] body[data-journey-mode="learn"] {
+    --island-art-light: .81;
+    --island-art-saturation: .79;
 }
 
 html[data-theme="dark"] body[data-journey-mode="learn"],
@@ -365,11 +372,6 @@ body[data-journey-mode="learn"].is-underwater :is(#resume-learning, #detail-star
     border-width: 0 1.5px 1.5px 0;
     transform: rotate(45deg);
 }
-.island-sheet-toggle[aria-expanded="false"] .island-chevron { margin-top: 3px; transform: rotate(225deg); }
-.island-sheet-toggle { margin-bottom: 12px; color: var(--island-ink); font-size: .875rem; font-weight: 500; }
-.island-current-card:has(.island-sheet-toggle[aria-expanded="false"]) .island-current-info { display: none; }
-.island-current-card:has(.island-sheet-toggle[aria-expanded="false"]) .island-current-actions { margin-top: 0; }
-
 .smart-journey .learning-workspace #lesson-route {
     position: relative;
     display: flex;
@@ -382,7 +384,7 @@ body[data-journey-mode="learn"].is-underwater :is(#resume-learning, #detail-star
 }
 .smart-journey #lesson-route::before { display: none; }
 .smart-journey #lesson-route .sj-learning-route-line {
-    display: none;
+    display: block;
     position: absolute;
     inset: 0;
     z-index: -1;
@@ -477,23 +479,54 @@ body[data-journey-mode="learn"].is-underwater :is(#resume-learning, #detail-star
     color: #fff;
 }
 .island-underwater-route {
-    box-sizing: border-box;
     display: flex;
-    align-items: flex-start;
-    gap: clamp(14px, 3vw, 24px);
+    flex-direction: column;
+    align-items: center;
+    gap: inherit;
     width: 100%;
-    padding: 8px 8px 12px;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scroll-padding-inline: 8px;
-    scroll-snap-type: inline proximity;
-    scrollbar-width: thin;
 }
 .island-underwater-route[hidden] { display: none; }
-.smart-journey .learning-workspace #lesson-route .island-underwater-route .sj-lesson-island {
-    width: min(19rem, 82%);
-    align-self: flex-start;
-    scroll-snap-align: center;
+.island-underwater-route .island-stop-picture {
+    width: 94%;
+    isolation: isolate;
+}
+.island-underwater-route .island-stop-picture::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: auto 7% 1%;
+    height: 22%;
+    background: radial-gradient(ellipse, #053c6670, #087da130 48%, transparent 73%);
+}
+.smart-journey .learning-workspace #lesson-route .island-underwater-route .sj-lesson-island img {
+    filter: brightness(calc(var(--island-art-light) - var(--island-art-depth, 0) * .12))
+        saturate(calc(var(--island-art-saturation) - var(--island-art-depth, 0) * .09))
+        grayscale(var(--island-art-grayscale, 0));
+    mask-image: linear-gradient(#000 0 86%, #000b 95%, #0005 100%);
+}
+.island-underwater-route .is-locked { --island-art-grayscale: .67; }
+
+.island-water-motion .underwater-deep-decor {
+    mask-image: linear-gradient(to bottom,
+        transparent max(0px, calc(var(--island-waterline, 100%) + 14px)),
+        #000 max(0px, calc(var(--island-waterline, 100%) + 100px)));
+}
+.island-water-motion .deep-ocean-light {
+    --island-ray-x: var(--journey-sun-x, 87%);
+    --island-ray-color: 181 246 255;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 41% 62% at var(--island-ray-x) 0%, rgb(var(--island-ray-color) / 20%), transparent 76%),
+        conic-gradient(from 147deg at var(--island-ray-x) 0%,
+            transparent 0deg 12deg, rgb(var(--island-ray-color) / 14%) 18deg, transparent 26deg 31deg,
+            rgb(var(--island-ray-color) / 23%) 37deg, transparent 45deg 51deg,
+            rgb(var(--island-ray-color) / 13%) 56deg, transparent 64deg 70deg,
+            rgb(var(--island-ray-color) / 11%) 76deg, transparent 89deg);
+    mask-image: linear-gradient(#000 8%, #0008 51%, transparent 98%);
+}
+html[data-theme="dark"] .island-water-motion .deep-ocean-light {
+    --island-ray-x: var(--journey-moon-x, 87%);
+    --island-ray-color: 162 196 251;
 }
 
 .smart-journey .learning-workspace #lesson-route .is-current .sj-island-index {
@@ -509,21 +542,7 @@ body[data-journey-mode="learn"].is-underwater :is(#resume-learning, #detail-star
     gap: 6px;
 }
 .is-locked h3 .icon-lock { flex: none; width: 15px; height: 15px; }
-.island-map-lock-hint {
-    position: relative;
-    z-index: 1;
-    box-sizing: border-box;
-    width: max-content;
-    max-width: 100%;
-    padding: 5px 10px;
-    border-radius: 10px;
-    background: #123c54;
-    color: #fff;
-    font: 400 .875rem/1.5 var(--ns-font);
-    overflow-wrap: anywhere;
-}
 .archipelago-boat #buddy-agent-handle { border-radius: 50%; }
-.archipelago-boat.is-off-map-strip { visibility: hidden; }
 .archipelago-boat #buddy-agent-handle:focus-visible {
     outline: 4px solid #b3eeff;
     outline-offset: 2px;
@@ -609,7 +628,7 @@ body[data-journey-mode="learn"].is-underwater :is(#resume-learning, #detail-star
 .island-course-video-footer .ns-button { min-height: 44px; background: #ffffff14; color: #fff; border-color: #38bdf84d; }
 
 @media (width < 1024px), (height < 480px) {
-    .smart-journey .island-current-card,
+    .island-dashboard { display: none; }
     html[data-theme] body.smart-journey[data-journey-mode="learn"] #island-detail-dialog {
         background: var(--island-glass-solid, var(--ns-liquid-panel-solid));
         -webkit-backdrop-filter: none;
@@ -626,6 +645,20 @@ body[data-journey-mode="learn"].is-underwater :is(#resume-learning, #detail-star
     .learning-celestial :is(.hero-sun, .journey-moon) { top: clamp(10rem, 26svh, 16rem); }
     .ocean-surface-world :is(.island-water-layer--far, .surface-ocean-wave--far) { display: none; }
 }
+@media (width < 768px), (width < 1024px) and (height < 480px) {
+    .smart-journey .learning-workspace #lesson-route {
+        --island-turn: min(8vw, 32px);
+        gap: clamp(28px, 8vw, 48px);
+    }
+    .smart-journey .learning-workspace #lesson-route .sj-lesson-island { width: min(88%, 300px); }
+    .smart-journey .learning-workspace #lesson-route .island-underwater-route .sj-lesson-island {
+        width: min(78%, 284px);
+        translate: var(--island-turn) 0;
+    }
+    .smart-journey .learning-workspace #lesson-route .island-underwater-route .sj-lesson-island:nth-child(odd) {
+        translate: calc(-1 * var(--island-turn)) 0;
+    }
+}
 @media (width < 480px) {
     .island-course-video-footer .ns-button { width: 100%; }
 }
@@ -636,10 +669,6 @@ body[data-journey-mode="learn"].is-underwater :is(#resume-learning, #detail-star
         -webkit-backdrop-filter: var(--ns-liquid-filter);
         backdrop-filter: var(--ns-liquid-filter);
     }
-    .island-sheet-toggle { display: none; }
-    .island-current-card:has(.island-sheet-toggle[aria-expanded="false"]) .island-current-info { display: block; }
-    .island-current-card:has(.island-sheet-toggle[aria-expanded="false"]) .island-current-actions { margin-top: 24px; }
-    .smart-journey #lesson-route .sj-learning-route-line { display: block; }
     .island-underwater-route:not([hidden]) { display: contents; }
     .smart-journey .learning-workspace #lesson-route .sj-lesson-island {
         width: min(64%, 380px);

@@ -5,6 +5,7 @@
     const toggle = header.querySelector('[data-navbar-toggle]');
     const menu = header.querySelector('#nextskill-main-menu');
     const wide = matchMedia('(min-width: 1024px)');
+    const courseDetails = document.querySelector('[data-course-details]');
     let open = false;
     function setOpen(value, returnFocus = false) {
         open = value && !wide.matches;
@@ -27,7 +28,10 @@
             setOpen(false, focusInside);
         }
     });
-    menu.addEventListener('click', event => { if (event.target.closest('.ns-navbar__link')) setOpen(false); });
+    menu.addEventListener('click', event => {
+        if (event.target.closest('.ns-navbar__link')) setOpen(false);
+        if (open && courseDetails && event.target.closest('[data-theme-toggle]')) setOpen(false, true);
+    });
     wide.addEventListener('change', () => {
         const active = document.activeElement;
         setOpen(false, !wide.matches && menu.contains(active));

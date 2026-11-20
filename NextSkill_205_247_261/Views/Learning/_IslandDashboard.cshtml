@@ -11,7 +11,7 @@
         <section id="island-detail" class="island-detail" hidden aria-labelledby="detail-title">
             <button type="button" id="detail-back" class="island-text-button">กลับด่านปัจจุบัน</button>
             <p class="island-chapter" id="detail-number"></p>
-            <h2 id="detail-title"></h2>
+            <h2 id="detail-title" tabindex="-1"></h2>
             <p id="detail-meta"></p>
             <p id="detail-status"></p>
             <button type="button" class="ns-button ns-button--primary" id="detail-start">เริ่มเรียน →</button>
@@ -19,11 +19,7 @@
     </div>
 
     <section class="island-current-card" id="island-current-card" aria-label="ด่านปัจจุบันของคุณ">
-        <button class="island-sheet-toggle island-text-button" id="island-sheet-toggle" type="button"
-                aria-expanded="true" aria-controls="island-current-info">
-            <span>รายละเอียดด่าน</span><span class="island-chevron" aria-hidden="true"></span>
-        </button>
-        <div class="island-current-info" id="island-current-info">
+        <div class="island-current-info">
             <p class="island-chapter" id="current-island-number">@(course.IsComplete ? $"ผ่านครบ {course.TotalLessons} ด่าน" : $"บทที่ {current.Id}")</p>
             <h2 id="current-island-title">@(course.IsComplete ? "เรียนจบคอร์สแล้ว" : current.DisplayTitle)</h2>
             <ol class="island-stages" id="island-stages" aria-label="ความคืบหน้าในคอร์ส">

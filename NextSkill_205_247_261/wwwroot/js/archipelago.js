@@ -2,8 +2,6 @@
  'use strict';
  const map=document.getElementById('lesson-map'),route=document.getElementById('lesson-route');
  if(!map||!route)return;
- const underwaterRoute=route.querySelector('.island-underwater-route');
- const compact=matchMedia('(width < 1024px), (height < 480px)');
  const scenery=document.createElement('div');
  scenery.className='archipelago-scenery';scenery.setAttribute('aria-hidden','true');
  scenery.innerHTML='<img class="scene-reef reef-one" src="/images/journey/reef-garden.svg" alt=""/><img class="scene-reef reef-two" src="/images/journey/reef-garden.svg" alt=""/><img class="scene-buoy buoy-one" src="/images/journey/sea-buoy.svg" alt=""/><img class="scene-buoy buoy-two" src="/images/journey/sea-buoy.svg" alt=""/><img class="scene-birds" src="/images/journey/sea-birds.svg" alt=""/><img class="scene-far-island" src="/images/journey/rocky-island.svg" alt=""/>';
@@ -14,7 +12,7 @@
  boat.innerHTML='<div class="map-vessel-bob"><span class="voyage-seat sj-mascot-anchor buddy-slot" data-buddy-anchor="map"></span><img class="voyage-hull" src="/images/journey/rowing-hull.svg" alt=""/><img class="voyage-oar" src="/images/journey/rowing-oar.svg" alt=""/><img class="voyage-submarine" src="/images/journey/nimo-submarine-v1.png" alt=""/><span class="submarine-bubbles" aria-hidden="true"><i></i><i></i><i></i></span></div>';
  map.append(boat);
  let dockId=null,position={x:0,y:0},active=null,arrival=null,surfaceDock=false;
- let redrawTimer,dockFrame=0;
+ let redrawTimer;
  function prepareSurfaceArrival(){surfaceDock=true;dockId=1;vehicle(1);updateDock();select();}
  function finishEntry(){
   if(!arrival)return;const entry=arrival;arrival=null;entry.animation.cancel();
@@ -37,25 +35,20 @@
   if(!art)return position;
   const a=art.getBoundingClientRect(),b=map.getBoundingClientRect();
   const shore=id===1&&window.NextSkillSeaWorld?window.NextSkillSeaWorld.surfaceShore(art)-scrollY-b.top+2:null;
-  const x=a.left-b.left-boat.offsetWidth*.35;
-  return {x:compact.matches&&id!==1?x:Math.max(0,x),y:shore??a.top-b.top+a.height*(id===1?.83:.64)};
+  const x=a.left-b.left-boat.offsetWidth*(id===1?.35:.72);
+  return {x:Math.max(0,x),y:shore??a.top-b.top+a.height*(id===1?.83:.79)};
  }
  function place(p){position=p;boat.style.transform=`translate3d(${p.x}px,${p.y}px,0)`;}
  function vehicle(id){boat.dataset.vehicle=id===1?'boat':'submarine';}
  function select(){document.querySelectorAll('[data-buddy-home="active"]').forEach(e=>e.removeAttribute('data-buddy-home'));boat.querySelector('[data-buddy-anchor]').dataset.buddyHome='active';window.NextSkillAgent?.refresh();}
  function updateDock(){
-  dockFrame=0;
   if(active||arrival||!dockId)return;
-  const next=destination(dockId);
-  const outside=compact.matches&&dockId!==1&&(next.x+boat.offsetWidth<=0||next.x>=underwaterRoute.clientWidth);
-  boat.classList.toggle('is-off-map-strip',outside);
-  place(next);
+  place(destination(dockId));
  }
- function queueDock(){if(!dockFrame)dockFrame=requestAnimationFrame(updateDock);}
  function redraw(){
   if(active||arrival)return;
   const nodes=[...route.querySelectorAll('[data-lesson-id]')],r=route.getBoundingClientRect(),svg=route.querySelector('svg');
-  if(svg&&!compact.matches){
+  if(svg){
    svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
    const points=nodes.map(node=>{
     const art=node.querySelector('img').getBoundingClientRect();
@@ -88,11 +81,6 @@
   if(!target||target.disabled||target.classList.contains('is-locked'))return Promise.resolve();
   surfaceDock=false;
   if(active)finish(active);
-  if(compact.matches&&id!==1){
-   const stop=target.getBoundingClientRect(),track=underwaterRoute.getBoundingClientRect();
-   underwaterRoute.scrollTo({left:underwaterRoute.scrollLeft+stop.left-track.left+(stop.width-track.width)/2,behavior:'instant'});
-  }
-  boat.classList.remove('is-off-map-strip');
   const fromId=dockId,from={...position},to=destination(id);dockId=id;select();
   if(reduced.matches||document.querySelector('.map-guide')?.dataset.motion!=='active'){
    vehicle(id);place(to);island(id).scrollIntoView({block:'center',behavior:'instant'});return Promise.resolve();
@@ -128,7 +116,6 @@
  }
  new MutationObserver(()=>requestAnimationFrame(redraw)).observe(route,{childList:true});
  new ResizeObserver(queueRedraw).observe(route);
- underwaterRoute.addEventListener('scroll',queueDock,{passive:true});
  function resize(){finishEntry();if(active)finish(active);queueRedraw();}
  window.addEventListener('resize',resize,{passive:true});
  window.addEventListener('orientationchange',resize,{passive:true});
@@ -136,6 +123,6 @@
  document.addEventListener('visibilitychange',()=>{if(document.hidden){finishEntry();if(active)finish(active);}});
  window.NextSkillMotion?.subscribe(state=>{boat.classList.toggle('is-motion-paused',!state.ambientAllowed);if(state.paused||state.reduced||state.hidden||state.dialogOpen){finishEntry();if(active)finish(active);}},{element:map});
  for(const type of ['wheel','touchstart','pointerdown','keydown'])window.addEventListener(type,()=>{finishEntry();if(active)finish(active);},{passive:true});
- window.addEventListener('pagehide',()=>{finishEntry();clearTimeout(redrawTimer);cancelAnimationFrame(dockFrame);dockFrame=0;});
+ window.addEventListener('pagehide',()=>{finishEntry();clearTimeout(redrawTimer);});
  window.NextSkillArchipelago={sail,arriveFromLeft,prepareSurfaceArrival,finishArrival:finishEntry};document.fonts.ready.then(redraw);redraw();
 })();
