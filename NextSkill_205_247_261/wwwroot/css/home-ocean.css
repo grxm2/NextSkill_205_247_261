@@ -74,11 +74,15 @@
     will-change: auto;
 }
 #ocean-journey .ow-boat-anchor {
-    --ow-avatar-width: clamp(70px, 19cqw, 86px);
-    left: calc(48% - var(--ow-avatar-width) / 2);
+    --ow-avatar-width: clamp(60px, calc(var(--ow-boat-width) * .39), 112px);
+    left: calc(49% - var(--ow-avatar-width) / 2);
     width: var(--ow-avatar-width);
     height: calc(var(--ow-avatar-width) * 1.15);
+    bottom: 25%;
 }
+#ocean-journey .ow-boat-anchor :is(.buddy-idle-motion, .buddy-shadow) { animation: none; }
+#ocean-journey .ow-boat-anchor .buddy-shadow { opacity: 0; }
+#ocean-journey .ow-boat-anchor .buddy-avatar-rowing { transform-origin: 50% 82%; }
 .smart-journey .ocean-home #ocean-journey .ow-harbor.cv-departure-harbor {
     position: absolute;
     top: var(--ow-dock-top);
@@ -141,8 +145,10 @@
     .smart-journey .ocean-home #ocean-journey {
         --ow-island-width: min(760px, 54cqw, calc(var(--ow-first-height) * 1.23));
         --ow-island-x: clamp(var(--ow-left), 47cqw, calc(100cqw - var(--ow-island-width) * 1.025 - var(--ow-right)));
-        --ow-island-top: calc(var(--ow-first-height) * .27);
         --ow-shore-horizon: calc(var(--ow-first-height) * .62);
+        /* The painted shoreline starts 47.5% of the artwork width below its top. */
+        --ow-island-top: max(calc(var(--ow-first-height) * .27),
+            calc(var(--ow-shore-horizon) + var(--ow-horizon-blend) + 12px - var(--ow-island-width) * .475));
         --ow-boat-width: clamp(164px, 21cqw, 310px);
         --ow-boat-left: max(var(--ow-left), calc(var(--ow-island-x) + var(--ow-island-width) * .21 - var(--ow-boat-width) * .88));
     }
@@ -152,7 +158,12 @@
 @media (width >= 1024px) and (height >= 768px) {
     .ocean-home { --ow-travel-height: max(2000px, calc(var(--ow-height) * 2.9)); }
     #ocean-journey .ow-island-mascot { --ow-avatar-width: 112px; }
-    #ocean-journey .ow-boat-anchor { --ow-avatar-width: 112px; }
+}
+
+@media (width >= 1024px) and (height < 480px) {
+    .smart-journey .ocean-home #ocean-journey {
+        --ow-boat-width: min(clamp(164px, 21cqw, 310px), calc(var(--ow-first-height) * .65));
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
