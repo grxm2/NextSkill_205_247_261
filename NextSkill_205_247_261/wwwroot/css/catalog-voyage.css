@@ -46,7 +46,6 @@ html[data-theme="dark"] .knowledge-sanctum .sanctum-art{filter:brightness(.85) s
 .cv-departure-active{overflow:hidden}
 .cv-home .ow-arrival-motion{transform-origin:50% 85%}
 .cv-home .ow-boat-idle{animation:cv-boat-bob 4.8s var(--ns-ease-in-out) infinite}
-.smart-journey .cv-home .ow-boat-anchor{bottom:29%}
 .ow-scene.cv-home .ow-boat-anchor .buddy-avatar-idle,.catalog-boat-nimo .buddy-avatar-idle{opacity:0}
 .ow-scene.cv-home .ow-boat-anchor .buddy-avatar-rowing,.catalog-boat-nimo .buddy-avatar-rowing{opacity:1}
 .cv-home .voyage-oar,.catalog-page .catalog-boat-oar{visibility:hidden}

@@ -16,6 +16,8 @@
     const navbar = document.querySelector('.ns-navbar');
     const seaEffects = scene.querySelector('.ow-open-sea-effects');
     const backdrop = scene.querySelector('.ocean-backdrop');
+    const buoy = scene.querySelector('.ow-home-buoy');
+    const seat = scene.querySelector('.ow-boat-anchor');
     const waterSurface = scene.querySelector('.ow-sea');
     scene.style.setProperty('--ow-dock-horizon', harborHorizon);
     let backdropWaterline = null;
@@ -58,11 +60,6 @@
             element.getAnimations().map(animation => ({ animation, maximum }))));
         seaIntensity = -1;
     }
-    function fitVesselOffset(offset) {
-        // Leave room for the hull and its gentle rocking inside the scene.
-        const available = scene.clientHeight - vessel.offsetTop - vessel.offsetHeight - 20;
-        return Math.max(0, Math.min(offset, available));
-    }
     function arrivalOffset() {
         const art = harborModel.getBoundingClientRect();
         const modelTop = art.top - scene.getBoundingClientRect().top;
@@ -100,7 +97,24 @@
         const artRect = art.getBoundingClientRect();
         const beachBottom = artRect.top - scene.getBoundingClientRect().top + artRect.height * .83;
         const hullTop = vessel.offsetTop + vessel.offsetHeight * .45;
-        return fitVesselOffset(Math.max(0, beachBottom - hullTop + 12));
+        let clearance = beachBottom - hullTop + 12;
+        if (buoyOnDepartureRoute()) {
+            const water = waterSurface.getBoundingClientRect();
+            const buoyBottom = waterSurface.offsetTop + (buoy.getBoundingClientRect().bottom - water.top);
+            // The right-hand buoy sweeps past the boat as the camera leaves
+            // shore. Sail in front of it, leaving room for Nimo and the oar.
+            const passengerTop = vessel.offsetTop + vessel.offsetHeight * .75 - seat.offsetHeight * .91;
+            clearance = Math.max(clearance, buoyBottom + 10 - passengerTop);
+        }
+        // The transparent art extends past the painted keel and can overhang.
+        const available = scene.clientHeight - vessel.offsetTop - vessel.offsetHeight * .85 - 12;
+        return Math.max(0, Math.min(clearance, available));
+    }
+    function buoyOnDepartureRoute() {
+        if (!buoy) return false;
+        const style = getComputedStyle(buoy);
+        // Use its world position, which is independent of the camera's scroll.
+        return parseFloat(style.left) + buoy.clientWidth + 8 > vessel.offsetLeft + vessel.offsetWidth * .18;
     }
     function alignBackdrop() {
         if (!backdrop || !waterSurface || !backdrop.offsetHeight) return;
@@ -180,15 +194,17 @@
         const shoreEnd = harborStop * .13;
         const cameraArrival = harborStop * (compact ? .86 : 1);
         const approach = harborStop * (compact ? .54 : .62);
-        timeline.to(camera, { x: () => -scene.clientWidth * .074, duration: harborStop * .06, ease: 'power1.in' }, harborStop * .07)
+        const pushOff = harborStop * .07;
+        const clearWater = harborStop * (buoyOnDepartureRoute() ? .13 : .07);
+        timeline.to(camera, { x: () => -scene.clientWidth * .074, duration: harborStop * .06, ease: 'power1.in' }, pushOff)
             .to(camera, { x: () => -harbor.offsetLeft, duration: cameraArrival - shoreEnd, ease: compact ? 'power1.out' : 'none' }, shoreEnd)
             .to(intro, { x: () => -intro.offsetWidth, autoAlpha: 0, duration: compact ? .17 : .23 }, 0)
             .to('.ow-distance', { x: () => -scene.clientWidth * .24, duration: harborStop }, 0)
             .to('.ow-clouds', { x: () => -scene.clientWidth * .5, duration: harborStop }, 0)
             .to('.ow-seabirds', { x: () => scene.clientWidth * .03, yPercent: -8, duration: harborStop }, 0)
-            // Move the hull clear of the sand before the camera travels.
-            .to(vessel, { y: departureClearance, duration: harborStop * .07, ease: 'power1.out' }, 0)
-            .to(vessel, { x: arrivalX, duration: harborStop * .93, ease: 'sine.inOut' }, harborStop * .07)
+            // Push off from the sand, then reach the sailing lane.
+            .to(vessel, { y: departureClearance, duration: clearWater, ease: 'power1.out' }, 0)
+            .to(vessel, { x: arrivalX, duration: harborStop - pushOff, ease: 'sine.inOut' }, pushOff)
             .to(vessel, { y: arrivalOffset, duration: harborStop - approach, ease: 'sine.inOut' }, approach);
         if (!compact) {
             timeline.to([waterSurface, scene.querySelector('.ow-distance')], { y: () => tideOffset, duration: harborStop - approach }, approach);
@@ -297,7 +313,7 @@
         if (!trigger || progress === null || progress === undefined) return;
         window.scrollTo({ top: trigger.start + (trigger.end - trigger.start) * progress, behavior: 'instant' });
         trigger.update();
-        trigger.getTween()?.progress(1);
+        trigger.getTween()?.progress?.(1);
         timeline.progress(progress);
         stablePosition = progress;
     }
@@ -314,7 +330,7 @@
                 stopTravel();
                 ScrollTrigger.refresh();
                 restorePosition(position);
-                if (navigationArmed && position > 0 && position < 1 && scene.dataset.cvPhase === 'traveling') go(harborStop, true, true);
+                if (navigationArmed && (position ?? 0) < 1 && scene.dataset.cvPhase === 'traveling') go(harborStop, true, true);
             }
             alignBackdrop();
         }, 150);
@@ -333,7 +349,7 @@
                 if (timeline) mediaFrame = requestAnimationFrame(() => {
                     ScrollTrigger.refresh();
                     restorePosition(position);
-                    if (navigationArmed && position > 0 && position < 1 && scene.dataset.cvPhase === 'traveling') go(harborStop, true, true);
+                    if (navigationArmed && (position ?? 0) < 1 && scene.dataset.cvPhase === 'traveling') go(harborStop, true, true);
                 });
                 return destroy;
             }, scene);
@@ -352,6 +368,9 @@
     window.addEventListener('orientationchange', scheduleResize, { passive: true });
     document.addEventListener('visibilitychange',syncIdle);
     window.NextSkillMotion?.subscribe(state => { paused = state.paused; syncIdle(); }, { element: scene, kind: 'ambient' });
+    if (buoy) window.NextSkillMotion?.subscribe(state => {
+        buoy.classList.toggle('ow-buoy-paused', !state.ambientAllowed);
+    }, { element: buoy, kind: 'ambient' });
     window.addEventListener('pagehide', () => {
         suspended = true; navigationArmed = false; clearTimeout(resizeTimer);
         layout.disconnect();

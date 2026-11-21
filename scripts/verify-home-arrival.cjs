@@ -7,8 +7,38 @@ const base = process.env.NEXTSKILL_TEST_URL || 'http://127.0.0.1:5208';
 const output = path.resolve('artifacts/home-arrival-qa');
 fs.mkdirSync(output, { recursive:true });
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+async function verifyArrivalClearance(page) {
+    const result = await page.evaluate(async () => {
+        const motion = document.querySelector('.ow-arrival-motion');
+        const buoy = document.querySelector('.ow-home-buoy').getBoundingClientRect();
+        const water = document.querySelector('.ow-sea').getBoundingClientRect();
+        const seat = motion.querySelector('.ow-boat-anchor');
+        const agent = document.querySelector('#nextskill-agent');
+        const animation = motion.getAnimations()[0];
+        const time = animation.currentTime;
+        const { duration } = animation.effect.getTiming();
+        animation.pause();
+        await animation.ready;
+        let collision = false, visibleAboveWater = false;
+        for (let i = 0; i < 100; i++) {
+            animation.currentTime = duration * i / 100;
+            const box = motion.getBoundingClientRect();
+            // The canvas has transparent padding around the painted hull.
+            const left = box.left + box.width * .18, right = box.left + box.width * .78;
+            const keel = box.top + box.height * .85;
+            if (left < buoy.right && right > buoy.left - buoy.width * .52) {
+                collision ||= keel > buoy.top && box.top + box.height * .30 < buoy.bottom;
+            }
+            visibleAboveWater ||= right > 0 && keel < water.top + 14;
+        }
+        animation.currentTime = time;
+        animation.play();
+        return { collision, visibleAboveWater, seated: agent.parentElement === seat };
+    });
+    assert.deepEqual(result, { collision: false, visibleAboveWater: false, seated: true });
+}
 async function chooseCourse(page) {
-    await page.locator('.ow-intro [data-catalog-voyage]').click();
+    await page.locator('.ow-intro [data-catalog-voyage]:visible').click();
     await page.waitForURL('**/Home/Courses', { timeout:20000 });
     await page.waitForFunction(() => document.querySelector('#catalog-voyage')?.hidden);
     assert.equal(await page.locator('#nextskill-agent').count(), 1);
@@ -19,7 +49,7 @@ async function chooseCourse(page) {
     const browser = await chromium.launch({ headless: true, executablePath: process.env.BROWSER_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
     const errors = [];
     try {
-        for (const viewport of [{ width:1440, height:900 }, { width:390, height:844 }]) {
+        for (const viewport of [{ width:1440, height:900 }, { width:1032, height:1376 }, { width:390, height:844 }]) {
             const page = await browser.newPage({ viewport, reducedMotion:'no-preference' });
             page.on('pageerror', error => errors.push(error.message));
             const response = await page.goto(`${base}/Home/Index`, { waitUntil:'domcontentloaded' });
@@ -35,6 +65,7 @@ async function chooseCourse(page) {
             assert.equal(start.voyage, 'rowing');
             assert.notEqual(start.transform, 'none');
             assert.equal(start.count, 1);
+            await verifyArrivalClearance(page);
             const xBefore = await page.locator('.ow-arrival-motion').evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m41);
             await page.waitForFunction(x => new DOMMatrix(getComputedStyle(document.querySelector('.ow-arrival-motion')).transform).m41 > x + 4, xBefore);
             const xAfter = await page.locator('.ow-arrival-motion').evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m41);
@@ -79,7 +110,7 @@ async function chooseCourse(page) {
         await reduced.waitForFunction(() => !!window.NextSkillVoyage);
         assert.equal(await reduced.locator('#nextskill-agent').getAttribute('data-context'), 'shore');
         assert.equal(await reduced.locator('#ocean-journey').getAttribute('data-arrival'), null);
-        assert.equal(await reduced.locator('.ow-intro [data-catalog-voyage]').isVisible(), true);
+        assert.equal(await reduced.locator('.ow-intro [data-catalog-voyage]:visible').count(), 1);
         console.log('PASS reduced motion');
         await reduced.close();
 

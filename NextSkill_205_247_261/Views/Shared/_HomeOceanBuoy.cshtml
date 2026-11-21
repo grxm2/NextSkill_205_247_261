@@ -1,0 +1,48 @@
+<svg class="ow-home-buoy" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+    <defs>
+        <linearGradient id="home-buoy-water-reflection" x1="50" y1="90" x2="50" y2="115" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#F4AE86" stop-opacity=".55"/><stop offset="1" stop-color="#60D7D5" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="home-buoy-water-shadow">
+            <stop stop-color="#135774" stop-opacity=".52"/><stop offset="1" stop-color="#297B91" stop-opacity="0"/>
+        </radialGradient>
+        <clipPath id="home-buoy-waterline">
+            <path d="M-90-30H112V89C88 89 79 95 54 95S30 88 6 91-55 94-90 92Z"/>
+        </clipPath>
+    </defs>
+
+    <ellipse cx="50" cy="93" rx="53" ry="11" fill="url(#home-buoy-water-shadow)"/>
+    <g fill="none" stroke="#B8F3EE" stroke-linecap="round">
+        <path class="ow-home-buoy-ripple" d="M4 92c-13 3-3 8 17 10m12 2c31 4 59-1 69-7" stroke-width="1.45"/>
+        <path class="ow-home-buoy-ripple ow-home-buoy-ripple--following" d="M6 96c11 5 32 8 44 7m11 0c24-1 42-6 39-9" stroke-width="1.15"/>
+    </g>
+    <path d="M21 95c10 3 24 5 35 5m7 0c8 0 17-2 24-4m-61 7c13 4 36 6 48 3m-36 4c9 2 22 2 29 1" fill="none" stroke="url(#home-buoy-water-reflection)" stroke-width="2.25" stroke-linecap="round"/>
+
+    <g clip-path="url(#home-buoy-waterline)">
+        <g class="ow-home-buoy-float">
+            <image href="@Url.Content("~/images/journey/home-navigation-buoy-v1.webp")" width="100" height="100"/>
+            <ellipse class="ow-home-buoy-lamp" cx="70" cy="11" rx="5" ry="5.5" fill="#FFE1A0"/>
+            <ellipse class="ow-home-seal-shadow" cx="29" cy="70" rx="20" ry="3.6" fill="url(#home-buoy-water-shadow)"/>
+            <g class="ow-home-seal-motion">
+                <image class="ow-home-seal-rest" href="@Url.Content("~/images/journey/home-buoy-seal-rest-v1.webp")" x="6" y="54" width="46" height="16"/>
+                <image class="ow-home-seal-alert" href="@Url.Content("~/images/journey/home-buoy-seal-alert-v1.webp")" x="6" y="47" width="46" height="23"/>
+                <image class="ow-home-seal-dive" href="@Url.Content("~/images/journey/home-buoy-seal-dive-v1.webp")" x="6" y="47" width="46" height="23.3"/>
+            </g>
+        </g>
+    </g>
+
+    <path d="M5 91c16-3 24-1 34 2 17 4 34 0 42-2 6-1 12-3 18-1-7 1-12 4-19 6-20 6-45 5-63-2Z" fill="#499CA5" opacity=".55"/>
+    <path d="M5 91c6-2 19-2 27 1m7 2c13 3 29 1 41-3m7-1c4-1 9-1 13-1" fill="none" stroke="#D7FAEB" stroke-width="1.45" stroke-linecap="round" opacity=".74"/>
+
+    <g transform="translate(-32 92)" fill="none" stroke-linecap="round">
+        <ellipse class="ow-home-seal-splash-ring" rx="15" ry="3" stroke="#C9F5F2" stroke-width="1.2" stroke-dasharray="26 6 18 8"/>
+        <g class="ow-home-seal-splash" stroke="#E5FFF5" stroke-width="1.45">
+            <path d="M-8 0q-5-4-6-9m13 8q-4-6-2-13m8 13q5-4 6-11m-16 11q-4-5-8-5m23 5q6-2 8-6"/>
+            <circle cx="-10" cy="-13" r=".95"/><circle cx="4" cy="-16" r="1.15"/><circle cx="15" cy="-10" r=".8"/>
+        </g>
+    </g>
+    <g class="ow-home-seal-bubbles" fill="none" stroke="#BCF5F2" stroke-width="1.25">
+        <ellipse cx="-34" cy="90" rx="2" ry="1.2"/><ellipse cx="-27" cy="92" rx="3.8" ry="1.3"/><ellipse cx="-19" cy="90" rx="1.7" ry="1.1"/>
+    </g>
+    <ellipse class="ow-home-seal-surface-ring" cx="-8" cy="92" rx="15" ry="3" fill="none" stroke="#E0FFF3" stroke-width="1.2" stroke-dasharray="22 8 14 8" stroke-linecap="round"/>
+</svg>

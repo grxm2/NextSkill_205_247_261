@@ -70,8 +70,9 @@
     }
     function finishReveal() {
         if(!revealing)return;
-        const inbound=seaArrival&&!marker.skip;
-        close(!inbound);
+        const lessonVoyage=window.NextSkillArchipelago?.hasLessonVoyage();
+        const inbound=seaArrival&&!marker.skip&&!lessonVoyage;
+        close(!inbound&&!lessonVoyage);
         if(inbound)Promise.resolve(window.NextSkillArchipelago?.arriveFromLeft()).then(focusRoute);
     }
     skip.addEventListener('click', () => { if (status === 'ready') close(true); });
@@ -88,10 +89,10 @@
         const map = document.getElementById('lesson-map');
         await Promise.race([document.fonts?.ready || Promise.resolve(), delay(800)]);
         if (run !== generation) return;
-        if (!seaArrival && map) window.scrollTo({ top: map.getBoundingClientRect().top + scrollY - 24, behavior: 'instant' });
+        if (!seaArrival && map && !window.NextSkillArchipelago?.hasLessonVoyage()) window.scrollTo({ top: map.getBoundingClientRect().top + scrollY - 24, behavior: 'instant' });
         await Promise.race([Promise.all([...document.querySelectorAll('#lesson-route img')].map(img => img.decode?.().catch(() => {}))), delay(800)]);
         if (run !== generation) return;
-        if(seaArrival){
+        if(seaArrival&&!window.NextSkillArchipelago?.hasLessonVoyage()){
             const route=document.getElementById('lesson-route');
             const first=route?.querySelector('[data-lesson-id="1"] img');
             if(first){

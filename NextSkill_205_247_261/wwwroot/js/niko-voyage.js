@@ -140,6 +140,47 @@
    cancelJump(false);select(shore);scene.dataset.voyage='shore';
   }
  }
+ function arrivalPath(motion){
+  const boat=motion.getBoundingClientRect();
+  const buoy=scene.querySelector('.ow-home-buoy')?.getBoundingClientRect();
+  const hullLeft=boat.left+boat.width*.18;
+  const keel=boat.top+boat.height*.85;
+  const head=boat.bottom-boat.height*.25-seat.offsetHeight*.91;
+  const distance=Math.max(innerWidth*.75,boat.right+40);
+  const end=-distance*.05;
+  const ease=getComputedStyle(scene).getPropertyValue('--ns-ease-out').trim() || 'ease-out';
+  const frame=(x,y,offset,easing='linear')=>({transform:`translate3d(${x}px,${y}px,0)`,offset,easing});
+  const gap=Math.max(8,boat.width*.035);
+  const foreground=Math.max(0,Math.min(scene.getBoundingClientRect().bottom,innerHeight)-keel-12);
+  let lane=0, clearX;
+  // Include the seal's dive on the left and keep the same depth until the
+  // stern clears the far side.
+  if(buoy?.width && buoy.right+gap<hullLeft+end && boat.left+boat.width*.78>buoy.left-buoy.width*.58-gap){
+   clearX=buoy.right+gap-hullLeft;
+   const behind=Math.min(0,buoy.top-gap-keel);
+   const sea=scene.querySelector('.ow-sea').getBoundingClientRect();
+   lane=keel+behind>=sea.top+22 ? behind : Math.min(foreground,Math.max(0,buoy.bottom+gap-head));
+  } else {
+   // In short landscape views, enter in the water below the dashboard.
+   const controls=[...scene.querySelectorAll('.hd-start, .hd-actions > a')]
+    .map(el=>el.getBoundingClientRect()).filter(box=>box.width);
+   const bottom=Math.max(head,...controls.map(box=>box.bottom+gap));
+   lane=Math.min(foreground,bottom-head);
+   clearX=Math.min(end-boat.width*.4,Math.max(0,...controls.map(box=>box.right))+gap-hullLeft);
+  }
+  const frames=[];
+  if(lane && clearX>-distance){
+   const turn=Math.min(end,clearX+boat.width*.65);
+   const offset=x=>.8*(x+distance)/(end+distance);
+   frames.push(frame(clearX,lane,offset(clearX)));
+   for(const t of [.25,.5,.75,1]){
+    const x=clearX+(turn-clearX)*t;
+    const curve=t*t*(3-2*t);
+    if(x<end)frames.push(frame(x,lane*(1-curve),offset(x)));
+   }
+  }
+  return [frame(-distance,lane,0),...frames,frame(end,0,.8,ease),frame(0,0,1)];
+ }
  function startIntro(){
   const root=document.documentElement;
   const motion=scene?.querySelector('.ow-arrival-motion');
@@ -149,12 +190,7 @@
   const current={animation:null};intro=current;
   boarded=true;select(seat);scene.dataset.arrival='rowing';row(scene);
   // Animate a child wrapper so the scroll-driven vessel transform remains independent.
-  const distance=Math.max(innerWidth * .75, motion.getBoundingClientRect().right + 40);
-  current.animation=motion.animate([
-   {transform:`translate3d(${-distance}px,0,0)`,offset:0,easing:'linear'},
-   {transform:`translate3d(${-distance * .05}px,0,0)`,offset:.8,easing:'cubic-bezier(.23,1,.32,1)'},
-   {transform:'translate3d(0,0,0)',offset:1}
-  ],{duration:5200,fill:'both'});
+  current.animation=motion.animate(arrivalPath(motion),{duration:5200,fill:'both'});
   root.classList.remove('ow-arrival-pending');
   current.animation.finished.then(async()=>{
    if(intro!==current)return;
@@ -211,5 +247,6 @@
  // wait on shore until the visitor starts the next voyage.
  if(shore)select(shore);
  sync();
- startIntro();
+ // The deferred world script aligns the buoy to the rendered waterline.
+ document.addEventListener('DOMContentLoaded',startIntro,{once:true});
 })();

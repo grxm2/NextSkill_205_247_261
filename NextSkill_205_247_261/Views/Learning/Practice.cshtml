@@ -43,8 +43,28 @@
         </aside>
     </section>
 </main>
-<template id="quiz-nimo-avatar">
-    <img src="~/images/nimo-learning.png" asp-append-version="true" alt="" width="32" height="32" decoding="async" />
+<template id="quiz-nimo-help">
+    <div class="practice-nimo-help">
+        <button type="button" class="practice-nimo-trigger" aria-expanded="false">
+            <img src="~/images/nimo-learning.png" asp-append-version="true" alt="" width="32" height="32" decoding="async" />
+            <span>ถาม Nimo</span>
+        </button>
+        <div class="practice-nimo-reply" hidden inert>
+            <div class="practice-nimo-stage" aria-hidden="true" inert>
+                <span class="practice-nimo-avatar buddy-slot" data-buddy-anchor="quiz-hint"></span>
+            </div>
+            <p class="practice-nimo-heading"><strong>Nimo</strong><span>คำใบ้</span></p>
+            <p class="practice-nimo-copy" data-quiz-hint></p>
+            <div class="practice-nimo-actions" role="group" aria-label="ให้ Nimo ใบ้เพิ่มไหม">
+                <button type="button" class="practice-nimo-action" data-quiz-more aria-expanded="false">ขอคำใบ้เพิ่ม</button>
+                <button type="button" class="practice-nimo-action" data-quiz-done>พอแล้ว ขอบคุณ</button>
+            </div>
+            <div class="practice-nimo-extra" hidden inert>
+                <strong>ลองคิดต่อแบบนี้</strong>
+                <p data-quiz-coaching></p>
+            </div>
+        </div>
+    </div>
 </template>
 <partial name="_CourseAwardDialog" model="Model" />
 <script src="~/js/course-certificate.js" asp-append-version="true" defer></script>

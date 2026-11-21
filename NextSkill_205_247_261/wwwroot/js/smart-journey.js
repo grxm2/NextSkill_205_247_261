@@ -27,6 +27,9 @@
     let pendingLeave = null;
     let nextLessonId = null;
     let quizOpen = false;
+    let dismissQuizHelp;
+    let quizHintAnimations = [];
+    let quizHintJump;
     let selections = new Map();
     let uncertainAttempt = null;
     let recoveryBusy = false;
@@ -88,6 +91,34 @@
     function targetLesson(course) {
         return course.lessons.find(item => item.id === course.lastLessonId)
             || course.lessons.find(item => item.status === 'current') || course.lessons.at(-1);
+    }
+    const lessonVoyageKey = id => `nextskill.lesson-voyage.${id}`;
+    function nextVoyageStop(course, fromId) {
+        if (!course?.completedLessons.includes(fromId)) return;
+        const from = course.lessons.findIndex(item => item.id === fromId);
+        const next = course.lessons[from + 1];
+        if (from >= 0 && next?.status === 'current') return next.id;
+    }
+    function rememberLessonVoyage(updatedState, courseId, fromId) {
+        if (!lessonPage) return;
+        const previous = state?.courses.find(course => course.courseId === courseId);
+        if (previous?.completedLessons.includes(fromId)) return;
+        const toId = nextVoyageStop(updatedState.courses.find(course => course.courseId === courseId), fromId);
+        if (toId === undefined) return;
+        try { sessionStorage.setItem(lessonVoyageKey(courseId), JSON.stringify({ fromId, toId })); } catch {}
+    }
+    function resumeLessonVoyage(course) {
+        const key = lessonVoyageKey(course.courseId);
+        try {
+            const saved = sessionStorage.getItem(key);
+            if (!saved) return;
+            const { fromId, toId } = JSON.parse(saved) || {};
+            const clear = () => {
+                try { if (sessionStorage.getItem(key) === saved) sessionStorage.removeItem(key); } catch {}
+            };
+            if (toId === undefined || nextVoyageStop(course, fromId) !== toId) { clear(); return; }
+            window.NextSkillArchipelago?.stageLessonVoyage(fromId, toId, clear);
+        } catch {}
     }
     function islandArt(id) {
         return id === 1 ? '/images/journey/learning-island-reference-v2.png'
@@ -168,6 +199,7 @@
         underwaterRoute.replaceChildren(...stops.slice(1));
         underwaterRoute.hidden = stops.length < 2;
         islandRoute.replaceChildren(routeLine, ...stops.slice(0, 1), underwaterRoute);
+        resumeLessonVoyage(course);
     }
     function renderIslandStats() {
         const meter = $('#island-level-meter');
@@ -336,6 +368,7 @@
         if (lessonPage && navigate) location.assign(`/Learning/Island?courseId=${courseId}`);
     }
     function clearLesson() {
+        dismissQuizHelp?.();
         videoPlayer?.reset();
         lesson = null; lessonDirty = false; nextLessonId = null;
         selections = new Map(); uncertainAttempt = null; quizOpen = false;
@@ -403,25 +436,131 @@
             showLessonMode(true);
         });
     }
-    function createQuizHelp(question, questionNumber) {
-        const help = node('details', 'practice-nimo-help');
-        help.setAttribute('name', 'quiz-nimo-help');
-        const trigger = node('summary', 'practice-nimo-trigger');
-        trigger.setAttribute('aria-label', `ถาม Nimo ข้อที่ ${questionNumber}`);
-        trigger.append($('#quiz-nimo-avatar').content.cloneNode(true), node('span', '', 'ถาม Nimo'));
+    function stopQuizHintSpeech() {
+        quizHintAnimations.forEach(animation => animation.cancel());
+        quizHintAnimations = [];
+    }
+    function stopQuizHintMotion() {
+        quizHintJump?.cancel();
+        stopQuizHintSpeech();
+    }
+    function jumpFromQuizButton(slot, trigger) {
+        const help = trigger.parentElement;
+        const icon = trigger.querySelector('img');
+        const button = trigger.getBoundingClientRect();
+        const navBottom = $('.ns-navbar')?.getBoundingClientRect().bottom ?? 0;
+        const scroll = Math.min(slot.getBoundingClientRect().bottom + 10 - innerHeight, button.top - Math.max(0, navBottom) - 24);
+        if (scroll > 0) window.scrollBy({ top: scroll, behavior: 'instant' });
 
-        const reply = node('div', 'practice-nimo-reply');
-        const hint = question.hint?.trim() || 'ลองสรุปว่าโจทย์ถามหาอะไร แล้วเทียบแต่ละตัวเลือกกับเงื่อนไขในโจทย์นะ';
-        reply.append(node('strong', '', 'คำใบ้'), node('p', '', hint));
-        if (question.coaching?.trim()) {
-            const coaching = node('details', 'practice-nimo-coaching');
-            coaching.append(node('summary', '', 'อธิบายแนวคิดเพิ่ม'), node('p', '', question.coaching));
-            reply.append(coaching);
+        const from = icon.getBoundingClientRect();
+        const to = slot.getBoundingClientRect();
+        const x = from.left + (from.width - to.width) / 2 - to.left;
+        const y = from.top + (from.height - to.height) / 2 - to.top;
+        const scale = from.width / to.width;
+        const belowButton = trigger.getBoundingClientRect().bottom - (to.top + to.height / 2) + from.width * .65;
+        // Keep the portrait in the icon's column until it clears the button label.
+        const pose = (x, y, width, height = width) => `translate(${x}px, ${y}px) scale(${width}, ${height})`;
+        const easeOut = getComputedStyle(slot).getPropertyValue('--ease-out').trim();
+        help.dataset.nimoEntering = '';
+        const animation = slot.animate([
+            { transform: pose(x, y, scale) },
+            { transform: pose(x, y + 3, scale * 1.08, scale * .92), offset: .14, easing: easeOut },
+            { transform: pose(x, y - 15, scale * .96, scale * 1.08), offset: .34 },
+            { transform: pose(x * .94, belowButton, scale * 1.05), offset: .61, easing: easeOut },
+            { transform: pose(0, 3, 1.04, .96), offset: .84, easing: easeOut },
+            { transform: 'none' }
+        ], { duration: 400, fill: 'backwards' });
+        const flight = { cancel: () => { animation.cancel(); settle(); } };
+        function settle() {
+            if (quizHintJump !== flight) return;
+            quizHintJump = undefined;
+            delete help.dataset.nimoEntering;
         }
-        help.append(trigger, reply);
+        quizHintJump = flight;
+        animation.finished.then(settle, settle);
+        return animation.effect.getTiming().duration;
+    }
+    function animateQuizHint(slot, event, hop = false) {
+        stopQuizHintSpeech();
+        if (event.detail === 0 || window.NextSkillMotion?.snapshot({ element: event.currentTarget, kind: 'reaction' }).reactionAllowed !== true) return;
+        const face = slot.querySelector('.nimo-speaking-face');
+        const mouth = face?.querySelector('.nimo-speaking-mouth');
+        if (!face || !mouth) return;
+        const speech = { duration: 720, delay: hop ? jumpFromQuizButton(slot, event.currentTarget) : 0 };
+        quizHintAnimations.push(
+            face.animate([{ opacity: 0 }, { opacity: 1, offset: .12 }, { opacity: 1, offset: .88 }, { opacity: 0 }], speech),
+            mouth.animate([.8, .4, 1, .4, .9, .45, 1, .8].map(scale => ({ transform: `scaleY(${scale})` })), speech)
+        );
+    }
+    function createQuizHelp(question, questionNumber) {
+        const help = $('#quiz-nimo-help').content.firstElementChild.cloneNode(true);
+        const trigger = help.querySelector('.practice-nimo-trigger');
+        const reply = help.querySelector('.practice-nimo-reply');
+        const slot = help.querySelector('[data-buddy-anchor]');
+        const more = help.querySelector('[data-quiz-more]');
+        const done = help.querySelector('[data-quiz-done]');
+        const extra = help.querySelector('.practice-nimo-extra');
+        const hint = question.hint?.trim() || 'ลองสรุปว่าโจทย์ถามหาอะไร แล้วมองหาคำสำคัญในโจทย์นะ';
+        const coaching = question.coaching?.trim() || 'ลองตัดตัวเลือกที่ขัดกับเงื่อนไขออกทีละข้อ แล้วอธิบายให้ตัวเองฟังว่าทำไมตัวเลือกที่เหลือจึงเหมาะกับโจทย์';
+        reply.id = `quiz-nimo-reply-${questionNumber}`;
+        extra.id = `quiz-nimo-extra-${questionNumber}`;
+        trigger.setAttribute('aria-label', `ถาม Nimo ข้อที่ ${questionNumber}`);
+        trigger.setAttribute('aria-controls', reply.id);
+        more.setAttribute('aria-controls', extra.id);
+        help.querySelector('[data-quiz-hint]').textContent = hint;
+        help.querySelector('[data-quiz-coaching]').textContent = coaching;
+
+        function showExtra(open) {
+            extra.hidden = extra.inert = !open;
+            more.setAttribute('aria-expanded', String(open));
+            more.textContent = open ? 'ซ่อนคำใบ้เพิ่ม' : 'ขอคำใบ้เพิ่ม';
+        }
+        function close(restoreFocus = false) {
+            stopQuizHintMotion();
+            trigger.setAttribute('aria-expanded', 'false');
+            if (restoreFocus) trigger.focus({ preventScroll: true });
+            reply.hidden = reply.inert = true;
+            delete slot.dataset.buddyHome;
+            dismissQuizHelp = undefined;
+            window.NextSkillAgent?.refresh();
+        }
+        trigger.addEventListener('click', event => {
+            if (!reply.hidden) { close(); return; }
+            dismissQuizHelp?.();
+            showExtra(false);
+            reply.hidden = reply.inert = false;
+            trigger.setAttribute('aria-expanded', 'true');
+            slot.dataset.buddyHome = 'active';
+            window.NextSkillAgent?.refresh();
+            dismissQuizHelp = close;
+            tell(`Nimo ข้อที่ ${questionNumber} ${hint}`);
+            animateQuizHint(slot, event, true);
+        });
+        more.addEventListener('click', event => {
+            const open = extra.hidden;
+            showExtra(open);
+            if (open) {
+                tell(`คำใบ้เพิ่ม ${coaching}`);
+                animateQuizHint(slot, event);
+            } else {
+                stopQuizHintSpeech();
+                window.NextSkillBuddyMotion?.play('nod', undefined, { motion: event.detail > 0 });
+            }
+        });
+        done.addEventListener('click', event => {
+            close(true);
+            window.NextSkillBuddyMotion?.play('wave', undefined, { motion: event.detail > 0 });
+        });
+        help.addEventListener('keydown', event => {
+            if (event.key !== 'Escape' || reply.hidden) return;
+            event.preventDefault();
+            event.stopPropagation();
+            close(true);
+        });
         return help;
     }
     function renderLesson(focus = true) {
+        dismissQuizHelp?.();
         $('#lesson-loading').hidden = true;
         $('#lesson-content').hidden = false;
         $('#lesson-location').textContent = `ด่าน ${lesson.id} · ${lesson.islandName} · ${lesson.minutes} นาที`;
@@ -466,6 +605,7 @@
         if (!lesson) return;
         const total = lesson.questionCount ?? lesson.questions.length;
         quizOpen = openQuiz && !videoLocked() && lesson.questions.length > 0;
+        if (!quizOpen) dismissQuizHelp?.();
         $('#lesson-result').hidden = true;
         $('#lesson-content').hidden = false;
         $('#lesson-reading').hidden = quizOpen || !lesson.reading.length;
@@ -520,9 +660,11 @@
         if (!busy) $('#lesson-step-next').disabled = videoLocked();
     }
     function renderResult(result, wasCourseComplete) {
+        dismissQuizHelp?.();
         const hadFirstLessonAward = state?.achievements.includes('first-lesson') === true;
         const hadCourseAward = state?.achievements.includes(`course-${lesson.courseId}`) === true;
         lessonDirty = false; uncertainAttempt = null;
+        if (result.passed && !result.alreadyCompleted) rememberLessonVoyage(result.state, lesson.courseId, lesson.id);
         setState(result.state);
         $('#submission-recovery').hidden = true;
         $('#lesson-error').hidden = true;
@@ -618,9 +760,11 @@
             if (requestId !== lessonRequest) return;
             const hadCourseAward = state?.achievements.includes(`course-${attempt.courseId}`) === true;
             const hadFirstLessonAward = state?.achievements.includes('first-lesson') === true;
+            rememberLessonVoyage(latest, attempt.courseId, attempt.lessonId);
             setState(latest);
             const course = latest.courses.find(c=>c.courseId===attempt.courseId);
             if (course?.completedLessons.includes(attempt.lessonId)) {
+                dismissQuizHelp?.();
                 lessonDirty = false;
                 $('#lesson-error').hidden = true;
                 $('#lesson-content').hidden = true;
@@ -834,6 +978,12 @@
     }
     syncMotion(); queueScene();
     window.NextSkillMotion?.subscribe(() => { syncMotion(); queueScene(); });
+    if (lessonPage) {
+        window.NextSkillMotion?.subscribe(({ reactionAllowed }) => {
+            if (!reactionAllowed) stopQuizHintMotion();
+        }, { element: lessonDialog, kind: 'reaction' });
+        window.addEventListener('resize', stopQuizHintMotion, { passive: true });
+    }
 
     async function start() {
         let failed = false;
@@ -853,6 +1003,13 @@
             } catch (error) { failed=true; pageError(error); }
         } else if (boot?.initialLessonId && authenticated) {
             await openLesson(courseId, boot.initialLessonId);
+        } else if (islandRoute && new URLSearchParams(location.search).get('resume') === 'true' && !window.NextSkillArchipelago?.hasLessonVoyage()) {
+            const course = viewedCourse();
+            const stop = course && islandRoute.querySelector(`[data-lesson-id="${targetLesson(course).id}"]`);
+            if (stop) {
+                stop.scrollIntoView({ block: 'center', behavior: 'instant' });
+                stop.click();
+            }
         } else if (new URLSearchParams(location.search).get('chooseCourse') === 'true') openCourses();
         await catalogWork;
         return failed ? 'error' : 'ready';

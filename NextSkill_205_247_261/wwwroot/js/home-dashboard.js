@@ -7,17 +7,16 @@
     const find = selector => dashboard.querySelector(selector);
     const signedIn = document.body.dataset.authenticated === 'true';
     const preview = !signedIn && document.body.dataset.guestPreview === 'true';
-    const startLink = find('[data-catalog-voyage]');
+    const startLink = find('.hd-start');
     const courseLink = find('[data-dashboard-active-title]');
+    const resumeLink = find('[data-dashboard-resume]');
     const meter = find('[data-dashboard-meter]');
     const next = find('[data-dashboard-next]');
     const format = new Intl.NumberFormat('th-TH');
     const goals = [...dashboard.querySelectorAll('[data-dashboard-goal]')];
-    const missions = find('#hd-mission-dialog');
-
-    document.getElementById('nimo-missions-open')?.addEventListener('click', () => missions.showModal());
-    missions.addEventListener('close', () =>
-        document.getElementById('buddy-agent-handle')?.focus({ preventScroll: true }));
+    const dailyGoals = find('#hd-daily-goals');
+    document.getElementById('nimo-missions-open')?.addEventListener('click', () =>
+        dailyGoals.focus({ preventScroll: true }));
 
     function renderGoals(activity) {
         const status = {};
@@ -31,12 +30,14 @@
             goal.querySelector('.hd-goal-check').hidden = !complete;
             goal.querySelector('[data-dashboard-goal-count]').textContent = complete ? 'สำเร็จ'
                 : `${format.format(count)}/${format.format(target)}${key === 'xpToday' ? ' XP' : ''}`;
-            goal.querySelector('progress').value = count;
         });
 
         const lessons = status.lessonsToday;
         const xp = status.xpToday;
-        if (Object.values(status).every(goal => goal.complete)) {
+        const complete = Object.values(status).filter(goal => goal.complete).length;
+        const summary = find('[data-dashboard-goal-summary]');
+        summary.textContent = `${format.format(complete)}/${format.format(goals.length)}`;
+        if (complete === goals.length) {
             dashboard.dataset.missionText = 'ภารกิจวันนี้ครบแล้ว เก่งมากเลย!';
         } else if (lessons.complete && xp.complete) {
             dashboard.dataset.missionText = 'ครบทั้งบทเรียนและ XP แล้ว เหลืออีกหนึ่งภารกิจนะ';
@@ -47,22 +48,41 @@
         }
     }
 
+    function renderMission(course, upcoming, achievements) {
+        const firstAward = upcoming && !achievements.includes('first-lesson');
+        const isFinalLesson = upcoming && course.totalLessons - course.completedLessons.length === 1;
+        const courseAward = isFinalLesson && !achievements.includes(`course-${course.courseId}`);
+        const task = !upcoming ? 'เริ่มคอร์สใหม่เพื่อสะสม XP' : isFinalLesson ? 'ผ่านบทสุดท้าย'
+            : course.completedLessons.length ? 'ผ่านบทถัดไป' : 'ผ่านบทแรก';
+        find('[data-dashboard-mission-task]').textContent = task;
+        find('[data-dashboard-rewards]').hidden = !upcoming;
+        if (!upcoming) return;
+
+        const xp = upcoming.xp + (courseAward ? Number(dashboard.dataset.courseBonus) : 0);
+        find('[data-dashboard-mission-xp]').textContent = `+${format.format(xp)} XP`;
+        const medals = [firstAward && 'เหรียญบทเรียนแรก', courseAward && 'เหรียญจบคอร์ส'].filter(Boolean);
+        const badge = find('[data-dashboard-mission-badge]');
+        badge.hidden = medals.length === 0;
+        badge.querySelector('strong').textContent = medals.join(' · ');
+    }
+
     if (preview) dashboard.dataset.status = 'loading';
 
     dashboard.addEventListener('nextskill:dashboard-state', ({ detail: state }) => {
         const started = state.courses.filter(course => course.hasStarted);
         const course = started.find(item => item.courseId === state.activeCourseId)
             ?? started.find(item => !item.isComplete) ?? started[0];
-        const returning = Boolean(course && (state.xp > 0 || state.courses.some(item => item.completedLessons.length)));
+        const returning = Boolean(course);
 
         dashboard.dataset.mode = returning ? 'returning' : 'intro';
         dashboard.dataset.status = 'ready';
         dashboard.setAttribute('aria-labelledby', returning ? 'home-greeting-title' : 'home-hero-title');
         find('[data-dashboard-hero]').hidden = returning;
         find('[data-dashboard-greeting]').hidden = !returning;
-        find('[data-dashboard-active-course]').hidden = !returning;
+        find('[data-dashboard-overview]').hidden = !returning;
         find('[data-dashboard-stats]').hidden = !returning;
-        startLink.hidden = Boolean(course || state.hasCompletedOnboarding);
+        find('[data-dashboard-actions]').hidden = !returning;
+        startLink.hidden = returning;
 
         if (!returning) {
             delete dashboard.dataset.missionText;
@@ -76,12 +96,12 @@
             : completed ? 'คอร์สที่กำลังเรียน' : 'คอร์สที่เลือกไว้';
         find('[data-dashboard-preview]').hidden = !preview;
         courseLink.href = '/Learning/Island?' + new URLSearchParams({ courseId: course.courseId });
+        resumeLink.href = '/Learning/Island?' + new URLSearchParams({ courseId: course.courseId, resume: 'true' });
+        find('[data-dashboard-resume-label]').textContent = course.isComplete ? 'ทบทวนบทเรียน' : 'เรียนต่อ';
         courseLink.textContent = course.title;
         find('[data-dashboard-ring]').style.setProperty('--hd-progress', course.progress + '%');
         find('[data-dashboard-percent]').textContent = format.format(course.progress) + '%';
-        find('[data-dashboard-progress]').textContent = completed
-            ? `ผ่านแล้ว ${format.format(completed)} จาก ${format.format(course.totalLessons)} บท`
-            : 'เริ่มบทแรกเพื่อรับ XP';
+        find('[data-dashboard-progress]').textContent = `ผ่านแล้ว ${format.format(completed)} จาก ${format.format(course.totalLessons)} บท`;
         meter.value = course.progress;
         next.hidden = !upcoming;
         find('[data-dashboard-next-label]').textContent = completed ? 'บทถัดไป' : 'บทแรก';
@@ -89,6 +109,8 @@
         find('[data-dashboard-stat="complete"]').textContent = format.format(started.filter(item => item.isComplete).length);
         find('[data-dashboard-stat="xp"]').textContent = format.format(state.xp);
         find('[data-dashboard-streak]').hidden = !state.activity;
+        renderMission(course, upcoming, state.achievements);
+        dailyGoals.hidden = !state.activity;
         if (state.activity) {
             find('[data-dashboard-stat="streak"]').textContent = format.format(state.activity.streakDays);
             renderGoals(state.activity);

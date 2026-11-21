@@ -57,6 +57,7 @@
     }
     function eligible() {
         if (!active || document.hidden || root.hidden || (!menu.hidden && !lessonCoach) || robot.dataset.voyagePose) return false;
+        if (root.dataset.context === 'quiz-hint') return false;
         if (islandCourseMenu && !islandCourseMenu.hidden) return false;
         if (root.dataset.context === 'in-flight' || root.closest('[data-voyage="rowing"],[data-voyage="boarding"],[data-voyage="diving"],[data-boarding="true"]')) return false;
         if (scene?.dataset.arrival || scene?.dataset.cvPhase) return false;
@@ -122,7 +123,7 @@
     }
 
     const protectedSelectors = [
-        '.ns-navbar', '.ow-intro h1', '.ow-intro > p', '.ow-intro-actions a', '[data-home-dashboard]',
+        '.ns-navbar', '.ow-intro h1', '.ow-intro > p', '.ow-intro-actions a', '[data-home-dashboard]', '[data-dashboard-stats]',
         '[data-nimo-speech-obstacle]', '.catalog-hero-copy', '.ns-catalog-status', '.ns-course-section-heading', '.ns-course-grid',
         '#lesson-reading', '#lesson-questions', '.lesson-step-actions', '.island-dashboard', '.practice-overview-heading',
         '#lesson-route .island-stop-picture', '#lesson-route :is(h3,.sj-island-status)',
