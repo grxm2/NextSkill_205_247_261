@@ -134,11 +134,48 @@
 
 @media (width < 768px) {
     #ocean-journey .ow-start-land > .ow-island-art { transform: none; }
-    #ocean-journey .ow-seabirds { top: 2%; }
     #ocean-journey .ow-clouds span:nth-child(2) { display: none; }
     #ocean-journey .hero-sun { box-shadow: 0 0 27px 11px #ffe3a8aa, 0 0 52px 27px #ffd39355; }
     #ocean-journey .hero-sun-disc { box-shadow: 0 0 17px 8px #fff0b6; }
     #ocean-journey .journey-moon { box-shadow: 0 0 22px 9px #e4f2ff50; }
+}
+
+@media (width < 768px) and (orientation: portrait) {
+    .smart-journey .ocean-home #ocean-journey {
+        --ow-sky-lane: clamp(46px, 7.5svh, 66px);
+        --ow-island-top: max(calc(var(--ow-dashboard-end, 240px) + var(--ow-sky-lane)), calc(var(--ow-first-height) * .51));
+        --ow-island-width: clamp(160px, calc((var(--ow-first-height) - var(--ow-island-top) - 65px) / .57), min(65cqw, 360px));
+        --ow-shore-horizon: calc(var(--ow-island-top) + var(--ow-island-width) * .475 - var(--ow-horizon-blend) - 4px);
+        --ow-boat-width: clamp(100px, 30cqw, 156px);
+        --ow-boat-left: max(var(--ow-left), 11cqw);
+        --ow-boat-depth: clamp(38px, calc((var(--ow-first-height) - var(--ow-shore-horizon)) * .27), 88px);
+        --ow-boat-top: min(calc(var(--ow-shore-horizon) + var(--ow-boat-depth) - var(--ow-boat-width) * .495),
+            calc(var(--ow-first-height) - var(--ow-boat-width) * .583 - 12px));
+    }
+
+    #ocean-journey .ow-island-mascot {
+        --ow-avatar-width: clamp(57px, 18cqw, 78px);
+        left: calc(50% - var(--ow-avatar-width) / 2);
+        top: calc(77% - var(--ow-avatar-width) * 1.06);
+    }
+    #ocean-journey .ow-island-mascot .buddy-shadow { left: 24%; bottom: 5%; width: 52%; height: 12%; }
+    #ocean-journey .ow-boat-anchor { --ow-avatar-width: clamp(48px, calc(var(--ow-boat-width) * .45), 70px); }
+    #ocean-journey .ow-seabirds {
+        left: var(--ow-left);
+        top: calc(var(--ow-dashboard-end, 240px) + 5px);
+        width: min(59cqw, calc((var(--ow-sky-lane) - 4px) / .26), 248px);
+    }
+}
+
+@media (width < 768px) and (orientation: portrait), (width < 1024px) and (orientation: landscape) and (height < 480px) {
+    #ocean-journey .ow-seabirds { color: #245b73; opacity: .86; }
+    html[data-theme="dark"] #ocean-journey .ow-seabirds { color: #c0e5fb; opacity: .84; }
+
+    /* Keep the opening shoreline clear and space the scenery along the voyage. */
+    .ocean-home .ocean-backdrop-boat-track:not(.ocean-backdrop-boat-track--4, .ocean-backdrop-boat-track--5) { display: none; }
+    .ocean-home .ocean-backdrop-boat-track--4 { left: 109cqw; --sail-from: -10px; --sail-to: 12px; }
+    .ocean-home .ocean-backdrop-boat-track--5 { left: 189cqw; }
+    .ocean-home .ocean-backdrop-boat-track { top: calc(var(--sea-level) - var(--boat-width) * .48 + 18px); }
 }
 
 @media (width >= 768px), (orientation: landscape) and (height < 480px) {
@@ -158,6 +195,23 @@
 @media (width >= 1024px) and (height >= 768px) {
     .ocean-home { --ow-travel-height: max(2000px, calc(var(--ow-height) * 2.9)); }
     #ocean-journey .ow-island-mascot { --ow-avatar-width: 112px; }
+}
+
+@media (width < 1024px) and (orientation: landscape) and (height < 480px) {
+    .smart-journey .ocean-home #ocean-journey {
+        --ow-island-width: min(42cqw, calc(var(--ow-first-height) * 1.02), 360px);
+        --ow-island-x: calc(100cqw - var(--ow-island-width) - var(--ow-right));
+        --ow-island-top: calc(var(--ow-shore-horizon) + var(--ow-horizon-blend) + 4px - var(--ow-island-width) * .475);
+        --ow-boat-width: clamp(96px, 15cqw, 150px);
+        --ow-boat-left: 48cqw;
+        --ow-boat-top: calc(var(--ow-shore-horizon) + clamp(34px, 10svh, 44px) - var(--ow-boat-width) * .495);
+    }
+    #ocean-journey .ow-island-mascot {
+        --ow-avatar-width: clamp(56px, 10cqw, 70px);
+        left: calc(50% - var(--ow-avatar-width) / 2);
+    }
+    #ocean-journey .ow-boat-anchor { --ow-avatar-width: clamp(48px, calc(var(--ow-boat-width) * .45), 67px); }
+    #ocean-journey .ow-seabirds { left: 53%; top: 7%; width: min(25cqw, 220px); }
 }
 
 @media (width >= 1024px) and (height < 480px) {

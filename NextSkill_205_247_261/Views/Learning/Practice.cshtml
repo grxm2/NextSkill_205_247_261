@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="~/css/course-certificate.css" asp-append-version="true" />
 <main id="journey-main" class="practice-page">
     <div class="practice-backdrop" aria-hidden="true"></div>
-    <div class="learning-celestial" aria-hidden="true"><partial name="_JourneyCelestial" /></div>
+    <div class="learning-celestial" data-journey-celestial aria-hidden="true"><partial name="_JourneyCelestial" /></div>
     <nav class="practice-breadcrumb" aria-label="เส้นทางนำทาง">
         <a asp-action="Island" asp-route-courseId="@Model.Course.CourseId">← @Model.Course.Title</a><span aria-hidden="true">›</span><span id="practice-breadcrumb-current">บทเรียนและแบบทดสอบ</span>
     </nav>

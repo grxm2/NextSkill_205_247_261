@@ -32,6 +32,7 @@
     let viewportWidth = innerWidth, viewportHeight = innerHeight, stablePosition = null;
     let compactVoyage = false;
     const touch = matchMedia('(pointer: coarse)');
+    const narrowShore = matchMedia('(width < 768px) and (orientation: portrait), (width < 1024px) and (orientation: landscape) and (height < 480px)');
     const scrubDuration = () => touch.matches ? .32 : .48;
     const harborStop = .62;
     function dock() {
@@ -97,13 +98,13 @@
         const artRect = art.getBoundingClientRect();
         const beachBottom = artRect.top - scene.getBoundingClientRect().top + artRect.height * .83;
         const hullTop = vessel.offsetTop + vessel.offsetHeight * .45;
-        let clearance = beachBottom - hullTop + 12;
+        const passengerTop = vessel.offsetTop + seat.offsetTop + seat.offsetHeight * .08;
+        let clearance = beachBottom - (narrowShore.matches ? Math.min(passengerTop, hullTop) : hullTop) + 12;
         if (buoyOnDepartureRoute()) {
             const water = waterSurface.getBoundingClientRect();
             const buoyBottom = waterSurface.offsetTop + (buoy.getBoundingClientRect().bottom - water.top);
-            // The right-hand buoy sweeps past the boat as the camera leaves
-            // shore. Sail in front of it, leaving room for Nimo and the oar.
-            const passengerTop = vessel.offsetTop + vessel.offsetHeight * .75 - seat.offsetHeight * .91;
+            // The buoy sweeps past as the camera pans. Keep the passenger
+            // and oar clear of it in the foreground sailing lane.
             clearance = Math.max(clearance, buoyBottom + 10 - passengerTop);
         }
         // The transparent art extends past the painted keel and can overhang.

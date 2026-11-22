@@ -512,7 +512,7 @@ body[data-journey-mode="learn"].is-underwater :is(#resume-learning, #detail-star
         #000 max(0px, calc(var(--island-waterline, 100%) + 100px)));
 }
 .island-water-motion .deep-ocean-light {
-    --island-ray-x: var(--journey-sun-x, 87%);
+    --island-ray-x: var(--journey-sun-x, var(--island-light-x));
     --island-ray-color: 181 246 255;
     inset: 0;
     background:
@@ -525,7 +525,7 @@ body[data-journey-mode="learn"].is-underwater :is(#resume-learning, #detail-star
     mask-image: linear-gradient(#000 8%, #0008 51%, transparent 98%);
 }
 html[data-theme="dark"] .island-water-motion .deep-ocean-light {
-    --island-ray-x: var(--journey-moon-x, 87%);
+    --island-ray-x: var(--journey-moon-x, var(--island-light-x));
     --island-ray-color: 162 196 251;
 }
 
@@ -550,15 +550,15 @@ html[data-theme="dark"] .island-water-motion .deep-ocean-light {
 }
 
 
-.learning-celestial {
-    position: absolute;
-    inset: 0 calc(-1 * var(--map-gutter-end)) auto calc(-1 * var(--map-gutter-start));
-    height: 100svh;
+.sj-learn {
+    --island-light-x: 94%;
+    --island-light-y: clamp(132px, 19svh, 184px);
+    --island-light-size: clamp(26px, 3vw, 48px);
 }
-.learning-celestial :is(.hero-sun, .journey-moon) {
-    left: 87%;
-    top: clamp(8.5rem, 24svh, 16rem);
-    width: clamp(28px, 4vw, 40px);
+.sj-learn > .learning-celestial :is(.hero-sun, .journey-moon) {
+    left: var(--island-light-x);
+    top: var(--island-light-y);
+    width: var(--island-light-size);
 }
 .learning-celestial .hero-sun { box-shadow: 0 0 24px 8px #fff0b280, 0 0 52px 16px #ffe3a338; }
 .learning-celestial .journey-moon { box-shadow: 0 0 24px 6px #e4f2ff45, 0 0 52px 16px #b5d9ff20; }
@@ -642,7 +642,10 @@ html[data-theme="dark"] .island-water-motion .deep-ocean-light {
     .island-heading { align-items: flex-start; }
     .smart-journey .island-heading { justify-content: flex-start; }
     .island-progress-strip { flex-basis: 100%; }
-    .learning-celestial :is(.hero-sun, .journey-moon) { top: clamp(10rem, 26svh, 16rem); }
+    .sj-learn {
+        --island-light-x: calc(100% - max(25px, var(--map-gutter-end) + 10px));
+        --island-light-y: max(calc(var(--nav-h) + 176px), 27svh);
+    }
     .ocean-surface-world :is(.island-water-layer--far, .surface-ocean-wave--far) { display: none; }
 }
 @media (width < 768px), (width < 1024px) and (height < 480px) {
@@ -662,6 +665,18 @@ html[data-theme="dark"] .island-water-motion .deep-ocean-light {
 @media (width < 480px) {
     .island-course-video-footer .ns-button { width: 100%; }
 }
+@media (768px <= width < 1024px) {
+    .sj-learn { --island-light-y: clamp(154px, 21svh, 184px); }
+}
+
+@media (width >= 1024px) {
+    .sj-learn {
+        --island-light-gutter: max(var(--map-gutter-end), calc((100% - 1280px) / 2));
+        --island-light-x: calc(100% - var(--island-light-gutter) / 2);
+        --island-light-size: clamp(20px, calc(var(--island-light-gutter) - 8px), 48px);
+    }
+}
+
 @media (width >= 1024px) and (height >= 480px) {
     .learning-workspace { grid-template-columns: minmax(0, 1fr) minmax(17rem, 25%); }
     .island-dashboard { position: sticky; top: var(--island-sidebar-top); }
@@ -681,5 +696,4 @@ html[data-theme="dark"] .island-water-motion .deep-ocean-light {
     .smart-journey .learning-workspace #lesson-route .island-underwater-route .sj-lesson-island:nth-child(odd) {
         align-self: flex-start;
     }
-    .learning-celestial :is(.hero-sun, .journey-moon) { left: 55%; width: 54px; }
 }
