@@ -22,27 +22,45 @@
     const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
     const controlSelector = 'input:not([type="hidden"]), .password-toggle-eye, .btn-auth-submit, .login-account-types a, .btn-skip-outline, .switch-form a, .login-course-link, [data-theme-toggle]';
 
+    const learningQuotes = [
+        '“ทักษะใหม่ไม่ได้สร้างในวันเดียว แต่เริ่มได้ตั้งแต่วินาทีที่คุณเปิดใจเรียนรู้”',
+        '“การเรียนรู้ไม่มีวันสิ้นสุด ทุกก้าวเล็กๆ วันนี้ คือความสำเร็จในวันหน้า”',
+        '“ไม่มีใครเก่งมาตั้งแต่เกิด แต่ทุกคนเก่งขึ้นได้จากการฝึกฝนทุกวัน”',
+        '“ความรู้คือสมบัติเดียวที่ยิ่งฝึกฝน ก็ยิ่งติดตัวเราไปตลอดชีวิต”',
+        '“เก่งขึ้นแค่วันละ 1% เมื่อครบปี คุณจะก้าวไปไกลกว่าเดิมอย่างไม่น่าเชื่อ!”',
+        '“ความผิดพลาดระหว่างฝึก คือครูที่ดีที่สุดที่พาเราไปสู่ความเชี่ยวชาญ”',
+        '“ลงทุนเวลาให้การเรียนรู้วันนี้ คือของขวัญที่ดีที่สุดในอนาคต”',
+        '“ก้าวแรกของการเรียนรู้อาจท้าทาย แต่มันคุ้มค่าเสมอเมื่อถึงจุดหมาย”'
+    ];
+    let quoteCursor = 0;
+    function nextLearningQuote() {
+        const q = learningQuotes[quoteCursor % learningQuotes.length];
+        quoteCursor = (quoteCursor + 1) % learningQuotes.length;
+        return q;
+    }
+
     const sayings = {
-        idle: 'ไปเรียนด้วยกันนะ!',
-        email: 'เริ่มที่อีเมลเลย!',
-        typing: 'ตามทันนะ พิมพ์ต่อได้เลย!',
-        password: 'นิโมปิดตาแล้ว รหัสลับของเธอ!',
-        reveal: 'นิโมยังหันไปอีกทางอยู่นะ!',
-        conceal: 'ซ่อนรหัสผ่านให้แล้ว!',
-        remember: 'ให้เว็บจดจำการเข้าสู่ระบบได้ตรงนี้',
-        remembered: 'ติ๊กไว้ให้เว็บจดจำแล้ว!',
-        forgotten: 'ไว้เข้าสู่ระบบใหม่ครั้งหน้าก็ได้!',
-        ready: 'พร้อมแล้ว ไปกันเลย!',
-        invalid: 'ลองดูช่องที่เว็บแจ้งไว้อีกทีนะ',
-        failed: 'ลองอีกครั้งนะ นิโมรออยู่!',
-        submitting: 'กำลังพาเข้า NextSkill!',
-        learner: 'ไปเรียนด้วยกันนะ!',
-        admin: 'ไปหน้าผู้ดูแลกัน!',
-        courses: 'ไปดูคอร์สกับนิโมไหม?',
-        guest: 'ไปสำรวจหน้าแรกก่อนได้เลย!',
-        register: 'มาสร้างบัญชีแล้วออกเรือกัน!',
-        light: 'ฟ้าใส ได้เวลาออกเรือ!',
-        dark: 'คืนนี้นิโมยังไม่ง่วงนะ!'
+        idle: learningQuotes[0],
+        email: 'กรอกอีเมลได้เลย การเรียนรู้บทใหม่กำลังรออยู่!',
+        typing: 'ตั้งใจสุดๆ พิมพ์ต่อได้เลยนะ!',
+        password: 'นิโมใส่แว่นดำบังให้แล้ว รหัสลับปลอดภัยแน่นอน!',
+        reveal: 'แอบเช็ครหัสผ่านให้ชัวร์ก่อนออกเดินทางนะ!',
+        conceal: 'นิโมใส่แว่นดำซ่อนรหัสผ่านให้เรียบร้อย!',
+        remember: 'ให้เว็บจดจำการเข้าสู่ระบบไว้เรียนต่อครั้งหน้าได้เลย',
+        remembered: 'บันทึกไว้ให้แล้ว ครั้งหน้ามาเรียนต่อได้ทันที!',
+        forgotten: 'ไว้แวะมาฝึกทักษะใหม่ด้วยกันอีกนะ!',
+        ready: learningQuotes[0],
+        invalid: 'ลองตรวจสอบข้อมูลในช่องที่แจ้งเตือนอีกนิดนะ',
+        failed: 'ไม่เป็นไรนะ ความพยายามคือจุดเริ่มต้นของการเรียนรู้ ลองอีกครั้ง!',
+        submitting: learningQuotes[1],
+        learner: 'ทุกทักษะฝึกได้ มาเริ่มเรียนฟรีบนเกาะด้วยกันนะ!',
+        admin: 'เข้าสู่โหมดผู้ดูแลระบบจัดการคอร์สเรียนกัน!',
+        courses: 'สำรวจคอร์สเรียนฟรีทั้งหมด ความรู้ดีๆ รออยู่เพียบ!',
+        guest: 'ไปเดินสำรวจหน้าแรกก่อนได้เลย ความรู้เปิดกว้างเสมอ!',
+        register: 'ก้าวแรกของการพัฒนาตัวเอง เริ่มต้นที่การสมัครสมาชิกเลย!',
+        light: 'แสงเช้าสดใส เหมาะกับการเริ่มต้นเรียนรู้สิ่งใหม่ที่สุด!',
+        dark: 'บรรยากาศเงียบสงบ โฟกัสกับการเรียนรู้ได้เต็มที่เลย~',
+        sip: learningQuotes[1]
     };
     const styles = getComputedStyle(nimo);
     const softOut = styles.getPropertyValue('--ns-ease-out').trim();
@@ -51,42 +69,20 @@
         ({ offset, x, y, turn, width, height, easing });
     const routines = [
         {
-            name: 'sidestep', duration: 4300, caption: 'ไปเรียนด้วยกันนะ!',
+            name: 'cool-pose-1', duration: 2800, shades: 'on', speech: false,
+            caption: '',
             steps: [
-                step(0), step(.14), step(.25, -6, 1, -7, 1.03, .96, 'linear'),
-                step(.36, -3, -2, -4, .99, 1.01), step(.50, 6, 1, 8, 1.03, .97, 'linear'),
-                step(.60, 4, -2, 4), step(.70, -2, 1, -3), step(.84), step(1)
+                step(0), step(.35, -2, -2, -2.5, 1.01, .99),
+                step(.70, 2, 1, 2, .995, 1.01), step(1)
             ]
         },
         {
-            name: 'curtsy', duration: 3900, caption: 'นิโมขอโค้งต้อนรับหน่อย!',
-            pose: 'bow', blend: [.25, .29, .56, .60],
+            name: 'takeoff-quote-1', duration: 4800, shades: 'off', speech: true,
+            getCaption: () => nextLearningQuote(),
             steps: [
-                step(0), step(.16), step(.27, 3, 2, 5, 1.03, .95, 'linear'),
-                step(.40, 4, 7, 12, 1.04, .91), step(.54, 3, 5, 8, 1.03, .93, softOut),
-                step(.66, -1, -2, -3, .99, 1.02), step(.80), step(1)
-            ]
-        },
-        {
-            name: 'two-hops', duration: 4100, caption: 'หนึ่ง สอง… ฮึบ!',
-            pose: 'hop', blend: [.47, .51, .62, .66],
-            steps: [
-                step(0), step(.18, -2, 2, -3, 1.03, .96, softOut),
-                step(.25, -3, -5, -4, .99, 1.02, 'linear'),
-                step(.35, -2, 2, -2, 1.03, .95), step(.46, 1, 4, 2, 1.05, .92, softOut),
-                step(.55, 4, -11, 7, .98, 1.04, 'linear'),
-                step(.64, 5, -3, 5, 1, 1, 'linear'),
-                step(.70, 4, 2, 2, 1.06, .93, softOut),
-                step(.83), step(1)
-            ]
-        },
-        {
-            name: 'book-shuffle', duration: 4800, caption: 'เปิดหนังสือ… ยังเต้นต่อได้!',
-            pose: 'book', blend: [.20, .24, .70, .74],
-            steps: [
-                step(0), step(.12), step(.25, -3, 0, -5),
-                step(.38, -4, 2, -8, 1.02, .97), step(.47, 0, -1, -1),
-                step(.59, 4, 1, 7, 1.02, .97), step(.70, 3, -1, 4), step(.87), step(1)
+                step(0), step(.12, 0, -6, 3, 1.03, .97, softOut),
+                step(.26, -2, 1, -1.5, .99, 1.01), step(.55, 2, -2, 1.5),
+                step(.82, -1, 0, -1), step(1)
             ]
         }
     ];
@@ -95,6 +91,7 @@
     let direction = 1;
     let dance = null;
     let settling = null;
+    let speechDelayTimer = null;
 
     function blendPoses(pose, stops, duration) {
         const [fadeIn, visible, fadeOut, hidden] = stops;
@@ -115,7 +112,9 @@
         routineIndex = (routineIndex + 1) % routines.length;
         if (routineIndex === 0) direction *= -1;
 
+        clearTimeout(speechDelayTimer);
         const { duration } = routine;
+        const activeCaption = typeof routine.getCaption === 'function' ? routine.getCaption() : routine.caption;
         const movement = stage.animate(routine.steps.map(({ offset, x, y, turn, width, height, easing }) => ({
             offset, easing,
             transform: `translate(${x * sign}%, ${y}%) rotate(${turn * sign}deg) scale(${width}, ${height})`
@@ -124,8 +123,29 @@
         const image = sprite?.querySelector('img');
         const pose = image?.complete && image.naturalWidth ? sprite : null;
         const animations = pose ? [movement, ...blendPoses(pose, routine.blend, duration)] : [movement];
-        dance = { pose, animations, caption: routine.caption };
+        dance = {
+            pose,
+            animations,
+            caption: activeCaption,
+            shades: routine.shades || 'off',
+            speech: routine.speech !== false
+        };
         nimo.dataset.dancing = routine.name;
+        nimo.dataset.shades = dance.shades;
+
+        if (!dance.speech) {
+            nimo.dataset.speechVisible = 'false';
+        } else {
+            // Keep bubble hidden while sunglasses are lifting off, then pop open with the learning quote!
+            nimo.dataset.speechVisible = 'false';
+            if (activeCaption) caption.textContent = activeCaption;
+            speechDelayTimer = setTimeout(() => {
+                if (dance && dance.speech) {
+                    nimo.dataset.speechVisible = 'true';
+                }
+            }, 420);
+        }
+
         movement.onfinish = () => {
             if (dance?.animations !== animations) return;
             endDance(false);
@@ -134,6 +154,7 @@
     }
 
     function endDance(smooth) {
+        clearTimeout(speechDelayTimer);
         const previous = dance;
         const transform = smooth ? getComputedStyle(stage).transform : 'none';
         const blends = smooth && previous.pose ? [front, previous.pose].map(element => ({
@@ -240,8 +261,38 @@
         cursorAllowed = canSettle && !submitting && !privacy && !following;
         nimo.dataset.mood = mood;
         syncDance(ambient && !paused && mood === 'idle', canSettle && !submitting);
-        const message = mood === 'idle' ? dance?.caption ?? sayings.idle : sayings[mood];
-        if (caption.textContent !== message) caption.textContent = message;
+
+        if (mood !== 'idle') {
+            clearTimeout(speechDelayTimer);
+            const message = sayings[mood] || sayings.idle;
+            if (caption.textContent !== message) caption.textContent = message;
+
+            // Keep sunglasses ON while filling out email/password/remember so Nimo takes them off right when about to click Login ('ready')!
+            const keepShadesOn = privacy || ['email', 'typing', 'remember', 'remembered', 'forgotten'].includes(mood);
+            if (keepShadesOn) {
+                nimo.dataset.shades = 'on';
+                nimo.dataset.speechVisible = privacy ? 'true' : 'false';
+            } else {
+                const wasOn = nimo.dataset.shades === 'on';
+                nimo.dataset.shades = 'off';
+                if (wasOn) {
+                    nimo.dataset.speechVisible = 'false';
+                    speechDelayTimer = setTimeout(() => {
+                        nimo.dataset.speechVisible = 'true';
+                    }, 340);
+                } else {
+                    nimo.dataset.speechVisible = 'true';
+                }
+            }
+        } else if (!dance) {
+            // Fallback if ambient motion is disabled
+            nimo.dataset.shades = 'off';
+            nimo.dataset.speechVisible = 'true';
+            if (!caption.textContent) caption.textContent = sayings.idle;
+        } else if (dance.caption && caption.textContent !== dance.caption) {
+            caption.textContent = dance.caption;
+        }
+
         if (privacy || following) {
             nimo.dataset.eyes = privacy ? 'closed' : 'open';
             nimo.dataset.look = privacy ? 'away' : 'form';
@@ -293,6 +344,29 @@
         if (reactionMood !== 'invalid') react('invalid', 3000);
     }, true);
 
+    // When the user is about to click "เข้าสู่ระบบ" (hover / focus / pointerenter on submit button),
+    // Nimo takes off his sunglasses by himself and speaks an inspiring learning quote!
+    if (submit) {
+        const triggerLoginReadyQuote = () => {
+            const quote = nextLearningQuote();
+            sayings.ready = quote;
+            sayings.submitting = quote;
+            if (nimo.dataset.shades === 'off') {
+                nimo.dataset.speechVisible = 'false';
+                nimo.dataset.shades = 'on';
+                setTimeout(() => {
+                    hovered = submit;
+                    react('ready', 4800);
+                }, 220);
+            } else {
+                hovered = submit;
+                react('ready', 4800);
+            }
+        };
+        submit.addEventListener('pointerenter', triggerLoginReadyQuote);
+        submit.addEventListener('focus', triggerLoginReadyQuote);
+    }
+
     document.addEventListener('focusin', event => {
         if (form.contains(event.target) && reactionMood === 'typing') resetReaction();
         render();
@@ -325,10 +399,23 @@
         react(event.detail?.theme === 'dark' ? 'dark' : 'light');
     });
 
-    pause.addEventListener('click', () => {
+    pause?.addEventListener('click', event => {
+        event.stopPropagation();
         paused = !paused;
         pause.textContent = paused ? 'เต้นต่อ' : 'พักท่าเต้น';
         render();
+    });
+
+    nimo.addEventListener('click', event => {
+        if (event.target.closest('[data-nimo-pause]')) return;
+        sayings.sip = learningQuotes[quoteCursor % learningQuotes.length];
+        quoteCursor = (quoteCursor + 1) % learningQuotes.length;
+        // Put shades on briefly if they were off so user sees the cool takeoff transition!
+        nimo.dataset.shades = 'on';
+        nimo.dataset.speechVisible = 'false';
+        setTimeout(() => {
+            react('sip', 4600);
+        }, 280);
     });
 
     if (overlay) new MutationObserver(() => {
@@ -346,7 +433,7 @@
         ambient = motion.ambientAllowed && canAnimate;
         canSettle = motion.reactionAllowed;
         if (motion.hidden) clearCursor();
-        pause.hidden = motion.reduced || motion.paused || !canAnimate;
+        if (pause) pause.hidden = motion.reduced || motion.paused || !canAnimate;
         render();
     }, { element: nimo });
     if (summary?.classList.contains('validation-summary-errors')) react('failed', 3500);

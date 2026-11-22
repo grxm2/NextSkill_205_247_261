@@ -367,8 +367,7 @@ html[data-theme="dark"] .ns-login-page .duo-cloud {
 .dot-top-left { top: 110px; left: 4%; }
 .dot-mid-right { top: 45%; right: 4%; }
 
-.ns-login-page .dot-mid-right,
-.ns-login-page .hero-rmooc-pill {
+.ns-login-page .dot-mid-right {
     display: none;
 }
 
@@ -968,57 +967,680 @@ html[data-theme="dark"] .account-main .legal-copy p { color: var(--acc-muted); }
     color: #ffffff;
 }
 
-.ns-login-page .story-card.nimo-story-card {
-    --login-story-ink: var(--ns-ink);
-    --login-story-border: var(--ns-border);
-    --login-story-wave: #8fcddb;
-    background: linear-gradient(180deg, #f0fafc, #d8f0f5) !important;
-    border-color: var(--login-story-border) !important;
-    box-shadow: var(--ns-shadow) !important;
+/* Full-Screen Illustrated Beach Backdrop & Living Animations */
+.acc-beach-bg-photo {
+    position: absolute;
+    inset: -2%;
+    background: url('../images/login-beach-bg.jpg') center bottom / cover no-repeat;
+    z-index: 0;
+    transform-origin: center bottom;
+    animation: accBeachBreezeZoom 22s ease-in-out infinite alternate;
+    transition: filter 0.45s ease, opacity 0.45s ease;
 }
 
-html[data-theme="dark"] .ns-login-page .story-card.nimo-story-card {
-    --login-story-ink: #e1f1f8;
-    --login-story-border: #3c5b73;
-    --login-story-wave: #3a728b;
-    background: linear-gradient(180deg, #142a3e, #183c51) !important;
+html[data-theme="dark"] .acc-beach-bg-photo {
+    filter: brightness(0.46) saturate(1.18) hue-rotate(-14deg) contrast(1.08);
+}
+
+.ns-login-page .account-ambient-decor > .journey-night-sky {
+    background: radial-gradient(circle at 75% 15%, rgba(56, 189, 248, 0.18) 0%, transparent 45%),
+                linear-gradient(180deg, rgba(7, 20, 38, 0.65) 0%, rgba(13, 34, 56, 0.45) 55%, rgba(13, 40, 64, 0.35) 100%);
+}
+
+@keyframes accBeachBreezeZoom {
+    0% { transform: scale(1) translate3d(0, 0, 0); }
+    100% { transform: scale(1.03) translate3d(-0.5%, -0.4%, 0); }
+}
+
+/* Rotating Lighthouse Beacon Beam on Right Cliff */
+.acc-cliff-lighthouse-beacon {
+    position: absolute;
+    top: 29.5%;
+    right: 13.6%;
+    width: 24px;
+    height: 24px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.acc-lh-core {
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffffff 0%, #fde047 60%, transparent 100%);
+    box-shadow: 0 0 18px 6px rgba(253, 224, 71, 0.85);
+    animation: fairyLightPulse 2s ease-in-out infinite alternate;
+}
+
+.acc-lh-beam {
+    position: absolute;
+    top: 5px;
+    left: -210px;
+    width: 220px;
+    height: 36px;
+    background: linear-gradient(90deg, transparent 0%, rgba(254, 240, 138, 0.35) 55%, rgba(255, 255, 255, 0.78) 100%);
+    clip-path: polygon(0 0, 100% 42%, 100% 58%, 0 100%);
+    transform-origin: 100% 50%;
+    animation: accLighthouseSweep 7s ease-in-out infinite alternate;
+}
+
+@keyframes accLighthouseSweep {
+    0% { transform: rotate(-14deg) scaleX(0.92); opacity: 0.55; }
+    50% { transform: rotate(4deg) scaleX(1.08); opacity: 0.92; }
+    100% { transform: rotate(18deg) scaleX(0.95); opacity: 0.6; }
+}
+
+/* Animated White Seagulls in Upper-Right Sky */
+.acc-sky-seagulls {
+    position: absolute;
+    top: 12%;
+    right: 22%;
+    width: 220px;
+    height: 110px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.acc-seagull {
+    position: absolute;
+    filter: drop-shadow(0 2px 6px rgba(2, 132, 199, 0.28));
+}
+
+.acc-gull-a {
+    top: 10px;
+    left: 20px;
+    animation: accGullGlideA 8s ease-in-out infinite alternate;
+}
+
+.acc-gull-b {
+    top: 42px;
+    left: 96px;
+    animation: accGullGlideB 6.5s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes accGullGlideA {
+    0% { transform: translate(0, 0) rotate(-4deg) scaleY(1); }
+    50% { transform: translate(-22px, -12px) rotate(3deg) scaleY(0.78); }
+    100% { transform: translate(-44px, 4px) rotate(-2deg) scaleY(1.08); }
+}
+
+@keyframes accGullGlideB {
+    0% { transform: translate(0, 0) rotate(3deg) scaleY(0.85); }
+    50% { transform: translate(18px, -10px) rotate(-4deg) scaleY(1.1); }
+    100% { transform: translate(34px, 4px) rotate(2deg) scaleY(0.9); }
+}
+
+/* Cute Animated Red Beach Crab Next to Bottom-Left Plumeria Flowers */
+.acc-beach-crab-actor {
+    position: absolute;
+    bottom: 24px;
+    left: 10.5%;
+    z-index: 3;
+    animation: accBeachCrabWalk 8s ease-in-out infinite;
+    filter: drop-shadow(0 6px 10px rgba(124, 45, 18, 0.25));
+}
+
+.acc-crab-claw-left {
+    transform-origin: 34px 44px;
+    animation: accClawWave 1.8s ease-in-out infinite alternate;
+}
+
+.acc-crab-claw-right {
+    transform-origin: 76px 44px;
+    animation: accClawWave 1.8s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes accBeachCrabWalk {
+    0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
+    25% { transform: translateX(26px) translateY(-3px) rotate(3deg); }
+    50% { transform: translateX(48px) translateY(1px) rotate(-2deg); }
+    75% { transform: translateX(18px) translateY(-2px) rotate(2deg); }
+}
+
+@keyframes accClawWave {
+    0% { transform: rotate(-10deg); }
+    100% { transform: rotate(14deg); }
+}
+
+/* Translucent Frosted Glass Story Card & Auth Card Matching Reference Mockup */
+.ns-login-page .story-card.nimo-story-card,
+.story-card.nimo-story-card.nimo-island-tea-card {
+    --login-story-ink: #0c2d48;
+    --login-story-border: rgba(255, 255, 255, 0.82);
+    --login-story-wave: rgba(255, 255, 255, 0.45);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.46) 0%,
+        rgba(235, 248, 255, 0.38) 58%,
+        rgba(254, 243, 199, 0.48) 100%
+    ) !important;
+    backdrop-filter: blur(11px) saturate(1.25) !important;
+    -webkit-backdrop-filter: blur(11px) saturate(1.25) !important;
+    border: 2px solid var(--login-story-border) !important;
+    box-shadow: 0 24px 54px rgba(3, 105, 161, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.92) !important;
+}
+
+html[data-theme="dark"] .ns-login-page .story-card.nimo-story-card,
+html[data-theme="dark"] .story-card.nimo-story-card.nimo-island-tea-card {
+    --login-story-ink: #f0f9ff;
+    --login-story-border: rgba(125, 211, 252, 0.42);
+    --login-story-wave: rgba(56, 189, 248, 0.25);
+    background: linear-gradient(
+        180deg,
+        rgba(12, 34, 56, 0.56) 0%,
+        rgba(15, 45, 72, 0.48) 60%,
+        rgba(20, 53, 82, 0.58) 100%
+    ) !important;
+    box-shadow: 0 24px 56px rgba(0, 8, 20, 0.55), inset 0 1px 0 rgba(186, 230, 253, 0.3) !important;
+}
+
+.ns-login-page .auth-form.nimo-auth-card {
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 2px solid rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 24px 54px rgba(3, 105, 161, 0.22) !important;
+}
+
+html[data-theme="dark"] .ns-login-page .auth-form.nimo-auth-card {
+    background: rgba(13, 31, 49, 0.88) !important;
+    border-color: rgba(56, 189, 248, 0.35) !important;
+}
+
+/* Home Page Pastel Sunrise Ocean Backdrop on Account/Login Pages */
+.account-ambient-decor.fs-island-world {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Active Two-Way Cruising Ships Across the Horizon & Mid-Ocean on Login Page */
+.account-ambient-decor.fs-island-world .ocean-backdrop-boat-track--1 {
+    left: -12vw;
+    top: calc(var(--sea-level) - 8px);
+    --boat-width: clamp(54px, 5.2vw, 78px);
+    --ship-hull: #3b7a8c;
+    animation: accShipCruiseLTR 34s linear infinite !important;
+    animation-delay: -5s !important;
+    opacity: 0.82;
+}
+
+.account-ambient-decor.fs-island-world .ocean-backdrop-boat-track--2 {
+    left: -12vw;
+    top: calc(var(--sea-level) + 18px);
+    --boat-width: clamp(52px, 5vw, 74px);
+    --ship-hull: #af8073;
+    --ship-accent: #fff7e6;
+    animation: accShipCruiseLTR 28s linear infinite !important;
+    animation-delay: -18s !important;
+    opacity: 0.86;
+}
+
+.account-ambient-decor.fs-island-world .ocean-backdrop-boat-track--3 {
+    left: -12vw;
+    top: calc(var(--sea-level) - 14px);
+    --boat-width: clamp(46px, 4.4vw, 64px);
+    --ship-hull: #5b7c94;
+    animation: accShipCruiseRTL 38s linear infinite !important;
+    animation-delay: -9s !important;
+    opacity: 0.72;
+}
+
+.account-ambient-decor.fs-island-world .ocean-backdrop-boat-track--5 {
+    display: block !important;
+    left: -12vw;
+    top: calc(var(--sea-level) + 34px);
+    --boat-width: clamp(58px, 5.6vw, 84px);
+    --ship-hull: #8b5e3c;
+    --ship-accent: #fef3c7;
+    animation: accShipCruiseRTL 26s linear infinite !important;
+    animation-delay: -14s !important;
+    opacity: 0.88;
+}
+
+.account-ambient-decor.fs-island-world .ocean-backdrop-boat-track--6 {
+    left: -12vw;
+    top: calc(var(--sea-level) + 6px);
+    --boat-width: clamp(48px, 4.6vw, 68px);
+    --ship-hull: #b97d73;
+    --ship-accent: #d8ad7f;
+    animation: accShipCruiseLTR 31s linear infinite !important;
+    animation-delay: -23s !important;
+    opacity: 0.78;
+}
+
+@keyframes accShipCruiseLTR {
+    0% { transform: translate3d(0, 0, 0) scaleX(1); }
+    100% { transform: translate3d(124vw, 0, 0) scaleX(1); }
+}
+
+@keyframes accShipCruiseRTL {
+    0% { transform: translate3d(124vw, 0, 0) scaleX(-1); }
+    100% { transform: translate3d(0, 0, 0) scaleX(-1); }
+}
+
+/* Starting Island Positioned at the Golden-Ratio Right Ocean Waterline (Palms Frame Far-Right Under Sun, Beach Surrounded by Sea Above Footer) */
+.account-ambient-decor .acc-left-ocean-island {
+    --island-w: clamp(320px, 28.5vw, 470px);
+    position: absolute;
+    right: -1.2vw;
+    left: auto;
+    top: calc(52% - var(--island-w) * 0.315);
+    width: var(--island-w);
+    margin: 0;
+    z-index: 3;
+    pointer-events: none;
+    filter: drop-shadow(0 14px 26px rgba(14, 116, 144, 0.2));
+}
+
+.account-ambient-decor .acc-left-ocean-island .ow-island-art {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+@media (max-width: 1180px) {
+    .account-ambient-decor .acc-left-ocean-island {
+        display: none;
+    }
+}
+
+/* Left Mid-Foreground Cruising Sailboat (Balancing the Island on the Right) */
+.acc-cruising-sailboat-right {
+    position: absolute;
+    left: 3.5vw;
+    right: auto;
+    top: 57%;
+    width: clamp(105px, 9.8vw, 142px);
+    z-index: 3;
+    pointer-events: none;
+    animation: accSailboatCruiseLeft 26s ease-in-out infinite;
+}
+
+.acc-sailboat-rock {
+    transform-origin: 50% 85%;
+    animation: fs-boat-idle 3.6s ease-in-out infinite alternate;
+}
+
+.acc-sailboat-rock svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+}
+
+@keyframes accSailboatCruiseLeft {
+    0% { transform: translate3d(0, 0, 0) scaleX(1); }
+    46% { transform: translate3d(11vw, 12px, 0) scaleX(1); }
+    50% { transform: translate3d(11.5vw, 14px, 0) scaleX(-1); }
+    96% { transform: translate3d(0.5vw, 2px, 0) scaleX(-1); }
+    100% { transform: translate3d(0, 0, 0) scaleX(1); }
+}
+
+/* Jumping Fish Pods Across Left, Right & Front Ocean */
+.acc-jumping-fish-pod {
+    position: absolute;
+    width: clamp(86px, 8vw, 122px);
+    z-index: 4;
+    pointer-events: none;
+}
+
+.acc-fish-pod--left {
+    left: 10vw;
+    top: 70%;
+}
+
+.acc-fish-pod--right {
+    right: 9vw;
+    top: 67%;
+    transform: scaleX(-1);
+}
+
+.acc-fish-pod--front {
+    left: 20vw;
+    top: 81%;
+    width: clamp(72px, 6.8vw, 102px);
+}
+
+.acc-jumping-fish-pod .acc-delay-1 {
+    animation-delay: -2.3s !important;
+}
+
+.acc-jumping-fish-pod .acc-delay-2 {
+    animation-delay: -4.1s !important;
+}
+
+/* Underwater Swimming Fish Schools */
+.acc-underwater-fish-school {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.acc-fish-school--ltr {
+    left: -12vw;
+    top: 79%;
+    animation: accFishSwimLTR 22s linear infinite;
+}
+
+.acc-fish-school--rtl {
+    left: -12vw;
+    top: 66%;
+    animation: accFishSwimRTL 27s linear infinite;
+    animation-delay: -11s;
+}
+
+.acc-sub-fish {
+    animation: accSubFishWiggle 1.4s ease-in-out infinite alternate;
+}
+.acc-sub-fish.f-2 { animation-delay: -0.5s; }
+.acc-sub-fish.f-3 { animation-delay: -0.9s; }
+
+@keyframes accFishSwimLTR {
+    0% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(62vw, -12px, 0); }
+    100% { transform: translate3d(124vw, 4px, 0); }
+}
+
+@keyframes accFishSwimRTL {
+    0% { transform: translate3d(124vw, 0, 0); }
+    50% { transform: translate3d(62vw, 10px, 0); }
+    100% { transform: translate3d(0, -4px, 0); }
+}
+
+@keyframes accSubFishWiggle {
+    0% { transform: translateY(0) rotate(-2deg); }
+    100% { transform: translateY(-3px) rotate(2.5deg); }
+}
+
+/* Study Books & Beach Base Around Nimo Inside Left Story Card */
+.nimo-study-beach-base-svg {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(104%, 390px);
+    height: auto;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.nimo-tea-island-diorama .mascot-character-art.login-nimo-beach-mode {
+    width: 256px;
+    height: 256px;
+    z-index: 3;
+    cursor: pointer;
+}
+
+/* Layered Nimo Sunglasses Cool-Pose & Takeoff Animation Rig */
+.nimo-shades-layered-rig {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform-origin: 50% 82%;
+    transition: transform 0.45s cubic-bezier(0.22, 1.2, 0.36, 1);
+}
+
+.nimo-shades-layered-rig > img,
+.nimo-animated-sunglasses-wrap,
+.nimo-animated-sunglasses-wrap > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+}
+
+.nimo-rig-base-open {
+    z-index: 1;
+    filter: drop-shadow(0 12px 18px rgba(14, 65, 96, 0.22));
+}
+
+.nimo-rig-base-cool {
+    z-index: 2;
+    opacity: 1;
+    transition: opacity 0.22s ease;
+}
+
+.nimo-animated-sunglasses-wrap {
+    z-index: 3;
+    transform-origin: 0 0;
+    /* Default: sunglasses DOWN over Nimo's eyes ("ใส่แว่นดำเก๊กเท่ๆ") */
+    transform: translate3d(-5.58%, 14.19%, 0) scale(1.20, 1.25);
+    transition: transform 0.56s cubic-bezier(0.22, 1.28, 0.36, 1), filter 0.35s ease;
+    filter: drop-shadow(0 5px 8px rgba(15, 23, 42, 0.28));
+}
+
+/* Cool Pose Subtle Head Bob While Wearing Sunglasses */
+[data-shades="on"] .nimo-shades-layered-rig {
+    animation: nimoCoolShadesSwagger 2.6s ease-in-out infinite;
+}
+
+@keyframes nimoCoolShadesSwagger {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    35% {
+        transform: translateY(-3px) rotate(-2.2deg) scale(1.015);
+    }
+    70% {
+        transform: translateY(1px) rotate(1.6deg) scale(0.995);
+    }
+}
+
+/* Shiny White Lens Gleam Sweeping Across Sunglasses While Posing Coolly */
+.nimo-shades-lens-glint {
+    position: absolute;
+    top: 12%;
+    left: 34%;
+    width: 38%;
+    height: 14%;
+    pointer-events: none;
+    overflow: hidden;
+    border-radius: 18px;
+    transform: rotate(-12deg);
+    z-index: 4;
+}
+
+.nimo-shades-lens-glint::after {
+    content: '';
+    position: absolute;
+    top: -30%;
+    left: -60%;
+    width: 32%;
+    height: 160%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.78) 50%, transparent 100%);
+    transform: skewX(-25deg);
+    animation: nimoShadesGlintSweep 2.4s ease-in-out infinite;
+}
+
+@keyframes nimoShadesGlintSweep {
+    0%, 25% {
+        left: -60%;
+        opacity: 0;
+    }
+    40% {
+        opacity: 0.95;
+    }
+    70%, 100% {
+        left: 135%;
+        opacity: 0;
+    }
+}
+
+/* State B: Nimo Takes Off / Lifts Sunglasses Up Onto Forehead ("อยู่ดีดีก็ถอดแว่น") */
+[data-shades="off"] .nimo-rig-base-cool {
+    opacity: 0;
+}
+
+[data-shades="off"] .nimo-animated-sunglasses-wrap {
+    transform: translate3d(0%, 0%, 0) scale(1, 1);
+    filter: drop-shadow(0 2px 4px rgba(15, 23, 42, 0.16));
+}
+
+[data-shades="off"] .nimo-shades-lens-glint::after {
+    animation: none;
+    opacity: 0;
+}
+
+[data-shades="off"] .nimo-shades-layered-rig {
+    animation: nimoTakeOffPerkBounce 0.58s cubic-bezier(0.22, 1.35, 0.36, 1) forwards;
+}
+
+@keyframes nimoTakeOffPerkBounce {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    38% {
+        transform: translateY(-9px) rotate(3.2deg) scale(1.045, 0.97);
+    }
+    72% {
+        transform: translateY(2px) rotate(-1.2deg) scale(0.99, 1.015);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+/* Speech Bubble Pop Control: Centered Sleek Quote Card Above Nimo, Hidden While Posing Coolly, Pops In After Taking Off Glasses */
+.login-nimo-beach-mode .mascot-speech-pill {
+    position: absolute !important;
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: calc(100% - 10px) !important;
+    translate: none !important;
+    width: max-content !important;
+    min-width: 240px !important;
+    max-width: min(340px, 86vw) !important;
+    white-space: normal !important;
+    text-align: center !important;
+    text-wrap: balance !important;
+    line-height: 1.48 !important;
+    padding: 11px 20px !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.1px !important;
+    color: #0369a1 !important;
+    background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%) !important;
+    border: 2px solid #38bdf8 !important;
+    border-bottom: 4px solid #0284c7 !important;
+    border-radius: 22px !important;
+    box-shadow: 0 14px 28px rgba(2, 132, 199, 0.22), inset 0 1px 0 #ffffff !important;
+    transition: opacity 0.34s cubic-bezier(0.22, 1.25, 0.36, 1), transform 0.38s cubic-bezier(0.22, 1.35, 0.36, 1) !important;
+    z-index: 6 !important;
+}
+
+html[data-theme="dark"] .login-nimo-beach-mode .mascot-speech-pill {
+    background: linear-gradient(180deg, rgba(15, 39, 62, 0.96) 0%, rgba(12, 31, 50, 0.96) 100%) !important;
+    color: #e0f2fe !important;
+    border-color: #38bdf8 !important;
+    border-bottom-color: #0284c7 !important;
+    box-shadow: 0 14px 30px rgba(0, 8, 20, 0.55) !important;
+}
+
+.login-nimo-beach-mode .mascot-speech-pill .speech-tail {
+    left: 50% !important;
+    right: auto !important;
+    bottom: -8px !important;
+    width: 13px !important;
+    height: 13px !important;
+    background: #f0f9ff !important;
+    border-right: 2px solid #38bdf8 !important;
+    border-bottom: 4px solid #0284c7 !important;
+    transform: translateX(-50%) rotate(45deg) !important;
+}
+
+html[data-theme="dark"] .login-nimo-beach-mode .mascot-speech-pill .speech-tail {
+    background: #0c1f32 !important;
+    border-right-color: #38bdf8 !important;
+    border-bottom-color: #0284c7 !important;
+}
+
+.login-nimo-beach-mode[data-speech-visible="false"] .mascot-speech-pill {
+    opacity: 0 !important;
+    transform: translateX(-50%) translateY(14px) scale(0.75) !important;
+    pointer-events: none !important;
+    animation: none !important;
+}
+
+.login-nimo-beach-mode[data-speech-visible="true"] .mascot-speech-pill {
+    opacity: 1 !important;
+    transform: translateX(-50%) translateY(0) scale(1) !important;
+    animation: nimoQuoteFloatCentered 3.2s ease-in-out infinite !important;
+}
+
+@keyframes nimoQuoteFloatCentered {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-5px) scale(1.01);
+    }
 }
 
 .ns-login-page .story-card :is(h1, .story-intro) {
     color: var(--login-story-ink) !important;
 }
 
-.ns-login-page .story-card.nimo-story-card::before {
-    content: none;
+.story-stars-decor,
+.star-sparkle,
+.story-sparkles-orbit,
+.duo-sparkle,
+.hero-rmooc-pill .star-gold {
+    display: none !important;
 }
 
-.ns-login-page .story-card :is(.story-stars-decor, .story-sparkles-orbit, .mascot-ambient-aura) {
-    display: none;
+.ns-login-page .story-card .hero-rmooc-pill.island-tea-badge {
+    background: rgba(255, 255, 255, 0.78);
+    color: #0369a1;
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.1);
 }
 
-.ns-login-page .story-card .mascot-cloud-pedestal {
-    height: 24px;
-    background: var(--login-story-wave);
-    opacity: 0.35;
-    filter: blur(6px);
-    animation: none;
+html[data-theme="dark"] .ns-login-page .story-card .hero-rmooc-pill.island-tea-badge {
+    background: rgba(15, 39, 62, 0.78);
+    color: #7dd3fc;
+    border-color: rgba(56, 189, 248, 0.38);
+}
+
+.ns-login-page .story-card .feature-tag-pill {
+    background: rgba(255, 255, 255, 0.78) !important;
+    color: #0369a1 !important;
+    border: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+    border-bottom: 3px solid rgba(14, 165, 233, 0.55) !important;
+    font-size: 11.5px !important;
+    padding: 6px 12px !important;
+}
+
+html[data-theme="dark"] .ns-login-page .story-card .feature-tag-pill {
+    background: rgba(15, 39, 62, 0.78) !important;
+    color: #bae6fd !important;
+    border-color: rgba(56, 189, 248, 0.38) !important;
 }
 
 .ns-login-page .story-card .mascot-character-art img.main-mascot-img {
-    filter: drop-shadow(0 8px 12px #173e5626);
+    filter: drop-shadow(0 10px 16px rgba(14, 65, 96, 0.22));
 }
 
 .ns-login-page .story-card .mascot-speech-pill {
-    border: 1px solid var(--ns-border) !important;
-    box-shadow: none !important;
-    animation: none;
+    border: 1.5px solid #7dd3fc !important;
+    border-bottom: 3.5px solid #38bdf8 !important;
+    box-shadow: 0 10px 24px rgba(2, 132, 199, 0.16) !important;
+    animation: speechBounce 3.2s ease-in-out infinite !important;
 }
 
 .ns-login-page .story-card .speech-tail {
     bottom: -7px;
     border: 0;
-    border-right: 1px solid var(--ns-border);
-    border-bottom: 1px solid var(--ns-border);
+    border-right: 1.5px solid #7dd3fc;
+    border-bottom: 3.5px solid #38bdf8;
 }
 
 .ns-login-page .story-card .story-wave-decor {
@@ -1028,6 +1650,410 @@ html[data-theme="dark"] .ns-login-page .story-card.nimo-story-card {
 .ns-login-page .story-wave-decor path {
     fill: var(--login-story-wave);
     opacity: 0.24;
+}
+
+/* ========================================================
+   Nimo's Island Tea Lounge Diorama & Full-Page Ocean Animations
+   ======================================================== */
+
+.nimo-tea-island-diorama {
+    position: relative;
+    min-height: 326px !important;
+    margin: 8px 0 14px !important;
+    padding-top: 56px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 30px;
+}
+
+.tea-island-canopy-svg {
+    position: absolute;
+    inset: -14px -18px 0 -18px;
+    width: calc(100% + 36px);
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+}
+
+.tea-island-ground-svg {
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(108%, 430px);
+    height: auto;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+}
+
+.nimo-tea-island-diorama .mascot-character-art {
+    position: relative;
+    z-index: 3;
+    margin-bottom: 12px;
+}
+
+/* Swaying Palm Tree Crown */
+.tea-palm-crown {
+    transform-origin: 68px 112px;
+    animation: teaPalmSway 4.8s ease-in-out infinite alternate;
+}
+
+@keyframes teaPalmSway {
+    0% { transform: rotate(-4deg) scale(1); }
+    100% { transform: rotate(5deg) scale(1.02); }
+}
+
+/* Swaying Striped Beach Umbrella */
+.tea-beach-umbrella {
+    transform-origin: 286px 266px;
+    animation: teaUmbrellaBreeze 5.4s ease-in-out infinite alternate;
+}
+
+.tea-umbrella-canopy {
+    transform-origin: 254px 68px;
+    animation: teaCanopyFlutter 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes teaUmbrellaBreeze {
+    0% { transform: rotate(-2.2deg); }
+    100% { transform: rotate(2.5deg); }
+}
+
+@keyframes teaCanopyFlutter {
+    0% { transform: scale(1, 1) translateY(0); }
+    100% { transform: scale(1.025, 0.98) translateY(-2px); }
+}
+
+/* Twinkling Fairy Lights under Beach Umbrella */
+.umbrella-fairy-lights .u-light {
+    filter: drop-shadow(0 0 6px rgba(253, 224, 71, 0.95));
+    animation: fairyLightPulse 2.2s ease-in-out infinite alternate;
+}
+.umbrella-fairy-lights .ul-2,
+.umbrella-fairy-lights .ul-4 {
+    animation-delay: -1.1s;
+}
+
+@keyframes fairyLightPulse {
+    0% { opacity: 0.55; transform: scale(0.85); }
+    100% { opacity: 1; transform: scale(1.22); }
+}
+
+/* Flying Mini Seagulls in Card Sky */
+.tea-gull-1 {
+    animation: gullFloat 4.5s ease-in-out infinite alternate;
+}
+.tea-gull-2 {
+    animation: gullFloat 5.2s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes gullFloat {
+    0% { transform: translate(0, 0) scale(0.95); }
+    100% { transform: translate(8px, -6px) scale(1.05); }
+}
+
+/* Animated Teacup Held by Nimo & Rising Steam Plumes */
+.nimo-teacup-hand {
+    position: absolute;
+    bottom: 14%;
+    right: 6%;
+    width: 68px;
+    height: 72px;
+    z-index: 6;
+    pointer-events: none;
+    transform-origin: 70% 75%;
+    animation: nimoTeaSipLoop 4.6s ease-in-out infinite;
+    filter: drop-shadow(0 6px 12px rgba(2, 132, 199, 0.24));
+}
+
+.nimo-teacup-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+}
+
+@keyframes nimoTeaSipLoop {
+    0%, 22%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    42%, 58% {
+        transform: translate(-14px, -22px) rotate(-18deg) scale(1.08);
+    }
+    75% {
+        transform: translate(-4px, -6px) rotate(-4deg) scale(1.02);
+    }
+}
+
+.tea-steam-wisp {
+    opacity: 0;
+    animation: teaSteamRise 2.8s ease-out infinite;
+}
+.tea-steam-wisp.wisp-2 {
+    animation-delay: -0.9s;
+}
+.tea-steam-wisp.wisp-3 {
+    animation-delay: -1.8s;
+}
+
+@keyframes teaSteamRise {
+    0% {
+        transform: translateY(6px) scaleX(0.9);
+        opacity: 0;
+    }
+    35% {
+        opacity: 0.85;
+    }
+    100% {
+        transform: translateY(-16px) translateX(4px) scaleX(1.15);
+        opacity: 0;
+    }
+}
+
+/* Teapot Steam on Side Table */
+.teapot-steam {
+    opacity: 0;
+    animation: teaSteamRise 3.2s ease-out infinite;
+}
+.teapot-steam.ts-2 {
+    animation-delay: -1.5s;
+}
+
+/* Island Shore Lagoon Ripples & Lapping Wave Crest */
+.island-lagoon-ripple.r-outer {
+    transform-origin: 210px 92px;
+    animation: lagoonRipplePulse 3.8s ease-in-out infinite alternate;
+}
+.island-lagoon-ripple.r-inner {
+    transform-origin: 210px 90px;
+    animation: lagoonRipplePulse 3.8s ease-in-out infinite alternate-reverse;
+}
+.tea-front-wave-crest {
+    animation: shoreFoamWash 3.4s ease-in-out infinite alternate;
+}
+
+@keyframes lagoonRipplePulse {
+    0% { transform: scale(0.97, 0.92); opacity: 0.55; }
+    100% { transform: scale(1.03, 1.08); opacity: 0.92; }
+}
+
+@keyframes shoreFoamWash {
+    0% { transform: translateY(0) scaleX(0.98); opacity: 0.65; }
+    100% { transform: translateY(-3px) scaleX(1.02); opacity: 0.95; }
+}
+
+/* Scuttling Red Beach Crab on the Island */
+.tea-island-crab {
+    animation: teaCrabScuttle 7.5s ease-in-out infinite;
+}
+
+@keyframes teaCrabScuttle {
+    0%, 100% { transform: translate(96px, 74px) rotate(0deg); }
+    25% { transform: translate(112px, 73px) rotate(4deg); }
+    50% { transform: translate(124px, 75px) rotate(-3deg); }
+    75% { transform: translate(106px, 73px) rotate(3deg); }
+}
+
+/* Extra Sparkle Orbit Item */
+.duo-sparkle.sp-4 {
+    bottom: 28%;
+    right: 8%;
+    animation-delay: -1.2s;
+    font-size: 17px;
+    color: #fb7185;
+}
+
+/* Full-Page Ambient Ocean Horizon & Rolling Waves Behind Cards */
+.acc-ocean-horizon {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 36svh;
+    min-height: 210px;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.acc-distant-islands {
+    position: absolute;
+    bottom: 108px;
+    left: 0;
+    right: 0;
+    opacity: 0.65;
+    transform: scaleX(1.08);
+}
+
+.acc-distant-islands img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.acc-horizon-sailboat {
+    position: absolute;
+    bottom: 112px;
+    right: 9%;
+    z-index: 1;
+    transform-origin: 50% 85%;
+    animation: accSailboatBob 6.5s ease-in-out infinite alternate;
+}
+
+@keyframes accSailboatBob {
+    0% { transform: translateX(0) translateY(0) rotate(-2.5deg); }
+    50% { transform: translateX(-14px) translateY(-4px) rotate(2deg); }
+    100% { transform: translateX(-28px) translateY(1px) rotate(-1.5deg); }
+}
+
+.acc-jumping-fish {
+    position: absolute;
+    bottom: 92px;
+    left: 11%;
+    z-index: 2;
+}
+
+.acc-fish-arc {
+    animation: accFishLeap 6.8s cubic-bezier(0.35, 0, 0.25, 1) infinite;
+}
+
+@keyframes accFishLeap {
+    0%, 62%, 100% {
+        transform: translate(54px, 78px) rotate(35deg) scale(0.5);
+        opacity: 0;
+    }
+    70% {
+        transform: translate(36px, 34px) rotate(-22deg) scale(1);
+        opacity: 1;
+    }
+    78% {
+        transform: translate(56px, 18px) rotate(8deg) scale(1.05);
+        opacity: 1;
+    }
+    86% {
+        transform: translate(78px, 46px) rotate(42deg) scale(0.92);
+        opacity: 0.9;
+    }
+    92% {
+        transform: translate(88px, 76px) rotate(65deg) scale(0.6);
+        opacity: 0;
+    }
+}
+
+.acc-wave-layer {
+    position: absolute;
+    bottom: 0;
+    left: -5%;
+    width: 110%;
+    line-height: 0;
+}
+
+.acc-wave-layer svg {
+    width: 100%;
+    display: block;
+}
+
+.acc-wave-back {
+    height: 128px;
+    fill: rgba(56, 189, 248, 0.22);
+    animation: accWaveSway 9s ease-in-out infinite alternate;
+}
+
+.acc-wave-mid {
+    height: 104px;
+    fill: rgba(14, 165, 233, 0.26);
+    animation: accWaveSway 7s ease-in-out infinite alternate-reverse;
+}
+
+.acc-wave-front {
+    height: 82px;
+    fill: rgba(2, 132, 199, 0.24);
+    animation: accWaveSway 5.5s ease-in-out infinite alternate;
+}
+
+html[data-theme="dark"] .acc-wave-back { fill: rgba(14, 116, 144, 0.28); }
+html[data-theme="dark"] .acc-wave-mid { fill: rgba(8, 145, 178, 0.24); }
+html[data-theme="dark"] .acc-wave-front { fill: rgba(56, 189, 248, 0.18); }
+
+@keyframes accWaveSway {
+    0% { transform: translateX(-2.5%) scaleY(0.96); }
+    100% { transform: translateX(2.5%) scaleY(1.05); }
+}
+
+/* Shimmering Water Glints & Floating Particles */
+.acc-water-glints span {
+    position: absolute;
+    height: 3px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    animation: glintShimmer 3.2s ease-in-out infinite alternate;
+}
+.acc-water-glints span:nth-child(1) { width: 36px; bottom: 68px; left: 16%; animation-delay: 0s; }
+.acc-water-glints span:nth-child(2) { width: 24px; bottom: 44px; left: 32%; animation-delay: -0.8s; }
+.acc-water-glints span:nth-child(3) { width: 42px; bottom: 82px; left: 48%; animation-delay: -1.5s; }
+.acc-water-glints span:nth-child(4) { width: 28px; bottom: 52px; left: 66%; animation-delay: -2.1s; }
+.acc-water-glints span:nth-child(5) { width: 34px; bottom: 74px; left: 82%; animation-delay: -0.4s; }
+.acc-water-glints span:nth-child(6) { width: 22px; bottom: 32px; left: 22%; animation-delay: -1.2s; }
+
+@keyframes glintShimmer {
+    0% { opacity: 0.25; transform: scaleX(0.75); }
+    100% { opacity: 0.9; transform: scaleX(1.2); }
+}
+
+.acc-floating-particles span {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fef08a 0%, #38bdf8 100%);
+    box-shadow: 0 0 10px rgba(254, 240, 138, 0.8);
+    opacity: 0;
+    animation: particleFloatUp 9s ease-in-out infinite;
+}
+.acc-floating-particles span:nth-child(1) { left: 8%; bottom: 18%; animation-delay: 0s; }
+.acc-floating-particles span:nth-child(2) { left: 19%; bottom: 26%; animation-delay: -2.2s; width: 5px; height: 5px; }
+.acc-floating-particles span:nth-child(3) { left: 34%; bottom: 14%; animation-delay: -4.1s; }
+.acc-floating-particles span:nth-child(4) { left: 52%; bottom: 22%; animation-delay: -1.5s; width: 6px; height: 6px; }
+.acc-floating-particles span:nth-child(5) { left: 68%; bottom: 16%; animation-delay: -5.4s; }
+.acc-floating-particles span:nth-child(6) { left: 81%; bottom: 28%; animation-delay: -3.3s; width: 5px; height: 5px; }
+.acc-floating-particles span:nth-child(7) { left: 91%; bottom: 20%; animation-delay: -6.8s; }
+.acc-floating-particles span:nth-child(8) { left: 14%; bottom: 45%; animation-delay: -7.5s; width: 6px; height: 6px; }
+
+@keyframes particleFloatUp {
+    0% { transform: translateY(0) scale(0.6); opacity: 0; }
+    30% { opacity: 0.75; }
+    70% { opacity: 0.65; }
+    100% { transform: translateY(-110px) translateX(18px) scale(1.2); opacity: 0; }
+}
+
+/* Shooting Stars in Account Sky */
+.acc-shooting-stars {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.acc-shooting-star {
+    position: absolute;
+    width: 110px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(253, 224, 71, 0.5), transparent);
+    border-radius: 99px;
+    opacity: 0;
+    transform: rotate(-28deg);
+    animation: accShootingStar 8.5s ease-in-out infinite;
+}
+.acc-star-1 { top: 14%; left: 68%; animation-delay: 1.5s; }
+.acc-star-2 { top: 24%; left: 28%; animation-delay: 5.5s; }
+
+@keyframes accShootingStar {
+    0%, 84%, 100% { transform: translate(0, 0) rotate(-28deg) scaleX(0.4); opacity: 0; }
+    88% { opacity: 0.95; }
+    94% { transform: translate(-180px, 95px) rotate(-28deg) scaleX(1.1); opacity: 0; }
 }
 
 .ns-login-page {
