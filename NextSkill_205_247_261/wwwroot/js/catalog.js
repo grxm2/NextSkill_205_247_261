@@ -45,7 +45,7 @@
         });
         page.querySelectorAll('[data-course-start]').forEach(link => {
             const saved=state.courses.find(item=>item.courseId===Number(link.dataset.courseId));
-            if(saved&&!selecting)(link.querySelector('[data-course-action-label]')||link).textContent=`${saved.isComplete?'ทบทวนบทเรียน':saved.hasStarted?'เรียนต่อจากเกาะเดิม':page.hasAttribute('data-catalog-ocean')?'เลือกคอร์สนี้':'เริ่มเรียนเกาะแรก'}`;
+            if(saved&&!selecting)(link.querySelector('[data-course-action-label]')||link).textContent=saved.isComplete?'ทบทวนบทเรียน':saved.hasStarted?'เรียนต่อจากเกาะเดิม':'เริ่มเรียนเกาะแรก';
         });
         const course = state.courses.find(item => item.courseId === Number(page.dataset.courseId));
         if (!course) return;
@@ -75,12 +75,31 @@
             message(error.name === 'TimeoutError' ? 'โหลดความก้าวหน้านานกว่าปกติ ลองอีกครั้งได้โดยไม่เริ่มใหม่' : error.message || 'ยังโหลดความก้าวหน้าไม่ได้', true);
         } finally { loading = false; page.removeAttribute('aria-busy'); }
     }
+
+    function rememberIslandArrival(start) {
+        if (!details) return;
+        const motion = window.NextSkillMotion?.snapshot();
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches || motion?.paused || document.hidden) return;
+        const island = new URL(start.dataset.islandUrl, location.href);
+        try {
+            sessionStorage.setItem('nextskill.journey-arrival', JSON.stringify({
+                courseId: Number(start.dataset.courseId),
+                url: island.pathname + island.search,
+                at: Date.now(),
+                source: 'details'
+            }));
+        } catch {}
+    }
+
     page.addEventListener('click', async event => {
         const start=event.target.closest('[data-course-start]');
         if(!start||!page.contains(start))return;
         if (selecting) { event.preventDefault(); return; }
-        // Anonymous production links use the existing login ReturnUrl directly.
-        if (!eligible || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+        if (!eligible) {
+            rememberIslandArrival(start);
+            return;
+        }
         event.preventDefault();
         selecting = true;
         const text=start.querySelector('[data-course-action-label]')||start;
@@ -96,6 +115,7 @@
             });
             if (response.status === 401) {
                 voyage?.cancel();
+                rememberIslandArrival(start);
                 location.assign(`/Account/Login?returnUrl=${encodeURIComponent(start.dataset.islandUrl)}`); return;
             }
             const result = await response.json().catch(() => null);
@@ -103,7 +123,10 @@
             if(!Array.isArray(result?.courses)||!result.courses.some(item=>item.courseId===Number(start.dataset.courseId)&&item.hasStarted))throw new Error('ยังยืนยันคอร์สที่เลือกไม่ได้ กรุณาลองอีกครั้ง');
             displayProgress(result);
             if(voyage)await voyage.navigate(start.dataset.islandUrl,Number(start.dataset.courseId));
-            else location.assign(start.dataset.islandUrl);
+            else {
+                rememberIslandArrival(start);
+                location.assign(start.dataset.islandUrl);
+            }
         } catch (error) {
             voyage?.cancel();
             message(error.name === 'TimeoutError' ? 'การเปิดเส้นทางใช้เวลานาน ลองกดเริ่มอีกครั้งได้ ข้อมูลเดิมยังอยู่' : error.message || 'ยังเปิดเส้นทางไม่ได้');

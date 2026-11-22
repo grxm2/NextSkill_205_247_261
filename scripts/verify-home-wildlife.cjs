@@ -72,7 +72,10 @@ const overlap=(a,b)=>Math.min(a.right,b.right)-Math.max(a.left,b.left)>1&&Math.m
    assert.deepEqual(await wildlife.evaluate(e=>e.getAnimations({subtree:true}).map(a=>a.currentTime)),frozen,'Pause freezes every wildlife animation');
    await page.screenshot({path:path.join(out,`home-${width}-day.png`)});
    if(width===1440)await page.locator('.ow-island-art').screenshot({path:path.join(out,'island-detail.png')});
+   const mobileNav=page.locator('[data-navbar-toggle]');
+   if(await mobileNav.isVisible())await mobileNav.click();
    await page.locator('[data-theme-toggle]').click();
+   if(await mobileNav.getAttribute('aria-expanded')==='true')await page.keyboard.press('Escape');
    await page.screenshot({path:path.join(out,`home-${width}-night.png`)});
    await page.evaluate(()=>NextSkillMotion.setPaused(false));
    await page.waitForFunction(()=>document.querySelector('[data-island-wildlife]').dataset.wildlifeMotion==='active');
@@ -81,10 +84,14 @@ const overlap=(a,b)=>Math.min(a.right,b.right)-Math.max(a.left,b.left)>1&&Math.m
    await page.evaluate(()=>document.querySelector('#journey-help-dialog').close());
    await page.waitForFunction(()=>document.querySelector('[data-island-wildlife]').dataset.wildlifeMotion==='active');
    // Move the camera to the harbor without selecting a course or arming navigation.
-   await page.evaluate(()=>scrollTo(0,document.scrollingElement.scrollHeight));
+   await page.evaluate(()=>{
+    NextSkillOceanWorld.hold();
+    scrollTo(0,document.scrollingElement.scrollHeight);
+   });
    await page.waitForFunction(()=>document.querySelector('[data-island-wildlife]').dataset.wildlifeMotion==='paused');
    await page.evaluate(()=>scrollTo(0,0));
    await page.waitForFunction(()=>document.querySelector('[data-island-wildlife]').dataset.wildlifeMotion==='active');
+   await page.evaluate(()=>NextSkillOceanWorld.release());
    await page.emulateMedia({reducedMotion:'reduce'});
    await page.waitForFunction(()=>document.querySelector('[data-island-wildlife]').getAnimations({subtree:true}).length===0);
    assert.equal(await wildlife.getAttribute('data-wildlife-motion'),'paused');

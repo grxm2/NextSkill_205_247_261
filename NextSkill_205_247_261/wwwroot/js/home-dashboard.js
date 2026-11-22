@@ -15,8 +15,35 @@
     const format = new Intl.NumberFormat('th-TH');
     const goals = [...dashboard.querySelectorAll('[data-dashboard-goal]')];
     const dailyGoals = find('#hd-daily-goals');
-    document.getElementById('nimo-missions-open')?.addEventListener('click', () =>
-        dailyGoals.focus({ preventScroll: true }));
+    const mission = find('.hd-mission');
+    const missionDialog = find('#hd-mission-dialog');
+    const missionTrigger = find('.hd-missions-trigger');
+    const compact = matchMedia('(width < 768px), (orientation: landscape) and (height < 480px)');
+    const missionHome = mission.parentElement;
+    let missionOpener;
+
+    function openMissions(event) {
+        if (!compact.matches) {
+            dailyGoals.focus({ preventScroll: true });
+            return;
+        }
+        if (missionDialog.open) return;
+        missionOpener = event.currentTarget;
+        missionDialog.prepend(mission);
+        missionDialog.showModal();
+    }
+
+    missionTrigger.addEventListener('click', openMissions);
+    document.getElementById('nimo-missions-open')?.addEventListener('click', openMissions);
+    missionDialog.addEventListener('close', () => {
+        missionHome.append(mission);
+        const focusTarget = missionOpener?.getClientRects().length ? missionOpener : missionTrigger;
+        if (focusTarget.getClientRects().length) focusTarget.focus({ preventScroll: true });
+        missionOpener = null;
+    });
+    compact.addEventListener('change', event => {
+        if (!event.matches && missionDialog.open) missionDialog.close();
+    });
 
     function renderGoals(activity) {
         const status = {};

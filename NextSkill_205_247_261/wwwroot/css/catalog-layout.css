@@ -154,9 +154,7 @@
 }
 .catalog-page .ns-course-card-copy > p { color: var(--ns-muted); line-height: 1.75; }
 .catalog-page .ns-course-card-footer { padding-top: 10px; }
-.catalog-page .catalog-card-actions { display: grid; gap: 8px 16px; }
-.catalog-page .catalog-card-start {
-    flex: 1 1 10.5rem;
+.catalog-page .catalog-card-choice {
     min-width: 0;
     min-height: 48px;
     padding: 10px 14px;
@@ -164,22 +162,7 @@
     gap: 12px;
     justify-content: space-between;
 }
-.catalog-page .catalog-card-start [data-course-action-label] { overflow-wrap: anywhere; }
-.catalog-page .catalog-course-link {
-    display: inline-flex;
-    align-items: center;
-    justify-self: start;
-    gap: 6px;
-    min-height: 44px;
-    padding-inline: 8px;
-    color: var(--ns-ink);
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    white-space: nowrap;
-}
-.catalog-page .catalog-course-link > span { width: 24px; height: 24px; }
-.catalog-page [data-course-start][aria-disabled="true"] { cursor: wait; opacity: .75; }
+.catalog-page .catalog-card-choice > span:first-child { overflow-wrap: anywhere; }
 .catalog-page .ns-catalog-status { margin: 0 0 20px; font-size: 14px; }
 
 .catalog-page .learning-celestial :is(.hero-sun,.journey-moon) {
@@ -188,10 +171,6 @@
     width: 24px;
 }
 .catalog-page .learning-celestial .hero-sun { box-shadow: 0 0 16px 5px #fff0b26b, 0 0 30px 10px #ffe3a32b; }
-
-@media (min-width: 480px) {
-    .catalog-page .catalog-card-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
-}
 
 @media (width < 768px), (width < 1024px) and (height < 480px) {
     .catalog-page .ns-course-grid {
@@ -221,8 +200,7 @@
     }
 
     .catalog-page .ns-course-card-footer { padding-top: 10px; }
-    .catalog-page .catalog-card-start { gap: 4px; padding-inline: 7px; font-size: .8125rem; }
-    .catalog-page .catalog-course-link { padding-inline: 0; font-size: .8125rem; }
+    .catalog-page .catalog-card-choice { gap: 4px; padding-inline: 7px; font-size: .8125rem; }
 }
 
 @media (min-width: 768px) {

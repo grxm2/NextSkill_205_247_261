@@ -152,14 +152,6 @@ body.ns-catalog-shell {
 .catalog-page .ns-course-progress progress::-webkit-progress-bar { background: #13496113; }
 .catalog-page .ns-course-progress progress::-webkit-progress-value { background: var(--ns-primary); border-radius: 999px; }
 .catalog-page .ns-course-progress progress::-moz-progress-bar { background: var(--ns-primary); }
-.catalog-page .catalog-course-link > span {
-    display: grid;
-    place-items: center;
-    flex: none;
-    color: var(--ns-primary-hover);
-    font-size: 19px;
-    transition: transform 160ms var(--ns-ease-out);
-}
 .catalog-page .ns-catalog-status { background: var(--catalog-surface); border: 1px solid var(--catalog-edge); border-radius: 14px; color: var(--ns-ink); padding: 12px 16px; }
 .catalog-page .ns-catalog-status.ns-status--error { background: var(--ns-danger-surface); color: var(--ns-danger); }
 .catalog-page .ns-course-empty { padding: 32px 24px 40px; background: var(--catalog-surface); border-color: var(--catalog-edge); }
@@ -177,7 +169,6 @@ body.ns-catalog-shell {
 }
 @media (hover: hover) and (pointer: fine) {
     .catalog-page .ns-course-card-art:hover > img { transform: scale(1.035); }
-    .catalog-page .catalog-course-link:hover > span { transform: translate(2px,-2px); }
     .catalog-page .ns-course-tags a:not([aria-current="true"]):hover { background: #ffffff66; }
     .catalog-page .ns-course-card h3 a:hover { text-decoration: underline; text-underline-offset: 4px; }
 }
@@ -200,6 +191,5 @@ html[data-theme="dark"] .ns-catalog-shell .ns-site-footer { background: #12364d;
 }
 @media (prefers-reduced-motion: reduce) {
     .catalog-page .catalog-boat-idle { animation: none; }
-    .catalog-page .ns-course-card-art > img,
-    .catalog-page .catalog-course-link > span { transition: none; transform: none; }
+    .catalog-page .ns-course-card-art > img { transition: none; transform: none; }
 }

@@ -10,7 +10,7 @@
 }
 <section class="ns-course-page catalog-page" data-course-page data-catalog-ocean data-progress-eligible="@eligible.ToString().ToLowerInvariant()" id="course-content" aria-labelledby="catalog-title">
     <partial name="_LearningOceanWorld" />
-    <div class="learning-celestial" aria-hidden="true"><partial name="_JourneyCelestial" /></div>
+    <div class="learning-celestial" data-journey-celestial aria-hidden="true"><partial name="_JourneyCelestial" /></div>
     <div class="catalog-wrap">
         <header class="catalog-hero" data-catalog-hero data-catalog-ambient="paused">
             <div class="catalog-hero-copy">
@@ -41,7 +41,6 @@
                 </div><span class="catalog-boat-water"></span></div></div>
             </div>
         </header>
-        <div hidden id="catalog-antiforgery">@Html.AntiForgeryToken()</div>
         <div class="ns-catalog-status ns-status" data-catalog-status role="status" aria-live="polite" hidden></div>
         <div class="ns-course-section-heading" id="catalog-results">
             <div><h2>@(filtered ? "คอร์สที่ตรงกับคุณ" : "คอร์สทั้งหมด")</h2><p>พบ @Model.TotalCount คอร์ส@(string.IsNullOrWhiteSpace(Model.Query) ? "" : $" สำหรับ “{Model.Query}”")</p></div>
@@ -77,18 +76,15 @@
                             <span class="visually-hidden">เร็ว ๆ นี้ ยังไม่เปิดให้เรียน</span>
                         }
                         <h3><a asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h3><p>@item.Description</p>
-                        <div class="ns-course-card-footer">
-                            <div class="ns-course-progress" data-course-progress hidden><span data-progress-label></span><progress max="100" value="0" aria-label="ความก้าวหน้า @item.Title"></progress></div>
-                            <div class="catalog-card-actions">
-                            @if (item.CanStart)
-                            {
-                                var islandUrl = Url.Action("Island", "Learning", new { courseId = item.Id })!;
-                                var startUrl = eligible ? islandUrl : Url.Action("Login", "Account", new { returnUrl = islandUrl });
-                                <a class="ns-button ns-button--primary catalog-card-start" href="@startUrl" data-course-start data-island-url="@islandUrl" data-course-id="@item.Id"><span data-course-action-label>@(eligible ? "เลือกคอร์สนี้" : "เข้าสู่ระบบเพื่อเรียน")</span><span aria-hidden="true">→</span></a>
-                            }
-                            <a class="catalog-course-link" asp-action="Details" asp-route-id="@item.Id" aria-label="ดูรายละเอียด @item.Title">รายละเอียด <span aria-hidden="true">↗</span></a>
+                        @if (item.CanStart)
+                        {
+                            <div class="ns-course-card-footer">
+                                <div class="ns-course-progress" data-course-progress hidden><span data-progress-label></span><progress max="100" value="0" aria-label="ความก้าวหน้า @item.Title"></progress></div>
+                                <a class="ns-button ns-button--primary catalog-card-choice" asp-action="Details" asp-route-id="@item.Id" aria-label="เลือกคอร์สนี้ @item.Title">
+                                    <span>เลือกคอร์สนี้</span><span aria-hidden="true">→</span>
+                                </a>
                             </div>
-                        </div>
+                        }
                     </div>
                 </article>
             }

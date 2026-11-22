@@ -64,10 +64,12 @@
     const POSE_JUMP = '/images/nimo-pose-jump.png';
 
     // Preload poses to eliminate flicker
-    [POSE_DEFAULT, POSE_STUDY, POSE_PEEK, POSE_JUMP].forEach(src => {
-        const img = new Image();
-        img.src = src;
-    });
+    if (mascotWrap) {
+        [POSE_DEFAULT, POSE_STUDY, POSE_PEEK, POSE_JUMP].forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+    }
 
     let currentPose = POSE_DEFAULT;
     let restorePoseTimer = null;
@@ -193,7 +195,7 @@
     // ==========================================
     // Interactive Form Field Focus Reactions
     // ==========================================
-    const emailInput = document.querySelector('input[type="email"], #Email, input[name="Email"]');
+    const emailInput = mascotWrap?.closest('main')?.querySelector('input[type="email"], #Email, input[name="Email"]');
     if (emailInput) {
         emailInput.addEventListener('focus', () => {
             setMascotPose(POSE_STUDY);
@@ -208,7 +210,7 @@
         });
     }
 
-    const passwordInputs = document.querySelectorAll('input[type="password"]');
+    const passwordInputs = mascotWrap ? document.querySelectorAll('input[type="password"]') : [];
     passwordInputs.forEach(input => {
         input.addEventListener('focus', () => {
             setMascotPose(POSE_PEEK);
@@ -224,7 +226,7 @@
     });
 
     // Submit button hover interaction (Excited jump!)
-    const submitBtn = document.querySelector('.btn-auth-submit');
+    const submitBtn = mascotWrap && document.querySelector('.btn-auth-submit');
     if (submitBtn) {
         submitBtn.addEventListener('mouseenter', () => {
             setMascotPose(POSE_JUMP);
@@ -242,7 +244,7 @@
     // Subtle 3D Game Tilt Parallax on Auth Grid
     const storyCard = document.querySelector('.nimo-story-card');
     const authCard = document.querySelector('.nimo-auth-card');
-    if (storyCard && authCard) {
+    if (storyCard && authCard && !storyCard.querySelector('[data-login-nimo]')) {
         const tiltAllowed = matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
         let tiltFrame = 0;
         const tilt = event => {

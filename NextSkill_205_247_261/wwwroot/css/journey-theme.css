@@ -18,8 +18,10 @@ html[data-theme="dark"] .theme-icon-moon{display:none}
 .journey-sun{opacity:1}
 html[data-theme="dark"] .journey-sun{transform:translate3d(-50%,75vh,0);opacity:0}
 html[data-theme="dark"] .journey-moon{transform:translate3d(-50%,-50%,0);opacity:1}
-.theme-transitioning .journey-sun,.theme-transitioning .journey-moon{transition:transform 1100ms var(--ns-ease-in-out),opacity 700ms ease}
-.theme-transitioning[data-theme="dark"] .journey-moon,.theme-transitioning[data-theme="light"] .journey-sun{transition-delay:350ms}
+.journey-orbit-source > :is(.journey-sun,.journey-moon){visibility:hidden}
+.journey-orbit-layer{position:fixed;inset:0;z-index:2;overflow:clip;pointer-events:none}
+.ns-login-page .journey-orbit-layer{z-index:0}
+.journey-orbit-body{position:absolute;top:0;left:0;opacity:0;pointer-events:none}
 .journey-night-sky{position:absolute;inset:0;background:radial-gradient(ellipse 42% 50% at var(--journey-moon-x,82%) var(--journey-moon-y,25%),#b6d4f724,transparent 75%),linear-gradient(#071426,#142f4b 52%,#234b63 70%,#173e58);opacity:0;pointer-events:none}
 .journey-stars{position:absolute;inset:0;opacity:0;pointer-events:none;background:radial-gradient(circle at 9% 13%,#eaf5ff 0 1px,transparent 1.8px),radial-gradient(circle at 22% 8%,#eaf5ff 0 1px,transparent 1.8px),radial-gradient(circle at 42% 18%,#d0e5f9 0 1.3px,transparent 2px),radial-gradient(circle at 57% 10%,#eaf5ff 0 1px,transparent 1.8px),radial-gradient(circle at 70% 32%,#eaf5ff 0 1px,transparent 1.8px),radial-gradient(circle at 93% 17%,#d0e5f9 0 1.4px,transparent 2px),radial-gradient(circle at 34% 34%,#eaf5ff 0 1px,transparent 1.8px)}
 html[data-theme="dark"] :is(.journey-night-sky,.journey-stars){opacity:1}

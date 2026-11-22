@@ -12,8 +12,11 @@
         seen = sessionStorage.getItem(seenKey) === 'true';
     } catch {}
     const age=Date.now()-marker?.at;
-    const seaArrival = marker?.source === 'catalog' || marker?.source === 'home';
-    const isArriving = !!(marker && boot && marker.courseId === boot.course.courseId && age>=0 && age < (seaArrival?60000:900000) && (!marker.url||marker.url===location.pathname+location.search));
+    const detailsArrival = marker?.source === 'details';
+    const seaArrival = detailsArrival || marker?.source === 'catalog' || marker?.source === 'home';
+    // The details route can pass through login before returning to the island.
+    const arrivalLifetime = seaArrival && !detailsArrival ? 60000 : 900000;
+    const isArriving = !!(marker && boot && marker.courseId === boot.course.courseId && age>=0 && age < arrivalLifetime && (!marker.url||marker.url===location.pathname+location.search));
     if(isArriving&&seaArrival&&!marker.skip)document.documentElement.classList.add('journey-island-arriving');
     const label = cloud.querySelector('.jc-label');
     const skip = document.createElement('button');
@@ -96,10 +99,10 @@
             const route=document.getElementById('lesson-route');
             const first=route?.querySelector('[data-lesson-id="1"] img');
             if(first){
-                const shore=window.NextSkillSeaWorld.surfaceShore(first);
+                const shore=window.NextSkillSeaWorld?.surfaceShore(first);
                 const sameViewport=marker.sea?.width===innerWidth&&marker.sea?.height===innerHeight;
                 const horizon=sameViewport?marker.sea.horizon:window.NextSkillSeaWorld?.referenceHorizon();
-                if(Number.isFinite(horizon)){
+                if(Number.isFinite(horizon)&&Number.isFinite(shore)){
                     const extra=Math.max(0,horizon-shore);
                     if(extra)route.style.paddingTop=`${extra}px`;
                     const documentShore=window.NextSkillSeaWorld.surfaceShore(first);

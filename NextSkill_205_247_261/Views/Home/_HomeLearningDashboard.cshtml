@@ -46,6 +46,15 @@
             <div class="hd-actions" data-dashboard-actions hidden>
                 <a class="ns-button ns-button--primary" data-dashboard-resume><span data-dashboard-resume-label>เรียนต่อ</span><span aria-hidden="true">→</span></a>
                 <a class="ns-button ns-button--secondary" asp-controller="Home" asp-action="Courses" data-catalog-voyage>เลือกคอร์สใหม่</a>
+                <button class="hd-missions-trigger" type="button" aria-haspopup="dialog" aria-controls="hd-mission-dialog">
+                    <svg viewBox="0 0 32 26" fill="none" aria-hidden="true" focusable="false">
+                        <path d="M4 12v8a3 3 0 0 0 3 3h18a3 3 0 0 0 3-3v-8Z" class="hd-chest-body" />
+                        <path d="M4 12V9a6 6 0 0 1 6-6h12a6 6 0 0 1 6 6v3Z" class="hd-chest-lid" />
+                        <path d="M9 5v6m14-6v6M9 15v5m14-5v5" class="hd-chest-bands" />
+                        <rect x="13" y="10" width="6" height="6" rx="1.5" class="hd-chest-latch" />
+                    </svg>
+                    <span>ภารกิจ</span>
+                </button>
             </div>
         </div>
         <section class="hd-mission hd-glass" aria-labelledby="hd-mission-title">
@@ -73,4 +82,9 @@
             </section>
         </section>
     </div>
+    <dialog class="hd-mission-dialog hd-glass" id="hd-mission-dialog" aria-labelledby="hd-mission-title">
+        <form method="dialog">
+            <button type="submit" class="hd-mission-close" aria-label="ปิดภารกิจ" autofocus>✕</button>
+        </form>
+    </dialog>
 </section>

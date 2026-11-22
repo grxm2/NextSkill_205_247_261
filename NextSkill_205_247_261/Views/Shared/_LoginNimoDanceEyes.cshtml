@@ -1,0 +1,62 @@
+@model string
+@functions {
+    private sealed record Eye(string Name, string Outline, int X, int Y, int RadiusX, int RadiusY, int Angle);
+}
+@{
+    var size = Model == "book" ? 1024 : 1254;
+    // Eye masks use the native pixel coordinates of each pose image.
+    var eyes = Model switch
+    {
+        "bow" => new[]
+        {
+            new Eye("left", "M501 552C507 517 527 491 556 482C581 477 632 500 692 537C715 567 715 609 688 639C659 670 610 670 559 651C518 634 493 602 501 552Z", 627, 578, 70, 82, -6),
+            new Eye("right", "M875 510C889 473 934 444 962 438C996 441 1020 482 1019 524C1018 571 992 607 952 614C905 623 870 577 875 510Z", 934, 532, 54, 77, -8)
+        },
+        "hop" => new[]
+        {
+            new Eye("left", "M454 502C450 451 480 410 529 395C575 384 624 418 644 465C664 507 657 552 626 578C596 603 546 601 503 579C472 562 457 536 454 502Z", 563, 511, 70, 82, -8),
+            new Eye("right", "M795 378C787 332 812 299 847 293C888 286 928 322 942 369C960 422 932 467 894 481C852 493 808 457 799 414Z", 855, 403, 57, 77, -11)
+        },
+        _ => new[]
+        {
+            new Eye("left", "M377 445C374 403 391 375 424 362C462 343 501 368 527 399C554 430 553 477 524 505C500 529 459 532 424 519C396 506 379 477 377 445Z", 467, 454, 57, 70, -10),
+            new Eye("right", "M669 346C665 304 686 274 714 270C747 266 778 298 789 333C801 372 783 407 754 424C722 443 687 421 676 390Z", 719, 365, 46, 65, -11)
+        }
+    };
+    var irisId = $"login-nimo-{Model}-iris";
+}
+
+<svg class="login-nimo-face" viewBox="0 0 @size @size" focusable="false">
+    <defs>
+        <linearGradient id="@irisId" x2="0" y2="1">
+            <stop stop-color="#0b294c" />
+            <stop offset=".57" stop-color="#123e6d" />
+            <stop offset="1" stop-color="#4598ce" />
+        </linearGradient>
+        @foreach (var eye in eyes)
+        {
+            <clipPath id="login-nimo-@Model-@eye.Name"><path d="@eye.Outline" /></clipPath>
+        }
+    </defs>
+    <g class="login-nimo-eyes">
+        @foreach (var eye in eyes)
+        {
+            <g clip-path="url(#login-nimo-@Model-@eye.Name)">
+                <path fill="#f8fbff" d="@eye.Outline" />
+                <g data-nimo-pupil data-gaze-size="@size">
+                    <g transform="translate(@eye.X @eye.Y) rotate(@eye.Angle) scale(@eye.RadiusX @eye.RadiusY)">
+                        <ellipse rx="1" ry="1" fill="url(#@irisId)" stroke="#0c294b" stroke-width=".10" />
+                        <ellipse cx="-.05" cy="-.10" rx=".56" ry=".61" fill="#0b2d55" />
+                        <circle cx=".19" cy="-.53" r=".21" fill="#fff" />
+                        <circle cx="-.36" cy=".56" r=".09" fill="#ecf7ff" />
+                    </g>
+                </g>
+                <g class="login-nimo-lids">
+                    <path fill="#8bc5e8" d="@eye.Outline" />
+                    <path transform="translate(@eye.X @eye.Y) rotate(@eye.Angle) scale(@eye.RadiusX @eye.RadiusY)"
+                          fill="none" stroke="#244f7e" stroke-width=".13" stroke-linecap="round" d="M-.72 -.06Q-.04 .43 .72 -.06" />
+                </g>
+            </g>
+        }
+    </g>
+</svg>

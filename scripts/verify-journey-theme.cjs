@@ -11,6 +11,11 @@ const output = path.resolve('artifacts/journey-theme');
     const browser=await chromium.launch({headless:true,executablePath:process.env.BROWSER_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe'});
     const errors=[];
     try {
+        const response = await fetch(new URL('/Learning/Catalog', base));
+        assert.ok(response.ok);
+        const { courses } = await response.json();
+        const testCourse = courses.find(course => course.id === 101 && course.canStart) ?? courses.find(course => course.canStart);
+        assert.ok(testCourse, 'The responsive fixture needs a published course');
         for (const width of [320,390,1440]) {
             const context=await browser.newContext({viewport:{width,height:width<701?844:1000},reducedMotion:'no-preference'});
             const page=await context.newPage();
@@ -25,9 +30,19 @@ const output = path.resolve('artifacts/journey-theme');
             await toggle.click();
             assert.equal(await toggle.getAttribute('aria-pressed'),'true');
             assert.equal(await page.evaluate(()=>localStorage.getItem('nextskill.theme.v1')),'dark');
+            const edges = await page.locator('.journey-orbit-layer').evaluate(layer => {
+                const viewportWidth = document.documentElement.clientWidth;
+                const [sun, moon] = ['sun', 'moon'].map(name => layer.querySelector(`[data-orbit-body="${name}"]`));
+                const crosses = (body, outside) => body.getAnimations()[0].effect.getKeyframes().some(frame => {
+                    const x = new DOMMatrixReadOnly(frame.transform).m41;
+                    return Number(frame.opacity) === 1 && outside(x);
+                });
+                return [crosses(sun, x => x > viewportWidth), crosses(moon, x => x + moon.offsetWidth < 0)];
+            });
+            assert.deepEqual(edges, [true, true], 'Both discs should travel beyond the viewport while visible');
             if(width===1440){
                 await page.waitForTimeout(500);
-                const mid=await page.locator('.journey-sun').evaluate(el=>el.getBoundingClientRect().top);
+                const mid=await page.locator('[data-orbit-body="sun"]').evaluate(el=>el.getBoundingClientRect().top);
                 assert.ok(mid>sunTop+10,'Sun did not descend during the transition');
             }
             await page.waitForFunction(()=>!document.documentElement.classList.contains('theme-transitioning'));
@@ -44,8 +59,8 @@ const output = path.resolve('artifacts/journey-theme');
             console.log(`PASS Home switch, persistence, reversal and layout ${width}px`);
 
             if(width!==320){
-                const response=await page.goto(`${base}/Learning/Island?courseId=1`,{waitUntil:'load'});
-                assert.equal(response.status(),200,'Island needs the local Development learning database');
+                const islandResponse=await page.goto(`${base}/Learning/Island?courseId=${testCourse.id}`,{waitUntil:'load'});
+                assert.equal(islandResponse.status(),200,'Island needs the local Development learning database');
                 await page.locator('.sj-lesson-island').first().waitFor();
                 assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
                 assert.equal(await page.locator('.learning-celestial .journey-moon').count(),1);
