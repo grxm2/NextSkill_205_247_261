@@ -110,8 +110,8 @@
                             @foreach (var course in courses)
                             {
                                 <li>
-                                    <a class="lp-course" asp-controller="Learning" asp-action="Island" asp-route-courseId="@course.CourseId">
-                                        <span class="lp-course-main"><strong dir="auto">@course.Title</strong><span class="lp-muted">@(course.IsComplete ? "เรียนจบแล้ว" : $"{course.CompletedLessons.Count} / {course.TotalLessons} บทเรียน")</span></span>
+                                    <a class="lp-course" asp-controller="Learning" asp-action="@(course.FinalQuizReady ? "FinalQuiz" : "Island")" asp-route-courseId="@course.CourseId">
+                                        <span class="lp-course-main"><strong dir="auto">@course.Title</strong><span class="lp-muted">@(course.IsComplete ? "เรียนจบแล้ว" : course.FinalQuizReady ? "พร้อมสอบท้ายคอร์ส" : $"{course.CompletedLessons.Count} / {course.TotalLessons} บทเรียน")</span></span>
                                         <span class="lp-course-meter">
                                             <progress class="lp-meter" value="@course.Progress" max="100" aria-label="ความคืบหน้า @course.Title"></progress>
                                             <span>@(course.Progress)%</span>

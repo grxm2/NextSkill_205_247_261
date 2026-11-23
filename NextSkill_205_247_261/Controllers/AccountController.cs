@@ -294,7 +294,17 @@ public class AccountController(AccountStore store, LearningStore learning, ILogg
     }
 
     [HttpPost, Authorize(Roles = "Admin")]
-    public async Task<IActionResult> AdminDeleteCourse([FromBody] CourseDeleteRequest? req)
+    public async Task<IActionResult> AdminPublishCourse([FromBody] CourseIdRequest? req)
+    {
+        if (!ModelState.IsValid || req is null || req.Id <= 0)
+            return BadRequest(new { success = false, message = "รหัสคอร์สไม่ถูกต้อง" });
+
+        return await RunAdminContentWrite(() => Task.FromResult<IActionResult>(
+            Json(new { success = true, course = AdminContentStore.PublishCourse(req.Id) })));
+    }
+
+    [HttpPost, Authorize(Roles = "Admin")]
+    public async Task<IActionResult> AdminDeleteCourse([FromBody] CourseIdRequest? req)
     {
         if (!ModelState.IsValid || req is null || req.Id <= 0)
             return BadRequest(new { success = false, message = "รหัสคอร์สไม่ถูกต้อง" });
@@ -342,7 +352,7 @@ public class AccountController(AccountStore store, LearningStore learning, ILogg
         {
             int highestRecordedId = await learning.HighestRecordedCourseIdAsync(token);
             int imported = AdminContentStore.ImportCourses(json, highestRecordedId);
-            return Json(new { success = true, count = imported, message = $"นำเข้าคอร์สสำเร็จ {imported} รายการ" });
+            return Json(new { success = true, count = imported, message = $"นำเข้าฉบับร่าง {imported} คอร์สแล้ว" });
         });
     }
 
@@ -407,6 +417,6 @@ public class AccountController(AccountStore store, LearningStore learning, ILogg
     [HttpGet] public IActionResult Terms() => View();
 }
 
-public record CourseDeleteRequest(int Id);
+public record CourseIdRequest(int Id);
 public record QuestionDeleteRequest(string Id);
 

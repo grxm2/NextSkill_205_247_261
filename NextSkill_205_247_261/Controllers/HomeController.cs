@@ -53,7 +53,7 @@ namespace NextSkill_205_247_261.Controllers
             all = sort switch
             {
                 "A-Z" => all.OrderBy(c => c.Title).ToList(),
-                "Recently" => all.OrderByDescending(c => c.Id).ToList(),
+                "Recently" => all.OrderByDescending(c => c.Metadata.CreatedAt).ThenByDescending(c => c.Id).ToList(),
                 _ => all.OrderByDescending(c => c.CanStart).ThenByDescending(c => c.Metadata.Featured).ThenBy(c => c.Id).ToList()
             };
 

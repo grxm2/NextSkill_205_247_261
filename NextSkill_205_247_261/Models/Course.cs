@@ -11,6 +11,8 @@ namespace NextSkill_205_247_261.Models
         public int Units { get; set; }
         public bool Featured { get; set; }
         public bool IsArchived { get; set; }
+        public bool? IsPublished { get; set; }
+        public DateTime? CreatedAt { get; set; }
         public string Description { get; set; } = string.Empty;
         public string Instructor { get; set; } = string.Empty;
         public List<string> Skills { get; set; } = new List<string>();

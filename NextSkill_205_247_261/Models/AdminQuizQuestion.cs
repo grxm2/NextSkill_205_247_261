@@ -5,10 +5,12 @@ namespace NextSkill_205_247_261.Models;
 
 public class AdminQuizQuestion
 {
+    public const int FinalQuizLessonId = 0;
+
     public string Id { get; set; } = "";
     public int CourseId { get; set; }
     public string CourseTitle { get; set; } = "";
-    public int LessonId { get; set; }
+    public int LessonId { get; set; } = -1;
     public string LessonTitle { get; set; } = "";
     public string Prompt { get; set; } = "";
     public List<string> Choices { get; set; } = new();

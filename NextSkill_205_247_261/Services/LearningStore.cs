@@ -106,6 +106,8 @@ public sealed partial class LearningStore(IConfiguration configuration, IDataPro
                 WHERE AccountId=@account AND AccountRole=@role;
             SELECT AchievementKey,EarnedAt FROM dbo.LearningAchievements
                 WHERE AccountId=@account AND AccountRole=@role ORDER BY EarnedAt,AchievementKey;
+            SELECT PassedAt,AwardedXp FROM dbo.LearningCourseFinalResults
+                WHERE AccountId=@account AND AccountRole=@role AND PassedAt IS NOT NULL;
             """, accountId, role);
         await using var reader = await command.ExecuteReaderAsync(token);
         var hasProfile = await reader.ReadAsync(token);
@@ -141,21 +143,44 @@ public sealed partial class LearningStore(IConfiguration configuration, IDataPro
         await reader.NextResultAsync(token);
         while (await reader.ReadAsync(token)) awards.Add(new LearningAward(reader.GetString(0), reader.GetDateTime(1)));
 
-        var courses = LearningCatalog.Published().Select(course =>
+        if (learningDays is not null)
+        {
+            await reader.NextResultAsync(token);
+            while (await reader.ReadAsync(token))
+            {
+                var completedDay = ThailandTime.Date(reader.GetDateTime(0));
+                learningDays.Add(completedDay);
+                if (completedDay < historyStart || completedDay > today) continue;
+                var totals = dayTotals.GetValueOrDefault(completedDay);
+                dayTotals[completedDay] = (totals.Lessons, totals.Xp + reader.GetInt32(1), totals.Courses ?? []);
+            }
+        }
+
+        var catalog = LearningCatalog.Published().ToArray();
+        var prerequisites = catalog.GroupBy(course => course.Category, StringComparer.OrdinalIgnoreCase)
+            .SelectMany(group => group.Zip(group.Skip(1), (previous, next) => (next.Id, Previous: previous)))
+            .ToDictionary(entry => entry.Id, entry => entry.Previous);
+        var earnedKeys = awards.Select(award => award.Key).ToHashSet(StringComparer.Ordinal);
+        var courses = catalog.Select(course =>
         {
             var done = course.Lessons.Where(l => complete.Contains((course.Id, l.Id))).Select(l => l.Id).ToArray();
             var next = course.Lessons.FirstOrDefault(l => !complete.Contains((course.Id, l.Id)));
             var current = next?.Id ?? (course.Lessons.Length > 0 ? course.Lessons[^1].Id : 1);
+            var hasStarted = started.ContainsKey(course.Id);
+            var isComplete = earnedKeys.Contains(CourseAwardKey(course.Id));
+            var prerequisite = prerequisites.GetValueOrDefault(course.Id);
+            var isLocked = !hasStarted && !isComplete && prerequisite is not null &&
+                !earnedKeys.Contains(CourseAwardKey(prerequisite.Id));
             var unlocked = course.Lessons.TakeWhile(l => complete.Contains((course.Id, l.Id))).Select(l => l.Id).ToList();
-            if (next is not null) unlocked.Add(next.Id);
+            if (!isLocked && next is not null) unlocked.Add(next.Id);
             var last = started.GetValueOrDefault(course.Id);
             if (!last.HasValue || done.Contains(last.Value) || !unlocked.Contains(last.Value)) last = next?.Id;
-            var lessonsCount = Math.Max(1, course.Lessons.Length);
             return new LearningCourseProgress(course.Id, course.Title, course.Category, course.Description,
                 course.IslandKind, course.Lessons.Length, done, unlocked, current, last,
-                done.Length * 100 / lessonsCount, started.ContainsKey(course.Id), next is null,
+                isComplete ? 100 : done.Length * 100 / (course.Lessons.Length + 1), hasStarted, isComplete,
                 course.Lessons.Select(l => LearningCatalog.Summary(l,
-                    done.Contains(l.Id) ? "completed" : l.Id == current ? "current" : "locked")).ToArray());
+                    done.Contains(l.Id) ? "completed" : !isLocked && l.Id == current ? "current" : "locked")).ToArray())
+            { IsLocked = isLocked, PrerequisiteCourseId = prerequisite?.Id, PrerequisiteCourseTitle = prerequisite?.Title };
         }).ToArray();
         var activeProgress = courses.FirstOrDefault(c => c.CourseId == active && c.HasStarted);
         LearningActivity? activity = null;
@@ -190,6 +215,10 @@ public sealed partial class LearningStore(IConfiguration configuration, IDataPro
         var course = RequireCourse(courseId);
         return WithProfileAsync(accountId, role, async (db, transaction, ct) =>
         {
+            var state = await ReadStateAsync(db, transaction, accountId, role, ct);
+            var candidate = state.Courses.FirstOrDefault(item => item.CourseId == course.Id)
+                ?? throw new LearningRuleException("course_unavailable", "คอร์สนี้ยังไม่เปิดให้เรียน", 404);
+            RequireUnlockedCourse(candidate);
             await using var command = Command(db, transaction, """
                 IF NOT EXISTS (SELECT 1 FROM dbo.LearningCourseProgress
                     WHERE AccountId=@account AND AccountRole=@role AND CourseId=@course)
@@ -387,8 +416,7 @@ public sealed partial class LearningStore(IConfiguration configuration, IDataPro
                 throw new LearningRuleException("video_required", "เปิดวิดีโอแล้วเลื่อนไปช่วงท้ายหรือกดข้ามก่อนทำแบบทดสอบ", 403);
             if (!QuizVersionMatches(request.QuizVersion, accountId, role, request.CourseId, lesson.Id, lesson.Questions))
                 throw new LearningRuleException("quiz_changed", "แบบทดสอบเปลี่ยนแล้ว กรุณาเปิดบทเรียนใหม่ก่อนส่งคำตอบ");
-            if (request.Answers is null || request.Answers.Length != lesson.Questions.Length ||
-                request.Answers.Where((choice, index) => choice < 0 || choice >= lesson.Questions[index].Choices.Length).Any())
+            if (!ValidAnswers(lesson.Questions, request.Answers))
                 throw new LearningRuleException("invalid_answers", "กรุณาตอบคำถามทุกข้อให้ครบ", 400);
 
             var feedback = lesson.Questions.Select((question, index) => new LearningFeedback(question.Id,
@@ -403,10 +431,8 @@ public sealed partial class LearningStore(IConfiguration configuration, IDataPro
                 return new LearningCompletion(passed, true, score, lesson.Questions.Length, lesson.RequiredCorrect, 0,
                     "ทบทวนบทเรียนแล้ว — ได้รับ XP ของบทนี้ไปแล้ว", feedback, state);
 
-            var completingCourse = progress.CompletedLessons.Count + 1 == progress.TotalLessons;
-            var courseAwardKey = CourseAwardKey(request.CourseId);
-            var earnCourseAward = completingCourse && !state.Achievements.Contains(courseAwardKey);
-            var reward = lesson.Xp + (earnCourseAward ? CourseCompletionBonus : 0);
+            var finishingLessons = progress.CompletedLessons.Count + 1 == progress.TotalLessons;
+            var reward = lesson.Xp;
             var next = progress.Lessons.FirstOrDefault(l => l.Id > request.LessonId)?.Id;
             await using (var command = Command(db, transaction, """
                 INSERT INTO dbo.LearningLessonCompletions (AccountId,AccountRole,CourseId,LessonId,AwardedXp)
@@ -427,17 +453,22 @@ public sealed partial class LearningStore(IConfiguration configuration, IDataPro
                 command.Parameters.Add("@next", SqlDbType.Int).Value = (object?)next ?? DBNull.Value;
                 await command.ExecuteNonQueryAsync(ct);
             }
-            if (earnCourseAward)
-                await AwardCourseAsync(db, transaction, accountId, role, request.CourseId, progress.Title, ct);
-            var message = (completingCourse, earnCourseAward) switch
-            {
-                (_, true) => $"เรียนจบคอร์สแล้ว! ได้รับเหรียญ ใบประกาศ และโบนัส {CourseCompletionBonus} XP",
-                (true, false) => "ผ่านครบทุกด่านในคอร์สแล้ว!",
-                _ => "ผ่านด่านแล้ว! เกาะถัดไปพร้อมให้สำรวจ"
-            };
+            var message = finishingLessons && !progress.IsComplete
+                ? "ผ่านครบทุกบทแล้ว ทำแบบทดสอบท้ายคอร์สเพื่อจบคอร์สนี้"
+                : "ผ่านบทเรียนแล้ว";
             return new LearningCompletion(true, false, score, lesson.Questions.Length, lesson.RequiredCorrect, reward,
                 message, feedback, await ReadStateAsync(db, transaction, accountId, role, ct));
         }, token);
+    }
+
+    private static bool ValidAnswers(LearningQuizDefinition[] questions, int[]? answers) =>
+        answers is not null && answers.Length == questions.Length &&
+        !answers.Where((choice, index) => choice < 0 || choice >= questions[index].Choices.Length).Any();
+
+    public static void RequireUnlockedCourse(LearningCourseProgress course)
+    {
+        if (course.IsLocked)
+            throw new LearningRuleException("course_locked", $"ผ่านแบบทดสอบท้ายคอร์ส “{course.PrerequisiteCourseTitle}” ก่อนเริ่มคอร์สนี้", 403);
     }
 
     public async Task<int> HighestRecordedCourseIdAsync(CancellationToken token)
@@ -466,6 +497,7 @@ public sealed partial class LearningStore(IConfiguration configuration, IDataPro
     {
         var course = state.Courses.FirstOrDefault(c => c.CourseId == courseId)
             ?? throw new LearningRuleException("course_unavailable", "เส้นทางนี้ยังไม่เปิดให้เรียน", 404);
+        RequireUnlockedCourse(course);
         if (!course.HasStarted) throw new LearningRuleException("course_not_selected", "เลือกคอร์สนี้ก่อนเริ่มเรียน", 409);
         if (!course.UnlockedIslands.Contains(lessonId)) throw new LearningRuleException("lesson_locked", "เรียนด่านก่อนหน้าให้ผ่านเพื่อเปิดเกาะนี้", 403);
         return course;

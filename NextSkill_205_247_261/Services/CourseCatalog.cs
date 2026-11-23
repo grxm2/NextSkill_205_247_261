@@ -14,7 +14,8 @@ public static class CourseCatalog
 
     internal static bool IsRetired(int id) => id is >= 2 and <= 17;
 
-    public static List<Course> GetCourses() => AdminContentStore.GetAllCourses();
+    public static List<Course> GetCourses() => AdminContentStore.GetAllCourses()
+        .Where(course => course.IsPublished != false).ToList();
 
     public static Course? GetHistoricalCourse(int id) => AdminContentStore.GetHistoricalCourse(id)
         ?? (RetiredTitles.TryGetValue(id, out var title) ? new Course { Id = id, Title = title } : null);

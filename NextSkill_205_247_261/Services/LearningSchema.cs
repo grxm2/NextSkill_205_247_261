@@ -2,7 +2,7 @@ namespace NextSkill_205_247_261.Services;
 
 public static class LearningSchema
 {
-    public const int CurrentVersion = 2;
+    public const int CurrentVersion = 3;
 
     // Additive only. SQL Server coordinates startup across different app processes.
     public const string Sql = """
@@ -117,7 +117,25 @@ public static class LearningSchema
                 AppliedAt datetime2 NOT NULL CONSTRAINT DF_NextSkillLearningSchema_Applied DEFAULT SYSUTCDATETIME()
             );
         END;
-        IF NOT EXISTS (SELECT 1 FROM dbo.NextSkillLearningSchema WHERE Version=2)
-            INSERT INTO dbo.NextSkillLearningSchema (Version) VALUES (2);
+        IF OBJECT_ID(N'dbo.LearningCourseFinalResults', N'U') IS NULL
+        BEGIN
+            CREATE TABLE dbo.LearningCourseFinalResults (
+                AccountId uniqueidentifier NOT NULL,
+                AccountRole varchar(10) NOT NULL,
+                CourseId int NOT NULL,
+                Attempts int NOT NULL,
+                Score int NOT NULL,
+                QuestionCount int NOT NULL,
+                LastAttemptAt datetime2 NOT NULL CONSTRAINT DF_LearningCourseFinal_Attempt DEFAULT SYSUTCDATETIME(),
+                PassedAt datetime2 NULL,
+                AwardedXp int NOT NULL,
+                CONSTRAINT PK_LearningCourseFinal PRIMARY KEY (AccountId, AccountRole, CourseId),
+                CONSTRAINT FK_LearningCourseFinal_Course FOREIGN KEY (AccountId, AccountRole, CourseId)
+                    REFERENCES dbo.LearningCourseProgress(AccountId, AccountRole, CourseId),
+                CONSTRAINT CK_LearningCourseFinal_Result CHECK (Attempts > 0 AND Score >= 0 AND Score <= QuestionCount AND AwardedXp >= 0)
+            );
+        END;
+        IF NOT EXISTS (SELECT 1 FROM dbo.NextSkillLearningSchema WHERE Version=3)
+            INSERT INTO dbo.NextSkillLearningSchema (Version) VALUES (3);
         """;
 }

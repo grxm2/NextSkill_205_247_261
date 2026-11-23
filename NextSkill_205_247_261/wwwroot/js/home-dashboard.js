@@ -74,14 +74,14 @@
     function renderMission(course, upcoming, achievements) {
         const firstAward = upcoming && !achievements.includes('first-lesson');
         const isFinalLesson = upcoming && course.totalLessons - course.completedLessons.length === 1;
-        const courseAward = isFinalLesson && !achievements.includes(`course-${course.courseId}`);
-        const task = !upcoming ? 'เริ่มคอร์สใหม่เพื่อสะสม XP' : isFinalLesson ? 'ผ่านบทสุดท้าย'
+        const courseAward = course.finalQuizReady;
+        const task = courseAward ? 'สอบท้ายคอร์ส' : !upcoming ? 'เริ่มคอร์สใหม่เพื่อสะสม XP' : isFinalLesson ? 'ผ่านบทสุดท้าย'
             : course.completedLessons.length ? 'ผ่านบทถัดไป' : 'ผ่านบทแรก';
         find('[data-dashboard-mission-task]').textContent = task;
-        find('[data-dashboard-rewards]').hidden = !upcoming;
-        if (!upcoming) return;
+        find('[data-dashboard-rewards]').hidden = !(upcoming || courseAward);
+        if (!upcoming && !courseAward) return;
 
-        find('[data-dashboard-mission-xp]').textContent = `+${format.format(upcoming.xp)} XP จากบทเรียน`;
+        find('[data-dashboard-mission-xp]').textContent = courseAward ? 'โบนัสเมื่อสอบผ่าน' : `+${format.format(upcoming.xp)} XP จากบทเรียน`;
         const medals = [firstAward && 'เหรียญบทเรียนแรก', courseAward && 'เหรียญจบคอร์ส'].filter(Boolean);
         const badge = find('[data-dashboard-mission-badge]');
         badge.hidden = medals.length === 0;
@@ -112,14 +112,16 @@
         }
 
         const completed = course.completedLessons.length;
-        const upcoming = !course.isComplete && (course.lessons.find(lesson => lesson.id === course.lastLessonId)
+        const upcoming = !course.hasFinishedLessons && (course.lessons.find(lesson => lesson.id === course.lastLessonId)
             ?? course.lessons.find(lesson => lesson.id === course.currentIslandId));
         find('[data-dashboard-course-label]').textContent = course.isComplete ? 'คอร์สที่เรียนจบแล้ว'
-            : completed ? 'คอร์สที่กำลังเรียน' : 'คอร์สที่เลือกไว้';
+            : course.finalQuizReady ? 'พร้อมสอบท้ายคอร์ส' : completed ? 'คอร์สที่กำลังเรียน' : 'คอร์สที่เลือกไว้';
         find('[data-dashboard-preview]').hidden = !preview;
         courseLink.href = '/Learning/Island?' + new URLSearchParams({ courseId: course.courseId });
-        resumeLink.href = '/Learning/Island?' + new URLSearchParams({ courseId: course.courseId, resume: 'true' });
-        find('[data-dashboard-resume-label]').textContent = course.isComplete ? 'ทบทวนบทเรียน' : 'เรียนต่อ';
+        resumeLink.href = course.finalQuizReady ? '/Learning/FinalQuiz?' + new URLSearchParams({ courseId: course.courseId })
+            : '/Learning/Island?' + new URLSearchParams({ courseId: course.courseId, resume: 'true' });
+        find('[data-dashboard-resume-label]').textContent = course.isComplete ? 'ทบทวนบทเรียน'
+            : course.finalQuizReady ? 'ทำแบบทดสอบท้ายคอร์ส' : 'เรียนต่อ';
         courseLink.textContent = course.title;
         find('[data-dashboard-ring]').style.setProperty('--hd-progress', course.progress + '%');
         find('[data-dashboard-percent]').textContent = format.format(course.progress) + '%';

@@ -37,11 +37,11 @@
             category: c.category ?? c.Category ?? 'Technology',
             level: c.level ?? c.Level ?? 'Beginner',
             instructor: c.instructor ?? c.Instructor ?? '',
-            units: c.units ?? c.Units ?? (c.lessons ? c.lessons.length : (c.Lessons ? c.Lessons.length : 4)),
             description: c.description ?? c.Description ?? '',
             videoUrl: c.videoUrl ?? c.VideoUrl ?? '',
             skills: c.skills ?? c.Skills ?? [],
             featured: c.featured ?? c.Featured ?? false,
+            isPublished: (c.isPublished ?? c.IsPublished) !== false,
             lessons: c.lessons ?? c.Lessons ?? []
         };
     }
@@ -141,11 +141,113 @@
     const courseTableBody = document.getElementById('courses-table-body');
     const courseSearchInput = document.getElementById('course-search-input');
     const courseCategoryFilter = document.getElementById('course-category-filter');
+    const lessonEditor = document.getElementById('course-lesson-editor');
+    const addLessonButton = document.getElementById('course-add-lesson');
+    const maxLessons = Number(lessonEditor.dataset.maxLessons);
+    const maxReadingSections = Number(lessonEditor.dataset.maxReadings);
+    let canChangeLessonList = true;
 
     document.getElementById('btn-open-course-modal')?.addEventListener('click', () => openCourseModal());
     document.getElementById('btn-open-upload-modal')?.addEventListener('click', () => {
         document.getElementById('course-upload-modal')?.showModal();
     });
+
+    function editorFieldValue(item, field) {
+        return item[field] ?? item[field[0].toUpperCase() + field.slice(1)];
+    }
+
+    function addReadingSection(list, section = {}) {
+        const entry = document.getElementById('course-reading-template').content.firstElementChild.cloneNode(true);
+        entry.querySelectorAll('[data-reading-field]').forEach(field => {
+            field.value = editorFieldValue(section, field.dataset.readingField) ?? '';
+        });
+        list.append(entry);
+        return entry;
+    }
+
+    function addCourseLesson(lesson) {
+        const id = editorFieldValue(lesson, 'id');
+        const editor = document.getElementById('course-lesson-template').content.firstElementChild.cloneNode(true);
+        editor.dataset.lessonId = id;
+        editor.querySelectorAll('[data-lesson-field]').forEach(field => {
+            const name = field.dataset.lessonField;
+            const value = editorFieldValue(lesson, name);
+            field.value = name === 'videoDurationSeconds' && !value ? '' : value ?? field.defaultValue;
+        });
+        const title = editor.querySelector('[data-lesson-field="title"]');
+        const heading = editor.querySelector('[data-lesson-heading]');
+        const updateHeading = () => {
+            const label = title.value.trim();
+            heading.textContent = label ? `บทที่ ${id} · ${label}` : `บทที่ ${id}`;
+        };
+        title.addEventListener('input', updateHeading);
+        updateHeading();
+        const readingList = editor.querySelector('[data-reading-list]');
+        for (const section of editorFieldValue(lesson, 'reading') ?? []) {
+            addReadingSection(readingList, section);
+        }
+        editor.querySelector('[data-reading-add]').disabled = readingList.childElementCount >= maxReadingSections;
+        lessonEditor.append(editor);
+        return editor;
+    }
+
+    function updateLessonEditorControls() {
+        const count = lessonEditor.childElementCount;
+        document.getElementById('course-unit-count').value = count;
+        addLessonButton.hidden = !canChangeLessonList;
+        addLessonButton.disabled = count >= maxLessons;
+        lessonEditor.querySelectorAll('[data-lesson-remove]').forEach(button => {
+            button.hidden = !canChangeLessonList || count <= 1;
+        });
+    }
+
+    addLessonButton.addEventListener('click', () => {
+        const inUse = new Set(Array.from(lessonEditor.children, editor => Number(editor.dataset.lessonId)));
+        let next = 1;
+        while (inUse.has(next)) next++;
+        if (next > maxLessons) return;
+
+        const editor = addCourseLesson({ id: next });
+        editor.open = true;
+        editor.querySelector('[data-lesson-field="title"]').focus();
+        updateLessonEditorControls();
+    });
+
+    lessonEditor.addEventListener('click', event => {
+        const button = event.target.closest('button');
+        const editor = button?.closest('[data-lesson-editor]');
+        if (!editor) return;
+
+        if (button.hasAttribute('data-lesson-remove')) {
+            if (!canChangeLessonList || lessonEditor.childElementCount <= 1) return;
+            editor.remove();
+            updateLessonEditorControls();
+            addLessonButton.focus();
+            return;
+        }
+        const readingList = editor.querySelector('[data-reading-list]');
+        const addReadingButton = editor.querySelector('[data-reading-add]');
+        if (button.hasAttribute('data-reading-remove')) {
+            button.closest('[data-reading-entry]').remove();
+            addReadingButton.disabled = false;
+            addReadingButton.focus();
+        } else if (button === addReadingButton && readingList.childElementCount < maxReadingSections) {
+            addReadingSection(readingList).querySelector('input').focus();
+            addReadingButton.disabled = readingList.childElementCount >= maxReadingSections;
+        }
+    });
+
+    function readCourseLessons() {
+        return Array.from(lessonEditor.children, editor => {
+            const id = Number(editor.dataset.lessonId);
+            const fields = Object.fromEntries(Array.from(editor.querySelectorAll('[data-lesson-field]'), field =>
+                [field.dataset.lessonField, field.type === 'number' ? Number(field.value) : field.value.trim()]));
+            const reading = Array.from(editor.querySelectorAll('[data-reading-entry]'), entry =>
+                Object.fromEntries(Array.from(entry.querySelectorAll('[data-reading-field]'), field =>
+                    [field.dataset.readingField, field.value.trim()]))).filter(section => section.heading || section.text || section.example);
+            return { ...fields, id, title: fields.title || `บทเรียนที่ ${id}`, reading };
+        });
+    }
 
     function openCourseModal(courseToEdit = null) {
         const c = courseToEdit ? normalizeCourse(courseToEdit) : null;
@@ -155,12 +257,17 @@
         document.getElementById('course-category').value = c ? c.category : 'Technology';
         document.getElementById('course-level').value = c ? c.level : 'Beginner';
         document.getElementById('course-instructor').value = c ? c.instructor : '';
-        document.getElementById('course-units').value = c ? (c.units || (c.lessons ? c.lessons.length : 4)) : 4;
         document.getElementById('course-description').value = c ? c.description : '';
         document.getElementById('course-skills').value = c && c.skills ? c.skills.join(', ') : '';
         const videoInput = document.getElementById('course-video-url');
         if (videoInput) videoInput.value = c ? (c.videoUrl || '') : '';
         document.getElementById('course-featured').checked = c ? !!c.featured : false;
+        canChangeLessonList = !c || !c.isPublished;
+        lessonEditor.replaceChildren();
+        const lessons = c?.lessons.length ? c.lessons : [{ id: 1 }];
+        lessons.forEach(lesson => addCourseLesson(lesson));
+        lessonEditor.firstElementChild.open = true;
+        updateLessonEditorControls();
         courseModal.showModal();
     }
 
@@ -176,7 +283,7 @@
             category: document.getElementById('course-category').value,
             level: document.getElementById('course-level').value,
             instructor: document.getElementById('course-instructor').value.trim(),
-            units: parseInt(document.getElementById('course-units').value, 10) || 4,
+            lessons: readCourseLessons(),
             description: document.getElementById('course-description').value.trim(),
             videoUrl: (document.getElementById('course-video-url')?.value || '').trim(),
             skills,
@@ -193,6 +300,11 @@
         }
     });
 
+    courseForm?.addEventListener('invalid', event => {
+        const lesson = event.target.closest('[data-lesson-editor]');
+        if (lesson) lesson.open = true;
+    }, true);
+
     function attachCourseActions() {
         document.querySelectorAll('.btn-edit-course').forEach(btn => {
             btn.onclick = () => {
@@ -200,6 +312,19 @@
                 const course = courses.find(c => c.id === id);
                 if (course) openCourseModal(course);
                 else alert('ไม่พบคอร์สที่ต้องการแก้ไข ID: ' + id);
+            };
+        });
+
+        document.querySelectorAll('.btn-publish-course').forEach(btn => {
+            btn.onclick = async () => {
+                btn.disabled = true;
+                try {
+                    await postAdminContent('/Account/AdminPublishCourse', { id: Number(btn.dataset.id) });
+                    reloadDashboard();
+                } catch (error) {
+                    alert(error.message);
+                    btn.disabled = false;
+                }
             };
         });
 
@@ -241,11 +366,14 @@
                 </td>
                 <td><span class="status-badge published">${escapeHtml(c.category || '')}</span></td>
                 <td>${escapeHtml(c.level || '')}</td>
-                <td>${c.lessons ? c.lessons.length : (c.units || 0)} ด่าน</td>
+                <td>${c.lessons.length} ด่าน</td>
                 <td>${escapeHtml(c.instructor || '')}</td>
-                <td>${c.featured ? '<span class="status-badge yellow">แนะนำ</span>' : '<span style="color: var(--nimo-muted); font-size: 12px;">ทั่วไป</span>'}</td>
+                <td>${c.isPublished ? '<span class="status-badge published">เผยแพร่แล้ว</span>' : '<span class="status-badge yellow">ฉบับร่าง</span>'}
+                    ${c.isPublished && c.featured ? '<span class="status-badge yellow">แนะนำ</span>' : ''}</td>
                 <td style="text-align: right; white-space: nowrap;">
-                    <a href="/Home/Details/${c.id}" target="_blank" class="ns-button ns-button--secondary ns-button--compact" title="เปิดดูหน้ารายละเอียดคอร์สนี้ในมุมมองของผู้เรียน" style="text-decoration: none;">ดูหน้าจริง</a>
+                    ${c.isPublished
+                        ? `<a href="/Home/Details/${c.id}" target="_blank" rel="noopener" class="ns-button ns-button--secondary ns-button--compact">ดูรายละเอียดคอร์ส</a>`
+                        : `<button type="button" class="ns-button ns-button--primary ns-button--compact btn-publish-course" data-id="${c.id}">เผยแพร่</button>`}
                     <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-course" data-id="${c.id}">แก้ไข</button>
                     <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-course" data-id="${c.id}" data-title="${escapeHtml(c.title)}">ลบ</button>
                 </td>
@@ -304,6 +432,7 @@
     const questionSearchInput = document.getElementById('question-search-input');
     const questionCourse = document.getElementById('q-course-id');
     const questionLesson = document.getElementById('q-lesson-id');
+    const finalQuizLessonId = Number(questionLesson.dataset.finalLesson);
     const questionChoices = [...(questionForm?.querySelectorAll('input[id^="q-choice-"]') || [])];
     const questionTemplate = document.getElementById('admin-question-card-template');
     const choiceTemplate = document.getElementById('admin-question-choice-template');
@@ -316,10 +445,11 @@
         questionLesson.replaceChildren(...lessons.map(lesson =>
             new Option(lesson.title ?? lesson.Title, lesson.id ?? lesson.Id)
         ));
+        if (course) questionLesson.add(new Option('แบบทดสอบท้ายคอร์ส', finalQuizLessonId));
         if (selectedLesson != null && Array.from(questionLesson.options).some(option => option.value === String(selectedLesson))) {
             questionLesson.value = String(selectedLesson);
         }
-        if (!lessons.length) questionLesson.add(new Option('คอร์สนี้ยังไม่มีบทเรียน', ''));
+        if (!course) questionLesson.add(new Option('เลือกคอร์สก่อน', ''));
     }
 
     questionCourse?.addEventListener('change', () => updateQuestionLessonOptions());
@@ -406,7 +536,8 @@
     function renderQuestionCard(question) {
         const card = questionTemplate.content.firstElementChild.cloneNode(true);
         card.dataset.id = question.id;
-        card.querySelector('[data-question-course]').textContent = question.courseTitle + ' · บทที่ ' + question.lessonId;
+        const destination = question.lessonId === finalQuizLessonId ? 'แบบทดสอบท้ายคอร์ส' : `บทที่ ${question.lessonId}`;
+        card.querySelector('[data-question-course]').textContent = `${question.courseTitle} · ${destination}`;
         card.querySelector('[data-question-id]').textContent = 'รหัส: ' + question.id;
         card.querySelector('[data-question-prompt]').textContent = question.prompt;
 

@@ -20,11 +20,13 @@ public static partial class AdminContentStore
     public const int CourseSkillsLimit = 30;
     public const int CourseSkillLimit = 80;
     public const int CourseLessonLimit = 50;
+    public const int CourseReadingSectionLimit = 30;
     public const int VideoUrlLimit = 2048;
     public const int QuestionPromptLimit = 1000;
     public const int QuestionChoiceLimit = 500;
     public const int QuestionNoteLimit = 2000;
     public const int MaxImportedCourses = 100;
+    public const int DefaultLessonMinutes = 10;
 
     private const string CourseFileName = "custom_courses.json";
     private const string QuestionFileName = "custom_questions.json";
@@ -81,6 +83,8 @@ public static partial class AdminContentStore
         {
             PrepareCourse(course);
             course.Id = NextCourseId(courses, highestRecordedCourseId);
+            course.IsPublished = false;
+            course.CreatedAt = DateTime.UtcNow;
             courses.Add(course);
         }
         else
@@ -89,15 +93,39 @@ public static partial class AdminContentStore
             if (index < 0)
                 throw new ContentValidationException("ไม่พบคอร์สที่สามารถแก้ไขได้");
 
-            var savedLessons = courses[index].Lessons;
-            if (course.Lessons is { Count: > 0 } && savedLessons is { Count: > 0 } &&
-                savedLessons.Any(saved => course.Lessons.All(incoming => incoming?.Id != saved.Id)))
-                throw new ContentValidationException("ต้องเก็บรหัสบทเรียนเดิมไว้เพื่อรักษาประวัติการเรียน");
-
-            PrepareCourse(course, savedLessons);
+            var saved = courses[index];
+            var questions = ReadQuestions().Where(question => question.CourseId == course.Id).ToList();
+            PrepareCourse(course, saved.Lessons);
+            course.IsPublished = saved.IsPublished;
+            course.CreatedAt = saved.CreatedAt;
+            if (ProtectedDefinition(saved, questions) is { } previous)
+            {
+                if (!saved.Lessons.Select(lesson => lesson.Id).ToHashSet().SetEquals(course.Lessons.Select(lesson => lesson.Id)))
+                    throw new ContentValidationException("คอร์สที่เผยแพร่แล้วต้องคงชุดรหัสบทเรียนเดิมไว้เพื่อรักษาประวัติการเรียน");
+                EnsurePublishable(course, questions, preserveExplicitFinal: !previous.UsesLegacyFinal);
+            }
+            else if (questions.Any(question => question.LessonId != AdminQuizQuestion.FinalQuizLessonId &&
+                course.Lessons.All(lesson => lesson.Id != question.LessonId)))
+            {
+                throw new ContentValidationException("ลบหรือย้ายคำถามในบทเรียนที่ต้องการนำออกก่อนบันทึกคอร์ส");
+            }
             courses[index] = course;
         }
 
+        WriteRows(CoursesFilePath, courses);
+        return course;
+    }
+
+    public static Course PublishCourse(int id)
+    {
+        using var contentLock = AcquireWriteLock();
+        var courses = ReadCourses();
+        var course = courses.Find(item => item.Id == id && IsAvailable(item))
+            ?? throw new ContentValidationException("ไม่พบคอร์สที่สามารถเผยแพร่ได้");
+
+        if (course.IsPublished == true) return course;
+        course.IsPublished = true;
+        EnsurePublishable(course, ReadQuestions());
         WriteRows(CoursesFilePath, courses);
         return course;
     }
@@ -138,10 +166,13 @@ public static partial class AdminContentStore
         using var contentLock = AcquireWriteLock();
         var courses = ReadCourses();
         var nextId = NextCourseId(courses, highestRecordedCourseId, imported.Count);
+        var createdAt = DateTime.UtcNow;
         for (var i = 0; i < imported.Count; i++)
         {
             var course = imported[i];
             course.Id = nextId + i;
+            course.IsPublished = false;
+            course.CreatedAt = createdAt;
             courses.Add(course);
         }
 
@@ -164,6 +195,11 @@ public static partial class AdminContentStore
         var courses = ReadCourses();
         PrepareQuestion(question, courses);
         var questions = ReadQuestions();
+        var original = string.IsNullOrEmpty(question.Id) ? null : questions.Find(item => item.Id == question.Id);
+        var protectedCourses = courses.Where(course => IsAvailable(course) &&
+                (course.Id == question.CourseId || course.Id == original?.CourseId))
+            .Select(course => (Course: course, Definition: ProtectedDefinition(course, questions)))
+            .Where(item => item.Definition is not null).ToList();
         if (string.IsNullOrWhiteSpace(question.Id))
         {
             question.Id = Guid.NewGuid().ToString("N");
@@ -179,6 +215,8 @@ public static partial class AdminContentStore
             questions[index] = question;
         }
 
+        foreach (var (course, previous) in protectedCourses)
+            EnsurePublishable(course, questions, preserveExplicitFinal: !previous!.UsesLegacyFinal);
         question.UpdatedAt = DateTime.UtcNow;
         WriteRows(QuestionsFilePath, questions);
         return question;
@@ -188,16 +226,38 @@ public static partial class AdminContentStore
     {
         using var contentLock = AcquireWriteLock();
         var questions = ReadQuestions();
-        var available = ReadCourses().Where(IsAvailable).Select(course => course.Id).ToHashSet();
-        var index = questions.FindIndex(question => question.Id == id && available.Contains(question.CourseId));
+        var available = ReadCourses().Where(IsAvailable).ToDictionary(course => course.Id);
+        var index = questions.FindIndex(question => question.Id == id && available.ContainsKey(question.CourseId));
         if (index < 0) return false;
 
+        var course = available[questions[index].CourseId];
+        var previous = ProtectedDefinition(course, questions);
         questions.RemoveAt(index);
+        if (previous is not null)
+            EnsurePublishable(course, questions, preserveExplicitFinal: !previous.UsesLegacyFinal);
         WriteRows(QuestionsFilePath, questions);
         return true;
     }
 
     private static bool IsAvailable(Course course) => !course.IsArchived && !CourseCatalog.IsRetired(course.Id);
+
+    private static LearningCourseDefinition? ProtectedDefinition(Course course, IEnumerable<AdminQuizQuestion> questions)
+    {
+        if (course.IsPublished == false) return null;
+        var definition = BuildDefinition(course, questions);
+        return course.IsPublished == true || definition.CanStart ? definition : null;
+    }
+
+    private static LearningCourseDefinition BuildDefinition(Course course, IEnumerable<AdminQuizQuestion> questions) =>
+        LearningCatalog.Build(course, questions.Where(question => question.CourseId == course.Id)
+            .ToLookup(question => question.LessonId));
+
+    private static void EnsurePublishable(Course course, IEnumerable<AdminQuizQuestion> questions, bool preserveExplicitFinal = false)
+    {
+        var definition = BuildDefinition(course, questions);
+        if (!definition.CanStart || (preserveExplicitFinal && definition.UsesLegacyFinal))
+            throw new ContentValidationException("คอร์สที่จะเปิดให้เรียนต้องมีบทอ่านหรือวิดีโอและคำถามในทุกบท พร้อมข้อสอบท้ายคอร์สตามเกณฑ์");
+    }
 
     private static List<Course> ReadCourses()
     {
@@ -271,7 +331,7 @@ public static partial class AdminContentStore
                 {
                     Id = id,
                     Title = $"บทเรียนที่ {id}",
-                    DurationMinutes = 10
+                    DurationMinutes = DefaultLessonMinutes
                 }).ToList();
             }
         }
@@ -297,7 +357,7 @@ public static partial class AdminContentStore
 
         lesson.Title = ReadText(lesson.Title, CourseTitleLimit, "ชื่อบทเรียน", required: true);
         lesson.Summary = ReadOptionalText(lesson.Summary, CourseDescriptionLimit, "สรุปบทเรียน");
-        if (lesson.Reading is null || lesson.Reading.Length > CourseSkillsLimit ||
+        if (lesson.Reading is null || lesson.Reading.Length > CourseReadingSectionLimit ||
             lesson.Reading.Any(section => section is null))
             throw new ContentValidationException("รูปแบบเนื้อหาบทเรียนไม่ถูกต้องหรือแบ่งเป็นหัวข้อมากเกินกำหนด");
 
@@ -319,8 +379,9 @@ public static partial class AdminContentStore
     private static void PrepareQuestion(AdminQuizQuestion question, List<Course> courses)
     {
         var course = courses.Find(item => item.Id == question.CourseId && IsAvailable(item));
-        var lesson = course?.Lessons?.Find(item => item.Id == question.LessonId);
-        if (course is null || lesson is null)
+        var isFinalQuiz = question.LessonId == AdminQuizQuestion.FinalQuizLessonId;
+        var lesson = course?.Lessons.Find(item => item.Id == question.LessonId);
+        if (course is null || (!isFinalQuiz && lesson is null))
             throw new ContentValidationException("ไม่พบคอร์สหรือบทเรียนที่เลือก");
 
         question.Prompt = ReadText(question.Prompt, QuestionPromptLimit, "คำถาม", required: true);
@@ -336,7 +397,7 @@ public static partial class AdminContentStore
         question.Hint = ReadText(question.Hint, QuestionNoteLimit, "คำใบ้");
         question.Coaching = ReadText(question.Coaching, QuestionNoteLimit, "แนวคิดเพิ่มเติม");
         question.CourseTitle = course.Title;
-        question.LessonTitle = lesson.Title;
+        question.LessonTitle = isFinalQuiz ? "แบบทดสอบท้ายคอร์ส" : lesson!.Title;
     }
 
     private static string ReadText(string? value, int limit, string field, bool required = false)

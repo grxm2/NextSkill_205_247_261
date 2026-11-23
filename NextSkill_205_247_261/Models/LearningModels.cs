@@ -28,7 +28,14 @@ public sealed record LearningCatalogCourse(int Id, string Title, string Category
 public sealed record LearningCourseProgress(int CourseId, string Title, string Category, string Description,
     string IslandKind, int TotalLessons, IReadOnlyList<int> CompletedLessons, IReadOnlyList<int> UnlockedIslands,
     int CurrentIslandId, int? LastLessonId, int Progress, bool HasStarted, bool IsComplete,
-    IReadOnlyList<LearningLessonSummary> Lessons);
+    IReadOnlyList<LearningLessonSummary> Lessons)
+{
+    public bool HasFinishedLessons => TotalLessons > 0 && CompletedLessons.Count == TotalLessons;
+    public bool FinalQuizReady => HasStarted && HasFinishedLessons && !IsComplete;
+    public bool IsLocked { get; init; }
+    public int? PrerequisiteCourseId { get; init; }
+    public string? PrerequisiteCourseTitle { get; init; }
+}
 public sealed record LearningState(int? ActiveCourseId, int? CurrentIslandId, int? LastLessonId,
     bool HasCompletedOnboarding, int Xp, int Level, IReadOnlyList<string> Achievements,
     IReadOnlyList<LearningCourseProgress> Courses)
@@ -77,6 +84,15 @@ public sealed record LearningLessonContent(int CourseId, int Id, string Title, s
 public sealed record LearningFeedback(int QuestionId, bool Correct, string Explanation);
 public sealed record LearningCompletion(bool Passed, bool AlreadyCompleted, int Score, int TotalQuestions,
     int RequiredCorrect, int AwardedXp, string Reward, IReadOnlyList<LearningFeedback> Feedback, LearningState State);
+public sealed record CourseFinalQuizPage(int CourseId, string CourseTitle, IReadOnlyList<LearningQuestion> Questions,
+    int RequiredCorrect, string? QuizVersion, bool AlreadyCompleted, int? NextCourseId, string? NextCourseTitle,
+    CourseFinalResult? Result = null, string? Error = null, int ErrorStatus = 400);
+public sealed record CourseFinalResult(bool Passed, int Score, int TotalQuestions, int RequiredCorrect, int AwardedXp);
+public sealed class CourseFinalQuizSubmission : SelectLearningCourseRequest
+{
+    [Required, StringLength(1024)] public string? QuizVersion { get; set; }
+    [Required, MinLength(1), MaxLength(20)] public int[] Answers { get; set; } = [];
+}
 public sealed class LearningIslandViewModel
 {
     public required LearningState State { get; init; }
@@ -85,7 +101,7 @@ public sealed class LearningIslandViewModel
     public int? InitialLessonId { get; init; }
     public string? ErrorMessage { get; init; }
 }
-public sealed class SelectLearningCourseRequest
+public class SelectLearningCourseRequest
 {
     [Range(1, int.MaxValue)] public int CourseId { get; set; }
 }

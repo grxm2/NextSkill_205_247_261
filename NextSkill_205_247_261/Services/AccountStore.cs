@@ -215,6 +215,12 @@ public class AccountStore(IConfiguration configuration, IPasswordHasher<Account>
                 INNER JOIN @catalog lesson ON lesson.CourseId=p.CourseId AND lesson.LessonId=p.LessonId
                 WHERE p.AccountRole='User';
 
+            DECLARE @finalPassed TABLE (PassedAt datetime2 NOT NULL, AwardedXp int NOT NULL);
+            INSERT INTO @finalPassed
+                SELECT p.PassedAt, p.AwardedXp FROM dbo.LearningCourseFinalResults p
+                INNER JOIN @enrolled e ON e.AccountId=p.AccountId AND e.CourseId=p.CourseId
+                WHERE p.AccountRole='User' AND p.PassedAt IS NOT NULL;
+
             SELECT
               (SELECT COUNT(*) FROM dbo.Users),
               (SELECT COUNT(*) FROM dbo.Admins),
@@ -225,7 +231,8 @@ public class AccountStore(IConfiguration configuration, IPasswordHasher<Account>
               + (SELECT COUNT(*) FROM dbo.Admins WHERE LastLoginAt IS NOT NULL),
               (SELECT COUNT(*) FROM @passed),
               (SELECT COUNT(*) FROM @enrolled),
-              (SELECT COALESCE(SUM(CONVERT(bigint, AwardedXp)), 0) FROM @passed),
+              (SELECT COALESCE(SUM(CONVERT(bigint, AwardedXp)), 0) FROM @passed)
+              + (SELECT COALESCE(SUM(CONVERT(bigint, AwardedXp)), 0) FROM @finalPassed),
               (SELECT COUNT(*) FROM dbo.LearningAchievements award
                INNER JOIN dbo.Users u ON u.Id=award.AccountId
                WHERE award.AccountRole='User' AND (
@@ -255,6 +262,7 @@ public class AccountStore(IConfiguration configuration, IPasswordHasher<Account>
                 UNION ALL SELECT LastLoginAt FROM dbo.Users WHERE LastLoginAt >= @trendStartUtc AND LastLoginAt <= @now
                 UNION ALL SELECT StartedAt FROM @enrolled WHERE StartedAt >= @trendStartUtc AND StartedAt <= @now
                 UNION ALL SELECT CompletedAt FROM @passed WHERE CompletedAt >= @trendStartUtc AND CompletedAt <= @now
+                UNION ALL SELECT PassedAt FROM @finalPassed WHERE PassedAt >= @trendStartUtc AND PassedAt <= @now
             ),
             ThaiMonths AS (
                 SELECT DATEADD(minute, @thaiOffsetMinutes, OccurredAt) AS LocalDate FROM LearnerEvents
