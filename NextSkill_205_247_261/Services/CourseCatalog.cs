@@ -14,12 +14,8 @@ public static class CourseCatalog
 
     internal static bool IsRetired(int id) => id is >= 2 and <= 17;
 
-    // The shared catalog connects to AdminContentStore so any admin edits appear dynamically across all views
-    public static List<Course> GetCourses()
-    {
-        return AdminContentStore.GetAllCourses().Where(course => !IsRetired(course.Id)).ToList();
-    }
+    public static List<Course> GetCourses() => AdminContentStore.GetAllCourses();
 
-    public static Course? GetHistoricalCourse(int id) => GetCourses().FirstOrDefault(course => course.Id == id)
+    public static Course? GetHistoricalCourse(int id) => AdminContentStore.GetHistoricalCourse(id)
         ?? (RetiredTitles.TryGetValue(id, out var title) ? new Course { Id = id, Title = title } : null);
 }

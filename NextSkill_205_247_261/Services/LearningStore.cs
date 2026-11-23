@@ -1,4 +1,7 @@
 using System.Data;
+using System.Security.Cryptography;
+using System.Text.Json;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Data.SqlClient;
 using NextSkill_205_247_261.Models;
 
@@ -10,11 +13,12 @@ public sealed class LearningRuleException(string code, string message, int statu
     public int StatusCode { get; } = statusCode;
 }
 
-public sealed class LearningStore(IConfiguration configuration)
+public sealed class LearningStore(IConfiguration configuration, IDataProtectionProvider protection)
 {
     private static readonly SemaphoreSlim SchemaLock = new(1, 1);
     private static bool schemaReady;
     public const int CourseCompletionBonus = 100;
+    private readonly IDataProtector quizVersions = protection.CreateProtector("NextSkill.QuizVersion.v1");
 
     private async Task<SqlConnection> OpenAsync(CancellationToken token)
     {
@@ -29,10 +33,16 @@ public sealed class LearningStore(IConfiguration configuration)
                 {
                     if (!schemaReady)
                     {
-                        await using var transaction = (SqlTransaction)await connection.BeginTransactionAsync(token);
-                        await using var setup = new SqlCommand(LearningSchema.Sql, connection, transaction);
-                        await setup.ExecuteNonQueryAsync(token);
-                        await transaction.CommitAsync(token);
+                        if (!await HasCurrentSchemaAsync(connection, token))
+                        {
+                            if (!configuration.GetValue("Learning:AutoMigrate", true))
+                                throw new InvalidOperationException("Apply scripts/LearningJourney.sql before starting the app.");
+
+                            await using var transaction = (SqlTransaction)await connection.BeginTransactionAsync(token);
+                            await using var setup = new SqlCommand(LearningSchema.Sql, connection, transaction);
+                            await setup.ExecuteNonQueryAsync(token);
+                            await transaction.CommitAsync(token);
+                        }
                         schemaReady = true;
                     }
                 }
@@ -43,6 +53,15 @@ public sealed class LearningStore(IConfiguration configuration)
         catch { await connection.DisposeAsync(); throw; }
     }
 
+    private static async Task<bool> HasCurrentSchemaAsync(SqlConnection connection, CancellationToken token)
+    {
+        await using var command = new SqlCommand("SELECT OBJECT_ID(N'dbo.NextSkillLearningSchema', N'U');", connection);
+        if (await command.ExecuteScalarAsync(token) is not int) return false;
+        command.CommandText = "SELECT 1 FROM dbo.NextSkillLearningSchema WHERE Version=@version;";
+        command.Parameters.Add("@version", SqlDbType.Int).Value = LearningSchema.CurrentVersion;
+        return await command.ExecuteScalarAsync(token) is not null;
+    }
+
     private static SqlCommand Command(SqlConnection db, SqlTransaction transaction, string sql, Guid accountId, string role)
     {
         var command = new SqlCommand(sql, db, transaction);
@@ -51,22 +70,25 @@ public sealed class LearningStore(IConfiguration configuration)
         return command;
     }
 
-    // Every account operation takes the same profile row/range lock first. This serializes
-    // selection, completion and reads across tabs/devices without locking unrelated learners.
+    // Lock the profile first for a coherent progress snapshot across reads and writes.
     private async Task<T> WithProfileAsync<T>(Guid accountId, string role,
-        Func<SqlConnection, SqlTransaction, CancellationToken, Task<T>> operation, CancellationToken token)
+        Func<SqlConnection, SqlTransaction, CancellationToken, Task<T>> operation, CancellationToken token,
+        bool createProfile = true)
     {
         if (role is not ("User" or "Admin")) throw new LearningRuleException("invalid_account", "ไม่พบบัญชีผู้เรียน", 403);
         await using var db = await OpenAsync(token);
         await using var transaction = (SqlTransaction)await db.BeginTransactionAsync(IsolationLevel.Serializable, token);
         await using (var profile = Command(db, transaction, """
-            IF NOT EXISTS (SELECT 1 FROM dbo.LearningProfiles WITH (UPDLOCK,HOLDLOCK)
+            IF @create=1 AND NOT EXISTS (SELECT 1 FROM dbo.LearningProfiles WITH (UPDLOCK,HOLDLOCK)
                 WHERE AccountId=@account AND AccountRole=@role)
                 INSERT INTO dbo.LearningProfiles (AccountId,AccountRole) VALUES (@account,@role);
             SELECT AccountId FROM dbo.LearningProfiles WITH (UPDLOCK,HOLDLOCK)
                 WHERE AccountId=@account AND AccountRole=@role;
             """, accountId, role))
+        {
+            profile.Parameters.Add("@create", SqlDbType.Bit).Value = createProfile;
             await profile.ExecuteScalarAsync(token);
+        }
         var result = await operation(db, transaction, token);
         await transaction.CommitAsync(token);
         return result;
@@ -86,10 +108,10 @@ public sealed class LearningStore(IConfiguration configuration)
                 WHERE AccountId=@account AND AccountRole=@role ORDER BY EarnedAt,AchievementKey;
             """, accountId, role);
         await using var reader = await command.ExecuteReaderAsync(token);
-        await reader.ReadAsync(token);
-        int? active = reader.IsDBNull(0) ? null : reader.GetInt32(0);
-        var onboarded = reader.GetBoolean(1);
-        var xp = reader.GetInt32(2);
+        var hasProfile = await reader.ReadAsync(token);
+        int? active = hasProfile && !reader.IsDBNull(0) ? reader.GetInt32(0) : null;
+        var onboarded = hasProfile && reader.GetBoolean(1);
+        var xp = hasProfile ? reader.GetInt32(2) : 0;
         var started = new Dictionary<int, int?>();
         var complete = new HashSet<(int Course, int Lesson)>();
         var awards = new List<LearningAward>();
@@ -160,7 +182,8 @@ public sealed class LearningStore(IConfiguration configuration)
     }
 
     public Task<LearningState> StateAsync(Guid accountId, string role, CancellationToken token = default, bool includeActivity = false)
-        => WithProfileAsync(accountId, role, (db, transaction, ct) => ReadStateAsync(db, transaction, accountId, role, ct, includeActivity), token);
+        => WithProfileAsync(accountId, role, (db, transaction, ct) => ReadStateAsync(db, transaction, accountId, role, ct, includeActivity),
+            token, createProfile: false);
 
     public Task<LearningState> SelectCourseAsync(Guid accountId, string role, int courseId, CancellationToken token = default)
     {
@@ -232,9 +255,39 @@ public sealed class LearningStore(IConfiguration configuration)
             var state = await ReadStateAsync(db, transaction, accountId, role, ct);
             var progress = RequireAccess(state, courseId, lessonId);
             var unlocked = await CanTakeQuizAsync(db, transaction, accountId, role, courseId, lesson, ct);
-            return LearningCatalog.PublicLesson(courseId, lesson,
+            return LessonContent(accountId, role, courseId, lesson,
                 progress.CompletedLessons.Contains(lessonId) ? "completed" : "current", unlocked);
-        }, token);
+        }, token, createProfile: false);
+    }
+
+    private LearningLessonContent LessonContent(Guid accountId, string role, int courseId,
+        LearningLessonDefinition lesson, string status, bool unlocked)
+    {
+        var content = LearningCatalog.PublicLesson(courseId, lesson, status, unlocked);
+        return unlocked
+            ? content with { QuizVersion = quizVersions.Protect(QuizStamp(accountId, role, courseId, lesson.Id, lesson.Questions)) }
+            : content;
+    }
+
+    private static string QuizStamp(Guid accountId, string role, int courseId, int lessonId, LearningQuizDefinition[] questions)
+    {
+        var digest = Convert.ToHexString(SHA256.HashData(JsonSerializer.SerializeToUtf8Bytes(questions)));
+        return $"{accountId:N}:{role}:{courseId}:{lessonId}:{digest}";
+    }
+
+    private bool QuizVersionMatches(string? version, Guid accountId, string role, int courseId, int lessonId,
+        LearningQuizDefinition[] questions)
+    {
+        if (string.IsNullOrEmpty(version)) return false;
+        try
+        {
+            return string.Equals(quizVersions.Unprotect(version), QuizStamp(accountId, role, courseId, lessonId, questions),
+                StringComparison.Ordinal);
+        }
+        catch (CryptographicException)
+        {
+            return false;
+        }
     }
 
     private static LearningLessonDefinition RequireVideo(LearningVideoRequest request)
@@ -280,7 +333,7 @@ public sealed class LearningStore(IConfiguration configuration)
             var progress = RequireAccess(state, request.CourseId, request.LessonId);
             var status = progress.CompletedLessons.Contains(request.LessonId) ? "completed" : "current";
             if (await CanTakeQuizAsync(db, transaction, accountId, role, request.CourseId, lesson, ct))
-                return LearningCatalog.PublicLesson(request.CourseId, lesson, status, true);
+                return LessonContent(accountId, role, request.CourseId, lesson, status, true);
 
             if (!request.SkipVideo && (positionSeconds < video.RequiredPositionSeconds || positionSeconds > video.DurationSeconds))
                 throw new LearningRuleException("video_required", "เลื่อนวิดีโอไปช่วงท้าย หรือกดข้ามเพื่อเริ่มแบบทดสอบ", 403);
@@ -299,7 +352,7 @@ public sealed class LearningStore(IConfiguration configuration)
                     VALUES (@account,@role,@course,@lesson,@video);
                 """, accountId, role, request.CourseId, lesson);
             await command.ExecuteNonQueryAsync(ct);
-            return LearningCatalog.PublicLesson(request.CourseId, lesson, status, true);
+            return LessonContent(accountId, role, request.CourseId, lesson, status, true);
         }, token);
     }
 
@@ -332,6 +385,8 @@ public sealed class LearningStore(IConfiguration configuration)
             var progress = RequireAccess(state, request.CourseId, request.LessonId);
             if (!await CanTakeQuizAsync(db, transaction, accountId, role, request.CourseId, lesson, ct))
                 throw new LearningRuleException("video_required", "เปิดวิดีโอแล้วเลื่อนไปช่วงท้ายหรือกดข้ามก่อนทำแบบทดสอบ", 403);
+            if (!QuizVersionMatches(request.QuizVersion, accountId, role, request.CourseId, lesson.Id, lesson.Questions))
+                throw new LearningRuleException("quiz_changed", "แบบทดสอบเปลี่ยนแล้ว กรุณาเปิดบทเรียนใหม่ก่อนส่งคำตอบ");
             if (request.Answers is null || request.Answers.Length != lesson.Questions.Length ||
                 request.Answers.Where((choice, index) => choice < 0 || choice >= lesson.Questions[index].Choices.Length).Any())
                 throw new LearningRuleException("invalid_answers", "กรุณาตอบคำถามทุกข้อให้ครบ", 400);
@@ -392,6 +447,22 @@ public sealed class LearningStore(IConfiguration configuration)
             return new LearningCompletion(true, false, score, lesson.Questions.Length, lesson.RequiredCorrect, reward,
                 message, feedback, await ReadStateAsync(db, transaction, accountId, role, ct));
         }, token);
+    }
+
+    public async Task<int> HighestRecordedCourseIdAsync(CancellationToken token)
+    {
+        await using var db = await OpenAsync(token);
+        await using var command = new SqlCommand("""
+            SELECT COALESCE(MAX(CourseId), 0) FROM (
+                SELECT CourseId FROM dbo.LearningCourseProgress
+                UNION ALL
+                SELECT ActiveCourseId FROM dbo.LearningProfiles
+                UNION ALL
+                SELECT TRY_CONVERT(int, SUBSTRING(AchievementKey, 8, 80))
+                FROM dbo.LearningAchievements WHERE AchievementKey LIKE 'course-%'
+            ) AS RecordedCourses;
+            """, db);
+        return Convert.ToInt32(await command.ExecuteScalarAsync(token));
     }
 
     public static LearningCourseDefinition RequireCourse(int courseId)

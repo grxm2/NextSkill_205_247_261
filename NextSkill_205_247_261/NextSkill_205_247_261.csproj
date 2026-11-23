@@ -9,5 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.6" />
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
+    <Content Update="Database\custom_courses.json;Database\custom_questions.json"
+             CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

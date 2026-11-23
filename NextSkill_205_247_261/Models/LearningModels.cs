@@ -61,7 +61,11 @@ public sealed record LearningLessonVideo(string YouTubeId, int DurationSeconds, 
 }
 public sealed record LearningLessonContent(int CourseId, int Id, string Title, string IslandName,
     string Summary, IReadOnlyList<LearningReading> Reading, IReadOnlyList<LearningQuestion> Questions,
-    int Xp, int Minutes, string Status, int QuestionCount, int RequiredCorrect, LearningLessonVideo? Video, bool VideoUnlocked);
+    int Xp, int Minutes, string Status, int QuestionCount, int RequiredCorrect, LearningLessonVideo? Video, bool VideoUnlocked)
+{
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? QuizVersion { get; init; }
+}
 public sealed record LearningFeedback(int QuestionId, bool Correct, string Explanation);
 public sealed record LearningCompletion(bool Passed, bool AlreadyCompleted, int Score, int TotalQuestions,
     int RequiredCorrect, int AwardedXp, string Reward, IReadOnlyList<LearningFeedback> Feedback, LearningState State);
@@ -85,6 +89,7 @@ public class LearningCheckpointRequest
 public sealed class CompleteLearningLessonRequest : LearningCheckpointRequest
 {
     [Required, MinLength(1), MaxLength(20)] public int[] Answers { get; set; } = [];
+    [StringLength(1024)] public string? QuizVersion { get; set; }
 }
 public class LearningVideoRequest : LearningCheckpointRequest
 {

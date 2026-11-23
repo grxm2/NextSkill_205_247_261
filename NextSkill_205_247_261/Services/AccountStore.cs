@@ -11,8 +11,11 @@ namespace NextSkill_205_247_261.Services;
 public record Account(Guid Id, string FullName, string Email, string PasswordHash, DateTime? LockoutEnd);
 public enum ProfileUpdateStatus { Updated, PasswordRequired, EmailTaken, Unavailable }
 
-public class AccountStore(IConfiguration configuration, IPasswordHasher<Account> hasher)
+public class AccountStore(IConfiguration configuration, IPasswordHasher<Account> hasher, ILogger<AccountStore> logger)
 {
+    public const string AdminSessionVersionClaim = "nextskill:admin-session-version";
+    public string AdminSessionVersion => configuration["Authentication:AdminSessionVersion"] ?? "1";
+
     private static string Table(string role) => role switch
     {
         "User" => "dbo.Users", "Admin" => "dbo.Admins", _ => throw new ArgumentException("Invalid role")
@@ -118,18 +121,18 @@ public class AccountStore(IConfiguration configuration, IPasswordHasher<Account>
         await using var transaction = (SqlTransaction)await db.BeginTransactionAsync();
         if (role == "Admin")
         {
-            var trimmedCode = invitation?.Trim() ?? "";
-            var isMasterCode = trimmedCode == "1234" || string.Equals(trimmedCode, "admin", StringComparison.OrdinalIgnoreCase);
-            if (!isMasterCode)
-            {
-                var codeHash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(trimmedCode)));
-                await using var redeem = new SqlCommand("""
-                    UPDATE dbo.AdminInvitations SET RedeemedAt=SYSUTCDATETIME()
-                    WHERE CodeHash=@hash AND RedeemedAt IS NULL AND ExpiresAt>SYSUTCDATETIME()
-                    """, db, transaction);
-                Add(redeem, "@hash", SqlDbType.VarChar, codeHash, 64);
-                if (await redeem.ExecuteNonQueryAsync() != 1) return "The admin invitation is invalid, expired, or already used.";
-            }
+            var code = invitation?.Trim();
+            if (string.IsNullOrEmpty(code))
+                return "รหัสเชิญไม่ถูกต้อง หมดอายุ หรือถูกใช้แล้ว";
+
+            var codeHash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(code)));
+            await using var redeem = new SqlCommand("""
+                UPDATE dbo.AdminInvitations SET RedeemedAt=SYSUTCDATETIME()
+                WHERE CodeHash=@hash AND RedeemedAt IS NULL AND ExpiresAt>SYSUTCDATETIME()
+                """, db, transaction);
+            Add(redeem, "@hash", SqlDbType.VarChar, codeHash, 64);
+            if (await redeem.ExecuteNonQueryAsync() != 1)
+                return "รหัสเชิญไม่ถูกต้อง หมดอายุ หรือถูกใช้แล้ว";
         }
         var account = new Account(Guid.NewGuid(), fullName.Trim(), email.Trim(), "", null);
         await using var insert = new SqlCommand($"""
@@ -143,7 +146,7 @@ public class AccountStore(IConfiguration configuration, IPasswordHasher<Account>
         Add(insert, "@hash", SqlDbType.NVarChar, hasher.HashPassword(account, password), 512);
         try { await insert.ExecuteNonQueryAsync(); }
         catch (SqlException ex) when (ex.Number is 2601 or 2627)
-        { return "An account with this email already exists for this account type."; }
+        { return "สมัครบัญชีไม่สำเร็จ กรุณาตรวจสอบข้อมูลหรือลองเข้าสู่ระบบ"; }
         await transaction.CommitAsync();
         return null;
     }
@@ -152,6 +155,7 @@ public class AccountStore(IConfiguration configuration, IPasswordHasher<Account>
     {
         var role = principal.FindFirstValue(ClaimTypes.Role);
         if (role is not ("User" or "Admin") || !Guid.TryParse(principal.FindFirstValue(ClaimTypes.NameIdentifier), out var id)) return false;
+        if (role == "Admin" && principal.FindFirstValue(AdminSessionVersionClaim) != AdminSessionVersion) return false;
         try
         {
             await using var db = await OpenAsync();
@@ -159,7 +163,11 @@ public class AccountStore(IConfiguration configuration, IPasswordHasher<Account>
             Add(query, "@id", SqlDbType.UniqueIdentifier, id);
             return (int)(await query.ExecuteScalarAsync())! == 1;
         }
-        catch (SqlException) { return false; }
+        catch (SqlException ex)
+        {
+            logger.LogWarning(ex, "Could not validate an authenticated session");
+            return false;
+        }
     }
 
     public async Task<AdminDashboardModel> AdminOverviewAsync()

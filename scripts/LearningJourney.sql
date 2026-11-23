@@ -1,7 +1,6 @@
 -- Additive learning schema. Run against the existing NextSkill account database.
 SET XACT_ABORT ON;
 BEGIN TRANSACTION;
-SET XACT_ABORT ON;
 DECLARE @schemaLock int;
 EXEC @schemaLock = sys.sp_getapplock @Resource=N'NextSkill.LearningSchema.v1',
     @LockMode=N'Exclusive', @LockOwner=N'Transaction', @LockTimeout=10000;
@@ -89,4 +88,13 @@ BEGIN
             REFERENCES dbo.LearningProfiles(AccountId,AccountRole)
     );
 END;
+IF OBJECT_ID(N'dbo.NextSkillLearningSchema', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.NextSkillLearningSchema (
+        Version int NOT NULL CONSTRAINT PK_NextSkillLearningSchema PRIMARY KEY,
+        AppliedAt datetime2 NOT NULL CONSTRAINT DF_NextSkillLearningSchema_Applied DEFAULT SYSUTCDATETIME()
+    );
+END;
+IF NOT EXISTS (SELECT 1 FROM dbo.NextSkillLearningSchema WHERE Version=1)
+    INSERT INTO dbo.NextSkillLearningSchema (Version) VALUES (1);
 COMMIT TRANSACTION;

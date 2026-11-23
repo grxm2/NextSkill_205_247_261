@@ -5,6 +5,9 @@
     ViewData["JourneyMode"] = "learn";
     var activeCourseMeta = NextSkill_205_247_261.Services.CourseCatalog.GetCourses().FirstOrDefault(c => c.Id == Model.Course.CourseId);
     var videoUrl = activeCourseMeta?.VideoUrl;
+    var embedUrl = CourseBrowseItem.ToEmbedUrl(videoUrl);
+    var isDirect = CourseBrowseItem.IsDirectVideo(videoUrl);
+    var hasCourseVideo = isDirect || embedUrl is not null;
     var levelXp = Model.State.Xp % LearningState.XpPerLevel;
     var goalTargets = LearningDailyGoals.All.ToDictionary(goal => goal.Key, goal => goal.Target);
 }
@@ -20,7 +23,7 @@
                 </button>
             </h1>
             <div class="island-course-menu" id="island-course-menu" hidden>
-                @if (!string.IsNullOrWhiteSpace(videoUrl))
+                @if (hasCourseVideo)
                 {
                     <button id="island-video-open" type="button" aria-haspopup="dialog" aria-controls="island-course-video-modal">
                         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 4.8a1 1 0 0 0-1.5.9v12.6a1 1 0 0 0 1.5.9l10.1-6.3a1 1 0 0 0 0-1.8L8 4.8Z"/></svg>
@@ -79,10 +82,8 @@
         <partial name="_IslandDashboard" model="Model" />
     </div>
 
-@if (!string.IsNullOrWhiteSpace(videoUrl))
+@if (hasCourseVideo)
 {
-    var embedUrl = NextSkill_205_247_261.Models.CourseBrowseItem.ToEmbedUrl(videoUrl);
-    var isDirect = NextSkill_205_247_261.Models.CourseBrowseItem.IsDirectVideo(videoUrl);
     <dialog id="island-course-video-modal" class="nimo-modal island-course-video" aria-labelledby="island-video-title">
         <div class="island-course-video-header">
             <div class="island-course-video-title">

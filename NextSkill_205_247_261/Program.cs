@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using NextSkill_205_247_261.Services;
 using System.Threading.RateLimiting;
 
@@ -38,7 +40,13 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                 && !request.Path.StartsWithSegments("/Learning/Entry");
             if (!isApi)
             {
-                context.Response.Redirect(context.RedirectUri);
+                var adminOnly = context.HttpContext.GetEndpoint()?.Metadata.GetOrderedMetadata<IAuthorizeData>()
+                    .Any(data => data.Roles == "Admin") == true;
+                var url = adminOnly
+                    ? QueryHelpers.AddQueryString($"{request.PathBase}/Account/AdminLogin", "returnUrl",
+                        $"{request.PathBase}{request.Path}{request.QueryString}")
+                    : context.RedirectUri;
+                context.Response.Redirect(url);
                 return Task.CompletedTask;
             }
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -66,6 +74,23 @@ builder.Services.AddRateLimiter(options =>
     };
 });
 var app = builder.Build();
+AdminContentStore.Configure(app.Environment.ContentRootPath);
+app.Use((context, next) =>
+{
+    context.Response.OnStarting(() =>
+    {
+        var headers = context.Response.Headers;
+        headers.ContentSecurityPolicy =
+            "base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; " +
+            "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com";
+        headers.XContentTypeOptions = "nosniff";
+        headers.XFrameOptions = "DENY";
+        headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
+        return Task.CompletedTask;
+    });
+    return next(context);
+});
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

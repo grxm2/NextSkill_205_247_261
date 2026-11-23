@@ -2,6 +2,8 @@ namespace NextSkill_205_247_261.Services;
 
 public static class LearningSchema
 {
+    public const int CurrentVersion = 1;
+
     // Additive only. SQL Server coordinates startup across different app processes.
     public const string Sql = """
         SET XACT_ABORT ON;
@@ -92,5 +94,14 @@ public static class LearningSchema
                     REFERENCES dbo.LearningProfiles(AccountId,AccountRole)
             );
         END;
+        IF OBJECT_ID(N'dbo.NextSkillLearningSchema', N'U') IS NULL
+        BEGIN
+            CREATE TABLE dbo.NextSkillLearningSchema (
+                Version int NOT NULL CONSTRAINT PK_NextSkillLearningSchema PRIMARY KEY,
+                AppliedAt datetime2 NOT NULL CONSTRAINT DF_NextSkillLearningSchema_Applied DEFAULT SYSUTCDATETIME()
+            );
+        END;
+        IF NOT EXISTS (SELECT 1 FROM dbo.NextSkillLearningSchema WHERE Version=1)
+            INSERT INTO dbo.NextSkillLearningSchema (Version) VALUES (1);
         """;
 }

@@ -5,6 +5,30 @@
     let courses = [];
     let questions = [];
 
+    async function postAdminContent(url, payload) {
+        const token = document.querySelector('#admin-antiforgery input')?.value;
+        if (!token) throw new Error('กรุณาเปิดหน้านี้ใหม่ก่อนบันทึกข้อมูล');
+
+        const headers = { 'X-CSRF-TOKEN': token };
+        const isForm = payload instanceof FormData;
+        if (!isForm) headers['Content-Type'] = 'application/json';
+        let response;
+        try {
+            response = await fetch(url, {
+                method: 'POST', credentials: 'same-origin', headers,
+                body: isForm ? payload : JSON.stringify(payload)
+            });
+        } catch {
+            throw new Error('เชื่อมต่อระบบไม่ได้ กรุณาลองอีกครั้ง');
+        }
+
+        const data = await response.json().catch(() => null);
+        if (!response.ok || data?.success !== true) {
+            throw new Error(data?.message || 'ทำรายการไม่สำเร็จ กรุณาเปิดหน้านี้ใหม่แล้วลองอีกครั้ง');
+        }
+        return data;
+    }
+
     function normalizeCourse(c) {
         if (!c) return null;
         return {
@@ -160,33 +184,19 @@
         };
 
         try {
-            const res = await fetch('/Account/AdminSaveCourse', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(coursePayload)
-            });
-            if (!res.ok) {
-                const errText = await res.text();
-                throw new Error(`เซิร์ฟเวอร์ตอบกลับรหัส ${res.status}: ${errText}`);
-            }
-            const data = await res.json();
-            if (data.success && data.course) {
-                const saved = normalizeCourse(data.course);
-                const idx = courses.findIndex(c => c.id === saved.id);
-                if (idx >= 0) courses[idx] = saved;
-                else courses.push(saved);
+            const data = await postAdminContent('/Account/AdminSaveCourse', coursePayload);
+            const saved = normalizeCourse(data.course);
+            const idx = courses.findIndex(c => c.id === saved.id);
+            if (idx >= 0) courses[idx] = saved;
+            else courses.push(saved);
 
-                renderCoursesTable();
-                updateCourseSelectDropdowns();
-                updateMetrics();
-                courseModal.close();
-                alert('บันทึกข้อมูลคอร์สเรียนสำเร็จ! ข้อมูลอัปเดตไปยังหน้าผู้เรียนเรียบร้อยแล้ว');
-            } else {
-                alert(data.message || 'บันทึกข้อมูลคอร์สไม่สำเร็จ');
-            }
+            renderCoursesTable();
+            updateCourseSelectDropdowns();
+            updateMetrics();
+            courseModal.close();
+            alert('บันทึกข้อมูลคอร์สแล้ว');
         } catch (err) {
-            console.error('Save course error:', err);
-            alert('เกิดข้อผิดพลาดในการบันทึกคอร์ส: ' + err.message);
+            alert(err.message);
         }
     });
 
@@ -204,31 +214,19 @@
             btn.onclick = async () => {
                 const id = parseInt(btn.dataset.id, 10);
                 const title = btn.dataset.title || 'คอร์สนี้';
-                if (!confirm(`คุณต้องการลบ "${title}" ใช่หรือไม่?`)) return;
+                if (!confirm(`นำ “${title}” ออกจากคลังคอร์สใช่ไหม? ประวัติการเรียนจะยังอยู่`)) return;
 
                 try {
-                    const res = await fetch('/Account/AdminDeleteCourse', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id })
-                    });
-                    if (!res.ok) {
-                        const errText = await res.text();
-                        throw new Error(`เซิร์ฟเวอร์ตอบกลับรหัส ${res.status}: ${errText}`);
-                    }
-                    const data = await res.json();
-                    if (data.success) {
-                        courses = courses.filter(c => c.id !== id);
-                        renderCoursesTable();
-                        updateCourseSelectDropdowns();
-                        updateMetrics();
-                        alert('ลบคอร์สเรียนสำเร็จ');
-                    } else {
-                        alert(data.message || 'ไม่สามารถลบคอร์สได้');
-                    }
+                    await postAdminContent('/Account/AdminDeleteCourse', { id });
+                    courses = courses.filter(c => c.id !== id);
+                    questions = questions.filter(q => q.courseId !== id);
+                    renderCoursesTable();
+                    updateCourseSelectDropdowns();
+                    renderQuestionsGrid();
+                    updateMetrics();
+                    alert('นำคอร์สออกจากคลังแล้ว');
                 } catch (e) {
-                    console.error('Delete course error:', e);
-                    alert('เกิดข้อผิดพลาดในการลบคอร์ส: ' + e.message);
+                    alert(e.message);
                 }
             };
         });
@@ -298,28 +296,16 @@
             feedback.style.color = '#0369a1';
             feedback.textContent = 'กำลังประมวลผลการอัปโหลด...';
 
-            const res = await fetch('/Account/AdminUploadCourses', {
-                method: 'POST',
-                body: formData
-            });
-            const data = await res.json();
-            if (data.success) {
-                feedback.style.background = '#ecfdf5';
-                feedback.style.color = '#047857';
-                feedback.textContent = data.message || 'นำเข้าคอร์สสำเร็จ!';
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
-            } else {
-                feedback.style.background = '#fef2f2';
-                feedback.style.color = '#dc2626';
-                feedback.textContent = data.message || 'ไม่สามารถนำเข้าคอร์สได้';
-            }
+            const data = await postAdminContent('/Account/AdminUploadCourses', formData);
+            feedback.style.background = '#ecfdf5';
+            feedback.style.color = '#047857';
+            feedback.textContent = data.message;
+            setTimeout(() => location.reload(), 1000);
         } catch (e) {
             feedback.style.display = 'block';
             feedback.style.background = '#fef2f2';
             feedback.style.color = '#dc2626';
-            feedback.textContent = 'เกิดข้อผิดพลาดในการอัปโหลดไฟล์';
+            feedback.textContent = e.message;
         }
     });
 
@@ -331,226 +317,172 @@
     const questionsContainer = document.getElementById('questions-container');
     const questionCourseFilter = document.getElementById('question-course-filter');
     const questionSearchInput = document.getElementById('question-search-input');
+    const questionCourse = document.getElementById('q-course-id');
+    const questionLesson = document.getElementById('q-lesson-id');
+    const questionChoices = [...(questionForm?.querySelectorAll('input[id^="q-choice-"]') || [])];
+    const questionTemplate = document.getElementById('admin-question-card-template');
+    const choiceTemplate = document.getElementById('admin-question-choice-template');
 
     document.getElementById('btn-open-question-modal')?.addEventListener('click', () => openQuestionModal());
 
     function updateCourseSelectDropdowns() {
-        const qCourseSelect = document.getElementById('q-course-id');
-        if (qCourseSelect) {
-            qCourseSelect.innerHTML = courses.map(c => `<option value="${c.id}">${escapeHtml(c.title)} (${escapeHtml(c.category)})</option>`).join('');
-        }
-        if (questionCourseFilter) {
-            const currentVal = questionCourseFilter.value;
-            questionCourseFilter.innerHTML = `<option value="0">ทุกคอร์ส (All Courses)</option>` +
-                courses.map(c => `<option value="${c.id}">${escapeHtml(c.title)} (${escapeHtml(c.category)})</option>`).join('');
-            questionCourseFilter.value = currentVal;
-        }
+        const courseOption = c => new Option(c.title + ' (' + c.category + ')', c.id);
+        const selectedCourse = questionCourse.value;
+        questionCourse.replaceChildren(...courses.map(courseOption));
+        if (courses.some(c => String(c.id) === selectedCourse)) questionCourse.value = selectedCourse;
+
+        const selectedFilter = questionCourseFilter.value;
+        questionCourseFilter.replaceChildren(new Option('ทุกคอร์ส (All Courses)', '0'), ...courses.map(courseOption));
+        questionCourseFilter.value = courses.some(c => String(c.id) === selectedFilter) ? selectedFilter : '0';
+        updateQuestionLessonOptions();
     }
+
+    function updateQuestionLessonOptions(selectedLesson) {
+        const course = courses.find(c => c.id === Number(questionCourse.value));
+        const lessons = course?.lessons || [];
+        questionLesson.replaceChildren(...lessons.map(lesson =>
+            new Option(lesson.title ?? lesson.Title, lesson.id ?? lesson.Id)
+        ));
+        if (selectedLesson != null && Array.from(questionLesson.options).some(option => option.value === String(selectedLesson))) {
+            questionLesson.value = String(selectedLesson);
+        }
+        if (!lessons.length) questionLesson.add(new Option('คอร์สนี้ยังไม่มีบทเรียน', ''));
+    }
+
+    questionCourse?.addEventListener('change', () => updateQuestionLessonOptions());
 
     function openQuestionModal(qToEdit = null) {
         document.getElementById('question-modal-title').textContent = qToEdit ? 'แก้ไขคำถามแบบฝึกหัด' : 'เพิ่มคำถามแบบฝึกหัดใหม่';
-        document.getElementById('question-id').value = qToEdit ? qToEdit.id : '';
-        if (qToEdit && qToEdit.courseId) document.getElementById('q-course-id').value = qToEdit.courseId;
-        document.getElementById('q-lesson-id').value = qToEdit ? (qToEdit.lessonId || 1) : 1;
-        document.getElementById('q-prompt').value = qToEdit ? qToEdit.prompt : '';
+        document.getElementById('question-id').value = qToEdit?.id || '';
+        if (qToEdit) questionCourse.value = String(qToEdit.courseId);
+        updateQuestionLessonOptions(qToEdit?.lessonId);
+        document.getElementById('q-prompt').value = qToEdit?.prompt || '';
 
-        const choices = qToEdit ? qToEdit.choices : ['', '', '', ''];
-        document.getElementById('q-choice-0').value = choices[0] || '';
-        document.getElementById('q-choice-1').value = choices[1] || '';
-        document.getElementById('q-choice-2').value = choices[2] || '';
-        document.getElementById('q-choice-3').value = choices[3] || '';
+        questionChoices.forEach((input, index) => { input.value = qToEdit?.choices[index] || ''; });
+        questionForm.querySelectorAll('input[name="q-correct"]').forEach((radio, index) => {
+            radio.checked = index === (qToEdit?.correctChoice ?? 0);
+        });
 
-        const correctIdx = qToEdit ? (qToEdit.correctChoice || 0) : 0;
-        const radio = document.getElementById(`correct-${correctIdx}`);
-        if (radio) radio.checked = true;
-
-        document.getElementById('q-explanation').value = qToEdit ? (qToEdit.explanation || '') : '';
-        document.getElementById('q-hint').value = qToEdit ? (qToEdit.hint || '') : '';
-        document.getElementById('q-coaching').value = qToEdit ? qToEdit.coaching : '';
-
+        document.getElementById('q-explanation').value = qToEdit?.explanation || '';
+        document.getElementById('q-hint').value = qToEdit?.hint || '';
+        document.getElementById('q-coaching').value = qToEdit?.coaching || '';
         questionModal.showModal();
     }
 
     questionForm?.addEventListener('submit', async event => {
         event.preventDefault();
-        const id = document.getElementById('question-id').value.trim();
-        const courseId = parseInt(document.getElementById('q-course-id').value, 10);
-        const courseObj = courses.find(c => c.id === courseId);
-        const courseTitle = courseObj ? courseObj.title : 'บทเรียน';
+        const selected = questionForm.querySelector('input[name="q-correct"]:checked');
+        const entered = questionChoices
+            .map((input, slot) => ({ slot, text: input.value.trim() }))
+            .filter(choice => choice.text);
+        const correctChoice = selected ? entered.findIndex(choice => choice.slot === Number(selected.value)) : -1;
 
-        const choices = [
-            document.getElementById('q-choice-0').value.trim(),
-            document.getElementById('q-choice-1').value.trim(),
-            document.getElementById('q-choice-2').value.trim(),
-            document.getElementById('q-choice-3').value.trim()
-        ].filter(Boolean);
-
-        if (choices.length < 2) {
-            alert('กรุณาระบุตัวเลือกคำตอบอย่างน้อย 2 ตัวเลือก');
+        if (correctChoice < 0) {
+            alert('เลือกเฉลยจากตัวเลือกที่กรอกข้อความแล้ว');
             return;
         }
 
-        const checkedRadio = document.querySelector('input[name="q-correct"]:checked');
-        const correctChoice = checkedRadio ? parseInt(checkedRadio.value, 10) : 0;
-
         const payload = {
-            id,
-            courseId,
-            courseTitle,
-            lessonId: parseInt(document.getElementById('q-lesson-id').value, 10) || 1,
-            lessonTitle: `บทที่ ${document.getElementById('q-lesson-id').value}`,
+            id: document.getElementById('question-id').value,
+            courseId: Number(questionCourse.value),
+            lessonId: Number(questionLesson.value),
             prompt: document.getElementById('q-prompt').value.trim(),
-            choices,
-            correctChoice: Math.min(correctChoice, choices.length - 1),
+            choices: entered.map(choice => choice.text),
+            correctChoice,
             explanation: document.getElementById('q-explanation').value.trim(),
             hint: document.getElementById('q-hint').value.trim(),
             coaching: document.getElementById('q-coaching').value.trim()
         };
 
         try {
-            const res = await fetch('/Account/AdminSaveQuestion', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            if (!res.ok) {
-                const errText = await res.text();
-                throw new Error(`เซิร์ฟเวอร์ตอบกลับรหัส ${res.status}: ${errText}`);
-            }
-            const data = await res.json();
-            if (data.success && data.question) {
-                const saved = normalizeQuestion(data.question);
-                const idx = questions.findIndex(q => q.id === saved.id);
-                if (idx >= 0) questions[idx] = saved;
-                else questions.push(saved);
+            const data = await postAdminContent('/Account/AdminSaveQuestion', payload);
+            const saved = normalizeQuestion(data.question);
+            const idx = questions.findIndex(q => q.id === saved.id);
+            if (idx >= 0) questions[idx] = saved;
+            else questions.push(saved);
 
-                renderQuestionsGrid();
-                updateMetrics();
-                questionModal.close();
-                alert('บันทึกข้อมูลคำถามสำเร็จ!');
-            } else {
-                alert(data.message || 'บันทึกคำถามไม่สำเร็จ');
-            }
-        } catch (e) {
-            console.error('Save question error:', e);
-            alert('เกิดข้อผิดพลาดในการบันทึกคำถาม: ' + e.message);
+            renderQuestionsGrid();
+            updateMetrics();
+            questionModal.close();
+            alert('บันทึกข้อมูลคำถามแล้ว');
+        } catch (error) {
+            alert(error.message);
         }
     });
 
-    function attachQuestionActions() {
-        document.querySelectorAll('.btn-edit-question').forEach(btn => {
-            btn.onclick = () => {
-                const id = btn.dataset.id;
-                const q = questions.find(item => item.id === id);
-                if (q) openQuestionModal(q);
-                else alert('ไม่พบคำถามที่ต้องการแก้ไข ID: ' + id);
-            };
-        });
+    questionsContainer?.addEventListener('click', async event => {
+        const button = event.target.closest('button[data-question-action]');
+        const card = button?.closest('[data-question-card]');
+        const question = questions.find(item => item.id === card?.dataset.id);
+        if (!question) return;
 
-        document.querySelectorAll('.btn-delete-question').forEach(btn => {
-            btn.onclick = async () => {
-                const id = btn.dataset.id;
-                if (!confirm('คุณต้องการลบคำถามข้อนี้ใช่หรือไม่?')) return;
+        switch (button.dataset.questionAction) {
+            case 'test':
+                openQuizTester(question);
+                break;
+            case 'edit':
+                openQuestionModal(question);
+                break;
+            case 'delete':
+                if (!confirm('คุณต้องการลบคำถามข้อนี้ใช่ไหม?')) return;
                 try {
-                    const res = await fetch('/Account/AdminDeleteQuestion', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id })
-                    });
-                    if (!res.ok) {
-                        const errText = await res.text();
-                        throw new Error(`เซิร์ฟเวอร์ตอบกลับรหัส ${res.status}: ${errText}`);
-                    }
-                    const data = await res.json();
-                    if (data.success) {
-                        questions = questions.filter(item => item.id !== id);
-                        renderQuestionsGrid();
-                        updateMetrics();
-                        alert('ลบคำถามสำเร็จ');
-                    } else {
-                        alert(data.message || 'ไม่สามารถลบคำถามได้');
-                    }
-                } catch (e) {
-                    console.error('Delete question error:', e);
-                    alert('เกิดข้อผิดพลาดในการลบคำถาม: ' + e.message);
+                    await postAdminContent('/Account/AdminDeleteQuestion', { id: question.id });
+                    questions = questions.filter(item => item.id !== question.id);
+                    renderQuestionsGrid();
+                    updateMetrics();
+                    alert('ลบคำถามแล้ว');
+                } catch (error) {
+                    alert(error.message);
                 }
-            };
+                break;
+        }
+    });
+
+    function renderQuestionCard(question) {
+        const card = questionTemplate.content.firstElementChild.cloneNode(true);
+        card.dataset.id = question.id;
+        card.querySelector('[data-question-course]').textContent = question.courseTitle + ' · บทที่ ' + question.lessonId;
+        card.querySelector('[data-question-id]').textContent = 'รหัส: ' + question.id;
+        card.querySelector('[data-question-prompt]').textContent = question.prompt;
+
+        const choices = card.querySelector('[data-question-choices]');
+        question.choices.forEach((text, index) => {
+            const choice = choiceTemplate.content.firstElementChild.cloneNode(true);
+            const correct = index === question.correctChoice;
+            choice.classList.toggle('correct', correct);
+            choice.querySelector('.choice-letter').textContent = String.fromCharCode(65 + index);
+            choice.querySelector('[data-choice-text]').textContent = text;
+            choice.querySelector('[data-choice-correct]').hidden = !correct;
+            choices.append(choice);
         });
 
-        document.querySelectorAll('.btn-test-quiz').forEach(btn => {
-            btn.onclick = () => {
-                const id = btn.dataset.id;
-                const q = questions.find(item => item.id === id);
-                if (q) openQuizTester(q);
-            };
-        });
+        const explanation = card.querySelector('[data-question-explanation]');
+        explanation.hidden = !question.explanation;
+        explanation.querySelector('span').textContent = question.explanation;
+        const hint = card.querySelector('[data-question-hint]');
+        hint.hidden = !question.hint;
+        hint.querySelector('span').textContent = question.hint;
+        return card;
     }
 
     function renderQuestionsGrid() {
         if (!questionsContainer) return;
-        const qSearch = (questionSearchInput?.value || '').trim().toLowerCase();
-        const courseFilterVal = parseInt(questionCourseFilter?.value || '0', 10);
+        const search = (questionSearchInput?.value || '').trim().toLowerCase();
+        const courseId = Number(questionCourseFilter?.value);
+        const filtered = questions.filter(question =>
+            (!courseId || question.courseId === courseId) &&
+            (!search || [question.prompt, question.explanation, question.courseTitle].some(text => text.toLowerCase().includes(search)))
+        );
 
-        const filtered = questions.filter(q => {
-            const matchesCourse = courseFilterVal === 0 || q.courseId === courseFilterVal;
-            const matchesPrompt = !qSearch || (q.prompt && q.prompt.toLowerCase().includes(qSearch)) ||
-                (q.explanation && q.explanation.toLowerCase().includes(qSearch)) ||
-                (q.courseTitle && q.courseTitle.toLowerCase().includes(qSearch));
-            return matchesCourse && matchesPrompt;
-        });
-
-        questionsContainer.innerHTML = filtered.map(q => `
-            <div class="question-studio-card" data-question-card data-id="${q.id}">
-                <div class="question-meta-row">
-                    <span class="question-course-tag">${escapeHtml(q.courseTitle || 'ทั่วไป')} · บทที่ ${q.lessonId || 1}</span>
-                    <span style="font-size: 11px; color: var(--nimo-muted);">รหัส: ${escapeHtml(q.id)}</span>
-                </div>
-                <h4 class="question-prompt">${escapeHtml(q.prompt)}</h4>
-                <div class="question-choices-list">
-                    ${(q.choices || []).map((choice, i) => {
-                        const isCorrect = i === q.correctChoice;
-                        const letter = String.fromCharCode(65 + i);
-                        return `
-                            <div class="choice-item ${isCorrect ? 'correct' : ''}">
-                                <span class="choice-letter">${letter}</span>
-                                <span>${escapeHtml(choice)}</span>
-                                ${isCorrect ? '<span style="margin-left: auto; font-size: 11px; font-weight: 700; color: #047857;">คำตอบที่ถูกต้อง</span>' : ''}
-                            </div>
-                        `;
-                    }).join('')}
-                </div>
-                ${q.explanation ? `
-                    <div class="question-note-box">
-                        <strong>คำอธิบายเมื่อผู้เรียนตอบ:</strong>
-                        <span>${escapeHtml(q.explanation)}</span>
-                    </div>
-                ` : ''}
-                ${q.hint ? `
-                    <div style="font-size: 12px; color: var(--nimo-muted); background: #fefce8; border: 1px solid #fef08a; padding: 7px 10px; border-radius: 8px;">
-                        <strong style="color: #b45309;">คำใบ้จาก Nimo:</strong> ${escapeHtml(q.hint)}
-                    </div>
-                ` : ''}
-                <div class="question-card-footer">
-                    <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-test-quiz" data-id="${q.id}">
-                        <span>ทดสอบตอบ</span>
-                    </button>
-                    <div style="display: flex; gap: 8px;">
-                        <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-question" data-id="${q.id}">แก้ไข</button>
-                        <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-question" data-id="${q.id}">ลบ</button>
-                    </div>
-                </div>
-            </div>
-        `).join('') || `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--nimo-muted);">ไม่พบคำถามที่ตรงกับเงื่อนไขการค้นหา</div>`;
-
+        questionsContainer.replaceChildren(...filtered.map(renderQuestionCard));
+        document.getElementById('questions-empty').hidden = filtered.length > 0;
         const badge = document.getElementById('question-total-badge');
         if (badge) badge.textContent = questions.length;
-
-        attachQuestionActions();
     }
 
     questionSearchInput?.addEventListener('input', renderQuestionsGrid);
     questionCourseFilter?.addEventListener('change', renderQuestionsGrid);
-    attachQuestionActions();
+    renderQuestionsGrid();
 
     // ==========================================
     // Interactive Quiz Tester with Nimo

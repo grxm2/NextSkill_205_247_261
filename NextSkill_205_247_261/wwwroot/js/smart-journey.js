@@ -714,7 +714,8 @@
             tell(`กรุณาเลือกคำตอบข้อที่ ${firstUnanswered + 1} ก่อนส่ง`);
             return;
         }
-        await submitAttempt({courseId:lesson.courseId,lessonId:lesson.id,answers:lesson.questions.map(q=>selections.get(q.id))});
+        await submitAttempt({courseId:lesson.courseId,lessonId:lesson.id,quizVersion:lesson.quizVersion,
+            answers:lesson.questions.map(q=>selections.get(q.id))});
     }
     async function submitAttempt(attempt) {
         if (submitting || !lesson) return;
@@ -739,13 +740,15 @@
                 $('#submission-recovery').hidden = false;
             } else {
                 showError($('#lesson-error'), error);
-                if (error.code === 'video_required') {
-                    lesson.videoUnlocked = false;
+                if (error.code === 'video_required' || error.code === 'quiz_changed') {
+                    if (error.code === 'video_required') lesson.videoUnlocked = false;
                     $('#submit-lesson').hidden = true;
                     $('#retry-lesson').hidden = false;
                 }
             }
-            $('#lesson-nimo-message').textContent = 'ไม่ต้องเริ่มใหม่ คำตอบยังอยู่ เราลองเชื่อมต่ออีกครั้งได้';
+            $('#lesson-nimo-message').textContent = error.code === 'quiz_changed'
+                ? 'เปิดบทเรียนอีกครั้งเพื่อดูคำถามชุดใหม่'
+                : 'ไม่ต้องเริ่มใหม่ คำตอบยังอยู่ เราลองเชื่อมต่ออีกครั้งได้';
         }
         finally {
             if (requestId === lessonRequest) setSubmissionBusy(false);
