@@ -71,6 +71,19 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+else
+{
+    app.UseExceptionHandler(errorApp => errorApp.Run(async context =>
+    {
+        var exception = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>()?.Error;
+        var logger = context.RequestServices.GetRequiredService<ILoggerFactory>().CreateLogger("UnhandledRequests");
+        logger.LogError(exception, "Unhandled exception while processing request {TraceIdentifier}", context.TraceIdentifier);
+
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType = "text/plain; charset=utf-8";
+        await context.Response.WriteAsync("An unexpected error occurred. Please try again later.");
+    }));
+}
 
 app.Use(async (context, next) =>
 {

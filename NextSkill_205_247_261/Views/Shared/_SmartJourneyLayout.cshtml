@@ -50,6 +50,8 @@
 @if (ViewData["JourneyMode"] as string == "learn") {
     <link rel="stylesheet" href="~/css/island-dashboard.css" asp-append-version="true" />
 }
+    <link rel="stylesheet" href="~/css/footer-glass.css" asp-append-version="true" />
+    <script src="~/js/footer-bubbles.js" asp-append-version="true" defer></script>
 </head>
 <body data-guest-preview="@((JourneyEnvironment.EnvironmentName == "Development" && JourneyConfiguration.GetValue("Learning:GuestPreview", true)).ToString().ToLowerInvariant())" id="nextskill-home" class="smart-journey" data-companion-theme="learning-club" data-journey-mode="@ViewData["JourneyMode"]" data-authenticated="@(User.Identity?.IsAuthenticated == true ? "true" : "false")">
     <a class="skip-link" href="#journey-main">ข้ามไปเนื้อหา</a>
