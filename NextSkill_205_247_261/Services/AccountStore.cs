@@ -166,29 +166,72 @@ public class AccountStore(IConfiguration configuration, IPasswordHasher<Account>
     {
         await using var db = await OpenAsync();
         await using var query = new SqlCommand("""
-            SELECT (SELECT COUNT(*) FROM dbo.Users), (SELECT COUNT(*) FROM dbo.Admins),
-              (SELECT COUNT(*) FROM dbo.Users WHERE CreatedAt >= DATEFROMPARTS(YEAR(SYSUTCDATETIME()),MONTH(SYSUTCDATETIME()),1));
+            SELECT
+              (SELECT COUNT(*) FROM dbo.Users),
+              (SELECT COUNT(*) FROM dbo.Admins),
+              (SELECT COUNT(*) FROM dbo.Users WHERE CreatedAt >= DATEFROMPARTS(YEAR(SYSUTCDATETIME()),MONTH(SYSUTCDATETIME()),1)),
+              (SELECT COUNT(*) FROM dbo.Users WHERE LastLoginAt >= DATEADD(day, -1, SYSUTCDATETIME()) OR CreatedAt >= DATEADD(day, -1, SYSUTCDATETIME()))
+              + (SELECT COUNT(*) FROM dbo.Admins WHERE LastLoginAt >= DATEADD(day, -1, SYSUTCDATETIME()) OR CreatedAt >= DATEADD(day, -1, SYSUTCDATETIME())),
+              (SELECT COUNT(*) FROM dbo.Users WHERE LastLoginAt IS NOT NULL)
+              + (SELECT COUNT(*) FROM dbo.Admins WHERE LastLoginAt IS NOT NULL),
+              CASE WHEN OBJECT_ID(N'dbo.LearningLessonCompletions', N'U') IS NOT NULL THEN (SELECT COUNT(*) FROM dbo.LearningLessonCompletions) ELSE 0 END,
+              CASE WHEN OBJECT_ID(N'dbo.LearningCourseProgress', N'U') IS NOT NULL THEN (SELECT COUNT(*) FROM dbo.LearningCourseProgress) ELSE 0 END,
+              CASE WHEN OBJECT_ID(N'dbo.LearningProfiles', N'U') IS NOT NULL THEN (SELECT ISNULL(SUM(Xp), 0) FROM dbo.LearningProfiles) ELSE 0 END,
+              CASE WHEN OBJECT_ID(N'dbo.LearningAchievements', N'U') IS NOT NULL THEN (SELECT COUNT(*) FROM dbo.LearningAchievements) ELSE 0 END;
+
             SELECT TOP (100) FullName, Email, Role, CreatedAt FROM (
               SELECT Id, FullName, Email, 'User' AS Role, CreatedAt FROM dbo.Users
               UNION ALL
               SELECT Id, FullName, Email, 'Admin' AS Role, CreatedAt FROM dbo.Admins
             ) members ORDER BY CreatedAt DESC, Id;
-            SELECT TOP (6) FullName, Role, Action, OccurredAt FROM (
+
+            SELECT TOP (10) FullName, Role, Action, OccurredAt FROM (
               SELECT FullName, 'User' AS Role, 'created a user account' AS Action, CreatedAt AS OccurredAt FROM dbo.Users
               UNION ALL SELECT FullName, 'Admin', 'created an admin account', CreatedAt FROM dbo.Admins
               UNION ALL SELECT FullName, 'User', 'last signed in', LastLoginAt FROM dbo.Users WHERE LastLoginAt IS NOT NULL
               UNION ALL SELECT FullName, 'Admin', 'last signed in', LastLoginAt FROM dbo.Admins WHERE LastLoginAt IS NOT NULL
             ) activity ORDER BY OccurredAt DESC, FullName;
+
+            SELECT OccurredAt FROM (
+              SELECT CreatedAt AS OccurredAt FROM dbo.Users
+              UNION ALL SELECT CreatedAt FROM dbo.Admins
+              UNION ALL SELECT LastLoginAt FROM dbo.Users WHERE LastLoginAt IS NOT NULL
+              UNION ALL SELECT LastLoginAt FROM dbo.Admins WHERE LastLoginAt IS NOT NULL
+            ) allEvents;
+
+            IF OBJECT_ID(N'dbo.LearningLessonCompletions', N'U') IS NOT NULL
+                SELECT CompletedAt FROM dbo.LearningLessonCompletions;
+            IF OBJECT_ID(N'dbo.LearningCourseProgress', N'U') IS NOT NULL
+                SELECT StartedAt FROM dbo.LearningCourseProgress;
             """, db);
         await using var reader = await query.ExecuteReaderAsync();
         await reader.ReadAsync();
-        var model = new AdminDashboardModel { Users = reader.GetInt32(0), Admins = reader.GetInt32(1), NewUsersThisMonth = reader.GetInt32(2) };
+        var model = new AdminDashboardModel
+        {
+            Users = reader.GetInt32(0),
+            Admins = reader.GetInt32(1),
+            NewUsersThisMonth = reader.GetInt32(2),
+            ActiveTodayCount = reader.GetInt32(3),
+            TotalLoginsCount = reader.GetInt32(4),
+            TotalLessonCompletions = reader.GetInt32(5),
+            StartedCoursesCount = reader.GetInt32(6),
+            TotalXpEarned = reader.GetInt32(7),
+            TotalAchievementsEarned = reader.GetInt32(8)
+        };
         await reader.NextResultAsync();
         while (await reader.ReadAsync())
             model.Members.Add(new(reader.GetString(0), reader.GetString(1), reader.GetString(2), DateTime.SpecifyKind(reader.GetDateTime(3), DateTimeKind.Utc)));
         await reader.NextResultAsync();
         while (await reader.ReadAsync())
             model.Activities.Add(new(reader.GetString(0), reader.GetString(1), reader.GetString(2), DateTime.SpecifyKind(reader.GetDateTime(3), DateTimeKind.Utc)));
+        while (await reader.NextResultAsync())
+        {
+            while (await reader.ReadAsync())
+            {
+                if (!reader.IsDBNull(0))
+                    model.AllActivityTimestamps.Add(DateTime.SpecifyKind(reader.GetDateTime(0), DateTimeKind.Utc));
+            }
+        }
         return model;
     }
 

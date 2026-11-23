@@ -100,14 +100,14 @@
                 </a>
             </nav>
 
-            <!-- System Quota Card (Matching Reference Screenshot) -->
+            <!-- System Summary Card -->
             <div class="sidebar-quota-card">
                 <div class="quota-header">
-                    <span>โควตาระบบคอร์ส</span>
-                    <strong id="quota-text">@Model.Courses.Count / 20</strong>
+                    <span>คลังเนื้อหาในระบบ</span>
+                    <strong id="quota-text">@Model.Courses.Count คอร์ส · @Model.TotalLessons ด่าน</strong>
                 </div>
                 <div class="quota-progress-track">
-                    <div class="quota-progress-fill" style="width: @(Math.Min(100, (Model.Courses.Count * 100) / 20))%;"></div>
+                    <div class="quota-progress-fill" style="width: @(Model.Courses.Count > 0 ? Math.Min(100, (Model.FeaturedCoursesCount * 100) / Model.Courses.Count) : 0)%;"></div>
                 </div>
             </div>
 
@@ -172,6 +172,16 @@
                 <section id="dashboard" class="admin-panel" data-title="ภาพรวมผู้ดูแลระบบ" aria-label="Dashboard overview">
                     
                     <!-- Dashboard Greeting Row (Matching Screenshot) -->
+                    @{
+                        var categoryShares = Model.GetCategoryShares();
+                        var trend3m = Model.GetMonthlyTrend(3);
+                        var trend6m = Model.GetMonthlyTrend(6);
+                        var trend12m = Model.GetMonthlyTrend(12);
+                        var avgLessonsPerCourse = Model.Courses.Count > 0 ? Math.Round((double)Model.TotalLessons / Model.Courses.Count, 1) : 0;
+                        var avgQuestionsPerLesson = Model.TotalLessons > 0 ? Math.Round((double)Model.TotalQuestions / Model.TotalLessons, 1) : 0;
+                    }
+
+                    <!-- Dashboard Greeting Row -->
                     <div class="dashboard-header-row">
                         <div>
                             <h2 class="dashboard-greeting-title" id="greeting-title">
@@ -179,7 +189,7 @@
                             </h2>
                             <p class="dashboard-greeting-sub">
                                 <span id="current-date-th">วันพุธที่ 16 พฤศจิกายน</span> · 
-                                <span class="attention-badge">4 รายการที่ต้องการการดูแล</span>
+                                <span class="attention-badge" id="header-summary-badge">@Model.Courses.Count คอร์ส · @Model.TotalLessons ด่าน · @Model.TotalQuestions คำถามในระบบ</span>
                             </p>
                         </div>
                         <div class="header-action-buttons">
@@ -195,14 +205,14 @@
                         </div>
                     </div>
 
-                    <!-- TWO Big Analytics Cards (Matching Reference Screenshot) -->
+                    <!-- TWO Big Analytics Cards (100% Real System Data) -->
                     <div class="analytics-main-grid">
-                        <!-- Left Big Card: Agency commission / Learning Trends -->
+                        <!-- Left Big Card: Real System Activity & Learning Trends -->
                         <article class="analytics-glass-card">
                             <div class="chart-card-header">
                                 <div class="chart-title-block">
                                     <h3>สถิติการเรียนรู้ &amp; การเติบโต (Learning Trends)</h3>
-                                    <p id="chart-sub-text">1,240 ผู้เรียนและกิจกรรม ในช่วง 6 เดือนที่ผ่านมา</p>
+                                    <p id="chart-sub-text">ผู้เรียน @Model.Users คน · กิจกรรมจริง @trend6m.TotalInPeriod รายการ ในช่วง 6 เดือนที่ผ่านมา</p>
                                 </div>
                                 <div class="chart-controls-wrap">
                                     <div class="chart-period-pill-group">
@@ -217,65 +227,56 @@
                             </div>
 
                             <div class="bar-chart-container">
-                                <div class="chart-y-axis">
-                                    <span>$30K</span>
-                                    <span>$20K</span>
-                                    <span>$10K</span>
-                                    <span>$0</span>
+                                <div class="chart-y-axis" id="chart-y-axis">
+                                    @foreach (var tick in trend6m.YAxisTicks)
+                                    {
+                                        <span>@tick.ToString("N0")</span>
+                                    }
                                 </div>
                                 <div class="chart-bars-wrap" id="chart-bars-container">
-                                    <div class="chart-bar-col" data-month="Jun" data-val="$18,400">
-                                        <div class="bar-pill" style="height: 48%;"></div>
-                                    </div>
-                                    <div class="chart-bar-col" data-month="Jul" data-val="$21,200">
-                                        <div class="bar-pill" style="height: 56%;"></div>
-                                    </div>
-                                    <div class="chart-bar-col" data-month="Aug" data-val="$29,800">
-                                        <div class="bar-pill" style="height: 78%;"></div>
-                                    </div>
-                                    <div class="chart-bar-col" data-month="Sep" data-val="$26,500">
-                                        <div class="bar-pill" style="height: 70%;"></div>
-                                    </div>
-                                    <div class="chart-bar-col" data-month="Oct" data-val="$34,100">
-                                        <div class="bar-pill" style="height: 88%;"></div>
-                                    </div>
-                                    <div class="chart-bar-col highlighted" data-month="Nov" data-val="$42,343">
-                                        <div class="bar-highlight-tooltip">$42,343</div>
-                                        <div class="bar-pill" style="height: 98%;"></div>
-                                    </div>
+                                    @foreach (var bar in trend6m.Bars)
+                                    {
+                                        <div class="chart-bar-col @(bar.Highlighted ? "highlighted" : "")" data-month="@bar.MonthKey" data-val="@bar.Count.ToString("N0") รายการ">
+                                            @if (bar.Highlighted)
+                                            {
+                                                <div class="bar-highlight-tooltip">@bar.Count.ToString("N0") รายการ</div>
+                                            }
+                                            <div class="bar-pill" style="height: @(bar.HeightPercent)%;"></div>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                             <div class="chart-x-labels">
-                                <span>มิ.ย.</span>
-                                <span>ก.ค.</span>
-                                <span>ส.ค.</span>
-                                <span>ก.ย.</span>
-                                <span>ต.ค.</span>
-                                <span>พ.ย.</span>
+                                @foreach (var bar in trend6m.Bars)
+                                {
+                                    <span>@bar.LabelTh</span>
+                                }
                             </div>
                         </article>
 
-                        <!-- Right Card: Commission by office / Course Categories Share -->
+                        <!-- Right Card: Real Course Categories Share -->
                         <article class="analytics-glass-card">
                             <div class="chart-card-header">
                                 <div class="chart-title-block">
                                     <h3>สัดส่วนคอร์สตามหมวดหมู่</h3>
-                                    <p>Last 6 months · สัดส่วนตามหมวดหมู่ในระบบ</p>
+                                    <p>เรียนฟรีทุกหมวดหมู่ · คำนวณจาก @Model.Courses.Count คอร์สจริงในระบบ</p>
                                 </div>
                             </div>
 
                             <div class="donut-chart-container">
                                 <div class="donut-svg-wrap">
-                                    <svg class="donut-svg" viewBox="0 0 100 100">
+                                    <svg class="donut-svg" id="category-donut-svg" viewBox="0 0 100 100">
                                         <circle class="donut-circle-bg" cx="50" cy="50" r="38"></circle>
-                                        <!-- Technology: 42% (dash: 100, gap: 138) -->
-                                        <circle class="donut-segment" cx="50" cy="50" r="38" stroke="#0284c7" stroke-dasharray="100 138" stroke-dashoffset="0"></circle>
-                                        <!-- Design: 28% (dash: 67, gap: 171) -->
-                                        <circle class="donut-segment" cx="50" cy="50" r="38" stroke="#10b981" stroke-dasharray="67 171" stroke-dashoffset="-100"></circle>
-                                        <!-- Business: 18% (dash: 43, gap: 195) -->
-                                        <circle class="donut-segment" cx="50" cy="50" r="38" stroke="#f59e0b" stroke-dasharray="43 195" stroke-dashoffset="-167"></circle>
-                                        <!-- Languages: 12% (dash: 28, gap: 210) -->
-                                        <circle class="donut-segment" cx="50" cy="50" r="38" stroke="#8b5cf6" stroke-dasharray="28 210" stroke-dashoffset="-210"></circle>
+                                        @foreach (var share in categoryShares)
+                                        {
+                                            <circle class="donut-segment"
+                                                    cx="50" cy="50" r="38"
+                                                    data-category="@share.Category"
+                                                    data-share-label="@share.Percent%"
+                                                    stroke="@share.Color"
+                                                    stroke-dasharray="@share.DashLength.ToString(System.Globalization.CultureInfo.InvariantCulture) @share.DashGap.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                                                    stroke-dashoffset="@share.DashOffset.ToString(System.Globalization.CultureInfo.InvariantCulture)"></circle>
+                                        }
                                     </svg>
                                     <div class="donut-center-info">
                                         <span class="donut-center-val" id="donut-center-num">@Model.Courses.Count</span>
@@ -283,62 +284,47 @@
                                     </div>
                                 </div>
 
-                                <div class="category-legend-grid">
-                                    <div class="legend-item">
-                                        <span class="legend-name">
-                                            <span class="legend-color-dot" style="background: #0284c7;"></span> Technology
-                                        </span>
-                                        <span class="legend-val">$43.2K · 42%</span>
-                                    </div>
-                                    <div class="legend-item">
-                                        <span class="legend-name">
-                                            <span class="legend-color-dot" style="background: #10b981;"></span> Design
-                                        </span>
-                                        <span class="legend-val">$28.5K · 28%</span>
-                                    </div>
-                                    <div class="legend-item">
-                                        <span class="legend-name">
-                                            <span class="legend-color-dot" style="background: #f59e0b;"></span> Business
-                                        </span>
-                                        <span class="legend-val">$19.1K · 18%</span>
-                                    </div>
-                                    <div class="legend-item">
-                                        <span class="legend-name">
-                                            <span class="legend-color-dot" style="background: #8b5cf6;"></span> Languages
-                                        </span>
-                                        <span class="legend-val">$12.4K · 12%</span>
-                                    </div>
+                                <div class="category-legend-grid" id="category-legend-grid">
+                                    @foreach (var share in categoryShares)
+                                    {
+                                        <div class="legend-item">
+                                            <span class="legend-name">
+                                                <span class="legend-color-dot" style="background: @share.Color;"></span> @share.Category
+                                            </span>
+                                            <span class="legend-val" data-cat-legend="@share.Category">@share.Count คอร์ส · @share.Percent%</span>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </article>
                     </div>
 
-                    <!-- 8 Metric Cards Grid (4x2 Frosted Cards matching Screenshot) -->
+                    <!-- 8 Metric Cards Grid (100% Real System Numbers) -->
                     <div class="metric-grid-eight">
-                        <!-- 1. Active Learners -->
+                        <!-- 1. Total Accounts in System -->
                         <article class="metric-card-modern">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                                 </span>
                             </div>
-                            <strong class="metric-number-bold" data-count="11">11</strong>
-                            <h4 class="metric-label-title">ผู้เรียนที่กำลังออนไลน์</h4>
+                            <strong class="metric-number-bold" data-count="@Model.TotalAccounts">@Model.TotalAccounts</strong>
+                            <h4 class="metric-label-title">บัญชีผู้ใช้ในระบบทั้งหมด</h4>
                             <p class="metric-desc-sub">
-                                <span class="live-pulse-dot"></span> 3 online right now
+                                <span class="live-pulse-dot"></span> ผู้เรียน @Model.Users คน · ผู้ดูแล @Model.Admins คน
                             </p>
                         </article>
 
-                        <!-- 2. Waiting for review -->
+                        <!-- 2. Total Courses in System -->
                         <article class="metric-card-modern">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon amber">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                                 </span>
                             </div>
-                            <strong class="metric-number-bold" data-count="6">6</strong>
-                            <h4 class="metric-label-title">รอการตรวจสอบ</h4>
-                            <p class="metric-desc-sub">oldest sent 4 h ago</p>
+                            <strong class="metric-number-bold" id="metric-courses-count" data-count="@Model.Courses.Count">@Model.Courses.Count</strong>
+                            <h4 class="metric-label-title">คอร์สเรียนทั้งหมดในระบบ</h4>
+                            <p class="metric-desc-sub" id="metric-courses-sub">คอร์สแนะนำ @Model.FeaturedCoursesCount คอร์ส · @categoryShares.Count หมวดหมู่</p>
                         </article>
 
                         <!-- 3. Open Units & Islands -->
@@ -350,45 +336,45 @@
                             </div>
                             <strong class="metric-number-bold" id="metric-lessons-count" data-count="@Model.TotalLessons">@Model.TotalLessons</strong>
                             <h4 class="metric-label-title">ด่าน &amp; เกาะที่เปิดสอน</h4>
-                            <p class="metric-desc-sub">ความรู้ในทะเล NextSkill</p>
+                            <p class="metric-desc-sub" id="metric-lessons-sub">เฉลี่ย @avgLessonsPerCourse ด่านต่อคอร์สในทะเล NextSkill</p>
                         </article>
 
-                        <!-- 4. Total Platform Learning / Agency -->
+                        <!-- 4. Real Completed Lesson Sessions -->
                         <article class="metric-card-modern">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon green">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
                                 </span>
-                                <span class="metric-trend-pill">↗ 7%</span>
+                                <span class="metric-trend-pill">เรียนฟรี 100%</span>
                             </div>
-                            <strong class="metric-number-bold">$42,343</strong>
-                            <h4 class="metric-label-title">ยอดการฝึกทำบทเรียน</h4>
-                            <p class="metric-desc-sub">7% more than last month</p>
+                            <strong class="metric-number-bold" data-count="@Model.TotalLessonCompletions">@Model.TotalLessonCompletions.ToString("N0")</strong>
+                            <h4 class="metric-label-title">ด่านที่เรียนสำเร็จสะสม (ครั้ง)</h4>
+                            <p class="metric-desc-sub">เริ่มเรียนแล้ว @Model.StartedCoursesCount คอร์ส · @Model.TotalXpEarned.ToString("N0") XP สะสม</p>
                         </article>
 
-                        <!-- 5. New Leads / Learners -->
+                        <!-- 5. New Learners This Month -->
                         <article class="metric-card-modern">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon purple">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
                                 </span>
-                                <span class="metric-trend-pill">↗ +14%</span>
+                                <span class="metric-trend-pill">เดือนนี้</span>
                             </div>
-                            <strong class="metric-number-bold" data-count="@(Model.NewUsersThisMonth > 0 ? Model.NewUsersThisMonth : 108)">@(Model.NewUsersThisMonth > 0 ? Model.NewUsersThisMonth : 108)</strong>
+                            <strong class="metric-number-bold" data-count="@Model.NewUsersThisMonth">@Model.NewUsersThisMonth</strong>
                             <h4 class="metric-label-title">ผู้เรียนใหม่เดือนนี้</h4>
-                            <p class="metric-desc-sub">last 7 days vs the 7 before</p>
+                            <p class="metric-desc-sub">เข้าใช้งานใน 24 ชม. ล่าสุด @Model.ActiveTodayCount บัญชี</p>
                         </article>
 
-                        <!-- 6. Island Completion Rate -->
+                        <!-- 6. Real Lesson Completion Rate -->
                         <article class="metric-card-modern">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon teal">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
                                 </span>
                             </div>
-                            <strong class="metric-number-bold">78.4%</strong>
-                            <h4 class="metric-label-title">อัตราเรียนจบเกาะ</h4>
-                            <p class="metric-desc-sub">820 ด่านสำเร็จใน 30 วัน</p>
+                            <strong class="metric-number-bold">@Model.CompletionRateText</strong>
+                            <h4 class="metric-label-title">อัตราเรียนจบด่านของผู้เรียน</h4>
+                            <p class="metric-desc-sub">ผ่านแล้ว @Model.TotalLessonCompletions ด่าน · รางวัล @Model.TotalAchievementsEarned รายการ</p>
                         </article>
 
                         <!-- 7. Quiz & Practice Questions -->
@@ -400,19 +386,19 @@
                             </div>
                             <strong class="metric-number-bold" id="metric-questions-count" data-count="@Model.TotalQuestions">@Model.TotalQuestions</strong>
                             <h4 class="metric-label-title">แบบฝึกหัดในคลัง</h4>
-                            <p class="metric-desc-sub">พร้อมฝึกตอบกับ Nimo</p>
+                            <p class="metric-desc-sub" id="metric-questions-sub">เฉลี่ย @avgQuestionsPerLesson ข้อต่อด่าน · พร้อมฝึกกับ Nimo</p>
                         </article>
 
-                        <!-- 8. System Uptime -->
+                        <!-- 8. Total Recorded System Activities -->
                         <article class="metric-card-modern">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon green">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
                                 </span>
                             </div>
-                            <strong class="metric-number-bold">99.98%</strong>
-                            <h4 class="metric-label-title">ความพร้อมของระบบ</h4>
-                            <p class="metric-desc-sub">LocalDB &amp; Web ปกติ</p>
+                            <strong class="metric-number-bold" data-count="@Model.TotalActivityEvents">@Model.TotalActivityEvents</strong>
+                            <h4 class="metric-label-title">กิจกรรมที่บันทึกในระบบ</h4>
+                            <p class="metric-desc-sub">เข้าสู่ระบบสะสม @Model.TotalLoginsCount บัญชี · LocalDB ปกติ</p>
                         </article>
                     </div>
 
@@ -487,7 +473,7 @@
                                 <div class="activity-row">
                                     <time datetime="@item.OccurredAt.ToString("O")" data-local-time>@item.OccurredAt.ToString("dd MMM HH:mm") UTC</time>
                                     <p><strong>@item.FullName</strong> @item.Action</p>
-                                    <span class="activity-tag">@item.Role</span>
+                                    <span class="activity-tag @(item.Role == "Admin" ? "role-admin" : "role-user")" data-role="@item.Role">@item.Role</span>
                                 </div>
                             }
                         </div>
@@ -521,10 +507,12 @@
                         <input type="search" id="course-search-input" placeholder="ค้นหาชื่อคอร์ส, ผู้สอน หรือหมวดหมู่..." style="padding: 9px 14px; border: 1.5px solid var(--nimo-sky-border); border-radius: 12px;" />
                         <select id="course-category-filter" style="padding: 9px 14px; border: 1.5px solid var(--nimo-sky-border); border-radius: 12px; font-size: 13.5px; background: white;">
                             <option value="">ทุกหมวดหมู่ (All Categories)</option>
-                            <option value="Technology">Technology</option>
                             <option value="Design">Design</option>
-                            <option value="Business">Business</option>
+                            <option value="Development">Development</option>
+                            <option value="AI">AI</option>
                             <option value="Languages">Languages</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Business">Business</option>
                         </select>
                     </div>
 
@@ -778,10 +766,12 @@
                     <div class="form-group">
                         <label for="course-category">หมวดหมู่ (Category) <span>*</span></label>
                         <select id="course-category" required>
-                            <option value="Technology">Technology</option>
                             <option value="Design">Design</option>
-                            <option value="Business">Business</option>
+                            <option value="Development">Development</option>
+                            <option value="AI">AI</option>
                             <option value="Languages">Languages</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Business">Business</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -987,6 +977,33 @@
     </dialog>
 
     <!-- Embedded Initial Data for fast interactive client features -->
+    @{
+        var trendsPayload = new
+        {
+            p3m = new
+            {
+                sub = $"ผู้เรียน {Model.Users:N0} คน · กิจกรรมจริง {trend3m.TotalInPeriod:N0} รายการ ในช่วง 3 เดือนที่ผ่านมา",
+                yTicks = trend3m.YAxisTicks.Select(t => t.ToString("N0")).ToArray(),
+                bars = trend3m.Bars.Select(b => new { month = b.MonthKey, val = $"{b.Count:N0} รายการ", height = $"{b.HeightPercent}%", highlighted = b.Highlighted }).ToArray(),
+                labels = trend3m.Bars.Select(b => b.LabelTh).ToArray()
+            },
+            p6m = new
+            {
+                sub = $"ผู้เรียน {Model.Users:N0} คน · กิจกรรมจริง {trend6m.TotalInPeriod:N0} รายการ ในช่วง 6 เดือนที่ผ่านมา",
+                yTicks = trend6m.YAxisTicks.Select(t => t.ToString("N0")).ToArray(),
+                bars = trend6m.Bars.Select(b => new { month = b.MonthKey, val = $"{b.Count:N0} รายการ", height = $"{b.HeightPercent}%", highlighted = b.Highlighted }).ToArray(),
+                labels = trend6m.Bars.Select(b => b.LabelTh).ToArray()
+            },
+            p12m = new
+            {
+                sub = $"ผู้เรียน {Model.Users:N0} คน · กิจกรรมจริง {trend12m.TotalInPeriod:N0} รายการ ในรอบ 1 ปีที่ผ่านมา",
+                yTicks = trend12m.YAxisTicks.Select(t => t.ToString("N0")).ToArray(),
+                bars = trend12m.Bars.Select(b => new { month = b.MonthKey, val = $"{b.Count:N0} รายการ", height = $"{b.HeightPercent}%", highlighted = b.Highlighted }).ToArray(),
+                labels = trend12m.Bars.Select(b => b.LabelTh).ToArray()
+            }
+        };
+    }
+    <script id="admin-trends-data" type="application/json">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(trendsPayload))</script>
     <script id="admin-courses-data" type="application/json">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Courses, new System.Text.Json.JsonSerializerOptions { PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase }))</script>
     <script id="admin-questions-data" type="application/json">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Questions, new System.Text.Json.JsonSerializerOptions { PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase }))</script>
     <script src="~/lib/gsap/gsap.min.js"></script>

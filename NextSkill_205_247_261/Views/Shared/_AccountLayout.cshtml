@@ -34,21 +34,155 @@
     }
     else
     {
-        <div class="account-ambient-decor" aria-hidden="true">
-            @if (isLogin)
-            {
+        <div class="account-ambient-decor fs-loading-sky fs-island-world island-theme-mode" aria-hidden="true">
+            <partial name="_OceanBirds" />
+
+            <!-- Pastel Sunrise Sky, Golden Sunbeams & Night Sky / Moon -->
+            <div class="ow-sky">
+                <div class="hero-sky-texture"></div>
                 <div class="journey-night-sky"></div>
-            }
-            <div class="duo-clouds-container">
-                <div class="duo-cloud duo-cloud-1"></div>
-                <div class="duo-cloud duo-cloud-2"></div>
-                <div class="duo-cloud duo-cloud-3"></div>
+                <partial name="_JourneyCelestial" />
+                <div class="fs-shooting-stars">
+                    <span class="fs-shooting-star fs-star-1"></span>
+                    <span class="fs-shooting-star fs-star-2"></span>
+                </div>
             </div>
-            <div class="ambient-glow-orb orb-1"></div>
-            <div class="ambient-glow-orb orb-2"></div>
-            <div class="ambient-glow-orb orb-3"></div>
-            <div class="bg-dot-matrix dot-top-left"></div>
-            <div class="bg-dot-matrix dot-mid-right"></div>
+
+            <!-- Distant Coastal Horizon Silhouette -->
+            <div class="ow-distance">
+                <img src="~/images/journey/distant-coast.svg" asp-append-version="true" width="1200" height="140" alt="" />
+            </div>
+
+            <!-- Painted Turquoise Ocean with Swell, Moving Wave Foam & Sun Reflections -->
+            <div class="ow-sea">
+                <div class="ow-water-detail">
+                    <div class="ow-water-surface"></div>
+                </div>
+                <div class="fs-sea-foam-layer">
+                    <div class="fs-sea-foam-band fs-sea-foam-band--far"><div class="fs-sea-foam-bob"><div class="fs-sea-foam-drift"></div></div></div>
+                    <div class="fs-sea-foam-band fs-sea-foam-band--near"><div class="fs-sea-foam-bob"><div class="fs-sea-foam-drift"></div></div></div>
+                </div>
+                <div class="ow-sun-path"></div>
+                <div class="hero-water-glints">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <!-- Soft Drifting Horizon Clouds -->
+            <div class="ow-clouds">
+                <span></span><span></span><span></span>
+            </div>
+
+            <!-- Distant Ships, Left Ocean Island, Right Sailboat, Jumping Fish Pods & Swimming Fish Schools -->
+            <div class="fs-island-camera">
+                <partial name="_OceanBackdrop" />
+
+                <!-- Left Ocean Tropical Island (Replacing the Wooden Rowboat) -->
+                <figure class="acc-left-ocean-island">
+                    <partial name="_StartingIslandArt" />
+                </figure>
+
+                <!-- Right Mid-Foreground Cruising Sailboat -->
+                <div class="acc-cruising-sailboat-right">
+                    <div class="acc-sailboat-rock">
+                        <svg viewBox="0 0 150 96" width="136" height="86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse cx="76" cy="84" rx="56" ry="5" fill="#155e75" fill-opacity="0.22" />
+                            <path class="acc-sailboat-wake" d="M12 85C36 89 72 89 124 84M24 90C52 93 84 92 114 88" stroke="#e0f2fe" stroke-width="2.2" stroke-linecap="round" />
+                            <path d="M28 68H122L108 82H48C38 82 32 76 28 68Z" fill="#c27849" stroke="#7c4a28" stroke-width="2.2" stroke-linejoin="round" />
+                            <path d="M36 72H112" stroke="#fde68a" stroke-width="1.8" stroke-linecap="round" />
+                            <line x1="74" y1="12" x2="74" y2="68" stroke="#64748b" stroke-width="2.8" stroke-linecap="round" />
+                            <path d="M71 16C52 32 42 46 36 63H71V16Z" fill="#fffdf7" stroke="#cbd5e1" stroke-width="1.4" stroke-linejoin="round" />
+                            <path d="M77 22C94 36 104 48 112 63H77V22Z" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.4" stroke-linejoin="round" />
+                            <path d="M74 12L92 17L74 21V12Z" fill="#f97316" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Jumping Fish Pod 1: Left Ocean Golden Fish -->
+                <div class="acc-jumping-fish-pod acc-fish-pod--left">
+                    <svg class="fs-jumping-fish-svg" viewBox="0 0 130 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g class="fs-fish-splash-rings" transform="translate(66 76)" stroke="#e8fcff" stroke-width="2" stroke-linecap="round">
+                            <ellipse rx="24" ry="5.5" />
+                            <ellipse rx="15" ry="3.2" />
+                            <path d="M-13 -4L-18 -13M13 -4L18 -13M0 -6V-15" />
+                        </g>
+                        <g class="fs-jumping-fish-arc" transform="translate(56 60)">
+                            <path d="M-11 -2L-22 -13L-20 7L-9 2Z" fill="#ea580c" />
+                            <path d="M-12 -5C-2 -16 14 -13 23 -1C12 11 -3 11 -12 -5Z" fill="#fbbf24" />
+                            <path d="M0 -11L7 -18L12 -9" fill="#f59e0b" />
+                            <path d="M-6 1L6 4" stroke="#fef3c7" stroke-width="1.8" stroke-linecap="round" />
+                            <circle cx="15" cy="-2" r="1.8" fill="#0f172a" />
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Jumping Fish Pod 2: Right Ocean Twin Leaping Fish -->
+                <div class="acc-jumping-fish-pod acc-fish-pod--right">
+                    <svg class="fs-jumping-fish-svg" viewBox="0 0 130 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g class="fs-fish-splash-rings acc-delay-1" transform="translate(64 76)" stroke="#e8fcff" stroke-width="2" stroke-linecap="round">
+                            <ellipse rx="24" ry="5.5" />
+                            <ellipse rx="14" ry="3" />
+                            <path d="M-12 -4L-17 -12M12 -4L17 -12M0 -6V-14" />
+                        </g>
+                        <g class="fs-jumping-fish-arc acc-delay-1" transform="translate(54 58)">
+                            <path d="M-10 -2L-20 -12L-19 6L-9 2Z" fill="#f43f5e" />
+                            <path d="M-11 -5C-2 -15 13 -12 21 -1C11 10 -3 10 -11 -5Z" fill="#fb7185" />
+                            <path d="M0 -10L6 -17L11 -9" fill="#e11d48" />
+                            <path d="M-6 1L5 4" stroke="#ffe4e6" stroke-width="1.6" stroke-linecap="round" />
+                            <circle cx="14" cy="-2" r="1.7" fill="#0f172a" />
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Jumping Fish Pod 3: Lower Foreground Sea -->
+                <div class="acc-jumping-fish-pod acc-fish-pod--front">
+                    <svg class="fs-jumping-fish-svg" viewBox="0 0 130 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g class="fs-fish-splash-rings acc-delay-2" transform="translate(64 76)" stroke="#e8fcff" stroke-width="1.8" stroke-linecap="round">
+                            <ellipse rx="20" ry="4.5" />
+                            <ellipse rx="12" ry="2.5" />
+                            <path d="M-10 -4L-14 -11M10 -4L14 -11M0 -5V-12" />
+                        </g>
+                        <g class="fs-jumping-fish-arc acc-delay-2" transform="translate(54 58)">
+                            <path d="M-10 -2L-20 -12L-19 6L-9 2Z" fill="#0284c7" />
+                            <path d="M-11 -5C-2 -15 13 -12 21 -1C11 10 -3 10 -11 -5Z" fill="#38bdf8" />
+                            <path d="M0 -10L6 -17L11 -9" fill="#0369a1" />
+                            <path d="M-6 1L5 4" stroke="#e0f2fe" stroke-width="1.6" stroke-linecap="round" />
+                            <circle cx="14" cy="-2" r="1.7" fill="#0f172a" />
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Underwater Swimming Fish Schools Gliding Beneath the Surface -->
+                <div class="acc-underwater-fish-school acc-fish-school--ltr">
+                    <svg viewBox="0 0 140 50" width="125" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g class="acc-sub-fish f-1" fill="#0e7490" fill-opacity="0.38">
+                            <path d="M72 20C84 12 100 13 110 20C100 27 84 28 72 20Z" />
+                            <path d="M74 20L63 13V27L74 20Z" />
+                        </g>
+                        <g class="acc-sub-fish f-2" fill="#0e7490" fill-opacity="0.3" transform="translate(-38, 12) scale(0.82)">
+                            <path d="M72 20C84 12 100 13 110 20C100 27 84 28 72 20Z" />
+                            <path d="M74 20L63 13V27L74 20Z" />
+                        </g>
+                        <g class="acc-sub-fish f-3" fill="#0e7490" fill-opacity="0.26" transform="translate(-18, -8) scale(0.7)">
+                            <path d="M72 20C84 12 100 13 110 20C100 27 84 28 72 20Z" />
+                            <path d="M74 20L63 13V27L74 20Z" />
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="acc-underwater-fish-school acc-fish-school--rtl">
+                    <svg viewBox="0 0 140 50" width="115" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g class="acc-sub-fish f-1" fill="#0e7490" fill-opacity="0.34">
+                            <path d="M68 20C56 12 40 13 30 20C40 27 56 28 68 20Z" />
+                            <path d="M66 20L77 13V27L66 20Z" />
+                        </g>
+                        <g class="acc-sub-fish f-2" fill="#0e7490" fill-opacity="0.26" transform="translate(36, 11) scale(0.8)">
+                            <path d="M68 20C56 12 40 13 30 20C40 27 56 28 68 20Z" />
+                            <path d="M66 20L77 13V27L66 20Z" />
+                        </g>
+                    </svg>
+                </div>
+            </div>
         </div>
     }
 
@@ -56,12 +190,6 @@
     <partial name="_Navbar" />
 
     <main class="account-main">
-        @if (isLogin)
-        {
-            <div class="login-celestial learning-celestial" data-journey-celestial aria-hidden="true">
-                <partial name="_JourneyCelestial" />
-            </div>
-        }
         @RenderBody()
     </main>
 

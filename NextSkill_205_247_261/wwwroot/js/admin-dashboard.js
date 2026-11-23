@@ -660,22 +660,108 @@
             .replace(/'/g, '&#39;');
     }
 
+    function bindDonutHover() {
+        const donutCenterVal = document.getElementById('donut-center-num');
+        document.querySelectorAll('.donut-segment').forEach(seg => {
+            seg.onmouseenter = () => {
+                if (donutCenterVal) {
+                    donutCenterVal.textContent = seg.getAttribute('data-share-label') || `${courses.length}`;
+                }
+            };
+            seg.onmouseleave = () => {
+                if (donutCenterVal) {
+                    donutCenterVal.textContent = courses.length;
+                }
+            };
+        });
+    }
+
     function updateMetrics() {
+        const totalL = courses.reduce((acc, c) => acc + (c.lessons ? c.lessons.length : (c.units || 0)), 0);
+        const featuredCount = courses.filter(c => !!c.featured).length;
+
         const mCourses = document.getElementById('metric-courses-count');
         if (mCourses) mCourses.textContent = courses.length;
         const mLessons = document.getElementById('metric-lessons-count');
-        if (mLessons) {
-            const totalL = courses.reduce((acc, c) => acc + (c.lessons ? c.lessons.length : (c.units || 0)), 0);
-            mLessons.textContent = totalL;
-        }
+        if (mLessons) mLessons.textContent = totalL;
         const mQuestions = document.getElementById('metric-questions-count');
         if (mQuestions) mQuestions.textContent = questions.length;
 
         const donutNum = document.getElementById('donut-center-num');
         if (donutNum) donutNum.textContent = courses.length;
 
+        const headerBadge = document.getElementById('header-summary-badge');
+        if (headerBadge) {
+            headerBadge.textContent = `${courses.length} คอร์ส · ${totalL} ด่าน · ${questions.length} คำถามในระบบ`;
+        }
+
+        const palette = ['#0284c7', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4'];
+        const circumference = 238.76;
+        const countsMap = new Map();
+        courses.forEach(c => {
+            const cat = (c.category || 'General').trim();
+            countsMap.set(cat, (countsMap.get(cat) || 0) + 1);
+        });
+        const entries = [...countsMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+        const totalC = Math.max(courses.length, 1);
+
+        let allocatedPct = 0;
+        let offset = 0;
+        const shares = entries.map(([cat, count], idx) => {
+            const pct = idx === entries.length - 1
+                ? Math.max(0, 100 - allocatedPct)
+                : Math.round(count * 100 / totalC);
+            allocatedPct += pct;
+            const dashLen = Number(((count / totalC) * circumference).toFixed(2));
+            const dashGap = Number(Math.max(0, circumference - dashLen).toFixed(2));
+            const dashOffset = Number((-offset).toFixed(2));
+            offset += dashLen;
+            return { cat, count, pct, color: palette[idx % palette.length], dashLen, dashGap, dashOffset };
+        });
+
+        const legendGrid = document.getElementById('category-legend-grid');
+        if (legendGrid && shares.length > 0) {
+            legendGrid.innerHTML = shares.map(s => `
+                <div class="legend-item">
+                    <span class="legend-name">
+                        <span class="legend-color-dot" style="background: ${s.color};"></span> ${escapeHtml(s.cat)}
+                    </span>
+                    <span class="legend-val" data-cat-legend="${escapeHtml(s.cat)}">${s.count} คอร์ส · ${s.pct}%</span>
+                </div>
+            `).join('');
+        }
+
+        const donutSvg = document.getElementById('category-donut-svg');
+        if (donutSvg && shares.length > 0) {
+            donutSvg.innerHTML = `<circle class="donut-circle-bg" cx="50" cy="50" r="38"></circle>` +
+                shares.map(s => `
+                    <circle class="donut-segment" cx="50" cy="50" r="38"
+                            data-category="${escapeHtml(s.cat)}"
+                            data-share-label="${s.pct}%"
+                            stroke="${s.color}"
+                            stroke-dasharray="${s.dashLen} ${s.dashGap}"
+                            stroke-dashoffset="${s.dashOffset}"></circle>
+                `).join('');
+            bindDonutHover();
+        }
+
+        const coursesSub = document.getElementById('metric-courses-sub');
+        if (coursesSub) coursesSub.textContent = `คอร์สแนะนำ ${featuredCount} คอร์ส · ${shares.length} หมวดหมู่`;
+
+        const lessonsSub = document.getElementById('metric-lessons-sub');
+        if (lessonsSub) {
+            const avgL = courses.length > 0 ? (totalL / courses.length).toFixed(1) : '0';
+            lessonsSub.textContent = `เฉลี่ย ${avgL} ด่านต่อคอร์สในทะเล NextSkill`;
+        }
+
+        const questionsSub = document.getElementById('metric-questions-sub');
+        if (questionsSub) {
+            const avgQ = totalL > 0 ? (questions.length / totalL).toFixed(1) : '0';
+            questionsSub.textContent = `เฉลี่ย ${avgQ} ข้อต่อด่าน · พร้อมฝึกกับ Nimo`;
+        }
+
         const quotaText = document.getElementById('quota-text');
-        if (quotaText) quotaText.textContent = `${courses.length} / 20`;
+        if (quotaText) quotaText.textContent = `${courses.length} คอร์ส · ${totalL} ด่าน`;
     }
 
     // ==========================================
@@ -734,47 +820,28 @@
     setTimeout(animateCounters, 200);
 
     // ==========================================
-    // Interactive Bar Chart Period Switcher
+    // Interactive Bar Chart Period Switcher (Real Server Data)
     // ==========================================
     const periodButtons = document.querySelectorAll('.chart-period-btn');
     const barsContainer = document.getElementById('chart-bars-container');
     const chartSubText = document.getElementById('chart-sub-text');
+    const chartYAxis = document.getElementById('chart-y-axis');
 
-    const chartPeriodData = {
-        '3m': {
-            sub: '680 ผู้เรียนและกิจกรรม ในช่วง 3 เดือนที่ผ่านมา',
-            bars: [
-                { month: 'Sep', val: '$26,500', height: '62%' },
-                { month: 'Oct', val: '$34,100', height: '80%' },
-                { month: 'Nov', val: '$42,343', height: '98%', highlighted: true }
-            ],
-            labels: ['ก.ย.', 'ต.ค.', 'พ.ย.']
-        },
-        '6m': {
-            sub: '1,240 ผู้เรียนและกิจกรรม ในช่วง 6 เดือนที่ผ่านมา',
-            bars: [
-                { month: 'Jun', val: '$18,400', height: '48%' },
-                { month: 'Jul', val: '$21,200', height: '56%' },
-                { month: 'Aug', val: '$29,800', height: '78%' },
-                { month: 'Sep', val: '$26,500', height: '70%' },
-                { month: 'Oct', val: '$34,100', height: '88%' },
-                { month: 'Nov', val: '$42,343', height: '98%', highlighted: true }
-            ],
-            labels: ['มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.']
-        },
-        '12m': {
-            sub: '3,850 ผู้เรียนและกิจกรรม ในรอบ 1 ปีที่ผ่านมา',
-            bars: [
-                { month: 'Dec', val: '$15,200', height: '38%' },
-                { month: 'Feb', val: '$19,800', height: '50%' },
-                { month: 'Apr', val: '$24,000', height: '60%' },
-                { month: 'Jun', val: '$28,500', height: '72%' },
-                { month: 'Aug', val: '$35,200', height: '86%' },
-                { month: 'Nov', val: '$42,343', height: '98%', highlighted: true }
-            ],
-            labels: ['ธ.ค.', 'ก.พ.', 'เม.ย.', 'มิ.ย.', 'ส.ค.', 'พ.ย.']
+    let serverTrends = null;
+    try {
+        const trendsElem = document.getElementById('admin-trends-data');
+        if (trendsElem) {
+            serverTrends = JSON.parse(trendsElem.textContent || 'null');
         }
-    };
+    } catch (e) {
+        console.error('Error parsing admin trends data', e);
+    }
+
+    const chartPeriodData = serverTrends ? {
+        '3m': serverTrends.p3m,
+        '6m': serverTrends.p6m,
+        '12m': serverTrends.p12m
+    } : {};
 
     periodButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -786,16 +853,20 @@
 
             if (chartSubText) chartSubText.textContent = data.sub;
 
+            if (chartYAxis && Array.isArray(data.yTicks)) {
+                chartYAxis.innerHTML = data.yTicks.map(t => `<span>${escapeHtml(t)}</span>`).join('');
+            }
+
             barsContainer.innerHTML = data.bars.map(b => `
-                <div class="chart-bar-col ${b.highlighted ? 'highlighted' : ''}" data-month="${b.month}" data-val="${b.val}">
-                    ${b.highlighted ? `<div class="bar-highlight-tooltip">${b.val}</div>` : ''}
+                <div class="chart-bar-col ${b.highlighted ? 'highlighted' : ''}" data-month="${escapeHtml(b.month)}" data-val="${escapeHtml(b.val)}">
+                    ${b.highlighted ? `<div class="bar-highlight-tooltip">${escapeHtml(b.val)}</div>` : ''}
                     <div class="bar-pill" style="height: ${b.height};"></div>
                 </div>
             `).join('');
 
             const xLabels = document.querySelector('.chart-x-labels');
             if (xLabels) {
-                xLabels.innerHTML = data.labels.map(l => `<span>${l}</span>`).join('');
+                xLabels.innerHTML = data.labels.map(l => `<span>${escapeHtml(l)}</span>`).join('');
             }
 
             attachBarInteractions();
@@ -827,29 +898,7 @@
     // ==========================================
     // Interactive Donut Chart Segment Hover
     // ==========================================
-    const donutSegments = document.querySelectorAll('.donut-segment');
-    const donutCenterVal = document.getElementById('donut-center-num');
-    const defaultDonutTotal = courses.length || 24;
-
-    const segmentInfo = [
-        { name: 'Technology', val: '42%' },
-        { name: 'Design', val: '28%' },
-        { name: 'Business', val: '18%' },
-        { name: 'Languages', val: '12%' }
-    ];
-
-    donutSegments.forEach((seg, idx) => {
-        seg.addEventListener('mouseenter', () => {
-            if (donutCenterVal && segmentInfo[idx]) {
-                donutCenterVal.textContent = segmentInfo[idx].val;
-            }
-        });
-        seg.addEventListener('mouseleave', () => {
-            if (donutCenterVal) {
-                donutCenterVal.textContent = defaultDonutTotal;
-            }
-        });
-    });
+    bindDonutHover();
 
     // ==========================================
     // Global Search Shortcut (Ctrl+K)
@@ -883,7 +932,9 @@
     // ==========================================
     const bellBtn = document.getElementById('topbar-bell-btn');
     bellBtn?.addEventListener('click', () => {
-        alert('การแจ้งเตือนระบบ NextSkill Admin:\n• มี 6 ด่านและแบบฝึกหัดรอการตรวจสอบ\n• ผู้เรียนออนไลน์พร้อมกัน 11 คน\n• ระบบฐานข้อมูล LocalDB ทำงานปกติสมบูรณ์');
+        const totalL = courses.reduce((acc, c) => acc + (c.lessons ? c.lessons.length : (c.units || 0)), 0);
+        const totalM = document.querySelectorAll('[data-member]').length;
+        alert(`สรุปข้อมูลระบบ NextSkill Admin (ข้อมูลจริง):\n• คอร์สเรียนในระบบ ${courses.length} คอร์ส (${totalL} ด่าน)\n• แบบฝึกหัดในคลัง ${questions.length} ข้อ\n• บัญชีสมาชิกในระบบ ${totalM} บัญชี\n• ระบบฐานข้อมูล LocalDB ทำงานปกติ`);
     });
 
     document.getElementById('btn-quick-activity')?.addEventListener('click', (e) => {

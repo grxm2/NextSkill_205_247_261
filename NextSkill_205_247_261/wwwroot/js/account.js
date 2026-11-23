@@ -137,45 +137,76 @@
         }
     }
 
-    // Cheer quotes on click
+    // Cheer & inspiring learning quotes
     const cheerQuotes = [
-        "ไปเรียนด้วยกันนะ!",
-        "สู้ๆ นะ! ทุกก้าวทำให้เราเก่งขึ้น",
-        "Nimo พร้อมลุยไปกับเธอแล้ว!",
-        "ยินดีต้อนรับสู่โลกแห่งการเรียนรู้!",
-        "วันนี้อยากฝึกทักษะอะไรดี?",
-        "เริ่มต้นทีละนิด ก็เก่งขึ้นได้เยอะเลย!",
-        "ความรู้คือพลังที่จะพาเราไปได้ไกล!"
+        "“การเรียนรู้ไม่มีวันสิ้นสุด ทุกก้าวเล็กๆ วันนี้ คือความสำเร็จที่ยิ่งใหญ่ในวันหน้า”",
+        "“ทักษะใหม่ไม่ได้สร้างในวันเดียว แต่เริ่มได้ตั้งแต่วินาทีที่คุณเปิดใจเรียนรู้”",
+        "“ไม่มีใครเก่งมาตั้งแต่เกิด แต่ทุกคนเก่งขึ้นได้จากการลงมือฝึกฝนทุกวัน”",
+        "“ความรู้คือสมบัติเดียวที่ยิ่งฝึกฝน ก็ยิ่งติดตัวเราไปตลอดชีวิต”",
+        "“เก่งขึ้นแค่วันละ 1% เมื่อครบหนึ่งปี คุณจะก้าวไปไกลกว่าเดิมอย่างไม่น่าเชื่อ!”",
+        "“ความผิดพลาดระหว่างฝึก คือครูที่ดีที่สุดที่พาเราไปสู่ความเชี่ยวชาญ”",
+        "“ลงทุนเวลาให้กับการเรียนรู้วันนี้ คือของขวัญที่ดีที่สุดสำหรับตัวคุณในอนาคต”"
     ];
     let quoteIndex = 0;
+    let shadesCycleTimer = null;
+    let shadesQuoteRevealTimer = null;
 
-    // Clean up entrance fly-in class after animation finishes so idle float can run
-    if (mascotWrap && mascotWrap.classList.contains('mascot-fly-in-entrance')) {
-        setTimeout(() => {
-            mascotWrap.classList.remove('mascot-fly-in-entrance');
-        }, 1400);
+    function runMascotShadesQuoteCycle() {
+        if (!mascotWrap) return;
+        clearTimeout(shadesCycleTimer);
+        clearTimeout(shadesQuoteRevealTimer);
+
+        // Phase 1: Wear black sunglasses & pose coolly (silent)
+        mascotWrap.dataset.shades = 'on';
+        mascotWrap.dataset.speechVisible = 'false';
+
+        // Phase 2: Suddenly take off sunglasses after 2.4s, then speak a learning quote!
+        shadesCycleTimer = setTimeout(() => {
+            mascotWrap.dataset.shades = 'off';
+            const quote = cheerQuotes[quoteIndex % cheerQuotes.length];
+            quoteIndex = (quoteIndex + 1) % cheerQuotes.length;
+            if (speechText) speechText.textContent = quote;
+
+            shadesQuoteRevealTimer = setTimeout(() => {
+                mascotWrap.dataset.speechVisible = 'true';
+            }, 420);
+
+            // Phase 3: Hold quote for 4.8s, then repeat cool sunglasses cycle
+            shadesCycleTimer = setTimeout(runMascotShadesQuoteCycle, 5000);
+        }, 2400);
     }
 
     if (mascotWrap) {
-        mascotWrap.addEventListener('click', (e) => {
-            quoteIndex = (quoteIndex + 1) % cheerQuotes.length;
-            setMascotSpeech(cheerQuotes[quoteIndex]);
-            setMascotPose(POSE_JUMP);
+        runMascotShadesQuoteCycle();
 
-            if (mascotImg) {
-                mascotImg.classList.remove('mascot-click-jump');
-                void mascotImg.offsetWidth;
-                mascotImg.classList.add('mascot-click-jump');
+        mascotWrap.addEventListener('click', () => {
+            clearTimeout(shadesCycleTimer);
+            clearTimeout(shadesQuoteRevealTimer);
+
+            const triggerTakeoffAndQuote = () => {
+                mascotWrap.dataset.shades = 'off';
+                const quote = cheerQuotes[quoteIndex % cheerQuotes.length];
+                quoteIndex = (quoteIndex + 1) % cheerQuotes.length;
+                if (speechText) speechText.textContent = quote;
+
+                shadesQuoteRevealTimer = setTimeout(() => {
+                    mascotWrap.dataset.speechVisible = 'true';
+                }, 380);
+
+                const rect = mascotWrap.getBoundingClientRect();
+                spawnDuoConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2, 18);
+
+                shadesCycleTimer = setTimeout(runMascotShadesQuoteCycle, 5200);
+            };
+
+            if (mascotWrap.dataset.shades === 'off') {
+                // Quickly put shades on to pose coolly, then flip them off with a new quote!
+                mascotWrap.dataset.speechVisible = 'false';
+                mascotWrap.dataset.shades = 'on';
+                shadesCycleTimer = setTimeout(triggerTakeoffAndQuote, 620);
+            } else {
+                triggerTakeoffAndQuote();
             }
-
-            // Burst confetti around mascot
-            const rect = mascotWrap.getBoundingClientRect();
-            spawnDuoConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2, 22);
-
-            clearTimeout(restorePoseTimer);
-            restorePoseTimer = setTimeout(() => {
-                setMascotPose(POSE_DEFAULT);
-            }, 1600);
         });
 
         // Keyboard accessibility
@@ -225,20 +256,32 @@
         });
     });
 
-    // Submit button hover interaction (Excited jump!)
+    // Submit button hover/focus interaction: Nimo takes off sunglasses & speaks a learning quote!
     const submitBtn = mascotWrap && document.querySelector('.btn-auth-submit');
     if (submitBtn) {
-        submitBtn.addEventListener('mouseenter', () => {
-            setMascotPose(POSE_JUMP);
-            setMascotSpeech("พร้อมแล้วกดเข้าสู่ระบบได้เลย!", true, 3000);
-        });
-        submitBtn.addEventListener('mouseleave', () => {
-            setTimeout(() => {
-                if (!document.activeElement || (document.activeElement.tagName !== 'INPUT')) {
-                    setMascotPose(POSE_DEFAULT);
-                }
-            }, 200);
-        });
+        const triggerSubmitQuote = () => {
+            clearTimeout(shadesCycleTimer);
+            clearTimeout(shadesQuoteRevealTimer);
+            const revealQuote = () => {
+                mascotWrap.dataset.shades = 'off';
+                const quote = cheerQuotes[quoteIndex % cheerQuotes.length];
+                quoteIndex = (quoteIndex + 1) % cheerQuotes.length;
+                if (speechText) speechText.textContent = quote;
+                shadesQuoteRevealTimer = setTimeout(() => {
+                    mascotWrap.dataset.speechVisible = 'true';
+                }, 340);
+                shadesCycleTimer = setTimeout(runMascotShadesQuoteCycle, 5200);
+            };
+            if (mascotWrap.dataset.shades === 'off') {
+                mascotWrap.dataset.speechVisible = 'false';
+                mascotWrap.dataset.shades = 'on';
+                shadesCycleTimer = setTimeout(revealQuote, 240);
+            } else {
+                revealQuote();
+            }
+        };
+        submitBtn.addEventListener('mouseenter', triggerSubmitQuote);
+        submitBtn.addEventListener('focus', triggerSubmitQuote);
     }
 
     // Subtle 3D Game Tilt Parallax on Auth Grid
