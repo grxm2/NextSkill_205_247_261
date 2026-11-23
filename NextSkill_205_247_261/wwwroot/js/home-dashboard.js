@@ -46,30 +46,26 @@
     });
 
     function renderGoals(activity) {
-        const status = {};
+        const status = new Map(activity.goals.map(goal => [goal.key, goal]));
         goals.forEach(goal => {
-            const key = goal.dataset.dashboardGoal;
-            const target = Number(goal.dataset.target);
-            const count = Math.min(target, activity[key]);
-            const complete = count === target;
-            status[key] = { count, target, complete };
+            const { progress, target, complete, unit } = status.get(goal.dataset.dashboardGoal);
             goal.toggleAttribute('data-complete', complete);
             goal.querySelector('.hd-goal-check').hidden = !complete;
             goal.querySelector('[data-dashboard-goal-count]').textContent = complete ? 'สำเร็จ'
-                : `${format.format(count)}/${format.format(target)}${key === 'xpToday' ? ' XP' : ''}`;
+                : `${format.format(progress)}/${format.format(target)} ${unit}`;
         });
 
-        const lessons = status.lessonsToday;
-        const xp = status.xpToday;
-        const complete = Object.values(status).filter(goal => goal.complete).length;
+        const lessons = status.get('lessonsToday');
+        const xp = status.get('xpToday');
+        const complete = activity.goals.filter(goal => goal.complete).length;
         const summary = find('[data-dashboard-goal-summary]');
         summary.textContent = `${format.format(complete)}/${format.format(goals.length)}`;
         if (complete === goals.length) {
             dashboard.dataset.missionText = 'ภารกิจวันนี้ครบแล้ว เก่งมากเลย!';
         } else if (lessons.complete && xp.complete) {
-            dashboard.dataset.missionText = 'ครบทั้งบทเรียนและ XP แล้ว เหลืออีกหนึ่งภารกิจนะ';
-        } else if (lessons.count || xp.count) {
-            dashboard.dataset.missionText = `วันนี้เรียนแล้ว ${lessons.count}/${lessons.target} บท · ${xp.count}/${xp.target} XP`;
+            dashboard.dataset.missionText = `ครบทั้งบทเรียนและ XP แล้ว เหลืออีก ${format.format(goals.length - complete)} ภารกิจ`;
+        } else if (lessons.progress || xp.progress) {
+            dashboard.dataset.missionText = `วันนี้เรียนแล้ว ${lessons.progress}/${lessons.target} บท · ${xp.progress}/${xp.target} XP`;
         } else {
             dashboard.dataset.missionText = `วันนี้ลองเรียน ${lessons.target} บท แล้วสะสม ${xp.target} XP กันนะ`;
         }
@@ -85,8 +81,7 @@
         find('[data-dashboard-rewards]').hidden = !upcoming;
         if (!upcoming) return;
 
-        const xp = upcoming.xp + (courseAward ? Number(dashboard.dataset.courseBonus) : 0);
-        find('[data-dashboard-mission-xp]').textContent = `+${format.format(xp)} XP`;
+        find('[data-dashboard-mission-xp]').textContent = `+${format.format(upcoming.xp)} XP จากบทเรียน`;
         const medals = [firstAward && 'เหรียญบทเรียนแรก', courseAward && 'เหรียญจบคอร์ส'].filter(Boolean);
         const badge = find('[data-dashboard-mission-badge]');
         badge.hidden = medals.length === 0;
@@ -133,7 +128,7 @@
         next.hidden = !upcoming;
         find('[data-dashboard-next-label]').textContent = completed ? 'บทถัดไป' : 'บทแรก';
         find('[data-dashboard-next-title]').textContent = upcoming?.title ?? '';
-        find('[data-dashboard-stat="complete"]').textContent = format.format(started.filter(item => item.isComplete).length);
+        find('[data-dashboard-stat="complete"]').textContent = format.format(state.completedCourseCount);
         find('[data-dashboard-stat="xp"]').textContent = format.format(state.xp);
         find('[data-dashboard-streak]').hidden = !state.activity;
         renderMission(course, upcoming, state.achievements);

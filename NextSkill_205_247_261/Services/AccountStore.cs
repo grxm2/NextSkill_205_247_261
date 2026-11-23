@@ -4,6 +4,7 @@ using System.Data;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using NextSkill_205_247_261.Models;
 
 namespace NextSkill_205_247_261.Services;
@@ -170,52 +171,113 @@ public class AccountStore(IConfiguration configuration, IPasswordHasher<Account>
         }
     }
 
-    public async Task<AdminDashboardModel> AdminOverviewAsync()
+    public async Task<AdminDashboardModel> AdminOverviewAsync(LearningStore learning, CancellationToken token)
     {
-        await using var db = await OpenAsync();
+        var now = DateTime.UtcNow;
+        var localNow = ThailandTime.ToLocal(now);
+        var monthStartLocal = new DateTime(localNow.Year, localNow.Month, 1);
+        var published = LearningCatalog.Published().ToArray();
+        var publishedLessons = published.SelectMany(course => course.Lessons.Select(lesson =>
+            new { CourseId = course.Id, LessonId = lesson.Id }));
+
+        await using var db = await learning.OpenAsync(token);
         await using var query = new SqlCommand("""
+            SET NOCOUNT ON;
+
+            DECLARE @catalog TABLE (CourseId int NOT NULL, LessonId int NOT NULL, PRIMARY KEY (CourseId, LessonId));
+            INSERT INTO @catalog
+                SELECT DISTINCT CourseId, LessonId FROM OPENJSON(@publishedLessons)
+                WITH (CourseId int, LessonId int);
+
+            DECLARE @lessonTotals TABLE (CourseId int PRIMARY KEY, LessonCount int NOT NULL);
+            INSERT INTO @lessonTotals SELECT CourseId, COUNT(*) FROM @catalog GROUP BY CourseId;
+
+            DECLARE @enrolled TABLE (
+                AccountId uniqueidentifier NOT NULL, CourseId int NOT NULL, StartedAt datetime2 NOT NULL,
+                LessonCount int NOT NULL, PRIMARY KEY (AccountId, CourseId)
+            );
+            INSERT INTO @enrolled
+                SELECT p.AccountId, p.CourseId, p.StartedAt, totals.LessonCount
+                FROM dbo.LearningCourseProgress p
+                INNER JOIN dbo.Users u ON u.Id=p.AccountId
+                INNER JOIN @lessonTotals totals ON totals.CourseId=p.CourseId
+                WHERE p.AccountRole='User';
+
+            DECLARE @passed TABLE (
+                AccountId uniqueidentifier NOT NULL, CourseId int NOT NULL, LessonId int NOT NULL,
+                CompletedAt datetime2 NOT NULL, AwardedXp int NOT NULL,
+                PRIMARY KEY (AccountId, CourseId, LessonId)
+            );
+            INSERT INTO @passed
+                SELECT p.AccountId, p.CourseId, p.LessonId, p.CompletedAt, p.AwardedXp
+                FROM dbo.LearningLessonCompletions p
+                INNER JOIN @enrolled enrollment ON enrollment.AccountId=p.AccountId AND enrollment.CourseId=p.CourseId
+                INNER JOIN @catalog lesson ON lesson.CourseId=p.CourseId AND lesson.LessonId=p.LessonId
+                WHERE p.AccountRole='User';
+
             SELECT
               (SELECT COUNT(*) FROM dbo.Users),
               (SELECT COUNT(*) FROM dbo.Admins),
-              (SELECT COUNT(*) FROM dbo.Users WHERE CreatedAt >= DATEFROMPARTS(YEAR(SYSUTCDATETIME()),MONTH(SYSUTCDATETIME()),1)),
-              (SELECT COUNT(*) FROM dbo.Users WHERE LastLoginAt >= DATEADD(day, -1, SYSUTCDATETIME()) OR CreatedAt >= DATEADD(day, -1, SYSUTCDATETIME()))
-              + (SELECT COUNT(*) FROM dbo.Admins WHERE LastLoginAt >= DATEADD(day, -1, SYSUTCDATETIME()) OR CreatedAt >= DATEADD(day, -1, SYSUTCDATETIME())),
+              (SELECT COUNT(*) FROM dbo.Users WHERE CreatedAt >= @monthStartUtc AND CreatedAt <= @now),
+              (SELECT COUNT(*) FROM dbo.Users WHERE LastLoginAt >= @recentActivityStart OR CreatedAt >= @recentActivityStart)
+              + (SELECT COUNT(*) FROM dbo.Admins WHERE LastLoginAt >= @recentActivityStart OR CreatedAt >= @recentActivityStart),
               (SELECT COUNT(*) FROM dbo.Users WHERE LastLoginAt IS NOT NULL)
               + (SELECT COUNT(*) FROM dbo.Admins WHERE LastLoginAt IS NOT NULL),
-              CASE WHEN OBJECT_ID(N'dbo.LearningLessonCompletions', N'U') IS NOT NULL THEN (SELECT COUNT(*) FROM dbo.LearningLessonCompletions) ELSE 0 END,
-              CASE WHEN OBJECT_ID(N'dbo.LearningCourseProgress', N'U') IS NOT NULL THEN (SELECT COUNT(*) FROM dbo.LearningCourseProgress) ELSE 0 END,
-              CASE WHEN OBJECT_ID(N'dbo.LearningProfiles', N'U') IS NOT NULL THEN (SELECT ISNULL(SUM(Xp), 0) FROM dbo.LearningProfiles) ELSE 0 END,
-              CASE WHEN OBJECT_ID(N'dbo.LearningAchievements', N'U') IS NOT NULL THEN (SELECT COUNT(*) FROM dbo.LearningAchievements) ELSE 0 END;
+              (SELECT COUNT(*) FROM @passed),
+              (SELECT COUNT(*) FROM @enrolled),
+              (SELECT COALESCE(SUM(CONVERT(bigint, AwardedXp)), 0) FROM @passed),
+              (SELECT COUNT(*) FROM dbo.LearningAchievements award
+               INNER JOIN dbo.Users u ON u.Id=award.AccountId
+               WHERE award.AccountRole='User' AND (
+                   (award.AchievementKey='first-lesson' AND EXISTS (
+                       SELECT 1 FROM @passed p WHERE p.AccountId=award.AccountId))
+                   OR EXISTS (
+                       SELECT 1 FROM @enrolled e WHERE e.AccountId=award.AccountId
+                         AND award.AchievementKey=CONCAT('course-', e.CourseId))
+               )),
+              (SELECT COALESCE(SUM(CONVERT(bigint, LessonCount)), 0) FROM @enrolled);
 
-            SELECT TOP (100) FullName, Email, Role, CreatedAt FROM (
+            SELECT TOP (@memberLimit) FullName, Email, Role, CreatedAt FROM (
               SELECT Id, FullName, Email, 'User' AS Role, CreatedAt FROM dbo.Users
               UNION ALL
               SELECT Id, FullName, Email, 'Admin' AS Role, CreatedAt FROM dbo.Admins
             ) members ORDER BY CreatedAt DESC, Id;
 
             SELECT TOP (10) FullName, Role, Action, OccurredAt FROM (
-              SELECT FullName, 'User' AS Role, 'created a user account' AS Action, CreatedAt AS OccurredAt FROM dbo.Users
-              UNION ALL SELECT FullName, 'Admin', 'created an admin account', CreatedAt FROM dbo.Admins
-              UNION ALL SELECT FullName, 'User', 'last signed in', LastLoginAt FROM dbo.Users WHERE LastLoginAt IS NOT NULL
-              UNION ALL SELECT FullName, 'Admin', 'last signed in', LastLoginAt FROM dbo.Admins WHERE LastLoginAt IS NOT NULL
+              SELECT FullName, 'User' AS Role, N'สมัครบัญชีผู้เรียน' AS Action, CreatedAt AS OccurredAt FROM dbo.Users
+              UNION ALL SELECT FullName, 'Admin', N'สมัครบัญชีผู้ดูแล', CreatedAt FROM dbo.Admins
+              UNION ALL SELECT FullName, 'User', N'เข้าสู่ระบบล่าสุด', LastLoginAt FROM dbo.Users WHERE LastLoginAt IS NOT NULL
+              UNION ALL SELECT FullName, 'Admin', N'เข้าสู่ระบบล่าสุด', LastLoginAt FROM dbo.Admins WHERE LastLoginAt IS NOT NULL
             ) activity ORDER BY OccurredAt DESC, FullName;
 
-            SELECT OccurredAt FROM (
-              SELECT CreatedAt AS OccurredAt FROM dbo.Users
-              UNION ALL SELECT CreatedAt FROM dbo.Admins
-              UNION ALL SELECT LastLoginAt FROM dbo.Users WHERE LastLoginAt IS NOT NULL
-              UNION ALL SELECT LastLoginAt FROM dbo.Admins WHERE LastLoginAt IS NOT NULL
-            ) allEvents;
-
-            IF OBJECT_ID(N'dbo.LearningLessonCompletions', N'U') IS NOT NULL
-                SELECT CompletedAt FROM dbo.LearningLessonCompletions;
-            IF OBJECT_ID(N'dbo.LearningCourseProgress', N'U') IS NOT NULL
-                SELECT StartedAt FROM dbo.LearningCourseProgress;
+            ;WITH LearnerEvents AS (
+                SELECT CreatedAt AS OccurredAt FROM dbo.Users WHERE CreatedAt >= @trendStartUtc AND CreatedAt <= @now
+                UNION ALL SELECT LastLoginAt FROM dbo.Users WHERE LastLoginAt >= @trendStartUtc AND LastLoginAt <= @now
+                UNION ALL SELECT StartedAt FROM @enrolled WHERE StartedAt >= @trendStartUtc AND StartedAt <= @now
+                UNION ALL SELECT CompletedAt FROM @passed WHERE CompletedAt >= @trendStartUtc AND CompletedAt <= @now
+            ),
+            ThaiMonths AS (
+                SELECT DATEADD(minute, @thaiOffsetMinutes, OccurredAt) AS LocalDate FROM LearnerEvents
+            )
+            SELECT DATEFROMPARTS(YEAR(LocalDate), MONTH(LocalDate), 1), COUNT(*)
+            FROM ThaiMonths
+            GROUP BY YEAR(LocalDate), MONTH(LocalDate);
             """, db);
-        await using var reader = await query.ExecuteReaderAsync();
-        await reader.ReadAsync();
+        query.Parameters.Add("@publishedLessons", SqlDbType.NVarChar, -1).Value = JsonSerializer.Serialize(publishedLessons);
+        Add(query, "@now", SqlDbType.DateTime2, now);
+        Add(query, "@monthStartUtc", SqlDbType.DateTime2, ThailandTime.ToUtc(monthStartLocal));
+        Add(query, "@trendStartUtc", SqlDbType.DateTime2,
+            ThailandTime.ToUtc(monthStartLocal.AddMonths(1 - AdminDashboardModel.ActivityMonths)));
+        Add(query, "@thaiOffsetMinutes", SqlDbType.Int, ThailandTime.UtcOffsetMinutes);
+        Add(query, "@memberLimit", SqlDbType.Int, AdminDashboardModel.MemberLimit);
+        Add(query, "@recentActivityStart", SqlDbType.DateTime2, now.AddHours(-AdminDashboardModel.RecentActivityHours));
+
+        await using var reader = await query.ExecuteReaderAsync(token);
+        await reader.ReadAsync(token);
         var model = new AdminDashboardModel
         {
+            LocalNow = localNow,
+            PublishedCoursesCount = published.Length,
             Users = reader.GetInt32(0),
             Admins = reader.GetInt32(1),
             NewUsersThisMonth = reader.GetInt32(2),
@@ -223,23 +285,19 @@ public class AccountStore(IConfiguration configuration, IPasswordHasher<Account>
             TotalLoginsCount = reader.GetInt32(4),
             TotalLessonCompletions = reader.GetInt32(5),
             StartedCoursesCount = reader.GetInt32(6),
-            TotalXpEarned = reader.GetInt32(7),
-            TotalAchievementsEarned = reader.GetInt32(8)
+            TotalXpEarned = reader.GetInt64(7),
+            TotalAchievementsEarned = reader.GetInt32(8),
+            EnrolledLessonSlots = reader.GetInt64(9)
         };
-        await reader.NextResultAsync();
-        while (await reader.ReadAsync())
+        await reader.NextResultAsync(token);
+        while (await reader.ReadAsync(token))
             model.Members.Add(new(reader.GetString(0), reader.GetString(1), reader.GetString(2), DateTime.SpecifyKind(reader.GetDateTime(3), DateTimeKind.Utc)));
-        await reader.NextResultAsync();
-        while (await reader.ReadAsync())
+        await reader.NextResultAsync(token);
+        while (await reader.ReadAsync(token))
             model.Activities.Add(new(reader.GetString(0), reader.GetString(1), reader.GetString(2), DateTime.SpecifyKind(reader.GetDateTime(3), DateTimeKind.Utc)));
-        while (await reader.NextResultAsync())
-        {
-            while (await reader.ReadAsync())
-            {
-                if (!reader.IsDBNull(0))
-                    model.AllActivityTimestamps.Add(DateTime.SpecifyKind(reader.GetDateTime(0), DateTimeKind.Utc));
-            }
-        }
+        await reader.NextResultAsync(token);
+        while (await reader.ReadAsync(token))
+            model.MonthlyActivityCounts.Add(DateOnly.FromDateTime(reader.GetDateTime(0)), reader.GetInt32(1));
         return model;
     }
 

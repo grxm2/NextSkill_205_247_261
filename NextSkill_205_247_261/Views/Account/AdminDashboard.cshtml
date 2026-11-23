@@ -109,7 +109,7 @@
                     <strong id="quota-text">@Model.Courses.Count คอร์ส · @Model.TotalLessons ด่าน</strong>
                 </div>
                 <div class="quota-progress-track">
-                    <div class="quota-progress-fill" style="width: @(Model.Courses.Count > 0 ? Math.Min(100, (Model.FeaturedCoursesCount * 100) / Model.Courses.Count) : 0)%;"></div>
+                    <div class="quota-progress-fill" style="width: @Model.FeaturedShare%;"></div>
                 </div>
             </div>
 
@@ -145,7 +145,9 @@
                         <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
                         <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 13.3A8.5 8.5 0 0 1 10.7 3.5a8.5 8.5 0 1 0 9.8 9.8Z"/></svg>
                     </button>
-                    <button type="button" class="topbar-icon-btn" id="topbar-bell-btn" title="การแจ้งเตือน">
+                    <button type="button" class="topbar-icon-btn" id="topbar-bell-btn" title="การแจ้งเตือน"
+                            data-course-count="@Model.Courses.Count" data-lesson-count="@Model.TotalLessons"
+                            data-question-count="@Model.TotalQuestions" data-account-count="@Model.TotalAccounts">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                         <span class="badge-dot"></span>
                     </button>
@@ -176,21 +178,21 @@
                     <!-- Dashboard Greeting Row (Matching Screenshot) -->
                     @{
                         var categoryShares = Model.GetCategoryShares();
-                        var trend3m = Model.GetMonthlyTrend(3);
-                        var trend6m = Model.GetMonthlyTrend(6);
-                        var trend12m = Model.GetMonthlyTrend(12);
-                        var avgLessonsPerCourse = Model.Courses.Count > 0 ? Math.Round((double)Model.TotalLessons / Model.Courses.Count, 1) : 0;
-                        var avgQuestionsPerLesson = Model.TotalLessons > 0 ? Math.Round((double)Model.TotalQuestions / Model.TotalLessons, 1) : 0;
+                        const int defaultMonths = 6;
+                        int[] trendPeriods = [3, defaultMonths, AdminDashboardModel.ActivityMonths];
+                        var trends = trendPeriods.ToDictionary(months => months, Model.GetMonthlyTrend);
+                        var defaultTrend = trends[defaultMonths];
+                        string TrendSummary(int months, int activityCount) => $"กิจกรรมผู้เรียน {activityCount:N0} รายการ ในช่วง {months} เดือน";
                     }
 
                     <!-- Dashboard Greeting Row -->
                     <div class="dashboard-header-row">
                         <div>
                             <h2 class="dashboard-greeting-title" id="greeting-title">
-                                สวัสดีตอนบ่าย, คุณ @Model.FullName
+                                @Model.Greeting คุณ @Model.FullName
                             </h2>
                             <p class="dashboard-greeting-sub">
-                                <span id="current-date-th">วันพุธที่ 16 พฤศจิกายน</span> · 
+                                <span id="current-date-th">@Model.ThaiDate</span> ·
                                 <span class="attention-badge" id="header-summary-badge">@Model.Courses.Count คอร์ส · @Model.TotalLessons ด่าน · @Model.TotalQuestions คำถามในระบบ</span>
                             </p>
                         </div>
@@ -214,13 +216,15 @@
                             <div class="chart-card-header">
                                 <div class="chart-title-block">
                                     <h3>สถิติการเรียนรู้ &amp; การเติบโต (Learning Trends)</h3>
-                                    <p id="chart-sub-text">ผู้เรียน @Model.Users คน · กิจกรรมจริง @trend6m.TotalInPeriod รายการ ในช่วง 6 เดือนที่ผ่านมา</p>
+                                    <p id="chart-sub-text">@TrendSummary(defaultMonths, defaultTrend.TotalInPeriod)</p>
                                 </div>
                                 <div class="chart-controls-wrap">
                                     <div class="chart-period-pill-group">
-                                        <button type="button" class="chart-period-btn" data-period="3m">3 เดือน</button>
-                                        <button type="button" class="chart-period-btn active" data-period="6m">6 เดือน</button>
-                                        <button type="button" class="chart-period-btn" data-period="12m">12 เดือน</button>
+                                        @foreach (var months in trendPeriods)
+                                        {
+                                            <button type="button" class="chart-period-btn @(months == defaultMonths ? "active" : null)"
+                                                    data-period="@(months)m" aria-pressed="@(months == defaultMonths ? "true" : "false")">@months เดือน</button>
+                                        }
                                     </div>
                                     <button type="button" class="admin-pill-btn primary" id="btn-chart-add-deal" style="padding: 6px 14px; font-size: 11.5px; margin-left: 6px;">
                                         <span>+ บันทึกข้อมูลคอร์ส</span>
@@ -230,15 +234,15 @@
 
                             <div class="bar-chart-container">
                                 <div class="chart-y-axis" id="chart-y-axis">
-                                    @foreach (var tick in trend6m.YAxisTicks)
+                                    @foreach (var tick in defaultTrend.YAxisTicks)
                                     {
                                         <span>@tick.ToString("N0")</span>
                                     }
                                 </div>
                                 <div class="chart-bars-wrap" id="chart-bars-container">
-                                    @foreach (var bar in trend6m.Bars)
+                                    @foreach (var bar in defaultTrend.Bars)
                                     {
-                                        <div class="chart-bar-col @(bar.Highlighted ? "highlighted" : "")" data-month="@bar.MonthKey" data-val="@bar.Count.ToString("N0") รายการ">
+                                        <div class="chart-bar-col @(bar.Highlighted ? "highlighted" : "")" data-month="@bar.MonthKey" data-count="@bar.Count" data-val="@bar.Count.ToString("N0") รายการ">
                                             @if (bar.Highlighted)
                                             {
                                                 <div class="bar-highlight-tooltip">@bar.Count.ToString("N0") รายการ</div>
@@ -249,7 +253,7 @@
                                 </div>
                             </div>
                             <div class="chart-x-labels">
-                                @foreach (var bar in trend6m.Bars)
+                                @foreach (var bar in defaultTrend.Bars)
                                 {
                                     <span>@bar.LabelTh</span>
                                 }
@@ -261,7 +265,7 @@
                             <div class="chart-card-header">
                                 <div class="chart-title-block">
                                     <h3>สัดส่วนคอร์สตามหมวดหมู่</h3>
-                                    <p>เรียนฟรีทุกหมวดหมู่ · คำนวณจาก @Model.Courses.Count คอร์สจริงในระบบ</p>
+                                    <p>คอร์สในคลัง @Model.Courses.Count คอร์ส</p>
                                 </div>
                             </div>
 
@@ -287,6 +291,10 @@
                                 </div>
 
                                 <div class="category-legend-grid" id="category-legend-grid">
+                                    @if (categoryShares.Count == 0)
+                                    {
+                                        <p class="subtle">ยังไม่มีคอร์สในคลัง</p>
+                                    }
                                     @foreach (var share in categoryShares)
                                     {
                                         <div class="legend-item">
@@ -318,15 +326,15 @@
                         </article>
 
                         <!-- 2. Total Courses in System -->
-                        <article class="metric-card-modern">
+                        <article class="metric-card-modern" data-active-course-count="@Model.PublishedCoursesCount">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon amber">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                                 </span>
                             </div>
                             <strong class="metric-number-bold" id="metric-courses-count" data-count="@Model.Courses.Count">@Model.Courses.Count</strong>
-                            <h4 class="metric-label-title">คอร์สเรียนทั้งหมดในระบบ</h4>
-                            <p class="metric-desc-sub" id="metric-courses-sub">คอร์สแนะนำ @Model.FeaturedCoursesCount คอร์ส · @categoryShares.Count หมวดหมู่</p>
+                            <h4 class="metric-label-title">คอร์สทั้งหมดในคลัง</h4>
+                            <p class="metric-desc-sub" id="metric-courses-sub">เปิดให้เรียน @Model.PublishedCoursesCount คอร์ส · คอร์สแนะนำ @Model.FeaturedCoursesCount คอร์ส</p>
                         </article>
 
                         <!-- 3. Open Units & Islands -->
@@ -337,21 +345,21 @@
                                 </span>
                             </div>
                             <strong class="metric-number-bold" id="metric-lessons-count" data-count="@Model.TotalLessons">@Model.TotalLessons</strong>
-                            <h4 class="metric-label-title">ด่าน &amp; เกาะที่เปิดสอน</h4>
-                            <p class="metric-desc-sub" id="metric-lessons-sub">เฉลี่ย @avgLessonsPerCourse ด่านต่อคอร์สในทะเล NextSkill</p>
+                            <h4 class="metric-label-title">ด่านของคอร์สในคลัง</h4>
+                            <p class="metric-desc-sub" id="metric-lessons-sub">เฉลี่ย @Model.AverageLessonsPerCourse ด่านต่อคอร์ส</p>
                         </article>
 
                         <!-- 4. Real Completed Lesson Sessions -->
-                        <article class="metric-card-modern">
+                        <article class="metric-card-modern" id="metric-learner-progress" data-enrollment-count="@Model.StartedCoursesCount"
+                                 data-passed-lessons="@Model.TotalLessonCompletions" data-lesson-slots="@Model.EnrolledLessonSlots" data-xp="@Model.TotalXpEarned">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon green">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
                                 </span>
-                                <span class="metric-trend-pill">เรียนฟรี 100%</span>
                             </div>
                             <strong class="metric-number-bold" data-count="@Model.TotalLessonCompletions">@Model.TotalLessonCompletions.ToString("N0")</strong>
-                            <h4 class="metric-label-title">ด่านที่เรียนสำเร็จสะสม (ครั้ง)</h4>
-                            <p class="metric-desc-sub">เริ่มเรียนแล้ว @Model.StartedCoursesCount คอร์ส · @Model.TotalXpEarned.ToString("N0") XP สะสม</p>
+                            <h4 class="metric-label-title">ด่านที่ผู้เรียนผ่าน (ครั้ง)</h4>
+                            <p class="metric-desc-sub">การลงทะเบียน @Model.StartedCoursesCount รายการ · @Model.TotalXpEarned.ToString("N0") XP จากด่านในคอร์สที่เปิดเรียน</p>
                         </article>
 
                         <!-- 5. New Learners This Month -->
@@ -364,7 +372,7 @@
                             </div>
                             <strong class="metric-number-bold" data-count="@Model.NewUsersThisMonth">@Model.NewUsersThisMonth</strong>
                             <h4 class="metric-label-title">ผู้เรียนใหม่เดือนนี้</h4>
-                            <p class="metric-desc-sub">เข้าใช้งานใน 24 ชม. ล่าสุด @Model.ActiveTodayCount บัญชี</p>
+                            <p class="metric-desc-sub">สมัครหรือเข้าสู่ระบบใน @AdminDashboardModel.RecentActivityHours ชม. ล่าสุด @Model.ActiveTodayCount บัญชี</p>
                         </article>
 
                         <!-- 6. Real Lesson Completion Rate -->
@@ -376,7 +384,7 @@
                             </div>
                             <strong class="metric-number-bold">@Model.CompletionRateText</strong>
                             <h4 class="metric-label-title">อัตราเรียนจบด่านของผู้เรียน</h4>
-                            <p class="metric-desc-sub">ผ่านแล้ว @Model.TotalLessonCompletions ด่าน · รางวัล @Model.TotalAchievementsEarned รายการ</p>
+                            <p class="metric-desc-sub">ผ่าน @Model.TotalLessonCompletions.ToString("N0") จาก @Model.EnrolledLessonSlots.ToString("N0") ด่านที่ลงทะเบียน</p>
                         </article>
 
                         <!-- 7. Quiz & Practice Questions -->
@@ -388,7 +396,7 @@
                             </div>
                             <strong class="metric-number-bold" id="metric-questions-count" data-count="@Model.TotalQuestions">@Model.TotalQuestions</strong>
                             <h4 class="metric-label-title">แบบฝึกหัดในคลัง</h4>
-                            <p class="metric-desc-sub" id="metric-questions-sub">เฉลี่ย @avgQuestionsPerLesson ข้อต่อด่าน · พร้อมฝึกกับ Nimo</p>
+                            <p class="metric-desc-sub" id="metric-questions-sub">เฉลี่ย @Model.AverageQuestionsPerLesson ข้อต่อด่าน</p>
                         </article>
 
                         <!-- 8. Total Recorded System Activities -->
@@ -399,8 +407,8 @@
                                 </span>
                             </div>
                             <strong class="metric-number-bold" data-count="@Model.TotalActivityEvents">@Model.TotalActivityEvents</strong>
-                            <h4 class="metric-label-title">กิจกรรมที่บันทึกในระบบ</h4>
-                            <p class="metric-desc-sub">เข้าสู่ระบบสะสม @Model.TotalLoginsCount บัญชี · LocalDB ปกติ</p>
+                            <h4 class="metric-label-title">กิจกรรมผู้เรียนใน @AdminDashboardModel.ActivityMonths เดือน</h4>
+                            <p class="metric-desc-sub">บัญชีที่เคยเข้าสู่ระบบ @Model.TotalLoginsCount บัญชี</p>
                         </article>
                     </div>
 
@@ -473,7 +481,7 @@
                             @foreach (var item in Model.Activities)
                             {
                                 <div class="activity-row">
-                                    <time datetime="@item.OccurredAt.ToString("O")" data-local-time>@item.OccurredAt.ToString("dd MMM HH:mm") UTC</time>
+                                    <time datetime="@item.OccurredAt.ToString("O")">@ThailandTime.ToLocal(item.OccurredAt).ToString("d MMM HH:mm", ThailandTime.Culture)</time>
                                     <p><strong>@item.FullName</strong> @item.Action</p>
                                     <span class="activity-tag @(item.Role == "Admin" ? "role-admin" : "role-user")" data-role="@item.Role">@item.Role</span>
                                 </div>
@@ -509,12 +517,10 @@
                         <input type="search" id="course-search-input" placeholder="ค้นหาชื่อคอร์ส, ผู้สอน หรือหมวดหมู่..." style="padding: 9px 14px; border: 1.5px solid var(--nimo-sky-border); border-radius: 12px;" />
                         <select id="course-category-filter" style="padding: 9px 14px; border: 1.5px solid var(--nimo-sky-border); border-radius: 12px; font-size: 13.5px; background: white;">
                             <option value="">ทุกหมวดหมู่ (All Categories)</option>
-                            <option value="Design">Design</option>
-                            <option value="Development">Development</option>
-                            <option value="AI">AI</option>
-                            <option value="Languages">Languages</option>
-                            <option value="Technology">Technology</option>
-                            <option value="Business">Business</option>
+                            @foreach (var share in categoryShares)
+                            {
+                                <option value="@share.Category">@share.Category</option>
+                            }
                         </select>
                     </div>
 
@@ -650,7 +656,7 @@
                     <div class="section-heading directory-heading">
                         <div>
                             <h2 id="members-heading">รายชื่อสมาชิกในระบบ (Account Directory)</h2>
-                            <p class="subtle">มีผู้เรียน @Model.Users คน · ผู้ดูแล @Model.Admins คน · แสดงรายการล่าสุด 100 รายการ</p>
+                            <p class="subtle">มีผู้เรียน @Model.Users คน · ผู้ดูแล @Model.Admins คน · แสดงล่าสุดสูงสุด @AdminDashboardModel.MemberLimit บัญชี</p>
                         </div>
                         <div class="directory-controls">
                             <label for="member-search" class="sr-only">ค้นหา</label>
@@ -684,7 +690,7 @@
                                                 @(member.Role == "Admin" ? "ผู้ดูแล" : "ผู้เรียน")
                                             </span>
                                         </td>
-                                        <td><time datetime="@member.CreatedAt.ToString("O")" data-local-date>@member.CreatedAt.ToString("dd MMM yyyy")</time></td>
+                                        <td><time datetime="@member.CreatedAt.ToString("O")">@ThailandTime.ToLocal(member.CreatedAt).ToString("d MMM yyyy", ThailandTime.Culture)</time></td>
                                     </tr>
                                 }
                                 <tr id="no-members" hidden="@(Model.Members.Count > 0)">
@@ -961,30 +967,17 @@
 
     <!-- Embedded Initial Data for fast interactive client features -->
     @{
-        var trendsPayload = new
+        var trendsPayload = trends.ToDictionary(entry => $"{entry.Key}m", entry => new
         {
-            p3m = new
+            sub = TrendSummary(entry.Key, entry.Value.TotalInPeriod),
+            yTicks = entry.Value.YAxisTicks.Select(t => t.ToString("N0")).ToArray(),
+            bars = entry.Value.Bars.Select(b => new
             {
-                sub = $"ผู้เรียน {Model.Users:N0} คน · กิจกรรมจริง {trend3m.TotalInPeriod:N0} รายการ ในช่วง 3 เดือนที่ผ่านมา",
-                yTicks = trend3m.YAxisTicks.Select(t => t.ToString("N0")).ToArray(),
-                bars = trend3m.Bars.Select(b => new { month = b.MonthKey, val = $"{b.Count:N0} รายการ", height = $"{b.HeightPercent}%", highlighted = b.Highlighted }).ToArray(),
-                labels = trend3m.Bars.Select(b => b.LabelTh).ToArray()
-            },
-            p6m = new
-            {
-                sub = $"ผู้เรียน {Model.Users:N0} คน · กิจกรรมจริง {trend6m.TotalInPeriod:N0} รายการ ในช่วง 6 เดือนที่ผ่านมา",
-                yTicks = trend6m.YAxisTicks.Select(t => t.ToString("N0")).ToArray(),
-                bars = trend6m.Bars.Select(b => new { month = b.MonthKey, val = $"{b.Count:N0} รายการ", height = $"{b.HeightPercent}%", highlighted = b.Highlighted }).ToArray(),
-                labels = trend6m.Bars.Select(b => b.LabelTh).ToArray()
-            },
-            p12m = new
-            {
-                sub = $"ผู้เรียน {Model.Users:N0} คน · กิจกรรมจริง {trend12m.TotalInPeriod:N0} รายการ ในรอบ 1 ปีที่ผ่านมา",
-                yTicks = trend12m.YAxisTicks.Select(t => t.ToString("N0")).ToArray(),
-                bars = trend12m.Bars.Select(b => new { month = b.MonthKey, val = $"{b.Count:N0} รายการ", height = $"{b.HeightPercent}%", highlighted = b.Highlighted }).ToArray(),
-                labels = trend12m.Bars.Select(b => b.LabelTh).ToArray()
-            }
-        };
+                month = b.MonthKey, count = b.Count, val = $"{b.Count:N0} รายการ",
+                height = b.HeightPercent, highlighted = b.Highlighted
+            }).ToArray(),
+            labels = entry.Value.Bars.Select(b => b.LabelTh).ToArray()
+        });
     }
     <script id="admin-trends-data" type="application/json">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(trendsPayload))</script>
     <script id="admin-courses-data" type="application/json">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Courses, new System.Text.Json.JsonSerializerOptions { PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase }))</script>

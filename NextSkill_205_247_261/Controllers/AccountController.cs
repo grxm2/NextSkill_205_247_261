@@ -146,18 +146,56 @@ public class AccountController(AccountStore store, LearningStore learning, ILogg
 
         try
         {
-            var state = await learning.StateAsync(id, "User", token);
-            var certificate = LearningCertificates.EarnedBy(state).FirstOrDefault(item => item.CourseId == courseId);
-            if (certificate is null) return NotFound();
-
-            var profile = await store.GetLearnerProfileAsync(id, token);
-            return profile is null ? Challenge() : View(new LearningCertificateViewModel(profile.FullName, certificate));
+            var certificate = await learning.CertificateAsync(id, courseId, token);
+            return certificate is null ? NotFound() : View(certificate);
         }
         catch (SqlException ex)
         {
             logger.LogError(ex, "Could not read learner certificate for course {CourseId}", courseId);
             return StatusCode(503, "เปิดใบประกาศไม่ได้ กรุณาลองใหม่อีกครั้ง");
         }
+    }
+
+    [HttpPost, Authorize(Roles = "User")]
+    public async Task<IActionResult> IssueCertificate(int courseId, CancellationToken token)
+    {
+        if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var id)) return Challenge();
+        if (courseId <= 0) return NotFound();
+
+        try
+        {
+            return await learning.IssueLegacyCertificateAsync(id, courseId, token)
+                ? RedirectToAction(nameof(Certificate), new { courseId }) : NotFound();
+        }
+        catch (SqlException ex)
+        {
+            logger.LogError(ex, "Could not issue reference for course {CourseId}", courseId);
+            return StatusCode(503, "ออกเลขอ้างอิงไม่ได้ กรุณาลองใหม่อีกครั้ง");
+        }
+    }
+
+    [HttpGet, AllowAnonymous]
+    public async Task<IActionResult> VerifyCertificate(string? code, CancellationToken token)
+    {
+        Response.Headers["X-Robots-Tag"] = "noindex, nofollow";
+        if (string.IsNullOrWhiteSpace(code)) return View();
+        code = code.Trim();
+        if (Guid.TryParseExact(code, "D", out var reference) || Guid.TryParseExact(code, "N", out reference))
+        {
+            try
+            {
+                var certificate = await learning.VerifyCertificateAsync(reference, token);
+                if (certificate is not null) return View(certificate);
+            }
+            catch (SqlException ex)
+            {
+                logger.LogError(ex, "Could not verify course certificate");
+                return StatusCode(503, "ตรวจสอบใบประกาศไม่ได้ กรุณาลองใหม่อีกครั้ง");
+            }
+        }
+
+        Response.StatusCode = StatusCodes.Status404NotFound;
+        return View();
     }
 
     [HttpPost, Authorize(Roles = "User"), EnableRateLimiting("authentication")]
@@ -219,16 +257,21 @@ public class AccountController(AccountStore store, LearningStore learning, ILogg
         if (profile is null) return Challenge();
 
         LearningState? state = null;
-        try { state = await learning.StateAsync(id, "User", token, includeActivity: true); }
+        IReadOnlyList<LearningCertificate> certificates = [];
+        try
+        {
+            state = await learning.StateAsync(id, "User", token, includeActivity: true);
+            certificates = await learning.CertificatesAsync(id, token);
+        }
         catch (SqlException ex) { logger.LogError(ex, "Could not read learner profile progress"); }
         return View("Dashboard", new LearnerProfileViewModel(profile,
             edit ?? new ProfileEditForm { FullName = profile.FullName, Email = profile.Email }, state,
-            LearningCertificates.EarnedBy(state)));
+            certificates));
     }
     [HttpGet, Authorize(Roles = "Admin")]
     public async Task<IActionResult> AdminDashboard()
     {
-        var model = await store.AdminOverviewAsync();
+        var model = await store.AdminOverviewAsync(learning, HttpContext.RequestAborted);
         model.FullName = User.Identity!.Name!;
         model.Email = User.FindFirstValue(ClaimTypes.Email)!;
         model.Courses = AdminContentStore.GetAllCourses();

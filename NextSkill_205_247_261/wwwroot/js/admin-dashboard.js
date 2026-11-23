@@ -184,17 +184,10 @@
         };
 
         try {
-            const data = await postAdminContent('/Account/AdminSaveCourse', coursePayload);
-            const saved = normalizeCourse(data.course);
-            const idx = courses.findIndex(c => c.id === saved.id);
-            if (idx >= 0) courses[idx] = saved;
-            else courses.push(saved);
-
-            renderCoursesTable();
-            updateCourseSelectDropdowns();
-            updateMetrics();
+            await postAdminContent('/Account/AdminSaveCourse', coursePayload);
             courseModal.close();
             alert('บันทึกข้อมูลคอร์สแล้ว');
+            reloadDashboard();
         } catch (err) {
             alert(err.message);
         }
@@ -218,13 +211,8 @@
 
                 try {
                     await postAdminContent('/Account/AdminDeleteCourse', { id });
-                    courses = courses.filter(c => c.id !== id);
-                    questions = questions.filter(q => q.courseId !== id);
-                    renderCoursesTable();
-                    updateCourseSelectDropdowns();
-                    renderQuestionsGrid();
-                    updateMetrics();
                     alert('นำคอร์สออกจากคลังแล้ว');
+                    reloadDashboard();
                 } catch (e) {
                     alert(e.message);
                 }
@@ -239,7 +227,7 @@
 
         const filtered = courses.filter(c => {
             const matchesQ = !q || (c.title && c.title.toLowerCase().includes(q)) || (c.instructor && c.instructor.toLowerCase().includes(q)) || (c.category && c.category.toLowerCase().includes(q));
-            const matchesCat = !cat || c.category === cat;
+            const matchesCat = !cat || c.category.toLowerCase() === cat.toLowerCase();
             return matchesQ && matchesCat;
         });
 
@@ -263,9 +251,6 @@
                 </td>
             </tr>
         `).join('') || `<tr><td colspan="8" class="empty-message">ไม่พบคอร์สที่ตรงกับเงื่อนไขการค้นหา</td></tr>`;
-
-        const badge = document.getElementById('course-total-badge');
-        if (badge) badge.textContent = courses.length;
 
         attachCourseActions();
     }
@@ -300,7 +285,7 @@
             feedback.style.background = '#ecfdf5';
             feedback.style.color = '#047857';
             feedback.textContent = data.message;
-            setTimeout(() => location.reload(), 1000);
+            setTimeout(reloadDashboard, 1000);
         } catch (e) {
             feedback.style.display = 'block';
             feedback.style.background = '#fef2f2';
@@ -324,18 +309,6 @@
     const choiceTemplate = document.getElementById('admin-question-choice-template');
 
     document.getElementById('btn-open-question-modal')?.addEventListener('click', () => openQuestionModal());
-
-    function updateCourseSelectDropdowns() {
-        const courseOption = c => new Option(c.title + ' (' + c.category + ')', c.id);
-        const selectedCourse = questionCourse.value;
-        questionCourse.replaceChildren(...courses.map(courseOption));
-        if (courses.some(c => String(c.id) === selectedCourse)) questionCourse.value = selectedCourse;
-
-        const selectedFilter = questionCourseFilter.value;
-        questionCourseFilter.replaceChildren(new Option('ทุกคอร์ส (All Courses)', '0'), ...courses.map(courseOption));
-        questionCourseFilter.value = courses.some(c => String(c.id) === selectedFilter) ? selectedFilter : '0';
-        updateQuestionLessonOptions();
-    }
 
     function updateQuestionLessonOptions(selectedLesson) {
         const course = courses.find(c => c.id === Number(questionCourse.value));
@@ -395,16 +368,10 @@
         };
 
         try {
-            const data = await postAdminContent('/Account/AdminSaveQuestion', payload);
-            const saved = normalizeQuestion(data.question);
-            const idx = questions.findIndex(q => q.id === saved.id);
-            if (idx >= 0) questions[idx] = saved;
-            else questions.push(saved);
-
-            renderQuestionsGrid();
-            updateMetrics();
+            await postAdminContent('/Account/AdminSaveQuestion', payload);
             questionModal.close();
             alert('บันทึกข้อมูลคำถามแล้ว');
+            reloadDashboard();
         } catch (error) {
             alert(error.message);
         }
@@ -427,10 +394,8 @@
                 if (!confirm('คุณต้องการลบคำถามข้อนี้ใช่ไหม?')) return;
                 try {
                     await postAdminContent('/Account/AdminDeleteQuestion', { id: question.id });
-                    questions = questions.filter(item => item.id !== question.id);
-                    renderQuestionsGrid();
-                    updateMetrics();
                     alert('ลบคำถามแล้ว');
+                    reloadDashboard();
                 } catch (error) {
                     alert(error.message);
                 }
@@ -476,8 +441,6 @@
 
         questionsContainer.replaceChildren(...filtered.map(renderQuestionCard));
         document.getElementById('questions-empty').hidden = filtered.length > 0;
-        const badge = document.getElementById('question-total-badge');
-        if (badge) badge.textContent = questions.length;
     }
 
     questionSearchInput?.addEventListener('input', renderQuestionsGrid);
@@ -570,15 +533,6 @@
     memberSearch?.addEventListener('input', filterMembers);
     memberRole?.addEventListener('change', filterMembers);
 
-    document.querySelectorAll('time[datetime]').forEach(elem => {
-        const date = new Date(elem.dateTime);
-        if (Number.isNaN(date.getTime())) return;
-        elem.textContent = new Intl.DateTimeFormat('th-TH', elem.hasAttribute('data-local-date')
-            ? { day: 'numeric', month: 'short', year: 'numeric' }
-            : { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(date);
-        elem.title = date.toLocaleString('th-TH');
-    });
-
     // ==========================================
     // Utility Helpers
     // ==========================================
@@ -594,162 +548,58 @@
 
     function bindDonutHover() {
         const donutCenterVal = document.getElementById('donut-center-num');
+        if (!donutCenterVal) return;
+        const total = donutCenterVal.textContent;
         document.querySelectorAll('.donut-segment').forEach(seg => {
             seg.onmouseenter = () => {
-                if (donutCenterVal) {
-                    donutCenterVal.textContent = seg.getAttribute('data-share-label') || `${courses.length}`;
-                }
+                donutCenterVal.textContent = seg.dataset.shareLabel;
             };
             seg.onmouseleave = () => {
-                if (donutCenterVal) {
-                    donutCenterVal.textContent = courses.length;
-                }
+                donutCenterVal.textContent = total;
             };
         });
     }
 
-    function updateMetrics() {
-        const totalL = courses.reduce((acc, c) => acc + (c.lessons ? c.lessons.length : (c.units || 0)), 0);
-        const featuredCount = courses.filter(c => !!c.featured).length;
+    const dashboardFilterIds = [
+        'global-admin-search', 'course-search-input', 'course-category-filter',
+        'question-search-input', 'question-course-filter', 'member-search', 'member-role'
+    ];
+    const dashboardRefreshKey = 'nextskill.admin-refresh';
 
-        const mCourses = document.getElementById('metric-courses-count');
-        if (mCourses) mCourses.textContent = courses.length;
-        const mLessons = document.getElementById('metric-lessons-count');
-        if (mLessons) mLessons.textContent = totalL;
-        const mQuestions = document.getElementById('metric-questions-count');
-        if (mQuestions) mQuestions.textContent = questions.length;
-
-        const donutNum = document.getElementById('donut-center-num');
-        if (donutNum) donutNum.textContent = courses.length;
-
-        const headerBadge = document.getElementById('header-summary-badge');
-        if (headerBadge) {
-            headerBadge.textContent = `${courses.length} คอร์ส · ${totalL} ด่าน · ${questions.length} คำถามในระบบ`;
+    function reloadDashboard() {
+        try {
+            const filters = dashboardFilterIds.map(id => document.getElementById(id)?.value);
+            const period = document.querySelector('.chart-period-btn.active')?.dataset.period;
+            sessionStorage.setItem(dashboardRefreshKey, JSON.stringify({ filters, period }));
+        } catch {
+            // Saving still refreshes the server data if storage is disabled.
         }
-
-        const palette = ['#0284c7', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4'];
-        const circumference = 238.76;
-        const countsMap = new Map();
-        courses.forEach(c => {
-            const cat = (c.category || 'General').trim();
-            countsMap.set(cat, (countsMap.get(cat) || 0) + 1);
-        });
-        const entries = [...countsMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-        const totalC = Math.max(courses.length, 1);
-
-        let allocatedPct = 0;
-        let offset = 0;
-        const shares = entries.map(([cat, count], idx) => {
-            const pct = idx === entries.length - 1
-                ? Math.max(0, 100 - allocatedPct)
-                : Math.round(count * 100 / totalC);
-            allocatedPct += pct;
-            const dashLen = Number(((count / totalC) * circumference).toFixed(2));
-            const dashGap = Number(Math.max(0, circumference - dashLen).toFixed(2));
-            const dashOffset = Number((-offset).toFixed(2));
-            offset += dashLen;
-            return { cat, count, pct, color: palette[idx % palette.length], dashLen, dashGap, dashOffset };
-        });
-
-        const legendGrid = document.getElementById('category-legend-grid');
-        if (legendGrid && shares.length > 0) {
-            legendGrid.innerHTML = shares.map(s => `
-                <div class="legend-item">
-                    <span class="legend-name">
-                        <span class="legend-color-dot" style="background: ${s.color};"></span> ${escapeHtml(s.cat)}
-                    </span>
-                    <span class="legend-val" data-cat-legend="${escapeHtml(s.cat)}">${s.count} คอร์ส · ${s.pct}%</span>
-                </div>
-            `).join('');
-        }
-
-        const donutSvg = document.getElementById('category-donut-svg');
-        if (donutSvg && shares.length > 0) {
-            donutSvg.innerHTML = `<circle class="donut-circle-bg" cx="50" cy="50" r="38"></circle>` +
-                shares.map(s => `
-                    <circle class="donut-segment" cx="50" cy="50" r="38"
-                            data-category="${escapeHtml(s.cat)}"
-                            data-share-label="${s.pct}%"
-                            stroke="${s.color}"
-                            stroke-dasharray="${s.dashLen} ${s.dashGap}"
-                            stroke-dashoffset="${s.dashOffset}"></circle>
-                `).join('');
-            bindDonutHover();
-        }
-
-        const coursesSub = document.getElementById('metric-courses-sub');
-        if (coursesSub) coursesSub.textContent = `คอร์สแนะนำ ${featuredCount} คอร์ส · ${shares.length} หมวดหมู่`;
-
-        const lessonsSub = document.getElementById('metric-lessons-sub');
-        if (lessonsSub) {
-            const avgL = courses.length > 0 ? (totalL / courses.length).toFixed(1) : '0';
-            lessonsSub.textContent = `เฉลี่ย ${avgL} ด่านต่อคอร์สในทะเล NextSkill`;
-        }
-
-        const questionsSub = document.getElementById('metric-questions-sub');
-        if (questionsSub) {
-            const avgQ = totalL > 0 ? (questions.length / totalL).toFixed(1) : '0';
-            questionsSub.textContent = `เฉลี่ย ${avgQ} ข้อต่อด่าน · พร้อมฝึกกับ Nimo`;
-        }
-
-        const quotaText = document.getElementById('quota-text');
-        if (quotaText) quotaText.textContent = `${courses.length} คอร์ส · ${totalL} ด่าน`;
+        location.reload();
     }
 
-    // ==========================================
-    // Dynamic Time-based Greeting & Thai Date
-    // ==========================================
-    function updateGreetingAndDate() {
-        const now = new Date();
-        const hr = now.getHours();
-        const greetingElem = document.getElementById('greeting-title');
-        if (greetingElem) {
-            let greeting = 'สวัสดีตอนเช้า';
-            if (hr >= 12 && hr < 17) {
-                greeting = 'สวัสดีตอนบ่าย';
-            } else if (hr >= 17) {
-                greeting = 'สวัสดีตอนเย็น';
-            }
-            const nameMatch = greetingElem.textContent.match(/คุณ\s+([^!,]+)/);
-            const name = nameMatch ? nameMatch[1].trim() : 'Admin';
-            greetingElem.textContent = `${greeting}, คุณ ${name}`;
+    function restoreDashboardFilters() {
+        let state;
+        try {
+            state = JSON.parse(sessionStorage.getItem(dashboardRefreshKey) || 'null');
+            sessionStorage.removeItem(dashboardRefreshKey);
+        } catch {
+            return;
         }
+        if (!Array.isArray(state?.filters)) return;
 
-        const dateElem = document.getElementById('current-date-th');
-        if (dateElem) {
-            dateElem.textContent = new Intl.DateTimeFormat('th-TH', {
-                weekday: 'long',
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            }).format(now);
-        }
-    }
-    updateGreetingAndDate();
-
-    // ==========================================
-    // Smooth Number Counter Animation
-    // ==========================================
-    function animateCounters() {
-        const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-        document.querySelectorAll('[data-count]').forEach(elem => {
-            const target = parseInt(elem.getAttribute('data-count'), 10);
-            if (isNaN(target)) return;
-            const duration = 1200;
-            const startTime = performance.now();
-            function update(now) {
-                const elapsed = now - startTime;
-                const progress = reduced.matches ? 1 : Math.min(elapsed / duration, 1);
-                const ease = 1 - Math.pow(1 - progress, 3);
-                const current = Math.floor(ease * target);
-                elem.textContent = current.toLocaleString('th-TH');
-                if (progress < 1) requestAnimationFrame(update);
-                else elem.textContent = target.toLocaleString('th-TH');
-            }
-            requestAnimationFrame(update);
+        dashboardFilterIds.forEach((id, index) => {
+            const field = document.getElementById(id);
+            const value = state.filters[index];
+            if (!field || typeof value !== 'string') return;
+            if (field instanceof HTMLSelectElement && ![...field.options].some(option => option.value === value)) return;
+            field.value = value;
         });
+
+        if (courseSearchInput.value || courseCategoryFilter.value) renderCoursesTable();
+        if (questionSearchInput.value || questionCourseFilter.value !== '0') renderQuestionsGrid();
+        if (memberSearch.value || memberRole.value !== 'all') filterMembers();
+        [...periodButtons].find(button => button.dataset.period === state.period && !button.classList.contains('active'))?.click();
     }
-    setTimeout(animateCounters, 200);
 
     // ==========================================
     // Interactive Bar Chart Period Switcher (Real Server Data)
@@ -769,19 +619,14 @@
         console.error('Error parsing admin trends data', e);
     }
 
-    const chartPeriodData = serverTrends ? {
-        '3m': serverTrends.p3m,
-        '6m': serverTrends.p6m,
-        '12m': serverTrends.p12m
-    } : {};
-
     periodButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            periodButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const period = btn.getAttribute('data-period');
-            const data = chartPeriodData[period];
+            const data = serverTrends?.[btn.dataset.period];
             if (!data || !barsContainer) return;
+            periodButtons.forEach(button => {
+                button.classList.toggle('active', button === btn);
+                button.setAttribute('aria-pressed', String(button === btn));
+            });
 
             if (chartSubText) chartSubText.textContent = data.sub;
 
@@ -790,9 +635,9 @@
             }
 
             barsContainer.innerHTML = data.bars.map(b => `
-                <div class="chart-bar-col ${b.highlighted ? 'highlighted' : ''}" data-month="${escapeHtml(b.month)}" data-val="${escapeHtml(b.val)}">
+                <div class="chart-bar-col ${b.highlighted ? 'highlighted' : ''}" data-month="${escapeHtml(b.month)}" data-count="${b.count}" data-val="${escapeHtml(b.val)}">
                     ${b.highlighted ? `<div class="bar-highlight-tooltip">${escapeHtml(b.val)}</div>` : ''}
-                    <div class="bar-pill" style="height: ${b.height};"></div>
+                    <div class="bar-pill" style="height: ${b.height}%;"></div>
                 </div>
             `).join('');
 
@@ -831,6 +676,7 @@
     // Interactive Donut Chart Segment Hover
     // ==========================================
     bindDonutHover();
+    restoreDashboardFilters();
 
     // ==========================================
     // Global Search Shortcut (Ctrl+K)
@@ -864,9 +710,8 @@
     // ==========================================
     const bellBtn = document.getElementById('topbar-bell-btn');
     bellBtn?.addEventListener('click', () => {
-        const totalL = courses.reduce((acc, c) => acc + (c.lessons ? c.lessons.length : (c.units || 0)), 0);
-        const totalM = document.querySelectorAll('[data-member]').length;
-        alert(`สรุปข้อมูลระบบ NextSkill Admin (ข้อมูลจริง):\n• คอร์สเรียนในระบบ ${courses.length} คอร์ส (${totalL} ด่าน)\n• แบบฝึกหัดในคลัง ${questions.length} ข้อ\n• บัญชีสมาชิกในระบบ ${totalM} บัญชี\n• ระบบฐานข้อมูล LocalDB ทำงานปกติ`);
+        const { courseCount, lessonCount, questionCount, accountCount } = bellBtn.dataset;
+        alert(`สรุปข้อมูลระบบ NextSkill Admin (ข้อมูลจริง):\n• คอร์สเรียนในระบบ ${courseCount} คอร์ส (${lessonCount} ด่าน)\n• แบบฝึกหัดในคลัง ${questionCount} ข้อ\n• บัญชีสมาชิกในระบบ ${accountCount} บัญชี\n• ระบบฐานข้อมูล LocalDB ทำงานปกติ`);
     });
 
     document.getElementById('btn-quick-activity')?.addEventListener('click', (e) => {

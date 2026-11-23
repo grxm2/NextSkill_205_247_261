@@ -10,8 +10,8 @@
         .OrderBy(course => course.CourseId != state.ActiveCourseId).ThenBy(course => course.IsComplete).ToArray() ?? [];
     var activeCourse = courses.FirstOrDefault(course => course.CourseId == state?.ActiveCourseId);
     var thai = CultureInfo.GetCultureInfo("th-TH");
-    string ThaiDate(DateTime utc) => utc.AddHours(7).ToString("d MMM yyyy", thai);
-    string IsoDate(DateTime utc) => utc.AddHours(7).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+    string ThaiDate(DateTime utc) => ThailandTime.ToLocal(utc).ToString("d MMM yyyy", thai);
+    string IsoDate(DateTime utc) => ThailandTime.ToLocal(utc).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 }
 
 @section Styles {
@@ -63,8 +63,8 @@
     }
     else
     {
-        var levelXp = state.Xp % LearningState.XpPerLevel;
-        var nextXp = LearningState.XpPerLevel - levelXp;
+        var levelXp = state.LevelXp;
+        var nextXp = state.XpUntilNextLevel;
         var goals = LearningDailyGoals.All;
         var today = activity.Today;
         var completedGoals = goals.Count(goal => goal.IsComplete(today));

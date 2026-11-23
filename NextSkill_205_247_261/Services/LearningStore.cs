@@ -13,14 +13,14 @@ public sealed class LearningRuleException(string code, string message, int statu
     public int StatusCode { get; } = statusCode;
 }
 
-public sealed class LearningStore(IConfiguration configuration, IDataProtectionProvider protection)
+public sealed partial class LearningStore(IConfiguration configuration, IDataProtectionProvider protection)
 {
     private static readonly SemaphoreSlim SchemaLock = new(1, 1);
     private static bool schemaReady;
     public const int CourseCompletionBonus = 100;
     private readonly IDataProtector quizVersions = protection.CreateProtector("NextSkill.QuizVersion.v1");
 
-    private async Task<SqlConnection> OpenAsync(CancellationToken token)
+    internal async Task<SqlConnection> OpenAsync(CancellationToken token)
     {
         var connection = new SqlConnection(configuration.GetConnectionString("NextSkill"));
         try
@@ -116,7 +116,7 @@ public sealed class LearningStore(IConfiguration configuration, IDataProtectionP
         var complete = new HashSet<(int Course, int Lesson)>();
         var awards = new List<LearningAward>();
         // Daily learning goals use the calendar day in Thailand (UTC+07:00).
-        var today = DateOnly.FromDateTime(DateTime.UtcNow.AddHours(7));
+        var today = ThailandTime.Date(DateTime.UtcNow);
         var historyStart = today.AddDays(-LearningDailyGoals.HistoryDays);
         var learningDays = includeActivity ? new HashSet<DateOnly>() : null;
         var dayTotals = new Dictionary<DateOnly, (int Lessons, int Xp, HashSet<int> Courses)>();
@@ -129,7 +129,7 @@ public sealed class LearningStore(IConfiguration configuration, IDataProtectionP
             complete.Add((completedCourse, reader.GetInt32(1)));
             if (learningDays is null) continue;
 
-            var completedDay = DateOnly.FromDateTime(reader.GetDateTime(2).AddHours(7));
+            var completedDay = ThailandTime.Date(reader.GetDateTime(2));
             learningDays.Add(completedDay);
             if (completedDay < historyStart || completedDay > today) continue;
 
@@ -404,7 +404,7 @@ public sealed class LearningStore(IConfiguration configuration, IDataProtectionP
                     "ทบทวนบทเรียนแล้ว — ได้รับ XP ของบทนี้ไปแล้ว", feedback, state);
 
             var completingCourse = progress.CompletedLessons.Count + 1 == progress.TotalLessons;
-            var courseAwardKey = $"course-{request.CourseId}";
+            var courseAwardKey = CourseAwardKey(request.CourseId);
             var earnCourseAward = completingCourse && !state.Achievements.Contains(courseAwardKey);
             var reward = lesson.Xp + (earnCourseAward ? CourseCompletionBonus : 0);
             var next = progress.Lessons.FirstOrDefault(l => l.Id > request.LessonId)?.Id;
@@ -428,19 +428,10 @@ public sealed class LearningStore(IConfiguration configuration, IDataProtectionP
                 await command.ExecuteNonQueryAsync(ct);
             }
             if (earnCourseAward)
-            {
-                await using var command = Command(db, transaction, """
-                    IF NOT EXISTS (SELECT 1 FROM dbo.LearningAchievements
-                        WHERE AccountId=@account AND AccountRole=@role AND AchievementKey=@key)
-                        INSERT INTO dbo.LearningAchievements (AccountId,AccountRole,AchievementKey)
-                        VALUES (@account,@role,@key);
-                    """, accountId, role);
-                command.Parameters.Add("@key", SqlDbType.VarChar, 80).Value = courseAwardKey;
-                await command.ExecuteNonQueryAsync(ct);
-            }
+                await AwardCourseAsync(db, transaction, accountId, role, request.CourseId, progress.Title, ct);
             var message = (completingCourse, earnCourseAward) switch
             {
-                (_, true) => "เรียนจบคอร์สแล้ว! ได้รับเหรียญ ใบประกาศ และโบนัส 100 XP",
+                (_, true) => $"เรียนจบคอร์สแล้ว! ได้รับเหรียญ ใบประกาศ และโบนัส {CourseCompletionBonus} XP",
                 (true, false) => "ผ่านครบทุกด่านในคอร์สแล้ว!",
                 _ => "ผ่านด่านแล้ว! เกาะถัดไปพร้อมให้สำรวจ"
             };

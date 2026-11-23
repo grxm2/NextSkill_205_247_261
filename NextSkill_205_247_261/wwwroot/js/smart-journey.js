@@ -203,7 +203,8 @@
     }
     function renderIslandStats() {
         const meter = $('#island-level-meter');
-        meter.value = state.xp % meter.max;
+        meter.value = state.levelXp;
+        $('#island-level-label').textContent = `เลเวล ${number(state.level)}`;
         $('#island-level-xp').textContent = `${number(meter.value)}/${number(meter.max)} XP`;
         meter.title = `ถึงเลเวล ${number(state.level + 1)}`;
         meter.setAttribute('aria-label', `XP ${meter.title}`);
@@ -212,8 +213,8 @@
         const streak = $('#island-streak-days');
         streak.textContent = number(state.activity.streakDays);
         streak.parentElement.title = `streak ${streak.textContent} วัน`;
-        const goals = Object.entries(boot.goalTargets);
-        const completed = goals.filter(([key, target]) => state.activity[key] >= target).length;
+        const goals = state.activity.goals;
+        const completed = goals.filter(goal => goal.complete).length;
         const goalTotal = $('#island-goals-total');
         goalTotal.textContent = `${number(completed)}/${number(goals.length)}`;
         goalTotal.parentElement.title = `ภารกิจวันนี้ ${goalTotal.textContent}`;

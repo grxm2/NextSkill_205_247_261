@@ -1,10 +1,9 @@
 @using System.Globalization
-@model LearningCertificateViewModel
+@model LearningCertificate
 @{
     Layout = null;
-    var localDate = Model.Certificate.EarnedAt.AddHours(7);
-    var thaiDate = localDate.ToString("d MMMM yyyy", CultureInfo.GetCultureInfo("th-TH"));
-    var isoDate = localDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+    var earnedDate = ThailandTime.ToLocal(Model.EarnedAt);
+    var issuedDate = Model.IssuedAt is { } issued ? ThailandTime.ToLocal(issued) : (DateTime?)null;
 }
 <!DOCTYPE html>
 <html lang="th">
@@ -12,7 +11,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <script>try { document.documentElement.dataset.theme = localStorage.getItem('nextskill.theme.v1') === 'dark' ? 'dark' : 'light'; } catch { document.documentElement.dataset.theme = 'light'; }</script>
-    <title>ใบประกาศนียบัตร @Model.Certificate.CourseTitle — NextSkill</title>
+    <title>ใบประกาศนียบัตร @Model.CourseTitle — NextSkill</title>
     <link rel="icon" href="~/home-favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="~/css/nextskill-tokens.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/nextskill-components.css" asp-append-version="true" />
@@ -23,6 +22,17 @@
     <main>
         <nav class="certificate-actions" aria-label="จัดการใบประกาศ">
             <a class="ns-button ns-button--compact" asp-action="Dashboard" asp-fragment="certificates">← กลับโปรไฟล์</a>
+            @if (Model.ReferenceCode is Guid code)
+            {
+                <a class="ns-button ns-button--compact" asp-action="VerifyCertificate" asp-route-code="@code.ToString("D")">ตรวจสอบเลขอ้างอิง</a>
+            }
+            else
+            {
+                <form asp-action="IssueCertificate" method="post">
+                    <input type="hidden" name="courseId" value="@Model.CourseId" />
+                    <button type="submit" class="ns-button ns-button--compact">ออกเลขอ้างอิง</button>
+                </form>
+            }
             <button type="button" class="ns-button ns-button--primary" id="print-certificate">พิมพ์ใบประกาศ</button>
         </nav>
         <article class="certificate-paper" aria-labelledby="certificate-title">
@@ -32,8 +42,21 @@
             <p>ขอมอบให้แก่</p>
             <strong class="certificate-recipient" dir="auto">@Model.LearnerName</strong>
             <p>ผู้เรียนและผ่านแบบทดสอบครบทุกบทในคอร์ส</p>
-            <h2 class="certificate-course" dir="auto">@Model.Certificate.CourseTitle</h2>
-            <p class="certificate-date">ออกเมื่อ <time datetime="@isoDate">@thaiDate</time></p>
+            <h2 class="certificate-course" dir="auto">@Model.CourseTitle</h2>
+            <p class="certificate-date">เรียนจบเมื่อ <time datetime="@earnedDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)">@earnedDate.ToString("d MMMM yyyy", ThailandTime.Culture)</time></p>
+            @if (Model.ReferenceCode is Guid reference && issuedDate is DateTime issueDate)
+            {
+                <p>ออกเมื่อ <time datetime="@issueDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)">@issueDate.ToString("d MMMM yyyy", ThailandTime.Culture)</time></p>
+                <p>เลขอ้างอิง <code>@reference.ToString("D")</code></p>
+                @if (Model.IsLegacySnapshot)
+                {
+                    <p>ออกเลขอ้างอิงย้อนหลังด้วยชื่อในบัญชี ณ วันที่ออกใบประกาศ</p>
+                }
+            }
+            else
+            {
+                <p>ประวัติการเรียนจบนี้ยังไม่มีเลขอ้างอิง</p>
+            }
         </article>
     </main>
 </body>

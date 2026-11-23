@@ -54,7 +54,8 @@
                     <ul class="cj-summary" aria-label="ข้อมูลคอร์ส">
                         <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-island" /></svg>@course.Curriculum.TotalLessons เกาะ</li>
                         <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-clock" /></svg>@(lessons.Sum(lesson => lesson.Minutes)) นาที</li>
-                        <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-star" /></svg>@(lessons.Sum(lesson => lesson.Xp)) XP<span class="visually-hidden"> จากบทเรียน</span></li>
+                        <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-star" /></svg>@course.Curriculum.LessonXpTotal XP จากบทเรียน</li>
+                        <li>โบนัสเมื่อจบคอร์ส +@NextSkill_205_247_261.Services.LearningStore.CourseCompletionBonus XP</li>
                         <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-award" /></svg>ใบรับรอง</li>
                     </ul>
                     <a class="ns-button ns-button--primary cj-start" href="@startUrl" data-course-start data-island-url="@islandUrl" data-course-id="@course.Id">

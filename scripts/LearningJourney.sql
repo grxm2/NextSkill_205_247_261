@@ -88,6 +88,22 @@ BEGIN
             REFERENCES dbo.LearningProfiles(AccountId,AccountRole)
     );
 END;
+IF OBJECT_ID(N'dbo.LearningCertificates', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.LearningCertificates (
+        AccountId uniqueidentifier NOT NULL,
+        CourseId int NOT NULL,
+        ReferenceCode uniqueidentifier NOT NULL,
+        LearnerName nvarchar(100) NOT NULL,
+        CourseTitle nvarchar(max) NOT NULL,
+        EarnedAt datetime2 NOT NULL,
+        IssuedAt datetime2 NOT NULL CONSTRAINT DF_LearningCertificate_Issued DEFAULT SYSUTCDATETIME(),
+        IsLegacySnapshot bit NOT NULL,
+        CONSTRAINT PK_LearningCertificates PRIMARY KEY (AccountId, CourseId),
+        CONSTRAINT UQ_LearningCertificates_Reference UNIQUE (ReferenceCode),
+        CONSTRAINT CK_LearningCertificates_Course CHECK (CourseId > 0)
+    );
+END;
 IF OBJECT_ID(N'dbo.NextSkillLearningSchema', N'U') IS NULL
 BEGIN
     CREATE TABLE dbo.NextSkillLearningSchema (
@@ -95,6 +111,6 @@ BEGIN
         AppliedAt datetime2 NOT NULL CONSTRAINT DF_NextSkillLearningSchema_Applied DEFAULT SYSUTCDATETIME()
     );
 END;
-IF NOT EXISTS (SELECT 1 FROM dbo.NextSkillLearningSchema WHERE Version=1)
-    INSERT INTO dbo.NextSkillLearningSchema (Version) VALUES (1);
+IF NOT EXISTS (SELECT 1 FROM dbo.NextSkillLearningSchema WHERE Version=2)
+    INSERT INTO dbo.NextSkillLearningSchema (Version) VALUES (2);
 COMMIT TRANSACTION;

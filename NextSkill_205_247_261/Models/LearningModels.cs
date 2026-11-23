@@ -23,6 +23,7 @@ public sealed record LearningCatalogCourse(int Id, string Title, string Category
     string IslandKind, int TotalLessons, bool CanStart, IReadOnlyList<LearningLessonSummary> Lessons)
 {
     public int CourseId => Id;
+    public int LessonXpTotal => Lessons.Sum(lesson => lesson.Xp);
 }
 public sealed record LearningCourseProgress(int CourseId, string Title, string Category, string Description,
     string IslandKind, int TotalLessons, IReadOnlyList<int> CompletedLessons, IReadOnlyList<int> UnlockedIslands,
@@ -33,6 +34,9 @@ public sealed record LearningState(int? ActiveCourseId, int? CurrentIslandId, in
     IReadOnlyList<LearningCourseProgress> Courses)
 {
     public const int XpPerLevel = 200;
+    public int LevelXp => Xp % XpPerLevel;
+    public int XpUntilNextLevel => XpPerLevel - LevelXp;
+    public int CompletedCourseCount => Achievements.Count(key => key.StartsWith("course-", StringComparison.Ordinal));
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public LearningActivity? Activity { get; init; }
@@ -45,6 +49,10 @@ public sealed record LearningAward(string Key, DateTime EarnedAt);
 public sealed record LearningDayProgress(int Lessons, int Xp, int Courses);
 public sealed record LearningActivity(int StreakDays, int LessonsToday, int XpToday, int CoursesToday)
 {
+    public IReadOnlyList<DailyGoalStatus> Goals => LearningDailyGoals.All
+        .Select(goal => new DailyGoalStatus(goal.Key, goal.Unit, goal.ReadProgress(Today), goal.Target, goal.IsComplete(Today)))
+        .ToArray();
+
     [JsonIgnore]
     public LearningDayProgress Today => new(LessonsToday, XpToday, CoursesToday);
 
