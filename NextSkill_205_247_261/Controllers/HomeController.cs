@@ -23,7 +23,6 @@ namespace NextSkill_205_247_261.Controllers
             return View();
         }
 
-        // Courses list with search, filter, sort and pagination
         [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Courses(string? q, string? tag, string sort = "Recommended", int page = 1, int pageSize = 9,
             CancellationToken token = default)

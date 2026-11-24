@@ -89,7 +89,6 @@ private static Uri? ParseWebUri(string? url) => Uri.TryCreate(url?.Trim(), UriKi
 
 public CourseCover Cover => CourseCover.For(Id, Category);
 
-// ภาพเกาะจาก master
 public string Art => Curriculum.IslandKind switch
 {
     "ux" => "/images/journey/workshop-island.svg",
@@ -98,7 +97,6 @@ public string Art => Curriculum.IslandKind switch
     _ => "/images/journey/destination-island-detailed.svg"
 };
 
-// ชื่อหมวดหมู่ภาษาไทยจาก master
 public string CategoryLabel => Category switch
 {
     "Design" => "UX/UI",

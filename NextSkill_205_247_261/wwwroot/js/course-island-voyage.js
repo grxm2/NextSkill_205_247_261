@@ -72,7 +72,7 @@
     }
 
     async function sail(trip) {
-        const boat = document.querySelector('.catalog-boat, .cj-boat, .archipelago-boat[data-vehicle="boat"], #ocean-journey .ow-arrival-motion');
+        const boat = document.querySelector('.catalog-boat, .archipelago-boat[data-vehicle="boat"], #ocean-journey .ow-arrival-motion');
         const seat = boat?.querySelector('[data-buddy-anchor]');
         if (!seat || !boat.getBoundingClientRect().width) return;
         lockForVoyage(trip);

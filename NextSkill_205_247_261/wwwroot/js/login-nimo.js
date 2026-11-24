@@ -269,7 +269,6 @@
             const message = sayings[mood] || sayings.idle;
             if (caption.textContent !== message) caption.textContent = message;
 
-            // Keep sunglasses ON while filling out email/password/remember so Nimo takes them off right when about to click Login ('ready')!
             const keepShadesOn = privacy || ['email', 'typing', 'remember', 'remembered', 'forgotten'].includes(mood);
             if (keepShadesOn) {
                 nimo.dataset.shades = 'on';
@@ -412,7 +411,6 @@
         if (event.target.closest('[data-nimo-pause]')) return;
         sayings.sip = learningQuotes[quoteCursor % learningQuotes.length];
         quoteCursor = (quoteCursor + 1) % learningQuotes.length;
-        // Put shades on briefly if they were off so user sees the cool takeoff transition!
         nimo.dataset.shades = 'on';
         nimo.dataset.speechVisible = 'false';
         setTimeout(() => {

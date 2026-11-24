@@ -36,27 +36,77 @@
             <button type="button" class="ns-button ns-button--primary" id="print-certificate">พิมพ์ใบประกาศ</button>
         </nav>
         <article class="certificate-paper" aria-labelledby="certificate-title">
-            <p class="certificate-brand">NextSkill</p>
-            <span class="certificate-seal" aria-hidden="true"></span>
-            <h1 id="certificate-title">ใบประกาศการเรียนจบ</h1>
-            <p>ขอมอบให้แก่</p>
-            <strong class="certificate-recipient" dir="auto">@Model.LearnerName</strong>
-            <p>ผู้เรียนและผ่านแบบทดสอบครบทุกบทในคอร์ส</p>
-            <h2 class="certificate-course" dir="auto">@Model.CourseTitle</h2>
-            <p class="certificate-date">เรียนจบเมื่อ <time datetime="@earnedDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)">@earnedDate.ToString("d MMMM yyyy", ThailandTime.Culture)</time></p>
-            @if (Model.ReferenceCode is Guid reference && issuedDate is DateTime issueDate)
-            {
-                <p>ออกเมื่อ <time datetime="@issueDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)">@issueDate.ToString("d MMMM yyyy", ThailandTime.Culture)</time></p>
-                <p>เลขอ้างอิง <code>@reference.ToString("D")</code></p>
-                @if (Model.IsLegacySnapshot)
+            <div class="certificate-glass">
+                <img class="certificate-brand" src="~/images/nextskill-navbar-island.webp" asp-append-version="true"
+                     alt="NextSkill" width="1086" height="362" />
+                <div class="certificate-emblem" aria-hidden="true">
+                    <svg viewBox="0 0 600 116" focusable="false">
+                        <defs>
+                            <g id="certificate-laurel">
+                                <path d="M244 101c-34-10-51-34-49-67" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M195 35c-3-15 3-25 13-34 1 15-4 26-13 34Zm1 18c-12-5-17-13-18-26 10 5 17 14 18 26Zm2 1c-3-12 1-21 10-29 3 12 0 22-10 29Zm7 18c-14-1-22-8-26-18 12 0 21 7 26 18Zm2 1c-4-12-2-22 6-30 5 10 4 21-6 30Zm14 15c-14 3-23 0-30-9 11-4 22 0 30 9Zm1 1c-8-9-10-19-5-29 9 8 11 19 5 29Zm14 9c-10 7-21 8-30 2 9-8 20-8 30-2Zm1 0c-10-7-14-17-11-28 10 7 15 17 11 28Z"/>
+                            </g>
+                        </defs>
+                        <path class="certificate-emblem-lines" d="M0 58h152m296 0h152" fill="none" stroke="currentColor"/>
+                        <use href="#certificate-laurel"/>
+                        <use href="#certificate-laurel" transform="translate(600) scale(-1 1)"/>
+                    </svg>
+                    <span class="certificate-seal"></span>
+                </div>
+                <h1 id="certificate-title">ใบประกาศการเรียนจบ</h1>
+                <p class="certificate-dedication">ขอมอบให้แก่</p>
+                <strong class="certificate-recipient @(Model.LearnerName.Length > 40 ? "certificate-recipient--long" : null)" dir="auto">@Model.LearnerName</strong>
+                <p class="certificate-completion">ผู้เรียนและผ่านแบบทดสอบครบทุกบทในคอร์ส</p>
+                <h2 class="certificate-course @(Model.CourseTitle.Length > 64 ? "certificate-course--long" : null)">
+                    <span class="certificate-icon certificate-icon--book" aria-hidden="true"></span><bdi>@Model.CourseTitle</bdi>
+                </h2>
+                <dl class="certificate-dates @(issuedDate.HasValue ? "certificate-dates--issued" : null)">
+                    <div>
+                        <svg class="certificate-date-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false">
+                            <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18m-14 4h2m2 0h2m2 0h2m-10 3h2m2 0h2" stroke-linecap="round"/>
+                        </svg>
+                        <dt>เรียนจบเมื่อ</dt>
+                        <dd><time datetime="@earnedDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)">@earnedDate.ToString("d MMMM yyyy", ThailandTime.Culture)</time></dd>
+                    </div>
+                    @if (issuedDate is DateTime issueDate)
+                    {
+                        <div>
+                            <svg class="certificate-date-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false">
+                                <circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <dt>ออกเมื่อ</dt>
+                            <dd><time datetime="@issueDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)">@issueDate.ToString("d MMMM yyyy", ThailandTime.Culture)</time></dd>
+                        </div>
+                    }
+                </dl>
+                @if (Model.ReferenceCode is Guid reference)
                 {
-                    <p>ออกเลขอ้างอิงย้อนหลังด้วยชื่อในบัญชี ณ วันที่ออกใบประกาศ</p>
+                    <p class="certificate-reference">เลขอ้างอิง <code dir="ltr">@reference.ToString("D")</code></p>
+                    @if (Model.IsLegacySnapshot)
+                    {
+                        <p class="certificate-note">ออกเลขอ้างอิงย้อนหลังด้วยชื่อในบัญชี ณ วันที่ออกใบประกาศ</p>
+                    }
                 }
-            }
-            else
-            {
-                <p>ประวัติการเรียนจบนี้ยังไม่มีเลขอ้างอิง</p>
-            }
+                else
+                {
+                    <p class="certificate-reference">ประวัติการเรียนจบนี้ยังไม่มีเลขอ้างอิง</p>
+                }
+                <svg class="certificate-wave" viewBox="0 0 1000 92" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                    <path d="M0 82C112 77 141 23 232 29s142 44 267 46C659 79 774-10 882 11c43 8 77 18 118 17v64H0Z" fill="#59beea" fill-opacity=".2"/>
+                    <path d="M0 82C112 77 141 23 232 29s142 44 267 46C659 79 774-10 882 11c43 8 77 18 118 17" fill="none" stroke="#f6fdff" stroke-width="3" vector-effect="non-scaling-stroke"/>
+                    <path d="M0 86c118 1 149-44 226-45s126 39 259 43c179 7 280-73 394-62 49 5 81 17 121 16" fill="none" stroke="#b3e9ff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+                </svg>
+                <div class="certificate-medal" aria-hidden="true">
+                    <div class="certificate-medal-face">
+                        <svg viewBox="0 0 64 64" focusable="false">
+                            <path d="M30 8 11 39h19Z" fill="#ace9ff"/>
+                            <path d="M33 8c12 11 17 20 16 31H33Z" fill="#6ac5ed"/>
+                            <path d="M10 43h45l-7 7H19Z" fill="#abe9ff"/>
+                            <path d="M9 54q6 4 12 0 6 4 12 0 6 4 12 0 5 4 10 0" fill="none" stroke="#6ac5ed" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
         </article>
     </main>
 </body>

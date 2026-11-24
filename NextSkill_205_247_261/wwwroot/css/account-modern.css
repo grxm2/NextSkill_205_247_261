@@ -1,8 +1,4 @@
-/* ========================================================
-   NextSkill Modern Daylight Ocean Account Theme
-   Matching Reference: Floating 3D Elements, Hero Mascot Card,
-   Capsule Role Switcher, and Lively Learning Animations
-   ======================================================== */
+/* Account pages */
 
 :root {
     --acc-day-sky: linear-gradient(180deg, #cbe9fc 0%, #e2f4ff 35%, #f2f9ff 70%, #ffffff 100%);
@@ -32,9 +28,7 @@ body.nimo-account-theme {
     position: relative;
 }
 
-/* ==========================================
-   Background Ambient Glowing Orbs & Milestone Badges
-   ========================================== */
+/* Background lighting */
 
 .account-ambient-decor {
     position: fixed;
@@ -96,7 +90,7 @@ body.nimo-account-theme.ns-auth-page {
     100% { transform: scale(0.95) translateY(10px); opacity: 0.5; }
 }
 
-/* Duolingo Floating Puffy Clouds */
+/* Drifting clouds */
 .duo-clouds-container {
     position: absolute;
     inset: 0;
@@ -232,128 +226,6 @@ html[data-theme="dark"] .ns-auth-page .duo-cloud {
     }
 }
 
-/* Floating Milestone Badges (Removed upon user request) */
-.ambient-float-card,
-.duo-interactive-badge {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    opacity: 0 !important;
-}
-
-.badge-title-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.duo-mini-pill {
-    font-size: 9.5px;
-    font-weight: 800;
-    padding: 2px 7px;
-    border-radius: 8px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    line-height: 1.2;
-}
-
-.duo-mini-pill.cyan {
-    background: #e0f2fe;
-    color: #0284c7;
-    border: 1px solid #bae6fd;
-}
-
-.duo-mini-pill.gold {
-    background: #fef3c7;
-    color: #b45309;
-    border: 1px solid #fde68a;
-    animation: pulseGold 2s infinite alternate;
-}
-
-.duo-mini-pill.green {
-    background: #dcfce7;
-    color: #15803d;
-    border: 1px solid #bbf7d0;
-}
-
-@keyframes pulseGold {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.08); filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.4)); }
-}
-
-.float-card-top-right {
-    top: 90px;
-    right: 3.5%;
-    animation: floatBadgeSlow 7s ease-in-out infinite;
-}
-
-.float-card-mid-left {
-    top: 42%;
-    left: 2.5%;
-    animation: floatBadgeRev 8s ease-in-out infinite;
-}
-
-.float-card-bot-left {
-    bottom: 80px;
-    left: 4%;
-    animation: floatBadgeSlow 6.5s ease-in-out infinite;
-    animation-delay: -2s;
-}
-
-.float-card-icon-wrap {
-    width: 40px;
-    height: 40px;
-    border-radius: 14px;
-    display: grid;
-    place-items: center;
-    font-size: 19px;
-    flex-shrink: 0;
-}
-
-.float-card-icon-wrap.icon-grad {
-    background: linear-gradient(135deg, #eff6ff, #dbeafe);
-    border: 1.5px solid #bfdbfe;
-    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
-}
-
-.float-card-icon-wrap.icon-xp {
-    background: linear-gradient(135deg, #fefce8, #fef08a);
-    border: 1.5px solid #fde047;
-    box-shadow: 0 4px 10px rgba(234, 179, 8, 0.25);
-}
-
-.float-card-icon-wrap.icon-rocket {
-    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-    border: 1.5px solid #bbf7d0;
-    box-shadow: 0 4px 10px rgba(34, 197, 94, 0.2);
-}
-
-.float-card-info strong {
-    display: block;
-    font-size: 13.5px;
-    font-weight: 800;
-    color: #0c2333;
-    line-height: 1.25;
-}
-
-.float-card-info small {
-    display: block;
-    font-size: 11px;
-    font-weight: 600;
-    color: #0284c7;
-    margin-top: 2px;
-}
-
-@keyframes floatBadgeSlow {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-14px) rotate(1.5deg); }
-}
-
-@keyframes floatBadgeRev {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-12px) rotate(-1.5deg); }
-}
-
 /* Dot Matrix Patterns */
 .bg-dot-matrix {
     position: absolute;
@@ -375,9 +247,7 @@ html[data-theme="dark"] .ns-auth-page :is(.dot-top-left, .mascot-cloud-pedestal)
     display: none;
 }
 
-/* ==========================================
-   Floating Modern Pill Navbar
-   ========================================== */
+/* Floating Modern Pill Navbar */
 
 .site-header {
     max-width: 1180px !important;
@@ -490,9 +360,7 @@ html[data-theme="dark"] .ns-auth-page :is(.dot-top-left, .mascot-cloud-pedestal)
     transform: translateY(-1px);
 }
 
-/* ==========================================
-   Main Auth Layout Grid
-   ========================================== */
+/* Main Auth Layout Grid */
 
 .account-main {
     flex: 1;
@@ -576,9 +444,7 @@ html[data-theme="dark"] .account-main .legal-copy p { color: var(--acc-muted); }
     }
 }
 
-/* ==========================================
-   Left Hero Promo Card (Rich Royal Blue)
-   ========================================== */
+/* Left Hero Promo Card (Rich Royal Blue) */
 
 .story-card.nimo-story-card {
     background: var(--acc-card-blue) !important;
@@ -797,7 +663,7 @@ html[data-theme="dark"] .account-main .legal-copy p { color: var(--acc-muted); }
 .duo-sparkle.sp-2 { top: 22%; right: 10%; animation-delay: -0.9s; font-size: 15px; }
 .duo-sparkle.sp-3 { bottom: 22%; left: 6%; animation-delay: -1.7s; font-size: 16px; }
 
-/* Speech Bubble From Mascot (Duolingo Style with Pointer Tail) */
+/* Mascot speech bubble */
 .mascot-speech-pill {
     position: absolute;
     top: -12px;
@@ -830,7 +696,7 @@ html[data-theme="dark"] .account-main .legal-copy p { color: var(--acc-muted); }
     border-radius: 2px;
 }
 
-/* Feature Pills Row (Duolingo 3D Tactile Pills) */
+/* Feature pills */
 .hero-features-pill-row {
     display: flex;
     justify-content: center;
@@ -869,7 +735,7 @@ html[data-theme="dark"] .account-main .legal-copy p { color: var(--acc-muted); }
     flex-shrink: 0;
 }
 
-/* Bottom Announcement Sub-banner (Duolingo 3D Card) */
+/* Announcement card */
 .hero-bottom-sub-banner {
     background: #ffffff !important;
     border: 2px solid #bae6fd !important;
@@ -1102,7 +968,7 @@ html[data-theme="dark"] .acc-beach-bg-photo {
     100% { transform: rotate(14deg); }
 }
 
-/* Translucent Frosted Glass Story Card & Auth Card Matching Reference Mockup */
+/* Story and sign-in cards */
 .ns-auth-page .story-card.nimo-story-card,
 .story-card.nimo-story-card.nimo-island-tea-card {
     --login-story-ink: #0c2d48;
@@ -1624,9 +1490,7 @@ html[data-theme="dark"] .login-nimo-beach-mode .mascot-speech-pill .speech-tail 
     opacity: 0.24;
 }
 
-/* ========================================================
-   Nimo's Island Tea Lounge Diorama & Full-Page Ocean Animations
-   ======================================================== */
+/* Nimo's Island Tea Lounge Diorama & Full-Page Ocean Animations */
 
 .nimo-tea-island-diorama {
     position: relative;
@@ -2053,9 +1917,7 @@ html[data-theme="dark"] .ns-auth-page {
     text-underline-offset: 4px;
 }
 
-/* ==========================================
-   Right Auth Card (Clean Modern White Form)
-   ========================================== */
+/* Right Auth Card (Clean Modern White Form) */
 
 .auth-form.nimo-auth-card {
     background: #ffffff !important;
@@ -2126,7 +1988,7 @@ html[data-theme="dark"] .ns-auth-page {
     margin: 0 0 20px !important;
 }
 
-/* Role Switcher Pill (User / Admin - Duolingo 3D Capsule) */
+/* Account role switcher */
 .login-account-types {
     display: flex;
     flex-wrap: wrap;
@@ -2209,7 +2071,7 @@ html[data-theme="dark"] .ns-auth-page {
     transform: translateY(-1px);
 }
 
-/* Form Fields with Integrated Inner Icons (Duolingo Tactile Feel) */
+/* Form fields with icons */
 .field {
     margin-bottom: 16px;
 }
@@ -2343,7 +2205,7 @@ html[data-theme="dark"] .ns-auth-page {
     font-weight: 500;
 }
 
-/* Duolingo Signature Chunky 3D Submit Button */
+/* Submit button */
 .btn-auth-submit,
 button.btn-auth-submit {
     width: 100% !important;
@@ -2385,7 +2247,7 @@ button.btn-auth-submit:active {
     box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2) !important;
 }
 
-/* Guest / Skip Action (Duolingo 3D Secondary Button) */
+/* Guest link */
 .guest-divider {
     display: flex;
     align-items: center;
@@ -2466,11 +2328,7 @@ a.btn-skip-outline:active {
     text-decoration: underline;
 }
 
-/* ==========================================
-   Duolingo Lively Keyframe Animations
-   ========================================== */
-
-/* Duolingo Float Squash & Stretch */
+/* Mascot idle animation */
 @keyframes duolingoFloat {
     0%, 100% {
         transform: translateY(0px) rotate(0deg) scale(1, 1);
@@ -2506,63 +2364,15 @@ a.btn-skip-outline:active {
     100% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); }
 }
 
-/* Mascot Active Interactive Jump & Speech Pop */
-.mascot-click-jump {
-    animation: mascotJumpClick 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-}
-
-@keyframes mascotJumpClick {
-    0% { transform: translateY(0) scale(1, 1) rotate(0deg); }
-    30% { transform: translateY(-28px) scale(1.15, 0.9) rotate(-5deg); }
-    55% { transform: translateY(-14px) scale(0.95, 1.08) rotate(4deg); }
-    75% { transform: translateY(-4px) scale(1.03, 0.98) rotate(-2deg); }
-    100% { transform: translateY(0) scale(1, 1) rotate(0deg); }
-}
-
-.speech-pop {
-    animation: speechPopEffect 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-}
-
-@keyframes speechPopEffect {
-    0% { transform: scale(0.85); opacity: 0.6; }
-    50% { transform: scale(1.08); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
 .mascot-character-art:focus-visible {
     outline: 3px dashed #bae6fd;
     outline-offset: 8px;
     border-radius: 24px;
 }
 
-/* Duolingo Confetti Burst Particles */
-.duo-confetti-particle {
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    border-radius: 50%;
-    animation: duoConfettiBurst 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-@keyframes duoConfettiBurst {
-    0% {
-        transform: translate(0, 0) scale(1) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--dx), var(--dy)) scale(0.2) rotate(var(--rot));
-        opacity: 0;
-    }
-}
-
-/* ==========================================
-   Responsive Breakpoints
-   ========================================== */
+/* Responsive Breakpoints */
 
 @media (width < 1024px) {
-    .ambient-float-card {
-        display: none;
-    }
     .site-header {
         padding: 10px 16px !important;
     }
@@ -2646,9 +2456,7 @@ a.btn-skip-outline:active {
     color: #0284c7;
 }
 
-/* ==========================================
-   Duolingo Cinematic Full-Screen Mascot Loading Experience
-   ========================================== */
+/* Login loading screen */
 
 .nimo-loading-overlay.full-screen-mode {
     position: fixed !important;
@@ -2674,9 +2482,7 @@ a.btn-skip-outline:active {
     pointer-events: auto !important;
 }
 
-/* ==========================================
-   Live Animated Pastel Sunrise Ocean, Lighthouse Harbor & Starting Island World
-   ========================================== */
+/* Live Animated Pastel Sunrise Ocean, Lighthouse Harbor & Starting Island World */
 .fs-loading-sky.fs-island-world {
     position: absolute;
     inset: 0;
@@ -2715,7 +2521,7 @@ a.btn-skip-outline:active {
     to { transform: translateX(3%); }
 }
 
-/* Golden Diagonal Shooting Stars Matching Home Page */
+/* Shooting stars */
 .fs-shooting-stars {
     position: absolute;
     inset: 0 0 46% 0;
@@ -3761,9 +3567,7 @@ a.btn-skip-outline:active {
     display: none !important;
 }
 
-/* ==========================================
-   Full-Screen Centered Hybrid Island Layout & Foreground UI
-   ========================================== */
+/* Full-Screen Centered Hybrid Island Layout & Foreground UI */
 .fs-loading-content {
     position: relative;
     z-index: 10;
@@ -3779,7 +3583,7 @@ a.btn-skip-outline:active {
     box-sizing: border-box;
 }
 
-/* Top Branding Pill (Original Text) */
+/* Brand label */
 .fs-top-brand-pill {
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(18px) saturate(1.3);
@@ -4062,7 +3866,7 @@ a.btn-skip-outline:active {
     100% { transform: translateY(-42px) scale(0.55) rotate(90deg); opacity: 0; }
 }
 
-/* Centered Duolingo 3D Motivational Speech Bubble Below Island Shore */
+/* Loading screen speech bubble */
 .fs-speech-bubble {
     position: relative;
     z-index: 6;
@@ -4125,7 +3929,7 @@ a.btn-skip-outline:active {
     border-radius: 3px;
 }
 
-/* Bottom Centered Duolingo 3D Progress Console */
+/* Loading progress panel */
 .fs-progress-console {
     width: 100%;
     max-width: 600px;
@@ -4348,9 +4152,7 @@ a.btn-skip-outline:active {
     40%, 80% { transform: translateX(8px); }
 }
 
-/* ==========================================
-   Home-matching Island Ocean Navbar Support
-   ========================================== */
+/* Account navigation */
 body.nimo-account-theme .ns-navbar.sj-header {
     --ns-liquid-bg: rgba(255, 255, 255, 0.45);
     --ns-liquid-filter: blur(14px) saturate(1.35);
@@ -4448,9 +4250,7 @@ html[data-theme="dark"] .account-types a.active {
     color: #ffffff !important;
 }
 
-/* ==========================================
-   Dark Mode Full-Screen Loading Screen (Moonlit Pastel Ocean & Harbor)
-   ========================================== */
+/* Dark Mode Full-Screen Loading Screen (Moonlit Pastel Ocean & Harbor) */
 html[data-theme="dark"] .nimo-loading-overlay.full-screen-mode {
     background: #0b2035 !important;
 }
