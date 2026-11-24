@@ -1,0 +1,551 @@
+/* Keep the navigation glass and add a tint for reading over the ocean. */
+.learning-dashboard {
+    --hd-ink: #103d57;
+    --hd-muted: #23516a;
+    --hd-blue: #0077a7;
+    --hd-groove: #225c7952;
+    --hd-line: #2e66834d;
+    --hd-fire: #a74624;
+    --hd-star: #8b5500;
+    --hd-goal-done: var(--ns-success);
+    --hd-button-sheen: linear-gradient(165deg, rgb(255 255 255 / 32%), transparent 58%);
+    --hd-hero-halo: 0 2px 12px rgb(255 255 255 / 60%);
+    --hd-gap: 14px;
+    --hd-pad: 18px;
+    --hd-ring-size: 64px;
+    color: var(--hd-ink);
+    font: 400 14px/1.45 var(--ns-font);
+    font-synthesis: none;
+}
+
+html[data-theme="dark"] .learning-dashboard {
+    --hd-ink: #f0f8ff;
+    --hd-muted: #d5e9f7;
+    --hd-blue: #8bdcff;
+    --hd-groove: #b6e3ff53;
+    --hd-line: #b7d6ed59;
+    --hd-fire: #ffb287;
+    --hd-star: #ffda87;
+    --hd-goal-done: #9ee0c8;
+    --hd-button-sheen: linear-gradient(165deg, rgb(203 235 255 / 18%), transparent 58%);
+    --hd-hero-halo: 0 2px 12px rgb(8 27 45 / 80%);
+}
+
+.smart-journey .ocean-home #ocean-journey .learning-dashboard {
+    --hd-gap: 12px;
+    --hd-pad: 12px;
+    --hd-left: var(--ow-left);
+    --hd-top: clamp(16px, 3.4svh, 28px);
+    left: var(--hd-left);
+    top: var(--hd-top);
+    width: min(var(--hd-intro-width, 440px), calc(100% - var(--ow-left) - var(--ow-right)));
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--hd-row-gap, var(--hd-gap));
+    padding: 0;
+    pointer-events: none;
+}
+
+.learning-dashboard[data-mode="intro"] {
+    --hd-intro-width: 560px;
+    --hd-row-gap: clamp(22px, 4svh, 30px);
+}
+
+.learning-dashboard :is(a, button) { pointer-events: auto; font-family: inherit; }
+.learning-dashboard :is(a, button):focus-visible { outline: 2px solid var(--hd-blue); outline-offset: 3px; }
+.hd-glass {
+    background: var(--ns-liquid-panel-bg);
+    border: 1px solid var(--ns-liquid-panel-edge);
+    border-radius: 20px;
+    box-shadow: var(--ns-liquid-panel-shadow);
+    -webkit-backdrop-filter: var(--ns-liquid-filter);
+    backdrop-filter: var(--ns-liquid-filter);
+}
+
+.hd-overview { display: grid; align-items: start; gap: var(--hd-gap); }
+.hd-course-column { display: grid; min-width: 0; gap: min(var(--hd-gap), 10px); }
+.hd-overview .hd-glass, .hd-mission-dialog .hd-mission {
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    min-width: 0;
+    padding: var(--hd-pad);
+}
+
+#ocean-journey .learning-dashboard .hd-hero h1 {
+    color: var(--hd-ink);
+    font-size: clamp(2.25rem, 5.2vw, 4.75rem);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: normal;
+    text-shadow: var(--hd-hero-halo);
+}
+
+#ocean-journey .learning-dashboard .hd-greeting {
+    color: var(--hd-ink);
+    font-size: clamp(26px, 8vw, 34px);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -.025em;
+}
+
+.hd-greeting bdi {
+    display: inline-block;
+    max-width: 100%;
+    color: var(--hd-blue);
+    font-size: 1.08em;
+    overflow-wrap: anywhere;
+}
+
+.hd-hero p {
+    max-width: 38rem;
+    margin: 18px 0 0;
+    color: var(--hd-muted);
+    font-size: clamp(1.05rem, 1.55vw, 1.375rem);
+    line-height: 1.65;
+    text-shadow: var(--hd-hero-halo);
+    text-wrap: balance;
+}
+
+.learning-dashboard h2 {
+    color: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.hd-icon {
+    width: 19px;
+    height: 19px;
+    flex: none;
+    background: var(--hd-blue);
+    mask: var(--hd-icon) center / contain no-repeat;
+}
+
+.hd-icon--fire { --hd-icon: url('../icons/fire.svg'); background: var(--hd-fire); }
+.hd-icon--trophy { --hd-icon: url('../icons/trophy.svg'); }
+.hd-icon--star { --hd-icon: url('../icons/star.svg'); background: var(--hd-star); }
+.hd-icon--lightning { --hd-icon: url('../icons/lightning.svg'); }
+
+.hd-current h2 {
+    margin: 0;
+    color: inherit;
+    font-size: clamp(17px, 1.35vw, 22px);
+    font-weight: 600;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.learning-dashboard .hd-course-link {
+    text-decoration: underline;
+    text-decoration-color: var(--hd-line);
+    text-underline-offset: .18em;
+}
+
+.learning-dashboard .hd-course-link:hover { text-decoration-color: currentColor; }
+
+.hd-card-top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; color: var(--hd-muted); font-size: 13px; }
+.hd-trial { border: 1px solid var(--hd-line); border-radius: 10px; padding: 1px 7px; }
+
+.hd-progress { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 11px; align-items: center; }
+.hd-ring {
+    --hd-ring-stroke: clamp(6px, calc(var(--hd-ring-size) / 9), 9px);
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: var(--hd-ring-size);
+    aspect-ratio: 1;
+}
+
+.hd-ring::before {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(var(--hd-blue) var(--hd-progress, 0%), var(--hd-groove) 0);
+    mask: radial-gradient(farthest-side, transparent calc(100% - var(--hd-ring-stroke)), #000 calc(100% - var(--hd-ring-stroke) + 1px));
+    content: "";
+}
+
+.hd-ring strong {
+    font: 600 clamp(12px, calc(var(--hd-ring-size) * .225), 16px)/1 var(--ns-font-number);
+    font-variant-numeric: tabular-nums;
+}
+.hd-progress-copy { display: grid; gap: 5px; min-width: 0; }
+.hd-progress-copy p { margin: 0; }
+.hd-progress-copy .hd-next-lesson { color: var(--hd-muted); font-size: 13px; }
+.hd-next-lesson strong {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    color: var(--hd-ink);
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+.hd-mission .hd-card-top { margin: 0; color: var(--hd-muted); font-size: 13px; font-weight: 400; }
+.hd-mission-target { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; }
+.hd-mission-task { margin: 0; font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
+.hd-rewards { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 4px 6px; }
+.hd-reward {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 100%;
+    padding: 3px 7px;
+    border: 1px solid var(--hd-line);
+    border-radius: 8px;
+    background: var(--ns-liquid-panel-bg);
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+.hd-reward strong { font-weight: 600; }
+.hd-reward .hd-icon { width: 14px; height: 14px; }
+.hd-reward--badge .hd-icon { background: var(--hd-star); }
+.hd-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.learning-dashboard .hd-missions-trigger { display: none; }
+.hd-actions .ns-button { padding-inline: clamp(12px, 2vw, 22px); }
+.hd-actions .ns-button--primary {
+    --hd-button-bg: color-mix(in srgb, var(--ns-liquid-panel-bg) 80%, var(--hd-blue));
+    min-width: min(140px, 100%);
+}
+
+.learning-dashboard progress.hd-meter {
+    appearance: none;
+    display: block;
+    width: 100%;
+    height: 11px;
+    overflow: hidden;
+    margin: 0;
+    border: 0;
+    border-radius: 999px;
+    background: var(--hd-groove);
+    accent-color: var(--hd-blue);
+}
+
+.learning-dashboard .hd-meter::-webkit-progress-bar { background: transparent; }
+.learning-dashboard .hd-meter::-webkit-progress-value { border-radius: inherit; background: var(--hd-meter-fill, var(--hd-blue)); }
+.learning-dashboard .hd-meter::-moz-progress-bar { border-radius: inherit; background: var(--hd-meter-fill, var(--hd-blue)); }
+
+.learning-dashboard :is(.hd-start, .hd-actions .ns-button, .hd-missions-trigger) {
+    max-width: 100%;
+    border: 1px solid var(--ns-liquid-panel-edge);
+    border-radius: 999px;
+    background: var(--hd-button-sheen) var(--hd-button-bg, var(--ns-liquid-panel-bg));
+    -webkit-backdrop-filter: var(--ns-liquid-filter);
+    backdrop-filter: var(--ns-liquid-filter);
+    box-shadow: var(--ns-liquid-shadow), inset 0 -2px 5px rgb(189 233 255 / 24%), 0 5px 16px rgb(16 61 87 / 17%);
+    color: var(--hd-ink);
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.learning-dashboard .hd-start {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    justify-self: start;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    min-height: 56px;
+    padding: 6px clamp(22px, 2.5vw, 34px);
+    font-size: clamp(1.05rem, 1.45vw, 1.2rem);
+}
+
+.hd-start-arrow { flex: none; font-size: 1.2em; line-height: 1; }
+
+@media (hover: hover) and (pointer: fine) {
+    .learning-dashboard :is(.hd-start, .hd-actions .ns-button):hover {
+        border-color: var(--ns-liquid-control-border);
+        background: var(--hd-button-sheen) color-mix(in srgb, var(--hd-button-bg, var(--ns-liquid-panel-bg)) 76%, var(--ns-liquid-panel-solid));
+        color: var(--hd-ink);
+    }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    body:not([data-motion="paused"]) .learning-dashboard :is(.hd-start, .hd-start-arrow) {
+        transition: transform 160ms var(--ns-ease-out);
+    }
+
+    body:not([data-motion="paused"]) .learning-dashboard .hd-start:hover {
+        transform: translateY(-2px);
+    }
+
+    body:not([data-motion="paused"]) .learning-dashboard .hd-start:hover .hd-start-arrow {
+        transform: translateX(4px);
+    }
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+    .learning-dashboard :is(.hd-start, .hd-actions .ns-button) {
+        border-color: var(--ns-liquid-border);
+        background-image: none;
+        box-shadow: none;
+    }
+}
+
+.hd-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    justify-self: end;
+    gap: 6px;
+    margin: 0;
+}
+
+.hd-stats dd {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
+    padding: 4px 9px;
+    border: 1px solid var(--ns-liquid-panel-edge);
+    border-radius: 999px;
+    background: var(--ns-liquid-panel-bg);
+    font-size: 13px;
+}
+
+.hd-stats .hd-icon { width: 15px; height: 15px; }
+.hd-stats dd strong { font-size: 16px; font-weight: 600; line-height: 1.2; font-variant-numeric: tabular-nums; }
+
+.hd-daily-goals { min-width: 0; padding-top: 8px; border-top: 1px solid var(--hd-line); }
+.hd-daily-goals:focus-visible { outline: 2px solid var(--hd-blue); outline-offset: 4px; border-radius: 4px; }
+.hd-daily-goals h3 {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0 0 2px;
+    color: var(--hd-muted);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+.hd-daily-goals h3 span { font-variant-numeric: tabular-nums; }
+.hd-missions {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.hd-missions li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 12px;
+    min-height: 31px;
+    padding-block: 4px;
+    font-size: 13px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.hd-goal-state {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    color: var(--hd-muted);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.hd-goal-check {
+    width: 12px;
+    height: 12px;
+    flex: none;
+    background: currentColor;
+    mask: url('../icons/check.svg') center / contain no-repeat;
+}
+
+.hd-missions [data-complete] .hd-goal-state { color: var(--hd-goal-done); }
+
+@media (width < 768px) {
+    .smart-journey .ocean-home #ocean-journey .learning-dashboard {
+        --hd-pad: 14px;
+        --hd-ring-size: clamp(52px, 15vw, 64px);
+    }
+    .hd-greeting { order: -1; }
+    .hd-stats { justify-self: start; justify-content: flex-start; }
+}
+
+@media (width >= 768px), (orientation: landscape) and (height < 480px) {
+    .smart-journey .ocean-home #ocean-journey .learning-dashboard {
+        --hd-left: max(var(--ow-left), 3.2vw, min(480px, calc((100cqw - 1530px) / 2)));
+        --hd-top: clamp(24px, 5svh, 58px);
+        width: var(--hd-intro-width, min(43vw, 580px));
+    }
+
+    .learning-dashboard[data-mode="intro"] { --hd-intro-width: min(49vw, 720px); }
+    #ocean-journey .learning-dashboard .hd-greeting { font-size: clamp(30px, 3vw, 51px); }
+}
+
+@media (width >= 768px) and (height >= 480px) {
+    .learning-dashboard[data-mode="returning"] { --hd-intro-width: min(53vw, 720px); }
+    .hd-overview { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+    .ocean-home .ow-intro .hd-stats {
+        /* Right-align to the navbar while staying inside the animated dashboard. */
+        --hd-stats-inset: max(var(--ns-gutter-end), calc((100cqw - 1560px) / 2));
+        position: absolute;
+        top: calc(12px - var(--hd-top));
+        right: calc(var(--hd-left) + 100% - 100cqw + var(--hd-stats-inset));
+        width: max-content;
+        max-width: calc(100cqw - var(--ow-left) - var(--hd-stats-inset));
+    }
+}
+
+@media (768px <= width < 1120px) {
+    .hd-actions { gap: 6px; }
+    .hd-actions .ns-button { min-height: 44px; padding-inline: 10px; font-size: 13px; }
+    .hd-actions .ns-button--primary { min-width: 0; }
+}
+
+@media (width >= 1280px) and (height >= 768px) {
+    .smart-journey .ocean-home #ocean-journey .learning-dashboard {
+        --hd-gap: 14px;
+        --hd-pad: 18px;
+        --hd-ring-size: 76px;
+    }
+}
+
+@media (orientation: landscape) and (height < 480px) {
+    .smart-journey .ocean-home #ocean-journey .learning-dashboard {
+        --hd-gap: 8px;
+        --hd-pad: 10px;
+        --hd-ring-size: 56px;
+        --hd-top: 8px;
+        width: var(--hd-intro-width, min(45vw, 410px));
+    }
+
+    .learning-dashboard[data-mode="intro"] {
+        --hd-intro-width: min(49vw, 450px);
+        --hd-row-gap: 16px;
+    }
+
+    .smart-journey .ocean-home #ocean-journey .learning-dashboard[data-mode="returning"] {
+        --hd-gap: 6px;
+        --hd-intro-width: min(88vw, 650px);
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .learning-dashboard[data-mode="returning"] .hd-overview { grid-column: 1 / -1; }
+    .learning-dashboard[data-mode="returning"] .hd-greeting { grid-area: 1 / 1; }
+    .hd-overview { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+    .hd-overview .hd-glass { gap: 4px; padding: 8px; }
+    .hd-daily-goals { padding-top: 4px; }
+    .hd-daily-goals h3 { margin-bottom: 2px; }
+    .hd-missions li { min-height: 24px; padding-block: 2px; font-size: 12px; }
+    .hd-stats { grid-area: 1 / 2; align-self: center; }
+    .hd-stats dd { padding-inline: 6px; font-size: 12px; }
+    .hd-stats dd strong { font-size: 14px; }
+    .hd-actions { align-self: start; gap: 6px; }
+    .hd-actions .ns-button { min-width: 0; min-height: 44px; padding: 8px 12px; font-size: 13px; white-space: nowrap; }
+    #ocean-journey .learning-dashboard .hd-greeting { font-size: clamp(22px, 3.1vw, 30px); }
+    .hd-next-lesson strong { display: inline; }
+    #ocean-journey .learning-dashboard .hd-hero h1 { font-size: clamp(1.8rem, 4.4vw, 2.55rem); }
+    .learning-dashboard .hd-hero p { margin-top: 12px; }
+    .learning-dashboard .hd-start { min-height: 48px; }
+}
+
+@media (width < 768px), (orientation: landscape) and (height < 480px) {
+    .hd-overview > .hd-mission { display: none; }
+    .hd-overview .hd-current { background: var(--hd-button-sheen) var(--ns-liquid-panel-bg); }
+    .hd-actions { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) auto; }
+    .learning-dashboard .hd-actions > a { min-width: 0; min-height: 50px; padding: 6px 8px; font-size: 13px; white-space: normal; }
+    .learning-dashboard .hd-missions-trigger {
+        display: grid;
+        place-content: center;
+        justify-items: center;
+        min-width: 56px;
+        min-height: 50px;
+        padding: 2px 8px 4px;
+        border-radius: 17px;
+        font-size: 11px;
+        line-height: 1.2;
+    }
+    .hd-missions-trigger svg { width: 29px; height: 24px; stroke: var(--hd-blue); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+    .hd-chest-body { fill: color-mix(in srgb, var(--hd-blue) 18%, transparent); }
+    .hd-chest-lid { fill: var(--ns-liquid-control); }
+    .hd-chest-bands { opacity: .58; }
+    .hd-chest-latch { fill: var(--ns-liquid-panel-solid); }
+
+    .hd-mission-dialog {
+        position: fixed;
+        inset: auto 0 0;
+        width: min(420px, calc(100% - 2 * var(--hd-pad)));
+        max-width: none;
+        max-height: calc(100dvh - 2 * var(--hd-pad));
+        margin: 0 auto max(var(--hd-pad), env(safe-area-inset-bottom));
+        padding: 0;
+        overflow: auto;
+        overscroll-behavior: contain;
+        pointer-events: auto;
+        background: var(--hd-button-sheen) color-mix(in srgb, var(--ns-liquid-panel-bg) 32%, var(--ns-liquid-panel-solid));
+        color: var(--hd-ink);
+    }
+    .hd-mission-dialog::backdrop { background: rgb(7 28 48 / 38%); }
+    .hd-mission-dialog .hd-mission { padding: 20px; background: transparent; border: 0; box-shadow: none; backdrop-filter: none; }
+    .hd-mission-dialog .hd-card-top { min-height: 38px; padding-right: 48px; font-size: 18px; font-weight: 600; color: var(--hd-ink); }
+    .hd-mission-dialog .hd-missions li { min-height: 36px; }
+    .hd-mission-close {
+        position: absolute;
+        inset: 10px 10px auto auto;
+        width: 44px;
+        height: 44px;
+        border: 1px solid var(--hd-line);
+        border-radius: 50%;
+        background: var(--ns-liquid-control);
+        color: var(--hd-ink);
+    }
+}
+
+@media (orientation: landscape) and (height < 480px) {
+    .smart-journey .ocean-home #ocean-journey .learning-dashboard[data-mode="returning"] {
+        --hd-intro-width: min(44vw, 480px);
+    }
+    .learning-dashboard .hd-overview { grid-template-columns: minmax(0, 1fr); }
+    .learning-dashboard .hd-stats { grid-area: 2 / 1 / 3 / -1; justify-self: start; justify-content: flex-start; }
+    .learning-dashboard .hd-greeting { grid-column: 1 / -1; }
+    .learning-dashboard .hd-actions > :is(a, button) { min-height: 44px; }
+}
+
+@media (orientation: landscape) and (height < 375px) {
+    .smart-journey .ocean-home #ocean-journey .learning-dashboard[data-mode="returning"] {
+        --hd-top: 4px;
+        --hd-gap: 4px;
+        --hd-ring-size: 46px;
+    }
+    .hd-overview .hd-current { gap: 3px; padding-block: 6px; }
+    .hd-stats dd { padding-block: 2px; }
+    .learning-dashboard .hd-progress-copy { position: relative; gap: 2px; font-size: 13px; }
+    .learning-dashboard :is(.hd-greeting, .hd-next-lesson):not([hidden]) { display: flex; align-items: baseline; gap: .35em; white-space: nowrap; }
+    .learning-dashboard .hd-progress-copy .hd-next-lesson { font-size: 12px; }
+    .learning-dashboard :is(.hd-greeting bdi, .hd-course-link, .hd-next-lesson strong) {
+        display: block;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .learning-dashboard progress.hd-meter {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        clip-path: inset(50%);
+    }
+}
+
+@media (forced-colors: active) {
+    .hd-ring { border: 1px solid CanvasText; }
+    .learning-dashboard :is(.hd-start, .hd-actions .ns-button, .hd-missions-trigger, .hd-mission-close) {
+        border-color: ButtonText;
+        background: ButtonFace;
+        color: ButtonText;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+}

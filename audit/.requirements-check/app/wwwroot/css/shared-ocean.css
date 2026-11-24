@@ -1,0 +1,33 @@
+/* Shared camera: the original island panorama, waterline and moving crests. */
+:root{--ocean-horizon:clamp(360px,60svh,544px);--ocean-boat-width:155px}
+.ocean-surface-world{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:linear-gradient(180deg,#72cdf1 0%,#42c3dd 48%,#128eb8 100%)}
+.ocean-horizon-anchor{position:absolute;top:var(--ocean-horizon);left:0;width:1px;height:1px}
+.ocean-surface-world .underwater-surface{position:absolute;inset:0 0 auto;height:100svh;background:#6fcff3 url('/images/journey/underwater-journey-background-v1.png') center top/cover no-repeat;mask-image:linear-gradient(180deg,transparent 0%,#000 12%,#000 64%,transparent 100%);will-change:transform}
+.ocean-surface-world .island-water-layer{position:absolute;inset:-12% -15%;z-index:1;pointer-events:none}
+.ocean-surface-world .island-water-drift{position:absolute;inset:0 auto 0 0;width:200%;height:100%;background-repeat:repeat-x;background-size:50% 100%;animation:shared-ocean-drift 110s linear infinite;will-change:transform}
+.ocean-surface-world .island-water-layer--far{opacity:.12}
+.ocean-surface-world .island-water-layer--far .island-water-drift{background-image:url('/images/journey/ocean-swell-0.svg')}
+.ocean-surface-world .island-water-layer--near{opacity:.06}
+.ocean-surface-world .island-water-layer--near .island-water-drift{background-image:url('/images/journey/ocean-swell-1.svg');animation-duration:78s;animation-direction:reverse}
+.ocean-surface-world .surface-ocean-waves{position:absolute;left:0;width:100%;height:115px;overflow:hidden;pointer-events:none}
+.ocean-surface-world .surface-ocean-wave{position:absolute;left:0;width:200%;height:58px;background:url('/images/journey/surface-wave-loop.svg') 0 0/50% 100% repeat-x;animation:shared-ocean-drift 19s linear infinite;opacity:.6;will-change:transform}
+.ocean-surface-world .surface-ocean-wave--far{top:0;opacity:.35;animation-duration:27s;animation-direction:reverse}
+.ocean-surface-world .surface-ocean-wave--near{top:32px}
+.ocean-surface-world.is-paused :is(.island-water-drift,.surface-ocean-wave){animation-play-state:paused;will-change:auto}
+html[data-theme="dark"] .ocean-surface-world{background:linear-gradient(#173c59,#12617e 48%,#0b4564)}
+html[data-theme="dark"] .ocean-surface-world .underwater-surface{filter:brightness(.58) saturate(.7)}
+html[data-theme="dark"] .ocean-surface-world .surface-ocean-waves{opacity:.65}
+@keyframes shared-ocean-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@media(max-width:700px){:root{--ocean-boat-width:110px;--ocean-horizon:clamp(500px,70svh,620px)}}
+@media(prefers-reduced-motion:reduce){.ocean-surface-world :is(.island-water-drift,.surface-ocean-wave){animation:none;will-change:auto}.ocean-surface-world .island-water-layer{transform:none!important}.ocean-surface-world .underwater-surface{will-change:auto}}
+
+/* Shore contact belongs to the scenery, with no raised shadow under the land. */
+.catalog-page .catalog-harbor .knowledge-sanctum{mask:url('/images/journey/sanctum-waterline-mask.svg') center/100% 100% no-repeat}
+.catalog-page .catalog-harbor:before{content:'';position:absolute;inset:0;pointer-events:none;background:url('/images/journey/sanctum-submerged-rocks.svg') center/100% 100% no-repeat}
+.catalog-page .catalog-harbor:after{content:'';position:absolute;inset:0;pointer-events:none;background:url('/images/journey/sanctum-shore-contact.svg') center/100% 100% no-repeat}
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island[data-lesson-id="1"] img{filter:none;mask-image:linear-gradient(#000 0 83%,#000d 90%,#0007 96%,transparent 100%)}
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island[data-lesson-id="1"]:before{display:none}
+.smart-journey .learning-workspace #lesson-route .sj-lesson-island[data-lesson-id="1"]:after{content:'';display:block;position:absolute;inset:0 0 auto;z-index:0;width:100%;height:auto;aspect-ratio:4/3;pointer-events:none;background:url('/images/journey/island-shore-contact.svg') center/100% 100% no-repeat}
+html[data-theme="dark"] .smart-journey .learning-workspace #lesson-route .sj-lesson-island[data-lesson-id="1"] img{filter:brightness(.85) saturate(.7)}
+html[data-theme="dark"] :is(.catalog-page .catalog-harbor,.sj-lesson-island[data-lesson-id="1"]):after{opacity:.7}
+html[data-theme="dark"] .catalog-page .catalog-harbor:before{opacity:.55}

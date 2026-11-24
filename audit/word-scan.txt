@@ -1,0 +1,82 @@
+names supplied by user: 0 files
+email or local user path: 14 files
+plans\README.md
+plans\IMPLEMENTATION.md
+NextSkill_205_247_261/Views\Learning\_IslandDashboard.cshtml
+docs\home-island-terrain.md
+NextSkill_205_247_261/Views\Courses\Enrollment.cshtml
+NextSkill_205_247_261/Views\Home\Details.cshtml
+NextSkill_205_247_261/Views\Account\Register.cshtml
+NextSkill_205_247_261/Views\Account\Login.cshtml
+NextSkill_205_247_261/Views\Shared\_LoginNimoDanceEyes.cshtml
+docs\HOME-OCEAN-WORLD.md
+docs\home-ocean-art.md
+NextSkill_205_247_261/Views\Shared\_SeaJourneyWorkspace.cshtml
+development markers: 69 files
+NextSkill_205_247_261/README-LOGIN.md
+DESIGN.md
+NextSkill_205_247_261/Database\custom_questions.json
+NextSkill_205_247_261/Database\custom_courses.json
+NextSkill_205_247_261/Services\CourseCatalog.cs
+skills\nextskill-mvc-theme\SKILL.md
+scripts\verify-water-world.cjs
+scripts\verify-water-contact.cjs
+plans\README.md
+scripts\verify-sealearn.cjs
+scripts\verify-sea-continuity.cjs
+scripts\verify-sanctum-motion.cjs
+creative tooling: 43 files
+DESIGN.md
+NextSkill_205_247_261/Database\custom_questions.json
+skills\nextskill-mvc-theme\SKILL.md
+NextSkill_205_247_261/Database\custom_courses.json
+NextSkill_205_247_261/Services\AdminContentStore.cs
+NextSkill_205_247_261/Services\LearningCatalog.cs
+NextSkill_205_247_261/Models\AdminQuizQuestion.cs
+NextSkill_205_247_261/Controllers\AccountController.cs
+plans\README.md
+NextSkill_205_247_261/Views\Shared\_AccountLayout.cshtml
+skills\nextskill-mvc-theme\references\design-system.md
+docs\SMART-LEARNING-BACKEND.md
+old branding: 45 files
+DESIGN.md
+README-SEALEARN.md
+plans\000-preflight-and-baseline.md
+skills\nextskill-mvc-theme\SKILL.md
+scripts\verify-sealearn.cjs
+NextSkill_205_247_261/Models\CourseEnrollmentViewModel.cs
+skills\nextskill-mvc-theme\README.md
+plans\README.md
+skills\nextskill-mvc-theme\references\mvc-integration.md
+NextSkill_205_247_261/Views\Shared\_HomeLayout.cshtml
+plans\003-motion-lifecycle.md
+NextSkill_205_247_261/Views\Shared\_ArchipelagoIslands.cshtml
+technical copy: 13 files
+NextSkill_205_247_261/README-LOGIN.md
+NextSkill_205_247_261/appsettings.json
+NextSkill_205_247_261/Database\New-AdminInvitation.ps1
+skills\nextskill-mvc-theme\SKILL.md
+skills\nextskill-mvc-theme\README.md
+scripts\verify-water-contact.cjs
+docs\SMART-LEARNING-BACKEND.md
+NextSkill_205_247_261/Views\Account\AdminDashboard.cshtml
+plans\IMPLEMENTATION.md
+NextSkill_205_247_261/Views\Shared\Error.cshtml
+docs\home-ocean-art.md
+docs\catalog-island-voyage.md
+broad claims or confusing labels: 66 files
+NextSkill_205_247_261/Views\Shared\_AccountStory.cshtml
+NextSkill_205_247_261/wwwroot\css\admin-modern.css
+NextSkill_205_247_261/wwwroot\css\buddy-character.css
+NextSkill_205_247_261/wwwroot\css\admin-game.css
+NextSkill_205_247_261/wwwroot\css\admin-dashboard.css
+NextSkill_205_247_261/Views\Account\Login.cshtml
+NextSkill_205_247_261/wwwroot\css\buddy-agent.css
+NextSkill_205_247_261/wwwroot\css\account.css
+NextSkill_205_247_261/Views\Account\AdminDashboard.cshtml
+NextSkill_205_247_261/wwwroot\css\account-modern.css
+NextSkill_205_247_261/wwwroot\css\archipelago.css
+NextSkill_205_247_261/wwwroot\css\account-game.css
+validation copy: 2 files
+NextSkill_205_247_261/README-LOGIN.md
+NextSkill_205_247_261/Controllers\AccountController.cs

@@ -1,0 +1,100 @@
+/* Shared ocean palette for Razor layouts. White surfaces, blue actions,
+   turquoise progress and sand rewards. The character keeps its own colours. */
+.ocean-theme, .game-theme.course-home.ocean-theme {
+    --ocean: #33d1ef;
+    --ocean-deep: #086885;
+    --ocean-tint: #eaf7fd;
+    --sea: #139caf;
+    --sand: #f1ca72;
+    --navy: #193b50;
+    --coast-muted: #526c7b;
+    --coast-line: #d9e7ef;
+    --game-accent: var(--ocean);
+    --game-accent-deep: var(--ocean-deep);
+    --game-accent-tint: var(--ocean-tint);
+    --game-ink: var(--navy);
+    --game-muted: var(--coast-muted);
+    --game-line: var(--coast-line);
+    --forest: var(--ocean);
+    --forest-deep: var(--ocean-deep);
+    --ink: var(--navy);
+    --muted: var(--coast-muted);
+    --bs-primary: var(--ocean);
+    --bs-primary-rgb: 51,209,239;
+    --bs-link-color: var(--ocean);
+    --bs-link-hover-color: var(--ocean-deep);
+    --bs-body-color: var(--navy);
+    color: var(--navy);
+    background-color: #fff;
+}
+.ocean-theme :is(a,button,input):focus-visible { outline-color: var(--ocean); }
+.ocean-theme a:not([class]) { color: var(--ocean-deep); }
+.ocean-theme.game-theme :is(.welcome h1,.arrival-copy h2,.chapter-copy h2,.section-heading h2,.companion-invite h2,.home-dialog h2,.companion-stage h3,.coach-bubble h2) { color: var(--navy); }
+.ocean-theme.game-theme :is(.eyebrow,.chapter-progress label,.section-description,.resume-label,.resume-description,.preview-label,.companion-invite-copy>p,.home-dialog>p,.dialog-note) { color: var(--coast-muted); }
+.ocean-theme.game-theme :is(.site-header,.buddy-arrival,.surface,.chapter-brief,.companion-invite,.streak-card,.freeze-card,.checkpoint,.home-dialog,.companion-speech,.buddy-study-card,.companion-stage,.guide-message,.coach-bubble,.agent-menu) { border-color: var(--coast-line); }
+.ocean-theme.game-theme .chapter-brief { border-top-color: var(--ocean); }
+.ocean-theme.game-theme :is(.brand,.footer-brand,.home-footer) { color: var(--navy); }
+.ocean-theme.game-theme .brand-mark { color: var(--navy); background: var(--ocean); box-shadow: 0 4px 0 #139bbd; }
+.ocean-theme.game-theme .brand-period { color: #deb04c; }
+.ocean-theme.game-theme .nav-link.active { color: var(--ocean-deep); background: var(--ocean-tint); box-shadow: none; }
+.ocean-theme.game-theme .nav-link:hover:not(:disabled) { color: var(--ocean-deep); }
+.ocean-theme.game-theme :is(.button-primary,.buddy-read-button) { color: var(--navy); background: var(--ocean); border-color: #18a6c8; box-shadow: 0 3px 0 #139bbd; }
+.ocean-theme.game-theme :is(.button-primary,.buddy-read-button):hover { color: #fff; background: var(--ocean-deep); }
+.ocean-theme.game-theme .chapter-icon { color: #13607b; background: #d3f0fa; border-color: #9bd6eb; }
+.ocean-theme.game-theme .current .level-node { color: var(--navy); background: var(--ocean); border-color: #18a6c8; box-shadow: 0 6px 0 #139bbd,0 0 0 8px #e0f8fd; }
+.ocean-theme.game-theme .completed .level-node { color: #174e65; background: #c0edf4; border-color: #80c9d9; box-shadow: 0 6px 0 #5aadc0; }
+.ocean-theme.game-theme .current .level-label,.ocean-theme.game-theme .current .level-caption { color: var(--ocean-deep); }
+.ocean-theme.game-theme .completed .level-label { color: #245c73; }
+.ocean-theme.game-theme .start-bubble,.ocean-theme.game-theme .start-bubble::after { color: var(--navy); background: var(--ocean); border-color: #18a6c8; box-shadow: 0 2px 0 #139bbd; }
+.ocean-theme.game-theme .map-track-complete { stroke: #7acbd9; }
+.ocean-theme.game-theme :is(.chapter-progress,.quest) progress::-webkit-progress-value { background: #33d1ef; box-shadow: none; }
+.ocean-theme.game-theme :is(.chapter-progress,.quest) progress::-moz-progress-bar { background: #33d1ef; }
+.ocean-theme.game-theme .chapter-progress strong { color: #076477; }
+.ocean-theme.game-theme :is(.chapter-progress,.quest) progress::-webkit-progress-bar { background: #e6f0f4; }
+.ocean-theme.game-theme .quest-icon { color: #185c7b; background: #def2fc; border-color: #b9dfef; }
+.ocean-theme.game-theme .quest:has(.icon-lightning) .quest-icon { color: #77541a; background: #fce9b6; border-color: #ebd090; }
+.ocean-theme.game-theme .day.done { color: #77541a; background: #f6db98; border-color: #dfc279; }
+.ocean-theme.game-theme :is(.streak-card h2,.streak-card h2>span) { color: #946022; }
+.ocean-theme.game-theme :is(.checkpoint h3,.checkpoint p,.checkpoint .text-button,.xp-stat,.xp-stat strong) { color: #7a591d; }
+.ocean-theme.game-theme .leaderboard .your-rank { background: #edf8fd; border-color: #bfdeed; }
+.ocean-theme.game-theme :is(.companion-open-button,.unit-badge,.freeze-button,.scene-motion,.league-button,.text-button) { color: var(--ocean-deep); border-color: #c4deea; }
+.ocean-theme.game-theme :is(.unit-badge,.freeze-icon,.avatar,.avatar-2,.avatar-3,.league-tier) { color: #205b76; background: #eaf6fc; }
+.ocean-theme.game-theme .freeze-button[aria-pressed=true] { color: var(--navy); background: var(--ocean); }
+.ocean-theme.game-theme .mobile-nav [aria-current=page] { color: var(--ocean-deep); background: var(--ocean-tint); }
+.ocean-theme.game-theme :is(.guide-message strong,.guide-message>span,.buddy-tap-hint,.buddy-motion-control,.companion-header p,.companion-panel>p,.companion-emotion,.companion-rest) { color: #3d687b; }
+.ocean-theme.game-theme .guide-message::after { border-color: var(--coast-line); }
+.ocean-theme .agent-menu button { color: var(--ocean-deep); background: #eef8fd; }
+.ocean-theme .agent-menu button[aria-pressed=true] { background: #d8effa; }
+.ocean-theme .agent-summon { color: var(--ocean-deep); background: #fff; border-color: #84cce5; box-shadow: 0 2px 8px #127ca21a; }
+.ocean-theme .agent-menu { color: var(--navy); border-color: #bdddec; }
+.ocean-theme.game-theme .companion-tabs button[aria-selected=true] { color: var(--ocean-deep); }
+.ocean-theme.game-theme .companion-tabs button[aria-selected=true]::after { background: var(--ocean); }
+.ocean-theme.game-theme :is(.buddy-study-card h4,.buddy-study-card blockquote,.buddy-encourage,.companion-speech) { color: #245a71; }
+.ocean-theme .btn-primary { --bs-btn-color: var(--navy); --bs-btn-bg: var(--ocean); --bs-btn-border-color: var(--ocean); --bs-btn-hover-color: #fff; --bs-btn-hover-bg: var(--ocean-deep); --bs-btn-hover-border-color: var(--ocean-deep); --bs-btn-active-bg: var(--ocean-deep); }
+.ocean-theme .form-control:focus { border-color: #5ebcdf; box-shadow: 0 0 0 .2rem #0079ba20; }
+.ocean-theme .navbar-brand { color: var(--ocean-deep); }
+.ocean-theme.game-theme .companion-small-button { color: var(--navy); background: var(--ocean); border-color: #18a6c8; }
+.ocean-theme.game-theme #companion-high-five,.ocean-theme.game-theme #companion-high-five:hover { color: var(--ocean-deep); background: #e9f7fd; border-color: #8dcde7; box-shadow: 0 2px 0 #68b5d3; }
+.ocean-theme.game-theme :is(.portrait-orbit,.companion-level) { color: #205b76; background: #e0f3fc; }
+.ocean-theme.game-theme :is(.companion-bond,.signal-game) { border-color: var(--coast-line); }
+.ocean-theme.game-theme :is(.companion-pose-buttons button,.companion-accessories button[aria-pressed=true],.signal-inputs button:not(:disabled)) { color: var(--ocean-deep); background: #edf8fd; border-color: #abd8eb; }
+.ocean-theme.game-theme .companion-swatch[aria-pressed=true] { border-color: var(--ocean); }
+
+/* Grid rows determine the trail length; SVG points come from the view model. */
+.game-theme.course-home.path-first .journey-steps { height: auto; }
+.ocean-theme .journey-levels { display: grid; grid-auto-rows: 156px; }
+.ocean-theme .journey-levels .journey-step { position: relative; top: auto; left: 30%; width: 110px; height: 64px; transform: translateX(-50%); }
+.ocean-theme .journey-levels .journey-step:nth-child(4n+2) { left: 60%; }
+.ocean-theme .journey-levels .journey-step:nth-child(4n+3) { left: 35%; }
+.ocean-theme .journey-levels .journey-step:nth-child(4n) { left: 65%; }
+.ocean-theme .skill-buddy[data-colour=sky] {
+    --buddy-main:#33d1ef; --buddy-edge:#1699be; --buddy-dark:#1699be;
+    --buddy-highlight:#a8f0fb; --buddy-limb:#75e0f4; --buddy-limb-edge:#168db1;
+    --buddy-face:#f3fcff; --buddy-face-edge:#2988a4; --buddy-ink:#124e68;
+}
+.ocean-theme .swatch-sky>span { background: #33d1ef; }
+@media(max-width:600px) {
+    .ocean-theme .journey-levels { grid-auto-rows: 112px; }
+    .ocean-theme .journey-levels .journey-step:nth-child(n) { top: auto; left: 0; width: 100%; height: 70px; transform: none; }
+    .game-theme.course-home.path-first .journey-steps::before { bottom: 46px; background: #d4edf3; }
+}

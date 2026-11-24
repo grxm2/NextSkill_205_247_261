@@ -1,0 +1,33 @@
+<div id="buddy-layer">
+    <section id="nimo-speech" class="nimo-speech" popover="manual" hidden aria-label="คำแนะนำจาก Nimo">
+        <div class="nimo-speech-card">
+            <div class="nimo-speech-heading"><strong data-buddy-name>Nimo</strong><span class="nimo-speech-meter" aria-hidden="true"><i></i><i></i><i></i></span><span class="nimo-speech-caption">อยู่ข้าง ๆ ทุกก้าว</span></div>
+            <button type="button" id="nimo-speech-close" aria-label="ปิดคำพูดของ Nimo">×</button>
+            <p class="nimo-speech-copy"><span id="nimo-speech-measure" aria-hidden="true"></span><span id="nimo-speech-text" aria-hidden="true"></span></p>
+            @if (ViewData["JourneyMode"] as string == "home")
+            {
+                <button type="button" id="nimo-missions-open" aria-controls="hd-daily-goals" hidden>ดูภารกิจวันนี้</button>
+            }
+        </div>
+        <span id="nimo-speech-announcement" class="agent-sr" role="status" aria-live="polite" aria-atomic="true"></span>
+    </section>
+    <div id="nextskill-agent" data-context="arrival">
+        <button type="button" id="buddy-agent-handle" aria-label="เปิดเมนูโค้ช Nimo" aria-expanded="false" aria-controls="buddy-agent-menu"><partial name="_SkillBuddy" /></button>
+    </div>
+    <div id="buddy-agent-menu" class="agent-menu" hidden aria-label="เมนูคู่หู">
+        <strong data-buddy-name>Nimo</strong><span class="agent-menu-hint">คู่หูฝึกสกิลของคุณ</span>
+        <button type="button" data-agent-action="talk">คุยกับ Nimo · ขอคำแนะนำ</button>
+        <button type="button" data-agent-action="practice">ฝึกฟีดแบ็ก 1 นาที</button>
+        <button type="button" data-agent-action="studio">ตั้งชื่อและแต่งตัวคู่หู</button>
+        @if (ViewData["PageClass"]?.ToString() == "course-enrollment")
+        { <button type="button" data-agent-action="course-help">ช่วยเลือกจุดเริ่มต้น</button> }
+        else
+        { <button type="button" data-agent-action="tour">แนะนำเส้นทางเรียน</button> }
+        <details class="agent-expression-picker"><summary>ลองท่าทางและสีหน้า <span id="agent-feeling">พร้อมเรียน</span></summary><div id="agent-pose-options" class="agent-pose-grid" role="group" aria-label="ลองท่าทางคู่หู"></div></details>
+        @if (ViewData["OceanCatalog"] is not true)
+        {
+            <button type="button" id="agent-pause" aria-pressed="false">พักการเคลื่อนไหว</button>
+        }
+    </div>
+    <span id="agent-status" class="agent-sr" role="status" aria-live="polite"></span>
+</div>

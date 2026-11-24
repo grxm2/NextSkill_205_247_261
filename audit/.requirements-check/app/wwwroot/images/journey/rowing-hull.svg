@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 280" fill="none" role="img" aria-labelledby="boat-title boat-desc">
+  <title id="boat-title">เรือเดินทางของ Nimo</title>
+  <desc id="boat-desc">เรือพายไม้สีน้ำผึ้ง มีหมุดทองเหลืองและเชือกผูกหัวเรือ</desc>
+  <defs>
+    <linearGradient id="boat-hull" x1="210" y1="130" x2="244" y2="233" gradientUnits="userSpaceOnUse"><stop stop-color="#D48C48"/><stop offset=".55" stop-color="#BD743A"/><stop offset="1" stop-color="#88502C"/></linearGradient>
+    <linearGradient id="boat-rim" x1="100" y1="93" x2="351" y2="172" gradientUnits="userSpaceOnUse"><stop stop-color="#F4B35D"/><stop offset="1" stop-color="#C47E38"/></linearGradient>
+  </defs>
+  <g id="boat-wake" stroke-linecap="round">
+    <ellipse cx="238" cy="237" rx="174" ry="23" fill="#2F9FC1" opacity=".13"/>
+    <path d="M83 218c-24 1-42 7-41 14 1 11 34 18 81 20m207-29c48-3 90 3 100 12 12 12-24 22-77 23" stroke="#A4EAF0" stroke-width="7"/>
+    <path d="M73 230c-10 1-17 3-17 6m78 28c40 5 97 6 128 4m79-12c26-1 44-3 58-7" stroke="#DBFAF6" stroke-width="4"/>
+    <path d="m42 211 15-1m362 7 19 2" stroke="#B4F1EE" stroke-width="4"/>
+  </g>
+
+  <g id="boat-front">
+    <path d="M97 135c67 30 162 38 263 0-11 50-49 92-115 99-68 7-123-27-148-99Z" fill="url(#boat-hull)" stroke="#7A4825" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M147 205c45 22 101 25 173-2-21 19-46 28-75 31-38 4-72-7-98-29Z" fill="#633A28" opacity=".3"/>
+    <path d="M105 153c63 29 156 32 240 3m-225 20c58 24 134 25 211 0m-194 22c45 17 103 17 171-2m-149 21c31 9 66 10 106 1" stroke="#774323" stroke-width="3" opacity=".65" stroke-linecap="round"/>
+    <path d="M123 162c51 18 110 22 162 14m-145 12c40 13 87 13 130 7m-106 17c27 6 54 7 78 4" stroke="#E6A15B" stroke-width="3" opacity=".6" stroke-linecap="round"/>
+    <path d="M149 172q14 7 31 8m57 9q18 1 36-3m-89 21q19 5 42 4m56-40q18-3 32-8m-79 62q19-1 36-6" stroke="#774323" stroke-width="1.5" opacity=".66" stroke-linecap="round"/>
+    <path d="M97 132c74 30 167 33 260 0l7 10c-90 38-195 37-265 4Z" fill="url(#boat-rim)" stroke="#A3612D" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M101 134c75 30 168 31 254 1" stroke="#FFD292" stroke-width="4" stroke-linecap="round"/>
+    <path d="M104 146c6 31 21 56 43 72" stroke="#D78C43" stroke-width="8" stroke-linecap="round"/>
+    <path d="m145 181-3 18m63-5 1 23m64-27-2 26m53-47-5 20" stroke="#814924" stroke-width="2.5" opacity=".55"/>
+    <g fill="#EFC17D" stroke="#8A5330" stroke-width="1.6">
+      <circle cx="125" cy="162" r="3"/><circle cx="153" cy="176" r="2.8"/>
+      <circle cx="332" cy="162" r="3"/><circle cx="306" cy="186" r="2.8"/>
+    </g>
+  </g>
+
+  <path d="M331 139c2 12 13 18 24 6m-14 6c1 8 7 14 8 17" stroke="#8C5633" stroke-width="7" stroke-linecap="round"/>
+  <path d="M331 139c2 12 13 18 24 6m-14 6c1 8 7 14 8 17" stroke="#EBC68C" stroke-width="4.4" stroke-linecap="round"/>
+  <path d="m334 146 2-1m8 11 2-1m5-7 1 2m-7 11 2-1" stroke="#AE784B" stroke-width="1.2" stroke-linecap="round"/>
+</svg>

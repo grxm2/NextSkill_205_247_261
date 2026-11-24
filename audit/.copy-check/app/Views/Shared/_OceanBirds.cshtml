@@ -1,0 +1,12 @@
+<svg class="ow-seabirds" viewBox="0 0 400 120" aria-hidden="true" focusable="false">
+    @foreach (var bird in new[] { (X:48, Y:55, Scale:1.0), (X:190, Y:28, Scale:.7), (X:320, Y:80, Scale:1.05) })
+    {
+        <g transform="translate(@bird.X @bird.Y) scale(@bird.Scale.ToString(System.Globalization.CultureInfo.InvariantCulture))">
+            <g class="ow-bird-glide" data-ocean-bird data-flight-origin="@bird.X" data-flight-scale="@bird.Scale.ToString(System.Globalization.CultureInfo.InvariantCulture)" fill="currentColor">
+                <path d="M-2 0Q0-4 2 0L1 5H-1Z" />
+                <g class="ow-bird-wing" data-ocean-wing="left"><path d="M-1 0C-8-7-17-10-29-7-19-5-10-3-2 2Z" /></g>
+                <g class="ow-bird-wing" data-ocean-wing="right"><path d="M1 0C8-7 17-10 29-7 19-5 10-3 2 2Z" /></g>
+            </g>
+        </g>
+    }
+</svg>

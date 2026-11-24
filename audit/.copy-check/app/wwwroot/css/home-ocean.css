@@ -1,0 +1,292 @@
+/* Keep the shore, waterline and hull in the same coordinate system. */
+.ocean-home {
+    container-type: inline-size;
+    --ow-left: max(16px, env(safe-area-inset-left));
+    --ow-right: max(16px, env(safe-area-inset-right));
+    --ow-horizon-blend: 14px;
+    --ow-first-height: max(280px, calc(100svh - var(--nav-h)));
+    --ow-height: max(280px, calc(100svh - var(--nav-sticky-inset, var(--nav-h))));
+    --ow-travel-height: clamp(720px, calc(var(--ow-height) * 2.15), 2000px);
+}
+
+.ocean-home .ow-track { position: relative; overflow-anchor: none; }
+.ocean-home .ow-stage { position: relative; }
+.ocean-home .ow-stage::before {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--nav-h));
+    inset-inline: 0;
+    height: var(--nav-h);
+    background: #6fbce7;
+    pointer-events: none;
+}
+
+.smart-journey .ocean-home #ocean-journey {
+    --ow-island-width: min(560px, calc(100cqw - var(--ow-left) - var(--ow-right)),
+        max(190px, calc((var(--ow-first-height) - var(--ow-island-top) - 28px) * 1.45)));
+    --ow-island-x: max(var(--ow-left), calc(100cqw - var(--ow-right) - var(--ow-island-width)));
+    --ow-island-top: calc(var(--ow-dashboard-end, 220px) + clamp(24px, 5svh, 48px));
+    --ow-shore-horizon: calc(var(--ow-island-top) + var(--ow-island-width) * .45);
+    --ow-water-depth: calc(var(--ow-first-height) - var(--ow-shore-horizon));
+    --ow-boat-width: clamp(94px, 28cqw, 148px);
+    --ow-boat-left: calc(var(--ow-island-x) + max(0px, var(--ow-island-width) * .23 - var(--ow-boat-width) * .35));
+    --ow-boat-depth: clamp(38px, calc(var(--ow-water-depth) * .36), 88px);
+    /* Place the painted keel (.85 of the 480 × 280 canvas) on the water. */
+    --ow-boat-top: calc(var(--ow-shore-horizon) + var(--ow-boat-depth) - var(--ow-boat-width) * (.85 * 280 / 480));
+    --ow-dock-frame-width: min(1080px, 62cqw, calc((var(--ow-height) - 32px) * 1.142857));
+    --ow-dock-width: var(--ow-dock-frame-width);
+    --ow-dock-top: calc(var(--ow-first-height) + 16px);
+    height: calc(var(--ow-dock-top) + var(--ow-dock-width) * .875 + 28px);
+    min-height: 0;
+    isolation: isolate;
+    overflow: clip;
+}
+
+.ow-enhanced .ocean-home .ow-track { height: calc(var(--ow-height) + var(--ow-travel-height)); }
+.ow-enhanced .ocean-home .ow-stage {
+    position: sticky;
+    top: var(--nav-sticky-inset, var(--nav-h));
+}
+.ow-enhanced .smart-journey .ocean-home #ocean-journey {
+    --ow-dock-top: max(8px, calc((var(--ow-height) - var(--ow-dock-width) * .875) * .44));
+    height: var(--ow-height);
+}
+
+.smart-journey .ocean-home #ocean-journey .ow-camera { position: absolute; inset: 0; padding: 0; will-change: auto; }
+.smart-journey .ocean-home #ocean-journey .ow-start-land {
+    top: var(--ow-island-top);
+    left: var(--ow-island-x);
+    width: var(--ow-island-width);
+    margin: 0;
+}
+#ocean-journey .ow-start-land > .ow-island-art { display: block; width: 100%; height: auto; }
+#ocean-journey .ow-island-mascot {
+    --ow-avatar-width: clamp(70px, 20cqw, 86px);
+    left: calc(44% - var(--ow-avatar-width) / 2);
+    top: calc(66% - var(--ow-avatar-width) * 1.05);
+    width: var(--ow-avatar-width);
+    height: calc(var(--ow-avatar-width) * 1.15);
+}
+.smart-journey .ocean-home #ocean-journey .ow-vessel {
+    top: var(--ow-boat-top);
+    left: var(--ow-boat-left);
+    width: var(--ow-boat-width);
+    z-index: 5;
+    opacity: 1;
+    will-change: auto;
+}
+#ocean-journey .ow-boat-anchor {
+    --ow-avatar-width: calc(var(--ow-boat-width) * .34);
+    left: calc(49% - var(--ow-avatar-width) / 2);
+    width: var(--ow-avatar-width);
+    height: calc(var(--ow-avatar-width) * 1.15);
+    bottom: 23%;
+}
+#ocean-journey .ow-boat-anchor :is(.buddy-idle-motion, .buddy-shadow) { animation: none; }
+#ocean-journey .ow-boat-anchor .buddy-shadow { opacity: 0; }
+#ocean-journey .ow-boat-anchor .buddy-avatar-rowing { transform-origin: 50% 82%; }
+.smart-journey .ocean-home #ocean-journey .ow-harbor.cv-departure-harbor {
+    position: absolute;
+    top: var(--ow-dock-top);
+    left: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    place-items: center;
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+}
+.ow-enhanced .smart-journey .ocean-home #ocean-journey .ow-harbor.cv-departure-harbor { left: 220cqw; }
+.smart-journey .ocean-home #ocean-journey .cv-departure-harbor .ow-dock {
+    width: var(--ow-dock-width);
+    max-width: none;
+    min-height: 0;
+    margin: 0;
+}
+#ocean-journey .ow-dock-arch { position: absolute; inset: 39% 30% 24% 42%; pointer-events: none; }
+#ocean-journey .ow-sea { top: var(--ow-shore-horizon); bottom: calc(-1 * var(--ow-water-reserve, 0px)); }
+#ocean-journey .ow-distance { top: calc(var(--ow-shore-horizon) - var(--ow-distance-height)); }
+#ocean-journey .ow-seabirds { left: 60%; top: 12%; width: 35%; overflow: hidden; }
+#ocean-journey :is(.journey-sun, .journey-moon) { left: 87%; top: calc(var(--ow-first-height) * .34); width: 40px; }
+#ocean-journey .hero-sun-rays { animation: hero-soft-light 12s ease-in-out infinite alternate; opacity: .4; }
+.ow-motion-paused#ocean-journey .hero-sun-rays { animation-play-state: paused; }
+@keyframes hero-soft-light { from { opacity: .35; } to { opacity: .5; } }
+
+@media (width < 768px), (width < 1024px) and (orientation: portrait) {
+    .smart-journey .ocean-home #ocean-journey {
+        --ow-dock-frame-width: min(calc(100cqw - var(--ow-left) - var(--ow-right)), calc((var(--ow-height) - 32px) * 1.142857));
+    }
+    #ocean-journey .sanctum-cliff-mass { transform: translate(34px, -80px) scale(.48, .833333); transform-origin: 0 0; }
+    #ocean-journey .sanctum-coast-wash { display: none; }
+}
+
+@media (width < 768px), (width < 1024px) and (orientation: portrait), (orientation: landscape) and (height < 480px) {
+    .ow-enhanced .smart-journey .ocean-home #ocean-journey {
+        /* Match the cave inlet to the opaque edge of the same painted sea. */
+        --ow-dock-inlet-y: calc(var(--ow-shore-horizon) + var(--ow-horizon-blend));
+        --ow-dock-above-inlet: calc(.875 * var(--ow-dock-horizon));
+        --ow-dock-below-inlet: calc(.875 * (1 - var(--ow-dock-horizon)));
+        --ow-dock-width: min(var(--ow-dock-frame-width),
+            calc((var(--ow-dock-inlet-y) - 8px) / var(--ow-dock-above-inlet)),
+            calc((var(--ow-height) - var(--ow-dock-inlet-y) - 12px) / var(--ow-dock-below-inlet)));
+        --ow-dock-top: calc(var(--ow-dock-inlet-y) - var(--ow-dock-width) * var(--ow-dock-above-inlet));
+    }
+}
+
+@media (width < 768px) {
+    #ocean-journey .ow-start-land > .ow-island-art { transform: none; }
+    #ocean-journey .ow-clouds span:nth-child(2) { display: none; }
+    #ocean-journey .hero-sun { box-shadow: 0 0 27px 11px #ffe3a8aa, 0 0 52px 27px #ffd39355; }
+    #ocean-journey .hero-sun-disc { box-shadow: 0 0 17px 8px #fff0b6; }
+    #ocean-journey .journey-moon { box-shadow: 0 0 22px 9px #e4f2ff50; }
+}
+
+@media (width < 768px) and (orientation: portrait) {
+    .smart-journey .ocean-home #ocean-journey {
+        --ow-sky-lane: clamp(46px, 7.5svh, 66px);
+        --ow-island-top: max(calc(var(--ow-dashboard-end, 240px) + var(--ow-sky-lane)), calc(var(--ow-first-height) * .51));
+        --ow-island-width: clamp(160px, calc((var(--ow-first-height) - var(--ow-island-top) - 65px) / .57), min(65cqw, 360px));
+        --ow-shore-horizon: calc(var(--ow-island-top) + var(--ow-island-width) * .475 - var(--ow-horizon-blend) - 4px);
+        --ow-boat-left: max(var(--ow-left), 11cqw);
+    }
+
+    #ocean-journey .ow-island-mascot {
+        --ow-avatar-width: clamp(57px, 18cqw, 78px);
+        left: calc(50% - var(--ow-avatar-width) / 2);
+        top: calc(77% - var(--ow-avatar-width) * 1.06);
+    }
+    #ocean-journey .ow-island-mascot .buddy-shadow { left: 24%; bottom: 5%; width: 52%; height: 12%; }
+    #ocean-journey .ow-boat-anchor { --ow-avatar-width: calc(var(--ow-boat-width) * .38); }
+    #ocean-journey .ow-seabirds {
+        left: var(--ow-left);
+        top: calc(var(--ow-dashboard-end, 240px) + 5px);
+        width: min(59cqw, calc((var(--ow-sky-lane) - 4px) / .26), 248px);
+    }
+}
+
+@media (width < 768px) and (orientation: portrait), (width < 1024px) and (orientation: landscape) and (height < 480px) {
+    #ocean-journey .ow-seabirds { color: #245b73; opacity: .86; }
+    html[data-theme="dark"] #ocean-journey .ow-seabirds { color: #c0e5fb; opacity: .84; }
+
+    /* Keep the opening shoreline clear and space the scenery along the voyage. */
+    .ocean-home .ocean-backdrop-boat-track:not(.ocean-backdrop-boat-track--4, .ocean-backdrop-boat-track--5) { display: none; }
+    .ocean-home .ocean-backdrop-boat-track--4 { left: 109cqw; --sail-from: -10px; --sail-to: 12px; }
+    .ocean-home .ocean-backdrop-boat-track--5 { left: 189cqw; }
+    .ocean-home .ocean-backdrop-boat-track { top: calc(var(--sea-level) - var(--boat-width) * .48 + 18px); }
+}
+
+@media (width >= 768px), (orientation: landscape) and (height < 480px) {
+    .smart-journey .ocean-home #ocean-journey {
+        --ow-island-width: min(760px, 54cqw, calc(var(--ow-first-height) * 1.23));
+        --ow-island-x: clamp(var(--ow-left), 47cqw, calc(100cqw - var(--ow-island-width) * 1.025 - var(--ow-right)));
+        --ow-shore-horizon: calc(var(--ow-first-height) * .62);
+        /* The painted shoreline starts 47.5% of the artwork width below its top. */
+        --ow-island-top: max(calc(var(--ow-first-height) * .27),
+            calc(var(--ow-shore-horizon) + var(--ow-horizon-blend) + 12px - var(--ow-island-width) * .475));
+        --ow-boat-width: min(clamp(140px, 17cqw, 250px), calc(var(--ow-water-depth) * .87));
+        --ow-boat-left: max(var(--ow-left), calc(var(--ow-island-x) + var(--ow-island-width) * .17 - var(--ow-boat-width) * .88));
+        --ow-boat-depth: min(calc(var(--ow-water-depth) - 20px),
+            max(calc(var(--ow-boat-width) * .45 + 38px), min(144px, calc(var(--ow-water-depth) * .48))));
+    }
+    #ocean-journey :is(.journey-sun, .journey-moon) { left: 82%; top: calc(var(--ow-first-height) * .25); width: clamp(44px, 4.5cqw, 70px); }
+}
+
+@media (width >= 1024px) and (height >= 768px) {
+    .ocean-home { --ow-travel-height: max(2000px, calc(var(--ow-height) * 2.9)); }
+    #ocean-journey .ow-island-mascot { --ow-avatar-width: 112px; }
+}
+
+@media (width < 1024px) and (orientation: landscape) and (height < 480px) {
+    .smart-journey .ocean-home #ocean-journey {
+        --ow-island-width: min(42cqw, calc(var(--ow-first-height) * 1.02), 360px);
+        --ow-island-x: calc(100cqw - var(--ow-island-width) - var(--ow-right));
+        --ow-island-top: calc(var(--ow-shore-horizon) + var(--ow-horizon-blend) + 4px - var(--ow-island-width) * .475);
+        --ow-boat-width: min(clamp(90px, 14cqw, 132px), calc(var(--ow-water-depth) * .97));
+        --ow-boat-left: 48cqw;
+        --ow-boat-depth: calc(var(--ow-water-depth) * .72);
+    }
+    #ocean-journey .ow-island-mascot {
+        --ow-avatar-width: clamp(56px, 10cqw, 70px);
+        left: calc(50% - var(--ow-avatar-width) / 2);
+    }
+    #ocean-journey .ow-seabirds { left: 53%; top: 7%; width: min(25cqw, 220px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #ocean-journey .hero-sun-rays { animation: none; }
+}
+
+/* Painted water matches the illustrated learning sea and uses the same crop in both renderers. */
+/* The heading leads the hero; retain this rule for already compiled Home views. */
+.ocean-home .ow-intro>.cv-eyebrow{display:none}
+.smart-journey .ocean-home .ow-intro{padding-top:clamp(16px,2.7vh,24px)}
+.smart-journey .ocean-home .ow-intro h1{margin:0}
+.smart-journey .ocean-home .cv-home .ow-intro>p:not(.cv-eyebrow){margin:20px 0 0}
+.smart-journey .ocean-home .ow-intro-actions{margin-top:24px}
+/* Use the navbar's shared liquid material, including its night and solid
+   fallbacks, on the existing departure link and its behavioral hooks. */
+html[data-theme] .ocean-home .ow-intro-actions .ns-button--primary{
+ min-height:56px;padding:14px 24px;gap:20px;border-radius:28px;
+ background:var(--ns-liquid-bg);border-color:var(--ns-liquid-border);color:var(--ns-liquid-ink);
+ box-shadow:var(--ns-liquid-shadow),0 6px 24px #173e5612;
+ -webkit-backdrop-filter:var(--ns-liquid-filter);backdrop-filter:var(--ns-liquid-filter);
+ font-size:15px;font-weight:600
+}
+html[data-theme] .ocean-home .ow-intro-actions .ns-button--primary:focus-visible{outline-color:var(--ns-liquid-ink)}
+@media(hover:hover) and (pointer:fine){
+ html[data-theme] .ocean-home .ow-intro-actions .ns-button--primary:hover{
+  background:var(--ns-liquid-control);border-color:var(--ns-liquid-control-border);color:var(--ns-liquid-ink)
+ }
+}
+@media(width < 768px){
+ .smart-journey .ocean-home .ow-intro{padding-top:16px}
+ .smart-journey .ocean-home .cv-home .ow-intro>p:not(.cv-eyebrow){margin-top:16px}
+ .smart-journey .ocean-home .ow-intro-actions{margin-top:20px}
+ html[data-theme] .ocean-home .ow-intro-actions .ns-button--primary{min-height:52px;padding:12px 20px;font-size:14px;gap:16px}
+}
+@media(forced-colors:active){
+ html[data-theme] .ocean-home .ow-intro-actions .ns-button--primary{background:ButtonFace;border-color:ButtonText;color:ButtonText;box-shadow:none;backdrop-filter:none}
+}
+.ocean-home .ow-sea{
+ background:linear-gradient(180deg,#77e3e3,#10bbd6 30%,#0089bd);
+ -webkit-mask-image:linear-gradient(to bottom,transparent,#000 var(--ow-horizon-blend));
+ mask-image:linear-gradient(to bottom,transparent,#000 var(--ow-horizon-blend));
+}
+/* The painted wave volumes replace the old flat wave bands and line grid. */
+.ocean-home .ow-swell,.ocean-home .ow-water-lines{display:none}
+.ocean-home .ow-swell-drift{animation:none;background:none;will-change:auto}
+.ow-water-detail{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;user-select:none;contain:layout paint}
+/* A narrow waterline and low-contrast distant ripples replace the broad fog
+   gap. The same blend covers the GPU material and its static fallback. */
+.ocean-home .ow-water-detail:after{content:'';position:absolute;inset:0 0 auto;height:clamp(40px,7vh,64px);background:linear-gradient(#d9e6dfeb,#c0e7e77a 35%,#ade5e426 70%,transparent);pointer-events:none}
+.ocean-home .ow-distance{opacity:.45;-webkit-mask-image:linear-gradient(#000 76%,transparent);mask-image:linear-gradient(#000 76%,transparent)}
+/* Place the immersed keel below the horizon's blend, with the contact line
+   covering its lower edge. Large independent bobbing exposes a gap at this scale. */
+.ocean-home .ocean-backdrop-boat-track{top:calc(var(--sea-level) - var(--boat-width) * .48 + 30px)}
+.ocean-home .ocean-backdrop-boat{--boat-bob:.35px;--boat-roll:.65deg;clip-path:inset(0 0 10%)}
+.ocean-home .ocean-backdrop-boat-water>ellipse{opacity:.28}
+.ocean-home .ocean-backdrop-boat-contact path:first-child{opacity:.42}
+.ocean-home .ocean-backdrop-boat-contact path:last-child{opacity:.85;stroke-width:1.8}
+/* The material owns wave motion; the older looping foam sheets would slide
+   independently across it during the voyage. */
+.ocean-home :is(.ow-sea-mist,.ow-sea-foam){display:none}
+.ow-water-surface{position:absolute;inset:0;background:url('/images/journey/home-ocean-painted-v2.webp') center/100% 100% no-repeat}
+.ow-water-live,.ow-water-foam{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none}
+.ow-water-detail[data-water-renderer="webgl"] .ow-water-surface{opacity:0}
+.ow-water-detail:not([data-water-renderer="webgl"]) :is(.ow-water-live,.ow-water-foam){visibility:hidden}
+.ocean-home .ow-sun-path{z-index:2;left:calc(var(--journey-light-x,82%) - 16%);width:32%;opacity:.10;clip-path:none;background:radial-gradient(ellipse 40% 100% at 50% 0,#fff3c975,transparent 85%)}
+.ocean-home .ow-sea:before{z-index:6;opacity:.85}
+.ocean-home .ow-sea:after{z-index:5}
+.ocean-home .hero-water-glints{display:none}
+.ocean-home .hero-water-glints span{animation:none}
+/* Reflections follow the shared sun/moon transition; dark water keeps its detail. */
+html[data-theme="dark"] .ocean-home .ow-sea:after{background:linear-gradient(#0b3855b8,#062b49c4)}
+html[data-theme="dark"] .ocean-home .ow-water-detail:after{background:linear-gradient(#668c9c99,#86bac52b 55%,transparent)}
+@media(width < 768px){
+ .ow-water-surface{background-size:cover;background-position:66% 50%}
+}
+@media(prefers-reduced-motion:reduce){
+ .ow-water-live,.ow-water-foam{display:none}
+ .ow-water-detail[data-water-renderer] .ow-water-surface{opacity:1}
+}

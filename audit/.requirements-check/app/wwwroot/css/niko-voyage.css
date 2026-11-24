@@ -1,0 +1,171 @@
+.ow-island-mascot{position:absolute;width:100px;height:115px;left:39%;top:39%;z-index:3}
+.voyage-oar{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;transform-origin:68% 49%;transition:transform .4s ease}
+
+/* Rowing State (Sailing across the sea) */
+[data-voyage="rowing"] .voyage-oar{animation:niko-row 1.5s ease-in-out infinite}
+[data-voyage="rowing"] .buddy-upper{animation:niko-row-body 1.5s ease-in-out infinite!important}
+[data-voyage="rowing"] .arm-left{animation:niko-row-left 1.5s ease-in-out infinite!important}
+[data-voyage="rowing"] .arm-right{animation:niko-row-right 1.5s ease-in-out infinite!important}
+
+/* Illustrated Mascot Rowing Avatar Switches */
+[data-voyage="rowing"] .buddy-avatar-idle,
+.ow-scene[data-voyage="rowing"] .buddy-avatar-idle {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(.92);
+}
+
+[data-voyage="rowing"] .buddy-avatar-rowing,
+.ow-scene[data-voyage="rowing"] .buddy-avatar-rowing {
+    opacity: 1 !important;
+    pointer-events: auto;
+    transform-origin: 68% 70%;
+    animation: nimo-row-stroke 1.5s ease-in-out infinite !important;
+}
+
+/* The rowing illustration already includes the paddle held in both hands.
+   Hide the loose boat oar only while that illustration is on board. */
+[data-voyage="rowing"]:has(.buddy-avatar-rowing) .voyage-oar{visibility:hidden}
+@keyframes nimo-row-stroke{
+    0%,100%{transform:translate(0,0) rotate(-7deg)}
+    22%{transform:translate(0,2%) rotate(-3deg)}
+    55%{transform:translate(-2%,1%) rotate(8deg)}
+    78%{transform:translate(-1%,-1%) rotate(2deg)}
+}
+.ow-scene.ow-motion-paused[data-voyage="rowing"] .buddy-avatar-rowing,
+body.voyage-paused [data-voyage="rowing"] .buddy-avatar-rowing{animation-play-state:paused!important}
+
+/* Boat Hull Rocking during Rowing */
+[data-voyage="rowing"] .ow-boat-idle,
+.ow-scene[data-voyage="rowing"] .ow-boat-idle {
+    animation: nimo-boat-rock 1.5s ease-in-out infinite !important;
+}
+
+/* Keep one paddle cadence while scrolling; changing CSS duration remaps its phase. */
+
+/* ========================================================
+   Docked at Course Harbor State (User Screenshot 2)
+   ======================================================== */
+[data-voyage="docked"] .buddy-avatar-idle,
+.ow-scene[data-voyage="docked"] .buddy-avatar-idle{opacity:1;animation:none}
+.ow-scene[data-voyage="docked"] .buddy-idle-motion{animation-name:nimo-shore-breathe}
+[data-voyage="docked"] .buddy-avatar-rowing,
+.ow-scene[data-voyage="docked"] .buddy-avatar-rowing{opacity:0;animation:none}
+[data-voyage="docked"] .voyage-oar,
+.ow-scene[data-voyage="docked"] .voyage-oar{animation:none;transform:rotate(-6deg) translateY(0)}
+[data-voyage="docked"] .ow-boat-idle,
+.ow-scene[data-voyage="docked"] .ow-boat-idle{animation:nimo-boat-idle 4.8s ease-in-out infinite}
+
+.voyage-cloud-boat{position:absolute;z-index:4;left:calc(50% - 105px);top:34%;width:210px;height:123px;pointer-events:none}
+.voyage-hull{position:relative;z-index:2;width:100%;height:auto}
+.voyage-seat{position:absolute;width:85px;height:98px;left:calc(48% - 42.5px);top:calc(38% - 98px);z-index:1}
+.voyage-arrival-boat{position:absolute;width:180px;pointer-events:none;opacity:0;z-index:3}.voyage-arrival-boat.has-arrived{opacity:1}
+.voyage-arrival-boat .voyage-seat{width:70px;height:81px;left:calc(48% - 35px);top:calc(38% - 81px)}
+.voyage-paused [data-voyage="rowing"] *, .voyage-paused .buddy-idle-motion,.ow-motion-paused .ow-boat-idle,.ow-motion-paused .voyage-oar,.ow-motion-paused .buddy-avatar-rowing,.ow-motion-paused .buddy-avatar-idle,.ow-motion-paused .ow-wake {animation-play-state:paused!important}
+.ow-boat-idle { animation:nimo-boat-idle 4.8s ease-in-out infinite; }
+@keyframes nimo-boat-idle { 0%,100%{transform:translateY(1px) rotate(-.55deg)}50%{transform:translateY(-1.2px) rotate(.55deg)} }
+
+/* ========================================================
+   Rowing Keyframe Animations
+   ======================================================== */
+@keyframes niko-row{
+    0%{transform:rotate(-16deg) translateY(-4px)}
+    22%{transform:rotate(-2deg) translateY(5px) scaleY(1.02)}
+    50%{transform:rotate(16deg) translateY(3px)}
+    75%{transform:rotate(4deg) translateY(-2px)}
+    100%{transform:rotate(-16deg) translateY(-4px)}
+}
+
+@keyframes niko-row-body{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg) translateY(3px)}}
+@keyframes niko-row-left{0%,100%{transform:rotate(50deg)}50%{transform:rotate(15deg)}}
+@keyframes niko-row-right{0%,100%{transform:translate(-5px,28px) rotate(-30deg)}50%{transform:translate(3px,35px) rotate(8deg)}}
+
+/* Nimo Mascot Paddle Stroke Animation */
+@keyframes nimo-paddle-stroke{
+    0%{transform:translateY(-2px) rotate(-9deg) scale(.98,1.02)}
+    22%{transform:translateY(6px) rotate(-3deg) scale(1.02,.98)}
+    50%{transform:translateY(-5px) rotate(10deg) scale(.97,1.03)}
+    75%{transform:translateY(-2px) rotate(3deg) scale(1,1)}
+    100%{transform:translateY(-2px) rotate(-9deg) scale(.98,1.02)}
+}
+
+/* Boat Rocking during Rowing */
+@keyframes nimo-boat-rock{
+    0%,100%{transform:translateY(var(--nimo-bob,.8px)) rotate(calc(-1 * var(--nimo-roll,.5deg)))}
+    50%{transform:translateY(calc(-1 * var(--nimo-bob,.8px))) rotate(var(--nimo-roll,.5deg))}
+}
+
+@media(max-width:700px){.ow-island-mascot{width:77px;height:89px;top:33%;left:38%}}
+@media(prefers-reduced-motion:reduce){[data-voyage="rowing"] *{animation:none!important}}
+@media(prefers-reduced-motion:reduce){[data-voyage="rowing"] .buddy-avatar-rowing,.ow-scene[data-voyage="rowing"] .buddy-avatar-rowing{animation:none!important;transform:none}}
+@media(prefers-reduced-motion:reduce){.ow-boat-idle,.buddy-idle-motion{animation:none!important;transform:none!important}}
+
+[data-voyage="rowing"] .buddy-book{display:none!important}
+
+/* The legacy CSS mascot is retained for script compatibility, but is fully
+   hidden behind the illustrated Nimo. Do not animate its invisible rig. */
+.ocean-home .nimo-buddy .buddy-upper,
+.ocean-home .nimo-buddy .buddy-upper * { animation:none!important; transition:none!important; }
+.voyage-cloud-boat{z-index:1}
+
+/* Back gunwale -> seated mascot -> front hull -> oar. All share one viewport. */
+.ow-boat-idle,.archipelago-boat,.voyage-cloud-boat,.voyage-arrival-boat{background:url('/images/journey/rowing-back.svg') center/100% 100% no-repeat;isolation:isolate}
+.ow-boat-idle .ow-boat-anchor,.archipelago-boat .voyage-seat,.voyage-cloud-boat .voyage-seat,.voyage-arrival-boat .voyage-seat{top:auto!important;bottom:38%;z-index:1}
+.voyage-hull{display:block}
+
+/* Slightly larger on the home shore and in the same boat, preserving the feet position. */
+.ocean-home .ow-island-mascot{width:112px;height:129px;left:calc(39% - 6px);top:calc(39% - 14px)}
+.ocean-home .ow-boat-anchor{width:112px;height:129px;left:calc(48% - 56px)}
+.ocean-home .ow-jump-anchor{position:absolute;top:0;left:0;z-index:8;will-change:transform}
+.ocean-home .ow-jump-anchor .buddy-shadow{opacity:0}
+/* The PNG has transparent space beneath its feet; keep its shadow at contact. */
+.ocean-home .ow-island-mascot .buddy-shadow{left:35px;bottom:20px;width:130px;height:14px;background:radial-gradient(ellipse,rgba(117,84,36,.32),transparent 70%)}
+.ocean-home .ow-island-mascot .buddy-idle-motion{animation-name:nimo-shore-breathe;transform-origin:50% 90%}
+@keyframes nimo-shore-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.012,.994)}}
+@media(max-width:700px){
+ .ocean-home .ow-island-mascot{width:86px;height:99px;left:calc(38% - 4.5px);top:calc(33% - 10px)}
+ .ocean-home .ow-boat-anchor{width:86px;height:99px;left:calc(48% - 43px)}
+}
+
+/* Dedicated illustrated poses are only active during the reversible transfer.
+   Keep the existing idle and rowing illustrations as the fallback. */
+.ocean-home .buddy-pose-image{opacity:0;pointer-events:none;transition:opacity 140ms ease-in-out;filter:none}
+.ocean-home .skill-buddy[data-voyage-pose] .buddy-avatar-idle,
+.ocean-home .skill-buddy[data-voyage-pose] .buddy-avatar-rowing{opacity:0!important;transition:opacity 140ms ease-in-out}
+.ocean-home .skill-buddy[data-voyage-pose="crouch"] .buddy-pose-crouch,
+.ocean-home .skill-buddy[data-voyage-pose="jump"] .buddy-pose-jump{opacity:1}
+.ocean-home .skill-buddy[data-voyage-pose] .buddy-reaction-mark{opacity:0}
+@media(prefers-reduced-motion:no-preference){
+ .ocean-home .ow-scene[data-voyage="shore"]:not(.ow-motion-paused) .skill-buddy[data-wave-ready="true"][data-posing="wave"]:not([data-voyage-pose]) .buddy-avatar-idle{opacity:0}
+ .ocean-home .ow-scene[data-voyage="shore"]:not(.ow-motion-paused) .skill-buddy[data-wave-ready="true"][data-posing="wave"]:not([data-voyage-pose]) .buddy-pose-wave{opacity:1}
+ .ocean-home .ow-scene[data-voyage="shore"]:not(.ow-motion-paused) .skill-buddy[data-wave-ready="true"][data-posing="wave"]:not([data-voyage-pose]) .buddy-reaction-mark{opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+ .ocean-home .buddy-pose-image{transition:none}
+}
+/* Contact shadow sits directly below the mascot's feet on the shore. */
+.ocean-home .ow-island-mascot .buddy-shadow {
+    left: 47px;
+    bottom: 31px;
+    width: 110px;
+    height: 10px;
+    background: radial-gradient(ellipse at center, rgba(105, 74, 39, .38), rgba(105, 74, 39, .16) 42%, transparent 72%);
+}
+/* A large cyan drop shadow on each moving bitmap looked like a gap beneath
+   the feet and required an expensive filter on every animation frame. */
+.ocean-home .skill-buddy .buddy-avatar-img { filter: none; }
+.ocean-home .ow-island-mascot .buddy-idle-motion { transform-origin: 50% 96%; }
+
+/* Hide the starting positions until the entrance is ready; without JavaScript
+   or when motion is reduced, the regular shore scene remains visible. */
+.ow-arrival-pending .ocean-home .ow-vessel,
+.ow-arrival-pending .ocean-home .ow-island-mascot #nextskill-agent { visibility:hidden; }
+.ow-arrival-motion { position:relative; }
+.ow-scene[data-arrival="rowing"] .ow-boat-idle {
+    animation: nimo-arrival-rock 1.5s ease-in-out infinite !important;
+}
+@keyframes nimo-arrival-rock {
+    0%, 100% { transform: translateY(.8px) rotate(-.5deg); }
+    50% { transform: translateY(-.8px) rotate(.5deg); }
+}
+

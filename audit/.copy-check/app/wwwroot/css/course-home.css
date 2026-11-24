@@ -1,0 +1,136 @@
+/* Course home: Bootstrap owns the responsive columns; these rules add our visual identity.
+   Loaded after the shared game and character styles, scoped to this view only. */
+.course-home {
+    --bs-body-font-family: Manrope, "Segoe UI", Tahoma, sans-serif;
+    --bs-body-color: var(--game-ink);
+    --bs-link-color: var(--game-accent);
+}
+.game-theme.course-home {
+    background-color: #f2f6f0;
+    background-image: url('../home-landscape.svg'), linear-gradient(180deg, #e8f2ef 0%, #f7f8f1 55%, #eef4e9 100%);
+    background-size: 100% 100vh, 100% 100vh;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.course-home .site-header { background: #ffffffed; }
+.course-home .buddy-arrival { background: #edf5e8; }
+.course-home .arrival-copy h2 { margin: 0; }
+.course-home .arrival-actions { margin-top: 12px; }
+.course-home.path-first .welcome h1 { margin: 0; }
+.course-home.path-first .streak-card { padding-bottom: 20px; }
+.course-home.path-first .quests-card .quest:first-of-type { margin-top: 20px; }
+.course-home.path-first .journey-steps { margin-top: 28px; }
+.course-home .league-card .leaderboard { margin-top: 16px; }
+.course-home .companion-invite-portrait { display: none; }
+.course-home .home-footer { margin-top: 32px; }
+.course-home.path-first .page-container { max-width: 1440px; padding-top: 32px; }
+.course-home.path-first .welcome { margin-bottom: 24px; }
+.course-home.path-first .welcome h1 { font-size: clamp(26px, 2.4vw, 34px); letter-spacing: -1.1px; }
+.course-home.path-first .welcome .eyebrow { font-size: 10px; letter-spacing: 1.3px; }
+.course-home.path-first .welcome h1+p { font-size: 14px; margin-top: 8px; }
+.course-home .preview-label { font-size: 12px; }
+.course-home .dashboard-grid.row {
+    display: flex; flex-direction: row; gap: 0; align-items: flex-start;
+    --bs-gutter-x: 28px; --bs-gutter-y: 24px;
+    margin-top: 0;
+}
+.course-home .dashboard-grid.row>* { margin-top: 0; }
+.course-home .main-column { gap: 22px; }
+.course-home .sidebar { display: flex; flex-direction: column; gap: 20px; }
+.course-home .sidebar>section { width: 100%; }
+.course-home .buddy-arrival { padding: 14px 24px; margin-bottom: 28px; background: #edf4ef; }
+.course-home .arrival-character { flex-basis: 90px; width: 90px; height: 110px; }
+.course-home .arrival-copy h2 { font-size: clamp(17px, 1.6vw, 21px); }
+.course-home .arrival-copy p { font-size: 14px; }
+.course-home .arrival-kicker { font-size: 10px; }
+.course-home .arrival-actions { margin-top: 8px; }
+.course-home.path-first .chapter-brief { flex-wrap: wrap; gap: 16px; padding: 24px; background: white; }
+.course-home .chapter-copy { flex: 1; min-width: 0; }
+.course-home .chapter-copy .eyebrow { font-size: 9px; }
+.course-home .chapter-copy h2 { font-size: clamp(20px, 2vw, 26px); }
+.course-home .chapter-copy>p:last-child { font-size: 13px; line-height: 1.8; margin-top: 5px; }
+.course-home .chapter-progress { width: 140px; padding-left: 0; }
+.course-home .chapter-progress label { font-size: 11px; }
+.course-home .course-resume {
+    display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    flex: 0 0 100%; padding-top: 20px; margin-top: 4px; border-top: 1px solid var(--game-line);
+}
+.course-home .course-resume>div { display: flex; flex-direction: column; gap: 4px; }
+.course-home .resume-label { font-size: 12px; color: var(--game-muted); }
+.course-home .course-resume strong { font-size: 19px; color: var(--game-ink); line-height: 1.5; }
+.course-home .resume-description { font-size: 13px; color: var(--game-muted); }
+.course-home .resume-button { min-width: 140px; min-height: 48px; font-size: 15px; flex-shrink: 0; }
+.course-home .btn.button-primary:focus-visible { box-shadow: none; outline: 3px solid var(--game-accent); outline-offset: 4px; }
+.course-home.path-first .journey-card { padding: 26px 24px 0; }
+.course-home.path-first .journey-card .section-heading h2 { font-size: clamp(23px, 2.2vw, 29px); }
+.course-home .section-heading .eyebrow { font-size: 10px; }
+.course-home.path-first .map-subtitle { font-size: 14px; line-height: 1.7; }
+.course-home .mission-strip { padding: 13px 14px; flex-wrap: wrap; row-gap: 5px; }
+.course-home .mission-strip>span:nth-child(2) { font-size: 9px; }
+.course-home .mission-strip>strong { font-size: 13px; }
+.course-home .mission-time,.course-home .mission-xp { font-size: 11px; }
+.course-home.path-first .level-label { font-size: 13px; }
+.course-home.path-first .current .level-label { font-size: 14px; }
+.course-home.path-first .level-caption { font-size: 11px; top: 116px; }
+.course-home .guide-message strong { font-size: 12px; }
+.course-home .guide-message>span { font-size: 11px; line-height: 1.6; }
+.course-home.path-first .checkpoint h3 { font-size: 16px; }
+.course-home.path-first .checkpoint p { font-size: 12px; line-height: 1.7; }
+.course-home.path-first .checkpoint .reward-kicker { font-size: 9px; }
+.course-home .quest h3 { font-size: 13px; }
+.course-home .quest-top>span,.course-home .quest-bottom>span { font-size: 11px; }
+.course-home .section-description { font-size: 13px; line-height: 1.7; }
+.course-home .companion-invite h2 { font-size: 20px; line-height: 1.5; }
+.course-home .companion-invite-copy>p:last-of-type { font-size: 12px; }
+.course-home .companion-open-button { min-height: 40px; font-size: 12px; }
+.course-home .member-name,.course-home .leaderboard strong { font-size: 13px; }
+.course-home .text-button { min-height: 40px; font-size: 12px; }
+.course-home .home-footer { font-size: 12px; }
+.course-home .home-dialog { margin: auto; }
+.course-home ol.leaderboard { padding-left: 0; margin-bottom: 0; }
+.course-home .nav-link { line-height: inherit; }
+@media (max-width:1199.98px) and (min-width:992px) {
+    .course-home .chapter-progress { flex-basis: 100%; }
+    .course-home .quest-top { flex-wrap: wrap; }
+}
+@media (max-width:991.98px) {
+    .course-home .sidebar { margin-top: 24px !important; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: start; }
+    .course-home .chapter-progress { width: 155px; }
+}
+@media (max-width:600px) {
+    .game-theme.course-home { background-size: auto 100svh, 100% 100svh; background-position: center top; }
+    .course-home.path-first .page-container { padding: 24px 18px 0; }
+    .course-home .dashboard-grid.row { --bs-gutter-x: 20px; }
+    .course-home .sidebar { display: flex; }
+    .course-home .buddy-arrival { padding: 16px; gap: 12px; }
+    .course-home .arrival-character { flex-basis: 62px; width: 62px; height: 96px; }
+    .course-home .arrival-copy p { font-size: 13px; }
+    .course-home .arrival-actions { flex-wrap: wrap; gap: 6px; }
+    .course-home.path-first .chapter-brief { padding: 20px 18px; }
+    .course-home .chapter-icon { width: 40px; height: 44px; }
+    .course-home .chapter-copy .eyebrow { font-size: 8px; letter-spacing: .7px; }
+    .course-home .chapter-copy>p:last-child { font-size: 12px; }
+    .course-home .chapter-progress { flex-basis: 100%; }
+    .course-home .course-resume { flex-wrap: wrap; gap: 16px; padding-top: 16px; }
+    .course-home .resume-button { width: 100%; }
+    .course-home.path-first .journey-card { padding: 22px 16px 0; }
+    .course-home .mission-time { margin-left: 0; }
+    /* Small screens use a vertical trail so lesson names never collide. */
+    .course-home.path-first .journey-steps { height: 480px; margin-top: 110px; margin-bottom: 22px; }
+    .course-home .game-map-path { display: none; }
+    .course-home.path-first .journey-steps::before { display: block; content: ''; position: absolute; top: 30px; bottom: 35px; left: 32px; width: 5px; height: auto; background: linear-gradient(#a5c692 0 45%,#e1e7df 45%); border-radius: 4px; }
+    .course-home.path-first .journey-step { width: 100%; height: 70px; left: 0; transform: none; }
+    .course-home .step-1 { top: 0; }
+    .course-home .step-2 { top: 98px; }
+    .course-home .step-3 { top: 196px; }
+    .course-home .step-4 { top: 294px; }
+    .course-home .step-5 { top: 392px; }
+    .course-home.path-first .level-node { position: absolute; left: 0; top: 0; }
+    .course-home.path-first .level-label { top: 10px; left: 84px; right: 0; text-align: left; font-size: 12px; line-height: 1.4; }
+    .course-home.path-first .current .level-label { font-size: 13px; }
+    .course-home.path-first .level-caption { top: 48px; left: 84px; right: 0; text-align: left; font-size: 11px; }
+    .course-home.path-first .start-bubble { left: 0; right: auto; transform: none; top: -28px; }
+    .course-home.path-first .checkpoint h3 { font-size: 14px; }
+    .course-home .guide-message strong { font-size: 11px; }
+    .course-home .guide-message>span { font-size: 10px; }
+}

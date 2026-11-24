@@ -1,0 +1,35 @@
+@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    var action = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    var home = controller == "Home" && action == "Index";
+    var catalog = controller == "Home" && (action == "Courses" || action == "Details") || controller == "Courses";
+    var learning = controller == "Learning";
+    var account = controller == "Account";
+    var authenticated = User.Identity?.IsAuthenticated == true;
+    var accountAction = User.IsInRole("Admin") ? "AdminDashboard" : "Dashboard";
+    var login = account && (action == "Login" || action == "AdminLogin");
+}
+<header class="ns-site-header">
+    <div class="ns-site-nav-inner">
+        <a class="ns-site-brand" asp-controller="Home" asp-action="Index" aria-label="NextSkill กลับหน้าแรก">
+            <svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><rect width="48" height="48" rx="15" fill="currentColor" /><path d="M12 32V17h6l13 15V17h6v16h-7L18 20v12Z" fill="#fff" /><path d="m28 8 10 1-1 9-4-4-7 7-4-4 8-7Z" fill="#ffda82" /></svg>
+            <span>NextSkill<small>เก่งขึ้น ในเส้นทางของคุณ</small></span>
+        </a>
+        <nav class="ns-site-nav" aria-label="เมนูหลัก">
+            <a asp-controller="Home" asp-action="Index" class="@(home ? "is-active" : null)" aria-current="@(home ? "page" : null)">หน้าแรก</a>
+            <a asp-controller="Home" asp-action="Courses" class="@(catalog ? "is-active" : null)" aria-current="@(catalog ? action == "Courses" ? "page" : "location" : null)">คอร์สเรียน</a>
+            <a asp-controller="Learning" asp-action="Entry" class="@(learning ? "is-active" : null)" aria-current="@(learning ? "location" : null)">@(authenticated ? "เรียนต่อ" : "เริ่มเรียน")</a>
+        </nav>
+        <nav class="ns-site-account" aria-label="บัญชีของคุณ">
+            @if (authenticated)
+            {
+                <a class="ns-site-profile @(account ? "is-active" : null)" asp-controller="Account" asp-action="@accountAction" aria-current="@(account && action == accountAction ? "page" : null)"><span class="ns-site-avatar" aria-hidden="true">@System.Globalization.StringInfo.GetNextTextElement(string.IsNullOrWhiteSpace(User.Identity?.Name) ? "N" : User.Identity.Name.Trim())</span><span>บัญชีของฉัน</span></a>
+                <form asp-controller="Account" asp-action="Logout" method="post"><button type="submit" class="ns-site-logout">ออกจากระบบ</button></form>
+            }
+            else
+            {
+                <a class="ns-button ns-button--secondary ns-button--compact" asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Learning/Entry" aria-current="@(login ? "page" : null)">เข้าสู่ระบบ <span aria-hidden="true">↗</span></a>
+            }
+        </nav>
+    </div>
+</header>

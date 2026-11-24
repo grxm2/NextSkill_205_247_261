@@ -14,8 +14,7 @@
     const next = find('[data-dashboard-next]');
     const format = new Intl.NumberFormat('th-TH');
     const goals = [...dashboard.querySelectorAll('[data-dashboard-goal]')];
-    const dailyGoals = find('#hd-daily-goals');
-    const mission = find('.hd-mission');
+    const mission = find('#hd-daily-goals');
     const missionDialog = find('#hd-mission-dialog');
     const missionTrigger = find('.hd-missions-trigger');
     const compact = matchMedia('(width < 768px), (orientation: landscape) and (height < 480px)');
@@ -24,7 +23,7 @@
 
     function openMissions(event) {
         if (!compact.matches) {
-            dailyGoals.focus({ preventScroll: true });
+            mission.focus({ preventScroll: true });
             return;
         }
         if (missionDialog.open) return;
@@ -71,23 +70,6 @@
         }
     }
 
-    function renderMission(course, upcoming, achievements) {
-        const firstAward = upcoming && !achievements.includes('first-lesson');
-        const isFinalLesson = upcoming && course.totalLessons - course.completedLessons.length === 1;
-        const courseAward = course.finalQuizReady;
-        const task = courseAward ? 'สอบท้ายคอร์ส' : !upcoming ? 'เริ่มคอร์สใหม่เพื่อสะสม XP' : isFinalLesson ? 'ผ่านบทสุดท้าย'
-            : course.completedLessons.length ? 'ผ่านบทถัดไป' : 'ผ่านบทแรก';
-        find('[data-dashboard-mission-task]').textContent = task;
-        find('[data-dashboard-rewards]').hidden = !(upcoming || courseAward);
-        if (!upcoming && !courseAward) return;
-
-        find('[data-dashboard-mission-xp]').textContent = courseAward ? 'โบนัสเมื่อสอบผ่าน' : `+${format.format(upcoming.xp)} XP จากบทเรียน`;
-        const medals = [firstAward && 'เหรียญบทเรียนแรก', courseAward && 'เหรียญจบคอร์ส'].filter(Boolean);
-        const badge = find('[data-dashboard-mission-badge]');
-        badge.hidden = medals.length === 0;
-        badge.querySelector('strong').textContent = medals.join(' · ');
-    }
-
     if (preview) dashboard.dataset.status = 'loading';
 
     dashboard.addEventListener('nextskill:dashboard-state', ({ detail: state }) => {
@@ -104,6 +86,8 @@
         find('[data-dashboard-overview]').hidden = !returning;
         find('[data-dashboard-stats]').hidden = !returning;
         find('[data-dashboard-actions]').hidden = !returning;
+        mission.hidden = missionTrigger.hidden = !returning || !state.activity;
+        if (mission.hidden && missionDialog.open) missionDialog.close();
         startLink.hidden = returning;
 
         if (!returning) {
@@ -114,8 +98,6 @@
         const completed = course.completedLessons.length;
         const upcoming = !course.hasFinishedLessons && (course.lessons.find(lesson => lesson.id === course.lastLessonId)
             ?? course.lessons.find(lesson => lesson.id === course.currentIslandId));
-        find('[data-dashboard-course-label]').textContent = course.isComplete ? 'คอร์สที่เรียนจบแล้ว'
-            : course.finalQuizReady ? 'พร้อมสอบท้ายคอร์ส' : completed ? 'คอร์สที่กำลังเรียน' : 'คอร์สที่เลือกไว้';
         find('[data-dashboard-preview]').hidden = !preview;
         courseLink.href = '/Learning/Island?' + new URLSearchParams({ courseId: course.courseId });
         resumeLink.href = course.finalQuizReady ? '/Learning/FinalQuiz?' + new URLSearchParams({ courseId: course.courseId })
@@ -133,8 +115,6 @@
         find('[data-dashboard-stat="complete"]').textContent = format.format(state.completedCourseCount);
         find('[data-dashboard-stat="xp"]').textContent = format.format(state.xp);
         find('[data-dashboard-streak]').hidden = !state.activity;
-        renderMission(course, upcoming, state.achievements);
-        dailyGoals.hidden = !state.activity;
         if (state.activity) {
             find('[data-dashboard-stat="streak"]').textContent = format.format(state.activity.streakDays);
             renderGoals(state.activity);

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 280" fill="none">
+  <defs>
+    <linearGradient id="inner-hull" x1="220" y1="97" x2="220" y2="182" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#BA7941"/><stop offset="1" stop-color="#824A2E"/>
+    </linearGradient>
+  </defs>
+  <g id="boat-back">
+    <path d="M92 111c65-34 190-36 272-9l-17 66-205 26Z" fill="#92552C"/>
+    <path d="M103 113c68-22 167-23 247-9l-10 47-195 32Z" fill="url(#inner-hull)"/>
+    <path d="M105 106c70-26 166-28 243-6" stroke="#D89D61" stroke-width="3" stroke-linecap="round"/>
+    <path d="M121 111c43-10 82-13 125-12m-104 30c51-12 117-16 185-10m-169 26c53-10 103-14 163-11" stroke="#714728" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+    <path d="m155 104 13 45m132-48-7 45" stroke="#CA8A4F" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+    <path d="m142 154 22-8 142-6 17 8-157 20Z" fill="#E3A456"/>
+    <path d="m165 168 158-20-1 9-154 22Z" fill="#B97434"/>
+    <path d="m166 162 139-17m-139 23 157-20" stroke="#F6C483" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+    <g fill="#89502E"><circle cx="169" cy="152" r="2.2"/><circle cx="300" cy="145" r="2.2"/></g>
+    <path d="M90 108c13-8 21-7 22 4l7 42-13 12Z" fill="#E7A153"/>
+    <path d="M350 100c10-6 18-5 18 6l-10 39-14-6Z" fill="#D89545"/>
+  </g>
+</svg>

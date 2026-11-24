@@ -28,24 +28,23 @@
     <div class="hd-overview" data-dashboard-overview hidden>
         <div class="hd-course-column">
             <section class="hd-current hd-glass" aria-label="คอร์สของคุณ" data-dashboard-active-course>
-                <div class="hd-card-top">
-                    <span data-dashboard-course-label>คอร์สที่กำลังเรียน</span>
+                <div class="hd-course-heading">
+                    <h2><a class="hd-course-link" data-dashboard-active-title data-continue-voyage></a></h2>
                     <span class="hd-trial" data-dashboard-preview title="ผลทดลองแยกจากบัญชีและเปิดได้จากเบราว์เซอร์นี้" hidden>ทดลองเรียน</span>
                 </div>
-                <h2><a class="hd-course-link" data-dashboard-active-title data-continue-voyage></a></h2>
                 <div class="hd-progress">
                     <div class="hd-ring" data-dashboard-ring aria-hidden="true"><strong data-dashboard-percent></strong></div>
                     <div class="hd-progress-copy">
                         <p data-dashboard-progress></p>
-                        <p class="hd-next-lesson" data-dashboard-next hidden><span data-dashboard-next-label>บทถัดไป</span> <strong data-dashboard-next-title></strong></p>
                         <progress class="hd-meter" data-dashboard-meter max="100" value="0" aria-label="ความคืบหน้าของคอร์สปัจจุบัน"></progress>
+                        <p class="hd-next-lesson" data-dashboard-next hidden><span data-dashboard-next-label>บทถัดไป</span> <strong data-dashboard-next-title></strong></p>
                     </div>
                 </div>
             </section>
             <div class="hd-actions" data-dashboard-actions hidden>
                 <a class="ns-button ns-button--primary" data-dashboard-resume><span data-dashboard-resume-label>เรียนต่อ</span><span aria-hidden="true">→</span></a>
                 <a class="ns-button ns-button--secondary" asp-controller="Home" asp-action="Courses" data-catalog-voyage>เลือกคอร์สใหม่</a>
-                <button class="hd-missions-trigger" type="button" aria-haspopup="dialog" aria-controls="hd-mission-dialog">
+                <button class="hd-missions-trigger" type="button" aria-haspopup="dialog" aria-controls="hd-mission-dialog" hidden>
                     <svg viewBox="0 0 32 26" fill="none" aria-hidden="true" focusable="false">
                         <path d="M4 12v8a3 3 0 0 0 3 3h18a3 3 0 0 0 3-3v-8Z" class="hd-chest-body" />
                         <path d="M4 12V9a6 6 0 0 1 6-6h12a6 6 0 0 1 6 6v3Z" class="hd-chest-lid" />
@@ -56,29 +55,22 @@
                 </button>
             </div>
         </div>
-        <section class="hd-mission hd-glass" aria-labelledby="hd-mission-title">
-            <h2 id="hd-mission-title" class="hd-card-top">ภารกิจ</h2>
-            <div class="hd-mission-target">
-                <p class="hd-mission-task" data-dashboard-mission-task></p>
-                <div class="hd-rewards" data-dashboard-rewards hidden>
-                    <span class="hd-reward"><span class="hd-icon hd-icon--lightning" aria-hidden="true"></span><strong data-dashboard-mission-xp></strong></span>
-                    <span class="hd-reward hd-reward--badge" data-dashboard-mission-badge hidden><span class="hd-icon hd-icon--trophy" aria-hidden="true"></span><strong></strong></span>
-                </div>
+        <section class="hd-mission hd-glass" id="hd-daily-goals" aria-labelledby="hd-mission-title" tabindex="-1" hidden>
+            <div class="hd-mission-heading">
+                <h2 id="hd-mission-title">ภารกิจวันนี้</h2>
+                <span class="hd-mission-summary"><span class="sr-only">สำเร็จแล้ว </span><span data-dashboard-goal-summary></span></span>
             </div>
-            <section class="hd-daily-goals" id="hd-daily-goals" aria-labelledby="hd-daily-goals-title" tabindex="-1" hidden>
-                <h3 id="hd-daily-goals-title">ภารกิจวันนี้ <span data-dashboard-goal-summary></span></h3>
-                <ul class="hd-missions">
-                    @foreach (var goal in LearningDailyGoals.All)
-                    {
-                        <li data-dashboard-goal="@goal.Key">
-                            <span>@goal.Title</span>
-                            <span class="hd-goal-state">
-                                <span class="hd-goal-check" aria-hidden="true" hidden></span><span data-dashboard-goal-count></span>
-                            </span>
-                        </li>
-                    }
-                </ul>
-            </section>
+            <ul class="hd-missions">
+                @foreach (var goal in LearningDailyGoals.All)
+                {
+                    <li data-dashboard-goal="@goal.Key">
+                        <span>@goal.Title</span>
+                        <span class="hd-goal-state">
+                            <span class="hd-goal-check" aria-hidden="true" hidden></span><span data-dashboard-goal-count></span>
+                        </span>
+                    </li>
+                }
+            </ul>
         </section>
     </div>
     <dialog class="hd-mission-dialog hd-glass" id="hd-mission-dialog" aria-labelledby="hd-mission-title">
