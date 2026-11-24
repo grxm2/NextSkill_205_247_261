@@ -114,6 +114,9 @@
                     <span>คลังเนื้อหาในระบบ</span>
                     <strong id="quota-text">@Model.Courses.Count คอร์ส · @Model.TotalLessons ด่าน</strong>
                 </div>
+                <div class="quota-progress-track" title="สัดส่วนคอร์สที่ตั้งเป็นคอร์สแนะนำ">
+                    <div class="quota-progress-fill" style="width: @Model.FeaturedShare%;"></div>
+                </div>
             </div>
 
             <div class="sidebar-account">
@@ -224,6 +227,9 @@
                                                     data-period="@(months)m" aria-pressed="@(months == defaultMonths ? "true" : "false")">@months เดือน</button>
                                         }
                                     </div>
+                                    <button type="button" class="admin-pill-btn primary" id="btn-chart-add-deal" style="padding: 6px 14px; font-size: 11.5px; margin-left: 6px;">
+                                        <span>+ สร้างคอร์สฉบับร่าง</span>
+                                    </button>
                                 </div>
                             </div>
 

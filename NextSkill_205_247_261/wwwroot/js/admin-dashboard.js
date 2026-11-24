@@ -114,6 +114,7 @@
     document.getElementById('hero-btn-new-course')?.addEventListener('click', () => {
         openCourseModal();
     });
+    document.getElementById('btn-chart-add-deal')?.addEventListener('click', () => openCourseModal());
     document.getElementById('hero-btn-upload-course')?.addEventListener('click', () => {
         document.getElementById('course-upload-modal')?.showModal();
     });

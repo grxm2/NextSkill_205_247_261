@@ -2,11 +2,18 @@
 @{
     Layout = "_AccountLayout";
     var admin = (string?)ViewData["Role"] == "Admin";
-    ViewData["Title"] = admin ? "สร้างบัญชีผู้ดูแล" : "สมัครบัญชีผู้เรียน";
+    const string emailHint = "กรอกอีเมลของคุณ เช่น name@example.com";
+    var passwordExample = $"ตั้งรหัสผ่านของคุณ (อย่างน้อย {RegisterForm.PasswordMinimumLength} ตัวอักษร)";
+    ViewData["Title"] = admin ? "สร้างบัญชีผู้ดูแล" : "สมัครสมาชิกใหม่";
 }
 
 <div class="auth-grid">
     <section class="auth-form nimo-auth-card" aria-labelledby="form-heading">
+        <div class="form-header-badge">
+            <span class="badge-dot" aria-hidden="true"></span>
+            <span>@(admin ? "NEW ADMIN · สิทธิ์ผู้ดูแล" : "START YOUR JOURNEY · เริ่มต้นก้าวแรก")</span>
+        </div>
+
         <h2 id="form-heading">@ViewData["Title"]</h2>
         <p class="form-intro">@(admin ? "สมัครด้วยรหัสเชิญจากผู้ดูแลระบบ" : "ใช้บัญชีนี้ลงทะเบียนคอร์สและบันทึกผลการเรียน")</p>
         
@@ -38,7 +45,7 @@
                             <circle cx="12" cy="7" r="4"/>
                         </svg>
                     </span>
-                    <input asp-for="FullName" autocomplete="name" required minlength="@RegisterForm.NameMinimumLength" maxlength="@RegisterForm.NameMaximumLength" />
+                    <input asp-for="FullName" autocomplete="name" placeholder="ระบุชื่อที่แสดงของคุณ" required minlength="@RegisterForm.NameMinimumLength" maxlength="@RegisterForm.NameMaximumLength" />
                 </div>
             </div>
 
@@ -51,8 +58,9 @@
                             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                         </svg>
                     </span>
-                    <input asp-for="Email" type="email" autocomplete="email" required maxlength="@RegisterForm.EmailMaximumLength" />
+                    <input asp-for="Email" type="email" autocomplete="email" placeholder="@emailHint" aria-describedby="auth-email-hint" required maxlength="@RegisterForm.EmailMaximumLength" />
                 </div>
+                <small id="auth-email-hint" class="auth-field-placeholder">@emailHint</small>
             </div>
 
             <div class="field">
@@ -64,7 +72,7 @@
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                         </svg>
                     </span>
-                    <input asp-for="Password" id="Password" type="password" autocomplete="new-password" required minlength="@RegisterForm.PasswordMinimumLength" maxlength="@RegisterForm.PasswordMaximumLength" aria-describedby="password-hint" />
+                    <input asp-for="Password" id="Password" type="password" autocomplete="new-password" placeholder="@passwordExample" required minlength="@RegisterForm.PasswordMinimumLength" maxlength="@RegisterForm.PasswordMaximumLength" aria-describedby="password-hint" />
                     <button class="password-toggle-eye" type="button" data-target="Password" aria-label="แสดง/ซ่อนรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true">
                             <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/>
@@ -72,6 +80,7 @@
                         </svg>
                     </button>
                 </div>
+                <small class="auth-field-placeholder">@passwordExample</small>
                 <small id="password-hint">ใช้อย่างน้อย @RegisterForm.PasswordMinimumLength ตัวอักษร</small>
             </div>
 
@@ -84,7 +93,7 @@
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                         </svg>
                     </span>
-                    <input asp-for="ConfirmPassword" id="ConfirmPassword" type="password" autocomplete="new-password" required maxlength="@RegisterForm.PasswordMaximumLength" />
+                    <input asp-for="ConfirmPassword" id="ConfirmPassword" type="password" autocomplete="new-password" placeholder="กรอกรหัสผ่านอีกครั้ง" required maxlength="@RegisterForm.PasswordMaximumLength" />
                     <button class="password-toggle-eye" type="button" data-target="ConfirmPassword" aria-label="แสดง/ซ่อนรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true">
                             <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/>

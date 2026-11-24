@@ -2,7 +2,8 @@
 @{
     Layout = "_AccountLayout";
     var admin = (string?)ViewData["Role"] == "Admin";
-    ViewData["Title"] = admin ? "เข้าสู่ระบบผู้ดูแล" : "เข้าสู่ระบบผู้เรียน";
+    const string emailHint = "กรอกอีเมลของคุณ เช่น name@example.com";
+    ViewData["Title"] = admin ? "เข้าสู่ระบบผู้ดูแล" : "ยินดีต้อนรับกลับมา";
     ViewData["AccountPageClass"] = "ns-login-page";
     ViewData["CompactAccountStory"] = true;
 }
@@ -52,8 +53,9 @@
                             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                         </svg>
                     </span>
-                    <input asp-for="Email" type="email" autocomplete="username" required maxlength="@RegisterForm.EmailMaximumLength" />
+                    <input asp-for="Email" type="email" autocomplete="username" placeholder="@emailHint" aria-describedby="auth-email-hint" required maxlength="@RegisterForm.EmailMaximumLength" />
                 </div>
+                <small id="auth-email-hint" class="auth-field-placeholder">@emailHint</small>
             </div>
 
             <div class="field">
@@ -65,7 +67,7 @@
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                         </svg>
                     </span>
-                    <input asp-for="Password" id="Password" type="password" autocomplete="current-password" required maxlength="@RegisterForm.PasswordMaximumLength" />
+                    <input asp-for="Password" id="Password" type="password" autocomplete="current-password" placeholder="••••••••" required maxlength="@RegisterForm.PasswordMaximumLength" />
                     <button class="password-toggle-eye" type="button" data-target="Password" aria-label="แสดง/ซ่อนรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true">
                             <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
