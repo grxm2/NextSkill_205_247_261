@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using NextSkill_205_247_261.Services;
+using System.Globalization;
 using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,6 +60,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         };
     });
 builder.Services.AddAuthorization();
+var authenticationWindow = TimeSpan.FromMinutes(1);
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -66,12 +68,16 @@ builder.Services.AddRateLimiter(options =>
         context.Connection.RemoteIpAddress?.ToString() ?? "local",
         _ => new FixedWindowRateLimiterOptions
         {
-            PermitLimit = 20, Window = TimeSpan.FromMinutes(1), QueueLimit = 08
+            PermitLimit = 20, Window = authenticationWindow, QueueLimit = 8
         }));
     options.OnRejected = async (context, token) =>
     {
-        context.HttpContext.Response.Headers.RetryAfter = "60";
-        await context.HttpContext.Response.WriteAsync("Too many attempts. Please try again in one minute.", token);
+        var wait = context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter)
+            ? retryAfter : authenticationWindow;
+        var response = context.HttpContext.Response;
+        response.Headers.RetryAfter = Math.Ceiling(wait.TotalSeconds).ToString(CultureInfo.InvariantCulture);
+        response.ContentType = "text/plain; charset=utf-8";
+        await response.WriteAsync("มีการส่งคำขอตรวจสอบบัญชีมากเกินไป กรุณารอสักครู่แล้วลองใหม่", token);
     };
 });
 var app = builder.Build();

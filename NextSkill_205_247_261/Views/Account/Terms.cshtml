@@ -1,9 +1,13 @@
-@{ Layout = "_AccountLayout"; ViewData["Title"] = "Terms & privacy"; }
+@{
+    Layout = "_AccountLayout";
+    ViewData["Title"] = "เงื่อนไขการใช้งานและนโยบายความเป็นส่วนตัว";
+}
 <article class="content-page legal-copy">
-    <h1>Terms of Use &amp; Privacy</h1>
-    <h2>Your account</h2><p>Use your own information when creating an account. Keep your password private and do not access accounts belonging to other people. Admin access requires an invitation from the system owner.</p>
-    <h2>Information stored</h2><p>This application stores your name, email, a password hash, account creation and terms acceptance times, last login time, and failed login information. These records are used to authenticate your account and control access. User and admin records are stored separately.</p>
-    <h2>Session cookies</h2><p>We use a session cookie to keep you logged in and security cookies to protect forms. Selecting “Remember me” keeps the login cookie after you close your browser. Log out on shared devices.</p>
-    <h2>Account changes</h2><p>Contact the person or organization operating this installation to request an account correction or deletion. This installation does not yet provide an account deletion or password reset screen.</p>
-    <a asp-action="Register">Back to create account</a>
+    <h1>เงื่อนไขการใช้งานและนโยบายความเป็นส่วนตัว</h1>
+    <h2>การใช้งานบัญชี</h2>
+    <p>ใช้ข้อมูลของตนเองเมื่อสมัคร เก็บรหัสผ่านไว้กับตนเอง และออกจากระบบเมื่อใช้เครื่องร่วมกับผู้อื่น ผู้ดูแลระบบสมัครผ่านรหัสเชิญที่ได้รับจากผู้ดูแลการติดตั้ง</p>
+    <h2>บทเรียนและใบประกาศ</h2>
+    <p>NextSkill ใช้ผลการเรียนและผลสอบเพื่อบันทึกความคืบหน้า และออกใบประกาศยืนยันการเรียนจบโดย NextSkill ตามเงื่อนไขของคอร์ส ชื่อผู้ให้บริการสื่อระบุแหล่งเรียนรู้ที่ใช้ประกอบบทเรียน</p>
+    <partial name="_PrivacyNotice" />
+    <a asp-action="Register">สมัครบัญชีผู้เรียน</a>
 </article>

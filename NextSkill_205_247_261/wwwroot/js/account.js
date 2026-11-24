@@ -862,7 +862,7 @@
                     <nav class="ns-navbar__menu" id="nextskill-main-menu" aria-label="เมนูหลัก">
                         <a class="ns-navbar__link" href="/"><span class="ns-navbar__icon ns-navbar__icon--home" aria-hidden="true"></span>หน้าแรก</a>
                         <a class="ns-navbar__link" href="/Home/Courses"><span class="ns-navbar__icon ns-navbar__icon--book" aria-hidden="true"></span>คอร์สเรียน</a>
-                        <a class="ns-navbar__link" href="/Learning/Island"><span class="ns-navbar__icon ns-navbar__icon--boat" aria-hidden="true"></span>เกาะของฉัน</a>
+                        <a class="ns-navbar__link" href="/Learning/Island"><span class="ns-navbar__icon ns-navbar__icon--boat" aria-hidden="true"></span>แผนที่บทเรียน</a>
                     </nav>
                     <div class="ns-navbar__account">
                         <button class="journey-theme-toggle" type="button" data-theme-toggle aria-label="ธีมกลางคืน" aria-pressed="false" title="เปิดธีมกลางคืน">

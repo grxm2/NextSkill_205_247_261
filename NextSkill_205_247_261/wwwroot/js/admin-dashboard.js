@@ -98,7 +98,7 @@
         });
         if (title && active.dataset.title) {
             title.textContent = active.dataset.title;
-            document.title = `${active.dataset.title} | NextSkill Admin`;
+            document.title = `${active.dataset.title} | NextSkill`;
         }
     }
 
@@ -112,9 +112,6 @@
 
     // Quick Hero Buttons
     document.getElementById('hero-btn-new-course')?.addEventListener('click', () => {
-        openCourseModal();
-    });
-    document.getElementById('btn-chart-add-deal')?.addEventListener('click', () => {
         openCourseModal();
     });
     document.getElementById('hero-btn-upload-course')?.addEventListener('click', () => {
@@ -346,41 +343,19 @@
     }
 
     function renderCoursesTable() {
-        if (!courseTableBody) return;
-        const q = (courseSearchInput?.value || '').trim().toLowerCase();
-        const cat = courseCategoryFilter?.value || '';
-
-        const filtered = courses.filter(c => {
-            const matchesQ = !q || (c.title && c.title.toLowerCase().includes(q)) || (c.instructor && c.instructor.toLowerCase().includes(q)) || (c.category && c.category.toLowerCase().includes(q));
-            const matchesCat = !cat || c.category.toLowerCase() === cat.toLowerCase();
-            return matchesQ && matchesCat;
+        const query = courseSearchInput.value.trim().toLowerCase();
+        const category = courseCategoryFilter.value.toLowerCase();
+        let count = 0;
+        courseTableBody.querySelectorAll('[data-course-row]').forEach(row => {
+            const data = row.dataset;
+            const matchesQuery = !query || [data.title, data.instructor, data.category, data.categoryLabel]
+                .some(text => text.toLowerCase().includes(query));
+            const matchesCategory = !category || data.category.toLowerCase() === category;
+            row.hidden = !(matchesQuery && matchesCategory);
+            if (!row.hidden) count++;
         });
-
-        courseTableBody.innerHTML = filtered.map(c => `
-            <tr data-course-row data-id="${c.id}">
-                <td><span class="status-badge">#${c.id}</span></td>
-                <td>
-                    <strong style="font-size: 14px; color: var(--nimo-navy);">${escapeHtml(c.title)}</strong>
-                    ${c.videoUrl ? '<span class="status-badge" style="background: rgba(14, 165, 233, 0.15); color: #0284c7; border: 1px solid #bae6fd; font-size: 11px; margin-left: 6px;" title="มีสื่อวิดีโอการเรียนรู้">▶ มีวิดีโอ</span>' : ''}
-                    <p style="margin: 3px 0 0; font-size: 12px; color: var(--nimo-muted); max-width: 320px; white-space: normal;">${escapeHtml(c.description || '')}</p>
-                </td>
-                <td><span class="status-badge published">${escapeHtml(c.category || '')}</span></td>
-                <td>${escapeHtml(c.level || '')}</td>
-                <td>${c.lessons.length} ด่าน</td>
-                <td>${escapeHtml(c.instructor || '')}</td>
-                <td>${c.isPublished ? '<span class="status-badge published">เผยแพร่แล้ว</span>' : '<span class="status-badge yellow">ฉบับร่าง</span>'}
-                    ${c.isPublished && c.featured ? '<span class="status-badge yellow">แนะนำ</span>' : ''}</td>
-                <td style="text-align: right; white-space: nowrap;">
-                    ${c.isPublished
-                        ? `<a href="/Home/Details/${c.id}" target="_blank" rel="noopener" class="ns-button ns-button--secondary ns-button--compact">ดูรายละเอียดคอร์ส</a>`
-                        : `<button type="button" class="ns-button ns-button--primary ns-button--compact btn-publish-course" data-id="${c.id}">เผยแพร่</button>`}
-                    <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-course" data-id="${c.id}">แก้ไข</button>
-                    <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-course" data-id="${c.id}" data-title="${escapeHtml(c.title)}">ลบ</button>
-                </td>
-            </tr>
-        `).join('') || `<tr><td colspan="8" class="empty-message">ไม่พบคอร์สที่ตรงกับเงื่อนไขการค้นหา</td></tr>`;
-
-        attachCourseActions();
+        document.getElementById('no-courses').hidden = count > 0;
+        return count;
     }
 
     courseSearchInput?.addEventListener('input', renderCoursesTable);
@@ -562,7 +537,7 @@
     }
 
     function renderQuestionsGrid() {
-        if (!questionsContainer) return;
+        if (!questionsContainer) return 0;
         const search = (questionSearchInput?.value || '').trim().toLowerCase();
         const courseId = Number(questionCourseFilter?.value);
         const filtered = questions.filter(question =>
@@ -572,6 +547,7 @@
 
         questionsContainer.replaceChildren(...filtered.map(renderQuestionCard));
         document.getElementById('questions-empty').hidden = filtered.length > 0;
+        return filtered.length;
     }
 
     questionSearchInput?.addEventListener('input', renderQuestionsGrid);
@@ -649,7 +625,7 @@
         const roleVal = memberRole?.value || 'all';
         let count = 0;
         document.querySelectorAll('[data-member]').forEach(row => {
-            const matchesQuery = !query || row.textContent.toLowerCase().includes(query);
+            const matchesQuery = !query || [row.cells[0], row.cells[1]].some(cell => cell.textContent.toLowerCase().includes(query));
             const matchesRole = roleVal === 'all' || row.dataset.role === roleVal;
             const visible = matchesQuery && matchesRole;
             row.hidden = !visible;
@@ -659,6 +635,7 @@
         if (noMembers) noMembers.hidden = count > 0;
         const countLabel = document.getElementById('member-count');
         if (countLabel) countLabel.textContent = `แสดง ${count} บัญชี`;
+        return count;
     }
 
     memberSearch?.addEventListener('input', filterMembers);
@@ -813,6 +790,7 @@
     // Global Search Shortcut (Ctrl+K)
     // ==========================================
     const globalSearch = document.getElementById('global-admin-search');
+    const globalSearchSummary = document.getElementById('admin-search-summary');
     window.addEventListener('keydown', e => {
         if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
             e.preventDefault();
@@ -820,36 +798,29 @@
         }
     });
 
-    globalSearch?.addEventListener('input', e => {
-        const q = e.target.value.trim().toLowerCase();
-        if (courseSearchInput) {
-            courseSearchInput.value = q;
-            renderCoursesTable();
-        }
-        if (questionSearchInput) {
-            questionSearchInput.value = q;
-            renderQuestionsGrid();
-        }
-        if (memberSearch) {
-            memberSearch.value = q;
-            filterMembers();
-        }
+    globalSearch?.addEventListener('input', event => {
+        const query = event.target.value.trim();
+        [courseSearchInput, questionSearchInput, memberSearch].forEach(field => { field.value = query; });
+        const courseMatches = renderCoursesTable();
+        const questionMatches = renderQuestionsGrid();
+        const recentAccountMatches = filterMembers();
+        globalSearchSummary.textContent = query
+            ? `พบ ${courseMatches} คอร์ส · ${questionMatches} คำถาม · ${recentAccountMatches} บัญชีในรายการล่าสุด เปิดแท็บที่ต้องการเพื่อดูผล`
+            : '';
+        globalSearchSummary.hidden = !query;
     });
 
-    // ==========================================
-    // Notification Bell Click Interaction
-    // ==========================================
-    const bellBtn = document.getElementById('topbar-bell-btn');
-    bellBtn?.addEventListener('click', () => {
-        const { courseCount, lessonCount, questionCount, accountCount } = bellBtn.dataset;
-        alert(`สรุปข้อมูลระบบ NextSkill Admin (ข้อมูลจริง):\n• คอร์สเรียนในระบบ ${courseCount} คอร์ส (${lessonCount} ด่าน)\n• แบบฝึกหัดในคลัง ${questionCount} ข้อ\n• บัญชีสมาชิกในระบบ ${accountCount} บัญชี\n• ระบบฐานข้อมูล LocalDB ทำงานปกติ`);
+    [courseSearchInput, questionSearchInput, memberSearch, courseCategoryFilter, questionCourseFilter, memberRole].forEach(field => {
+        field.addEventListener('input', () => { globalSearchSummary.hidden = true; });
     });
 
     document.getElementById('btn-quick-activity')?.addEventListener('click', (e) => {
         e.preventDefault();
         const actSection = document.querySelector('.activity-section');
         if (actSection) {
-            actSection.scrollIntoView({ behavior: 'smooth' });
+            const heading = actSection.querySelector('h2');
+            heading.focus({ preventScroll: true });
+            actSection.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
         }
     });
 
@@ -960,9 +931,9 @@
                                 </g>
                             </svg>
                         </span>
-                        <span class="admin-brand-badge">ADMIN</span>
+                        <span class="admin-brand-badge">ผู้ดูแล</span>
                     </div>
-                    <small class="admin-brand-sub">Control Center · ผู้ดูแลระบบ</small>
+                    <small class="admin-brand-sub">จัดการเนื้อหาและบัญชี</small>
                 </div>
             `;
         }

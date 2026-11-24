@@ -1,26 +1,18 @@
 # NextSkill — สมัครสมาชิกและเข้าสู่ระบบ
 
-หน้าเว็บใช้ดีไซน์ขาวดำตามภาพอ้างอิง และแยกแบบฟอร์ม User / Admin
-
 ## เปิดใช้งาน
 
-เปิด Solution ใน Visual Studio แล้วกด F5 เว็บจะเริ่มที่หน้า **Login** หากยังไม่ได้เข้าสู่ระบบ เมื่อ Login สำเร็จทั้ง User และ Admin จะเข้าสู่หน้า **Home (Learning Club)** จากนั้นกด **Courses** ใน Navigation เพื่อเปิดแค็ตตาล็อกจาก branch game
-
-หากยังไม่พร้อม Login ให้กด **ข้ามไปก่อน** ใต้ปุ่ม Log in เพื่อเข้า Home และเปิด Courses จาก Navigation ได้ทันที โดยไม่ต้องเชื่อมต่อฐานข้อมูลบัญชี หน้า `/` ยังเริ่มที่ Login ตามเดิม
-
-การข้ามใช้สำหรับดูหน้า Home และหน้าคอร์สตัวอย่างเท่านั้น ไม่ได้สร้างบัญชีหรือให้สิทธิ์ User/Admin หน้า My account และ Admin dashboard ยังต้องเข้าสู่ระบบตามบทบาทเดิม
-
-การรวม branch Login เก็บหน้า Home, Navigation, Floating Buddy และแค็ตตาล็อก `/Home/Courses` ปัจจุบันไว้ครบ หน้า Dashboard ของ User และ Admin ยังแยกตามบทบาทตามระบบบัญชีเดิม
+ติดตั้งฐานข้อมูลตาม [คู่มือเริ่มต้น](../README.md) แล้วรันแอป ผู้เยี่ยมชมเปิด `/` เพื่อสำรวจหน้าแรกและคลังคอร์ส การลงทะเบียนและความคืบหน้าผูกกับบัญชีผู้เรียน ผู้ที่เข้าสู่ระบบแล้วจะกลับไปยังคอร์สที่ค้างไว้เมื่อมีคอร์ส ส่วนผู้ดูแลจะเข้าสู่หน้าจัดการระบบ
 
 | หน้า | URL ต่อท้ายที่อยู่เว็บ |
 |---|---|
-| สมัคร User | `/Account/Register` |
-| Login User | `/Account/Login` |
-| สมัคร Admin | `/Account/AdminRegister` |
-| Login Admin | `/Account/AdminLogin` |
-| หน้า Home หลัง Login (User / Admin) | `/Home/Index` |
-| ข้อมูลบัญชี User | `/Account/Dashboard` |
-| จัดการระบบ Admin (ผ่านบัญชีของฉัน) | `/Account/AdminDashboard` |
+| สมัครผู้เรียน | `/Account/Register` |
+| เข้าสู่ระบบสำหรับผู้เรียน | `/Account/Login` |
+| สมัครผู้ดูแลด้วยรหัสเชิญ | `/Account/AdminRegister` |
+| เข้าสู่ระบบสำหรับผู้ดูแล | `/Account/AdminLogin` |
+| หน้าแรก | `/Home/Index` |
+| โปรไฟล์และคอร์สของผู้เรียน | `/Account/Dashboard` |
+| จัดการระบบ | `/Account/AdminDashboard` |
 
 สมัครสำเร็จแล้วให้เข้าสู่ระบบด้วยอีเมลและรหัสผ่านที่ตั้งเอง รหัสผ่านต้องยาว 8–128 ตัวอักษร
 
@@ -81,8 +73,8 @@ dotnet run --launch-profile https
 - Cookie ยืนยันตัวตนแบบ HttpOnly และตรวจบทบาทฝั่งเซิร์ฟเวอร์
 - จำกัดการพยายามสมัคร/Login 20 ครั้งต่อนาทีต่อ IP และล็อกบัญชี 15 นาทีเมื่อรหัสผ่านผิด 5 ครั้ง
 - Logout ล้าง cookie ของเบราว์เซอร์ การเลือก Remember me ทำให้ cookie อยู่หลังปิดเบราว์เซอร์ อายุ 8 ชั่วโมงและต่ออายุเมื่อใช้งาน
-- การทดสอบใช้บัญชีชั่วคราวแล้วลบเฉพาะข้อมูลทดสอบ
+- การทดสอบที่เปลี่ยนข้อมูลใช้ฐานแยกและบัญชีสังเคราะห์
 
-ระบบบัญชียังไม่มีการยืนยันอีเมล/ลืมรหัสผ่าน ส่วน `/Home/Courses` ใช้แค็ตตาล็อกจาก branch game และ `/Courses/Enrollment` ใช้หน้าลงทะเบียนเรียนเดิม
+ระบบบัญชียังไม่มีการยืนยันอีเมลหรือระบบตั้งรหัสผ่านใหม่ คลังคอร์สอยู่ที่ `/Home/Courses` เส้นทางเดิม `/Courses/Enrollment` ส่งต่อมายังคลังคอร์ส ผู้เรียนลงทะเบียนจากหน้ารายละเอียดของแต่ละคอร์ส
 
 แนวทางอ้างอิง: [Cookie authentication ของ Microsoft](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-10.0) และ [Antiforgery ของ ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-10.0)

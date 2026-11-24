@@ -2,8 +2,7 @@
 @{
     Layout = "_AccountLayout";
     var admin = (string?)ViewData["Role"] == "Admin";
-    const string emailHint = "กรอกอีเมลของคุณ เช่น name@example.com";
-    ViewData["Title"] = admin ? "เข้าสู่ระบบผู้ดูแล (Admin)" : "ยินดีต้อนรับกลับมา";
+    ViewData["Title"] = admin ? "เข้าสู่ระบบผู้ดูแล" : "เข้าสู่ระบบผู้เรียน";
     ViewData["AccountPageClass"] = "ns-login-page";
     ViewData["CompactAccountStory"] = true;
 }
@@ -18,8 +17,8 @@
 
 <div class="auth-grid">
     <section class="auth-form nimo-auth-card" aria-labelledby="form-heading">
-        <h2 id="form-heading">@(admin ? "เข้าสู่ระบบผู้ดูแล" : "ยินดีต้อนรับกลับมา")</h2>
-        <p class="form-intro">@(admin ? "เข้าสู่ระบบเพื่อจัดการเนื้อหา คอร์สเรียน และสถิติผู้เรียนใน NextSkill" : "เข้าสู่ระบบเพื่อเริ่มต้นการเรียนรู้ และพัฒนาทักษะไปกับ NextSkill อีกครั้ง")</p>
+        <h2 id="form-heading">@ViewData["Title"]</h2>
+        <p class="form-intro">@(admin ? "ใช้บัญชีผู้ดูแลเพื่อจัดการคอร์สและข้อสอบ" : "เข้าสู่ระบบเพื่อบันทึกความคืบหน้าและกลับมาเรียนต่อ")</p>
         
         <nav class="login-account-types" aria-label="ประเภทบัญชี">
             <a asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" aria-current="@(!admin ? "page" : null)">
@@ -45,7 +44,7 @@
             <div asp-validation-summary="All" class="validation-summary" role="alert" tabindex="-1"></div>
             
             <div class="field">
-                <label asp-for="Email">อีเมล (Email) <span aria-hidden="true">*</span></label>
+                <label asp-for="Email">อีเมล <span aria-hidden="true">*</span></label>
                 <div class="input-icon-wrap">
                     <span class="input-leading-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -53,13 +52,12 @@
                             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                         </svg>
                     </span>
-                    <input asp-for="Email" type="email" autocomplete="username" placeholder="@emailHint" aria-describedby="auth-email-hint" required maxlength="254" />
+                    <input asp-for="Email" type="email" autocomplete="username" required maxlength="@RegisterForm.EmailMaximumLength" />
                 </div>
-                <small id="auth-email-hint" class="auth-field-placeholder">@emailHint</small>
             </div>
 
             <div class="field">
-                <label asp-for="Password">รหัสผ่าน (Password) <span aria-hidden="true">*</span></label>
+                <label asp-for="Password">รหัสผ่าน <span aria-hidden="true">*</span></label>
                 <div class="input-icon-wrap">
                     <span class="input-leading-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -67,7 +65,7 @@
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                         </svg>
                     </span>
-                    <input asp-for="Password" id="Password" type="password" autocomplete="current-password" placeholder="••••••••" required maxlength="128" />
+                    <input asp-for="Password" id="Password" type="password" autocomplete="current-password" required maxlength="@RegisterForm.PasswordMaximumLength" />
                     <button class="password-toggle-eye" type="button" data-target="Password" aria-label="แสดง/ซ่อนรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true">
                             <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
@@ -79,7 +77,7 @@
 
             <div class="check-row">
                 <input asp-for="RememberMe" id="RememberMe" />
-                <label asp-for="RememberMe" for="RememberMe">จดจำฉันในระบบอัตโนมัติ</label>
+                <label asp-for="RememberMe" for="RememberMe">จำการเข้าสู่ระบบในเบราว์เซอร์นี้</label>
             </div>
 
             <button type="submit" class="btn-auth-submit">
@@ -93,14 +91,14 @@
         </div>
 
         <a class="btn-skip-outline" asp-controller="Home" asp-action="Index">
-            <span>ข้ามไปก่อน - เข้าสู่ระบบจากโปรแกรมเลย</span>
+            <span>กลับหน้าแรกโดยไม่เข้าสู่ระบบ</span>
             <span class="guest-arrow" aria-hidden="true">→</span>
         </a>
 
         <p class="switch-form">
-            ยังไม่มีบัญชีใช่ไหม? 
+            ยังไม่มีบัญชี
             <a asp-action="@(admin ? "AdminRegister" : "Register")" asp-route-returnUrl="@Model.ReturnUrl">
-                สมัครสมาชิกที่นี่เลย! →
+                @(admin ? "สมัครด้วยรหัสเชิญ" : "สมัครบัญชีผู้เรียน")
             </a>
         </p>
     </section>

@@ -17,7 +17,7 @@
             <nav class="ns-navbar__menu" aria-label="เมนูหลัก">
                 <a class="ns-navbar__link @(home ? "glass" : null)" asp-controller="Home" asp-action="Index" aria-current="@(home ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--home" aria-hidden="true"></span>หน้าแรก</a>
                 <a class="ns-navbar__link @(catalog ? "glass" : null)" asp-controller="Home" asp-action="Courses" aria-current="@(catalog ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--book" aria-hidden="true"></span>คอร์สเรียน</a>
-                <a class="ns-navbar__link @(learning ? "glass" : null)" asp-controller="Learning" asp-action="Island" aria-current="@(learning ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--boat" aria-hidden="true"></span>เกาะของฉัน</a>
+                <a class="ns-navbar__link @(learning ? "glass" : null)" asp-controller="Learning" asp-action="Island" aria-current="@(learning ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--boat" aria-hidden="true"></span>แผนที่บทเรียน</a>
             </nav>
             <div class="ns-navbar__account">
                 @if (ViewData["JourneyMode"] is not null)

@@ -1,6 +1,6 @@
-# SeaLearn illustration direction
+# Early NextSkill ocean illustrations
 
-Generated with the built-in image generation tool, using the user's attached SeaLearn screenshot as the hero's visual reference. These are scene assets; headings, navigation, cards, progress and controls are rendered in MVC views. Images were optimized to WebP without changing the originals in the generated-image library.
+These illustrations originated with image generation using the visual reference from the early ocean-themed prototype. The project uses them as scene assets. Headings, navigation, cards, progress and controls are rendered in MVC views. The project copies were optimized to WebP.
 
 Final assets are under `NextSkill_205_247_261/wwwroot/images/`:
 

@@ -46,8 +46,8 @@ public class AccountController(AccountStore store, LearningStore learning, ILogg
     {
         if (role == "Admin" && string.IsNullOrWhiteSpace(form.InvitationCode))
             ModelState.AddModelError(nameof(form.InvitationCode), "กรุณากรอกรหัสเชิญจากผู้ดูแลระบบ");
-        if ((form.FullName ?? "").Trim().Length < 2)
-            ModelState.AddModelError(nameof(form.FullName), "Please enter at least 2 characters.");
+        if (ModelState.IsValid && (form.FullName ?? "").Trim().Length < RegisterForm.NameMinimumLength)
+            ModelState.AddModelError(nameof(form.FullName), $"ชื่อที่แสดงต้องมีอย่างน้อย {RegisterForm.NameMinimumLength} ตัวอักษร");
         if (ModelState.IsValid)
         {
             try
@@ -204,8 +204,8 @@ public class AccountController(AccountStore store, LearningStore learning, ILogg
         if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var id)) return Challenge();
         var fullName = form.FullName?.Trim() ?? "";
         var email = form.Email?.Trim() ?? "";
-        if (ModelState.IsValid && fullName.Length < 2)
-            ModelState.AddModelError("Edit.FullName", "ชื่อที่แสดงต้องมีอย่างน้อย 2 ตัวอักษร");
+        if (ModelState.IsValid && fullName.Length < RegisterForm.NameMinimumLength)
+            ModelState.AddModelError("Edit.FullName", $"ชื่อที่แสดงต้องมีอย่างน้อย {RegisterForm.NameMinimumLength} ตัวอักษร");
 
         if (ModelState.IsValid)
         {

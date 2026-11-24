@@ -26,7 +26,7 @@ The main boat now disturbs that same water material. Hull measurements use the e
 
 Production asset: `NextSkill_205_247_261/wwwroot/images/journey/home-ocean-painted-v2.webp` — 2172 × 724 pixels, 159,346 bytes. Generated with the built-in imagegen tool, then encoded as WebP at quality 90. Reference: the existing `underwater-journey-background-v1.png`, used for water color and illustration style only.
 
-Original generation: `C:/Users/gram/.codex/generated_images/01a1e23c-09f8-7c11-a948-254055191683/exec-b12267c9-8d50-41fe-bfb9-3a7e78447198.png`.
+Original generated PNG: `exec-b12267c9-8d50-41fe-bfb9-3a7e78447198.png` (source record outside this repository).
 
 ## Final prompt
 

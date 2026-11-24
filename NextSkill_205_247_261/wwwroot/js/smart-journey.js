@@ -687,7 +687,6 @@
     function renderResult(result, wasCourseComplete) {
         dismissQuizHelp?.();
         const hadFirstLessonAward = state?.achievements.includes('first-lesson') === true;
-        const hadCourseAward = state?.achievements.includes(`course-${lesson.courseId}`) === true;
         lessonDirty = false; uncertainAttempt = null;
         if (result.passed && !result.alreadyCompleted) rememberLessonVoyage(result.state, lesson.courseId, lesson.id);
         setState(result.state);
@@ -708,7 +707,7 @@
             box.append(node('strong', '', `${item.correct ? '✓' : 'ลองอีกครั้ง'} · ${question?.prompt || 'คำถาม'}`),node('p','',item.explanation));
             return box;
         }));
-        const saveCopy = signedIn ? 'บันทึกกับบัญชีแล้ว' : 'บันทึกในโหมดทดลองของเซสชันนี้';
+        const saveCopy = signedIn ? 'บันทึกกับบัญชีแล้ว' : 'บันทึกผลทดลองสำหรับเบราว์เซอร์นี้แล้ว';
         $('#lesson-reward').textContent = result.awardedXp ? `+${result.awardedXp} XP · ${saveCopy}`
             : result.passed ? `ทบทวนแล้ว · ${saveCopy}` : 'ยังไม่ได้รับ XP ในรอบนี้';
         const progress = viewedCourse();
@@ -716,7 +715,7 @@
         $('#edit-lesson-answers').hidden = result.passed;
         $('#review-lesson').hidden = result.passed;
         $('#finish-learning').textContent = result.passed ? 'กลับไปแผนที่เกาะ' : 'พักไว้ แล้วลองอีกครั้งภายหลัง';
-        $('#lesson-nimo-message').textContent = result.passed ? (result.alreadyCompleted ? 'ได้ฝึกอีกครั้งแล้ว เก่งขึ้นทีละก้าวนะ' : 'เห็นความตั้งใจของคุณแล้ว ไปด้วยกันต่อได้เลย') : 'ลองดูคำอธิบาย เราค่อย ๆ แก้ไปด้วยกันนะ';
+        $('#lesson-nimo-message').textContent = result.passed ? (result.alreadyCompleted ? 'ทบทวนบทเรียนแล้ว' : 'ผ่านแบบทดสอบบทเรียนแล้ว') : 'ดูคำอธิบายของแต่ละข้อก่อนลองใหม่';
         if (!result.passed) window.NextSkillBuddyMotion?.play('retry');
         else if (!result.alreadyCompleted) window.NextSkillBuddyMotion?.play(progress.isComplete && !wasCourseComplete ? 'proud' : 'celebrate');
         else window.NextSkillBuddyMotion?.play('nod');
@@ -724,7 +723,7 @@
         $('#lesson-result-title').focus({preventScroll:true});
         if (lessonPage) positionPractice();
         else panel.scrollIntoView({behavior:'instant',block:'nearest'});
-        window.NextSkillCourseAward?.show(result, lesson.courseId, hadCourseAward, hadFirstLessonAward);
+        window.NextSkillCourseAward?.show(result, lesson.courseId, hadFirstLessonAward);
     }
     async function submitLesson(event) {
         event.preventDefault();
@@ -784,7 +783,6 @@
         try {
             const latest = await api('State', undefined, null, 10000);
             if (requestId !== lessonRequest) return;
-            const hadCourseAward = state?.achievements.includes(`course-${attempt.courseId}`) === true;
             const hadFirstLessonAward = state?.achievements.includes('first-lesson') === true;
             rememberLessonVoyage(latest, attempt.courseId, attempt.lessonId);
             setState(latest);
@@ -799,13 +797,13 @@
                 $('#lesson-result-title').textContent = 'ยืนยันแล้วว่าบทเรียนนี้ผ่าน';
                 $('#lesson-result-eyebrow').textContent = 'ตรวจสอบจากความก้าวหน้าล่าสุด';
                 $('#lesson-result-message').textContent = 'ความก้าวหน้าบันทึกแล้ว หากต้องการคำอธิบายของคำตอบรอบนี้ สามารถส่งคำตอบเดิมอีกครั้งได้ โดยไม่รับ XP ซ้ำ';
-                $('#lesson-reward').textContent = `XP สะสมปัจจุบัน ${number(latest.xp)} · ${signedIn?'ข้อมูลบัญชี':'โหมดทดลองของเซสชันนี้'}`;
+                $('#lesson-reward').textContent = `XP สะสมปัจจุบัน ${number(latest.xp)} · ${signedIn ? 'ข้อมูลบัญชี' : 'ผลทดลองสำหรับเบราว์เซอร์นี้'}`;
                 $('#lesson-result-feedback').replaceChildren();
                 $('#edit-lesson-answers').hidden = true;
                 $('#review-lesson').hidden = true;
                 setLessonResultActions(course, true);
                 $('#lesson-result-title').focus({preventScroll:true});
-                window.NextSkillCourseAward?.show({ passed: true, state: latest }, attempt.courseId, hadCourseAward, hadFirstLessonAward);
+                window.NextSkillCourseAward?.show({ passed: true, state: latest }, attempt.courseId, hadFirstLessonAward);
             } else showError($('#lesson-error'),new Error('ยังไม่พบผลผ่านของบทเรียนนี้ ส่งคำตอบเดิมอีกครั้งเพื่อยืนยันผลได้'));
         } catch(error) { if(requestId===lessonRequest) showError($('#lesson-error'),error); }
         finally { if(requestId===lessonRequest) { recoveryBusy=false; $('#check-save-status').disabled=false; } }
@@ -918,7 +916,7 @@
         catch(error) { pageError(error); }
         finally { button.disabled=false; }
     });
-    $('#journey-help-dialog ol li:last-child p').textContent = signedIn ? 'ความก้าวหน้าผูกกับบัญชีของคุณ กลับมาเรียนต่อได้ทุกอุปกรณ์' : 'โหมดทดลองบันทึกแยกในเซสชันนี้ และไม่ย้ายผลเข้าบัญชีอัตโนมัติ';
+    $('#journey-help-dialog ol li:last-child p').textContent = signedIn ? 'ผลการเรียนผูกกับบัญชีของคุณ เปิดได้จากอุปกรณ์อื่นหลังเข้าสู่ระบบ' : 'ผลทดลองแยกจากบัญชีและเปิดได้จากเบราว์เซอร์นี้';
     $('[data-stay-lesson]').addEventListener('click', () => { pendingLeave = null; leaveDialog.close(); });
     $('[data-confirm-leave]').addEventListener('click', () => {
         const action = pendingLeave; pendingLeave = null; lessonDirty = false; leaveDialog.close(); closeLesson(false); action?.();

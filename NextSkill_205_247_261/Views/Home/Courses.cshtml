@@ -15,12 +15,12 @@
         <header class="catalog-hero" data-catalog-hero data-catalog-ambient="paused">
             <div class="catalog-hero-copy">
                 <div class="catalog-heading">
-                    <h1 id="catalog-title">เลือกคอร์สที่ใช่<span>สำหรับคุณ</span></h1>
-                    <p class="catalog-intro">เลือกทักษะที่อยากฝึก แล้วออกเดินทางไปเกาะบทเรียนกับ Nimo</p>
+                    <h1 id="catalog-title">คลังคอร์สเรียน</h1>
+                    <p class="catalog-intro">ค้นจากชื่อคอร์สหรือกรองตามทักษะที่ต้องการฝึก</p>
                 </div>
         <div class="catalog-tools" data-catalog-tools>
             <form method="get" asp-action="Courses" class="catalog-search" role="search" aria-label="ค้นหาคอร์สเรียน">
-                <label class="catalog-search-field" for="course-query"><span class="visually-hidden">อยากฝึกเรื่องอะไร? ค้นหาชื่อคอร์ส ทักษะ หรือผู้สอน</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input id="course-query" name="q" value="@Model.Query" type="search" maxlength="200" placeholder="อยากฝึกเรื่องอะไร? ค้นหาคอร์สหรือทักษะ" /></label>
+                <label class="catalog-search-field" for="course-query"><span class="visually-hidden">ค้นหาชื่อคอร์ส ทักษะ หรือแหล่งเนื้อหา</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input id="course-query" name="q" value="@Model.Query" type="search" maxlength="200" placeholder="ค้นหาคอร์สหรือทักษะ" /></label>
                 <label class="catalog-sort-field" for="course-sort"><span class="visually-hidden">เรียงตาม</span><select id="course-sort" name="sort"><option value="Recommended" selected="@(Model.Sort == "Recommended")">แนะนำให้ลอง</option><option value="A-Z" selected="@(Model.Sort == "A-Z")">ชื่อคอร์ส A–Z</option><option value="Recently" selected="@(Model.Sort == "Recently")">เพิ่มล่าสุด</option></select></label>
                 <input type="hidden" name="tag" value="@Model.Tag" /><input type="hidden" name="pageSize" value="@Model.PageSize" />
                 <button type="submit" class="ns-button ns-button--primary catalog-search-submit">ค้นหาคอร์ส <span aria-hidden="true">→</span></button>

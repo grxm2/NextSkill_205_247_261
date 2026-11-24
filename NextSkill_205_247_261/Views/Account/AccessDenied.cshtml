@@ -1,2 +1,6 @@
-@{ Layout = "_AccountLayout"; ViewData["Title"] = "Access denied"; }
-<section class="content-page"><p class="eyebrow">403 / ACCESS DENIED</p><h1>This page needs a different account.</h1><p>Your account does not have permission to access this page.</p><a asp-action="Login">User log in</a> · <a asp-action="AdminLogin">Admin log in</a></section>
+@{ Layout = "_AccountLayout"; ViewData["Title"] = "ไม่มีสิทธิ์เปิดหน้านี้"; }
+<section class="content-page">
+    <h1>ไม่มีสิทธิ์เปิดหน้านี้</h1>
+    <p>บัญชีที่ใช้อยู่เปิดหน้านี้ไม่ได้ หากมีบัญชีที่ได้รับสิทธิ์ ให้เข้าสู่ระบบด้วยบัญชีนั้น</p>
+    <a asp-action="Login">เข้าสู่ระบบผู้เรียน</a> · <a asp-action="AdminLogin">เข้าสู่ระบบผู้ดูแล</a>
+</section>
