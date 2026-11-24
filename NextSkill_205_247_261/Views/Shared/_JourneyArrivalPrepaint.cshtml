@@ -1,0 +1,16 @@
+<script>
+    try {
+        const marker = JSON.parse(sessionStorage.getItem('nextskill.journey-arrival'));
+        const age = Date.now() - marker?.at;
+        const here = location.pathname + location.search;
+        const nav = performance.getEntriesByType('navigation')[0];
+        const navigation = marker?.navigation === true && age >= 0 && age < 60000
+            && (marker.url === here || (nav?.redirectCount > 0 && nav.type === 'navigate'));
+        const island = !marker?.navigation && age >= 0 && age < 900000
+            && /\/learning\/island\/?$/i.test(location.pathname)
+            && Number(new URLSearchParams(location.search).get('courseId')) === marker.courseId;
+        if (navigation) document.documentElement.setAttribute('data-journey-navigation-arrival', '');
+        if ((navigation || island) && !marker.skip && !matchMedia('(prefers-reduced-motion: reduce)').matches)
+            document.documentElement.classList.add('journey-arrival-prepaint');
+    } catch {}
+</script>

@@ -3,32 +3,21 @@
     Layout = "_AccountLayout";
     var admin = (string?)ViewData["Role"] == "Admin";
     const string emailHint = "กรอกอีเมลของคุณ เช่น name@example.com";
-    var passwordExample = $"ตั้งรหัสผ่านของคุณ (อย่างน้อย {RegisterForm.PasswordMinimumLength} ตัวอักษร)";
     ViewData["Title"] = admin ? "สร้างบัญชีผู้ดูแล" : "สมัครสมาชิกใหม่";
+    ViewData["AccountPageClass"] = "ns-auth-page";
 }
 
 <div class="auth-grid">
     <section class="auth-form nimo-auth-card" aria-labelledby="form-heading">
-        <div class="form-header-badge">
-            <span class="badge-dot" aria-hidden="true"></span>
-            <span>@(admin ? "NEW ADMIN · สิทธิ์ผู้ดูแล" : "START YOUR JOURNEY · เริ่มต้นก้าวแรก")</span>
-        </div>
-
         <h2 id="form-heading">@ViewData["Title"]</h2>
         <p class="form-intro">@(admin ? "สมัครด้วยรหัสเชิญจากผู้ดูแลระบบ" : "ใช้บัญชีนี้ลงทะเบียนคอร์สและบันทึกผลการเรียน")</p>
         
-        <nav class="account-types" aria-label="ประเภทบัญชี">
-            <a asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="@(!admin ? "active" : "")" aria-current="@(!admin ? "page" : null)">
-                <span class="type-icon" aria-hidden="true">
-                    <svg class="type-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                </span>
-                <span>ผู้เรียน</span>
+        <nav class="login-account-types" aria-label="ประเภทบัญชี">
+            <a asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" aria-current="@(!admin ? "page" : null)">
+                ผู้เรียน
             </a>
-            <a asp-action="AdminRegister" asp-route-returnUrl="@Model.ReturnUrl" class="@(admin ? "active" : "")" aria-current="@(admin ? "page" : null)">
-                <span class="type-icon" aria-hidden="true">
-                    <svg class="type-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                </span>
-                <span>ผู้ดูแลระบบ</span>
+            <a asp-action="AdminRegister" asp-route-returnUrl="@Model.ReturnUrl" aria-current="@(admin ? "page" : null)">
+                ผู้ดูแลระบบ
             </a>
         </nav>
 
@@ -72,7 +61,7 @@
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                         </svg>
                     </span>
-                    <input asp-for="Password" id="Password" type="password" autocomplete="new-password" placeholder="@passwordExample" required minlength="@RegisterForm.PasswordMinimumLength" maxlength="@RegisterForm.PasswordMaximumLength" aria-describedby="password-hint" />
+                    <input asp-for="Password" id="Password" type="password" autocomplete="new-password" placeholder="••••••••" required minlength="@RegisterForm.PasswordMinimumLength" maxlength="@RegisterForm.PasswordMaximumLength" aria-describedby="password-hint" />
                     <button class="password-toggle-eye" type="button" data-target="Password" aria-label="แสดง/ซ่อนรหัสผ่าน" aria-pressed="false" title="แสดง/ซ่อนรหัสผ่าน">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true">
                             <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/>
@@ -80,7 +69,6 @@
                         </svg>
                     </button>
                 </div>
-                <small class="auth-field-placeholder">@passwordExample</small>
                 <small id="password-hint">ใช้อย่างน้อย @RegisterForm.PasswordMinimumLength ตัวอักษร</small>
             </div>
 

@@ -1,0 +1,59 @@
+.ns-site-shell--scenic { isolation: isolate; }
+.ns-site-shell--scenic > .learner-coast { z-index: -1; }
+
+html[data-theme="dark"] .ns-site-shell--scenic {
+    --ns-footer-glass-background: var(--ns-liquid-panel-solid);
+    --ns-footer-glass-glow: .06;
+}
+
+.learner-coast {
+    --coast-horizon: 64%;
+    --coast-art-width: max(100vw, 1160px);
+    --coast-light-x: clamp(89%, calc(50% + 610px), 95%);
+    --coast-light-y: clamp(102px, 14svh, 150px);
+    z-index: 0;
+    background: linear-gradient(180deg, #92cde9, #c8e9f5 57%, #9cdcec 70%, #75c6dc);
+}
+
+.learner-coast__shore, .learner-coast__night {
+    position: absolute;
+    inset: 0;
+}
+
+.learner-coast__shore {
+    /* The waterline lies 15.2% of the painted image's width down from its top. */
+    top: calc(var(--coast-horizon) - var(--coast-art-width) * .152);
+    background: url("../images/journey/underwater-journey-background-v1.png") center top / var(--coast-art-width) auto no-repeat;
+    mask-image: linear-gradient(transparent, #000 35%, #000 73%, transparent);
+    opacity: .52;
+}
+
+.learner-coast__night {
+    background: linear-gradient(180deg, #091c34f5, #142f47e8 58%, #103950d9);
+    opacity: 0;
+}
+
+[data-theme="dark"] .learner-coast__night { opacity: 1; }
+[data-theme="dark"] .learner-coast .journey-stars { opacity: .35; }
+
+.learner-coast :is(.hero-sun, .journey-moon) {
+    left: var(--coast-light-x);
+    top: var(--coast-light-y);
+    width: clamp(27px, 3vw, 45px);
+}
+
+.learner-coast .hero-sun {
+    box-shadow: 0 0 24px 9px #fff2bc95, 0 0 58px 24px #ffe5a83d;
+}
+
+.learner-coast .journey-moon {
+    box-shadow: 0 0 24px 8px #e2f2ff44, 0 0 55px 22px #c3deff25;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .theme-transitioning .learner-coast__night { transition: opacity 1300ms ease; }
+}
+
+@media (width < 768px) {
+    .learner-coast { --coast-light-x: 89%; --coast-light-y: 75px; }
+}

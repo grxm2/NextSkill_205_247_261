@@ -2,9 +2,9 @@
 :is(.ns-site-footer, .sj-footer, #nextskill-home footer) {
     position: relative;
     isolation: isolate;
-    background:
+    background: var(--ns-footer-glass-background,
         linear-gradient(115deg, rgba(255, 255, 255, .46), rgba(255, 255, 255, .16) 52%, rgba(255, 255, 255, .34)),
-        rgba(112, 205, 222, .34);
+        rgba(112, 205, 222, .34));
     border-top: 1px solid rgba(255, 255, 255, .78);
     box-shadow: 0 -12px 32px rgba(12, 86, 112, .10), inset 0 1px 0 rgba(255, 255, 255, .68);
     -webkit-backdrop-filter: blur(22px) saturate(1.55);
@@ -152,7 +152,7 @@ html[data-theme="dark"] .ns-footer-bubble {
     z-index: -1;
     inset: 0;
     pointer-events: none;
-    background: radial-gradient(ellipse at 18% 0, rgba(255, 255, 255, .34), transparent 58%);
+    background: radial-gradient(ellipse at 18% 0, rgba(255, 255, 255, var(--ns-footer-glass-glow, .34)), transparent 58%);
 }
 
 :is(.ns-site-footer, .sj-footer, #nextskill-home footer) > :not(.ns-footer-bubbles) {

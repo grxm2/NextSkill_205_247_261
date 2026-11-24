@@ -1,13 +1,4 @@
-@{
-    var compact = ViewData["CompactAccountStory"] is true;
-}
-
 <aside class="story-card nimo-story-card nimo-island-tea-card" aria-label="เรื่องราวการเรียนรู้กับ NextSkill">
-    <!-- Top Island Lounge Badge -->
-    <div class="hero-rmooc-pill island-tea-badge">
-        <span>NEXTSKILL ISLAND · เรียนสนุก ชิลได้ทุกที่</span>
-    </div>
-
     <!-- Headline -->
     <h1>เรียนสนุก<br />ไปด้วยกันนะ!</h1>
     
@@ -57,68 +48,12 @@
             </defs>
         </svg>
 
-        @if (compact)
-        {
-            <partial name="_LoginNimo" />
-        }
-        else
-        {
-            <div class="mascot-character-art login-nimo-beach-mode" id="nimoInteractiveMascot" data-shades="on" data-speech-visible="false" role="button" tabindex="0" title="คลิกให้นิโมถอดแว่นพูดคำคมการเรียนรู้!" aria-label="มาสคอตนิโมกำลังนั่งเก้าอี้ชายหาดใส่แว่นดำจิบน้ำส้ม">
-                <span class="nimo-shades-layered-rig" aria-hidden="true">
-                    <img src="~/images/nimo-beach-no-shades.png" asp-append-version="true" alt="Nimo (นิโม) กำลังนั่งเก้าอี้ชายหาดสวมแว่นดำจิบน้ำส้มเย็นๆ" class="main-mascot-img nimo-rig-base-open" id="nimoMascotImg" width="260" height="260" draggable="false" />
-                    <img src="~/images/nimo-beach-cool-base.png" asp-append-version="true" alt="" class="nimo-rig-base-cool" width="260" height="260" draggable="false" />
-                    <span class="nimo-animated-sunglasses-wrap">
-                        <img src="~/images/nimo-beach-sunglasses.png" asp-append-version="true" alt="" class="nimo-rig-sunglasses" width="260" height="260" draggable="false" />
-                        <span class="nimo-shades-lens-glint"></span>
-                    </span>
-                </span>
-
-                <div class="mascot-speech-pill" id="nimoSpeechBubble" aria-live="polite">
-                    <span id="nimoSpeechText">การเรียนรู้ไม่มีวันสิ้นสุด ทุกก้าวเล็กๆ วันนี้ คือความสำเร็จในวันหน้า!</span>
-                    <span class="speech-tail" aria-hidden="true"></span>
-                </div>
-            </div>
-        }
+        <partial name="_LoginNimo" />
     </div>
 
-    <!-- Feature Tags Row (Clean Vector Icons, No Emojis) -->
-    <div class="hero-features-pill-row">
-        <span class="feature-tag-pill">
-            <svg class="tag-svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-            <span>เรียนฟรี 100%</span>
-        </span>
-        <span class="feature-tag-pill">
-            <svg class="tag-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline></svg>
-            <span>เกาะแห่งการเรียนรู้</span>
-        </span>
-        <span class="feature-tag-pill">
-            <svg class="tag-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-            <span>ฝึกทักษะคู่กับ Nimo</span>
-        </span>
-    </div>
-
-    @if (compact)
-    {
-        <a asp-controller="Home" asp-action="Courses" class="login-course-link">
-            ดูคอร์สเรียนทั้งหมด <span aria-hidden="true">→</span>
-        </a>
-    }
-    else
-    {
-        <!-- Bottom Sub-Banner -->
-        <a asp-controller="Home" asp-action="Courses" class="hero-bottom-sub-banner" title="สำรวจคอร์สเรียนทั้งหมด">
-            <div class="sub-banner-content">
-                <span class="sub-banner-icon" aria-hidden="true">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 11 18-5v12L3 14v-3z"></path><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg>
-                </span>
-                <div class="sub-banner-text">
-                    <strong>ออกแบบการเรียนรู้ที่เหมาะกับคุณ</strong>
-                    <small>เรียนฟรีได้ทุกที่ ทุกเวลา บนเกาะ NextSkill</small>
-                </div>
-            </div>
-            <div class="sub-banner-arrow" aria-hidden="true">→</div>
-        </a>
-    }
+    <a asp-controller="Home" asp-action="Courses" class="login-course-link">
+        ดูคอร์สเรียนทั้งหมด <span aria-hidden="true">→</span>
+    </a>
 
     <!-- Animated Multi-Layer Island Ocean Wave Arc at Bottom of Card -->
     <div class="story-wave-decor" aria-hidden="true">

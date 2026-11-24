@@ -1,4 +1,5 @@
 /* An opaque veil dissolves first; two softly masked banks drift apart. */
+.journey-arrival-prepaint::before{content:'';position:fixed;inset:0;z-index:2147483647;background:#ccefff url('../images/journey/clouds-reference-v1.png') center/cover no-repeat}
 #journey-cloud-transition{position:fixed;inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;overflow:hidden;background:transparent;isolation:isolate}
 #journey-cloud-transition::backdrop{background:transparent}
 .jc-core{position:absolute;inset:0;background:#ccefff url('../images/journey/clouds-reference-v1.png') center/cover no-repeat;z-index:0;opacity:1;transition:opacity var(--jc-reveal-duration,200ms) cubic-bezier(.77,0,.175,1)}
@@ -10,7 +11,7 @@
 .is-revealing .jc-bank-bottom{opacity:0;transform:translate3d(12%,9%,0) scale(1.08);will-change:transform,opacity}
 .is-revealing .jc-core{opacity:0;will-change:opacity}
 #journey-cloud-transition #buddy-layer,#journey-cloud-transition #nextskill-agent,#journey-cloud-transition .voyage-cloud-boat{display:none!important}
-.journey-transition-active #nextskill-agent{visibility:hidden!important}
+.journey-transition-active #nextskill-agent:not([data-voyage-seat] > *){visibility:hidden!important}
 .journey-transition-active .ow-scene *,.journey-transition-active .ow-scene :before,.journey-transition-active .ow-scene :after{animation-play-state:paused!important}
 .jc-label{position:absolute;left:50%;bottom:90px;transform:translateX(-50%);padding:10px 18px;border-radius:12px;background:#f5fcffff;color:#174b61;z-index:5;max-width:90vw;text-align:center}
 .jc-skip{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);min-height:44px;border:2px solid #277a96;border-radius:12px;padding:8px 18px;background:#fff;color:#174b61;z-index:6;cursor:pointer;font:inherit}
@@ -24,11 +25,9 @@
 .is-covering .jc-bank-bottom{transform:translate3d(110%,0,0)}
 .is-covering.is-covered .jc-core{opacity:1}
 .is-covering.is-covered .jc-bank{transform:translate3d(0,0,0)}
-.course-voyage-stage{font-family:var(--ns-font);overflow:hidden}
-.course-voyage-stage .catalog-boat{transform-origin:50% 85%;pointer-events:none}
-.course-voyage-stage .catalog-boat-idle{animation:none;transform:var(--catalog-departure-bob,none)}
-.course-voyage-stage .catalog-boat-water{animation-play-state:running}
-.course-voyage-skip{position:absolute;right:24px;bottom:24px;min-height:44px;padding:10px 18px;border:1px solid #fff;border-radius:14px;background:#f7fdfff2;color:#173e56;font:500 14px var(--ns-font);pointer-events:auto;cursor:pointer}
+.course-voyage-active [data-catalog-ocean]{overflow-x:clip}
+.course-voyage-active #nimo-speech,[data-voyage-seat] :is(.buddy-reaction-mark,.nimo-speaking-face){display:none}
+.course-voyage-skip{position:fixed;right:24px;bottom:24px;z-index:200010;min-height:44px;padding:10px 18px;border:1px solid #fff;border-radius:14px;background:#f7fdfff2;color:#173e56;font:500 14px var(--ns-font);cursor:pointer}
 .course-voyage-skip:focus-visible{outline:3px solid #087faa;outline-offset:3px}
 .journey-island-arriving .archipelago-boat{visibility:hidden}
 .smart-journey #lesson-map.has-boat-arrival{overflow:visible}

@@ -36,9 +36,11 @@
     function refresh() {
         const modal = [...document.querySelectorAll('dialog[open]')].at(-1);
         const coach = document.getElementById('buddy-coach');
-        const slot = modal ? modal.querySelector('[data-buddy-anchor]')
-            : coach && !coach.hidden ? coach.querySelector('[data-buddy-anchor]')
-            : document.querySelector('[data-buddy-home="active"]') || document.querySelector('[data-buddy-anchor="arrival"]');
+        const voyageSeat = document.querySelector('[data-voyage-seat]');
+        const slot = voyageSeat && (!modal || modal.id === 'journey-cloud-transition') ? voyageSeat
+            : modal ? modal.querySelector('[data-buddy-anchor]')
+            : (coach && !coach.hidden ? coach.querySelector('[data-buddy-anchor]')
+            : document.querySelector('[data-buddy-home="active"]') || document.querySelector('[data-buddy-anchor="arrival"]'));
         const parent = modal || document.body;
         const talk = menu.querySelector('[data-agent-action="talk"]');
         if (talk) talk.hidden = Boolean(modal && modal.id !== 'lesson-dialog' || coach && !coach.hidden);

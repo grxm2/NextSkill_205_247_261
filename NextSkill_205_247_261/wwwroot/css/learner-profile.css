@@ -6,54 +6,6 @@ html[data-theme="dark"] body.ns-profile-page {
     --acc-sky-bg: #112b42;
 }
 
-.lp-scenery {
-    --lp-horizon: 64%;
-    --lp-art-width: max(100vw, 1160px);
-    --lp-light-x: clamp(89%, calc(50% + 610px), 95%);
-    --lp-light-y: clamp(102px, 14svh, 150px);
-    z-index: 0;
-    background: linear-gradient(180deg, #92cde9, #c8e9f5 57%, #9cdcec 70%, #75c6dc);
-}
-
-.lp-shore, .lp-night-wash {
-    position: absolute;
-    inset: 0;
-}
-
-.lp-shore {
-    /* The waterline sits 15.2% of the painted image's width down from its top. */
-    top: calc(var(--lp-horizon) - var(--lp-art-width) * .152);
-    background: url("../images/journey/underwater-journey-background-v1.png") center top / var(--lp-art-width) auto no-repeat;
-    mask-image: linear-gradient(transparent, #000 35%, #000 73%, transparent);
-    opacity: .52;
-}
-
-.lp-night-wash {
-    background: linear-gradient(180deg, #091c34f5, #142f47e8 58%, #103950d9);
-    opacity: 0;
-}
-
-[data-theme="dark"] .lp-night-wash { opacity: 1; }
-[data-theme="dark"] .lp-scenery .journey-stars { opacity: .35; }
-
-.lp-scenery :is(.hero-sun, .journey-moon) {
-    left: var(--lp-light-x);
-    top: var(--lp-light-y);
-    width: clamp(27px, 3vw, 45px);
-}
-
-.lp-scenery .hero-sun {
-    box-shadow: 0 0 24px 9px #fff2bc95, 0 0 58px 24px #ffe5a83d;
-}
-
-.lp-scenery .journey-moon {
-    box-shadow: 0 0 24px 8px #e2f2ff44, 0 0 55px 22px #c3deff25;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .theme-transitioning .lp-night-wash { transition: opacity 1300ms ease; }
-}
-
 .ns-profile-page .site-footer {
     position: relative;
     background: var(--ns-liquid-bg);
@@ -334,7 +286,6 @@ html[data-theme="dark"] .lp {
 }
 
 @media (width < 768px) {
-    .lp-scenery { --lp-light-x: 89%; --lp-light-y: 75px; }
     .ns-profile-page .account-main { padding: 28px var(--ns-gutter-end) 48px var(--ns-gutter-start); }
     .lp-overview { grid-template-columns: minmax(0, 1fr); }
     .lp-hero { gap: 14px; border-radius: 24px; }

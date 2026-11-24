@@ -38,9 +38,8 @@
     function measure() {
         displayedHeight = Math.max(surface.offsetHeight, sea.clientWidth * 941 / 1672);
         waves.style.top = `${displayedHeight * .265}px`;
-        if (catalogBoat && catalogBoat.parentElement === catalogTrack) {
-            // The vessel can move to a fixed transition stage. Keep its last
-            // real shore coordinate until it returns to the harbor track.
+        if (catalogBoat) {
+            // The berth is measured in layout coordinates even while the boat sails.
             shore = catalogTrack.getBoundingClientRect().top + scrollY + catalogBoat.offsetTop - 2;
         }
         update();
@@ -58,7 +57,10 @@
     window.addEventListener('scroll', queue, { passive: true });
     window.addEventListener('resize', hero ? queueMeasure : measure, { passive: true });
     if (hero) {
-        new ResizeObserver(queueMeasure).observe(hero);
+        const size = new ResizeObserver(queueMeasure);
+        size.observe(hero);
+        const navbar = document.querySelector('[data-navbar]');
+        if (navbar) size.observe(navbar);
         screen.orientation?.addEventListener('change', queueMeasure);
     }
     document.addEventListener('visibilitychange', () => sync(window.NextSkillMotion?.snapshot({ element: main, kind: 'ambient' })));

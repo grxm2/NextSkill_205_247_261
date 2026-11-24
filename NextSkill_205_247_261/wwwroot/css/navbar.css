@@ -35,6 +35,9 @@ html[data-theme="dark"] .ns-navbar__wordmark{--wordmark-next:#d3e7f0;--wordmark-
 .ns-navbar__icon--book{--nav-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 6c-2-2-5-2-9-1v14c4-1 7-1 9 1m0-14c2-2 5-2 9-1v14c-4-1-7-1-9 1m0-14v14'/%3E%3C/svg%3E")}
 .ns-navbar__icon--boat{--nav-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v13M10 5 4 15h6zM14 6l6 9h-6zM3 18c3 2 5 2 8 0 3 2 6 2 10 0'/%3E%3C/svg%3E")}
 .ns-navbar__account{display:flex;align-items:flex-start;gap:10px}
+.ns-navbar .ns-navbar__favorites[aria-current="page"]{background:var(--ns-danger-surface);color:var(--ns-danger);border-color:currentColor}
+.ns-navbar__favorites[aria-current="page"] svg{fill:currentColor}
+html[data-theme="dark"] .ns-navbar .ns-navbar__favorites[aria-current="page"]{background:#472b3b;color:#ffb5bd;border-color:currentColor}
 .ns-navbar__control-label { display: none; }
 .ns-navbar .ns-navbar__login,.ns-navbar .ns-navbar__login.glass{display:flex;align-items:center;justify-content:center;min-height:44px;padding:6px 1rem;border:1px solid rgba(255,255,255,.6);border-radius:24px;background:rgba(255,255,255,.12);color:#fff;box-shadow:none;font-size:14px;font-weight:500;text-decoration:none;-webkit-backdrop-filter:none;backdrop-filter:none;transition:background-color .2s ease}
 .ns-navbar .ns-navbar__login:hover,.ns-navbar .ns-navbar__login.glass:hover{background:rgba(255,255,255,.22);color:#fff}
@@ -74,6 +77,10 @@ html[data-theme="dark"] .ns-navbar__wordmark{--wordmark-next:#d3e7f0;--wordmark-
      gap: 8px;
      padding-block-start: 10px;
      border-block-start: 1px solid var(--ns-liquid-control-border);
+ }
+ .ns-navbar__account:has(> .journey-theme-toggle:not([hidden])):has(> .ns-navbar__favorites) {
+     grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr);
+     align-items: center;
  }
  .ns-navbar__profile { display: contents; }
  .ns-navbar__profile .ns-navbar__dropdown {

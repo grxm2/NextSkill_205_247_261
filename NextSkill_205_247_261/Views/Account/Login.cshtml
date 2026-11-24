@@ -4,16 +4,7 @@
     var admin = (string?)ViewData["Role"] == "Admin";
     const string emailHint = "กรอกอีเมลของคุณ เช่น name@example.com";
     ViewData["Title"] = admin ? "เข้าสู่ระบบผู้ดูแล" : "ยินดีต้อนรับกลับมา";
-    ViewData["AccountPageClass"] = "ns-login-page";
-    ViewData["CompactAccountStory"] = true;
-}
-
-@section Styles {
-    <link rel="stylesheet" href="~/css/login-nimo.css" asp-append-version="true" />
-}
-
-@section Scripts {
-    <script src="~/js/login-nimo.js" asp-append-version="true" defer></script>
+    ViewData["AccountPageClass"] = "ns-auth-page";
 }
 
 <div class="auth-grid">

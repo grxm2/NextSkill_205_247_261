@@ -1,0 +1,8 @@
+@{
+    var error = TempData["FavoritesError"] as string;
+    var notice = TempData["FavoritesNotice"] as string;
+    var message = error ?? notice;
+}
+<div class="favorite-feedback" data-favorite-feedback role="status" aria-live="polite">
+    <p class="ns-status @(error is null ? "ns-status--success" : "ns-status--error")" hidden="@(message is null)">@message</p>
+</div>

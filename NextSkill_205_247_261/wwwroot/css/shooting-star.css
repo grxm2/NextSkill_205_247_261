@@ -23,7 +23,7 @@
 html[data-theme="dark"] .shooting-star{--star-core:#fff;--star-light:#d3efff;--star-tail:rgba(133,204,255,.8)}
 .ocean-home .ow-intro .shooting-star--behind{position:absolute;z-index:0}
 .ocean-home .ow-intro :is(.hd-hero,.hd-greeting,.hd-current,.hd-stats){position:relative;z-index:1}
-#hero-highlight{color:#006b69;font-weight:700;text-shadow:none;transition:text-shadow 650ms ease-out}
+#hero-highlight{color:#006b69;text-shadow:none;transition:text-shadow 650ms ease-out}
 html[data-theme="dark"] #hero-highlight{color:#8ee7d5}
 /* Keep the ocean gradient legible as the star's highlight passes across it. */
 @supports ((-webkit-background-clip:text) or (background-clip:text)){

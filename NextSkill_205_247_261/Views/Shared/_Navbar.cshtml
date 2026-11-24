@@ -4,11 +4,12 @@
     var home = controller.Equals("Home", StringComparison.OrdinalIgnoreCase) && action.Equals("Index", StringComparison.OrdinalIgnoreCase);
     var catalog = controller.Equals("Courses", StringComparison.OrdinalIgnoreCase) || controller.Equals("Home", StringComparison.OrdinalIgnoreCase) && (action.Equals("Courses", StringComparison.OrdinalIgnoreCase) || action.Equals("Details", StringComparison.OrdinalIgnoreCase));
     var learning = controller.Equals("Learning", StringComparison.OrdinalIgnoreCase);
+    var favorites = controller.Equals("Favorites", StringComparison.OrdinalIgnoreCase);
     var authenticated = User.Identity?.IsAuthenticated == true;
 }
 <header class="ns-navbar sj-header" data-navbar>
     <div class="ns-navbar__inner site-nav__inner">
-        <a class="ns-navbar__brand" asp-controller="Home" asp-action="Index" aria-label="NextSkill กลับหน้าแรก">
+        <a class="ns-navbar__brand" asp-controller="Home" asp-action="Index" data-navbar-voyage aria-label="NextSkill กลับหน้าแรก">
             <span class="ns-navbar__logo">
                 <img src="~/images/nextskill-navbar-island.webp" asp-append-version="true" alt="" width="1086" height="362" />
                 <svg width="0" height="0" aria-hidden="true" focusable="false">
@@ -27,9 +28,9 @@
         <button class="ns-navbar__toggle" type="button" aria-expanded="false" aria-controls="nextskill-main-menu" aria-label="เปิดเมนูหลัก" data-navbar-toggle hidden><span aria-hidden="true"></span></button>
         <div class="ns-navbar__panel" id="nextskill-main-menu">
             <nav class="ns-navbar__menu" aria-label="เมนูหลัก">
-                <a class="ns-navbar__link @(home ? "glass" : null)" asp-controller="Home" asp-action="Index" aria-current="@(home ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--home" aria-hidden="true"></span>หน้าแรก</a>
-                <a class="ns-navbar__link @(catalog ? "glass" : null)" asp-controller="Home" asp-action="Courses" aria-current="@(catalog ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--book" aria-hidden="true"></span>คอร์สเรียน</a>
-                <a class="ns-navbar__link @(learning ? "glass" : null)" asp-controller="Learning" asp-action="Island" aria-current="@(learning ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--boat" aria-hidden="true"></span>แผนที่บทเรียน</a>
+                <a class="ns-navbar__link @(home ? "glass" : null)" asp-controller="Home" asp-action="Index" data-navbar-voyage aria-current="@(home ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--home" aria-hidden="true"></span>หน้าแรก</a>
+                <a class="ns-navbar__link @(catalog ? "glass" : null)" asp-controller="Home" asp-action="Courses" data-navbar-voyage aria-current="@(catalog ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--book" aria-hidden="true"></span>คอร์สเรียน</a>
+                <a class="ns-navbar__link @(learning ? "glass" : null)" asp-controller="Learning" asp-action="Island" data-navbar-voyage aria-current="@(learning ? "page" : null)"><span class="ns-navbar__icon ns-navbar__icon--boat" aria-hidden="true"></span>แผนที่บทเรียน</a>
             </nav>
             <div class="ns-navbar__account">
                 @if (ViewData["JourneyMode"] is not null)
@@ -39,6 +40,12 @@
                         <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 13.3A8.5 8.5 0 0 1 10.7 3.5a8.5 8.5 0 1 0 9.8 9.8Z"/></svg>
                         <span class="ns-navbar__control-label" aria-hidden="true">ธีม</span>
                     </button>
+                }
+                @if (User.IsInRole("User"))
+                {
+                    <a class="ns-navbar__favorites" asp-controller="Favorites" asp-action="Index" aria-label="รายการโปรด" title="รายการโปรด" aria-current="@(favorites ? "page" : null)">
+                        <partial name="_FavoriteHeart" />
+                    </a>
                 }
                 @if (authenticated)
                 {

@@ -4,11 +4,10 @@
 <html lang="th">
 <head>
     <script>try { document.documentElement.dataset.theme = localStorage.getItem('nextskill.theme.v1') === 'dark' ? 'dark' : 'light'; } catch { document.documentElement.dataset.theme = 'light'; }</script>
+    <partial name="_JourneyArrivalPrepaint" />
 @if (ViewData["JourneyMode"]?.ToString() == "home") {
-    <script>try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches && JSON.parse(localStorage.getItem('nextskill.agent.v1'))?.paused !== true && !location.hash) document.documentElement.classList.add('ow-arrival-pending'); } catch {}</script>
+    <script>try { if (!document.documentElement.hasAttribute('data-journey-navigation-arrival') && !matchMedia('(prefers-reduced-motion: reduce)').matches && JSON.parse(localStorage.getItem('nextskill.agent.v1'))?.paused !== true && !location.hash) document.documentElement.classList.add('ow-arrival-pending'); } catch {}</script>
 }
-    <script>try { const m=JSON.parse(sessionStorage.getItem('nextskill.journey-arrival')); if(location.pathname.toLowerCase()==='/learning/island' && m && Number(new URLSearchParams(location.search).get('courseId'))===m.courseId && Date.now()-m.at<900000) document.documentElement.classList.add('journey-arrival-prepaint'); } catch {}</script>
-    <style>.journey-arrival-prepaint:before{content:'';position:fixed;inset:0;z-index:2147483647;background:#ccefff url('/images/journey/clouds-reference-v1.png') center/cover no-repeat}</style>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#d8f4ff" />
@@ -96,6 +95,7 @@
 <script src="~/js/shooting-star.js" asp-append-version="true" defer></script>
 }
 @if (ViewData["JourneyMode"]?.ToString() == "home") { <script src="~/js/catalog-voyage.js" asp-append-version="true" defer></script> }
+    <script src="~/js/course-island-voyage.js" asp-append-version="true" defer></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="~/js/navbar.js" asp-append-version="true" defer></script>
     <script src="~/js/nimo-speech.js" asp-append-version="true" defer></script>

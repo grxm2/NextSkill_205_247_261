@@ -17,6 +17,13 @@ public static class CourseCatalog
     public static List<Course> GetCourses() => AdminContentStore.GetAllCourses()
         .Where(course => course.IsPublished != false).ToList();
 
+    public static List<CourseBrowseItem> GetBrowseItems()
+    {
+        var curricula = LearningCatalog.PublicCatalog().ToDictionary(course => course.Id);
+        return GetCourses().Where(course => curricula.ContainsKey(course.Id))
+            .Select(course => new CourseBrowseItem(course, curricula[course.Id])).ToList();
+    }
+
     public static Course? GetHistoricalCourse(int id) => AdminContentStore.GetHistoricalCourse(id)
         ?? (RetiredTitles.TryGetValue(id, out var title) ? new Course { Id = id, Title = title } : null);
 }

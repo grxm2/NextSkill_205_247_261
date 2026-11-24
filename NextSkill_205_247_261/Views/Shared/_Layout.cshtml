@@ -1,5 +1,6 @@
 @{
     var oceanCatalog = ViewData["OceanCatalog"] is true;
+    var hasBackdrop = IsSectionDefined("Backdrop");
     ViewData["JourneyMode"] ??= "site";
 }
 <!DOCTYPE html>
@@ -9,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>@ViewData["Title"] · NextSkill</title>
     <script>try { document.documentElement.dataset.theme = localStorage.getItem('nextskill.theme.v1') === 'dark' ? 'dark' : 'light'; } catch { document.documentElement.dataset.theme = 'light'; }</script>
+    <partial name="_JourneyArrivalPrepaint" />
     @if (oceanCatalog)
     {
         <partial name="_CatalogVoyagePrepaint" />
@@ -34,6 +36,7 @@
     <link rel="stylesheet" href="~/css/glass.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/footer-glass.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/journey-clouds.css" asp-append-version="true" />
     <script src="~/js/footer-bubbles.js" asp-append-version="true" defer></script>
     @if (oceanCatalog)
     {
@@ -41,7 +44,6 @@
         <link rel="stylesheet" href="~/css/catalog-ocean.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/catalog-voyage.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/catalog-layout.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/journey-clouds.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/shared-ocean.css" asp-append-version="true" />
         <link rel="preload" href="~/images/journey/underwater-journey-background-v1.png" as="image" />
         <link rel="preload" href="~/images/journey/clouds-reference-v1.png" as="image" />
@@ -50,7 +52,8 @@
     <link rel="stylesheet" href="~/css/nimo-speech.css" asp-append-version="true" />
     @await RenderSectionAsync("Styles", required: false)
 </head>
-<body class="ocean-theme ns-site-shell @(oceanCatalog ? "ns-catalog-shell" : null)">
+<body class="ocean-theme ns-site-shell @(oceanCatalog ? "ns-catalog-shell" : null) @(hasBackdrop ? "ns-site-shell--scenic" : null)">
+    @await RenderSectionAsync("Backdrop", required: false)
     <partial name="_Navbar" />
     <div class="@(oceanCatalog ? "ns-catalog-main" : "container ns-site-main")">
         <main role="main" class="pb-3">
@@ -68,14 +71,17 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <partial name="_FloatingBuddy" />
-    @if (oceanCatalog) { <partial name="_CatalogVoyage" /><partial name="_JourneyCloudTransition" /> }
+    @if (oceanCatalog) { <partial name="_CatalogVoyage" /> }
+    <partial name="_JourneyCloudTransition" />
     <script src="~/js/motion-state.js" asp-append-version="true" defer></script>
     <script src="~/js/journey-theme.js" asp-append-version="true" defer></script>
     <script src="~/js/buddy-agent.js" asp-append-version="true" defer></script>
     <script src="~/js/buddy-motion.js" asp-append-version="true" defer></script>
-    @if (oceanCatalog) { <script src="~/js/island-water-motion.js" asp-append-version="true" defer></script><script src="~/js/course-island-voyage.js" asp-append-version="true" defer></script> }
+    @if (oceanCatalog) { <script src="~/js/island-water-motion.js" asp-append-version="true" defer></script> }
     @await RenderSectionAsync("Scripts", required: false)
     @if (oceanCatalog) { <script src="~/js/catalog-voyage.js" asp-append-version="true" defer></script> }
+    <script src="~/js/journey-clouds.js" asp-append-version="true" defer></script>
+    <script src="~/js/course-island-voyage.js" asp-append-version="true" defer></script>
     <script src="~/js/navbar.js" asp-append-version="true" defer></script>
     <script src="~/js/nimo-speech.js" asp-append-version="true" defer></script>
 </body>

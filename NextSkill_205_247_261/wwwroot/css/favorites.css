@@ -1,0 +1,204 @@
+.favorite-cover {
+    position: relative;
+    scroll-margin-block-start: 12px;
+}
+
+.favorite-toggle form,
+.favorites-item__actions form { margin: 0; }
+
+.favorite-toggle--cover {
+    position: absolute;
+    z-index: 2;
+    inset-block-start: 8px;
+    inset-inline-end: 8px;
+}
+
+.favorite-toggle--cover .favorite-toggle__button {
+    border-radius: 50%;
+    box-shadow: 0 2px 8px #173e5626;
+}
+
+.favorite-toggle .favorite-toggle__button[aria-pressed="true"] {
+    color: var(--ns-danger);
+    background: var(--ns-danger-surface);
+    border-color: #e6bac1;
+}
+
+.favorite-toggle__button[aria-pressed="true"] svg { fill: currentColor; }
+.favorite-toggle .favorite-toggle__button[aria-busy="true"] { cursor: progress; opacity: .75; }
+.favorite-detail-actions:has(.favorite-toggle) { margin-block: 12px; }
+
+.favorite-feedback--overlay {
+    position: fixed;
+    z-index: 1050;
+    inset-inline: 16px;
+    inset-block-end: max(16px, env(safe-area-inset-bottom));
+    width: fit-content;
+    max-width: calc(100% - 32px);
+    margin-inline: auto;
+    pointer-events: none;
+}
+
+.favorite-feedback--overlay .ns-status {
+    margin: 0;
+    box-shadow: var(--ns-shadow);
+}
+
+html[data-theme="dark"] .favorite-feedback .ns-status--success {
+    color: #a0e5cd;
+    background: #153f3b;
+    border-color: #4d796e;
+}
+
+.favorites-page {
+    --favorites-muted: color-mix(in srgb, var(--ns-liquid-ink) 85%, var(--ns-liquid-panel-tint));
+    width: min(100%, 1120px);
+    margin: 0 auto clamp(32px, 6vw, 72px);
+    color: var(--ns-liquid-ink);
+}
+
+.favorites-page .ns-surface {
+    background: var(--ns-liquid-panel-bg, var(--ns-surface));
+    border-color: var(--ns-liquid-panel-edge);
+    box-shadow: var(--ns-liquid-panel-shadow);
+    -webkit-backdrop-filter: var(--ns-liquid-filter);
+    backdrop-filter: var(--ns-liquid-filter);
+}
+
+.favorites-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px 24px;
+    margin-block-end: 24px;
+    padding: clamp(20px, 3.2vw, 38px);
+    border-radius: clamp(22px, 3vw, 30px);
+}
+
+.favorites-heading h1 {
+    margin: 0 0 6px;
+    font-size: clamp(1.625rem, 3.1vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.favorites-heading p { margin: 0; color: var(--favorites-muted); }
+.favorites-back { flex: none; }
+
+.favorites-page .ns-button { border-radius: 999px; }
+.favorites-page .ns-button:not(.ns-button--primary, .ns-button--danger) {
+    color: var(--ns-liquid-ink);
+    background: var(--ns-liquid-control);
+    border-color: var(--ns-liquid-control-border);
+}
+
+.favorites-empty {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    padding: clamp(24px, 6vw, 56px) 20px;
+    text-align: center;
+}
+
+.favorites-empty h2, .favorites-item h2 { margin: 0; font-size: 1.125rem; line-height: 1.55; font-weight: 600; }
+.favorites-empty p { margin: 0 0 8px; color: var(--favorites-muted); }
+
+.favorites-empty__icon {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    color: var(--ns-danger);
+    background: var(--ns-danger-surface);
+}
+
+.favorites-empty__icon svg { width: 28px; height: 28px; }
+
+.favorites-list {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.favorites-item {
+    display: grid;
+    grid-template-columns: minmax(100px, 25%) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(16px, 3vw, 28px);
+    padding: clamp(16px, 3vw, 24px);
+}
+
+.favorites-item__cover {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.favorites-item__cover--missing {
+    display: grid;
+    place-items: center;
+    color: var(--favorites-muted);
+    background: var(--ns-liquid-control);
+    border: 1px solid var(--ns-liquid-control-border);
+}
+
+.favorites-item__link { color: inherit; text-decoration: none; }
+.favorites-item__link:hover { color: inherit; text-decoration: underline; text-underline-offset: .2em; }
+.favorites-item__body { display: grid; gap: 8px; min-width: 0; }
+.favorites-item__metadata { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; color: var(--favorites-muted); font-size: .875rem; }
+.favorites-item__metadata:empty { display: none; }
+.favorites-item__note { margin: 0; white-space: pre-wrap; }
+.favorites-item__actions { margin-block-start: 4px; }
+.favorites-pin { color: var(--ns-warning); background: var(--ns-warning-surface); }
+
+.favorites-edit { max-width: 680px; }
+.favorites-edit__form { display: grid; gap: 20px; padding: clamp(16px, 4vw, 28px); }
+.favorites-edit__form .ns-status { margin: 0; }
+.favorites-edit__form textarea {
+    width: 100%;
+    min-height: 112px;
+    resize: vertical;
+    padding: 10px 14px;
+    border: 1px solid var(--ns-liquid-control-border);
+    border-radius: 12px;
+    background: var(--ns-liquid-panel-solid);
+    color: var(--ns-liquid-ink);
+    font: 400 16px/1.6 var(--ns-font);
+}
+
+.favorites-edit__form .ns-field { color: inherit; }
+.favorites-edit__form #favorite-note-hint { color: var(--favorites-muted); }
+
+.favorites-edit__form :is(textarea, input):focus-visible,
+.favorites-item__link:focus-visible { outline: 3px solid var(--ns-primary-hover); outline-offset: 3px; }
+
+.favorites-edit__pin { display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; }
+.favorites-edit__pin input { flex: none; width: 18px; height: 18px; accent-color: var(--ns-primary); }
+
+@media (hover: hover) and (pointer: fine) {
+    .favorites-page .ns-button:hover:not(.ns-button--primary, .ns-button--danger) {
+        background: var(--ns-liquid-panel-solid);
+    }
+
+    html[data-theme="dark"] .favorite-toggle
+        .ns-button:hover:not(.ns-button--primary, .ns-button--danger, [aria-pressed="true"], [aria-disabled="true"]) {
+        color: var(--ns-ink);
+        background: var(--ns-surface);
+    }
+
+    html[data-theme="dark"] .favorites-page .ns-button--primary:hover {
+        background: var(--ns-primary);
+        border-color: var(--ns-primary-hover);
+    }
+}
+
+@media (max-width: 540px) {
+    .favorites-item { grid-template-columns: minmax(0, 1fr); }
+}

@@ -13,9 +13,10 @@
     const poses = new Map([...stage.querySelectorAll('[data-nimo-pose]')].map(pose => [pose.dataset.nimoPose, pose]));
     const front = poses.get('wave');
     const email = form.elements.Email;
-    const password = form.elements.Password;
+    const registering = Boolean(form.elements.ConfirmPassword);
+    const privateFields = [...form.querySelectorAll('input[name="Password"], input[name="ConfirmPassword"], input[name="InvitationCode"]')];
     const remember = form.querySelector('#RememberMe');
-    const passwordToggle = form.querySelector('.password-toggle-eye');
+    const passwordToggles = [...form.querySelectorAll('.password-toggle-eye')];
     const submit = form.querySelector('.btn-auth-submit');
     const summary = form.querySelector('.validation-summary');
     const overlay = document.getElementById('nimoLoginLoadingOverlay');
@@ -58,6 +59,7 @@
         courses: 'สำรวจคอร์สเรียนฟรีทั้งหมด ความรู้ดีๆ รออยู่เพียบ!',
         guest: 'ไปเดินสำรวจหน้าแรกก่อนได้เลย ความรู้เปิดกว้างเสมอ!',
         register: 'ก้าวแรกของการพัฒนาตัวเอง เริ่มต้นที่การสมัครสมาชิกเลย!',
+        login: 'มีบัญชีแล้ว ไปเรียนต่อกันได้เลย!',
         light: 'แสงเช้าสดใส เหมาะกับการเริ่มต้นเรียนรู้สิ่งใหม่ที่สุด!',
         dark: 'บรรยากาศเงียบสงบ โฟกัสกับการเรียนรู้ได้เต็มที่เลย~',
         sip: learningQuotes[1]
@@ -207,15 +209,15 @@
     function moodFor(control) {
         if (!control) return 'idle';
         if (control === email) return 'email';
-        if (control === password || control === passwordToggle) return 'password';
+        if (privateFields.includes(control) || passwordToggles.includes(control)) return 'password';
         if (control === remember) return 'remember';
         if (control === submit) return 'ready';
         if (control.matches('.login-account-types a')) {
-            return control.pathname.endsWith('/AdminLogin') ? 'admin' : 'learner';
+            return /\/Admin(?:Login|Register)$/i.test(control.pathname) ? 'admin' : 'learner';
         }
         if (control.matches('.login-course-link')) return 'courses';
         if (control.matches('.btn-skip-outline')) return 'guest';
-        if (control.matches('.switch-form a')) return 'register';
+        if (control.matches('.switch-form a')) return registering ? 'login' : 'register';
         return 'idle';
     }
 
@@ -332,14 +334,14 @@
         gazeStep = (gazeStep + 1) % 5;
         react('typing', 720);
     });
-    password.addEventListener('input', () => {
+    privateFields.forEach(field => field.addEventListener('input', () => {
         resetReaction();
         render();
-    });
-    passwordToggle.addEventListener('click', () => {
-        react(passwordToggle.getAttribute('aria-pressed') === 'true' ? 'reveal' : 'conceal');
-    });
-    remember.addEventListener('change', () => react(remember.checked ? 'remembered' : 'forgotten'));
+    }));
+    passwordToggles.forEach(toggle => toggle.addEventListener('click', () => {
+        react(toggle.getAttribute('aria-pressed') === 'true' ? 'reveal' : 'conceal');
+    }));
+    remember?.addEventListener('change', () => react(remember.checked ? 'remembered' : 'forgotten'));
     form.addEventListener('invalid', () => {
         if (reactionMood !== 'invalid') react('invalid', 3000);
     }, true);
