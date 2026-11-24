@@ -1,0 +1,62 @@
+/* Ribbon maps: the path moves with exploration; the lessons and their labels stay readable. */
+#nextskill-home .journey-controls { display: flex; align-items: center; gap: 8px; }
+#nextskill-home .journey-motion-button { display: grid; place-items: center; width: 44px; height: 44px; flex: 0 0 44px; padding: 0; border: 1px solid #e3d5c4; border-radius: 10px; color: #986039; background: #fffdfa; }
+#nextskill-home .journey-motion-symbol { display: block; position: relative; width: 13px; height: 15px; border-left: 4px solid currentColor; border-right: 4px solid currentColor; border-radius: 1px; }
+#nextskill-home .journey-motion-button[aria-pressed=true] .journey-motion-symbol { width: 0; height: 0; border: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-left: 11px solid currentColor; border-radius: 0; margin-left: 3px; }
+#nextskill-home .journey-motion-button:disabled { opacity: .55; cursor: default; }
+#nextskill-home .journey-card .journey-levels { grid-template-rows: none; grid-auto-rows: 136px; }
+#nextskill-home .journey-card .journey-step { grid-row: auto; }
+#nextskill-home .journey-card :is(.position-0,.position-2) { left: 30%; }
+#nextskill-home .journey-card :is(.position-1,.position-3) { left: 70%; }
+#nextskill-home .journey-card .journey-steps { margin-top: 32px; }
+#nextskill-home .journey-card .journey-steps { container-type: inline-size; }
+#nextskill-home .journey-card .unit-banner { justify-content: flex-start; }
+#nextskill-home .journey-card .unit-banner>div { text-align: left; }
+#nextskill-home .journey-card .level-label { position: relative; z-index: 2; background: transparent; padding: 3px 4px; margin-top: 9px; }
+#nextskill-home .journey-card .level-name { display: inline; max-width: 100%; padding: 1px 3px; background: #fff; box-shadow: 0 0 0 2px #fff; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+#nextskill-home .journey-card .game-map-path { z-index: 0; }
+#nextskill-home .journey-card .game-map-path path { stroke-dasharray: none; }
+#nextskill-home .journey-card .game-map-path .map-ribbon-edge { stroke-width: 26px; stroke: #e5d8c1; }
+#nextskill-home .journey-card .game-map-path .map-track { stroke-width: 21px; stroke: #f4ebd8; }
+#nextskill-home .journey-card .game-map-path .map-track-complete { stroke-width: 21px; stroke: #8aaf8d; }
+#nextskill-home .journey-card .game-map-path .map-ribbon-stitch { stroke-width: 2px; stroke: #fffdf6; stroke-dasharray: 4 13; }
+#nextskill-home .journey-card .chapter-locked .map-ribbon-edge { stroke: #e8e1d6; stroke-width: 23px; }
+#nextskill-home .journey-card .chapter-locked .map-track { stroke: #f5f1e9; stroke-width: 19px; }
+#nextskill-home .journey-card .chapter-locked .map-ribbon-stitch { stroke: #d5cab9; stroke-width: 2px; stroke-dasharray: 2 16; }
+#nextskill-home .journey-card .current .level-node { background: #f98a56; border-color: #d46436; box-shadow: 0 6px 0 #b74e28,inset 0 3px 0 #ffc29a; }
+#nextskill-home .journey-aura { position: absolute; inset: -12px; border: 1.5px solid #ecab7d; border-radius: 50%; pointer-events: none; }
+#nextskill-home .journey-aura::after { content: ''; position: absolute; right: -4px; top: calc(50% - 4px); width: 8px; height: 8px; border: 2px solid #fff8eb; border-radius: 50%; background: #df713d; }
+#nextskill-home .journey-card .level-node:focus-visible { outline: 3px solid #a34423; outline-offset: 7px; }
+#nextskill-home .journey-traveler { opacity: 0; pointer-events: none; }
+#nextskill-home .traveler-position,#nextskill-home .traveler-needle,#nextskill-home .traveler-tail { transform-origin: 0 0; }
+#nextskill-home .traveler-tail { fill: #dd8c45; }
+#nextskill-home .tail-far { opacity: .25; }
+#nextskill-home .tail-middle { opacity: .45; }
+#nextskill-home .tail-near { opacity: .7; }
+#nextskill-home .traveler-disc { fill: #fff9ed; stroke: #c7763d; stroke-width: 2px; }
+#nextskill-home .journey-card .game-map-path .traveler-needle path { fill: #e2783d; stroke: #8a4729; stroke-width: 1px; }
+#nextskill-home .journey-card[data-motion]:not([data-motion=active]) .jump-highlight .level-node { animation: none; }
+#nextskill-home .journey-card[data-motion]:not([data-motion=active]) .level-node { transition: none; }
+#nextskill-home .journey-card[data-motion]:not([data-motion=active]) .level-node:not(:disabled):hover { transform: none; }
+@container(min-width:720px) {
+    #nextskill-home .journey-card .journey-step .level-label { position: absolute; top: 22px; width: 160px; max-width: 160px; padding: 0; margin: 0; }
+    #nextskill-home .journey-card :is(.position-0,.position-2) .level-label { right: calc(50% + 55px); text-align: right; }
+    #nextskill-home .journey-card :is(.position-1,.position-3) .level-label { left: calc(50% + 55px); text-align: left; }
+}
+@media(hover:hover) and (pointer:fine) {
+    #nextskill-home .journey-motion-button:hover { background: #fff0e3; }
+    #nextskill-home .journey-card[data-motion=active] .level-node:not(:disabled):hover { transform: translateY(-3px) rotate(-3deg); }
+    #nextskill-home .journey-card .level-node:not(:disabled):active { transform: translateY(2px); }
+}
+@media(max-width:480px) {
+    #nextskill-home .journey-heading { flex-wrap: wrap; gap: 12px; }
+    #nextskill-home .journey-controls { gap: 7px; }
+    #nextskill-home .journey-heading h2 { font-size: 22px; }
+    #nextskill-home .journey-card .game-map-path .map-ribbon-edge { stroke-width: 22px; }
+    #nextskill-home .journey-card .game-map-path :is(.map-track,.map-track-complete) { stroke-width: 17px; }
+}
+@media(prefers-reduced-motion:reduce) {
+    #nextskill-home .journey-traveler { display: none; }
+    #nextskill-home .journey-card .level-node { animation: none !important; transition: none; }
+    #nextskill-home .journey-card .level-node:not(:disabled):hover { transform: none; }
+}

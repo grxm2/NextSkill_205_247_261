@@ -12,11 +12,8 @@ namespace NextSkill_205_247_261.Controllers
     {
         public IActionResult Index()
         {
-            return View(new HomeDashboardViewModel
-            {
-                LearnerName = User.Identity?.IsAuthenticated == true ? User.Identity.Name ?? "ผู้เรียน" : "นักผจญภัย",
-                PopularCourses = GetCourses().Where(course => course.Featured).Take(4).ToArray()
-            });
+            var learnerName = User.Identity?.IsAuthenticated == true ? User.Identity.Name ?? "ผู้เรียน" : "นักผจญภัย";
+            return View(new HomeDashboardViewModel(learnerName));
         }
 
         public IActionResult Privacy()
@@ -53,7 +50,7 @@ namespace NextSkill_205_247_261.Controllers
             all = sort switch
             {
                 "A-Z" => all.OrderBy(c => c.Title).ToList(),
-                "Recently" => all.OrderByDescending(c => c.Id).ToList(),
+                "Recently" => all.OrderByDescending(c => c.Metadata.CreatedAt).ThenByDescending(c => c.Id).ToList(),
                 _ => all.OrderByDescending(c => c.CanStart).ThenByDescending(c => c.Metadata.Featured).ThenBy(c => c.Id).ToList()
             };
 

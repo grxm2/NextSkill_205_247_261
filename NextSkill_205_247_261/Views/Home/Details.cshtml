@@ -11,7 +11,7 @@
     var islandUrl = Url.Action("Island", "Learning", new { courseId = course.Id })!;
     var startUrl = eligible ? islandUrl : Url.Action("Login", "Account", new { returnUrl = islandUrl });
     var study = course.Metadata.Lessons.Any(lesson => lesson.Reading.Length > 0) ? "ดูหรืออ่าน" : "ดูวิดีโอ";
-    var steps = new[] { ("play", study), ("quiz", "ทำแบบทดสอบ"), ("unlock", "ปลดล็อกเกาะ"), ("award", "รับใบรับรอง") };
+    var steps = new[] { ("play", study), ("quiz", "ผ่านแบบทดสอบแต่ละบท"), ("unlock", "สอบท้ายคอร์ส"), ("award", "รับใบประกาศจาก NextSkill") };
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/course-details.css" asp-append-version="true" />
@@ -49,17 +49,23 @@
                 <span class="cj-category">@course.CategoryLabel</span>
                 <h1 id="course-title">@course.Title</h1>
                 <p class="cj-intro">@course.Description</p>
+                @if (!string.IsNullOrWhiteSpace(course.Metadata.Instructor))
+                {
+                    <p class="cj-credit">แหล่งสื่อ <bdi>@course.Metadata.Instructor</bdi></p>
+                }
                 @if (course.CanStart)
                 {
                     <ul class="cj-summary" aria-label="ข้อมูลคอร์ส">
                         <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-island" /></svg>@course.Curriculum.TotalLessons เกาะ</li>
                         <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-clock" /></svg>@(lessons.Sum(lesson => lesson.Minutes)) นาที</li>
-                        <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-star" /></svg>@(lessons.Sum(lesson => lesson.Xp)) XP<span class="visually-hidden"> จากบทเรียน</span></li>
-                        <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-award" /></svg>ใบรับรอง</li>
+                        <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-star" /></svg>@course.Curriculum.LessonXpTotal XP จากบทเรียน</li>
+                        <li>โบนัสเมื่อจบคอร์ส +@NextSkill_205_247_261.Services.LearningStore.CourseCompletionBonus XP</li>
+                        <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-award" /></svg>ใบประกาศโดย NextSkill</li>
                     </ul>
                     <a class="ns-button ns-button--primary cj-start" href="@startUrl" data-course-start data-island-url="@islandUrl" data-course-id="@course.Id">
-                        <span data-course-action-label>เริ่มเรียนเกาะแรก</span><svg class="cj-icon" aria-hidden="true"><use href="#cj-arrow" /></svg>
+                        <span data-course-action-label>ลงทะเบียนและเริ่มเรียน</span><svg class="cj-icon" aria-hidden="true"><use href="#cj-arrow" /></svg>
                     </a>
+                    <p class="ns-status" data-course-lock-note hidden></p>
                     <div hidden id="catalog-antiforgery">@Html.AntiForgeryToken()</div>
                 }
             </div>

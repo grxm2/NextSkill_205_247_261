@@ -5,6 +5,30 @@
     let courses = [];
     let questions = [];
 
+    async function postAdminContent(url, payload) {
+        const token = document.querySelector('#admin-antiforgery input')?.value;
+        if (!token) throw new Error('กรุณาเปิดหน้านี้ใหม่ก่อนบันทึกข้อมูล');
+
+        const headers = { 'X-CSRF-TOKEN': token };
+        const isForm = payload instanceof FormData;
+        if (!isForm) headers['Content-Type'] = 'application/json';
+        let response;
+        try {
+            response = await fetch(url, {
+                method: 'POST', credentials: 'same-origin', headers,
+                body: isForm ? payload : JSON.stringify(payload)
+            });
+        } catch {
+            throw new Error('เชื่อมต่อระบบไม่ได้ กรุณาลองอีกครั้ง');
+        }
+
+        const data = await response.json().catch(() => null);
+        if (!response.ok || data?.success !== true) {
+            throw new Error(data?.message || 'ทำรายการไม่สำเร็จ กรุณาเปิดหน้านี้ใหม่แล้วลองอีกครั้ง');
+        }
+        return data;
+    }
+
     function normalizeCourse(c) {
         if (!c) return null;
         return {
@@ -13,11 +37,11 @@
             category: c.category ?? c.Category ?? 'Technology',
             level: c.level ?? c.Level ?? 'Beginner',
             instructor: c.instructor ?? c.Instructor ?? '',
-            units: c.units ?? c.Units ?? (c.lessons ? c.lessons.length : (c.Lessons ? c.Lessons.length : 4)),
             description: c.description ?? c.Description ?? '',
             videoUrl: c.videoUrl ?? c.VideoUrl ?? '',
             skills: c.skills ?? c.Skills ?? [],
             featured: c.featured ?? c.Featured ?? false,
+            isPublished: (c.isPublished ?? c.IsPublished) !== false,
             lessons: c.lessons ?? c.Lessons ?? []
         };
     }
@@ -74,7 +98,7 @@
         });
         if (title && active.dataset.title) {
             title.textContent = active.dataset.title;
-            document.title = `${active.dataset.title} | NextSkill Admin`;
+            document.title = `${active.dataset.title} | NextSkill`;
         }
     }
 
@@ -90,9 +114,7 @@
     document.getElementById('hero-btn-new-course')?.addEventListener('click', () => {
         openCourseModal();
     });
-    document.getElementById('btn-chart-add-deal')?.addEventListener('click', () => {
-        openCourseModal();
-    });
+    document.getElementById('btn-chart-add-deal')?.addEventListener('click', () => openCourseModal());
     document.getElementById('hero-btn-upload-course')?.addEventListener('click', () => {
         document.getElementById('course-upload-modal')?.showModal();
     });
@@ -117,11 +139,113 @@
     const courseTableBody = document.getElementById('courses-table-body');
     const courseSearchInput = document.getElementById('course-search-input');
     const courseCategoryFilter = document.getElementById('course-category-filter');
+    const lessonEditor = document.getElementById('course-lesson-editor');
+    const addLessonButton = document.getElementById('course-add-lesson');
+    const maxLessons = Number(lessonEditor.dataset.maxLessons);
+    const maxReadingSections = Number(lessonEditor.dataset.maxReadings);
+    let canChangeLessonList = true;
 
     document.getElementById('btn-open-course-modal')?.addEventListener('click', () => openCourseModal());
     document.getElementById('btn-open-upload-modal')?.addEventListener('click', () => {
         document.getElementById('course-upload-modal')?.showModal();
     });
+
+    function editorFieldValue(item, field) {
+        return item[field] ?? item[field[0].toUpperCase() + field.slice(1)];
+    }
+
+    function addReadingSection(list, section = {}) {
+        const entry = document.getElementById('course-reading-template').content.firstElementChild.cloneNode(true);
+        entry.querySelectorAll('[data-reading-field]').forEach(field => {
+            field.value = editorFieldValue(section, field.dataset.readingField) ?? '';
+        });
+        list.append(entry);
+        return entry;
+    }
+
+    function addCourseLesson(lesson) {
+        const id = editorFieldValue(lesson, 'id');
+        const editor = document.getElementById('course-lesson-template').content.firstElementChild.cloneNode(true);
+        editor.dataset.lessonId = id;
+        editor.querySelectorAll('[data-lesson-field]').forEach(field => {
+            const name = field.dataset.lessonField;
+            const value = editorFieldValue(lesson, name);
+            field.value = name === 'videoDurationSeconds' && !value ? '' : value ?? field.defaultValue;
+        });
+        const title = editor.querySelector('[data-lesson-field="title"]');
+        const heading = editor.querySelector('[data-lesson-heading]');
+        const updateHeading = () => {
+            const label = title.value.trim();
+            heading.textContent = label ? `บทที่ ${id} · ${label}` : `บทที่ ${id}`;
+        };
+        title.addEventListener('input', updateHeading);
+        updateHeading();
+        const readingList = editor.querySelector('[data-reading-list]');
+        for (const section of editorFieldValue(lesson, 'reading') ?? []) {
+            addReadingSection(readingList, section);
+        }
+        editor.querySelector('[data-reading-add]').disabled = readingList.childElementCount >= maxReadingSections;
+        lessonEditor.append(editor);
+        return editor;
+    }
+
+    function updateLessonEditorControls() {
+        const count = lessonEditor.childElementCount;
+        document.getElementById('course-unit-count').value = count;
+        addLessonButton.hidden = !canChangeLessonList;
+        addLessonButton.disabled = count >= maxLessons;
+        lessonEditor.querySelectorAll('[data-lesson-remove]').forEach(button => {
+            button.hidden = !canChangeLessonList || count <= 1;
+        });
+    }
+
+    addLessonButton.addEventListener('click', () => {
+        const inUse = new Set(Array.from(lessonEditor.children, editor => Number(editor.dataset.lessonId)));
+        let next = 1;
+        while (inUse.has(next)) next++;
+        if (next > maxLessons) return;
+
+        const editor = addCourseLesson({ id: next });
+        editor.open = true;
+        editor.querySelector('[data-lesson-field="title"]').focus();
+        updateLessonEditorControls();
+    });
+
+    lessonEditor.addEventListener('click', event => {
+        const button = event.target.closest('button');
+        const editor = button?.closest('[data-lesson-editor]');
+        if (!editor) return;
+
+        if (button.hasAttribute('data-lesson-remove')) {
+            if (!canChangeLessonList || lessonEditor.childElementCount <= 1) return;
+            editor.remove();
+            updateLessonEditorControls();
+            addLessonButton.focus();
+            return;
+        }
+        const readingList = editor.querySelector('[data-reading-list]');
+        const addReadingButton = editor.querySelector('[data-reading-add]');
+        if (button.hasAttribute('data-reading-remove')) {
+            button.closest('[data-reading-entry]').remove();
+            addReadingButton.disabled = false;
+            addReadingButton.focus();
+        } else if (button === addReadingButton && readingList.childElementCount < maxReadingSections) {
+            addReadingSection(readingList).querySelector('input').focus();
+            addReadingButton.disabled = readingList.childElementCount >= maxReadingSections;
+        }
+    });
+
+    function readCourseLessons() {
+        return Array.from(lessonEditor.children, editor => {
+            const id = Number(editor.dataset.lessonId);
+            const fields = Object.fromEntries(Array.from(editor.querySelectorAll('[data-lesson-field]'), field =>
+                [field.dataset.lessonField, field.type === 'number' ? Number(field.value) : field.value.trim()]));
+            const reading = Array.from(editor.querySelectorAll('[data-reading-entry]'), entry =>
+                Object.fromEntries(Array.from(entry.querySelectorAll('[data-reading-field]'), field =>
+                    [field.dataset.readingField, field.value.trim()]))).filter(section => section.heading || section.text || section.example);
+            return { ...fields, id, title: fields.title || `บทเรียนที่ ${id}`, reading };
+        });
+    }
 
     function openCourseModal(courseToEdit = null) {
         const c = courseToEdit ? normalizeCourse(courseToEdit) : null;
@@ -131,12 +255,17 @@
         document.getElementById('course-category').value = c ? c.category : 'Technology';
         document.getElementById('course-level').value = c ? c.level : 'Beginner';
         document.getElementById('course-instructor').value = c ? c.instructor : '';
-        document.getElementById('course-units').value = c ? (c.units || (c.lessons ? c.lessons.length : 4)) : 4;
         document.getElementById('course-description').value = c ? c.description : '';
         document.getElementById('course-skills').value = c && c.skills ? c.skills.join(', ') : '';
         const videoInput = document.getElementById('course-video-url');
         if (videoInput) videoInput.value = c ? (c.videoUrl || '') : '';
         document.getElementById('course-featured').checked = c ? !!c.featured : false;
+        canChangeLessonList = !c || !c.isPublished;
+        lessonEditor.replaceChildren();
+        const lessons = c?.lessons.length ? c.lessons : [{ id: 1 }];
+        lessons.forEach(lesson => addCourseLesson(lesson));
+        lessonEditor.firstElementChild.open = true;
+        updateLessonEditorControls();
         courseModal.showModal();
     }
 
@@ -152,7 +281,7 @@
             category: document.getElementById('course-category').value,
             level: document.getElementById('course-level').value,
             instructor: document.getElementById('course-instructor').value.trim(),
-            units: parseInt(document.getElementById('course-units').value, 10) || 4,
+            lessons: readCourseLessons(),
             description: document.getElementById('course-description').value.trim(),
             videoUrl: (document.getElementById('course-video-url')?.value || '').trim(),
             skills,
@@ -160,35 +289,19 @@
         };
 
         try {
-            const res = await fetch('/Account/AdminSaveCourse', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(coursePayload)
-            });
-            if (!res.ok) {
-                const errText = await res.text();
-                throw new Error(`เซิร์ฟเวอร์ตอบกลับรหัส ${res.status}: ${errText}`);
-            }
-            const data = await res.json();
-            if (data.success && data.course) {
-                const saved = normalizeCourse(data.course);
-                const idx = courses.findIndex(c => c.id === saved.id);
-                if (idx >= 0) courses[idx] = saved;
-                else courses.push(saved);
-
-                renderCoursesTable();
-                updateCourseSelectDropdowns();
-                updateMetrics();
-                courseModal.close();
-                alert('บันทึกข้อมูลคอร์สเรียนสำเร็จ! ข้อมูลอัปเดตไปยังหน้าผู้เรียนเรียบร้อยแล้ว');
-            } else {
-                alert(data.message || 'บันทึกข้อมูลคอร์สไม่สำเร็จ');
-            }
+            await postAdminContent('/Account/AdminSaveCourse', coursePayload);
+            courseModal.close();
+            alert('บันทึกข้อมูลคอร์สแล้ว');
+            reloadDashboard();
         } catch (err) {
-            console.error('Save course error:', err);
-            alert('เกิดข้อผิดพลาดในการบันทึกคอร์ส: ' + err.message);
+            alert(err.message);
         }
     });
+
+    courseForm?.addEventListener('invalid', event => {
+        const lesson = event.target.closest('[data-lesson-editor]');
+        if (lesson) lesson.open = true;
+    }, true);
 
     function attachCourseActions() {
         document.querySelectorAll('.btn-edit-course').forEach(btn => {
@@ -200,76 +313,50 @@
             };
         });
 
+        document.querySelectorAll('.btn-publish-course').forEach(btn => {
+            btn.onclick = async () => {
+                btn.disabled = true;
+                try {
+                    await postAdminContent('/Account/AdminPublishCourse', { id: Number(btn.dataset.id) });
+                    reloadDashboard();
+                } catch (error) {
+                    alert(error.message);
+                    btn.disabled = false;
+                }
+            };
+        });
+
         document.querySelectorAll('.btn-delete-course').forEach(btn => {
             btn.onclick = async () => {
                 const id = parseInt(btn.dataset.id, 10);
                 const title = btn.dataset.title || 'คอร์สนี้';
-                if (!confirm(`คุณต้องการลบ "${title}" ใช่หรือไม่?`)) return;
+                if (!confirm(`นำ “${title}” ออกจากคลังคอร์สใช่ไหม? ประวัติการเรียนจะยังอยู่`)) return;
 
                 try {
-                    const res = await fetch('/Account/AdminDeleteCourse', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id })
-                    });
-                    if (!res.ok) {
-                        const errText = await res.text();
-                        throw new Error(`เซิร์ฟเวอร์ตอบกลับรหัส ${res.status}: ${errText}`);
-                    }
-                    const data = await res.json();
-                    if (data.success) {
-                        courses = courses.filter(c => c.id !== id);
-                        renderCoursesTable();
-                        updateCourseSelectDropdowns();
-                        updateMetrics();
-                        alert('ลบคอร์สเรียนสำเร็จ');
-                    } else {
-                        alert(data.message || 'ไม่สามารถลบคอร์สได้');
-                    }
+                    await postAdminContent('/Account/AdminDeleteCourse', { id });
+                    alert('นำคอร์สออกจากคลังแล้ว');
+                    reloadDashboard();
                 } catch (e) {
-                    console.error('Delete course error:', e);
-                    alert('เกิดข้อผิดพลาดในการลบคอร์ส: ' + e.message);
+                    alert(e.message);
                 }
             };
         });
     }
 
     function renderCoursesTable() {
-        if (!courseTableBody) return;
-        const q = (courseSearchInput?.value || '').trim().toLowerCase();
-        const cat = courseCategoryFilter?.value || '';
-
-        const filtered = courses.filter(c => {
-            const matchesQ = !q || (c.title && c.title.toLowerCase().includes(q)) || (c.instructor && c.instructor.toLowerCase().includes(q)) || (c.category && c.category.toLowerCase().includes(q));
-            const matchesCat = !cat || c.category === cat;
-            return matchesQ && matchesCat;
+        const query = courseSearchInput.value.trim().toLowerCase();
+        const category = courseCategoryFilter.value.toLowerCase();
+        let count = 0;
+        courseTableBody.querySelectorAll('[data-course-row]').forEach(row => {
+            const data = row.dataset;
+            const matchesQuery = !query || [data.title, data.instructor, data.category, data.categoryLabel]
+                .some(text => text.toLowerCase().includes(query));
+            const matchesCategory = !category || data.category.toLowerCase() === category;
+            row.hidden = !(matchesQuery && matchesCategory);
+            if (!row.hidden) count++;
         });
-
-        courseTableBody.innerHTML = filtered.map(c => `
-            <tr data-course-row data-id="${c.id}">
-                <td><span class="status-badge">#${c.id}</span></td>
-                <td>
-                    <strong style="font-size: 14px; color: var(--nimo-navy);">${escapeHtml(c.title)}</strong>
-                    ${c.videoUrl ? '<span class="status-badge" style="background: rgba(14, 165, 233, 0.15); color: #0284c7; border: 1px solid #bae6fd; font-size: 11px; margin-left: 6px;" title="มีสื่อวิดีโอการเรียนรู้">▶ มีวิดีโอ</span>' : ''}
-                    <p style="margin: 3px 0 0; font-size: 12px; color: var(--nimo-muted); max-width: 320px; white-space: normal;">${escapeHtml(c.description || '')}</p>
-                </td>
-                <td><span class="status-badge published">${escapeHtml(c.category || '')}</span></td>
-                <td>${escapeHtml(c.level || '')}</td>
-                <td>${c.lessons ? c.lessons.length : (c.units || 0)} ด่าน</td>
-                <td>${escapeHtml(c.instructor || '')}</td>
-                <td>${c.featured ? '<span class="status-badge yellow">แนะนำ</span>' : '<span style="color: var(--nimo-muted); font-size: 12px;">ทั่วไป</span>'}</td>
-                <td style="text-align: right; white-space: nowrap;">
-                    <a href="/Home/Details/${c.id}" target="_blank" class="ns-button ns-button--secondary ns-button--compact" title="เปิดดูหน้ารายละเอียดคอร์สนี้ในมุมมองของผู้เรียน" style="text-decoration: none;">ดูหน้าจริง</a>
-                    <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-course" data-id="${c.id}">แก้ไข</button>
-                    <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-course" data-id="${c.id}" data-title="${escapeHtml(c.title)}">ลบ</button>
-                </td>
-            </tr>
-        `).join('') || `<tr><td colspan="8" class="empty-message">ไม่พบคอร์สที่ตรงกับเงื่อนไขการค้นหา</td></tr>`;
-
-        const badge = document.getElementById('course-total-badge');
-        if (badge) badge.textContent = courses.length;
-
-        attachCourseActions();
+        document.getElementById('no-courses').hidden = count > 0;
+        return count;
     }
 
     courseSearchInput?.addEventListener('input', renderCoursesTable);
@@ -298,28 +385,16 @@
             feedback.style.color = '#0369a1';
             feedback.textContent = 'กำลังประมวลผลการอัปโหลด...';
 
-            const res = await fetch('/Account/AdminUploadCourses', {
-                method: 'POST',
-                body: formData
-            });
-            const data = await res.json();
-            if (data.success) {
-                feedback.style.background = '#ecfdf5';
-                feedback.style.color = '#047857';
-                feedback.textContent = data.message || 'นำเข้าคอร์สสำเร็จ!';
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
-            } else {
-                feedback.style.background = '#fef2f2';
-                feedback.style.color = '#dc2626';
-                feedback.textContent = data.message || 'ไม่สามารถนำเข้าคอร์สได้';
-            }
+            const data = await postAdminContent('/Account/AdminUploadCourses', formData);
+            feedback.style.background = '#ecfdf5';
+            feedback.style.color = '#047857';
+            feedback.textContent = data.message;
+            setTimeout(reloadDashboard, 1000);
         } catch (e) {
             feedback.style.display = 'block';
             feedback.style.background = '#fef2f2';
             feedback.style.color = '#dc2626';
-            feedback.textContent = 'เกิดข้อผิดพลาดในการอัปโหลดไฟล์';
+            feedback.textContent = e.message;
         }
     });
 
@@ -331,226 +406,154 @@
     const questionsContainer = document.getElementById('questions-container');
     const questionCourseFilter = document.getElementById('question-course-filter');
     const questionSearchInput = document.getElementById('question-search-input');
+    const questionCourse = document.getElementById('q-course-id');
+    const questionLesson = document.getElementById('q-lesson-id');
+    const finalQuizLessonId = Number(questionLesson.dataset.finalLesson);
+    const questionChoices = [...(questionForm?.querySelectorAll('input[id^="q-choice-"]') || [])];
+    const questionTemplate = document.getElementById('admin-question-card-template');
+    const choiceTemplate = document.getElementById('admin-question-choice-template');
 
     document.getElementById('btn-open-question-modal')?.addEventListener('click', () => openQuestionModal());
 
-    function updateCourseSelectDropdowns() {
-        const qCourseSelect = document.getElementById('q-course-id');
-        if (qCourseSelect) {
-            qCourseSelect.innerHTML = courses.map(c => `<option value="${c.id}">${escapeHtml(c.title)} (${escapeHtml(c.category)})</option>`).join('');
+    function updateQuestionLessonOptions(selectedLesson) {
+        const course = courses.find(c => c.id === Number(questionCourse.value));
+        const lessons = course?.lessons || [];
+        questionLesson.replaceChildren(...lessons.map(lesson =>
+            new Option(lesson.title ?? lesson.Title, lesson.id ?? lesson.Id)
+        ));
+        if (course) questionLesson.add(new Option('แบบทดสอบท้ายคอร์ส', finalQuizLessonId));
+        if (selectedLesson != null && Array.from(questionLesson.options).some(option => option.value === String(selectedLesson))) {
+            questionLesson.value = String(selectedLesson);
         }
-        if (questionCourseFilter) {
-            const currentVal = questionCourseFilter.value;
-            questionCourseFilter.innerHTML = `<option value="0">ทุกคอร์ส (All Courses)</option>` +
-                courses.map(c => `<option value="${c.id}">${escapeHtml(c.title)} (${escapeHtml(c.category)})</option>`).join('');
-            questionCourseFilter.value = currentVal;
-        }
+        if (!course) questionLesson.add(new Option('เลือกคอร์สก่อน', ''));
     }
+
+    questionCourse?.addEventListener('change', () => updateQuestionLessonOptions());
 
     function openQuestionModal(qToEdit = null) {
         document.getElementById('question-modal-title').textContent = qToEdit ? 'แก้ไขคำถามแบบฝึกหัด' : 'เพิ่มคำถามแบบฝึกหัดใหม่';
-        document.getElementById('question-id').value = qToEdit ? qToEdit.id : '';
-        if (qToEdit && qToEdit.courseId) document.getElementById('q-course-id').value = qToEdit.courseId;
-        document.getElementById('q-lesson-id').value = qToEdit ? (qToEdit.lessonId || 1) : 1;
-        document.getElementById('q-prompt').value = qToEdit ? qToEdit.prompt : '';
+        document.getElementById('question-id').value = qToEdit?.id || '';
+        if (qToEdit) questionCourse.value = String(qToEdit.courseId);
+        updateQuestionLessonOptions(qToEdit?.lessonId);
+        document.getElementById('q-prompt').value = qToEdit?.prompt || '';
 
-        const choices = qToEdit ? qToEdit.choices : ['', '', '', ''];
-        document.getElementById('q-choice-0').value = choices[0] || '';
-        document.getElementById('q-choice-1').value = choices[1] || '';
-        document.getElementById('q-choice-2').value = choices[2] || '';
-        document.getElementById('q-choice-3').value = choices[3] || '';
+        questionChoices.forEach((input, index) => { input.value = qToEdit?.choices[index] || ''; });
+        questionForm.querySelectorAll('input[name="q-correct"]').forEach((radio, index) => {
+            radio.checked = index === (qToEdit?.correctChoice ?? 0);
+        });
 
-        const correctIdx = qToEdit ? (qToEdit.correctChoice || 0) : 0;
-        const radio = document.getElementById(`correct-${correctIdx}`);
-        if (radio) radio.checked = true;
-
-        document.getElementById('q-explanation').value = qToEdit ? (qToEdit.explanation || '') : '';
-        document.getElementById('q-hint').value = qToEdit ? (qToEdit.hint || '') : '';
-        document.getElementById('q-coaching').value = qToEdit ? qToEdit.coaching : '';
-
+        document.getElementById('q-explanation').value = qToEdit?.explanation || '';
+        document.getElementById('q-hint').value = qToEdit?.hint || '';
+        document.getElementById('q-coaching').value = qToEdit?.coaching || '';
         questionModal.showModal();
     }
 
     questionForm?.addEventListener('submit', async event => {
         event.preventDefault();
-        const id = document.getElementById('question-id').value.trim();
-        const courseId = parseInt(document.getElementById('q-course-id').value, 10);
-        const courseObj = courses.find(c => c.id === courseId);
-        const courseTitle = courseObj ? courseObj.title : 'บทเรียน';
+        const selected = questionForm.querySelector('input[name="q-correct"]:checked');
+        const entered = questionChoices
+            .map((input, slot) => ({ slot, text: input.value.trim() }))
+            .filter(choice => choice.text);
+        const correctChoice = selected ? entered.findIndex(choice => choice.slot === Number(selected.value)) : -1;
 
-        const choices = [
-            document.getElementById('q-choice-0').value.trim(),
-            document.getElementById('q-choice-1').value.trim(),
-            document.getElementById('q-choice-2').value.trim(),
-            document.getElementById('q-choice-3').value.trim()
-        ].filter(Boolean);
-
-        if (choices.length < 2) {
-            alert('กรุณาระบุตัวเลือกคำตอบอย่างน้อย 2 ตัวเลือก');
+        if (correctChoice < 0) {
+            alert('เลือกเฉลยจากตัวเลือกที่กรอกข้อความแล้ว');
             return;
         }
 
-        const checkedRadio = document.querySelector('input[name="q-correct"]:checked');
-        const correctChoice = checkedRadio ? parseInt(checkedRadio.value, 10) : 0;
-
         const payload = {
-            id,
-            courseId,
-            courseTitle,
-            lessonId: parseInt(document.getElementById('q-lesson-id').value, 10) || 1,
-            lessonTitle: `บทที่ ${document.getElementById('q-lesson-id').value}`,
+            id: document.getElementById('question-id').value,
+            courseId: Number(questionCourse.value),
+            lessonId: Number(questionLesson.value),
             prompt: document.getElementById('q-prompt').value.trim(),
-            choices,
-            correctChoice: Math.min(correctChoice, choices.length - 1),
+            choices: entered.map(choice => choice.text),
+            correctChoice,
             explanation: document.getElementById('q-explanation').value.trim(),
             hint: document.getElementById('q-hint').value.trim(),
             coaching: document.getElementById('q-coaching').value.trim()
         };
 
         try {
-            const res = await fetch('/Account/AdminSaveQuestion', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            if (!res.ok) {
-                const errText = await res.text();
-                throw new Error(`เซิร์ฟเวอร์ตอบกลับรหัส ${res.status}: ${errText}`);
-            }
-            const data = await res.json();
-            if (data.success && data.question) {
-                const saved = normalizeQuestion(data.question);
-                const idx = questions.findIndex(q => q.id === saved.id);
-                if (idx >= 0) questions[idx] = saved;
-                else questions.push(saved);
-
-                renderQuestionsGrid();
-                updateMetrics();
-                questionModal.close();
-                alert('บันทึกข้อมูลคำถามสำเร็จ!');
-            } else {
-                alert(data.message || 'บันทึกคำถามไม่สำเร็จ');
-            }
-        } catch (e) {
-            console.error('Save question error:', e);
-            alert('เกิดข้อผิดพลาดในการบันทึกคำถาม: ' + e.message);
+            await postAdminContent('/Account/AdminSaveQuestion', payload);
+            questionModal.close();
+            alert('บันทึกข้อมูลคำถามแล้ว');
+            reloadDashboard();
+        } catch (error) {
+            alert(error.message);
         }
     });
 
-    function attachQuestionActions() {
-        document.querySelectorAll('.btn-edit-question').forEach(btn => {
-            btn.onclick = () => {
-                const id = btn.dataset.id;
-                const q = questions.find(item => item.id === id);
-                if (q) openQuestionModal(q);
-                else alert('ไม่พบคำถามที่ต้องการแก้ไข ID: ' + id);
-            };
-        });
+    questionsContainer?.addEventListener('click', async event => {
+        const button = event.target.closest('button[data-question-action]');
+        const card = button?.closest('[data-question-card]');
+        const question = questions.find(item => item.id === card?.dataset.id);
+        if (!question) return;
 
-        document.querySelectorAll('.btn-delete-question').forEach(btn => {
-            btn.onclick = async () => {
-                const id = btn.dataset.id;
-                if (!confirm('คุณต้องการลบคำถามข้อนี้ใช่หรือไม่?')) return;
+        switch (button.dataset.questionAction) {
+            case 'test':
+                openQuizTester(question);
+                break;
+            case 'edit':
+                openQuestionModal(question);
+                break;
+            case 'delete':
+                if (!confirm('คุณต้องการลบคำถามข้อนี้ใช่ไหม?')) return;
                 try {
-                    const res = await fetch('/Account/AdminDeleteQuestion', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id })
-                    });
-                    if (!res.ok) {
-                        const errText = await res.text();
-                        throw new Error(`เซิร์ฟเวอร์ตอบกลับรหัส ${res.status}: ${errText}`);
-                    }
-                    const data = await res.json();
-                    if (data.success) {
-                        questions = questions.filter(item => item.id !== id);
-                        renderQuestionsGrid();
-                        updateMetrics();
-                        alert('ลบคำถามสำเร็จ');
-                    } else {
-                        alert(data.message || 'ไม่สามารถลบคำถามได้');
-                    }
-                } catch (e) {
-                    console.error('Delete question error:', e);
-                    alert('เกิดข้อผิดพลาดในการลบคำถาม: ' + e.message);
+                    await postAdminContent('/Account/AdminDeleteQuestion', { id: question.id });
+                    alert('ลบคำถามแล้ว');
+                    reloadDashboard();
+                } catch (error) {
+                    alert(error.message);
                 }
-            };
+                break;
+        }
+    });
+
+    function renderQuestionCard(question) {
+        const card = questionTemplate.content.firstElementChild.cloneNode(true);
+        card.dataset.id = question.id;
+        const destination = question.lessonId === finalQuizLessonId ? 'แบบทดสอบท้ายคอร์ส' : `บทที่ ${question.lessonId}`;
+        card.querySelector('[data-question-course]').textContent = `${question.courseTitle} · ${destination}`;
+        card.querySelector('[data-question-id]').textContent = 'รหัส: ' + question.id;
+        card.querySelector('[data-question-prompt]').textContent = question.prompt;
+
+        const choices = card.querySelector('[data-question-choices]');
+        question.choices.forEach((text, index) => {
+            const choice = choiceTemplate.content.firstElementChild.cloneNode(true);
+            const correct = index === question.correctChoice;
+            choice.classList.toggle('correct', correct);
+            choice.querySelector('.choice-letter').textContent = String.fromCharCode(65 + index);
+            choice.querySelector('[data-choice-text]').textContent = text;
+            choice.querySelector('[data-choice-correct]').hidden = !correct;
+            choices.append(choice);
         });
 
-        document.querySelectorAll('.btn-test-quiz').forEach(btn => {
-            btn.onclick = () => {
-                const id = btn.dataset.id;
-                const q = questions.find(item => item.id === id);
-                if (q) openQuizTester(q);
-            };
-        });
+        const explanation = card.querySelector('[data-question-explanation]');
+        explanation.hidden = !question.explanation;
+        explanation.querySelector('span').textContent = question.explanation;
+        const hint = card.querySelector('[data-question-hint]');
+        hint.hidden = !question.hint;
+        hint.querySelector('span').textContent = question.hint;
+        return card;
     }
 
     function renderQuestionsGrid() {
-        if (!questionsContainer) return;
-        const qSearch = (questionSearchInput?.value || '').trim().toLowerCase();
-        const courseFilterVal = parseInt(questionCourseFilter?.value || '0', 10);
+        if (!questionsContainer) return 0;
+        const search = (questionSearchInput?.value || '').trim().toLowerCase();
+        const courseId = Number(questionCourseFilter?.value);
+        const filtered = questions.filter(question =>
+            (!courseId || question.courseId === courseId) &&
+            (!search || [question.prompt, question.explanation, question.courseTitle].some(text => text.toLowerCase().includes(search)))
+        );
 
-        const filtered = questions.filter(q => {
-            const matchesCourse = courseFilterVal === 0 || q.courseId === courseFilterVal;
-            const matchesPrompt = !qSearch || (q.prompt && q.prompt.toLowerCase().includes(qSearch)) ||
-                (q.explanation && q.explanation.toLowerCase().includes(qSearch)) ||
-                (q.courseTitle && q.courseTitle.toLowerCase().includes(qSearch));
-            return matchesCourse && matchesPrompt;
-        });
-
-        questionsContainer.innerHTML = filtered.map(q => `
-            <div class="question-studio-card" data-question-card data-id="${q.id}">
-                <div class="question-meta-row">
-                    <span class="question-course-tag">${escapeHtml(q.courseTitle || 'ทั่วไป')} · บทที่ ${q.lessonId || 1}</span>
-                    <span style="font-size: 11px; color: var(--nimo-muted);">รหัส: ${escapeHtml(q.id)}</span>
-                </div>
-                <h4 class="question-prompt">${escapeHtml(q.prompt)}</h4>
-                <div class="question-choices-list">
-                    ${(q.choices || []).map((choice, i) => {
-                        const isCorrect = i === q.correctChoice;
-                        const letter = String.fromCharCode(65 + i);
-                        return `
-                            <div class="choice-item ${isCorrect ? 'correct' : ''}">
-                                <span class="choice-letter">${letter}</span>
-                                <span>${escapeHtml(choice)}</span>
-                                ${isCorrect ? '<span style="margin-left: auto; font-size: 11px; font-weight: 700; color: #047857;">คำตอบที่ถูกต้อง</span>' : ''}
-                            </div>
-                        `;
-                    }).join('')}
-                </div>
-                ${q.explanation ? `
-                    <div class="question-note-box">
-                        <strong>คำอธิบายเมื่อผู้เรียนตอบ:</strong>
-                        <span>${escapeHtml(q.explanation)}</span>
-                    </div>
-                ` : ''}
-                ${q.hint ? `
-                    <div style="font-size: 12px; color: var(--nimo-muted); background: #fefce8; border: 1px solid #fef08a; padding: 7px 10px; border-radius: 8px;">
-                        <strong style="color: #b45309;">คำใบ้จาก Nimo:</strong> ${escapeHtml(q.hint)}
-                    </div>
-                ` : ''}
-                <div class="question-card-footer">
-                    <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-test-quiz" data-id="${q.id}">
-                        <span>ทดสอบตอบ</span>
-                    </button>
-                    <div style="display: flex; gap: 8px;">
-                        <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-question" data-id="${q.id}">แก้ไข</button>
-                        <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-question" data-id="${q.id}">ลบ</button>
-                    </div>
-                </div>
-            </div>
-        `).join('') || `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--nimo-muted);">ไม่พบคำถามที่ตรงกับเงื่อนไขการค้นหา</div>`;
-
-        const badge = document.getElementById('question-total-badge');
-        if (badge) badge.textContent = questions.length;
-
-        attachQuestionActions();
+        questionsContainer.replaceChildren(...filtered.map(renderQuestionCard));
+        document.getElementById('questions-empty').hidden = filtered.length > 0;
+        return filtered.length;
     }
 
     questionSearchInput?.addEventListener('input', renderQuestionsGrid);
     questionCourseFilter?.addEventListener('change', renderQuestionsGrid);
-    attachQuestionActions();
+    renderQuestionsGrid();
 
     // ==========================================
     // Interactive Quiz Tester with Nimo
@@ -623,7 +626,7 @@
         const roleVal = memberRole?.value || 'all';
         let count = 0;
         document.querySelectorAll('[data-member]').forEach(row => {
-            const matchesQuery = !query || row.textContent.toLowerCase().includes(query);
+            const matchesQuery = !query || [row.cells[0], row.cells[1]].some(cell => cell.textContent.toLowerCase().includes(query));
             const matchesRole = roleVal === 'all' || row.dataset.role === roleVal;
             const visible = matchesQuery && matchesRole;
             row.hidden = !visible;
@@ -633,19 +636,11 @@
         if (noMembers) noMembers.hidden = count > 0;
         const countLabel = document.getElementById('member-count');
         if (countLabel) countLabel.textContent = `แสดง ${count} บัญชี`;
+        return count;
     }
 
     memberSearch?.addEventListener('input', filterMembers);
     memberRole?.addEventListener('change', filterMembers);
-
-    document.querySelectorAll('time[datetime]').forEach(elem => {
-        const date = new Date(elem.dateTime);
-        if (Number.isNaN(date.getTime())) return;
-        elem.textContent = new Intl.DateTimeFormat('th-TH', elem.hasAttribute('data-local-date')
-            ? { day: 'numeric', month: 'short', year: 'numeric' }
-            : { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(date);
-        elem.title = date.toLocaleString('th-TH');
-    });
 
     // ==========================================
     // Utility Helpers
@@ -662,162 +657,58 @@
 
     function bindDonutHover() {
         const donutCenterVal = document.getElementById('donut-center-num');
+        if (!donutCenterVal) return;
+        const total = donutCenterVal.textContent;
         document.querySelectorAll('.donut-segment').forEach(seg => {
             seg.onmouseenter = () => {
-                if (donutCenterVal) {
-                    donutCenterVal.textContent = seg.getAttribute('data-share-label') || `${courses.length}`;
-                }
+                donutCenterVal.textContent = seg.dataset.shareLabel;
             };
             seg.onmouseleave = () => {
-                if (donutCenterVal) {
-                    donutCenterVal.textContent = courses.length;
-                }
+                donutCenterVal.textContent = total;
             };
         });
     }
 
-    function updateMetrics() {
-        const totalL = courses.reduce((acc, c) => acc + (c.lessons ? c.lessons.length : (c.units || 0)), 0);
-        const featuredCount = courses.filter(c => !!c.featured).length;
+    const dashboardFilterIds = [
+        'global-admin-search', 'course-search-input', 'course-category-filter',
+        'question-search-input', 'question-course-filter', 'member-search', 'member-role'
+    ];
+    const dashboardRefreshKey = 'nextskill.admin-refresh';
 
-        const mCourses = document.getElementById('metric-courses-count');
-        if (mCourses) mCourses.textContent = courses.length;
-        const mLessons = document.getElementById('metric-lessons-count');
-        if (mLessons) mLessons.textContent = totalL;
-        const mQuestions = document.getElementById('metric-questions-count');
-        if (mQuestions) mQuestions.textContent = questions.length;
-
-        const donutNum = document.getElementById('donut-center-num');
-        if (donutNum) donutNum.textContent = courses.length;
-
-        const headerBadge = document.getElementById('header-summary-badge');
-        if (headerBadge) {
-            headerBadge.textContent = `${courses.length} คอร์ส · ${totalL} ด่าน · ${questions.length} คำถามในระบบ`;
+    function reloadDashboard() {
+        try {
+            const filters = dashboardFilterIds.map(id => document.getElementById(id)?.value);
+            const period = document.querySelector('.chart-period-btn.active')?.dataset.period;
+            sessionStorage.setItem(dashboardRefreshKey, JSON.stringify({ filters, period }));
+        } catch {
+            // Saving still refreshes the server data if storage is disabled.
         }
-
-        const palette = ['#0284c7', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4'];
-        const circumference = 238.76;
-        const countsMap = new Map();
-        courses.forEach(c => {
-            const cat = (c.category || 'General').trim();
-            countsMap.set(cat, (countsMap.get(cat) || 0) + 1);
-        });
-        const entries = [...countsMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-        const totalC = Math.max(courses.length, 1);
-
-        let allocatedPct = 0;
-        let offset = 0;
-        const shares = entries.map(([cat, count], idx) => {
-            const pct = idx === entries.length - 1
-                ? Math.max(0, 100 - allocatedPct)
-                : Math.round(count * 100 / totalC);
-            allocatedPct += pct;
-            const dashLen = Number(((count / totalC) * circumference).toFixed(2));
-            const dashGap = Number(Math.max(0, circumference - dashLen).toFixed(2));
-            const dashOffset = Number((-offset).toFixed(2));
-            offset += dashLen;
-            return { cat, count, pct, color: palette[idx % palette.length], dashLen, dashGap, dashOffset };
-        });
-
-        const legendGrid = document.getElementById('category-legend-grid');
-        if (legendGrid && shares.length > 0) {
-            legendGrid.innerHTML = shares.map(s => `
-                <div class="legend-item">
-                    <span class="legend-name">
-                        <span class="legend-color-dot" style="background: ${s.color};"></span> ${escapeHtml(s.cat)}
-                    </span>
-                    <span class="legend-val" data-cat-legend="${escapeHtml(s.cat)}">${s.count} คอร์ส · ${s.pct}%</span>
-                </div>
-            `).join('');
-        }
-
-        const donutSvg = document.getElementById('category-donut-svg');
-        if (donutSvg && shares.length > 0) {
-            donutSvg.innerHTML = `<circle class="donut-circle-bg" cx="50" cy="50" r="38"></circle>` +
-                shares.map(s => `
-                    <circle class="donut-segment" cx="50" cy="50" r="38"
-                            data-category="${escapeHtml(s.cat)}"
-                            data-share-label="${s.pct}%"
-                            stroke="${s.color}"
-                            stroke-dasharray="${s.dashLen} ${s.dashGap}"
-                            stroke-dashoffset="${s.dashOffset}"></circle>
-                `).join('');
-            bindDonutHover();
-        }
-
-        const coursesSub = document.getElementById('metric-courses-sub');
-        if (coursesSub) coursesSub.textContent = `คอร์สแนะนำ ${featuredCount} คอร์ส · ${shares.length} หมวดหมู่`;
-
-        const lessonsSub = document.getElementById('metric-lessons-sub');
-        if (lessonsSub) {
-            const avgL = courses.length > 0 ? (totalL / courses.length).toFixed(1) : '0';
-            lessonsSub.textContent = `เฉลี่ย ${avgL} ด่านต่อคอร์สในทะเล NextSkill`;
-        }
-
-        const questionsSub = document.getElementById('metric-questions-sub');
-        if (questionsSub) {
-            const avgQ = totalL > 0 ? (questions.length / totalL).toFixed(1) : '0';
-            questionsSub.textContent = `เฉลี่ย ${avgQ} ข้อต่อด่าน · พร้อมฝึกกับ Nimo`;
-        }
-
-        const quotaText = document.getElementById('quota-text');
-        if (quotaText) quotaText.textContent = `${courses.length} คอร์ส · ${totalL} ด่าน`;
+        location.reload();
     }
 
-    // ==========================================
-    // Dynamic Time-based Greeting & Thai Date
-    // ==========================================
-    function updateGreetingAndDate() {
-        const now = new Date();
-        const hr = now.getHours();
-        const greetingElem = document.getElementById('greeting-title');
-        if (greetingElem) {
-            let greeting = 'สวัสดีตอนเช้า';
-            if (hr >= 12 && hr < 17) {
-                greeting = 'สวัสดีตอนบ่าย';
-            } else if (hr >= 17) {
-                greeting = 'สวัสดีตอนเย็น';
-            }
-            const nameMatch = greetingElem.textContent.match(/คุณ\s+([^!,]+)/);
-            const name = nameMatch ? nameMatch[1].trim() : 'Admin';
-            greetingElem.textContent = `${greeting}, คุณ ${name}`;
+    function restoreDashboardFilters() {
+        let state;
+        try {
+            state = JSON.parse(sessionStorage.getItem(dashboardRefreshKey) || 'null');
+            sessionStorage.removeItem(dashboardRefreshKey);
+        } catch {
+            return;
         }
+        if (!Array.isArray(state?.filters)) return;
 
-        const dateElem = document.getElementById('current-date-th');
-        if (dateElem) {
-            dateElem.textContent = new Intl.DateTimeFormat('th-TH', {
-                weekday: 'long',
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            }).format(now);
-        }
-    }
-    updateGreetingAndDate();
-
-    // ==========================================
-    // Smooth Number Counter Animation
-    // ==========================================
-    function animateCounters() {
-        const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-        document.querySelectorAll('[data-count]').forEach(elem => {
-            const target = parseInt(elem.getAttribute('data-count'), 10);
-            if (isNaN(target)) return;
-            const duration = 1200;
-            const startTime = performance.now();
-            function update(now) {
-                const elapsed = now - startTime;
-                const progress = reduced.matches ? 1 : Math.min(elapsed / duration, 1);
-                const ease = 1 - Math.pow(1 - progress, 3);
-                const current = Math.floor(ease * target);
-                elem.textContent = current.toLocaleString('th-TH');
-                if (progress < 1) requestAnimationFrame(update);
-                else elem.textContent = target.toLocaleString('th-TH');
-            }
-            requestAnimationFrame(update);
+        dashboardFilterIds.forEach((id, index) => {
+            const field = document.getElementById(id);
+            const value = state.filters[index];
+            if (!field || typeof value !== 'string') return;
+            if (field instanceof HTMLSelectElement && ![...field.options].some(option => option.value === value)) return;
+            field.value = value;
         });
+
+        if (courseSearchInput.value || courseCategoryFilter.value) renderCoursesTable();
+        if (questionSearchInput.value || questionCourseFilter.value !== '0') renderQuestionsGrid();
+        if (memberSearch.value || memberRole.value !== 'all') filterMembers();
+        [...periodButtons].find(button => button.dataset.period === state.period && !button.classList.contains('active'))?.click();
     }
-    setTimeout(animateCounters, 200);
 
     // ==========================================
     // Interactive Bar Chart Period Switcher (Real Server Data)
@@ -837,19 +728,14 @@
         console.error('Error parsing admin trends data', e);
     }
 
-    const chartPeriodData = serverTrends ? {
-        '3m': serverTrends.p3m,
-        '6m': serverTrends.p6m,
-        '12m': serverTrends.p12m
-    } : {};
-
     periodButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            periodButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const period = btn.getAttribute('data-period');
-            const data = chartPeriodData[period];
+            const data = serverTrends?.[btn.dataset.period];
             if (!data || !barsContainer) return;
+            periodButtons.forEach(button => {
+                button.classList.toggle('active', button === btn);
+                button.setAttribute('aria-pressed', String(button === btn));
+            });
 
             if (chartSubText) chartSubText.textContent = data.sub;
 
@@ -858,9 +744,9 @@
             }
 
             barsContainer.innerHTML = data.bars.map(b => `
-                <div class="chart-bar-col ${b.highlighted ? 'highlighted' : ''}" data-month="${escapeHtml(b.month)}" data-val="${escapeHtml(b.val)}">
+                <div class="chart-bar-col ${b.highlighted ? 'highlighted' : ''}" data-month="${escapeHtml(b.month)}" data-count="${b.count}" data-val="${escapeHtml(b.val)}">
                     ${b.highlighted ? `<div class="bar-highlight-tooltip">${escapeHtml(b.val)}</div>` : ''}
-                    <div class="bar-pill" style="height: ${b.height};"></div>
+                    <div class="bar-pill" style="height: ${b.height}%;"></div>
                 </div>
             `).join('');
 
@@ -899,11 +785,13 @@
     // Interactive Donut Chart Segment Hover
     // ==========================================
     bindDonutHover();
+    restoreDashboardFilters();
 
     // ==========================================
     // Global Search Shortcut (Ctrl+K)
     // ==========================================
     const globalSearch = document.getElementById('global-admin-search');
+    const globalSearchSummary = document.getElementById('admin-search-summary');
     window.addEventListener('keydown', e => {
         if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
             e.preventDefault();
@@ -911,37 +799,29 @@
         }
     });
 
-    globalSearch?.addEventListener('input', e => {
-        const q = e.target.value.trim().toLowerCase();
-        if (courseSearchInput) {
-            courseSearchInput.value = q;
-            renderCoursesTable();
-        }
-        if (questionSearchInput) {
-            questionSearchInput.value = q;
-            renderQuestionsGrid();
-        }
-        if (memberSearch) {
-            memberSearch.value = q;
-            filterMembers();
-        }
+    globalSearch?.addEventListener('input', event => {
+        const query = event.target.value.trim();
+        [courseSearchInput, questionSearchInput, memberSearch].forEach(field => { field.value = query; });
+        const courseMatches = renderCoursesTable();
+        const questionMatches = renderQuestionsGrid();
+        const recentAccountMatches = filterMembers();
+        globalSearchSummary.textContent = query
+            ? `พบ ${courseMatches} คอร์ส · ${questionMatches} คำถาม · ${recentAccountMatches} บัญชีในรายการล่าสุด เปิดแท็บที่ต้องการเพื่อดูผล`
+            : '';
+        globalSearchSummary.hidden = !query;
     });
 
-    // ==========================================
-    // Notification Bell Click Interaction
-    // ==========================================
-    const bellBtn = document.getElementById('topbar-bell-btn');
-    bellBtn?.addEventListener('click', () => {
-        const totalL = courses.reduce((acc, c) => acc + (c.lessons ? c.lessons.length : (c.units || 0)), 0);
-        const totalM = document.querySelectorAll('[data-member]').length;
-        alert(`สรุปข้อมูลระบบ NextSkill Admin (ข้อมูลจริง):\n• คอร์สเรียนในระบบ ${courses.length} คอร์ส (${totalL} ด่าน)\n• แบบฝึกหัดในคลัง ${questions.length} ข้อ\n• บัญชีสมาชิกในระบบ ${totalM} บัญชี\n• ระบบฐานข้อมูล LocalDB ทำงานปกติ`);
+    [courseSearchInput, questionSearchInput, memberSearch, courseCategoryFilter, questionCourseFilter, memberRole].forEach(field => {
+        field.addEventListener('input', () => { globalSearchSummary.hidden = true; });
     });
 
     document.getElementById('btn-quick-activity')?.addEventListener('click', (e) => {
         e.preventDefault();
         const actSection = document.querySelector('.activity-section');
         if (actSection) {
-            actSection.scrollIntoView({ behavior: 'smooth' });
+            const heading = actSection.querySelector('h2');
+            heading.focus({ preventScroll: true });
+            actSection.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
         }
     });
 
@@ -1052,9 +932,9 @@
                                 </g>
                             </svg>
                         </span>
-                        <span class="admin-brand-badge">ADMIN</span>
+                        <span class="admin-brand-badge">ผู้ดูแล</span>
                     </div>
-                    <small class="admin-brand-sub">Control Center · ผู้ดูแลระบบ</small>
+                    <small class="admin-brand-sub">จัดการเนื้อหาและบัญชี</small>
                 </div>
             `;
         }

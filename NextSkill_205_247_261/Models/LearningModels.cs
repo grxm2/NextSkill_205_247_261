@@ -23,16 +23,27 @@ public sealed record LearningCatalogCourse(int Id, string Title, string Category
     string IslandKind, int TotalLessons, bool CanStart, IReadOnlyList<LearningLessonSummary> Lessons)
 {
     public int CourseId => Id;
+    public int LessonXpTotal => Lessons.Sum(lesson => lesson.Xp);
 }
 public sealed record LearningCourseProgress(int CourseId, string Title, string Category, string Description,
     string IslandKind, int TotalLessons, IReadOnlyList<int> CompletedLessons, IReadOnlyList<int> UnlockedIslands,
     int CurrentIslandId, int? LastLessonId, int Progress, bool HasStarted, bool IsComplete,
-    IReadOnlyList<LearningLessonSummary> Lessons);
+    IReadOnlyList<LearningLessonSummary> Lessons)
+{
+    public bool HasFinishedLessons => TotalLessons > 0 && CompletedLessons.Count == TotalLessons;
+    public bool FinalQuizReady => HasStarted && HasFinishedLessons && !IsComplete;
+    public bool IsLocked { get; init; }
+    public int? PrerequisiteCourseId { get; init; }
+    public string? PrerequisiteCourseTitle { get; init; }
+}
 public sealed record LearningState(int? ActiveCourseId, int? CurrentIslandId, int? LastLessonId,
     bool HasCompletedOnboarding, int Xp, int Level, IReadOnlyList<string> Achievements,
     IReadOnlyList<LearningCourseProgress> Courses)
 {
     public const int XpPerLevel = 200;
+    public int LevelXp => Xp % XpPerLevel;
+    public int XpUntilNextLevel => XpPerLevel - LevelXp;
+    public int CompletedCourseCount => Achievements.Count(key => key.StartsWith("course-", StringComparison.Ordinal));
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public LearningActivity? Activity { get; init; }
@@ -45,6 +56,10 @@ public sealed record LearningAward(string Key, DateTime EarnedAt);
 public sealed record LearningDayProgress(int Lessons, int Xp, int Courses);
 public sealed record LearningActivity(int StreakDays, int LessonsToday, int XpToday, int CoursesToday)
 {
+    public IReadOnlyList<DailyGoalStatus> Goals => LearningDailyGoals.All
+        .Select(goal => new DailyGoalStatus(goal.Key, goal.Unit, goal.ReadProgress(Today), goal.Target, goal.IsComplete(Today)))
+        .ToArray();
+
     [JsonIgnore]
     public LearningDayProgress Today => new(LessonsToday, XpToday, CoursesToday);
 
@@ -61,10 +76,23 @@ public sealed record LearningLessonVideo(string YouTubeId, int DurationSeconds, 
 }
 public sealed record LearningLessonContent(int CourseId, int Id, string Title, string IslandName,
     string Summary, IReadOnlyList<LearningReading> Reading, IReadOnlyList<LearningQuestion> Questions,
-    int Xp, int Minutes, string Status, int QuestionCount, int RequiredCorrect, LearningLessonVideo? Video, bool VideoUnlocked);
+    int Xp, int Minutes, string Status, int QuestionCount, int RequiredCorrect, LearningLessonVideo? Video, bool VideoUnlocked)
+{
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? QuizVersion { get; init; }
+}
 public sealed record LearningFeedback(int QuestionId, bool Correct, string Explanation);
 public sealed record LearningCompletion(bool Passed, bool AlreadyCompleted, int Score, int TotalQuestions,
     int RequiredCorrect, int AwardedXp, string Reward, IReadOnlyList<LearningFeedback> Feedback, LearningState State);
+public sealed record CourseFinalQuizPage(int CourseId, string CourseTitle, IReadOnlyList<LearningQuestion> Questions,
+    int RequiredCorrect, string? QuizVersion, bool AlreadyCompleted, int? NextCourseId, string? NextCourseTitle,
+    CourseFinalResult? Result = null, string? Error = null, int ErrorStatus = 400);
+public sealed record CourseFinalResult(bool Passed, int Score, int TotalQuestions, int RequiredCorrect, int AwardedXp);
+public sealed class CourseFinalQuizSubmission : SelectLearningCourseRequest
+{
+    [Required, StringLength(1024)] public string? QuizVersion { get; set; }
+    [Required, MinLength(1), MaxLength(20)] public int[] Answers { get; set; } = [];
+}
 public sealed class LearningIslandViewModel
 {
     public required LearningState State { get; init; }
@@ -73,7 +101,7 @@ public sealed class LearningIslandViewModel
     public int? InitialLessonId { get; init; }
     public string? ErrorMessage { get; init; }
 }
-public sealed class SelectLearningCourseRequest
+public class SelectLearningCourseRequest
 {
     [Range(1, int.MaxValue)] public int CourseId { get; set; }
 }
@@ -85,6 +113,7 @@ public class LearningCheckpointRequest
 public sealed class CompleteLearningLessonRequest : LearningCheckpointRequest
 {
     [Required, MinLength(1), MaxLength(20)] public int[] Answers { get; set; } = [];
+    [StringLength(1024)] public string? QuizVersion { get; set; }
 }
 public class LearningVideoRequest : LearningCheckpointRequest
 {

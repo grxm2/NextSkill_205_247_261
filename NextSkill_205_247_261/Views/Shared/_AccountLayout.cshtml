@@ -212,7 +212,7 @@
     <!-- ==========================================
          CINEMATIC FULL-SCREEN ANIMATED ISLAND & HARBOR LOADING SCREEN
          ========================================== -->
-    <div id="nimoLoginLoadingOverlay" class="nimo-loading-overlay full-screen-mode island-theme-mode" aria-hidden="true" role="dialog" aria-modal="true" aria-label="กำลังเข้าสู่ระบบ">
+    <div id="nimoLoginLoadingOverlay" class="nimo-loading-overlay full-screen-mode island-theme-mode" aria-hidden="true">
         <!-- Live Multi-Layer Pastel Sunrise Ocean, Lighthouse Harbor & Reef World -->
         <div class="fs-loading-sky fs-island-world" aria-hidden="true">
             <partial name="_OceanBirds" />
@@ -473,19 +473,12 @@
                 <div class="fs-progress-meta">
                     <div class="fs-status-box">
                         <span class="fs-status-dot" aria-hidden="true"></span>
-                        <span class="fs-stage-label" id="loadingStageLabel">กำลังเชื่อมต่อระบบบัญชี NextSkill...</span>
-                    </div>
-                    <div class="fs-percent-box">
-                        <span class="fs-percent-number" id="loadingPercentNumber">0%</span>
+                        <span class="fs-stage-label" role="status">กำลังเข้าสู่ระบบ NextSkill…</span>
                     </div>
                 </div>
 
-                <!-- 3D Chunky Duolingo Progress Bar Track -->
-                <div class="fs-progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                    <div class="fs-progress-fill" id="loadingProgressFill" style="width: 0%;">
-                        <span class="fs-progress-glow-tip" aria-hidden="true"></span>
-                        <span class="fs-progress-star-tip" aria-hidden="true">★</span>
-                    </div>
+                <div class="fs-progress-track" aria-hidden="true">
+                    <div class="fs-progress-fill" id="loadingProgressFill" style="width: 30%;"></div>
                 </div>
 
                 <!-- Inspiring Learner Tip -->

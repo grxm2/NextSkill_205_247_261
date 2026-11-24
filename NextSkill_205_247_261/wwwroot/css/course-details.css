@@ -461,6 +461,7 @@ html[data-theme="dark"] .cj-island-art img { filter: brightness(.79) drop-shadow
 }
 .cj-media { display: grid; gap: 16px; }
 .cj-status { margin-top: 0; }
+.cj-start[hidden] { display: none; }
 .course-journey :is(a, button):focus-visible { outline-color: var(--cj-focus); }
 
 @media (prefers-reduced-motion: no-preference) {

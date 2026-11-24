@@ -1,0 +1,28 @@
+@model CertificateVerification
+@{
+    ViewData["Title"] = "ตรวจสอบใบประกาศ";
+    Layout = "_AccountLayout";
+}
+
+<section class="ns-surface" aria-labelledby="verification-title">
+    <h1 id="verification-title">ตรวจสอบใบประกาศจาก NextSkill</h1>
+    @if (Model is not null)
+    {
+        <p role="status">พบใบประกาศในระบบ</p>
+        <dl>
+            <dt>คอร์ส</dt><dd>@Model.CourseTitle</dd>
+            <dt>เรียนจบเมื่อ</dt><dd>@ThailandTime.ToLocal(Model.EarnedAt).ToString("d MMMM yyyy", ThailandTime.Culture)</dd>
+            <dt>ออกเมื่อ</dt><dd>@ThailandTime.ToLocal(Model.IssuedAt).ToString("d MMMM yyyy", ThailandTime.Culture)</dd>
+        </dl>
+    }
+    else if (Context.Response.StatusCode == StatusCodes.Status404NotFound)
+    {
+        <p role="status">ไม่พบใบประกาศสำหรับเลขอ้างอิงนี้</p>
+    }
+
+    <form asp-action="VerifyCertificate" method="get">
+        <label for="certificate-code">เลขอ้างอิงบนใบประกาศ</label>
+        <input id="certificate-code" name="code" type="text" required maxlength="36" autocomplete="off" spellcheck="false" />
+        <button class="ns-button ns-button--primary" type="submit">ตรวจสอบ</button>
+    </form>
+</section>

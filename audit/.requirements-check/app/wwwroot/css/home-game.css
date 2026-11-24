@@ -1,0 +1,596 @@
+/* The game theme layers onto the shared home components. All artwork is native CSS. */
+.game-theme {
+    --canvas: #f8fbf7;
+    --ink: #263d3c;
+    --muted: #6b8580;
+    --forest: #299c5a;
+    --forest-deep: #197e43;
+    --lime: #c5f18a;
+    --line: #e3ece5;
+    --radius: 22px;
+    background-image: none;
+
+}
+.game-theme .site-header { background: #fff; border-bottom: 2px solid #e6eee7; }
+.game-theme .header-inner { min-height: 86px; }
+.game-theme .brand { color: #24864b; }
+.game-theme .brand-mark { background: #69c856; color: white; box-shadow: 0 4px 0 #3b9e3b; border-radius: 12px; }
+.game-theme .brand-period { color: #f5b62e; }
+.game-theme .desktop-nav { gap: 25px; align-items: center; }
+.game-theme .nav-link { padding: 10px 14px; border-radius: 11px; font-weight: 800; color: #81968b; }
+.game-theme .nav-link.active { background: #ebf7e4; color: #3b944c; box-shadow: 0 2px 0 #d5eac9; }
+.game-theme .nav-link.active::after { display: none; }
+.game-theme .header-stats { gap: 22px; }
+.game-theme .xp-stat { color: #b18a20; font-weight: 800; }
+.game-theme .xp-stat .icon { width: 25px; height: 25px; color: #e8ae1f; }
+.game-theme .xp-stat strong { color: #bc8d13; font-size: 16px; font-weight: 800; }
+.header-streak { display: flex; align-items: center; gap: 5px; color: #e48d36; font-size: 15px; }
+.header-streak .icon { width: 25px; height: 25px; }
+.game-theme .heart-stat { color: #ed777c; }
+.game-theme .heart-stat .icon { width: 25px; height: 25px; color: #ed777c; }
+.game-theme .heart-stat strong { font-size: 14px; }
+.game-theme .avatar { background: #e3f2fe; color: #448ebc; outline-color: #d0e4ee; }
+.game-theme .page-container { padding-top: 33px; }
+.game-theme .welcome { margin-bottom: 25px; }
+.game-theme .welcome .eyebrow { color: #83a486; font-size: 8px; }
+.game-theme .welcome h1 { font-size: 29px; letter-spacing: -1.2px; }
+.game-theme .welcome-spark { color: #e7b53c; font-size: 31px; }
+.game-theme .welcome h1+p { color: #627c69; }
+.game-theme .dashboard-grid { grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; }
+.game-theme .main-column { gap: 24px; }
+.game-theme .continue-card { padding: 27px 32px 22px; background: #e6f7de; border: 2px solid #d3ecc6; border-bottom-width: 6px; overflow: hidden; }
+.game-theme .hero-label { color: #68a257; background: #d4edc7; border-radius: 7px; padding: 5px 8px; font-size: 8px; }
+.game-theme .continue-card h2 { font-size: 46px; letter-spacing: -2px; line-height: 1.1; margin: 15px 0 12px; color: #296541; }
+.game-theme .continue-card h2>span { color: #4aaa52; }
+.game-theme .hero-copy>p { font-size: 11px; line-height: 1.8; color: #497241; }
+.game-theme .button-primary { background: #85d14c; color: #254c2b; border: 2px solid #39a750; border-bottom: 0; box-shadow: 0 5px 0 #2c9343; font-size: 12px; font-weight: 800; border-radius: 12px; padding: 13px 20px; min-height: 45px; }
+.game-theme .button-primary:hover { background: #96dd61; transform: translateY(-2px); box-shadow: 0 7px 0 #2c9343; }
+.game-theme .button-primary:active { transform: translateY(4px); box-shadow: 0 1px 0 #2c9343; }
+.game-theme .continue-button { margin-top: 18px; }
+.game-theme .lesson-meta { margin-top: 17px; color: #75a065; font-size: 9px; }
+.game-theme .meta-dot { background: #86ba6c; }
+.game-theme .hero-progress { padding-top: 16px; margin-top: 18px; border-color: #d0e6c4; }
+.game-theme .hero-progress>div { font-size: 10px; color: #4f7547; }
+.game-theme .hero-progress strong { color: #469447; }
+.game-theme .hero-progress strong>span, .game-theme .progress-unit { color: #67865b; }
+.game-theme .hero-progress progress { height: 10px; border: 2px solid #d3e9c8; border-radius: 8px; }
+.game-theme .hero-progress progress::-webkit-progress-bar { background: #d4e8c9; }
+.game-theme .hero-progress progress::-webkit-progress-value { background: #65bb52; box-shadow: inset 0 2px #8cce6d; }
+.game-theme .hero-progress progress::-moz-progress-bar { background: #65bb52; }
+.game-theme .surface { border: 2px solid #e1ebe3; border-bottom-width: 5px; background: #fff; }
+.game-theme .journey-card { padding: 25px 28px 0; }
+.game-theme .section-heading h2 { font-size: 19px; color: #405c50; }
+.game-theme .section-heading .eyebrow { font-size: 8px; color: #94af9d; }
+.game-theme .unit-badge { background: #e7f3ff; color: #5798c7; border: 1px solid #d0e6fa; border-bottom-width: 3px; border-radius: 9px; padding: 7px 10px; font-size: 8px; font-weight: 800; }
+.map-subtitle { color: #718877; font-size: 10px; margin-top: 8px; }
+.game-theme .journey-steps { display: block; max-width: 600px; height: 540px; margin: 16px auto 45px; isolation: isolate; }
+.game-theme .journey-steps::before, .game-theme .journey-steps::after { display: none; }
+.game-map-path { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.game-map-path path { stroke-width: 12px; stroke-linecap: round; fill: none; }
+.map-track { stroke: #e9eee7; }
+.map-track-complete { stroke: #b9dea1; }
+.game-theme .journey-step { position: absolute; width: 110px; height: 70px; transform: translate(-50%, -50%); }
+.game-theme .step-1 { left: 30%; top: 12.5%; }
+.game-theme .step-2 { left: 60%; top: 30.769%; }
+.game-theme .step-3 { left: 35%; top: 50.962%; }
+.game-theme .step-4 { left: 65%; top: 70.192%; }
+.game-theme .step-5 { left: 41.667%; top: 89.423%; }
+.game-theme .level-node { box-sizing: border-box; width: 75px; height: 67px; margin: 0; border: 2px solid #e3eae0; border-radius: 50%; outline: 0; background: #eff3ed; color: #b1c3ad; box-shadow: 0 7px 0 #d7e0d4; font-size: 23px; font-weight: 800; }
+.game-theme .level-node .icon { width: 27px; height: 27px; }
+.game-theme .completed .level-node { background: #95cc69; border-color: #83bb5b; color: #fff; box-shadow: 0 7px 0 #6ea84d; }
+.game-theme .current .level-node { background: #48b8e9; border: 2px solid #33a5d8; color: #fff; box-shadow: 0 7px 0 #238bbc, 0 0 0 8px #ecf9ff; }
+.game-theme .level-node:not(:disabled):hover { transform: translateY(-3px); outline: 0; }
+.game-theme .level-node:not(:disabled):active { transform: translateY(5px); box-shadow: 0 2px 0 #6ea84d; }
+.game-theme .current .level-node:active { box-shadow: 0 2px 0 #238bbc; }
+.game-theme .level-node:focus-visible { outline: 3px solid #367d9e; outline-offset: 10px; }
+.game-theme .level-label { position: absolute; top: 83px; left: -15px; right: -15px; color: #55774a; font-size: 11px; font-weight: 800; margin: 0; }
+.game-theme .current .level-label { color: #4b91b5; }
+.game-theme .locked .level-label { color: #81997c; }
+.game-theme .level-caption { position: absolute; top: 102px; left: -15px; right: -15px; font-size: 8px; color: #6c8560; margin: 0; }
+.game-theme .current .level-caption { color: #608ba1; }
+.start-bubble { position: absolute; top: -39px; font-size: 8px; font-weight: 800; color: #449bc3; letter-spacing: .6px; border: 2px solid #cceaf7; border-radius: 9px; background: white; box-shadow: 0 2px 0 #e1f2fa; padding: 6px 10px; white-space: nowrap; }
+.start-bubble::after { content: ''; position: absolute; width: 8px; height: 8px; border-right: 2px solid #cceaf7; border-bottom: 2px solid #cceaf7; background: white; left: calc(50% - 4px); bottom: -6px; transform: rotate(45deg); }
+.map-decoration { position: absolute; color: #e8d89c; font-size: 35px; }
+.decoration-one { top: 26px; right: 16%; color: #c1dfac; }
+.decoration-two { top: 240px; right: 6%; font-size: 50px; color: #d5e8f0; }
+.decoration-three { bottom: 74px; left: 8%; color: #dfc681; font-size: 30px; }
+.game-theme .current-lesson { border: 2px solid #d8edf8; border-bottom-width: 4px; border-radius: 14px; background: #f3fbff; padding: 17px; }
+.game-theme .current-lesson-icon { background: #d9f0fc; color: #6aa9ca; border: 1px solid #cbe7f5; border-bottom: 3px solid #b7dce9; }
+.game-theme .current-lesson h3 { color: #4c7487; }
+.game-theme .current-lesson>div>p { color: #63899c; }
+.game-theme .current-lesson>div>span { color: #688793; }
+.game-theme .lesson-reward { color: #d7a83b; }
+.game-theme .checkpoint { margin: 18px -10px 20px; padding: 15px; border: 2px dashed #f0ddb0; border-radius: 14px; background: #fffcf2; gap: 12px; }
+.game-theme .checkpoint-icon { color: #dbaf48; background: #fff0bd; border-radius: 10px; width: 38px; height: 38px; }
+.game-theme .checkpoint-icon .icon { width: 22px; height: 22px; }
+.game-theme .checkpoint h3 { color: #8d7031; font-size: 12px; font-weight: 800; }
+.game-theme .checkpoint p { color: #907748; font-size: 9px; }
+.game-theme .checkpoint .text-button { color: #957332; font-size: 10px; font-weight: 800; }
+.game-theme .learning-note { display: none; }
+.game-theme .sidebar { gap: 20px; }
+.game-theme .streak-card { background: #fff6e9; border: 2px solid #f5e5cb; border-bottom-width: 5px; padding: 23px 24px 0; }
+.game-theme .fire-disc { background: #ffe5bd; color: #e8a553; border: 1px solid #f7d59f; border-bottom: 3px solid #efc98f; }
+.game-theme .streak-tag { color: #d6b07b; }
+.game-theme .streak-card h2 { color: #d89541; font-size: 48px; }
+.game-theme .streak-card h2>span { color: #c99b60; font-size: 21px; }
+.game-theme .streak-card>p { color: #926331; font-size: 10px; }
+.game-theme .week { margin: 21px 0; gap: 7px; }
+.game-theme .week-day { color: #926331; font-size: 9px; font-weight: 600; }
+.game-theme .day { width: 27px; height: 29px; border-radius: 9px; border: 1px solid #f0e2c9; border-bottom: 3px solid #ecddc4; background: #fffaf3; }
+.game-theme .day.done { background: #f5bb66; border-color: #edaf56; border-bottom-color: #dc9a41; color: #fff; }
+.game-theme .day-dot { background: #e2d3b7; }
+.game-theme .streak-footer { border-color: #efdfc3; color: #926331; margin: 0 -24px; font-size: 9px; }
+.game-theme .quests-card, .game-theme .league-card { padding: 24px; }
+.game-theme .sidebar .section-heading h2 { font-size: 17px; font-weight: 800; color: #536e62; }
+.game-theme .small-label { border: 1px solid #d9ebce; border-radius: 7px; background: #f2f9ea; color: #92b179; font-weight: 800; font-size: 9px; }
+.game-theme .section-description { color: #607760; font-size: 10px; }
+.game-theme .quest { margin-top: 22px; }
+.game-theme .quest-icon { background: #eef8e8; color: #94b97f; border: 1px solid #dfedd3; border-bottom: 3px solid #d8e8cd; border-radius: 10px; width: 36px; height: 39px; }
+.game-theme .quest:nth-of-type(3) .quest-icon { background: #fff5db; color: #d9b15d; border-color: #f2e3b5; }
+.game-theme .quest:nth-of-type(4) .quest-icon { background: #eaf4fc; color: #86b6d1; border-color: #d5e7f4; }
+.game-theme .quest h3 { color: #527459; font-size: 11px; font-weight: 800; }
+.game-theme .quest-top>span { color: #9c7828; font-size: 8px; }
+.game-theme .quest-bottom>span { color: #64835a; font-size: 8px; }
+.game-theme .quest progress { height: 8px; border-radius: 6px; }
+.game-theme .quest progress::-webkit-progress-bar { background: #eef3e9; }
+.game-theme .quest progress::-webkit-progress-value { background: #b1d889; box-shadow: inset 0 2px #c3e3a2; }
+.game-theme .quest progress::-moz-progress-bar { background: #b1d889; }
+.game-theme .league-title .icon { color: #ccae5c; }
+.game-theme .league-tier { background: #ecf2fa; border: 2px solid #d9e5f3; border-bottom-width: 3px; color: #8aa5c3; }
+.game-theme .leaderboard .your-rank { background: #eef8e5; border: 1px solid #dceccb; }
+.game-theme .leaderboard li { border: 1px solid transparent; font-size: 11px; }
+.game-theme .rank { color: #7b9473; font-size: 9px; }
+.game-theme .avatar-1 { background: #fff0cc; color: #c5a05f; }
+.game-theme .avatar-2 { background: #cce9ad; color: #6b9c4b; }
+.game-theme .avatar-3 { background: #dfedfa; color: #82a8c5; }
+.game-theme .member-avatar { border-radius: 9px; border-bottom: 3px solid #0000000a; }
+.game-theme .leaderboard strong { color: #577849; }
+.game-theme .leaderboard strong>span { color: #7d9670; }
+.game-theme .league-button { border-top: 2px solid #f0f4eb; color: #65884e; font-weight: 800; font-size: 10px; }
+.game-theme .freeze-card { padding: 12px; background: #edf7fd; border: 2px solid #d9edf8; border-bottom-width: 4px; border-radius: 14px; }
+.game-theme .freeze-icon { background: #d8edf9; color: #8cb8d2; }
+.game-theme .freeze-card h2 { font-size: 10px; color: #577e91; }
+.game-theme .freeze-card p { font-size: 8px; color: #6c90a3; }
+.game-theme .freeze-button { color: #527d94; border: 1px solid #c4dfec; border-bottom: 3px solid #bdd8e6; background: #f9fdff; padding: 6px 10px; font-size: 9px; font-weight: 800; }
+.game-theme .freeze-button:hover, .game-theme .freeze-button[aria-pressed=true] { background: #d5edf9; }
+.game-theme .home-footer { border-color: #e0ebde; color: #a5b59d; margin-top: 28px; }
+.game-theme .footer-brand { color: #8eac7f; }
+.game-theme .home-dialog { background: #fff; border: 2px solid #dfebdf; border-bottom-width: 6px; box-shadow: 0 15px 60px #2c61322e; }
+.game-theme .home-dialog h2 { color: #39794f; }
+.game-theme .home-dialog::backdrop { background: #214e3459; }
+.game-theme .dialog-symbol { background: #e7f7d8; color: #8cba69; border: 1px solid #d6eac2; border-bottom: 3px solid #c4dda8; }
+.game-theme .lesson-example { background: #edf8e4; border: 2px solid #e0edcf; }
+.game-theme .reward-detail { background: #fff6d9; color: #b99743; border: 2px solid #f7e5af; }
+.game-theme .mobile-nav { border: 2px solid #e1ece1; border-bottom-width: 5px; background: #fff; }
+.game-theme .mobile-nav [aria-current=page] { color: #59ad65; background: #eef8e7; border-radius: 10px; }
+
+/* A small original NextSkill robot, built from native shapes rather than external images. */
+.game-art { min-height: 292px; overflow: visible; }
+.game-orbit { width: 245px; height: 245px; position: absolute; border-radius: 50%; background: #d7efc8; top: 22px; left: calc(50% - 119px); }
+.orbit-b { width: 190px; height: 190px; top: 49px; left: calc(50% - 92px); background: #c8e9b4; }
+.game-spark { position: absolute; z-index: 3; color: #e5b445; font-size: 33px; }
+.spark-a { top: 24px; left: 7px; transform: rotate(20deg); }.spark-b { bottom: 35px; right: 12px; font-size: 22px; color: #73b8d1; }.spark-c { top: 9px; right: 20px; font-size: 27px; color: #93c877; }
+.xp-token { display: flex; align-items: center; gap: 5px; position: absolute; top: 9px; right: 0; background: #fff7d5; color: #c6a145; border: 2px solid #f2d979; border-bottom-width: 4px; font-size: 10px; font-weight: 800; padding: 7px 11px; border-radius: 12px; transform: rotate(9deg); z-index: 3; }
+.xp-token .icon { width: 18px; height: 18px; }
+.buddy-bubble { position: absolute; bottom: 3px; left: 2px; padding: 9px 14px; border: 2px solid #c9e1ba; border-bottom-width: 4px; border-radius: 13px; background: #fff; color: #77a95b; font-size: 11px; font-weight: 800; transform: rotate(-5deg); }
+
+@media(min-width:1440px) {
+    .game-theme .continue-card { padding: 30px 36px 22px; }
+    .game-theme .continue-card h2 { font-size: 52px; }
+    .game-theme .game-art { min-height: 300px; }
+}
+@media(max-width:1180px) {
+    .game-theme .dashboard-grid { grid-template-columns: minmax(0,1fr) 290px; gap: 23px; }
+    .game-theme .header-inner { gap: 23px; }
+    .game-theme .desktop-nav { gap: 12px; }
+    .game-theme .nav-link { padding: 9px 10px; font-size: 11px; }
+    .game-theme .header-stats { gap: 16px; }
+    .game-theme .continue-card { padding: 25px 25px 20px; grid-template-columns: minmax(0,1.1fr) .9fr; }
+    .game-theme .continue-card h2 { font-size: 44px; }
+    .game-theme .hero-copy>p { font-size: 10px; }
+    .game-theme .hero-label { font-size: 7px; }
+    .game-theme .game-art { min-height: 290px; }
+    .skill-buddy { transform: rotate(-7deg) scale(.86); }
+    .game-orbit { width: 200px; height: 200px; top: 50px; left: calc(50% - 100px); }
+    .orbit-b { width: 155px; height: 155px; top: 72px; left: calc(50% - 77px); }
+    .buddy-bubble { font-size: 9px; padding: 8px 10px; bottom: 2px; }
+    .xp-token { font-size: 8px; right: -8px; top: 20px; padding: 6px 8px; }
+    .spark-a { left: 4px; font-size: 24px; }
+    .spark-c { display: none; }
+    .game-theme .journey-card { padding: 24px 22px 0; }
+    .game-theme .checkpoint { flex-wrap: wrap; }
+    .game-theme .checkpoint h3 { font-size: 11px; }
+    .game-theme .checkpoint p { font-size: 8px; }
+    .game-theme .checkpoint .text-button { font-size: 9px; }
+    .game-theme .quests-card, .game-theme .league-card { padding: 22px 20px; }
+    .game-theme .streak-card { padding: 22px 20px 0; }
+    .game-theme .streak-footer { margin: 0 -20px; font-size: 8px; }
+    .game-theme .day { width: 25px; height: 27px; }
+}
+@media(max-width:960px) {
+    .game-theme .header-inner { min-height: 78px; gap: 18px; }
+    .game-theme .desktop-nav { gap: 4px; }
+    .game-theme .nav-link { font-size: 9px; padding: 8px; }
+    .game-theme .header-stats { gap: 12px; }
+    .game-theme .heart-stat { display: none; }
+    .game-theme .header-streak { font-size: 12px; }
+    .game-theme .xp-stat strong { font-size: 13px; }
+    .game-theme .xp-stat .icon, .header-streak .icon { width: 20px; height: 20px; }
+    .game-theme .welcome h1 { font-size: 25px; }
+    .game-theme .welcome-spark { font-size: 27px; }
+    .game-theme .dashboard-grid { grid-template-columns: minmax(0,1fr) 255px; gap: 20px; }
+    .game-theme .continue-card { display: block; padding: 25px 24px 21px; }
+    .game-theme .game-art { display: none; }
+    .game-theme .continue-card h2 { font-size: 43px; }
+    .game-theme .hero-copy>p { font-size: 11px; }
+    .game-theme .hero-progress { margin-top: 24px; }
+    .game-theme .hero-progress>div { font-size: 8px; }
+    .game-theme .journey-steps { height: 510px; margin-bottom: 39px; }
+    .game-theme .journey-card { padding: 23px 18px 0; }
+    .game-theme .level-name { display: inline; }
+    .game-theme .level-short { display: none; }
+    .game-theme .level-node { width: 68px; height: 62px; font-size: 21px; }
+    .game-theme .level-label { top: 78px; font-size: 10px; }
+    .game-theme .level-caption { top: 96px; font-size: 8px; }
+    .game-theme .section-heading h2 { font-size: 16px; }
+    .game-theme .start-bubble { top: -38px; font-size: 7px; }
+    .game-theme .checkpoint { padding: 13px; }
+    .game-theme .checkpoint h3 { font-size: 10px; }
+    .game-theme .checkpoint p { font-size: 8px; }
+    .game-theme .checkpoint .text-button { flex-basis: 100%; }
+    .game-theme .streak-card { padding: 20px 18px 0; }
+    .game-theme .streak-card h2 { font-size: 43px; }
+    .game-theme .streak-card h2>span { font-size: 18px; }
+    .game-theme .streak-card>p { font-size: 9px; }
+    .game-theme .streak-footer { margin: 0 -18px; font-size: 7px; }
+    .game-theme .day { width: 23px; height: 25px; }
+    .game-theme .week { gap: 4px; }
+    .game-theme .quests-card, .game-theme .league-card { padding: 20px 17px; }
+    .game-theme .sidebar .section-heading h2 { font-size: 15px; }
+    .game-theme .quest-icon { width: 30px; height: 34px; }
+    .game-theme .quest h3 { font-size: 10px; }
+    .game-theme .freeze-card { padding: 10px 8px; gap: 8px; }
+    .game-theme .freeze-card h2 { font-size: 8px; }
+    .game-theme .freeze-card p { font-size: 7px; }
+    .game-theme .freeze-button { font-size: 7px; padding: 5px 8px; }
+}
+@media(max-width:700px) {
+    .game-theme .header-inner { min-height: 75px; }
+    .game-theme .header-stats { gap: 15px; }
+    .game-theme .page-container { padding-top: 27px; }
+    .game-theme .welcome h1 { font-size: 26px; display: block; line-height: 1.35; max-width: 340px; }
+    .game-theme .welcome-spark { display: none; }
+    .game-theme .welcome h1+p { font-size: 11px; }
+    .game-theme .dashboard-grid { display: flex; flex-direction: column; gap: 24px; }
+    .game-theme .continue-card { display: grid; grid-template-columns: minmax(0,1.2fr) .8fr; padding: 26px 25px 21px; }
+    .game-theme .game-art { display: grid; min-height: 285px; }
+    .game-theme .continue-card h2 { font-size: 44px; }
+    .game-theme .journey-card { padding: 24px 23px 0; }
+    .game-theme .section-heading h2 { font-size: 19px; }
+    .game-theme .section-heading .eyebrow { font-size: 8px; }
+    .game-theme .journey-steps { max-width: 500px; height: 540px; }
+    .game-theme .level-node { width: 76px; height: 69px; }
+    .game-theme .level-label { font-size: 11px; top: 84px; }
+    .game-theme .level-caption { top: 103px; font-size: 9px; }
+    .game-theme .current-lesson h3 { font-size: 14px; }
+    .game-theme .checkpoint h3 { font-size: 12px; }
+    .game-theme .checkpoint p { font-size: 9px; max-width: none; }
+    .game-theme .checkpoint .text-button { flex-basis: auto; font-size: 10px; }
+    .game-theme .sidebar { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 20px; }
+    .game-theme .streak-card { grid-column: 1/-1; padding: 23px 25px 0; }
+    .game-theme .streak-card h2 { margin-top: 0; font-size: 48px; }
+    .game-theme .streak-card h2>span { font-size: 24px; }
+    .game-theme .streak-card>p { font-size: 11px; }
+    .game-theme .week { justify-content: flex-start; gap: 13px; }
+    .game-theme .day { width: 33px; height: 35px; border-radius: 11px; }
+    .game-theme .streak-footer { margin: 0 -25px; font-size: 10px; }
+    .game-theme .quests-card, .game-theme .league-card { padding: 20px 18px; }
+    .game-theme .sidebar .section-heading h2 { font-size: 15px; }
+    .game-theme .freeze-card { grid-column: 1/-1; padding: 13px; }
+    .game-theme .freeze-card h2 { font-size: 11px; }
+    .game-theme .freeze-card p { font-size: 9px; }
+    .game-theme .freeze-button { padding: 7px 14px; font-size: 9px; }
+}
+@media(max-width:450px) {
+    .game-theme .header-stats { gap: 12px; }
+    .game-theme .xp-stat { gap: 3px; font-size: 8px; }
+    .game-theme .xp-stat strong { font-size: 11px; }
+    .game-theme .xp-stat .icon { width: 16px; height: 16px; }
+    .game-theme .header-streak { font-size: 11px; gap: 3px; }
+    .header-streak .icon { width: 18px; height: 18px; }
+    .game-theme .avatar { display: none; }
+    .game-theme .welcome h1 { font-size: 27px; }
+    .game-theme .continue-card { grid-template-columns: minmax(0,1fr); padding: 23px 22px 20px; }
+    .game-theme .game-art { display: grid; min-height: 235px; position: absolute; top: 45px; right: -21px; width: 155px; z-index: -1; opacity: .32; }
+    .game-theme .hero-copy { z-index: auto; }
+    .game-theme .continue-card h2 { font-size: 47px; }
+    .game-theme .hero-copy>p { font-size: 11px; max-width: 250px; }
+    .game-theme .hero-label { font-size: 7px; }
+    .game-theme .continue-button { margin-top: 19px; }
+    .game-theme .xp-token, .game-theme .buddy-bubble, .game-theme .game-spark { display: none; }
+    .skill-buddy { transform: rotate(12deg) scale(.8); }
+    .game-theme .hero-progress>div { font-size: 9px; }
+    .game-theme .hero-progress strong>span { font-size: 8px; }
+    .game-theme .journey-card { padding: 23px 20px 0; }
+    .game-theme .section-heading h2 { font-size: 18px; }
+    .game-theme .section-heading .eyebrow { font-size: 7px; }
+    .game-theme .unit-badge { font-size: 7px; padding: 6px 8px; }
+    .map-subtitle { font-size: 9px; max-width: 220px; }
+    .game-theme .journey-steps { height: 510px; margin-top: 15px; margin-bottom: 40px; }
+    .game-theme .journey-step { width: 92px; height: 66px; }
+    .game-theme .level-node { width: 69px; height: 63px; }
+    .game-theme .level-label { font-size: 10px; top: 78px; }
+    .game-theme .level-caption { font-size: 8px; top: 96px; }
+    .game-map-path path { stroke-width: 10px; }
+    .game-theme .start-bubble { top: -35px; font-size: 7px; padding: 5px 8px; }
+    .map-decoration { font-size: 25px; }
+    .decoration-two { right: 1%; font-size: 38px; }
+    .decoration-three { left: 0; }
+    .game-theme .current-lesson { padding: 14px 12px; gap: 11px; }
+    .game-theme .current-lesson h3 { font-size: 13px; }
+    .game-theme .current-lesson>div>p { font-size: 7px; }
+    .game-theme .checkpoint { margin: 17px -7px 20px; padding: 13px 12px; }
+    .game-theme .checkpoint h3 { font-size: 11px; }
+    .game-theme .checkpoint p { font-size: 9px; max-width: 190px; }
+    .game-theme .checkpoint .text-button { flex-basis: 100%; font-size: 10px; }
+    .game-theme .sidebar { display: flex; flex-direction: column; gap: 19px; }
+    .game-theme .sidebar>section { width: 100%; }
+    .game-theme .streak-card { padding: 25px 24px 0; }
+    .game-theme .streak-footer { margin: 0 -24px; font-size: 10px; }
+    .game-theme .week { justify-content: space-between; gap: 6px; }
+    .game-theme .day { width: 31px; height: 34px; }
+    .game-theme .quests-card, .game-theme .league-card { padding: 24px; }
+    .game-theme .sidebar .section-heading h2 { font-size: 18px; }
+    .game-theme .section-description { font-size: 11px; }
+    .game-theme .quest h3 { font-size: 12px; }
+    .game-theme .quest-icon { width: 38px; height: 41px; }
+    .game-theme .quest-top>span { font-size: 9px; }
+    .game-theme .quest-bottom>span { font-size: 9px; }
+    .game-theme .leaderboard li { font-size: 12px; padding: 10px 8px; }
+    .game-theme .leaderboard strong { font-size: 12px; }
+    .game-theme .leaderboard strong>span { font-size: 9px; }
+    .game-theme .league-button { font-size: 11px; }
+    .game-theme .freeze-card { padding: 14px 12px; }
+}
+@media(max-width:350px) {
+    .game-theme .header-stats { gap: 10px; }
+    .game-theme .header-streak { font-size: 10px; }
+    .game-theme .welcome h1 { font-size: 25px; }
+    .game-theme .continue-card { padding: 22px 19px 20px; }
+    .game-theme .continue-card h2 { font-size: 43px; }
+    .game-theme .hero-copy>p { max-width: 225px; font-size: 10px; }
+    .game-theme .journey-card { padding: 22px 16px 0; }
+    .game-theme .section-heading h2 { font-size: 16px; }
+    .game-theme .journey-steps { height: 495px; }
+    .game-theme .day { width: 27px; height: 30px; }
+    .game-theme .streak-card { padding-left: 20px; padding-right: 20px; }
+    .game-theme .streak-footer { margin-left: -20px; margin-right: -20px; font-size: 9px; }
+    .game-theme .quests-card, .game-theme .league-card { padding: 21px; }
+}
+
+/* Path-first composition: the current lesson, its purpose, and the destination form one story. */
+.path-first .header-inner { min-height: 78px; }
+.path-first .page-container { padding-top: 25px; }
+.path-first .welcome { margin-bottom: 21px; }
+.path-first .welcome h1 { font-size: 25px; margin: 5px 0; }
+.path-first .welcome h1+p { font-size: 12px; }
+.path-first .welcome .eyebrow { font-size: 7px; }
+.path-first .welcome-spark { display: none; }
+.path-first .main-column { gap: 18px; }
+.chapter-brief { display: flex; align-items: center; gap: 15px; padding: 21px 24px; border: 2px solid #cde6ba; border-bottom-width: 4px; border-radius: 17px; background: #e8f6dc; }
+.chapter-icon { display: grid; place-items: center; width: 47px; height: 49px; flex-shrink: 0; color: #699d45; border: 2px solid #b9dba0; border-bottom-width: 4px; border-radius: 13px; background: #d8edc6; }
+.chapter-icon .icon { width: 25px; height: 25px; }
+.chapter-copy .eyebrow { font-size: 7px; letter-spacing: 1.1px; color: #7fa163; }
+.chapter-copy h2 { font-size: 20px; letter-spacing: -.6px; font-weight: 800; color: #4a7835; line-height: 1.35; margin-top: 3px; }
+.chapter-copy>p:last-child { font-size: 10px; color: #75925e; margin-top: 3px; }
+.chapter-progress { width: 155px; margin-left: auto; padding-left: 12px; flex-shrink: 0; }
+.chapter-progress label { display: flex; justify-content: space-between; gap: 10px; font-size: 8px; margin-bottom: 7px; color: #82a368; }
+.chapter-progress strong { color: #689343; font-weight: 800; }
+.chapter-progress progress { height: 8px; background: #d3e6c3; }
+.chapter-progress progress::-webkit-progress-bar { background: #d3e6c3; }
+.chapter-progress progress::-webkit-progress-value { background: #81bd4c; box-shadow: inset 0 2px #9ed367; }
+.chapter-progress progress::-moz-progress-bar { background: #81bd4c; }
+.path-first .journey-card { padding: 25px 28px 0; }
+.path-first .journey-card .section-heading h2 { font-size: 25px; letter-spacing: -.9px; color: #365848; }
+.path-first .map-subtitle { color: #718877; font-size: 11px; margin-top: 7px; }
+.mission-strip { display: flex; align-items: center; gap: 9px; padding: 12px 14px; margin-top: 18px; background: #f3fafe; border: 1px solid #e0eff7; border-radius: 10px; }
+.mission-dot { width: 6px; height: 6px; border-radius: 50%; background: #6bb7d9; box-shadow: 0 0 0 3px #e1f1f9; }
+.mission-strip>span:nth-child(2) { font-size: 7px; font-weight: 800; color: #86aaba; letter-spacing: .5px; }
+.mission-strip>strong { font-size: 11px; color: #5e8798; }
+.mission-time { margin-left: auto; color: #8da8b2; font-size: 9px; }
+.mission-xp { display: flex; align-items: center; gap: 3px; color: #b4913d; font-size: 9px; font-weight: 800; }
+.mission-xp .icon { width: 14px; height: 14px; }
+.path-first .journey-steps { height: 440px; max-width: 600px; margin: 12px auto 45px; }
+.path-first .journey-step { width: 110px; height: 64px; }
+.path-first .level-node { width: 72px; height: 63px; }
+.path-first .level-label { top: 76px; font-size: 10px; line-height: 1.3; }
+.path-first .level-caption { top: 105px; font-size: 8px; }
+.path-first .start-bubble { font-size: 8px; letter-spacing: .8px; top: -34px; padding: 5px 11px; }
+.path-first .map-decoration { opacity: .55; font-size: 25px; }
+.path-first .decoration-one { right: 8%; top: 26px; }
+.path-first .decoration-two { display: none; }
+.path-first .decoration-three { bottom: 45px; left: 3%; }
+.map-guide { position: absolute; z-index: 2; top: 38%; left: 74%; width: 144px; height: 110px; }
+.guide-buddy { position: absolute; left: 18px; top: 5px; width: 88px; height: 101px; }
+.guide-buddy .skill-buddy { position: absolute; top: 0; left: 0; transform: rotate(-7deg) scale(.42); transform-origin: top left; }
+.guide-message { position: absolute; top: -45px; left: 0; width: 144px; padding: 9px 10px; border: 1px solid #d7e8c8; border-bottom-width: 3px; border-radius: 11px; background: #f5faee; }
+.guide-message strong { display: block; font-size: 9px; font-weight: 800; color: #6e9456; }
+.guide-message>span { display: block; font-size: 8px; line-height: 1.6; color: #8aab72; margin-top: 3px; }
+.guide-message::after { content: ''; position: absolute; width: 7px; height: 7px; border-right: 1px solid #d7e8c8; border-bottom: 1px solid #d7e8c8; background: #f5faee; bottom: -5px; left: 50px; transform: rotate(45deg); }
+.path-first .checkpoint { margin: 16px -4px 22px; padding: 16px; border: 1px solid #eddfb9; border-bottom-width: 4px; border-radius: 15px; background: #fffcf3; gap: 13px; }
+.path-first .checkpoint-icon { width: 43px; height: 45px; border: 1px solid #f1dca4; border-bottom: 3px solid #e9cd87; border-radius: 12px; background: #ffedb6; }
+.path-first .checkpoint h3 { font-size: 13px; margin-top: 3px; }
+.path-first .checkpoint p { font-size: 9px; }
+.path-first .checkpoint .reward-kicker { font-size: 6px; letter-spacing: 1px; color: #b7a36d; margin: 0; }
+.path-first .sidebar { gap: 16px; }
+.path-first .quests-card { order: 0; border-bottom-width: 3px; border-color: #e4ece2; padding: 23px; }
+.path-first .streak-card { order: 1; background: #fffcf6; border-width: 1px; border-bottom-width: 3px; border-color: #f1e7d6; padding: 20px 23px 0; }
+.path-first .streak-heading { float: right; align-items: flex-end; flex-direction: column; gap: 5px; }
+.path-first .fire-disc { width: 30px; height: 32px; border-radius: 10px; }
+.path-first .fire-disc .icon { width: 19px; height: 19px; }
+.path-first .streak-tag { font-size: 6px; }
+.path-first .streak-card h2 { margin-top: 0; font-size: 35px; line-height: 1.2; }
+.path-first .streak-card h2>span { font-size: 18px; }
+.path-first .streak-card>p { margin-top: 5px; font-size: 10px; }
+.path-first .week { margin: 18px 0; }
+.path-first .streak-footer { margin: 0 -23px; font-size: 8px; padding: 10px; border-color: #f1e7d6; }
+.path-first .league-card { order: 2; border-width: 1px; border-bottom-width: 2px; border-color: #e7ede5; background: #fdfefb; padding: 20px 23px; }
+.path-first .league-card .section-heading h2 { font-size: 15px; }
+.path-first .league-card .section-description { font-size: 9px; }
+.path-first .league-card .leaderboard li { padding-top: 7px; padding-bottom: 7px; }
+.path-first .freeze-card { order: 3; border-width: 1px; border-bottom-width: 2px; background: #f5fbfe; padding: 11px; }
+.path-first .home-footer { margin-top: 24px; }
+@media(max-width:1180px) {
+    .chapter-brief { padding: 19px 21px; gap: 12px; }
+    .chapter-copy h2 { font-size: 18px; }
+    .chapter-progress { width: 120px; }
+    .path-first .journey-card { padding-left: 23px; padding-right: 23px; }
+    .path-first .journey-card .section-heading h2 { font-size: 23px; }
+    .map-guide { left: 72%; width: 130px; }
+    .guide-message { width: 130px; }
+    .guide-message strong { font-size: 8px; }
+    .guide-message>span { font-size: 7px; }
+    .mission-strip { flex-wrap: wrap; gap: 7px; }
+    .mission-strip>strong { font-size: 10px; }
+    .mission-time { font-size: 8px; }
+    .mission-xp { font-size: 8px; }
+    .path-first .checkpoint { flex-wrap: wrap; }
+    .path-first .checkpoint .text-button { font-size: 9px; }
+    .path-first .quests-card, .path-first .league-card { padding: 21px; }
+}
+@media(max-width:960px) {
+    .chapter-brief { padding: 18px; flex-wrap: wrap; }
+    .chapter-icon { width: 38px; height: 41px; }
+    .chapter-icon .icon { width: 21px; height: 21px; }
+    .chapter-copy h2 { font-size: 17px; }
+    .chapter-copy .eyebrow { font-size: 6px; }
+    .chapter-copy>p:last-child { font-size: 9px; }
+    .chapter-progress { width: 100%; padding: 0; margin-top: 4px; }
+    .chapter-progress label { font-size: 8px; }
+    .chapter-progress progress { height: 7px; }
+    .path-first .journey-card { padding: 23px 19px 0; }
+    .path-first .journey-card .section-heading h2 { font-size: 22px; }
+    .path-first .map-subtitle { font-size: 10px; }
+    .path-first .mission-strip>span:nth-child(2) { font-size: 6px; }
+    .path-first .mission-time { display: none; }
+    .mission-xp { margin-left: auto; }
+    .path-first .journey-steps { height: 450px; margin-top: 87px; margin-bottom: 48px; }
+    .map-guide { top: -71px; left: 0; width: 100%; height: 61px; display: flex; align-items: center; gap: 10px; }
+    .guide-buddy { position: relative; left: 0; top: 0; width: 49px; height: 60px; flex-shrink: 0; }
+    .guide-buddy .skill-buddy { transform: rotate(-7deg) scale(.25); left: 5px; top: 5px; }
+    .guide-message { position: relative; top: 0; left: 0; width: auto; flex: 1; padding: 8px 10px; }
+    .guide-message strong { font-size: 9px; }
+    .guide-message>span { font-size: 8px; }
+    .guide-message::after { top: calc(50% - 4px); left: -5px; bottom: auto; transform: rotate(135deg); }
+    .path-first .level-node { width: 66px; height: 59px; }
+    .path-first .level-label { font-size: 9px; top: 72px; }
+    .path-first .level-caption { font-size: 7px; top: 99px; }
+    .path-first .checkpoint h3 { font-size: 12px; }
+    .path-first .checkpoint p { font-size: 8px; }
+    .path-first .checkpoint .text-button { flex-basis: 100%; }
+    .path-first .streak-card { padding: 19px 17px 0; }
+    .path-first .streak-card h2 { font-size: 33px; }
+    .path-first .streak-card h2>span { font-size: 16px; }
+    .path-first .streak-card>p { font-size: 8px; }
+    .path-first .streak-footer { margin: 0 -17px; font-size: 7px; }
+    .path-first .quests-card, .path-first .league-card { padding: 20px 17px; }
+}
+@media(max-width:700px) {
+    .path-first .welcome h1 { font-size: 25px; }
+    .path-first .welcome h1+p { font-size: 11px; }
+    .chapter-brief { padding: 18px 20px; }
+    .chapter-icon { width: 44px; height: 46px; }
+    .chapter-copy h2 { font-size: 20px; }
+    .chapter-copy>p:last-child { font-size: 10px; }
+    .chapter-progress { width: 140px; margin-left: auto; }
+    .path-first .journey-card { padding: 24px 23px 0; }
+    .path-first .journey-card .section-heading h2 { font-size: 25px; }
+    .path-first .mission-strip { flex-wrap: nowrap; }
+    .path-first .mission-time { display: inline; }
+    .path-first .journey-steps { height: 455px; margin-top: 86px; }
+    .path-first .level-node { width: 72px; height: 65px; }
+    .path-first .level-label { top: 79px; font-size: 10px; }
+    .path-first .level-caption { top: 107px; font-size: 8px; }
+    .path-first .checkpoint .text-button { flex-basis: auto; font-size: 10px; }
+    .path-first .sidebar { display: flex; flex-direction: column; }
+    .path-first .sidebar>section { width: 100%; }
+    .path-first .quests-card, .path-first .league-card { padding: 24px; }
+    .path-first .streak-card { padding: 22px 24px 0; }
+    .path-first .streak-card h2 { font-size: 38px; }
+    .path-first .streak-card h2>span { font-size: 21px; }
+    .path-first .streak-card>p { font-size: 10px; }
+    .path-first .streak-footer { margin: 0 -24px; font-size: 9px; }
+    .path-first .week { justify-content: space-between; }
+}
+@media(max-width:450px) {
+    .path-first .page-container { padding-top: 23px; }
+    .path-first .welcome { margin-bottom: 19px; }
+    .path-first .welcome h1 { font-size: 24px; }
+    .chapter-brief { padding: 16px 18px; gap: 11px; border-radius: 15px; }
+    .chapter-copy h2 { font-size: 18px; }
+    .chapter-copy .eyebrow { font-size: 6px; }
+    .chapter-copy>p:last-child { font-size: 9px; }
+    .chapter-progress { width: 100%; margin: 3px 0 0; }
+    .path-first .journey-card { padding: 23px 19px 0; }
+    .path-first .journey-card .section-heading h2 { font-size: 23px; max-width: 210px; }
+    .path-first .journey-card .section-heading { align-items: flex-start; }
+    .path-first .unit-badge { display: none; }
+    .path-first .map-subtitle { font-size: 10px; max-width: 230px; }
+    .mission-strip { padding: 10px; gap: 6px; margin-top: 14px; }
+    .mission-strip>span:nth-child(2) { display: none; }
+    .mission-strip>strong { font-size: 10px; }
+    .path-first .mission-time { display: none; }
+    .path-first .journey-steps { height: 460px; margin-top: 86px; margin-bottom: 49px; }
+    .path-first .journey-step { width: 94px; height: 64px; }
+    .path-first .level-node { width: 67px; height: 60px; }
+    .path-first .level-label { font-size: 9px; top: 73px; left: -12px; right: -12px; }
+    .path-first .level-caption { top: 100px; font-size: 7px; }
+    .path-first .start-bubble { top: -34px; font-size: 7px; padding: 5px 9px; }
+    .path-first .checkpoint { padding: 14px 12px; gap: 10px; }
+    .path-first .checkpoint h3 { font-size: 12px; }
+    .path-first .checkpoint p { font-size: 9px; max-width: 210px; }
+    .path-first .checkpoint .text-button { flex-basis: 100%; }
+    .path-first .checkpoint .reward-kicker { font-size: 6px; }
+}
+@media(max-width:350px) {
+    .chapter-brief { padding-left: 14px; padding-right: 14px; }
+    .chapter-copy h2 { font-size: 16px; }
+    .chapter-copy>p:last-child { font-size: 8px; }
+    .path-first .journey-card { padding-left: 15px; padding-right: 15px; }
+    .path-first .journey-card .section-heading h2 { font-size: 22px; }
+    .path-first .journey-steps { height: 460px; }
+    .path-first .level-label { font-size: 8px; }
+    .path-first .streak-card { padding-left: 20px; padding-right: 20px; }
+    .path-first .streak-footer { margin-left: -20px; margin-right: -20px; }
+}
+
+/* Companion feedback uses transform-only WAAPI motion; idle work pauses offscreen. */
+.buddy-interaction { border: 0; padding: 0; background: none; cursor: pointer; border-radius: 15px; }
+.buddy-interaction .skill-buddy { pointer-events: none; }
+.buddy-interaction:focus-visible { outline: 3px solid #86b863; outline-offset: 5px; }
+.buddy-interaction:active { transform: none !important; }
+.buddy-tap-hint { position: absolute; top: 105px; left: 8px; right: 0; color: #78a05b; font-size: 8px; font-weight: 800; text-align: center; white-space: nowrap; }
+.buddy-arm { transform-origin: 50% 80%; }
+.buddy-body, .buddy-face, .buddy-eye { transform-origin: center; }
+.buddy-face { transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1); }
+.path-first .guide-message { top: -82px; }
+.buddy-motion-control { display: block; border: 0; background: none; color: #75975d; padding: 4px 0 0; margin-top: 4px; font-size: 7px; text-decoration: underline; text-underline-offset: 2px; }
+.buddy-motion-control:hover:not(:disabled) { color: #476b32; }
+.buddy-motion-control:disabled { text-decoration: none; color: #9aad8a; }
+.lesson-buddy { position: absolute; top: 23px; right: 42px; width: 80px; height: 92px; pointer-events: none; }
+.lesson-buddy .skill-buddy { position: absolute; top: 0; left: 0; transform-origin: top left; transform: rotate(-7deg) scale(.37); }
+@media(hover:hover) and (pointer:fine) {
+    .buddy-interaction:hover .buddy-face { transform: translateY(-2px); }
+    .buddy-interaction:hover .buddy-tap-hint { color: #3a753e; }
+}
+@media(max-width:960px) {
+    .path-first .journey-steps { margin-top: 110px; }
+    .path-first .map-guide { top: -94px; height: 82px; }
+    .path-first .guide-message { top: 0; padding: 8px 10px; }
+    .buddy-tap-hint { top: 62px; left: 3px; font-size: 7px; }
+    .buddy-motion-control { font-size: 8px; padding-top: 3px; margin-top: 2px; }
+}
+@media(prefers-reduced-motion:reduce) {
+    .buddy-face { transition: none; }
+    .buddy-interaction:hover .buddy-face { transform: none; }
+}

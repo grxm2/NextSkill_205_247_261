@@ -158,7 +158,7 @@
         skip.hidden = true; recovery.hidden = false;
         const retry = recovery.querySelector('[data-cv-retry]');
         retry.href = url.href;
-        retry.textContent = courseId ? 'ลองเปิดเกาะของฉันอีกครั้ง' : 'ลองเปิดหน้าคอร์สอีกครั้ง';
+        retry.textContent = courseId ? 'ลองเปิดแผนที่บทเรียนอีกครั้ง' : 'ลองเปิดคลังคอร์สอีกครั้ง';
         retry.focus({ preventScroll: true });
     }
     async function depart({ url, trigger, courseId }) {

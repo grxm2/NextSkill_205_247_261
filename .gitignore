@@ -63,6 +63,9 @@ project.lock.json
 project.fragment.lock.json
 artifacts/
 
+# Runtime lock for shared course and quiz content
+NextSkill_205_247_261/Database/.content.lock
+
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
 

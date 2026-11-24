@@ -3,7 +3,7 @@
 ## Working solution
 
 - Branch: `gram-test`; original base `98f210703dc788fb5710e646db3ff8b814f72e33`.
-- Visual Studio solution: `C:/Users/gram/Desktop/NextSkill_205_247_261/NextSkill_205_247_261.slnx`.
+- Visual Studio solution: `NextSkill_205_247_261.slnx` (repository root).
 - Changes are local working-tree edits. No commit, push or merge was performed.
 - The reviewed implementation was copied only after confirming the actual Visual Studio checkout had the same branch/base and no pending changes. Source/target hashes were verified.
 

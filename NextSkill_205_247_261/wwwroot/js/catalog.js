@@ -35,7 +35,8 @@
             bar.hidden = false;
             const label = wrap.querySelector('[data-progress-label]');
             if (ring) {
-                label.textContent = course.hasStarted ? `ผ่าน ${course.completedLessons.length}/${course.totalLessons} เกาะ` : 'ยังไม่เริ่ม';
+                label.textContent = course.finalQuizReady ? 'พร้อมสอบท้ายคอร์ส'
+                    : course.hasStarted ? `ผ่าน ${course.completedLessons.length}/${course.totalLessons} เกาะ` : 'ยังไม่เริ่ม';
                 ring.style.setProperty('--cj-progress', `${bar.value}%`);
                 ring.querySelector('[data-progress-percent]').textContent = `${bar.value}%`;
             } else {
@@ -44,8 +45,23 @@
             }
         });
         page.querySelectorAll('[data-course-start]').forEach(link => {
-            const saved=state.courses.find(item=>item.courseId===Number(link.dataset.courseId));
-            if(saved&&!selecting)(link.querySelector('[data-course-action-label]')||link).textContent=saved.isComplete?'ทบทวนบทเรียน':saved.hasStarted?'เรียนต่อจากเกาะเดิม':'เริ่มเรียนเกาะแรก';
+            const saved = state.courses.find(item => item.courseId === Number(link.dataset.courseId));
+            if (!saved || selecting) return;
+            const label = link.querySelector('[data-course-action-label]') || link;
+            link.hidden = saved.isLocked;
+            link.href = saved.finalQuizReady ? `/Learning/FinalQuiz?courseId=${saved.courseId}` : link.dataset.islandUrl;
+            label.textContent = saved.isComplete ? 'ทบทวนบทเรียน' : saved.finalQuizReady ? 'ทำแบบทดสอบท้ายคอร์ส'
+                : saved.hasStarted ? 'เรียนต่อจากเกาะเดิม' : 'ลงทะเบียนและเริ่มเรียน';
+            const note = page.querySelector('[data-course-lock-note]');
+            if (!note) return;
+            note.hidden = !saved.isLocked;
+            note.textContent = saved.isLocked ? 'สอบท้ายคอร์สก่อนหน้าให้ผ่านเพื่อปลดล็อกคอร์สนี้' : '';
+            if (saved.isLocked && saved.prerequisiteCourseId && saved.prerequisiteCourseTitle) {
+                const previous = document.createElement('a');
+                previous.href = `/Home/Details/${saved.prerequisiteCourseId}`;
+                previous.textContent = `ดูคอร์ส ${saved.prerequisiteCourseTitle}`;
+                note.append(' · ', previous);
+            }
         });
         const course = state.courses.find(item => item.courseId === Number(page.dataset.courseId));
         if (!course) return;
@@ -94,6 +110,9 @@
     page.addEventListener('click', async event => {
         const start=event.target.closest('[data-course-start]');
         if(!start||!page.contains(start))return;
+        const progress = latestState?.courses.find(course => course.courseId === Number(start.dataset.courseId));
+        if (progress?.isLocked) { event.preventDefault(); return; }
+        if (progress?.finalQuizReady) return;
         if (selecting) { event.preventDefault(); return; }
         if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
         if (!eligible) {

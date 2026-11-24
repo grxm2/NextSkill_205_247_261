@@ -1,0 +1,51 @@
+/* The star is a fixed, non-interactive layer; the sky remains the real backdrop. */
+.shooting-star{
+    --star-core:#fffaf0;
+    --star-light:#ffd580;
+    --star-tail:rgba(255,177,64,.8);
+    position:fixed;left:0;top:0;z-index:999;width:12px;height:12px;
+    border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0 12%,var(--star-core) 28%,var(--star-light) 55%,var(--star-tail) 90%);opacity:0;pointer-events:none;
+    box-shadow:0 0 9px 3px var(--star-light),0 0 24px 5px var(--star-tail);
+    transform-origin:center;will-change:transform,opacity;
+}
+.shooting-star:before{
+    content:'';position:absolute;right:6px;top:50%;width:165px;height:8px;
+    border-radius:50%;transform:translateY(-50%);
+    background:linear-gradient(to left,var(--star-core),var(--star-light) 6%,var(--star-tail) 24%,transparent 94%);
+    box-shadow:0 0 8px -2px var(--star-tail);
+}
+.shooting-star:after{
+    content:'';position:absolute;inset:-9px;pointer-events:none;
+    background:linear-gradient(90deg,transparent 42%,var(--star-core) 50%,transparent 58%) center/100% 2px no-repeat,
+        linear-gradient(0deg,transparent 42%,var(--star-core) 50%,transparent 58%) center/2px 100% no-repeat;
+    opacity:.85;
+}
+html[data-theme="dark"] .shooting-star{--star-core:#fff;--star-light:#d3efff;--star-tail:rgba(133,204,255,.8)}
+.ocean-home .ow-intro .shooting-star--behind{position:absolute;z-index:0}
+.ocean-home .ow-intro :is(.hd-hero,.hd-greeting,.hd-current,.hd-stats){position:relative;z-index:1}
+#hero-highlight{color:#006b69;font-weight:700;text-shadow:none;transition:text-shadow 650ms ease-out}
+html[data-theme="dark"] #hero-highlight{color:#8ee7d5}
+/* Keep the ocean gradient legible as the star's highlight passes across it. */
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+    #hero-highlight{
+        background-image:linear-gradient(115deg,#075786 0%,#006b69 42%,#3b8594 50%,#075786 58%,#006b69 100%);
+        background-size:240% 100%;background-position:0% 50%;
+        -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+        transition:background-position 900ms ease-out,text-shadow 650ms ease-out;
+    }
+    html[data-theme="dark"] #hero-highlight{
+        background-image:linear-gradient(115deg,#a6dfff 0%,#8ee7d5 42%,#f0fbff 50%,#a6dfff 58%,#8ee7d5 100%);
+    }
+    #hero-highlight.is-star-lit{background-position:100% 50%;transition-duration:900ms,120ms}
+}
+@media(forced-colors:active){
+    #hero-highlight{background-image:none;-webkit-text-fill-color:currentColor}
+    html[data-theme="dark"] #hero-highlight{background-image:none}
+}
+#hero-highlight.is-star-lit{text-shadow:0 0 6px #ffe4a855,0 0 18px #ffd78a44}
+html[data-theme="dark"] #hero-highlight.is-star-lit{text-shadow:0 0 8px #fff9,0 0 22px #9edfff88}
+@media(width < 1024px),(prefers-reduced-motion:reduce){
+    .shooting-star{display:none}
+    #hero-highlight{transition:none}
+    #hero-highlight.is-star-lit{text-shadow:none}
+}

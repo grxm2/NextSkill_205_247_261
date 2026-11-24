@@ -5,8 +5,10 @@
     ViewData["JourneyMode"] = "learn";
     var activeCourseMeta = NextSkill_205_247_261.Services.CourseCatalog.GetCourses().FirstOrDefault(c => c.Id == Model.Course.CourseId);
     var videoUrl = activeCourseMeta?.VideoUrl;
-    var levelXp = Model.State.Xp % LearningState.XpPerLevel;
-    var goalTargets = LearningDailyGoals.All.ToDictionary(goal => goal.Key, goal => goal.Target);
+    var embedUrl = CourseBrowseItem.ToEmbedUrl(videoUrl);
+    var isDirect = CourseBrowseItem.IsDirectVideo(videoUrl);
+    var hasCourseVideo = isDirect || embedUrl is not null;
+    var levelXp = Model.State.LevelXp;
 }
 <main id="journey-main" class="sj-learn">
     <partial name="_LearningOceanWorld" />
@@ -20,7 +22,7 @@
                 </button>
             </h1>
             <div class="island-course-menu" id="island-course-menu" hidden>
-                @if (!string.IsNullOrWhiteSpace(videoUrl))
+                @if (hasCourseVideo)
                 {
                     <button id="island-video-open" type="button" aria-haspopup="dialog" aria-controls="island-course-video-modal">
                         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 4.8a1 1 0 0 0-1.5.9v12.6a1 1 0 0 0 1.5.9l10.1-6.3a1 1 0 0 0 0-1.8L8 4.8Z"/></svg>
@@ -36,14 +38,15 @@
             <div class="island-progress-xp">
                 <dt class="sr-only">XP ในเลเวลปัจจุบัน</dt>
                 <dd>
-                    <span class="icon icon-lightning" aria-hidden="true"></span><span id="island-level-xp">@($"{levelXp}/{LearningState.XpPerLevel} XP")</span>
+                    <span class="icon icon-lightning" aria-hidden="true"></span><span id="island-level-label">เลเวล @Model.State.Level</span>
+                    <span id="island-level-xp">@($"{levelXp}/{LearningState.XpPerLevel} XP")</span>
                     <progress class="island-meter" id="island-level-meter" max="@LearningState.XpPerLevel" value="@levelXp"
                               aria-label="XP ถึงเลเวล @(Model.State.Level + 1)" title="ถึงเลเวล @(Model.State.Level + 1)"></progress>
                 </dd>
             </div>
             @if (Model.State.Activity is { } activity)
             {
-                var completedGoals = LearningDailyGoals.All.Count(goal => goal.IsComplete(activity.Today));
+                var completedGoals = activity.Goals.Count(goal => goal.Complete);
                 <div>
                     <dt class="sr-only">เรียนต่อเนื่อง (วัน)</dt>
                     <dd title="@($"streak {activity.StreakDays} วัน")">
@@ -79,10 +82,8 @@
         <partial name="_IslandDashboard" model="Model" />
     </div>
 
-@if (!string.IsNullOrWhiteSpace(videoUrl))
+@if (hasCourseVideo)
 {
-    var embedUrl = NextSkill_205_247_261.Models.CourseBrowseItem.ToEmbedUrl(videoUrl);
-    var isDirect = NextSkill_205_247_261.Models.CourseBrowseItem.IsDirectVideo(videoUrl);
     <dialog id="island-course-video-modal" class="nimo-modal island-course-video" aria-labelledby="island-video-title">
         <div class="island-course-video-header">
             <div class="island-course-video-title">
@@ -119,4 +120,4 @@
 }
 <dialog id="island-detail-dialog" class="island-detail-dialog" aria-labelledby="detail-title"><button type="button" id="detail-sheet-close" aria-label="ปิดรายละเอียด">✕</button></dialog>
 </main>
-<script type="application/json" id="learning-initial-state">@Json.Serialize(new { state = Model.State, course = Model.Course, initialLessonId = Model.InitialLessonId, goalTargets })</script>
+<script type="application/json" id="learning-initial-state">@Json.Serialize(new { state = Model.State, course = Model.Course, initialLessonId = Model.InitialLessonId })</script>

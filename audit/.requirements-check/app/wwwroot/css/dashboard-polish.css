@@ -1,0 +1,132 @@
+@font-face { font-family: Prompt; src: url('../fonts/Prompt-Regular.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+@font-face { font-family: Prompt; src: url('../fonts/Prompt-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; }
+@font-face { font-family: Prompt; src: url('../fonts/Prompt-SemiBold.ttf') format('truetype'); font-weight: 600; font-display: swap; }
+@font-face { font-family: Prompt; src: url('../fonts/Prompt-Bold.ttf') format('truetype'); font-weight: 700 900; font-display: swap; }
+.ocean-theme { font-family: Prompt,"Segoe UI",Tahoma,sans-serif; --bs-body-font-family: Prompt,"Segoe UI",Tahoma,sans-serif; }
+.game-theme.course-home.dashboard-refined { background: #f2fbfe; font-size: 15px; line-height: 1.7; }
+.dashboard-refined :is(button,input) { font-family: inherit; }
+.ocean-theme.dashboard-refined :is(.eyebrow,.chapter-copy .eyebrow,.chapter-progress label,.resume-label,.resume-description,.quest-top>span,.quest-bottom>span,.section-description,.level-caption,.small-label,.companion-field-hint,.companion-kicker,.companion-storage-note,.buddy-study-note,.agent-menu-hint,.companion-emotion,.companion-activity) { font-size: 13px; color: #526879; letter-spacing: 0; line-height: 1.8; }
+.game-theme.course-home.dashboard-refined .page-container { padding-top: 22px; }
+.game-theme.course-home.dashboard-refined .greeting-row { padding: 0; margin: 0 0 22px; gap: 18px; border: 0; box-shadow: none; background: transparent; }
+.game-theme.course-home.dashboard-refined .arrival-character { flex: 0 0 82px; width: 82px; height: 96px; background: none; }
+.dashboard-refined .arrival-copy h1 { font-size: 27px; font-weight: 600; line-height: 1.5; letter-spacing: -.4px; margin-bottom: 5px; }
+.dashboard-refined .arrival-copy p { font-size: 14px; color: #526879; }
+.dashboard-refined .arrival-copy p>strong { color: #086885; font-weight: 500; }
+.dashboard-refined .greeting-tour { padding: 8px 0; background: transparent; border: 0; color: #086885; font-size: 14px; text-underline-offset: 5px; }
+.dashboard-refined .greeting-tour:hover { text-decoration: underline; }
+.game-theme.course-home.dashboard-refined .map-guide { display: none; }
+.game-theme.course-home.dashboard-refined .journey-steps { margin-top: 22px; margin-bottom: 26px; }
+.game-theme.course-home.dashboard-refined :is(.chapter-brief,.journey-card,.daily-goal-card,.quests-card,.streak-card,.league-card,.freeze-card) {
+    border: 2px solid #d4e7ef; border-bottom: 4px solid #bfd7e4; background: #fff;
+    box-shadow: 0 3px 0 #dbeaf326; border-radius: 20px;
+}
+.game-theme.course-home.dashboard-refined .chapter-brief { padding: 18px 22px; gap: 12px; }
+.game-theme.course-home.dashboard-refined .chapter-copy h2 { font-size: 24px; line-height: 1.5; font-weight: 600; }
+.game-theme.course-home.dashboard-refined .chapter-icon { width: 44px; height: 48px; }
+.game-theme.course-home.dashboard-refined .course-resume { padding-top: 12px; margin-top: 0; }
+.game-theme.course-home.dashboard-refined .course-resume strong { font-size: 18px; font-weight: 500; }
+.game-theme.course-home.dashboard-refined .resume-button { min-height: 46px; }
+.game-theme.course-home.dashboard-refined .journey-card { padding: 22px 24px 0; }
+.game-theme.course-home.dashboard-refined .journey-card .section-heading h2 { font-size: 25px; font-weight: 600; }
+.dashboard-refined .path-count { font-size: 14px; color: #526879; }
+.dashboard-refined .unit-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 16px; margin-top: 18px; background: #e2f8ff; border-radius: 12px; border-bottom: 3px solid #bce6f2; }
+.dashboard-refined .unit-banner strong { font-size: 16px; font-weight: 500; color: #18526b; }
+.dashboard-refined .unit-banner>span { color: #456877; font-size: 13px; }
+.dashboard-refined .journey-levels { grid-auto-rows: 136px; }
+.game-theme.course-home.dashboard-refined .level-label { font-size: 13px; line-height: 1.5; }
+.game-theme.course-home.dashboard-refined .current .level-label { font-size: 14px; }
+.game-theme.course-home.dashboard-refined .level-caption { top: 114px; font-size: 13px; }
+.game-theme.course-home.dashboard-refined .start-bubble { font-size: 12px; }
+.game-theme.course-home.dashboard-refined .current .level-node { box-shadow: 0 6px 0 #139bbd,0 0 0 9px #e0f8fd,0 0 0 12px #b9ecf8; }
+.game-theme.course-home.dashboard-refined .sidebar { gap: 18px; }
+.dashboard-refined .daily-goal-card { display: flex; align-items: center; gap: 20px; padding: 20px; order: 0; }
+.dashboard-refined .daily-goal-card h2 { font-size: 19px; font-weight: 600; }
+.dashboard-refined .daily-goal-card p { color: #526879; font-size: 14px; }
+.dashboard-refined .daily-goal-card a { color: #086885; font-size: 14px; text-decoration: underline; text-underline-offset: 4px; }
+.dashboard-refined .daily-goal-ring { position: relative; width: 80px; height: 80px; flex: 0 0 80px; }
+.dashboard-refined .daily-goal-ring svg { display: block; width: 80px; height: 80px; transform: rotate(-90deg); }
+.dashboard-refined .daily-goal-ring circle { fill: none; stroke-width: 7; }
+.dashboard-refined .goal-track { stroke: #e4f3f8; }
+.dashboard-refined .goal-value { stroke: #33d1ef; stroke-linecap: round; }
+.dashboard-refined .daily-goal-ring strong { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 600; }
+.dashboard-refined .daily-goal-ring strong>span { font-size: 14px; font-weight: 400; color: #526879; }
+.game-theme.course-home.dashboard-refined .quests-card { order: 1; padding: 22px; }
+.game-theme.course-home.dashboard-refined .streak-card { order: 2; padding: 20px 22px; }
+.game-theme.course-home.dashboard-refined .league-card { order: 3; }
+.game-theme.course-home.dashboard-refined .freeze-card { order: 4; }
+.game-theme.course-home.dashboard-refined .quest h3 { font-size: 15px; font-weight: 500; }
+.game-theme.course-home.dashboard-refined .quest-xp progress::-webkit-progress-value { background: #e2ad37; }
+.game-theme.course-home.dashboard-refined .quest-xp progress::-moz-progress-bar { background: #e2ad37; }
+.game-theme.course-home.dashboard-refined .quest-quiz progress::-webkit-progress-value { background: #9360ce; }
+.game-theme.course-home.dashboard-refined .quest-quiz progress::-moz-progress-bar { background: #9360ce; }
+.game-theme.course-home.dashboard-refined .quest-quiz .quest-icon { color: #7342a2; background: #f0e5fc; border-color: #d4b8ed; }
+.game-theme.course-home.dashboard-refined .quest-lesson .quest-icon { color: #185c7b; background: #def2fc; border-color: #b9dfef; }
+.game-theme.course-home.dashboard-refined .quest-xp .quest-top>span { color: #8b6019; }
+.game-theme.course-home.dashboard-refined .quest-quiz .quest-top>span { color: #7342a2; }
+.game-theme.course-home.dashboard-refined .header-stats { gap: 22px; }
+.game-theme.course-home.dashboard-refined .xp-stat strong,.game-theme.course-home.dashboard-refined .header-streak strong { font-size: 18px; }
+.game-theme.course-home.dashboard-refined .header-streak { color: #b76516; }
+.game-theme.course-home.dashboard-refined .heart-stat { color: #d53760; font-size: 16px; }
+.game-theme.course-home.dashboard-refined .nav-link { font-size: 14px; }
+.game-theme.course-home.dashboard-refined .week-day { font-size: 13px; }
+.game-theme.course-home.dashboard-refined .streak-card h2 { font-size: 34px; }
+.game-theme.course-home.dashboard-refined .streak-card h2>span { font-size: 16px; margin-left: 8px; }
+.game-theme.course-home.dashboard-refined .checkpoint { padding: 18px; }
+.game-theme.course-home.dashboard-refined .checkpoint h3 { font-size: 17px; line-height: 1.6; }
+.game-theme.course-home.dashboard-refined .checkpoint p { font-size: 14px; }
+.game-theme.course-home.dashboard-refined :is(.text-button,.freeze-button,.freeze-card h2,.freeze-card p,.member-name,.leaderboard strong,.rank) { font-size: 14px; }
+.dashboard-refined .dashboard-footer { position: relative; min-height: 220px; margin-top: 30px; padding: 100px 24px 35px; overflow: hidden; }
+.dashboard-refined .dashboard-footer .learning-scene { position: absolute; inset: 0; z-index: 0; }
+.dashboard-refined .dashboard-footer .scene-sky { background: transparent; }
+.dashboard-refined .dashboard-footer .scene-layer { top: -80px; height: calc(100% + 160px); }
+.game-theme.course-home.dashboard-refined .home-footer { position: relative; z-index: 1; max-width: 1216px; margin: 0 auto; padding: 16px 20px; background: #fff; border: 2px solid #d4e7ef; border-radius: 16px; font-size: 13px; }
+.dashboard-refined .home-footer .scene-motion { border: 0; padding: 4px; background: transparent; font-size: 13px; }
+.dashboard-refined .home-dialog { font-size: 15px; }
+.dashboard-refined .home-dialog h2 { font-size: 26px; line-height: 1.6; }
+.game-theme.course-home.dashboard-refined :is(.companion-tabs button,.companion-field-label,.companion-small-button,.companion-panel>p,.companion-emotion,.companion-speech,.buddy-study-card p,.buddy-study-card h4,.agent-menu button) { font-size: 14px; line-height: 1.8; }
+.game-theme.course-home.dashboard-refined .companion-stage h3 { font-size: 24px; }
+.game-theme.course-home.dashboard-refined .buddy-study-card blockquote { font-size: 18px; }
+.game-theme.course-home.dashboard-refined .companion-kicker { letter-spacing: 0; }
+.game-theme.course-home.dashboard-refined :is(.companion-level,.companion-colours button,.companion-accessories strong,.companion-accessories small,.signal-result,.signal-reward,.signal-game-heading,.signal-inputs button,.companion-next-unlock strong,.companion-next-unlock span,.bond-heading,.bond-card p,.xp-stat>span:last-child) { font-size: 13px; line-height: 1.8; }
+.game-theme.course-home.dashboard-refined :is(.companion-header>p,.companion-rest,.buddy-break summary,.dialog-note,.coach-meta,.coach-audio-status,.coach-voice-row button,.coach-actions>button:first-child) { font-size: 13px; line-height: 1.8; }
+@media(max-width:1199.98px) {
+    .game-theme.course-home.dashboard-refined .header-inner { gap: 24px; }
+    .game-theme.course-home.dashboard-refined .desktop-nav { gap: 20px; }
+    .game-theme.course-home.dashboard-refined .chapter-progress { flex-basis: auto; width: 155px; }
+}
+@media(max-width:991.98px) {
+    .game-theme.course-home.dashboard-refined .sidebar { position: static; }
+    .game-theme.course-home.dashboard-refined .chapter-progress { width: 140px; }
+}
+@media(max-width:600px) {
+    .game-theme.course-home.dashboard-refined .page-container { padding: 18px 16px 0; }
+    .game-theme.course-home.dashboard-refined .greeting-row { display: grid; grid-template-columns: 58px minmax(0,1fr); gap: 4px 12px; margin-bottom: 20px; }
+    .game-theme.course-home.dashboard-refined .arrival-character { grid-row: 1 / span 2; width: 58px; height: 72px; }
+    .dashboard-refined .arrival-copy h1 { font-size: 23px; }
+    .dashboard-refined .arrival-copy p { font-size: 13px; }
+    .dashboard-refined .greeting-tour { grid-column: 2; justify-self: start; margin-left: 0; padding: 0; font-size: 13px; }
+    .game-theme.course-home.dashboard-refined .chapter-brief { padding: 16px; }
+    .game-theme.course-home.dashboard-refined .chapter-copy h2 { font-size: 20px; }
+    .game-theme.course-home.dashboard-refined .chapter-progress { flex-basis: 100%; width: 100%; }
+    .game-theme.course-home.dashboard-refined .journey-card { padding: 20px 16px 0; }
+    .game-theme.course-home.dashboard-refined .journey-card .section-heading h2 { font-size: 22px; max-width: none; }
+    .dashboard-refined .unit-banner { flex-direction: column; align-items: flex-start; gap: 2px; }
+    .game-theme.course-home.dashboard-refined .journey-steps { margin-top: 24px; }
+    .dashboard-refined .journey-levels { grid-auto-rows: 112px; }
+    .game-theme.course-home.dashboard-refined .level-label { top: 10px; font-size: 13px; }
+    .game-theme.course-home.dashboard-refined .current .level-label { font-size: 14px; }
+    .game-theme.course-home.dashboard-refined .level-caption { top: 48px; font-size: 13px; }
+    .dashboard-refined .dashboard-footer { padding-inline: 16px; }
+    .game-theme.course-home.dashboard-refined .home-footer { flex-wrap: wrap; gap: 8px 16px; }
+    .dashboard-refined .mobile-nav a,.dashboard-refined .mobile-nav button { font-size: 12px; }
+    .game-theme.course-home.dashboard-refined .header-stats { gap: 14px; }
+    .game-theme.course-home.dashboard-refined .companion-stage { display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 8px 12px; padding: 16px; min-height: 0; }
+    .game-theme.course-home.dashboard-refined .companion-stage .companion-portrait { position: relative; left: auto; top: auto; grid-column: 1; grid-row: 1 / span 4; align-self: center; width: 96px; height: 120px; margin: 0; }
+    .game-theme.course-home.dashboard-refined .companion-stage .portrait-orbit { width: 96px; height: 96px; top: 12px; left: 0; }
+    .game-theme.course-home.dashboard-refined .companion-stage :is(.companion-level,h3,.companion-emotion,.companion-stage-actions) { grid-column: 2; margin: 0; min-width: 0; }
+    .game-theme.course-home.dashboard-refined .companion-stage .companion-level { position: static; white-space: normal; padding: 5px; }
+    .game-theme.course-home.dashboard-refined .companion-stage-actions { align-items: stretch; }
+    .game-theme.course-home.dashboard-refined .companion-stage-actions .button { width: 100%; padding: 8px; gap: 6px; font-size: 13px; }
+    .game-theme.course-home.dashboard-refined .companion-stage :is(.buddy-read-button,.companion-activity,.companion-speech,.buddy-break) { grid-column: 1 / -1; width: 100%; margin: 6px 0 0; }
+    .game-theme.course-home.dashboard-refined .companion-stage .buddy-read-button { font-size: 14px; }
+}

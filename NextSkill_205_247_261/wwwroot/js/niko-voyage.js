@@ -145,7 +145,7 @@
   const buoy=scene.querySelector('.ow-home-buoy')?.getBoundingClientRect();
   const hullLeft=boat.left+boat.width*.18;
   const keel=boat.top+boat.height*.85;
-  const head=boat.bottom-boat.height*.25-seat.offsetHeight*.91;
+  const head=Math.min(boat.top+boat.height*.30,seat.getBoundingClientRect().top-boat.width*.03);
   const distance=Math.max(innerWidth*.75,boat.right+40);
   const end=-distance*.05;
   const ease=getComputedStyle(scene).getPropertyValue('--ns-ease-out').trim() || 'ease-out';
@@ -153,13 +153,11 @@
   const gap=Math.max(8,boat.width*.035);
   const foreground=Math.max(0,Math.min(scene.getBoundingClientRect().bottom,innerHeight)-keel-12);
   let lane=0, clearX;
-  // Include the seal's dive on the left and keep the same depth until the
-  // stern clears the far side.
+  // Row in front of the buoy and its seal, then curve towards the shore.
+  // The foreground lane also keeps the passenger below the horizon traffic.
   if(buoy?.width && buoy.right+gap<hullLeft+end && boat.left+boat.width*.78>buoy.left-buoy.width*.58-gap){
    clearX=buoy.right+gap-hullLeft;
-   const behind=Math.min(0,buoy.top-gap-keel);
-   const sea=scene.querySelector('.ow-sea').getBoundingClientRect();
-   lane=keel+behind>=sea.top+22 ? behind : Math.min(foreground,Math.max(0,buoy.bottom+gap-head));
+   lane=Math.min(foreground,Math.max(0,buoy.bottom+gap-head));
   } else {
    // In short landscape views, enter in the water below the dashboard.
    const controls=[...scene.querySelectorAll('.hd-start, .hd-actions > a')]

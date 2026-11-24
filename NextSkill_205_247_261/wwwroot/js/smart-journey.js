@@ -139,12 +139,15 @@
         if (!course) return;
         const current = targetLesson(course);
         const hasProgress = course.completedLessons.length > 0;
-        $('#current-island-number').textContent = course.isComplete ? `ผ่านครบ ${course.totalLessons} ด่าน` : `บทที่ ${current.id}`;
-        $('#current-island-title').textContent = course.isComplete ? 'เรียนจบคอร์สแล้ว' : current.displayTitle || current.title;
+        $('#current-island-number').textContent = course.hasFinishedLessons ? `ผ่านครบ ${course.totalLessons} ด่าน` : `บทที่ ${current.id}`;
+        $('#current-island-title').textContent = course.isComplete ? 'เรียนจบคอร์สแล้ว' : course.finalQuizReady ? 'พร้อมสอบท้ายคอร์ส' : current.displayTitle || current.title;
         $('#current-lesson-minutes').textContent = `${current.minutes} นาที`;
+        $('#current-lesson-time').hidden = course.finalQuizReady;
         const reward = $('#current-lesson-xp');
         reward.textContent = `+${current.xp} XP`;
-        reward.parentElement.hidden = course.isComplete;
+        reward.parentElement.hidden = course.hasFinishedLessons;
+        $('#resume-learning').hidden = course.finalQuizReady;
+        $('#island-final-quiz').hidden = !course.finalQuizReady;
         $('#resume-learning-label').textContent = course.isComplete ? 'ทบทวนบทเรียน' : hasProgress ? 'เรียนต่อ' : 'เริ่มเรียน';
         $('#island-stages').replaceChildren(...course.lessons.map(item => {
             const marker = node('li', `island-stage is-${item.status}`);
@@ -203,7 +206,8 @@
     }
     function renderIslandStats() {
         const meter = $('#island-level-meter');
-        meter.value = state.xp % meter.max;
+        meter.value = state.levelXp;
+        $('#island-level-label').textContent = `เลเวล ${number(state.level)}`;
         $('#island-level-xp').textContent = `${number(meter.value)}/${number(meter.max)} XP`;
         meter.title = `ถึงเลเวล ${number(state.level + 1)}`;
         meter.setAttribute('aria-label', `XP ${meter.title}`);
@@ -212,8 +216,8 @@
         const streak = $('#island-streak-days');
         streak.textContent = number(state.activity.streakDays);
         streak.parentElement.title = `streak ${streak.textContent} วัน`;
-        const goals = Object.entries(boot.goalTargets);
-        const completed = goals.filter(([key, target]) => state.activity[key] >= target).length;
+        const goals = state.activity.goals;
+        const completed = goals.filter(goal => goal.complete).length;
         const goalTotal = $('#island-goals-total');
         goalTotal.textContent = `${number(completed)}/${number(goals.length)}`;
         goalTotal.parentElement.title = `ภารกิจวันนี้ ${goalTotal.textContent}`;
@@ -230,7 +234,11 @@
         info.append(node('h3', '', course.title), node('p', 'sj-course-description', course.description));
         const meta = node('div', 'sj-course-small-meta');
         meta.append(node('span', '', categoryLabel(course.category)), node('span', '', course.canStart ? `${course.totalLessons} ด่านเรียนรู้` : 'กำลังเตรียมเส้นทาง'));
-        info.append(meta); card.append(info);
+        info.append(meta);
+        if (progress?.isLocked && progress.prerequisiteCourseTitle) {
+            info.append(node('p', 'sj-course-description', `สอบท้ายคอร์ส “${progress.prerequisiteCourseTitle}” ให้ผ่านเพื่อปลดล็อก`));
+        }
+        card.append(info);
         if (isCurrent) card.append(node('span', 'sj-course-tag', 'คอร์สปัจจุบัน'));
         if (progress?.hasStarted) {
             const wrap = node('div', 'sj-course-progress');
@@ -238,9 +246,11 @@
             const bar = node('progress'); bar.max = progress.totalLessons; bar.value = progress.completedLessons.length; bar.setAttribute('aria-label', `ความก้าวหน้า ${course.title}`);
             wrap.append(caption, bar); card.append(wrap);
         }
-        const button = node('button', 'sj-course-action', !course.canStart ? 'เร็ว ๆ นี้' : progress?.isComplete ? 'ทบทวน' : progress?.hasStarted ? 'เรียนต่อ' : 'เริ่มเรียน');
+        const action = !course.canStart ? 'ยังไม่เปิดให้เรียน' : progress?.isLocked ? 'ล็อกอยู่' : progress?.isComplete ? 'ทบทวน'
+            : progress?.finalQuizReady ? 'สอบท้ายคอร์ส' : progress?.hasStarted ? 'เรียนต่อ' : 'ลงทะเบียนและเริ่มเรียน';
+        const button = node('button', 'sj-course-action', action);
         button.type = 'button'; button.dataset.selectCourse = course.id;
-        button.disabled = !course.canStart || selectionBusy;
+        button.disabled = !course.canStart || progress?.isLocked === true || selectionBusy;
         button.setAttribute('aria-label', `${button.textContent}: ${course.title}`);
         button.addEventListener('click', () => guarded(() => selectCourse(course.id)));
         card.append(button);
@@ -298,7 +308,8 @@
         islandCourseOptions.replaceChildren(node('li', '', 'กำลังโหลดคอร์ส…'));
         try {
             await loadCatalog();
-            const alternatives = catalog.filter(course => course.canStart && course.id !== courseId);
+            const alternatives = catalog.filter(course => course.canStart && course.id !== courseId &&
+                !state?.courses.find(progress => progress.courseId === course.id)?.isLocked);
             islandCourseOptions.replaceChildren(...alternatives.map(course => {
                 const item = node('li');
                 const button = node('button', '', course.title);
@@ -323,6 +334,11 @@
     }
     async function selectCourse(id) {
         if (selectionBusy) return;
+        const selectedCourse = state?.courses.find(course => course.courseId === id);
+        if (selectedCourse?.finalQuizReady) {
+            location.assign(`/Learning/FinalQuiz?courseId=${id}`);
+            return;
+        }
         if (!authenticated) {
             try { sessionStorage.setItem(pendingCourseKey, String(id)); } catch {}
             window.NextSkillJourneyTransition?.remember(id);
@@ -379,6 +395,7 @@
         $('#edit-lesson-answers').hidden = true;
         $('#review-lesson').hidden = true;
         $('#choose-next-course').hidden = true;
+        $('#lesson-final-quiz').hidden = true;
         $('#lesson-result-feedback').replaceChildren();
         $('#lesson-error').hidden = true;
         $('#retry-lesson').hidden = true;
@@ -659,10 +676,17 @@
         $('#lesson-quiz').setAttribute('aria-busy', String(busy));
         if (!busy) $('#lesson-step-next').disabled = videoLocked();
     }
+    function setLessonResultActions(course, passed) {
+        nextLessonId = passed && !course.hasFinishedLessons ? targetLesson(course).id : null;
+        $('#next-island').hidden = !nextLessonId;
+        $('#choose-next-course').hidden = !(passed && course.isComplete);
+        const finalQuiz = $('#lesson-final-quiz');
+        finalQuiz.hidden = !(passed && course.finalQuizReady);
+        if (!finalQuiz.hidden) finalQuiz.href = `/Learning/FinalQuiz?courseId=${course.courseId}`;
+    }
     function renderResult(result, wasCourseComplete) {
         dismissQuizHelp?.();
         const hadFirstLessonAward = state?.achievements.includes('first-lesson') === true;
-        const hadCourseAward = state?.achievements.includes(`course-${lesson.courseId}`) === true;
         lessonDirty = false; uncertainAttempt = null;
         if (result.passed && !result.alreadyCompleted) rememberLessonVoyage(result.state, lesson.courseId, lesson.id);
         setState(result.state);
@@ -683,17 +707,15 @@
             box.append(node('strong', '', `${item.correct ? '✓' : 'ลองอีกครั้ง'} · ${question?.prompt || 'คำถาม'}`),node('p','',item.explanation));
             return box;
         }));
-        const saveCopy = signedIn ? 'บันทึกกับบัญชีแล้ว' : 'บันทึกในโหมดทดลองของเซสชันนี้';
+        const saveCopy = signedIn ? 'บันทึกกับบัญชีแล้ว' : 'บันทึกผลทดลองสำหรับเบราว์เซอร์นี้แล้ว';
         $('#lesson-reward').textContent = result.awardedXp ? `+${result.awardedXp} XP · ${saveCopy}`
             : result.passed ? `ทบทวนแล้ว · ${saveCopy}` : 'ยังไม่ได้รับ XP ในรอบนี้';
         const progress = viewedCourse();
-        nextLessonId = result.passed && !progress.isComplete ? targetLesson(progress).id : null;
-        $('#next-island').hidden = !nextLessonId;
-        $('#choose-next-course').hidden = !(result.passed && progress.isComplete);
+        setLessonResultActions(progress, result.passed);
         $('#edit-lesson-answers').hidden = result.passed;
         $('#review-lesson').hidden = result.passed;
         $('#finish-learning').textContent = result.passed ? 'กลับไปแผนที่เกาะ' : 'พักไว้ แล้วลองอีกครั้งภายหลัง';
-        $('#lesson-nimo-message').textContent = result.passed ? (result.alreadyCompleted ? 'ได้ฝึกอีกครั้งแล้ว เก่งขึ้นทีละก้าวนะ' : 'เห็นความตั้งใจของคุณแล้ว ไปด้วยกันต่อได้เลย') : 'ลองดูคำอธิบาย เราค่อย ๆ แก้ไปด้วยกันนะ';
+        $('#lesson-nimo-message').textContent = result.passed ? (result.alreadyCompleted ? 'ทบทวนบทเรียนแล้ว' : 'ผ่านแบบทดสอบบทเรียนแล้ว') : 'ดูคำอธิบายของแต่ละข้อก่อนลองใหม่';
         if (!result.passed) window.NextSkillBuddyMotion?.play('retry');
         else if (!result.alreadyCompleted) window.NextSkillBuddyMotion?.play(progress.isComplete && !wasCourseComplete ? 'proud' : 'celebrate');
         else window.NextSkillBuddyMotion?.play('nod');
@@ -701,7 +723,7 @@
         $('#lesson-result-title').focus({preventScroll:true});
         if (lessonPage) positionPractice();
         else panel.scrollIntoView({behavior:'instant',block:'nearest'});
-        window.NextSkillCourseAward?.show(result, lesson.courseId, hadCourseAward, hadFirstLessonAward);
+        window.NextSkillCourseAward?.show(result, lesson.courseId, hadFirstLessonAward);
     }
     async function submitLesson(event) {
         event.preventDefault();
@@ -714,7 +736,8 @@
             tell(`กรุณาเลือกคำตอบข้อที่ ${firstUnanswered + 1} ก่อนส่ง`);
             return;
         }
-        await submitAttempt({courseId:lesson.courseId,lessonId:lesson.id,answers:lesson.questions.map(q=>selections.get(q.id))});
+        await submitAttempt({courseId:lesson.courseId,lessonId:lesson.id,quizVersion:lesson.quizVersion,
+            answers:lesson.questions.map(q=>selections.get(q.id))});
     }
     async function submitAttempt(attempt) {
         if (submitting || !lesson) return;
@@ -739,13 +762,15 @@
                 $('#submission-recovery').hidden = false;
             } else {
                 showError($('#lesson-error'), error);
-                if (error.code === 'video_required') {
-                    lesson.videoUnlocked = false;
+                if (error.code === 'video_required' || error.code === 'quiz_changed') {
+                    if (error.code === 'video_required') lesson.videoUnlocked = false;
                     $('#submit-lesson').hidden = true;
                     $('#retry-lesson').hidden = false;
                 }
             }
-            $('#lesson-nimo-message').textContent = 'ไม่ต้องเริ่มใหม่ คำตอบยังอยู่ เราลองเชื่อมต่ออีกครั้งได้';
+            $('#lesson-nimo-message').textContent = error.code === 'quiz_changed'
+                ? 'เปิดบทเรียนอีกครั้งเพื่อดูคำถามชุดใหม่'
+                : 'ไม่ต้องเริ่มใหม่ คำตอบยังอยู่ เราลองเชื่อมต่ออีกครั้งได้';
         }
         finally {
             if (requestId === lessonRequest) setSubmissionBusy(false);
@@ -758,7 +783,6 @@
         try {
             const latest = await api('State', undefined, null, 10000);
             if (requestId !== lessonRequest) return;
-            const hadCourseAward = state?.achievements.includes(`course-${attempt.courseId}`) === true;
             const hadFirstLessonAward = state?.achievements.includes('first-lesson') === true;
             rememberLessonVoyage(latest, attempt.courseId, attempt.lessonId);
             setState(latest);
@@ -773,15 +797,13 @@
                 $('#lesson-result-title').textContent = 'ยืนยันแล้วว่าบทเรียนนี้ผ่าน';
                 $('#lesson-result-eyebrow').textContent = 'ตรวจสอบจากความก้าวหน้าล่าสุด';
                 $('#lesson-result-message').textContent = 'ความก้าวหน้าบันทึกแล้ว หากต้องการคำอธิบายของคำตอบรอบนี้ สามารถส่งคำตอบเดิมอีกครั้งได้ โดยไม่รับ XP ซ้ำ';
-                $('#lesson-reward').textContent = `XP สะสมปัจจุบัน ${number(latest.xp)} · ${signedIn?'ข้อมูลบัญชี':'โหมดทดลองของเซสชันนี้'}`;
+                $('#lesson-reward').textContent = `XP สะสมปัจจุบัน ${number(latest.xp)} · ${signedIn ? 'ข้อมูลบัญชี' : 'ผลทดลองสำหรับเบราว์เซอร์นี้'}`;
                 $('#lesson-result-feedback').replaceChildren();
                 $('#edit-lesson-answers').hidden = true;
                 $('#review-lesson').hidden = true;
-                nextLessonId = !course.isComplete ? targetLesson(course).id : null;
-                $('#next-island').hidden = !nextLessonId;
-                $('#choose-next-course').hidden = !course.isComplete;
+                setLessonResultActions(course, true);
                 $('#lesson-result-title').focus({preventScroll:true});
-                window.NextSkillCourseAward?.show({ passed: true, state: latest }, attempt.courseId, hadCourseAward, hadFirstLessonAward);
+                window.NextSkillCourseAward?.show({ passed: true, state: latest }, attempt.courseId, hadFirstLessonAward);
             } else showError($('#lesson-error'),new Error('ยังไม่พบผลผ่านของบทเรียนนี้ ส่งคำตอบเดิมอีกครั้งเพื่อยืนยันผลได้'));
         } catch(error) { if(requestId===lessonRequest) showError($('#lesson-error'),error); }
         finally { if(requestId===lessonRequest) { recoveryBusy=false; $('#check-save-status').disabled=false; } }
@@ -789,6 +811,7 @@
     function resumeLesson() {
         const course = viewedCourse() || activeCourse();
         if (!course) { openCourses(); return; }
+        if (course.finalQuizReady) { location.assign(`/Learning/FinalQuiz?courseId=${course.courseId}`); return; }
         if (!courseId) { location.assign(`/Learning/Island?courseId=${course.courseId}`); return; }
         openLesson(course.courseId, targetLesson(course).id);
     }
@@ -893,7 +916,7 @@
         catch(error) { pageError(error); }
         finally { button.disabled=false; }
     });
-    $('#journey-help-dialog ol li:last-child p').textContent = signedIn ? 'ความก้าวหน้าผูกกับบัญชีของคุณ กลับมาเรียนต่อได้ทุกอุปกรณ์' : 'โหมดทดลองบันทึกแยกในเซสชันนี้ และไม่ย้ายผลเข้าบัญชีอัตโนมัติ';
+    $('#journey-help-dialog ol li:last-child p').textContent = signedIn ? 'ผลการเรียนผูกกับบัญชีของคุณ เปิดได้จากอุปกรณ์อื่นหลังเข้าสู่ระบบ' : 'ผลทดลองแยกจากบัญชีและเปิดได้จากเบราว์เซอร์นี้';
     $('[data-stay-lesson]').addEventListener('click', () => { pendingLeave = null; leaveDialog.close(); });
     $('[data-confirm-leave]').addEventListener('click', () => {
         const action = pendingLeave; pendingLeave = null; lessonDirty = false; leaveDialog.close(); closeLesson(false); action?.();
@@ -999,13 +1022,13 @@
             try {
                 setState(await api('SelectCourse', { courseId }));
                 try { sessionStorage.removeItem(pendingCourseKey); } catch {}
-                if (!window.NextSkillJourneyTransition?.isArriving) await openLesson(courseId, targetLesson(viewedCourse()).id);
+                if (!window.NextSkillJourneyTransition?.isArriving && !viewedCourse().finalQuizReady) await openLesson(courseId, targetLesson(viewedCourse()).id);
             } catch (error) { failed=true; pageError(error); }
         } else if (boot?.initialLessonId && authenticated) {
             await openLesson(courseId, boot.initialLessonId);
         } else if (islandRoute && new URLSearchParams(location.search).get('resume') === 'true' && !window.NextSkillArchipelago?.hasLessonVoyage()) {
             const course = viewedCourse();
-            const stop = course && islandRoute.querySelector(`[data-lesson-id="${targetLesson(course).id}"]`);
+            const stop = course && !course.finalQuizReady && islandRoute.querySelector(`[data-lesson-id="${targetLesson(course).id}"]`);
             if (stop) {
                 stop.scrollIntoView({ block: 'center', behavior: 'instant' });
                 stop.click();

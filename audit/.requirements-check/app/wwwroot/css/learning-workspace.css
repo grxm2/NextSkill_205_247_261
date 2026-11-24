@@ -1,0 +1,212 @@
+.smart-journey:has(.sj-learn){background:radial-gradient(ellipse at 12% 30%,#d4f4df60,transparent 35%),radial-gradient(ellipse at 88% 68%,#b7f1e65c,transparent 30%),linear-gradient(180deg,#bceaf1,#7bd2e0 50%,#a7e4e8);background-attachment:fixed}
+.smart-journey .sj-learn:before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.3;background:repeating-linear-gradient(173deg,transparent 0 115px,#eaffff66 117px,transparent 119px 220px)}
+.smart-journey .sj-learn{isolation:isolate;background:transparent;max-width:1440px;width:92%;padding-top:24px}
+.smart-journey .learning-sidebar .sj-current-island{display:block;min-height:0;padding:25px;background:#f7fdfff0;border:1px solid #ffffffb3;border-radius:24px;box-shadow:0 18px 48px #185e7720}
+.smart-journey .learning-sidebar .sj-current-island[hidden]{display:none}
+.learning-sidebar .sj-island-scene{display:none}
+.smart-journey .learning-sidebar .sj-current-copy h2,.island-detail h2{font-size:23px;line-height:1.6;color:#164b61;font-weight:600;margin:12px 0}
+.smart-journey .learning-sidebar .sj-current-description{font-size:14px;line-height:1.8;margin-top:10px!important}
+.smart-journey .learning-sidebar .sj-current-meta{display:grid;gap:9px;font-size:13px;margin-top:18px}
+.smart-journey .learning-sidebar .sj-current-actions{display:grid;gap:10px;margin-top:22px}.learning-sidebar #resume-learning{width:100%;min-width:0}
+.smart-journey .learning-sidebar .sj-course-progress{margin-top:22px}.learning-sidebar .sj-course-progress progress{width:100%}
+.smart-journey .learning-sidebar .sj-learning-summary{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:24px;margin:0;background:#eff9fbe8;border:1px solid #ffffffa8;border-radius:24px;box-shadow:0 14px 36px #185e7717}
+.smart-journey .learning-sidebar .sj-learning-summary>p{grid-column:1/-1;margin:0;font-size:13px;line-height:1.8}.learning-sidebar .sj-learning-summary>div:nth-child(3){grid-column:1/-1}
+@media(prefers-reduced-motion:reduce){.learning-workspace *{scroll-behavior:auto}}
+
+/* Quiet scenery sits under the route; interactive islands remain the focus. */
+.archipelago-scenery{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.archipelago-scenery img{position:absolute;display:block;object-fit:contain}
+.scene-reef{width:210px;opacity:.65}.reef-one{left:0;top:230px;transform:rotate(-18deg)}.reef-two{right:0;top:66%;transform:rotate(24deg) scale(.85)}
+.scene-buoy{width:43px;opacity:.85}.buoy-one{left:29%;top:36%}.buoy-two{right:18%;top:79%;transform:scale(.8)}
+.scene-birds{width:150px;right:8%;top:55px;opacity:.85}.scene-far-island{left:6%;top:54%;width:100px;opacity:.32;filter:saturate(.55)}
+.learning-sidebar-inner{gap:16px}.smart-journey .learning-sidebar .sj-current-island{padding:24px;border-radius:25px;background:#f8fefff0;box-shadow:0 20px 50px #1d71851c}
+.smart-journey .learning-sidebar .sj-current-copy h2{font-size:22px;margin:16px 0 8px}
+.smart-journey .learning-sidebar .sj-current-copy>.sj-eyebrow{font-size:11px;margin-bottom:16px!important;color:#4e8491}
+.smart-journey .learning-sidebar .sj-current-description{font-size:13px;color:#60828b}
+.smart-journey .learning-sidebar .sj-current-actions{margin-top:20px}.smart-journey .learning-sidebar .sj-current-meta{font-size:12px;gap:8px}
+.smart-journey .learning-sidebar .sj-learning-summary{background:#ecfbf9de;padding:23px;border-radius:25px;box-shadow:0 12px 35px #1d718510}
+.smart-journey .learning-sidebar .sj-learning-summary strong{font-size:23px;color:#236e7d}
+
+/* Shared page edges, readable labels, and clear learning states. */
+.smart-journey{--journey-edge:max(24px,calc((100vw - 1280px)/2));--journey-ink:#28596c}
+.smart-journey .sj-nav-inner,.smart-journey .sj-learn{width:calc(100% - var(--journey-edge)*2);max-width:1280px;margin-inline:auto}
+.smart-journey .sj-nav-inner{min-height:80px}
+.smart-journey .ow-intro{left:var(--journey-edge)}
+.smart-journey .sj-learn{padding-top:14px}
+.smart-journey .sj-course-small-meta,.smart-journey .sj-course-description,.smart-journey .sj-learn-top,.smart-journey .sj-saved,
+.smart-journey .learning-sidebar .sj-current-description,
+.smart-journey .learning-sidebar .sj-current-meta,.smart-journey .learning-sidebar .sj-current-copy>.sj-eyebrow,
+.smart-journey .learning-sidebar .sj-learning-summary>p,.smart-journey .sj-course-label{font-size:14px;color:var(--journey-ink);line-height:1.65}
+.smart-journey .ow-start-land figcaption{position:absolute;top:13%;right:10%;margin:0;padding:8px 14px;border-radius:16px;background:#f5ffffe8;border:1px solid #fff;color:#22596c;font-size:14px;letter-spacing:0;box-shadow:0 4px 14px #24617412}
+.smart-journey .ow-harbor-board>p:not(.sj-eyebrow),.smart-journey .ow-intro>p:not(.sj-eyebrow){font-size:16px;color:#28596c}
+.smart-journey .ow-controls button,.smart-journey .ow-controls #ocean-location{font-size:14px}
+@media(max-width:850px){
+ .smart-journey{--journey-edge:20px}
+ .smart-journey .sj-nav-inner{min-height:108px}
+}
+@media(max-width:700px){
+ .smart-journey .ow-intro{width:calc(100% - var(--journey-edge)*2)}
+ .smart-journey .ow-scene{min-height:620px}
+ .smart-journey .ow-controls{bottom:max(12px,env(safe-area-inset-bottom));padding:8px 12px 12px}
+ .smart-journey .ow-controls>div{display:none}
+ .smart-journey .ow-controls #ocean-location{max-width:53%}
+ .smart-journey .ow-controls .ow-skip{font-size:14px;min-height:44px;margin-left:auto}
+ .smart-journey .ow-journey-caption{bottom:100px;font-size:14px}
+ .smart-journey .ow-harbor{top:2%;max-height:calc(100% - 110px)}
+ .smart-journey .ow-dock{width:120px;flex-shrink:0;margin-bottom:-25px}
+ .smart-journey .ow-harbor-board{max-height:calc(100svh - 230px);overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;padding:14px;scroll-padding:12px}
+ .smart-journey .ow-harbor-board .sj-course-card{grid-template-columns:30px minmax(0,1fr);padding:10px}
+ .smart-journey .ow-harbor-board .sj-course-card .sj-course-action{grid-column:2;grid-row:auto;font-size:14px!important;min-height:44px}
+ .smart-journey .ow-harbor-board .sj-course-small-meta{font-size:14px}
+ .smart-journey .ow-harbor-board .sj-course-card h3{font-size:15px}
+ .smart-journey .ow-harbor-board>p:not(.sj-eyebrow){font-size:14px}
+ .smart-journey .ow-start-land figcaption{right:18%;top:10%;padding:6px 10px}
+ .smart-journey .sj-nav{gap:8px;flex-wrap:wrap}
+ .smart-journey .sj-nav a,.smart-journey .sj-nav button{font-size:14px}
+}
+
+.smart-journey{overflow-x:clip}
+@media(max-width:700px){
+ .smart-journey .ow-harbor{left:calc(220vw + 20px);width:calc(100vw - 40px)}
+ .smart-journey .ow-scene[data-stage="2"] .ow-journey-caption{display:none}
+ .smart-journey .ow-scene[data-stage="2"] .ow-vessel{z-index:0;opacity:.6}
+ .smart-journey .ow-camera{z-index:1}
+ .smart-journey .ow-container-button{font-size:0}
+ .smart-journey .ow-container-button:after{font-size:11px}
+}
+
+
+/* Home hero: keep the copy readable over the horizon and balance the shore scene. */
+
+@media(min-width:701px){
+ .smart-journey .ow-start-land{left:47vw;top:27%;width:min(760px,54vw)}
+ .smart-journey .ow-vessel{left:54%;width:clamp(200px,21vw,310px)}
+ .smart-journey .ow-start-land figcaption{top:2%;right:1%}
+}
+@media(max-width:700px){
+
+ .smart-journey .ow-start-land figcaption{top:-5%;right:2%;font-size:12px}
+ .smart-journey .ow-vessel{width:clamp(170px,48vw,205px)}
+}
+
+/* Scale the home headline without crowding smaller screens. */
+.smart-journey .ow-intro h1{font-size:clamp(42px,5vw,74px);line-height:1.3}
+@media(max-width:700px){.smart-journey .ow-intro h1{font-size:clamp(38px,9.5vw,46px);line-height:1.3}}
+@media(max-width:700px) and (max-height:740px){.smart-journey .ow-intro h1{font-size:clamp(34px,9vw,40px)}}
+
+
+/* A clear blue sea complements the illustrated learning islands. */
+.smart-journey:has(.sj-learn){background:linear-gradient(180deg,#c2edf1 0%,#8edce9 48%,#6acfe4 100%);background-attachment:fixed}
+.smart-journey .sj-learn:before{opacity:.25;background:url('/images/journey/ocean-swell-0.svg') center center / 100% 100% no-repeat}
+.smart-journey .learning-workspace .archipelago-scenery img{opacity:.25}
+
+/* Decorative water stays behind the lesson controls. */
+.smart-journey .sj-learn:before{display:none}
+.island-water-motion{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.island-water-layer{position:absolute;inset:-12% -15%;pointer-events:none}
+.island-water-drift{position:absolute;inset:0 auto 0 0;width:200%;height:100%;background-repeat:repeat-x;background-size:50% 100%;animation:island-water-drift 110s linear infinite;will-change:transform}
+.island-water-layer--far{opacity:.26}
+.island-water-layer--far .island-water-drift{background-image:url('/images/journey/ocean-swell-0.svg')}
+.island-water-layer--near{opacity:.12}
+.island-water-layer--near .island-water-drift{background-image:url('/images/journey/ocean-swell-1.svg');animation-duration:78s;animation-direction:reverse}
+.island-water-motion.is-paused .island-water-drift{animation-play-state:paused;will-change:auto}
+@keyframes island-water-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@media(prefers-reduced-motion:reduce){.island-water-drift{animation:none;will-change:auto}.island-water-layer{transform:none!important}}
+
+/* Surface, then a shallow underwater panorama. Only decorative layers move. */
+.underwater-surface,.underwater-depth{position:absolute;inset:0;pointer-events:none}
+.underwater-surface{background:linear-gradient(180deg,#82d5fb 0%,#bcecff 29%,#73d8ed 29.3%,#53cce0 34%,#5dcddd 100%)}
+.underwater-depth{opacity:0;background:radial-gradient(ellipse at 50% -10%,#a5efffc4,transparent 48%),radial-gradient(ellipse at 10% 95%,#55afd47a,transparent 30%),radial-gradient(ellipse at 90% 90%,#55afd47a,transparent 30%),linear-gradient(180deg,#76d7ec,#50c2dd 54%,#4aafd0)}
+.underwater-depth:after{content:'';position:absolute;inset:0;background:url('/images/journey/reef-garden.svg') left bottom / 250px auto no-repeat,url('/images/journey/reef-garden.svg') right bottom / 220px auto no-repeat;opacity:.35}
+.island-water-layer{z-index:1}
+
+/* Reference-inspired environment, separated from interactive islands. */
+.underwater-surface{background:#83d8ed url('/images/journey/underwater-journey-background-v1.png') center center / cover no-repeat}
+.underwater-depth{background:#29b7d2 url('/images/journey/underwater-journey-background-v1.png') center bottom / 100% 170% no-repeat}
+.underwater-depth:after{display:none}
+.island-water-layer--far{opacity:.12}.island-water-layer--near{opacity:.06}
+
+/* Keep the horizon below the course heading; retain water depth on narrow screens. */
+.underwater-surface{background-position:center calc(50% + 64px);background-color:#6fcff3}
+@media(max-width:700px){.underwater-depth{background-size:auto 170%}}
+
+
+/* One continuous illustrated ocean, with islands sharing the same horizontal world. */
+.underwater-surface{inset:auto 0;top:-12vh;height:185vh;background-position:center top;background-size:cover;will-change:transform}
+@media(prefers-reduced-motion:reduce){
+ .underwater-surface{will-change:auto}
+}
+
+/* The sky/waterline is anchored to the first island; the deep sea fills the viewport. */
+.island-water-motion{background:linear-gradient(180deg,#72cdf1 0%,#42c3dd 48%,#128eb8 100%)}
+.underwater-surface{top:0;height:100vh;background-position:center top;background-size:cover;mask-image:linear-gradient(180deg,transparent 0%,#000 12%,#000 64%,transparent 100%)}
+/* Underwater light and coral appear as the surface leaves the view. */
+.underwater-deep-decor{position:absolute;inset:0;z-index:0;opacity:0;pointer-events:none;background:radial-gradient(ellipse 35% 28% at 0 100%,#075f8990 0 60%,transparent 61%),radial-gradient(ellipse 35% 28% at 100% 100%,#075f8990 0 60%,transparent 61%),linear-gradient(115deg,transparent 24%,#b5f7ff24 27%,transparent 32%,transparent 48%,#b5f7ff20 52%,transparent 58%)}
+.underwater-deep-decor:before{content:'';position:absolute;inset:0;background:url('/images/journey/reef-garden.svg') left bottom / min(27vw,300px) auto no-repeat,url('/images/journey/reef-garden.svg') right bottom / min(24vw,260px) auto no-repeat;opacity:.48}
+.underwater-deep-decor:after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 14% 66%,transparent 4px,#d6fcff70 5px,transparent 7px),radial-gradient(circle at 17% 58%,transparent 3px,#d6fcff70 4px,transparent 6px),radial-gradient(circle at 84% 64%,transparent 5px,#d6fcff70 6px,transparent 8px),radial-gradient(circle at 88% 54%,transparent 3px,#d6fcff70 4px,transparent 6px)}
+
+/* The seabed stays present while the current, fish and bubbles move separately. */
+.underwater-deep-decor{isolation:isolate}
+.deep-ocean-backdrop{position:absolute;inset:0;z-index:0;background:#149bc3 url('/images/journey/underwater-seabed-background-v1.png') center center / cover no-repeat}
+.underwater-deep-decor:before,.underwater-deep-decor:after{z-index:1}
+.deep-ocean-light{position:absolute;inset:-15%;z-index:1;pointer-events:none;background:linear-gradient(112deg,transparent 20%,#c6ffff26 25%,transparent 30%,transparent 50%,#c6ffff20 55%,transparent 60%);animation:deep-light-sway 17s ease-in-out infinite alternate}
+.deep-fish-school{position:absolute;z-index:2;left:-16%;display:flex;align-items:center;gap:12px;pointer-events:none;animation:deep-fish-cross 32s linear infinite}
+.deep-fish-school img{width:35px;height:auto;display:block;opacity:.65}
+.deep-fish-school img:nth-child(2){transform:translateY(16px) scale(.8)}
+.deep-fish-school img:nth-child(3){transform:translateY(-10px) scale(.7)}
+.deep-fish-school--far{top:27%;animation-duration:40s;animation-delay:-13s;opacity:.65}
+.deep-fish-school--near{top:58%;animation-duration:27s;animation-delay:-19s}
+.deep-bubble{position:absolute;bottom:-10%;z-index:2;width:12px;height:12px;border:2px solid #d4faffaa;border-radius:50%;box-shadow:22px 26px 0 -3px #d4faff99,-15px 48px 0 -4px #d4faff88;pointer-events:none;animation:deep-bubble-rise 11s linear infinite}
+.deep-bubble--one{left:12%;animation-delay:-4s}.deep-bubble--two{left:76%;animation-duration:14s;animation-delay:-9s}.deep-bubble--three{left:45%;animation-duration:16s;animation-delay:-12s}
+@keyframes deep-light-sway{from{transform:translate3d(-2%,0,0);opacity:.65}to{transform:translate3d(2%,0,0);opacity:1}}
+@keyframes deep-fish-cross{from{transform:translate3d(0,0,0)}to{transform:translate3d(125vw,0,0)}}
+@keyframes deep-bubble-rise{0%{transform:translate3d(0,0,0);opacity:0}15%{opacity:.75}85%{opacity:.65}100%{transform:translate3d(16px,-110vh,0);opacity:0}}
+.island-water-motion.is-paused .deep-ocean-light,.island-water-motion.is-paused .deep-fish-school,.island-water-motion.is-paused .deep-bubble{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.deep-ocean-light,.deep-fish-school,.deep-bubble{animation:none!important}}
+.deep-ocean-plant{position:absolute;z-index:2;bottom:-3%;width:clamp(90px,15vw,210px);height:auto;opacity:.6;transform-origin:50% 100%;pointer-events:none;animation:deep-plant-sway 7s ease-in-out infinite alternate}
+.deep-ocean-plant--left{left:-3%}.deep-ocean-plant--right{right:-3%;animation-delay:-3.5s}
+@keyframes deep-plant-sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.island-water-motion.is-paused .deep-ocean-plant{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.deep-ocean-plant{animation:none!important}}
+/* Keep the seabed behind the underwater landmarks, including on narrow screens. */
+.deep-ocean-backdrop{background-size:auto 130%;background-position:center bottom}
+
+/* The moving crests share the same document-anchored waterline as the shore. */
+.surface-ocean-waves{position:absolute;left:0;width:100%;height:115px;overflow:hidden;pointer-events:none}
+.surface-ocean-wave{position:absolute;left:0;width:200%;height:58px;background:url('/images/journey/surface-wave-loop.svg') 0 0 / 50% 100% repeat-x;animation:surface-crest-drift 19s linear infinite;opacity:.58;will-change:transform}
+.surface-ocean-wave--far{top:0;opacity:.35;animation-duration:27s;animation-direction:reverse}
+.surface-ocean-wave--near{top:32px;opacity:.6}
+@keyframes surface-crest-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+.island-water-motion.is-paused .surface-ocean-wave{animation-play-state:paused;will-change:auto}
+@media(prefers-reduced-motion:reduce){.surface-ocean-wave{animation:none;will-change:auto}}
+@media(width < 768px){
+ .deep-ocean-backdrop{background-size:auto 145%}
+ .deep-fish-school--far,.deep-bubble--three{display:none}
+ .deep-ocean-plant{animation:none}
+}
+
+
+/* Ocean navigation, shared by the landing and learning journey. */
+body.smart-journey .sj-header{isolation:isolate;border:0;background:linear-gradient(115deg,#00518d,#075d9b 58%,#1273ab);backdrop-filter:none;box-shadow:0 5px 20px #00518326}
+body.smart-journey .sj-header:before{content:'';position:absolute;z-index:0;left:59%;top:75%;width:36%;height:115px;pointer-events:none;background:radial-gradient(ellipse at 50% 0,#fff1aecc 0,#ffdd8777 15%,transparent 56%),conic-gradient(from 154deg at 50% 0,transparent 0 6deg,#fff0b044 7deg 12deg,transparent 13deg 22deg,#fff0b044 23deg 28deg,transparent 29deg 40deg,#fff0b033 41deg 47deg,transparent 48deg 55deg);mask-image:linear-gradient(#000,transparent);opacity:.8}
+body.smart-journey .sj-header:after{content:'';position:absolute;left:0;right:0;bottom:-9px;height:17px;z-index:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 20' preserveAspectRatio='none'%3E%3Cpath d='M0 4 C100 -4 170 17 280 9 S440 2 560 10 S720 12 820 5 S970 2 1070 10 S1200 1 1310 7 S1490 14 1600 5' fill='none' stroke='%23b4f6ff' stroke-width='3'/%3E%3Cpath d='M1020 8 C1110 17 1200 1 1310 7 S1490 14 1600 5' fill='none' stroke='%23ffe7a0' stroke-width='3'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+body.smart-journey .sj-nav-inner{position:relative;z-index:1;gap:20px}
+body.smart-journey .sj-brand>span{color:#fff}
+body.smart-journey .sj-brand small{color:#d7efff}
+body.smart-journey .sj-nav{gap:clamp(8px,1.8vw,28px)}
+body.smart-journey .sj-nav a,body.smart-journey .sj-nav>button{gap:7px;min-height:44px;padding:8px 13px;border-radius:30px;color:#fff;font-size:14px;font-weight:500;text-decoration:none}
+body.smart-journey .sj-nav a:before,body.smart-journey .sj-nav>button:before{content:'';display:block;flex:0 0 19px;width:19px;height:19px;background:currentColor;mask-size:contain;mask-repeat:no-repeat;mask-position:center}
+body.smart-journey .sj-nav a:nth-child(1):before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 11 12 3l9 8M5 10v10h5v-6h4v6h5V10'/%3E%3C/svg%3E")}
+body.smart-journey .sj-nav a:nth-child(2):before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 6c-2-2-5-2-9-1v14c4-1 7-1 9 1m0-14c2-2 5-2 9-1v14c-4-1-7-1-9 1m0-14v14'/%3E%3C/svg%3E")}
+body.smart-journey .sj-nav a:nth-child(3):before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v13M10 5 4 15h6zM14 6l6 9h-6zM3 18c3 2 5 2 8 0 3 2 6 2 10 0'/%3E%3C/svg%3E")}
+body.smart-journey .sj-nav>button:before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m2 8 10-5 10 5-10 5L2 8Zm3 5 7 4 7-4M5 17l7 4 7-4'/%3E%3C/svg%3E")}
+body.smart-journey .sj-nav [aria-current="page"]{background:#e8f7ff;color:#0065a0;font-weight:600}
+body.smart-journey .sj-nav [aria-current]:after{display:none}
+body.smart-journey .sj-nav a:hover,body.smart-journey .sj-nav>button:hover{background:#e8f7ff;color:#005a91!important}
+body.smart-journey .sj-nav a:focus-visible,body.smart-journey .sj-nav button:focus-visible,body.smart-journey .sj-login:focus-visible,body.smart-journey .sj-profile summary:focus-visible{outline:3px solid #ffe69b;outline-offset:3px}
+body.smart-journey .sj-login{color:#fff!important;border-color:#bce6fa;background:#ffffff1c;font-weight:500}
+body.smart-journey .sj-profile>summary,body.smart-journey .sj-nav-xp,body.smart-journey .sj-nav-xp strong{color:#fff}
+@media(max-width:1100px){body.smart-journey .sj-nav{gap:2px}body.smart-journey .sj-nav a,body.smart-journey .sj-nav>button{padding-inline:8px}}
+@media(max-width:900px){body.smart-journey .sj-nav-inner{padding-bottom:13px}body.smart-journey .sj-nav{justify-content:space-between;gap:0}body.smart-journey .sj-nav a,body.smart-journey .sj-nav>button{font-size:12px;padding:6px 8px;min-height:40px}body.smart-journey .sj-nav a:before,body.smart-journey .sj-nav>button:before{width:16px;height:16px;flex-basis:16px}}
+@media(max-width:450px){body.smart-journey .sj-nav a,body.smart-journey .sj-nav>button{font-size:11px;gap:3px;padding-inline:5px}body.smart-journey .sj-nav a:before,body.smart-journey .sj-nav>button:before{width:14px;height:14px;flex-basis:14px}body.smart-journey .sj-brand small{font-size:10px}}
+

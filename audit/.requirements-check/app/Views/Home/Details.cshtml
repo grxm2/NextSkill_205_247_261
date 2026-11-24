@@ -1,0 +1,187 @@
+@model CourseDetailsPageViewModel
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment CourseEnvironment
+@inject Microsoft.Extensions.Configuration.IConfiguration CourseConfiguration
+@{
+    ViewData["Title"] = Model.Course.Title;
+    var course = Model.Course;
+    var lessons = course.Curriculum.Lessons;
+    var authenticated = User.Identity?.IsAuthenticated == true;
+    var preview = !authenticated && CourseEnvironment.EnvironmentName == "Development" && CourseConfiguration.GetValue("Learning:GuestPreview", true);
+    var eligible = authenticated || preview;
+    var islandUrl = Url.Action("Island", "Learning", new { courseId = course.Id })!;
+    var startUrl = eligible ? islandUrl : Url.Action("Login", "Account", new { returnUrl = islandUrl });
+    var study = course.Metadata.Lessons.Any(lesson => lesson.Reading.Length > 0) ? "ดูหรืออ่าน" : "ดูวิดีโอ";
+    var steps = new[] { ("play", study), ("quiz", "ผ่านแบบทดสอบแต่ละบท"), ("unlock", "สอบท้ายคอร์ส"), ("award", "รับใบรับรอง") };
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/course-details.css" asp-append-version="true" />
+}
+<section class="ns-course-page course-journey" data-course-page data-course-details
+         data-progress-eligible="@eligible.ToString().ToLowerInvariant()" data-course-id="@course.Id"
+         data-can-start="@course.CanStart.ToString().ToLowerInvariant()"
+         id="course-content" aria-labelledby="course-title">
+    <svg class="cj-icon-library" aria-hidden="true" focusable="false" width="0" height="0">
+        <symbol id="cj-back" viewBox="0 0 24 24"><path d="m11 5-7 7 7 7M4 12h16"/></symbol>
+        <symbol id="cj-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-7-7 7 7-7 7"/></symbol>
+        <symbol id="cj-island" viewBox="0 0 24 24"><path d="M3 20c1-3 4-4 9-4s8 1 9 4H3Zm9-4c0-4 1-7 3-10m0 0c-2-2-5-2-7 0 2 0 3 1 4 2m3-2c2-1 5-1 6 2-2-1-4 0-5 2m-1-4c0-2 1-3 2-4"/></symbol>
+        <symbol id="cj-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+        <symbol id="cj-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/></symbol>
+        <symbol id="cj-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5.5"/><path d="m8.3 13.2-2 7.4 5.7-2.3 5.7 2.3-2-7.4M12 7v4m-2-2h4"/></symbol>
+        <symbol id="cj-flag" viewBox="0 0 24 24"><path d="M5 21V4m0 1c3-3 6-2 9 0 1.5 1 3.4 1.2 5 .4v9c-1.6.8-3.5.6-5-.4-3-2-6-3-9 0"/></symbol>
+        <symbol id="cj-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4m-4 4v2"/></symbol>
+        <symbol id="cj-unlock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.4-2m-3.4 10v2"/></symbol>
+        <symbol id="cj-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+        <symbol id="cj-play" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3V9Z"/></symbol>
+        <symbol id="cj-quiz" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2m6 2V2m-6 9 2 2 4-4m-6 8h6"/></symbol>
+    </svg>
+    <header class="cj-hero">
+        <div class="journey-night-sky cj-night-sky" aria-hidden="true"></div>
+        <div class="cj-sky" aria-hidden="true"></div>
+        <div class="cj-sea" aria-hidden="true"></div>
+        <div class="cj-celestial" data-journey-celestial aria-hidden="true">
+            <partial name="_JourneyCelestial" />
+        </div>
+        <div class="cj-wrap cj-hero-inner">
+            <div class="cj-hero-copy">
+                <nav aria-label="เส้นทางนำทาง">
+                    <a asp-action="Courses" class="cj-back"><svg class="cj-icon" aria-hidden="true"><use href="#cj-back" /></svg> คลังคอร์ส</a>
+                </nav>
+                <span class="cj-category">@course.CategoryLabel</span>
+                <h1 id="course-title">@course.Title</h1>
+                <p class="cj-intro">@course.Description</p>
+                @if (course.CanStart)
+                {
+                    <ul class="cj-summary" aria-label="ข้อมูลคอร์ส">
+                        <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-island" /></svg>@course.Curriculum.TotalLessons เกาะ</li>
+                        <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-clock" /></svg>@(lessons.Sum(lesson => lesson.Minutes)) นาที</li>
+                        <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-star" /></svg>@course.Curriculum.LessonXpTotal XP จากบทเรียน</li>
+                        <li>โบนัสเมื่อจบคอร์ส +@NextSkill_205_247_261.Services.LearningStore.CourseCompletionBonus XP</li>
+                        <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-award" /></svg>ใบรับรอง</li>
+                    </ul>
+                    <a class="ns-button ns-button--primary cj-start" href="@startUrl" data-course-start data-island-url="@islandUrl" data-course-id="@course.Id">
+                        <span data-course-action-label>ลงทะเบียนและเริ่มเรียน</span><svg class="cj-icon" aria-hidden="true"><use href="#cj-arrow" /></svg>
+                    </a>
+                    <p class="ns-status" data-course-lock-note hidden></p>
+                    <div hidden id="catalog-antiforgery">@Html.AntiForgeryToken()</div>
+                }
+            </div>
+            <div class="cj-island-art" aria-hidden="true">
+                <img src="~/images/journey/learning-island-reference-v2.png" asp-append-version="true" alt="" width="1448" height="1086" fetchpriority="high" />
+                <span class="cj-sparkles"></span>
+            </div>
+        </div>
+        <div class="cj-wave" aria-hidden="true"></div>
+    </header>
+
+    <div class="cj-wrap cj-main">
+        <div class="ns-catalog-status ns-status cj-status" data-catalog-status role="status" aria-live="polite" hidden></div>
+        <div class="cj-grid">
+            <div class="cj-content">
+                <section class="cj-route cj-glass" aria-labelledby="course-lessons-title">
+                    <header class="cj-section-heading">
+                        <h2 id="course-lessons-title">เส้นทางเดินเรือ</h2>
+                        @if (course.CanStart)
+                        {
+                            <p>รับ XP ครั้งเดียวต่อเกาะ</p>
+                        }
+                    </header>
+                    @if (course.CanStart)
+                    {
+                        <ol class="cj-stops" role="list">
+                            @foreach (var lesson in lessons)
+                            {
+                                var current = lesson.Status == "current";
+                                <li class="cj-stop" data-learning-lesson-id="@lesson.Id" data-status="@lesson.Status" aria-current="@(current ? "step" : null)">
+                                    <span class="cj-stop-number" aria-hidden="true">@lesson.Id.ToString("00")</span>
+                                    <div class="cj-stop-detail">
+                                        <div class="cj-stop-heading">
+                                            <h3><span class="visually-hidden">เกาะ @lesson.Id </span>@lesson.DisplayTitle</h3>
+                                            <span class="cj-state">
+                                                <svg class="cj-icon cj-state-current" aria-hidden="true"><use href="#cj-flag" /></svg>
+                                                <svg class="cj-icon cj-state-locked" aria-hidden="true"><use href="#cj-lock" /></svg>
+                                                <svg class="cj-icon cj-state-completed" aria-hidden="true"><use href="#cj-check" /></svg>
+                                                <span data-lesson-state>@(current ? "เริ่มที่นี่" : "ล็อกอยู่")</span>
+                                            </span>
+                                        </div>
+                                        <ul class="cj-stop-meta" aria-label="เวลาและ XP">
+                                            <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-clock" /></svg>@lesson.Minutes นาที</li>
+                                            <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-star" /></svg>+@lesson.Xp XP</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            }
+                        </ol>
+                    }
+                    else
+                    {
+                        <p class="cj-empty">กำลังเตรียมเกาะบทเรียนสำหรับคอร์สนี้</p>
+                    }
+                </section>
+
+                @if (course.CanStart)
+                {
+                    <section class="cj-flow" aria-labelledby="course-flow-title">
+                        <h2 id="course-flow-title">วิธีเรียน</h2>
+                        <ol role="list">
+                            @foreach (var (icon, label) in steps)
+                            {
+                                <li><svg class="cj-icon" aria-hidden="true"><use href="@($"#cj-{icon}")" /></svg><span>@label</span></li>
+                            }
+                        </ol>
+                    </section>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(course.VideoUrl))
+                {
+                    <section class="cj-media cj-glass" aria-labelledby="course-video-title">
+                        <h2 id="course-video-title">วิดีโอประกอบคอร์ส</h2>
+                        <div class="ns-video-player-frame">
+                            @if (course.HasDirectVideo)
+                            {
+                                <video controls class="ns-video-media" src="@course.VideoUrl" preload="metadata" playsinline>
+                                    เบราว์เซอร์ของคุณไม่รองรับการเล่นวิดีโอ
+                                </video>
+                            }
+                            else
+                            {
+                                <iframe class="ns-video-media" src="@course.VideoEmbedUrl" title="สื่อการเรียนรู้ @course.Title"
+                                        loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen></iframe>
+                            }
+                        </div>
+                    </section>
+                }
+            </div>
+
+            <aside class="cj-progress-stick" aria-labelledby="course-progress-title">
+                <div class="cj-progress-card cj-glass">
+                    <img class="cj-nimo" src="~/images/nimo-learning.png" asp-append-version="true" width="1024" height="1024" alt="" loading="lazy" />
+                    <h2 id="course-progress-title">@(course.CanStart ? "ความคืบหน้า" : "คอร์สอื่น")</h2>
+                    @if (course.CanStart)
+                    {
+                        <div class="cj-progress" data-course-progress>
+                            <div class="cj-ring" data-progress-ring aria-hidden="true"><strong data-progress-percent>—</strong></div>
+                            <progress class="visually-hidden" max="100" value="0" aria-label="ความก้าวหน้า @course.Title" hidden></progress>
+                            <p data-progress-label>@(eligible ? "กำลังโหลด…" : "เข้าสู่ระบบเพื่อดูผล")</p>
+                        </div>
+                    }
+                    @if (course.Metadata.Skills.Count > 0)
+                    {
+                        <details class="cj-skills-disclosure">
+                            <summary>ทักษะที่ได้</summary>
+                            <ul class="cj-skills">
+                                @foreach (var skill in course.Metadata.Skills)
+                                {
+                                    <li>@skill</li>
+                                }
+                            </ul>
+                        </details>
+                    }
+                    <a class="cj-other" asp-action="Courses">ดูคอร์สอื่น <svg class="cj-icon" aria-hidden="true"><use href="#cj-arrow" /></svg></a>
+                </div>
+            </aside>
+        </div>
+        <noscript><p class="ns-status ns-course-noscript">เปิด JavaScript เพื่อเลือกคอร์สและดูความคืบหน้าของคุณ</p></noscript>
+    </div>
+</section>
+@section Scripts { <script src="~/js/catalog.js" asp-append-version="true" defer></script> }

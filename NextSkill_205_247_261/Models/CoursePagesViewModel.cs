@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.WebUtilities;
+
 namespace NextSkill_205_247_261.Models;
 
 // Public metadata is rendered without SQL. Account progress is optionally hydrated
@@ -17,7 +19,7 @@ public string Category => !string.IsNullOrWhiteSpace(Metadata.Category)
 
 public bool CanStart => Curriculum.CanStart;
 
-public string? VideoUrl => Metadata.VideoUrl;
+public string? VideoUrl => HasDirectVideo || VideoEmbedUrl is not null ? Metadata.VideoUrl : null;
 
 public string? VideoEmbedUrl => ToEmbedUrl(Metadata.VideoUrl);
 
@@ -25,36 +27,39 @@ public bool HasDirectVideo => IsDirectVideo(Metadata.VideoUrl);
 
 public static string? ToEmbedUrl(string? url)
 {
-    if (string.IsNullOrWhiteSpace(url)) return null;
-    url = url.Trim();
-    if (url.Contains("youtube.com/watch", StringComparison.OrdinalIgnoreCase))
+    if (ParseWebUri(url) is not { } uri) return null;
+
+    var path = uri.AbsolutePath.Trim('/');
+    var host = uri.Host.ToLowerInvariant();
+    var youtubeId = host switch
     {
-        var match = System.Text.RegularExpressions.Regex.Match(url, @"[?&]v=([^&#]+)");
-        if (match.Success) return $"https://www.youtube.com/embed/{match.Groups[1].Value}?rel=0";
-    }
-    if (url.Contains("youtu.be/", StringComparison.OrdinalIgnoreCase))
+        "youtu.be" => path,
+        "youtube.com" or "www.youtube.com" or "m.youtube.com" when path == "watch" =>
+            QueryHelpers.ParseQuery(uri.Query).GetValueOrDefault("v").ToString(),
+        "youtube.com" or "www.youtube.com" or "www.youtube-nocookie.com" when path.StartsWith("embed/", StringComparison.Ordinal) => path[6..],
+        _ => null
+    };
+    if (youtubeId is { Length: 11 } && youtubeId.All(value => char.IsAsciiLetterOrDigit(value) || value is '-' or '_'))
+        return $"https://www.youtube-nocookie.com/embed/{youtubeId}?rel=0";
+
+    var vimeoId = host switch
     {
-        var match = System.Text.RegularExpressions.Regex.Match(url, @"youtu\.be/([^?&#]+)");
-        if (match.Success) return $"https://www.youtube.com/embed/{match.Groups[1].Value}?rel=0";
-    }
-    if (url.Contains("youtube.com/embed/", StringComparison.OrdinalIgnoreCase))
-    {
-        return url;
-    }
-    if (url.Contains("vimeo.com/", StringComparison.OrdinalIgnoreCase) && !url.Contains("player.vimeo.com"))
-    {
-        var match = System.Text.RegularExpressions.Regex.Match(url, @"vimeo\.com/(\d+)");
-        if (match.Success) return $"https://player.vimeo.com/video/{match.Groups[1].Value}";
-    }
-    return url;
+        "vimeo.com" or "www.vimeo.com" => path,
+        "player.vimeo.com" when path.StartsWith("video/", StringComparison.Ordinal) => path[6..],
+        _ => null
+    };
+    return vimeoId is { Length: > 0 } && vimeoId.All(char.IsAsciiDigit)
+        ? $"https://player.vimeo.com/video/{vimeoId}" : null;
 }
 
 public static bool IsDirectVideo(string? url)
 {
-    if (string.IsNullOrWhiteSpace(url)) return false;
-    var clean = url.Split('?')[0].ToLowerInvariant();
-    return clean.EndsWith(".mp4") || clean.EndsWith(".webm") || clean.EndsWith(".ogg");
+    var extension = Path.GetExtension(ParseWebUri(url)?.AbsolutePath);
+    return extension?.ToLowerInvariant() is ".mp4" or ".webm" or ".ogg";
 }
+
+private static Uri? ParseWebUri(string? url) => Uri.TryCreate(url?.Trim(), UriKind.Absolute, out var uri)
+    && uri.Scheme is "http" or "https" && uri.UserInfo.Length == 0 ? uri : null;
 
 public CourseCover Cover => CourseCover.For(Id, Category);
 

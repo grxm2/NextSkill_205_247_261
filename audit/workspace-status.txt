@@ -1,0 +1,10 @@
+## master...origin/master
+ M NextSkill_205_247_261/Views/Shared/_Navbar.cshtml
+ M NextSkill_205_247_261/wwwroot/css/home-buoy.css
+ M NextSkill_205_247_261/wwwroot/css/home-ocean.css
+ M NextSkill_205_247_261/wwwroot/css/navbar.css
+ M NextSkill_205_247_261/wwwroot/js/niko-voyage.js
+ M scripts/verify-home-arrival.cjs
+?? AUDIT_REPORT.md
+?? NextSkill_205_247_261/wwwroot/images/nextskill-navbar-island.webp
+?? audit/

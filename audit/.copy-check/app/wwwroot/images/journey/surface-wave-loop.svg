@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 58" preserveAspectRatio="none">
+  <path d="M0 26 Q75 7 150 26 T300 26 T450 26 T600 26 T750 26 T900 26 T1050 26 T1200 26" fill="none" stroke="#c5fbff" stroke-width="3" stroke-linecap="round"/>
+  <path d="M0 42 Q55 32 110 42 T220 42 M320 42 Q375 32 430 42 T540 42 M650 42 Q705 32 760 42 T870 42 M980 42 Q1035 32 1090 42 T1200 42" fill="none" stroke="#e8ffff" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+</svg>

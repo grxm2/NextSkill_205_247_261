@@ -1,0 +1,153 @@
+.ow-home-buoy {
+    --buoy-width: min(clamp(62px, 7.5cqw, 108px), 18svh);
+    --buoy-depth: clamp(24px, calc((var(--ow-first-height) - var(--ow-shore-horizon)) * .48), 160px);
+    --buoy-period: 4.8s;
+    --seal-cycle: 22s;
+    position: absolute;
+    left: 14cqw;
+    top: calc(var(--sea-level) + var(--buoy-depth) - var(--buoy-width) * .92);
+    width: var(--buoy-width);
+    height: auto;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.ow-home-buoy :is(.ow-home-buoy-float, .ow-home-buoy-ripple) {
+    transform-box: view-box;
+    transform-origin: 50% 92%;
+}
+
+.ow-home-seal-motion {
+    transform-box: view-box;
+    transform-origin: 29% 66%;
+}
+
+.ow-home-buoy :is(.ow-home-seal-rest, .ow-home-seal-alert, .ow-home-seal-splash-ring, .ow-home-seal-surface-ring) {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.ow-home-seal-rest { transform-origin: center bottom; }
+.ow-home-seal-splash { transform-box: fill-box; transform-origin: center bottom; }
+.ow-home-buoy-ripple { opacity: .2; }
+.ow-home-buoy :is(.ow-home-buoy-lamp, .ow-home-seal-alert, .ow-home-seal-dive, .ow-home-seal-splash,
+    .ow-home-seal-splash-ring, .ow-home-seal-bubbles, .ow-home-seal-surface-ring) { opacity: 0; }
+
+html[data-theme="dark"] .ow-home-buoy { filter: brightness(.74) saturate(.86); }
+html[data-theme="dark"] .ow-home-buoy-lamp { opacity: .7; filter: drop-shadow(0 0 3px #ffca75); }
+
+@media (width < 768px) {
+    .ow-home-buoy {
+        --buoy-width: min(clamp(50px, 15cqw, 72px), 18svh);
+        left: calc(100cqw - var(--ow-right) - 12px - var(--buoy-width));
+    }
+}
+
+@media (width < 768px) and (orientation: portrait), (orientation: landscape) and (height < 480px) {
+    .ow-home-buoy {
+        --buoy-width: clamp(42px, min(13cqw, 13svh), 62px);
+        --buoy-depth: 28px;
+        left: 134cqw;
+    }
+}
+
+@media (width >= 768px) and (height >= 480px) {
+    .ow-home-buoy {
+        /* Leave a strip of open water between the tower and the horizon. */
+        --buoy-depth: clamp(calc(var(--buoy-width) * .92 + 36px),
+            calc((var(--ow-first-height) - var(--ow-shore-horizon)) * .48), 160px);
+    }
+}
+
+@media (width >= 768px) and (480px <= height < 768px) {
+    .ow-home-buoy {
+        /* Leave a sailing lane in front of the buoy on shallower scenes. */
+        --buoy-width: clamp(42px, calc(var(--ow-water-depth) * .34), 88px);
+        --buoy-depth: calc(var(--buoy-width) * .92 + 24px);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .ow-home-buoy-float { animation: ocean-distant-rock var(--buoy-period) ease-in-out infinite; --boat-bob: .55px; --boat-roll: 1deg; }
+    .ow-home-buoy-ripple { animation: ocean-contact-ripple var(--buoy-period) ease-out infinite; }
+    .ow-home-buoy-ripple--following { animation-delay: calc(var(--buoy-period) / -2); }
+    .ow-home-seal-motion { animation: home-seal-travel var(--seal-cycle) linear infinite; }
+    .ow-home-seal-rest { animation: home-seal-rest var(--seal-cycle) linear infinite, home-seal-breathe 3.2s ease-in-out infinite; }
+    .ow-home-seal-alert { animation: home-seal-alert var(--seal-cycle) linear infinite, home-seal-face-shore var(--seal-cycle) step-end infinite; }
+    .ow-home-seal-dive { animation: home-seal-dive var(--seal-cycle) linear infinite; }
+    .ow-home-seal-shadow { animation: home-seal-shadow var(--seal-cycle) linear infinite; }
+    .ow-home-seal-splash { animation: home-seal-splash var(--seal-cycle) linear infinite; }
+    .ow-home-seal-splash-ring { animation: home-seal-splash-ring var(--seal-cycle) linear infinite; }
+    .ow-home-seal-bubbles { animation: home-seal-bubbles var(--seal-cycle) linear infinite; }
+    .ow-home-seal-surface-ring { animation: home-seal-surface-ring var(--seal-cycle) linear infinite; }
+    .ow-home-buoy.ow-buoy-paused *, .ow-motion-paused .ow-home-buoy * { animation-play-state: paused; }
+}
+
+/* Rest on the deck, gather up, dive left, then haul out on the same edge. */
+@keyframes home-seal-travel {
+    0%, 24%, 58%, 100% { transform: none; }
+    27% { transform: translate(-4%, 1%) scale(1.04, .93); animation-timing-function: var(--ease-out); }
+    29.5% { transform: translate(-22%, -13%) rotate(8deg); }
+    31% { transform: translate(-37%, -7%) rotate(-12deg); }
+    34% { transform: translate(-54%, 47%) rotate(-28deg); }
+    41% { transform: translate(-55%, 48%); }
+    44% { transform: translate(-45%, 41%); animation-timing-function: var(--ease-out); }
+    47% { transform: translate(-39%, 27%) rotate(-7deg); }
+    51% { transform: translate(-24%, 8%) rotate(-13deg); animation-timing-function: var(--ease-in-out); }
+    55% { transform: translate(-3%, 0) rotate(2deg); }
+}
+
+@keyframes home-seal-rest {
+    0%, 21%, 58%, 100% { opacity: 1; }
+    23%, 56% { opacity: 0; }
+}
+
+@keyframes home-seal-breathe {
+    0%, 100% { transform: none; }
+    50% { transform: scaleY(1.045); }
+}
+
+@keyframes home-seal-alert {
+    0%, 21%, 28.5%, 44%, 58%, 100% { opacity: 0; }
+    23%, 27.5%, 46%, 56% { opacity: 1; }
+}
+
+@keyframes home-seal-face-shore {
+    0%, 60%, 100% { transform: none; }
+    43% { transform: scaleX(-1); }
+}
+
+@keyframes home-seal-dive {
+    0%, 27.5%, 36%, 100% { opacity: 0; }
+    28.5%, 34% { opacity: 1; }
+}
+
+@keyframes home-seal-shadow {
+    0%, 25%, 58%, 100% { opacity: 1; }
+    31%, 52% { opacity: 0; }
+}
+
+@keyframes home-seal-splash {
+    0%, 32%, 41%, 100% { opacity: 0; }
+    32.8% { transform: scale(.9); opacity: .65; animation-timing-function: var(--ease-out); }
+    35% { transform: translateY(-8%) scale(1.13); opacity: .76; }
+    40% { transform: translateY(24%) scale(1.26); opacity: 0; }
+}
+
+@keyframes home-seal-splash-ring {
+    0%, 32%, 43%, 100% { opacity: 0; }
+    33.5% { transform: scale(.9); opacity: .7; animation-timing-function: var(--ease-out); }
+    43% { transform: scale(1.9, 1.85); }
+}
+
+@keyframes home-seal-bubbles {
+    0%, 40%, 49%, 100% { opacity: 0; }
+    41% { transform: none; opacity: .52; }
+    47% { transform: translate(8px, -2px); opacity: .34; }
+}
+
+@keyframes home-seal-surface-ring {
+    0%, 46%, 56%, 100% { opacity: 0; }
+    47% { transform: scale(.9); opacity: .56; animation-timing-function: var(--ease-out); }
+    56% { transform: scale(1.65, 1.4); }
+}
