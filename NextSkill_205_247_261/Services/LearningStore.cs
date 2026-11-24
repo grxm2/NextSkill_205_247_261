@@ -106,9 +106,13 @@ public sealed partial class LearningStore(IConfiguration configuration, IDataPro
                 WHERE AccountId=@account AND AccountRole=@role;
             SELECT AchievementKey,EarnedAt FROM dbo.LearningAchievements
                 WHERE AccountId=@account AND AccountRole=@role ORDER BY EarnedAt,AchievementKey;
-            SELECT PassedAt,AwardedXp FROM dbo.LearningCourseFinalResults
-                WHERE AccountId=@account AND AccountRole=@role AND PassedAt IS NOT NULL;
             """, accountId, role);
+        if (includeActivity)
+            command.CommandText += """
+
+                SELECT PassedAt,AwardedXp FROM dbo.LearningCourseFinalResults
+                    WHERE AccountId=@account AND AccountRole=@role AND PassedAt IS NOT NULL;
+                """;
         await using var reader = await command.ExecuteReaderAsync(token);
         var hasProfile = await reader.ReadAsync(token);
         int? active = hasProfile && !reader.IsDBNull(0) ? reader.GetInt32(0) : null;
@@ -241,16 +245,15 @@ public sealed partial class LearningStore(IConfiguration configuration, IDataPro
         {
             var state = await ReadStateAsync(db, transaction, accountId, role, ct);
             var course = RequireAccess(state, courseId, lessonId);
-            if (!course.CompletedLessons.Contains(lessonId))
-            {
-                await using var command = Command(db, transaction, """
-                    UPDATE dbo.LearningCourseProgress SET LastLessonId=@lesson,UpdatedAt=SYSUTCDATETIME()
-                        WHERE AccountId=@account AND AccountRole=@role AND CourseId=@course;
-                    """, accountId, role);
-                command.Parameters.Add("@course", SqlDbType.Int).Value = courseId;
-                command.Parameters.Add("@lesson", SqlDbType.Int).Value = lessonId;
-                await command.ExecuteNonQueryAsync(ct);
-            }
+            if (course.CompletedLessons.Contains(lessonId)) return state;
+
+            await using var command = Command(db, transaction, """
+                UPDATE dbo.LearningCourseProgress SET LastLessonId=@lesson,UpdatedAt=SYSUTCDATETIME()
+                    WHERE AccountId=@account AND AccountRole=@role AND CourseId=@course;
+                """, accountId, role);
+            command.Parameters.Add("@course", SqlDbType.Int).Value = courseId;
+            command.Parameters.Add("@lesson", SqlDbType.Int).Value = lessonId;
+            await command.ExecuteNonQueryAsync(ct);
             return await ReadStateAsync(db, transaction, accountId, role, ct);
         }, token);
     }

@@ -40,11 +40,7 @@ public sealed partial class LearningStore
             var xp = passed ? CourseCompletionBonus : 0;
             await SaveFinalResultAsync(db, transaction, accountId, role, course.Id, score, questions.Length, passed, xp, ct);
 
-            if (passed)
-            {
-                await AwardCourseAsync(db, transaction, accountId, role, course.Id, progress.Title, ct);
-                state = await ReadStateAsync(db, transaction, accountId, role, ct);
-            }
+            if (passed) await AwardCourseAsync(db, transaction, accountId, role, course.Id, progress.Title, ct);
 
             return BuildFinalQuizPage(accountId, role, course, passed, state) with
             { Result = new CourseFinalResult(passed, score, questions.Length, required, xp) };
