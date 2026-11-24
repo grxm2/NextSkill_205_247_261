@@ -1,12 +1,8 @@
-/* ========================================================
-   NextSkill Admin Modern Ocean Theme (Daylight / Dark Mode)
-   Tropical Ocean Glassmorphism matching the Home Island Landing Page
-   & Seamless Dark Mode Toggle System
-   ======================================================== */
+/* Admin dashboard */
 
 :root, html[data-theme="light"] {
     color-scheme: light;
-    /* Soft daylight sky + tropical ocean horizon matching the Home landing page */
+    /* Daytime sky and ocean */
     --adm-bg-gradient: radial-gradient(circle at 82% 10%, rgba(255, 251, 235, 0.85) 0%, transparent 40%),
                        radial-gradient(circle at 18% 18%, rgba(224, 242, 254, 0.9) 0%, transparent 45%),
                        radial-gradient(circle at 50% 88%, rgba(56, 189, 248, 0.35) 0%, transparent 60%),
@@ -50,7 +46,7 @@
 
 html[data-theme="dark"] {
     color-scheme: dark;
-    /* Deep Starry Night Ocean matching the Home Dark Theme */
+    /* Night sky and ocean */
     --adm-bg-gradient: radial-gradient(circle at 75% 15%, rgba(56, 189, 248, 0.14) 0%, transparent 45%),
                        radial-gradient(circle at 20% 25%, rgba(14, 165, 233, 0.16) 0%, transparent 50%),
                        radial-gradient(circle at 50% 90%, rgba(2, 132, 199, 0.15) 0%, transparent 55%),
@@ -92,9 +88,7 @@ html[data-theme="dark"] {
     --adm-accent-purple: #a78bfa;
 }
 
-/* ==========================================
-   Prompt Typography Foundation (Matches Home Island Theme)
-   ========================================== */
+/* Local Prompt font faces */
 @font-face {
     font-family: 'Prompt';
     src: local('Prompt'), local('Prompt-Regular'),
@@ -149,7 +143,7 @@ html[data-theme="dark"] {
     font-display: swap;
 }
 
-/* Global Font Enforcement for Admin Dashboard (Matches Home Island exactly) */
+/* Admin typography */
 html,
 body.ns-admin,
 .admin-shell,
@@ -169,9 +163,7 @@ p, span, a, label, strong, small, time, table, th, td, kbd {
     text-rendering: optimizeLegibility !important;
 }
 
-/* ==========================================
-   Full Page Base & Living Ocean Background
-   ========================================== */
+/* Full Page Base & Living Ocean Background */
 
 body.ns-admin {
     background: var(--adm-bg-gradient) !important;
@@ -231,9 +223,7 @@ body.ns-admin {
     }
 }
 
-/* ==========================================
-   Admin Shell & Sidebar (Ocean Frosted)
-   ========================================== */
+/* Admin Shell & Sidebar (Ocean Frosted) */
 
 .admin-shell {
     position: relative;
@@ -272,7 +262,7 @@ body.ns-admin {
     overflow-wrap: anywhere;
 }
 
-/* Brand Area matching Navbar Logo on Login / Home */
+/* Sidebar branding */
 .sidebar .brand,
 .sidebar .brand.admin-brand {
     display: flex !important;
@@ -294,21 +284,6 @@ body.ns-admin {
     transform: translateY(-1px);
 }
 
-.admin-brand-logo-img {
-    width: 46px;
-    height: 46px;
-    object-fit: cover;
-    object-position: left center;
-    flex: 0 0 46px;
-    border-radius: 12px;
-    filter: drop-shadow(0 4px 10px rgba(2, 132, 199, 0.25));
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.sidebar .brand:hover .admin-brand-logo-img {
-    transform: scale(1.08) rotate(-4deg);
-}
-
 .admin-brand-content {
     display: flex;
     flex-direction: column;
@@ -317,44 +292,24 @@ body.ns-admin {
     flex: 1 1 auto;
 }
 
-.admin-brand-wordmark-row {
+.admin-brand-row {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
 }
 
-.admin-brand-wordmark {
-    --wordmark-next: #0f3750;
-    --wordmark-skill: #0284c7;
-    display: block;
-    width: 94px;
-    flex: 0 0 94px;
-    filter: none;
+.admin-brand-row .ns-navbar__logo {
+    flex: 0 1 144px;
+    width: 144px;
+    min-width: 0;
 }
 
-html[data-theme="dark"] .admin-brand-wordmark {
-    --wordmark-next: #f0f9ff;
-    --wordmark-skill: #38bdf8;
-}
-
-.admin-brand-wordmark .ns-wordmark-art {
-    display: block;
-    width: 100%;
-    height: auto;
-    overflow: visible;
-}
-
-.admin-brand-wordmark .ns-wordmark-next {
-    fill: var(--wordmark-next, #0f3750);
-    transition: fill 0.3s ease;
-}
-
-.admin-brand-wordmark .ns-wordmark-skill {
-    fill: var(--wordmark-skill, #0284c7);
-    transition: fill 0.3s ease;
+.sidebar .admin-brand :is(.ns-navbar__logo, .admin-brand-badge) {
+    margin-top: 0;
 }
 
 .admin-brand-badge {
+    flex: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -379,40 +334,6 @@ html[data-theme="dark"] .admin-brand-wordmark {
     text-overflow: ellipsis;
     display: block;
     letter-spacing: -0.2px;
-}
-
-/* Fallback legacy badge styles */
-.brand-mascot-badge {
-    position: relative;
-    width: 44px;
-    height: 44px;
-    background: linear-gradient(135deg, #0284c7, #06b6d4);
-    border-radius: 14px;
-    display: grid;
-    place-items: center;
-    box-shadow: 0 6px 16px rgba(0, 210, 255, 0.35);
-    flex-shrink: 0;
-    overflow: visible;
-}
-
-.brand-mascot-badge img {
-    width: 34px;
-    height: 34px;
-    object-fit: contain;
-    animation: nimoFloat 3.2s ease-in-out infinite;
-}
-
-.brand-text-block strong {
-    font-size: 19px !important;
-    font-weight: 800 !important;
-    color: var(--adm-heading-color) !important;
-    letter-spacing: -0.4px;
-}
-
-.brand-text-block small {
-    font-size: 11px !important;
-    font-weight: 600 !important;
-    color: var(--adm-accent-blue) !important;
 }
 
 /* Nav Category Headers */
@@ -508,13 +429,6 @@ html[data-theme="dark"] .admin-brand-wordmark {
     display: block !important;
 }
 
-.topbar-icon-btn svg {
-    width: 18px !important;
-    height: 18px !important;
-    stroke-width: 2 !important;
-    display: block !important;
-}
-
 .topbar-search-icon svg {
     width: 15px !important;
     height: 15px !important;
@@ -528,7 +442,7 @@ html[data-theme="dark"] .admin-brand-wordmark {
     color: var(--adm-accent-blue);
 }
 
-/* Sidebar Quota / Storage Card (matching screenshot) */
+/* Sidebar summary card */
 .sidebar-quota-card {
     background: var(--adm-quota-bg);
     border: 1px solid var(--adm-card-border);
@@ -573,18 +487,6 @@ html[data-theme="dark"] .admin-brand-wordmark {
     50% { opacity: 1; filter: drop-shadow(0 0 6px #22d3ee); }
 }
 
-.sidebar-quota-card .peeking-mascot {
-    position: absolute;
-    right: 8px;
-    bottom: -4px;
-    width: 38px;
-    height: 38px;
-    object-fit: contain;
-    opacity: 0.9;
-    animation: nimoFloat 4s ease-in-out infinite;
-    pointer-events: none;
-}
-
 /* Sidebar Account Box */
 .sidebar-account {
     border-top: 1px solid var(--adm-sidebar-border) !important;
@@ -601,16 +503,14 @@ html[data-theme="dark"] .admin-brand-wordmark {
     color: var(--adm-text-sub) !important;
 }
 
-/* ==========================================
-   Workspace & Topbar
-   ========================================== */
+/* Workspace & Topbar */
 
 .workspace {
     padding: max(24px, env(safe-area-inset-top)) max(34px, env(safe-area-inset-right)) max(50px, env(safe-area-inset-bottom)) 34px !important;
     min-width: 0;
 }
 
-/* Modern Topbar matching reference */
+/* Top bar */
 .topbar {
     display: flex !important;
     justify-content: space-between !important;
@@ -686,31 +586,7 @@ html[data-theme="dark"] .topbar-search-shortcut {
     align-items: center;
     gap: 14px;
     flex-wrap: wrap;
-}
-
-.topbar-icon-btn {
-    width: 44px;
-    height: 44px;
-    flex: none;
-    border-radius: 50%;
-    border: 1px solid var(--adm-card-border);
-    background: var(--adm-card-bg);
-    color: var(--adm-accent-blue);
-    display: grid;
-    place-items: center;
-    font-size: 16px;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);
-}
-
-.topbar-icon-btn:hover {
-    background: var(--adm-nav-hover-bg);
-    color: var(--adm-heading-color);
-    border-color: #38bdf8;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.18);
+    min-width: 0;
 }
 
 /* Day/Night Theme Toggle Button */
@@ -771,37 +647,13 @@ html[data-theme="dark"] .admin-theme-toggle .theme-icon-moon {
     100% { transform: scale(1) rotate(0deg); }
 }
 
-
-.topbar-icon-btn .badge-dot {
-    position: absolute;
-    top: 7px;
-    right: 7px;
-    width: 8px;
-    height: 8px;
-    background: #ef4444;
-    border: 1.5px solid #091c28;
-    border-radius: 50%;
-    animation: livePulse 2s infinite;
-}
-
-.topbar-icon-btn.mascot-btn {
-    overflow: visible;
-}
-
-.topbar-icon-btn.mascot-btn img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    animation: nimoFloat 3s ease-in-out infinite;
-}
-
 /* User Pill in Topbar */
 .admin-user-pill {
     display: inline-flex !important;
     align-items: center !important;
     gap: 10px !important;
     min-width: 0;
-    max-width: min(100%, 26rem);
+    max-width: 18rem;
     background: var(--adm-card-bg) !important;
     border: 1px solid var(--adm-card-border) !important;
     border-radius: 30px !important;
@@ -822,13 +674,17 @@ html[data-theme="dark"] .admin-theme-toggle .theme-icon-moon {
 }
 
 .admin-name-text {
+    min-width: 0;
     font-size: 13.5px !important;
     font-weight: 600 !important;
     color: var(--adm-heading-color) !important;
-    overflow-wrap: anywhere;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .admin-role-tag {
+    flex: none;
     font-size: 10.5px !important;
     background: rgba(34, 211, 238, 0.2) !important;
     color: var(--adm-accent-blue) !important;
@@ -838,9 +694,7 @@ html[data-theme="dark"] .admin-theme-toggle .theme-icon-moon {
     font-weight: 700 !important;
 }
 
-/* ==========================================
-   Dashboard Greeting Header Area
-   ========================================== */
+/* Dashboard Greeting Header Area */
 
 .dashboard-header-row {
     display: flex;
@@ -851,12 +705,15 @@ html[data-theme="dark"] .admin-theme-toggle .theme-icon-moon {
     gap: 16px;
 }
 
+.dashboard-header-row > :first-child { min-width: 0; }
+
 .dashboard-greeting-title {
     font-size: clamp(24px, 2.2vw, 32px);
     font-weight: 800;
     color: var(--adm-heading-color);
     margin: 0 0 6px;
     letter-spacing: -0.6px;
+    overflow-wrap: anywhere;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -935,9 +792,7 @@ html[data-theme="light"] .attention-badge {
     transform: translateY(-2px);
 }
 
-/* ==========================================
-   Two Big Analytics Cards (Matching Reference)
-   ========================================== */
+/* Analytics cards */
 
 .analytics-main-grid {
     display: grid;
@@ -1027,25 +882,6 @@ html[data-theme="light"] .attention-badge {
     background: #0f172a;
     color: #ffffff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* Mascot Sitting on Top Corner of Charts */
-.card-perched-mascot {
-    position: absolute;
-    top: -22px;
-    right: 24px;
-    width: 68px;
-    height: 68px;
-    object-fit: contain;
-    filter: drop-shadow(0 8px 16px rgba(2, 132, 199, 0.35));
-    animation: nimoFloat 3.6s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 3;
-}
-
-.card-perched-mascot.left-pos {
-    left: 20px;
-    right: auto;
 }
 
 /* Bar Chart Graphic Area */
@@ -1145,7 +981,7 @@ html[data-theme="light"] .attention-badge {
     padding-top: 10px;
     font-size: 12px;
     font-weight: 600;
-    color: #64748b;
+    color: var(--adm-text-sub);
     padding-left: 45px;
 }
 
@@ -1245,7 +1081,7 @@ html[data-theme="light"] .attention-badge {
     align-items: center;
     gap: 7px;
     font-weight: 600;
-    color: #475569;
+    color: var(--adm-text-sub);
 }
 
 .legend-color-dot {
@@ -1260,9 +1096,7 @@ html[data-theme="light"] .attention-badge {
     color: var(--adm-text-main);
 }
 
-/* ==========================================
-   8 Metric Cards Grid (4x2 Frosted Layout)
-   ========================================== */
+/* 8 Metric Cards Grid (4x2 Frosted Layout) */
 
 .metric-grid-eight {
     display: grid !important;
@@ -1291,24 +1125,6 @@ html[data-theme="light"] .attention-badge {
     transform: translateY(-5px);
     box-shadow: var(--adm-card-hover-shadow) !important;
     border-color: rgba(56, 189, 248, 0.8) !important;
-}
-
-/* Micro Mascot Peek in Metric Card */
-.metric-peek-mascot {
-    position: absolute;
-    bottom: -6px;
-    right: 8px;
-    width: 42px;
-    height: 42px;
-    object-fit: contain;
-    opacity: 0.15;
-    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    pointer-events: none;
-}
-
-.metric-card-modern:hover .metric-peek-mascot {
-    opacity: 0.85;
-    transform: translateY(-6px) scale(1.15) rotate(4deg);
 }
 
 .metric-card-top {
@@ -1388,9 +1204,7 @@ html[data-theme="light"] .attention-badge {
     100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
 
-/* ==========================================
-   Table & Outlined Cards Styling (Glass Look)
-   ========================================== */
+/* Table & Outlined Cards Styling (Glass Look) */
 
 .overview-grid {
     display: grid !important;
@@ -1437,6 +1251,10 @@ html[data-theme="light"] .attention-badge {
 .admin-table-scroll {
     max-width: 100%;
     overflow-x: auto;
+}
+
+.admin-table-scroll:has(> .admin-record-table) {
+    container: admin-records / inline-size;
 }
 
 :is(.admin-table-scroll, .admin-chart-scroll):focus-visible {
@@ -1599,95 +1417,7 @@ html[data-theme="dark"] .question-course-tag {
     border: 1px solid rgba(56, 189, 248, 0.3) !important;
 }
 
-/* ==========================================
-   Interactive Mascot Buddy
-   ========================================== */
-
-.floating-mascot-buddy {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 14px;
-    margin-block-end: 20px;
-}
-
-.mascot-speech-bubble {
-    background: var(--adm-bubble-bg);
-    color: var(--adm-bubble-text);
-    padding: 10px 16px;
-    border-radius: 18px 18px 4px 18px;
-    font-size: 14px;
-    font-weight: 600;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
-    border: 1.5px solid var(--adm-bubble-border);
-    min-width: 0;
-    min-height: 5em;
-    max-width: 280px;
-    line-height: 1.6;
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    animation: popBubble 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.mascot-speech-bubble:hover {
-    transform: scale(1.04);
-}
-
-.mascot-speech-bubble::after {
-    content: '';
-    position: absolute;
-    top: calc(50% - 6px);
-    left: 100%;
-    border-width: 6px 0 6px 8px;
-    border-style: solid;
-    border-color: transparent transparent transparent var(--adm-bubble-bg);
-}
-
-.mascot-avatar-trigger {
-    width: 68px;
-    height: 68px;
-    flex: 0 0 68px;
-    background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e0f2fe 70%, #bae6fd 100%);
-    border: 2.5px solid #38bdf8;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    box-shadow: 0 12px 32px rgba(2, 132, 199, 0.45);
-    cursor: pointer;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
-    position: relative;
-}
-
-.mascot-avatar-trigger:hover {
-    transform: scale(1.12) rotate(6deg);
-    box-shadow: 0 18px 40px rgba(0, 210, 255, 0.65);
-}
-
-.mascot-avatar-trigger img {
-    width: 52px;
-    height: 52px;
-    object-fit: contain;
-    animation: nimoFloat 3s ease-in-out infinite;
-}
-
-@keyframes nimoFloat {
-    0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-6px) rotate(2deg);
-    }
-}
-
-@keyframes popBubble {
-    0% { transform: scale(0.6); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-/* ==========================================
-   Responsive Adjustments
-   ========================================== */
+/* Responsive Adjustments */
 
 @media (width < 1280px) {
     .analytics-main-grid {
@@ -1769,12 +1499,9 @@ html[data-theme="dark"] .question-course-tag {
     .workspace {
         padding: 16px var(--ns-gutter-end) max(40px, env(safe-area-inset-bottom)) var(--ns-gutter-start) !important;
     }
-    .card-perched-mascot,
     .ocean-bubble:nth-child(n + 4) {
         display: none;
     }
-    .floating-mascot-buddy .mascot-avatar-trigger { width: 52px; height: 52px; flex: 0 0 52px; }
-    .floating-mascot-buddy .mascot-avatar-trigger img { width: 42px; height: 42px; }
 }
 
 @media (max-width: 768px) {
@@ -1783,7 +1510,6 @@ html[data-theme="dark"] .question-course-tag {
     .topbar-actions { gap: 8px; }
     .admin-panel + .admin-panel:not([hidden]) { margin-top: 0; }
 
-    .dashboard-greeting-title { overflow-wrap: anywhere; }
     .dashboard-greeting-sub { display: block; }
     .attention-badge { display: inline-block; }
     .header-action-buttons > * { justify-content: center; }
@@ -1859,6 +1585,29 @@ html[data-theme="dark"] .question-course-tag {
         padding-inline: 8px !important;
     }
 
+    .quiz-cards-grid { padding: 12px; }
+    .question-studio-card { padding: 12px; }
+    .quiz-filter-bar,
+    .admin-course-filters { padding: 12px; }
+    .choice-item [data-choice-correct] {
+        grid-column: 2;
+        margin-inline-start: 0 !important;
+    }
+    .choice-item {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 4px 8px;
+    }
+
+    .modal-header { padding: 12px 16px; }
+    .modal-footer { padding-block: 12px; }
+    .admin-tester-nimo #tester-nimo-bubble {
+        position: static;
+        max-width: 100%;
+    }
+}
+
+@container admin-records (width < 48rem) {
     #courses-main-table,
     .members-table { min-width: 0; }
     .admin-record-table,
@@ -1895,27 +1644,6 @@ html[data-theme="dark"] .question-course-tag {
         font-size: 12px;
     }
     .admin-course-actions { justify-content: flex-start; }
-
-    .quiz-cards-grid { padding: 12px; }
-    .question-studio-card { padding: 12px; }
-    .quiz-filter-bar,
-    .admin-course-filters { padding: 12px; }
-    .choice-item [data-choice-correct] {
-        grid-column: 2;
-        margin-inline-start: 0 !important;
-    }
-    .choice-item {
-        display: grid;
-        grid-template-columns: auto minmax(0, 1fr);
-        gap: 4px 8px;
-    }
-
-    .modal-header { padding: 12px 16px; }
-    .modal-footer { padding-block: 12px; }
-    .admin-tester-nimo #tester-nimo-bubble {
-        position: static;
-        max-width: 100%;
-    }
 }
 
 @media (max-width: 479px) {
@@ -1923,18 +1651,9 @@ html[data-theme="dark"] .question-course-tag {
     .sidebar .admin-brand-sub {
         display: none !important;
     }
-    .sidebar .admin-brand-logo-img {
-        width: 34px;
-        height: 34px;
-        flex-basis: 34px;
-    }
-    .sidebar .admin-brand-wordmark {
-        width: 76px;
-        flex-basis: 76px;
-    }
-    .sidebar .admin-brand-wordmark-row {
-        flex-wrap: wrap;
-        row-gap: 0;
+    .admin-brand-row .ns-navbar__logo {
+        width: 112px;
+        flex-basis: 112px;
     }
     .admin-nav { flex-direction: column !important; }
     .sidebar-account { max-width: none; }
@@ -1967,9 +1686,7 @@ html[data-theme="dark"] .question-course-tag {
     .ocean-ambient-bubbles { display: none; }
 }
 
-/* ==========================================
-   Panel Headings & Form Controls on Ocean Canvas
-   ========================================== */
+/* Panel Headings & Form Controls on Ocean Canvas */
 
 .admin-panel > .section-heading h2,
 .admin-panel > h2,
@@ -2187,14 +1904,4 @@ dialog textarea {
     background: var(--adm-input-bg) !important;
     border: 1px solid var(--adm-input-border) !important;
     color: var(--adm-input-color) !important;
-}
-
-/* Explicitly hide removed mascot elements per design request */
-.floating-mascot-buddy,
-#mascot-buddy-wrap,
-#topbar-mascot-toggle,
-.peeking-mascot,
-.card-perched-mascot,
-.metric-peek-mascot {
-    display: none !important;
 }

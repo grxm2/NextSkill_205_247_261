@@ -30,6 +30,7 @@
         <symbol id="cj-back" viewBox="0 0 24 24"><path d="m11 5-7 7 7 7M4 12h16"/></symbol>
         <symbol id="cj-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-7-7 7 7-7 7"/></symbol>
         <symbol id="cj-external" viewBox="0 0 24 24"><path d="M13 5h6v6m0-6-8 8m7 0v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+        <symbol id="cj-book" viewBox="0 0 24 24"><path d="M12 6a8 8 0 0 0-9-2v14a8 8 0 0 1 9 2 8 8 0 0 1 9-2V4a8 8 0 0 0-9 2Zm0 0v14"/></symbol>
         <symbol id="cj-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
         <symbol id="cj-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/></symbol>
         <symbol id="cj-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5.5"/><path d="m8.3 13.2-2 7.4 5.7-2.3 5.7 2.3-2-7.4M12 7v4m-2-2h4"/></symbol>
@@ -56,36 +57,52 @@
                 {
                     <p class="cj-credit">แหล่งสื่อ <bdi>@course.Metadata.Instructor</bdi></p>
                 }
-                @if (course.CanStart)
+                @if (course.CanStart || Model.IsFavorite is not null || !authenticated)
                 {
-                    <ul class="cj-summary cj-liquid-panel" role="list" aria-label="ข้อมูลคอร์ส">
-                        <li><strong>@course.Curriculum.TotalLessons เกาะ</strong><span>บทเรียน</span></li>
-                        <li><strong>@(lessons.Sum(lesson => lesson.Minutes)) นาที</strong><span>เวลาเรียน</span></li>
-                        <li><strong>@course.Curriculum.LessonXpTotal XP</strong><span>จากบทเรียน</span></li>
-                        <li><strong>+@completionBonus XP</strong><span>โบนัสจบคอร์ส</span></li>
-                        <li><strong>ใบประกาศ</strong><span>โดย NextSkill</span></li>
-                    </ul>
-                }
-                <div class="ns-button-row favorite-detail-actions">
-                    @if (course.CanStart)
-                    {
-                        <a class="ns-button ns-button--primary cj-start" href="@startUrl" data-course-start data-island-url="@islandUrl"
-                           data-catalog-url="@catalogUrl" data-login-url="@loginUrl" data-course-id="@course.Id">
-                            <span data-course-action-label>ลงทะเบียนและเริ่มเรียน</span><svg class="cj-icon" aria-hidden="true"><use href="#cj-arrow" /></svg>
-                        </a>
-                        <div class="cj-lock-note cj-liquid-panel" data-course-lock-note hidden>
-                            <svg class="cj-icon" aria-hidden="true"><use href="#cj-lock" /></svg>
-                            <div>
-                                <p>สอบท้ายคอร์สก่อนหน้าให้ผ่านเพื่อปลดล็อกคอร์สนี้</p>
-                                <a class="cj-lock-link" data-course-prerequisite hidden></a>
-                            </div>
+                    <div class="cj-enrollment @(course.CanStart ? "cj-liquid-panel" : null)">
+                        @if (course.CanStart)
+                        {
+                            <dl class="cj-summary" aria-label="ข้อมูลคอร์ส">
+                                <div>
+                                    <dt><svg class="cj-icon" aria-hidden="true"><use href="#cj-book" /></svg> บทเรียน</dt>
+                                    <dd><strong>@course.Curriculum.TotalLessons</strong> เกาะ</dd>
+                                </div>
+                                <div>
+                                    <dt><svg class="cj-icon" aria-hidden="true"><use href="#cj-clock" /></svg> เวลาเรียน</dt>
+                                    <dd><strong>@(lessons.Sum(lesson => lesson.Minutes))</strong> นาที</dd>
+                                </div>
+                                <div>
+                                    <dt><svg class="cj-icon" aria-hidden="true"><use href="#cj-star" /></svg> XP บทเรียน</dt>
+                                    <dd><strong>@course.Curriculum.LessonXpTotal</strong> XP</dd>
+                                </div>
+                            </dl>
+                            <ul class="cj-rewards" role="list" aria-label="รางวัลเมื่อจบคอร์ส">
+                                <li><strong>+@completionBonus XP</strong> โบนัสจบคอร์ส</li>
+                                <li><svg class="cj-icon" aria-hidden="true"><use href="#cj-award" /></svg> ใบประกาศจาก NextSkill</li>
+                            </ul>
+                        }
+                        <div class="cj-actions">
+                            @if (course.CanStart)
+                            {
+                                <a class="ns-button ns-button--primary cj-start" href="@startUrl" data-course-start data-island-url="@islandUrl"
+                                   data-catalog-url="@catalogUrl" data-login-url="@loginUrl" data-course-id="@course.Id">
+                                    <span data-course-action-label>ลงทะเบียนและเริ่มเรียน</span><svg class="cj-icon" aria-hidden="true"><use href="#cj-arrow" /></svg>
+                                </a>
+                                <div class="cj-lock-note" data-course-lock-note hidden>
+                                    <svg class="cj-icon" aria-hidden="true"><use href="#cj-lock" /></svg>
+                                    <div>
+                                        <p>สอบท้ายคอร์สก่อนหน้าให้ผ่านเพื่อปลดล็อกคอร์สนี้</p>
+                                        <a class="cj-lock-link" data-course-prerequisite hidden></a>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.IsFavorite is not null || !authenticated)
+                            {
+                                <partial name="_FavoriteButton" model="new FavoriteButtonViewModel(course, Model.IsFavorite == true, currentUrl)" />
+                            }
                         </div>
-                    }
-                    @if (Model.IsFavorite is not null || !authenticated)
-                    {
-                        <partial name="_FavoriteButton" model="new FavoriteButtonViewModel(course, Model.IsFavorite == true, currentUrl)" />
-                    }
-                </div>
+                    </div>
+                }
                 <partial name="_FavoriteStatus" />
                 @if (User.IsInRole("User") && Model.IsFavorite is null)
                 {
@@ -131,10 +148,6 @@
             </section>
         </div>
         <div class="cj-wave" aria-hidden="true"></div>
-        <div class="cj-boat" aria-hidden="true" inert>
-            <span class="cj-boat-seat buddy-slot" data-buddy-anchor="sailing" data-buddy-home="active"></span>
-            <img class="cj-boat-hull" src="~/images/journey/rowing-hull.svg" asp-append-version="true" width="480" height="280" alt="" />
-        </div>
     </header>
 
     <div class="cj-wrap cj-main">

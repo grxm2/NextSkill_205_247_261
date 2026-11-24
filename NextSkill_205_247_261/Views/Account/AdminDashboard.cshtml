@@ -39,7 +39,6 @@
     <a class="skip-link" href="#main-content">ข้ามไปเนื้อหาหลัก</a>
     <div id="admin-antiforgery" hidden>@Html.AntiForgeryToken()</div>
 
-    <!-- Living Ocean Ambient Bubbles Layer -->
     <div class="ocean-ambient-bubbles" aria-hidden="true">
         <div class="ocean-bubble"></div>
         <div class="ocean-bubble"></div>
@@ -50,14 +49,12 @@
     </div>
 
     <div class="admin-shell">
-        <!-- Sidebar Navigation (Deep Ocean Glass) -->
         <aside class="sidebar">
             <div class="admin-sidebar-header">
                 <a class="brand admin-brand" href="#dashboard" aria-label="NextSkill ภาพรวมผู้ดูแลระบบ">
-                    <img src="~/images/nextskill-navbar-logo.webp" asp-append-version="true" alt="NextSkill" class="admin-brand-logo-img" width="46" height="46" />
                     <div class="admin-brand-content">
-                        <div class="admin-brand-wordmark-row">
-                            <span class="ns-navbar__wordmark admin-brand-wordmark" aria-hidden="true"><partial name="_NextSkillWordmark" /></span>
+                        <div class="admin-brand-row">
+                            <partial name="_NextSkillLogo" />
                             <span class="admin-brand-badge">ผู้ดูแล</span>
                         </div>
                         <small class="admin-brand-sub">จัดการเนื้อหาและบัญชี</small>
@@ -116,7 +113,6 @@
                     </a>
                 </nav>
 
-                <!-- System Summary Card -->
                 <div class="sidebar-quota-card">
                     <div class="quota-header">
                         <span>คลังเนื้อหาในระบบ</span>
@@ -142,7 +138,6 @@
             </div>
         </aside>
 
-        <!-- Main Workspace -->
         <div class="workspace">
             <header class="topbar">
                 <div class="topbar-search-wrap">
@@ -169,23 +164,9 @@
             </header>
             <p class="ns-status" id="admin-search-summary" role="status" hidden></p>
 
-            <!-- Floating Mascot Buddy (Nimo) -->
-            <div class="floating-mascot-buddy" id="mascot-buddy-wrap">
-                <div class="mascot-speech-bubble" id="mascot-speech" aria-live="polite">
-                    เลือกแท็บคอร์สเรียนเพื่อจัดการเนื้อหา
-                </div>
-                <button type="button" class="mascot-avatar-trigger" id="mascot-trigger-btn" aria-label="เพื่อนร่วมทาง Nimo">
-                    <img src="~/images/nimo-rowing.png" alt="Nimo" id="floating-mascot-img" />
-                </button>
-            </div>
-
             <main id="main-content" tabindex="-1">
-                <!-- ==============================================
-                     PANEL 1: Dashboard Overview (Dribbble/Modern Ocean Style)
-                     ============================================== -->
                 <section id="dashboard" class="admin-panel" data-title="ภาพรวมผู้ดูแลระบบ" aria-label="ภาพรวมผู้ดูแลระบบ">
                     
-                    <!-- Dashboard Greeting Row (Matching Screenshot) -->
                     @{
                         var categoryShares = Model.GetCategoryShares();
                         const int defaultMonths = 6;
@@ -195,7 +176,6 @@
                         string TrendSummary(int months, int activityCount) => $"กิจกรรมผู้เรียน {activityCount:N0} รายการ ในช่วง {months} เดือน";
                     }
 
-                    <!-- Dashboard Greeting Row -->
                     <div class="dashboard-header-row">
                         <div>
                             <h2 class="dashboard-greeting-title" id="greeting-title">
@@ -219,9 +199,7 @@
                         </div>
                     </div>
 
-                    <!-- TWO Big Analytics Cards (100% Real System Data) -->
                     <div class="analytics-main-grid">
-                        <!-- Left Big Card: Real System Activity & Learning Trends -->
                         <article class="analytics-glass-card">
                             <div class="chart-card-header">
                                 <div class="chart-title-block">
@@ -274,7 +252,6 @@
                             </div>
                         </article>
 
-                        <!-- Right Card: Real Course Categories Share -->
                         <article class="analytics-glass-card">
                             <div class="chart-card-header">
                                 <div class="chart-title-block">
@@ -323,9 +300,7 @@
                         </article>
                     </div>
 
-                    <!-- 8 Metric Cards Grid (100% Real System Numbers) -->
                     <div class="metric-grid-eight">
-                        <!-- 1. Total Accounts in System -->
                         <article class="metric-card-modern">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon">
@@ -339,7 +314,6 @@
                             </p>
                         </article>
 
-                        <!-- 2. Total Courses in System -->
                         <article class="metric-card-modern" data-active-course-count="@Model.PublishedCoursesCount">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon amber">
@@ -351,7 +325,6 @@
                             <p class="metric-desc-sub" id="metric-courses-sub">เปิดให้เรียน @Model.PublishedCoursesCount คอร์ส · ตั้งค่าแนะนำ @Model.FeaturedCoursesCount คอร์ส</p>
                         </article>
 
-                        <!-- 3. Open Units & Islands -->
                         <article class="metric-card-modern">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon teal">
@@ -363,7 +336,6 @@
                             <p class="metric-desc-sub" id="metric-lessons-sub">เฉลี่ย @Model.AverageLessonsPerCourse ด่านต่อคอร์ส</p>
                         </article>
 
-                        <!-- 4. Real Completed Lesson Sessions -->
                         <article class="metric-card-modern" id="metric-learner-progress" data-enrollment-count="@Model.StartedCoursesCount"
                                  data-passed-lessons="@Model.TotalLessonCompletions" data-lesson-slots="@Model.EnrolledLessonSlots" data-xp="@Model.TotalXpEarned">
                             <div class="metric-card-top">
@@ -376,7 +348,6 @@
                             <p class="metric-desc-sub">การลงทะเบียน @Model.StartedCoursesCount รายการ · @Model.TotalXpEarned.ToString("N0") XP จากด่านในคอร์สที่เปิดเรียน</p>
                         </article>
 
-                        <!-- 5. New Learners This Month -->
                         <article class="metric-card-modern">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon purple">
@@ -389,7 +360,6 @@
                             <p class="metric-desc-sub">สมัครหรือเข้าสู่ระบบใน @AdminDashboardModel.RecentActivityHours ชม. ล่าสุด @Model.ActiveTodayCount บัญชี</p>
                         </article>
 
-                        <!-- 6. Real Lesson Completion Rate -->
                         <article class="metric-card-modern">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon teal">
@@ -401,7 +371,6 @@
                             <p class="metric-desc-sub">ผ่าน @Model.TotalLessonCompletions.ToString("N0") จาก @Model.EnrolledLessonSlots.ToString("N0") ด่านที่ลงทะเบียน</p>
                         </article>
 
-                        <!-- 7. Quiz & Practice Questions -->
                         <article class="metric-card-modern">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon amber">
@@ -413,7 +382,6 @@
                             <p class="metric-desc-sub" id="metric-questions-sub">เฉลี่ย @Model.AverageQuestionsPerLesson ข้อต่อด่าน</p>
                         </article>
 
-                        <!-- 8. Total Recorded System Activities -->
                         <article class="metric-card-modern">
                             <div class="metric-card-top">
                                 <span class="metric-modern-icon green">
@@ -426,7 +394,6 @@
                         </article>
                     </div>
 
-                    <!-- Course Performance & Quick Tasks -->
                     <div class="overview-grid">
                         <section class="performance outlined-card" aria-labelledby="quick-courses-title" style="padding: 24px;">
                             <div class="section-heading">
@@ -481,7 +448,6 @@
                         </section>
                     </div>
 
-                    <!-- Recent Activity -->
                     <section class="activity-section outlined-card" aria-labelledby="activity-title" style="padding: 24px; margin-top: 24px;">
                         <div class="section-heading">
                             <h2 id="activity-title" tabindex="-1">การสมัครและการเข้าสู่ระบบล่าสุด</h2>
@@ -504,9 +470,6 @@
                     </section>
                 </section>
 
-                <!-- ==============================================
-                     PANEL 2: Course Library & Management
-                     ============================================== -->
                 <section id="courses" class="admin-panel" data-title="จัดการคอร์สเรียน" aria-labelledby="courses-heading" hidden>
                     <div class="section-heading">
                         <div>
@@ -526,7 +489,6 @@
                         </div>
                     </div>
 
-                    <!-- Search and filters -->
                     <div class="outlined-card admin-course-filters">
                         <input type="search" id="course-search-input" aria-label="ค้นหาคอร์สจากชื่อ แหล่งเนื้อหา หรือหมวดหมู่" placeholder="ค้นหาชื่อคอร์ส แหล่งเนื้อหา หรือหมวดหมู่" />
                         <select id="course-category-filter" aria-label="กรองคอร์สตามหมวดหมู่">
@@ -538,7 +500,6 @@
                         </select>
                     </div>
 
-                    <!-- Courses Table -->
                     <div class="outlined-card" style="padding: 0;">
                         <div class="table-scroll admin-table-scroll" role="region" aria-labelledby="courses-heading" tabindex="0">
                             <table id="courses-main-table" class="admin-record-table" role="table" aria-labelledby="courses-heading">
@@ -613,9 +574,6 @@
                     </div>
                 </section>
 
-                <!-- ==============================================
-                     PANEL 3: Question & Quiz Studio
-                     ============================================== -->
                 <section id="questions" class="admin-panel" data-title="จัดการแบบทดสอบ" aria-labelledby="questions-heading" hidden>
                     <div class="section-heading">
                         <div>
@@ -629,7 +587,6 @@
                         </div>
                     </div>
 
-                    <!-- Filter Bar -->
                     <div class="outlined-card" style="padding: 0; margin-bottom: 22px;">
                         <div class="quiz-filter-bar">
                             <label class="admin-filter-label" for="question-course-filter">เลือกคอร์ส</label>
@@ -644,7 +601,6 @@
                             <input type="search" id="question-search-input" aria-label="ค้นหาคำถาม คำอธิบายเฉลย หรือชื่อคอร์ส" placeholder="ค้นหาคำถาม คำอธิบายเฉลย หรือชื่อคอร์ส" />
                         </div>
 
-                        <!-- Questions Grid -->
                         <div class="quiz-cards-grid" id="questions-container"></div>
                         <p id="questions-empty" class="empty-message" hidden>ไม่พบคำถามที่ตรงกับเงื่อนไขการค้นหา</p>
                         <template id="admin-question-card-template">
@@ -682,9 +638,6 @@
                     </div>
                 </section>
 
-                <!-- ==============================================
-                     PANEL 4: Learners & Accounts Directory
-                     ============================================== -->
                 <section id="learners" class="admin-panel" data-title="รายชื่อบัญชี" aria-labelledby="members-heading" hidden>
                     <div class="section-heading directory-heading">
                         <div>
@@ -739,9 +692,6 @@
                     <p class="subtle" id="member-count" aria-live="polite" style="margin-top: 10px;">แสดง @Model.Members.Count บัญชี</p>
                 </section>
 
-                <!-- ==============================================
-                     PANEL 5: Admin Profile & Settings
-                     ============================================== -->
                 <section id="settings" class="admin-panel" data-title="บัญชีผู้ดูแลระบบ" aria-labelledby="settings-heading" hidden>
                     <div class="section-heading">
                         <h2 id="settings-heading">บัญชีผู้ดูแลระบบ</h2>
@@ -767,9 +717,6 @@
         </div>
     </div>
 
-    <!-- ==============================================
-         MODAL 1: Add / Edit Course Dialog
-         ============================================== -->
     <dialog id="course-modal" class="nimo-modal" aria-labelledby="course-modal-title">
         <div class="modal-header">
             <h3 id="course-modal-title">สร้างคอร์สเรียนใหม่</h3>
@@ -845,9 +792,6 @@
         </form>
     </dialog>
 
-    <!-- ==============================================
-         MODAL 2: Upload Course (JSON / File) Dialog
-         ============================================== -->
     <dialog id="course-upload-modal" class="nimo-modal" aria-labelledby="course-upload-modal-title">
         <div class="modal-header">
             <h3 id="course-upload-modal-title">นำเข้าคอร์สจาก JSON</h3>
@@ -884,9 +828,6 @@
         </form>
     </dialog>
 
-    <!-- ==============================================
-         MODAL 3: Add / Edit Question Dialog
-         ============================================== -->
     <dialog id="question-modal" class="nimo-modal">
         <div class="modal-header">
             <h3 id="question-modal-title">เพิ่มคำถามแบบฝึกหัดใหม่</h3>
@@ -962,9 +903,6 @@
         </form>
     </dialog>
 
-    <!-- ==============================================
-         MODAL 4: Interactive Quiz Tester with Nimo
-         ============================================== -->
     <dialog id="quiz-tester-modal" class="nimo-modal" aria-labelledby="quiz-tester-modal-title">
         <div class="modal-header">
             <h3 id="quiz-tester-modal-title">ทดสอบตอบคำถามคู่กับ Nimo</h3>
@@ -981,7 +919,6 @@
             <h3 id="tester-prompt" style="font-size: 17px; margin: 0 0 18px; text-align: left;">คำถาม</h3>
 
             <div id="tester-choices" style="display: flex; flex-direction: column; gap: 10px; text-align: left;">
-                <!-- Choice buttons injected by JS -->
             </div>
 
             <div id="tester-feedback" style="display: none; margin-top: 18px; padding: 14px; border-radius: 12px; text-align: left; font-size: 13px;">
@@ -994,7 +931,6 @@
         </div>
     </dialog>
 
-    <!-- Embedded Initial Data for fast interactive client features -->
     @{
         var trendsPayload = trends.ToDictionary(entry => $"{entry.Key}m", entry => new
         {

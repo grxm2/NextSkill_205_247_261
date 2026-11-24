@@ -14,8 +14,8 @@
 |---|---|---|
 | Home | `Views/Home/Index.cshtml` → `_SmartJourneyLayout` | `JourneyMode=home`, body `.smart-journey`, ฉาก `.ocean-home/.ow-scene` |
 | เกาะบทเรียน | `Views/Learning/Island.cshtml` → `_SmartJourneyLayout` | `JourneyMode=learn`, เนื้อหา `.sj-learn` |
-| คอร์ส/รายละเอียด | `Views/Home/Courses.cshtml`, `Details.cshtml` → `_Layout` | body `.ocean-theme.ns-site-shell`, nav `_SiteNav` |
-| บัญชี | `Views/Account/*` ที่ระบุ `_AccountLayout` | body `.nimo-account-theme.ns-site-shell`, nav `_SiteNav` |
+| คอร์ส/รายละเอียด | `Views/Home/Courses.cshtml`, `Details.cshtml` → `_Layout` | body `.ocean-theme.ns-site-shell`, nav `_Navbar` |
+| บัญชี | `Views/Account/*` ที่ระบุ `_AccountLayout` | body `.nimo-account-theme.ns-site-shell`, nav `_Navbar` |
 | Admin dashboard | `Views/Account/AdminDashboard.cshtml` | `Layout=null`; import tokens/components ของตัวเอง |
 
 `Views/_ViewStart.cshtml` ตั้ง default `_Layout`; แต่ View สามารถเลือกต่างออกไปได้ ตรวจหน้าเป้าหมายทุกครั้ง

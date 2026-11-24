@@ -1,0 +1,14 @@
+<span class="ns-navbar__logo">
+    <img src="~/images/nextskill-navbar-island.webp" asp-append-version="true" alt="" width="1086" height="362" />
+    <svg width="0" height="0" aria-hidden="true" focusable="false">
+        <filter id="ns-navbar-logo-outline" color-interpolation-filters="sRGB">
+            @* Lower the opacity of near-white outlines while retaining the colored artwork. *@
+            <feColorMatrix in="SourceGraphic" type="matrix" result="outline-opacity" values="
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                -0.85 -1.70 -0.85 0 3.65" />
+            <feComposite in="SourceGraphic" in2="outline-opacity" operator="in" />
+        </filter>
+    </svg>
+</span>
