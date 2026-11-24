@@ -1,0 +1,87 @@
+@model CourseFavoritesPageViewModel
+@{
+    ViewData["Title"] = "รายการโปรดของฉัน";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/learner-coast.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/favorites.css" asp-append-version="true" />
+}
+@section Backdrop {
+    <partial name="_LearnerCoast" />
+}
+<section class="favorites-page" aria-labelledby="favorites-title">
+    <header class="ns-surface favorites-heading">
+        <div>
+            <h1 id="favorites-title">รายการโปรดของฉัน</h1>
+            <p>@(Model.Unavailable ? "เพลย์ลิสต์คอร์สส่วนตัว" : $"เพลย์ลิสต์ส่วนตัว · {Model.Items.Count} คอร์ส")</p>
+        </div>
+        <a class="favorites-back ns-button ns-button--secondary" asp-controller="Home" asp-action="Courses">ไปที่คลังคอร์ส <span aria-hidden="true">→</span></a>
+    </header>
+    <partial name="_FavoriteStatus" />
+
+    @if (Model.Unavailable)
+    {
+        <div class="ns-surface favorites-empty">
+            <h2>โหลดรายการโปรดไม่ได้</h2>
+            <a class="ns-button ns-button--secondary" asp-action="Index">ลองอีกครั้ง</a>
+        </div>
+    }
+    else if (Model.Items.Count == 0)
+    {
+        <div class="ns-surface favorites-empty">
+            <span class="favorites-empty__icon"><partial name="_FavoriteHeart" /></span>
+            <h2>ยังไม่มีคอร์สในรายการโปรด</h2>
+            <p>กดหัวใจที่คอร์สที่ชอบเพื่อเก็บไว้เปิดดูทีหลัง</p>
+            <a class="ns-button ns-button--primary" asp-controller="Home" asp-action="Courses">เลือกคอร์สที่ชอบ</a>
+        </div>
+    }
+    else
+    {
+        <ul class="favorites-list">
+            @foreach (var item in Model.Items)
+            {
+                var id = item.Favorite.CourseId;
+                var title = item.Course?.Title ?? "คอร์สนี้ไม่เปิดให้เข้าดูแล้ว";
+                <li class="ns-surface favorites-item">
+                    @if (item.Course is not null)
+                    {
+                        <img class="favorites-item__cover" src="@item.Course.Cover.Path" asp-append-version="true"
+                             alt="" width="960" height="540" loading="lazy" />
+                    }
+                    else
+                    {
+                        <div class="favorites-item__cover favorites-item__cover--missing"><partial name="_FavoriteHeart" /></div>
+                    }
+                    <div class="favorites-item__body">
+                        <div class="favorites-item__metadata">
+                            @if (item.Course is not null) { <span>@item.Course.CategoryLabel</span> }
+                            @if (item.Favorite.IsPinned) { <span class="ns-badge favorites-pin">ปักหมุด</span> }
+                        </div>
+                        <h2>
+                            @if (item.Course is not null)
+                            {
+                                <a class="favorites-item__link" asp-controller="Home" asp-action="Details" asp-route-id="@id">@title</a>
+                            }
+                            else
+                            {
+                                @title
+                            }
+                        </h2>
+                        @if (!string.IsNullOrEmpty(item.Favorite.Note))
+                        {
+                            <p class="favorites-item__note">@item.Favorite.Note</p>
+                        }
+                        <div class="ns-button-row favorites-item__actions">
+                            <a class="ns-button ns-button--compact" asp-action="Edit" asp-route-id="@id" aria-label="แก้ไขรายการโปรด @title">แก้ไข</a>
+                            <form asp-action="Set" method="post">
+                                <input name="courseId" type="hidden" value="@id" />
+                                <input name="save" type="hidden" value="false" />
+                                <button class="ns-button ns-button--compact ns-button--danger" type="submit" aria-label="นำ @title ออกจากรายการโปรด">นำออก</button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+</section>

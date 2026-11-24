@@ -85,6 +85,49 @@
     const panels = [...document.querySelectorAll('.admin-panel')];
     const links = [...document.querySelectorAll('.admin-nav a')];
     const title = document.getElementById('page-title');
+    const main = document.getElementById('main-content');
+    const menuToggle = document.getElementById('admin-menu-toggle');
+    const sidebar = menuToggle.closest('.sidebar');
+    const sidebarMenu = document.getElementById('admin-sidebar-menu');
+    const compactLayout = window.matchMedia('(max-width: 1024px)');
+
+    function setMenuOpen(open) {
+        sidebarMenu.hidden = compactLayout.matches && !open;
+        menuToggle.setAttribute('aria-expanded', String(compactLayout.matches && open));
+    }
+
+    function syncMenuLayout() {
+        const activeElement = document.activeElement;
+        menuToggle.hidden = !compactLayout.matches;
+        setMenuOpen(false);
+        if (compactLayout.matches && sidebarMenu.contains(activeElement)) {
+            menuToggle.focus({ preventScroll: true });
+        } else if (!compactLayout.matches && activeElement === menuToggle) {
+            sidebarMenu.querySelector('[aria-current="page"]')?.focus({ preventScroll: true });
+        }
+    }
+
+    function focusPanel() {
+        setMenuOpen(false);
+        main.focus({ preventScroll: true });
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    syncMenuLayout();
+    compactLayout.addEventListener('change', syncMenuLayout);
+    menuToggle.addEventListener('click', () => setMenuOpen(sidebarMenu.hidden));
+    sidebar.addEventListener('keydown', event => {
+        if (event.key !== 'Escape' || !compactLayout.matches || sidebarMenu.hidden) return;
+        setMenuOpen(false);
+        menuToggle.focus();
+    });
+    sidebar.addEventListener('click', event => {
+        if (compactLayout.matches && !sidebarMenu.hidden
+                && event.target.closest('.admin-nav a, .admin-brand')?.hash === location.hash) {
+            event.preventDefault();
+            focusPanel();
+        }
+    });
 
     function navigate() {
         const id = location.hash.slice(1) || 'dashboard';
@@ -105,9 +148,7 @@
     navigate();
     window.addEventListener('hashchange', () => {
         navigate();
-        const main = document.getElementById('main-content');
-        if (main) main.focus({ preventScroll: true });
-        window.scrollTo({ top: 0, behavior: 'instant' });
+        focusPanel();
     });
 
     // Quick Hero Buttons
@@ -626,7 +667,8 @@
         const roleVal = memberRole?.value || 'all';
         let count = 0;
         document.querySelectorAll('[data-member]').forEach(row => {
-            const matchesQuery = !query || [row.cells[0], row.cells[1]].some(cell => cell.textContent.toLowerCase().includes(query));
+            const matchesQuery = !query || [row.cells[0], row.querySelector('[data-member-email]')]
+                .some(field => field.textContent.toLowerCase().includes(query));
             const matchesRole = roleVal === 'all' || row.dataset.role === roleVal;
             const visible = matchesQuery && matchesRole;
             row.hidden = !visible;

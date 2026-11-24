@@ -56,7 +56,7 @@
         else removeSurface();
     }
     function eligible() {
-        if (!active || document.hidden || root.hidden || (!menu.hidden && !lessonCoach) || robot.dataset.voyagePose) return false;
+        if (!active || document.hidden || root.hidden || root.closest('[inert]') || (!menu.hidden && !lessonCoach) || robot.dataset.voyagePose) return false;
         if (root.dataset.context === 'quiz-hint') return false;
         if (islandCourseMenu && !islandCourseMenu.hidden) return false;
         if (root.dataset.context === 'in-flight' || root.closest('[data-voyage="rowing"],[data-voyage="boarding"],[data-voyage="diving"],[data-boarding="true"]')) return false;

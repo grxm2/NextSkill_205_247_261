@@ -29,7 +29,7 @@
         }
     });
     menu.addEventListener('click', event => {
-        if (event.target.closest('.ns-navbar__link')) setOpen(false);
+        if (event.target.closest('.ns-navbar__link, .ns-navbar__favorites')) setOpen(false);
         if (open && courseDetails && event.target.closest('[data-theme-toggle]')) setOpen(false, true);
     });
     wide.addEventListener('change', () => {

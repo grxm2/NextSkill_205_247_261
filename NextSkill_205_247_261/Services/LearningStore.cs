@@ -13,10 +13,13 @@ public sealed class LearningRuleException(string code, string message, int statu
     public int StatusCode { get; } = statusCode;
 }
 
-public sealed partial class LearningStore(IConfiguration configuration, IDataProtectionProvider protection)
+public sealed partial class LearningStore(
+    IConfiguration configuration,
+    IDataProtectionProvider protection,
+    IHostApplicationLifetime applicationLifetime)
 {
     private static readonly SemaphoreSlim SchemaLock = new(1, 1);
-    private static bool schemaReady;
+    private static volatile bool schemaReady;
     public const int CourseCompletionBonus = 100;
     private readonly IDataProtector quizVersions = protection.CreateProtector("NextSkill.QuizVersion.v1");
 
@@ -33,21 +36,24 @@ public sealed partial class LearningStore(IConfiguration configuration, IDataPro
                 {
                     if (!schemaReady)
                     {
-                        if (!await HasCurrentSchemaAsync(connection, token))
+                        // Schema initialization is shared by all requests, even if the first client disconnects.
+                        var schemaToken = applicationLifetime.ApplicationStopping;
+                        if (!await HasCurrentSchemaAsync(connection, schemaToken))
                         {
                             if (!configuration.GetValue("Learning:AutoMigrate", true))
                                 throw new InvalidOperationException("Apply scripts/LearningJourney.sql before starting the app.");
 
-                            await using var transaction = (SqlTransaction)await connection.BeginTransactionAsync(token);
+                            await using var transaction = (SqlTransaction)await connection.BeginTransactionAsync(schemaToken);
                             await using var setup = new SqlCommand(LearningSchema.Sql, connection, transaction);
-                            await setup.ExecuteNonQueryAsync(token);
-                            await transaction.CommitAsync(token);
+                            await setup.ExecuteNonQueryAsync(schemaToken);
+                            await transaction.CommitAsync(schemaToken);
                         }
                         schemaReady = true;
                     }
                 }
                 finally { SchemaLock.Release(); }
             }
+            token.ThrowIfCancellationRequested();
             return connection;
         }
         catch { await connection.DisposeAsync(); throw; }

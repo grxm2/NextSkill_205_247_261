@@ -52,84 +52,93 @@
     <div class="admin-shell">
         <!-- Sidebar Navigation (Deep Ocean Glass) -->
         <aside class="sidebar">
-            <a class="brand admin-brand" href="#dashboard" aria-label="NextSkill ภาพรวมผู้ดูแลระบบ">
-                <img src="~/images/nextskill-navbar-logo.webp" asp-append-version="true" alt="NextSkill" class="admin-brand-logo-img" width="46" height="46" />
-                <div class="admin-brand-content">
-                    <div class="admin-brand-wordmark-row">
-                        <span class="ns-navbar__wordmark admin-brand-wordmark" aria-hidden="true"><partial name="_NextSkillWordmark" /></span>
-                        <span class="admin-brand-badge">ผู้ดูแล</span>
+            <div class="admin-sidebar-header">
+                <a class="brand admin-brand" href="#dashboard" aria-label="NextSkill ภาพรวมผู้ดูแลระบบ">
+                    <img src="~/images/nextskill-navbar-logo.webp" asp-append-version="true" alt="NextSkill" class="admin-brand-logo-img" width="46" height="46" />
+                    <div class="admin-brand-content">
+                        <div class="admin-brand-wordmark-row">
+                            <span class="ns-navbar__wordmark admin-brand-wordmark" aria-hidden="true"><partial name="_NextSkillWordmark" /></span>
+                            <span class="admin-brand-badge">ผู้ดูแล</span>
+                        </div>
+                        <small class="admin-brand-sub">จัดการเนื้อหาและบัญชี</small>
                     </div>
-                    <small class="admin-brand-sub">จัดการเนื้อหาและบัญชี</small>
-                </div>
-            </a>
-
-            <div class="nav-section-title">ภาพรวม</div>
-            <nav aria-label="เมนูภาพรวมผู้ดูแล" class="admin-nav">
-                <a href="#dashboard" class="active" aria-current="page">
-                    <span class="nav-icon">
-                        <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
-                    </span>
-                    <span>ภาพรวม</span>
                 </a>
-            </nav>
-
-            <div class="nav-section-title">เนื้อหาและผู้ใช้</div>
-            <nav class="admin-nav">
-                <a href="#courses">
-                    <span class="nav-icon">
-                        <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                    </span>
-                    <span>จัดการคอร์สเรียน</span>
-                    <small>@Model.Courses.Count</small>
-                </a>
-                <a href="#questions">
-                    <span class="nav-icon">
-                        <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                    </span>
-                    <span>จัดการแบบทดสอบ</span>
-                    <small>@Model.TotalQuestions</small>
-                </a>
-                <a href="#learners">
-                    <span class="nav-icon">
-                        <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                    </span>
-                    <span>รายชื่อบัญชี</span>
-                    <small>@Model.TotalAccounts</small>
-                </a>
-            </nav>
-
-            <div class="nav-section-title">บัญชีผู้ดูแล</div>
-            <nav class="admin-nav">
-                <a href="#settings">
-                    <span class="nav-icon">
-                        <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                    </span>
-                    <span>บัญชีของฉัน</span>
-                </a>
-            </nav>
-
-            <!-- System Summary Card -->
-            <div class="sidebar-quota-card">
-                <div class="quota-header">
-                    <span>คลังเนื้อหาในระบบ</span>
-                    <strong id="quota-text">@Model.Courses.Count คอร์ส · @Model.TotalLessons ด่าน</strong>
-                </div>
-                <div class="quota-progress-track" title="สัดส่วนคอร์สที่ตั้งเป็นคอร์สแนะนำ">
-                    <div class="quota-progress-fill" style="width: @Model.FeaturedShare%;"></div>
-                </div>
+                <button type="button" class="admin-pill-btn secondary admin-menu-toggle" id="admin-menu-toggle"
+                        aria-controls="admin-sidebar-menu" aria-expanded="false" hidden>
+                    <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+                    เมนู
+                </button>
             </div>
 
-            <div class="sidebar-account">
-                <strong>@Model.FullName</strong>
-                <span>@Model.Email</span>
-                <form asp-action="Logout" method="post" style="margin-top: 12px;">
-                    <button class="ns-button ns-button--secondary ns-button--compact" type="submit" style="width: 100%; justify-content: center;">
-                        ออกจากระบบ ↗
-                    </button>
-                </form>
-            </div>
-            <div class="sidebar-bottom" style="margin-top: 12px; padding: 0 4px; font-size: 10px; color: #7dd3fc; opacity: 0.8;">
-                NextSkill
+            <div class="admin-sidebar-menu" id="admin-sidebar-menu">
+                <div class="nav-section-title">ภาพรวม</div>
+                <nav aria-label="เมนูภาพรวมผู้ดูแล" class="admin-nav">
+                    <a href="#dashboard" class="active" aria-current="page">
+                        <span class="nav-icon">
+                            <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                        </span>
+                        <span>ภาพรวม</span>
+                    </a>
+                </nav>
+
+                <div class="nav-section-title">เนื้อหาและผู้ใช้</div>
+                <nav class="admin-nav">
+                    <a href="#courses">
+                        <span class="nav-icon">
+                            <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        </span>
+                        <span>จัดการคอร์สเรียน</span>
+                        <small>@Model.Courses.Count</small>
+                    </a>
+                    <a href="#questions">
+                        <span class="nav-icon">
+                            <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        </span>
+                        <span>จัดการแบบทดสอบ</span>
+                        <small>@Model.TotalQuestions</small>
+                    </a>
+                    <a href="#learners">
+                        <span class="nav-icon">
+                            <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </span>
+                        <span>รายชื่อบัญชี</span>
+                        <small>@Model.TotalAccounts</small>
+                    </a>
+                </nav>
+
+                <div class="nav-section-title">บัญชีผู้ดูแล</div>
+                <nav class="admin-nav">
+                    <a href="#settings">
+                        <span class="nav-icon">
+                            <svg class="admin-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        </span>
+                        <span>บัญชีของฉัน</span>
+                    </a>
+                </nav>
+
+                <!-- System Summary Card -->
+                <div class="sidebar-quota-card">
+                    <div class="quota-header">
+                        <span>คลังเนื้อหาในระบบ</span>
+                        <strong id="quota-text">@Model.Courses.Count คอร์ส · @Model.TotalLessons ด่าน</strong>
+                    </div>
+                    <div class="quota-progress-track" title="สัดส่วนคอร์สที่ตั้งเป็นคอร์สแนะนำ">
+                        <div class="quota-progress-fill" style="width: @Model.FeaturedShare%;"></div>
+                    </div>
+                </div>
+
+                <div class="sidebar-account">
+                    <strong>@Model.FullName</strong>
+                    <span>@Model.Email</span>
+                    <form asp-action="Logout" method="post" style="margin-top: 12px;">
+                        <button class="ns-button ns-button--secondary ns-button--compact" type="submit" style="width: 100%; justify-content: center;">
+                            ออกจากระบบ ↗
+                        </button>
+                    </form>
+                </div>
+                <div class="sidebar-bottom" style="margin-top: 12px; padding: 0 4px; font-size: 10px; color: #7dd3fc; opacity: 0.8;">
+                    NextSkill
+                </div>
             </div>
         </aside>
 
@@ -216,7 +225,7 @@
                         <article class="analytics-glass-card">
                             <div class="chart-card-header">
                                 <div class="chart-title-block">
-                                    <h3>กิจกรรมผู้เรียนรายเดือน</h3>
+                                    <h3 id="activity-chart-title">กิจกรรมผู้เรียนรายเดือน</h3>
                                     <p id="chart-sub-text">@TrendSummary(defaultMonths, defaultTrend.TotalInPeriod)</p>
                                 </div>
                                 <div class="chart-controls-wrap">
@@ -227,37 +236,41 @@
                                                     data-period="@(months)m" aria-pressed="@(months == defaultMonths ? "true" : "false")">@months เดือน</button>
                                         }
                                     </div>
-                                    <button type="button" class="admin-pill-btn primary" id="btn-chart-add-deal" style="padding: 6px 14px; font-size: 11.5px; margin-left: 6px;">
+                                    <button type="button" class="admin-pill-btn primary" id="btn-chart-add-deal" style="padding: 6px 14px; font-size: 11.5px;">
                                         <span>+ สร้างคอร์สฉบับร่าง</span>
                                     </button>
                                 </div>
                             </div>
 
-                            <div class="bar-chart-container">
-                                <div class="chart-y-axis" id="chart-y-axis">
-                                    @foreach (var tick in defaultTrend.YAxisTicks)
-                                    {
-                                        <span>@tick.ToString("N0")</span>
-                                    }
-                                </div>
-                                <div class="chart-bars-wrap" id="chart-bars-container">
-                                    @foreach (var bar in defaultTrend.Bars)
-                                    {
-                                        <div class="chart-bar-col @(bar.Highlighted ? "highlighted" : "")" data-month="@bar.MonthKey" data-count="@bar.Count" data-val="@bar.Count.ToString("N0") รายการ">
-                                            @if (bar.Highlighted)
+                            <div class="admin-chart-scroll" role="region" aria-labelledby="activity-chart-title" tabindex="0">
+                                <div class="admin-chart-plot">
+                                    <div class="bar-chart-container">
+                                        <div class="chart-y-axis" id="chart-y-axis">
+                                            @foreach (var tick in defaultTrend.YAxisTicks)
                                             {
-                                                <div class="bar-highlight-tooltip">@bar.Count.ToString("N0") รายการ</div>
+                                                <span>@tick.ToString("N0")</span>
                                             }
-                                            <div class="bar-pill" style="height: @(bar.HeightPercent)%;"></div>
                                         </div>
-                                    }
+                                        <div class="chart-bars-wrap" id="chart-bars-container">
+                                            @foreach (var bar in defaultTrend.Bars)
+                                            {
+                                                <div class="chart-bar-col @(bar.Highlighted ? "highlighted" : "")" data-month="@bar.MonthKey" data-count="@bar.Count" data-val="@bar.Count.ToString("N0") รายการ">
+                                                    @if (bar.Highlighted)
+                                                    {
+                                                        <div class="bar-highlight-tooltip">@bar.Count.ToString("N0") รายการ</div>
+                                                    }
+                                                    <div class="bar-pill" style="height: @(bar.HeightPercent)%;"></div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="chart-x-labels">
+                                        @foreach (var bar in defaultTrend.Bars)
+                                        {
+                                            <span>@bar.LabelTh</span>
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="chart-x-labels">
-                                @foreach (var bar in defaultTrend.Bars)
-                                {
-                                    <span>@bar.LabelTh</span>
-                                }
                             </div>
                         </article>
 
@@ -420,7 +433,7 @@
                                 <h2 id="quick-courses-title">คอร์สในคลัง</h2>
                                 <a href="#courses" class="ns-button ns-button--secondary ns-button--compact">ดูทั้งหมด (@Model.Courses.Count) →</a>
                             </div>
-                            <div class="table-scroll">
+                            <div class="table-scroll admin-table-scroll" role="region" aria-labelledby="quick-courses-title" tabindex="0">
                                 <table>
                                     <thead>
                                         <tr>
@@ -514,9 +527,9 @@
                     </div>
 
                     <!-- Search and filters -->
-                    <div class="outlined-card" style="margin-bottom: 20px; padding: 16px 20px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;">
-                        <input type="search" id="course-search-input" aria-label="ค้นหาคอร์สจากชื่อ แหล่งเนื้อหา หรือหมวดหมู่" placeholder="ค้นหาชื่อคอร์ส แหล่งเนื้อหา หรือหมวดหมู่" style="padding: 9px 14px; border: 1.5px solid var(--nimo-sky-border); border-radius: 12px;" />
-                        <select id="course-category-filter" aria-label="กรองคอร์สตามหมวดหมู่" style="padding: 9px 14px; border: 1.5px solid var(--nimo-sky-border); border-radius: 12px; font-size: 13.5px; background: white;">
+                    <div class="outlined-card admin-course-filters">
+                        <input type="search" id="course-search-input" aria-label="ค้นหาคอร์สจากชื่อ แหล่งเนื้อหา หรือหมวดหมู่" placeholder="ค้นหาชื่อคอร์ส แหล่งเนื้อหา หรือหมวดหมู่" />
+                        <select id="course-category-filter" aria-label="กรองคอร์สตามหมวดหมู่">
                             <option value="">ทุกหมวดหมู่</option>
                             @foreach (var share in categoryShares)
                             {
@@ -527,40 +540,41 @@
 
                     <!-- Courses Table -->
                     <div class="outlined-card" style="padding: 0;">
-                        <div class="table-scroll">
-                            <table id="courses-main-table">
-                                <thead>
-                                    <tr>
-                                        <th>รหัส</th>
-                                        <th>ชื่อคอร์สเรียน</th>
-                                        <th>หมวดหมู่</th>
-                                        <th>ระดับ</th>
-                                        <th>จำนวนด่าน</th>
-                                        <th>แหล่งเนื้อหา</th>
-                                        <th>สถานะคอร์ส</th>
-                                        <th style="text-align: right;">จัดการ</th>
+                        <div class="table-scroll admin-table-scroll" role="region" aria-labelledby="courses-heading" tabindex="0">
+                            <table id="courses-main-table" class="admin-record-table" role="table" aria-labelledby="courses-heading">
+                                <thead role="rowgroup">
+                                    <tr role="row">
+                                        <th scope="col" role="columnheader">รหัส</th>
+                                        <th scope="col" role="columnheader">ชื่อคอร์สเรียน</th>
+                                        <th scope="col" role="columnheader">หมวดหมู่</th>
+                                        <th scope="col" role="columnheader">ระดับ</th>
+                                        <th scope="col" role="columnheader">จำนวนด่าน</th>
+                                        <th scope="col" role="columnheader">แหล่งเนื้อหา</th>
+                                        <th scope="col" role="columnheader">สถานะคอร์ส</th>
+                                        <th scope="col" role="columnheader" style="text-align: right;">จัดการ</th>
                                     </tr>
                                 </thead>
-                                <tbody id="courses-table-body">
+                                <tbody id="courses-table-body" role="rowgroup">
                                     @foreach (var course in Model.Courses)
                                     {
                                         var categoryLabel = CourseCatalogPageViewModel.CategoryLabel(course.Category);
-                                        <tr data-course-row data-id="@course.Id" data-category="@course.Category" data-category-label="@categoryLabel"
+                                        <tr role="row" data-course-row data-id="@course.Id" data-category="@course.Category" data-category-label="@categoryLabel"
                                             data-title="@course.Title" data-instructor="@course.Instructor">
-                                            <td><span class="status-badge">#@course.Id</span></td>
-                                            <td>
-                                                <strong style="font-size: 14px; color: var(--nimo-navy);">@course.Title</strong>
+                                            <td role="cell"><span class="admin-cell-label" aria-hidden="true">รหัส</span><span class="status-badge">#@course.Id</span></td>
+                                            <td role="cell" class="admin-record-title">
+                                                <strong>@course.Title</strong>
                                                 @if (!string.IsNullOrWhiteSpace(course.VideoUrl))
                                                 {
                                                     <span class="status-badge" style="background: rgba(14, 165, 233, 0.15); color: #0284c7; border: 1px solid #bae6fd; font-size: 11px; margin-left: 6px;" title="มีสื่อวิดีโอการเรียนรู้">▶ มีวิดีโอ</span>
                                                 }
-                                                <p style="margin: 3px 0 0; font-size: 12px; color: var(--nimo-muted); max-width: 320px; white-space: normal;">@course.Description</p>
+                                                <p class="admin-course-description">@course.Description</p>
                                             </td>
-                                            <td><span class="status-badge published">@categoryLabel</span></td>
-                                            <td>@LevelLabel(course.Level)</td>
-                                            <td>@(course.Lessons?.Count ?? course.Units) ด่าน</td>
-                                            <td>@course.Instructor</td>
-                                            <td>
+                                            <td role="cell"><span class="admin-cell-label" aria-hidden="true">หมวดหมู่</span><span class="status-badge published">@categoryLabel</span></td>
+                                            <td role="cell"><span class="admin-cell-label" aria-hidden="true">ระดับ</span>@LevelLabel(course.Level)</td>
+                                            <td role="cell"><span class="admin-cell-label" aria-hidden="true">จำนวนด่าน</span>@(course.Lessons?.Count ?? course.Units) ด่าน</td>
+                                            <td role="cell"><span class="admin-cell-label" aria-hidden="true">แหล่งเนื้อหา</span>@course.Instructor</td>
+                                            <td role="cell">
+                                                <span class="admin-cell-label" aria-hidden="true">สถานะคอร์ส</span>
                                                 @if (course.IsPublished == false)
                                                 {
                                                     <span class="status-badge yellow">ฉบับร่าง</span>
@@ -574,22 +588,24 @@
                                                     <span class="status-badge yellow">แนะนำ</span>
                                                 }
                                             </td>
-                                            <td style="text-align: right; white-space: nowrap;">
-                                                @if (course.IsPublished == false)
-                                                {
-                                                    <button type="button" class="ns-button ns-button--primary ns-button--compact btn-publish-course" data-id="@course.Id">เผยแพร่</button>
-                                                }
-                                                else
-                                                {
-                                                    <a asp-controller="Home" asp-action="Details" asp-route-id="@course.Id" target="_blank" rel="noopener" class="ns-button ns-button--secondary ns-button--compact">ดูรายละเอียดคอร์ส</a>
-                                                }
-                                                <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-course" data-id="@course.Id">แก้ไข</button>
-                                                <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-course" data-id="@course.Id" data-title="@course.Title">นำออกจากคลัง</button>
+                                            <td role="cell" class="admin-record-actions">
+                                                <div class="admin-course-actions">
+                                                    @if (course.IsPublished == false)
+                                                    {
+                                                        <button type="button" class="ns-button ns-button--primary ns-button--compact btn-publish-course" data-id="@course.Id">เผยแพร่</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-controller="Home" asp-action="Details" asp-route-id="@course.Id" target="_blank" rel="noopener" class="ns-button ns-button--secondary ns-button--compact">ดูรายละเอียดคอร์ส</a>
+                                                    }
+                                                    <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-course" data-id="@course.Id">แก้ไข</button>
+                                                    <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-course" data-id="@course.Id" data-title="@course.Title">นำออกจากคลัง</button>
+                                                </div>
                                             </td>
                                         </tr>
                                     }
-                                    <tr id="no-courses" hidden="@(Model.Courses.Count > 0)">
-                                        <td colspan="8" class="empty-message">ไม่พบคอร์สที่ตรงกับเงื่อนไขการค้นหา</td>
+                                    <tr role="row" id="no-courses" hidden="@(Model.Courses.Count > 0)">
+                                        <td role="cell" colspan="8" class="empty-message">ไม่พบคอร์สที่ตรงกับเงื่อนไขการค้นหา</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -616,7 +632,7 @@
                     <!-- Filter Bar -->
                     <div class="outlined-card" style="padding: 0; margin-bottom: 22px;">
                         <div class="quiz-filter-bar">
-                            <span style="font-size: 13px; font-weight: 600; color: var(--nimo-slate);">เลือกคอร์ส:</span>
+                            <label class="admin-filter-label" for="question-course-filter">เลือกคอร์ส</label>
                             <select id="question-course-filter" aria-label="กรองคำถามตามคอร์ส">
                                 <option value="0">ทุกคอร์ส</option>
                                 @foreach (var c in Model.Courses)
@@ -649,7 +665,7 @@
                                 </div>
                                 <div class="question-card-footer">
                                     <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-test-quiz" data-question-action="test" style="font-size: 12px;">ทดสอบตอบ</button>
-                                    <div style="display: flex; gap: 8px;">
+                                    <div class="question-card-actions">
                                         <button type="button" class="ns-button ns-button--secondary ns-button--compact btn-edit-question" data-question-action="edit">แก้ไข</button>
                                         <button type="button" class="ns-button ns-button--danger ns-button--compact btn-delete-question" data-question-action="delete">ลบ</button>
                                     </div>
@@ -686,32 +702,36 @@
                             </select>
                         </div>
                     </div>
-                    <div class="outlined-card table-scroll" style="padding: 0;">
-                        <table class="members-table">
-                            <thead>
-                                <tr>
-                                    <th>ชื่อ-นามสกุล</th>
-                                    <th>อีเมล</th>
-                                    <th>สิทธิ์บัญชี</th>
-                                    <th>วันที่เข้าร่วม</th>
+                    <div class="outlined-card table-scroll admin-table-scroll" role="region" aria-labelledby="members-heading" tabindex="0" style="padding: 0;">
+                        <table class="members-table admin-record-table" role="table" aria-labelledby="members-heading">
+                            <thead role="rowgroup">
+                                <tr role="row">
+                                    <th scope="col" role="columnheader">ชื่อ-นามสกุล</th>
+                                    <th scope="col" role="columnheader">อีเมล</th>
+                                    <th scope="col" role="columnheader">สิทธิ์บัญชี</th>
+                                    <th scope="col" role="columnheader">วันที่เข้าร่วม</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody role="rowgroup">
                                 @foreach (var member in Model.Members)
                                 {
-                                    <tr data-member data-role="@member.Role">
-                                        <td><strong>@member.FullName</strong></td>
-                                        <td>@member.Email</td>
-                                        <td>
+                                    <tr role="row" data-member data-role="@member.Role">
+                                        <td role="cell" class="admin-record-title"><strong>@member.FullName</strong></td>
+                                        <td role="cell" class="admin-record-wide">
+                                            <span class="admin-cell-label" aria-hidden="true">อีเมล</span>
+                                            <span data-member-email>@member.Email</span>
+                                        </td>
+                                        <td role="cell">
+                                            <span class="admin-cell-label" aria-hidden="true">สิทธิ์บัญชี</span>
                                             <span class="status-badge @(member.Role == "Admin" ? "published" : "")">
                                                 @(member.Role == "Admin" ? "ผู้ดูแล" : "ผู้เรียน")
                                             </span>
                                         </td>
-                                        <td><time datetime="@member.CreatedAt.ToString("O")">@ThailandTime.ToLocal(member.CreatedAt).ToString("d MMM yyyy", ThailandTime.Culture)</time></td>
+                                        <td role="cell"><span class="admin-cell-label" aria-hidden="true">วันที่เข้าร่วม</span><time datetime="@member.CreatedAt.ToString("O")">@ThailandTime.ToLocal(member.CreatedAt).ToString("d MMM yyyy", ThailandTime.Culture)</time></td>
                                     </tr>
                                 }
-                                <tr id="no-members" hidden="@(Model.Members.Count > 0)">
-                                    <td colspan="4" class="empty-message">ไม่พบบัญชีที่ตรงกับคำค้นหา</td>
+                                <tr role="row" id="no-members" hidden="@(Model.Members.Count > 0)">
+                                    <td role="cell" colspan="4" class="empty-message">ไม่พบบัญชีที่ตรงกับคำค้นหา</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -727,7 +747,7 @@
                         <h2 id="settings-heading">บัญชีผู้ดูแลระบบ</h2>
                     </div>
                     <div class="outlined-card settings-card" style="padding: 28px;">
-                        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 24px;">
+                        <div class="admin-settings-profile">
                             <span class="avatar large-avatar" style="width: 56px; height: 56px; font-size: 22px;">@initial</span>
                             <div>
                                 <h3 style="margin: 0 0 4px; font-size: 20px;">@Model.FullName</h3>
@@ -828,9 +848,9 @@
     <!-- ==============================================
          MODAL 2: Upload Course (JSON / File) Dialog
          ============================================== -->
-    <dialog id="course-upload-modal" class="nimo-modal">
+    <dialog id="course-upload-modal" class="nimo-modal" aria-labelledby="course-upload-modal-title">
         <div class="modal-header">
-            <h3>นำเข้าคอร์สจาก JSON</h3>
+            <h3 id="course-upload-modal-title">นำเข้าคอร์สจาก JSON</h3>
             <button type="button" class="modal-close-btn" data-close-modal="course-upload-modal" aria-label="ปิด">✕</button>
         </div>
         <form id="course-upload-form" method="dialog">
@@ -945,20 +965,20 @@
     <!-- ==============================================
          MODAL 4: Interactive Quiz Tester with Nimo
          ============================================== -->
-    <dialog id="quiz-tester-modal" class="nimo-modal">
+    <dialog id="quiz-tester-modal" class="nimo-modal" aria-labelledby="quiz-tester-modal-title">
         <div class="modal-header">
-            <h3>ทดสอบตอบคำถามคู่กับ Nimo</h3>
+            <h3 id="quiz-tester-modal-title">ทดสอบตอบคำถามคู่กับ Nimo</h3>
             <button type="button" class="modal-close-btn" data-close-modal="quiz-tester-modal" aria-label="ปิด">✕</button>
         </div>
         <div class="modal-body" style="text-align: center;">
-            <div style="display: inline-block; position: relative; margin-bottom: 16px;">
+            <div class="admin-tester-nimo">
                 <img src="~/images/nimo-learning.png" alt="Nimo" style="width: 140px; height: 140px; object-fit: contain;" />
-                <div id="tester-nimo-bubble" style="position: absolute; right: -70px; top: 10px; background: white; border: 1.5px solid #bae6fd; border-radius: 12px; padding: 6px 12px; font-size: 11.5px; font-weight: 600; color: #0284c7; box-shadow: 0 4px 12px rgba(2,132,199,0.15); white-space: nowrap;">
+                <div id="tester-nimo-bubble">
                     ลองเลือกคำตอบที่ถูกต้องได้เลย
                 </div>
             </div>
 
-            <h3 id="tester-prompt" style="font-size: 17px; margin: 0 0 18px; text-align: left; color: var(--nimo-navy);">คำถาม</h3>
+            <h3 id="tester-prompt" style="font-size: 17px; margin: 0 0 18px; text-align: left;">คำถาม</h3>
 
             <div id="tester-choices" style="display: flex; flex-direction: column; gap: 10px; text-align: left;">
                 <!-- Choice buttons injected by JS -->

@@ -2,7 +2,7 @@ namespace NextSkill_205_247_261.Services;
 
 public static class LearningSchema
 {
-    public const int CurrentVersion = 3;
+    public const int CurrentVersion = 4;
 
     // Additive only. SQL Server coordinates startup across different app processes.
     public const string Sql = """
@@ -137,5 +137,20 @@ public static class LearningSchema
         END;
         IF NOT EXISTS (SELECT 1 FROM dbo.NextSkillLearningSchema WHERE Version=3)
             INSERT INTO dbo.NextSkillLearningSchema (Version) VALUES (3);
+        IF OBJECT_ID(N'dbo.CourseFavorites', N'U') IS NULL
+        BEGIN
+            CREATE TABLE dbo.CourseFavorites (
+                UserId uniqueidentifier NOT NULL,
+                CourseId int NOT NULL,
+                Note nvarchar(300) NOT NULL CONSTRAINT DF_CourseFavorites_Note DEFAULT (N''),
+                IsPinned bit NOT NULL CONSTRAINT DF_CourseFavorites_Pinned DEFAULT (0),
+                AddedAt datetime2 NOT NULL CONSTRAINT DF_CourseFavorites_Added DEFAULT SYSUTCDATETIME(),
+                CONSTRAINT PK_CourseFavorites PRIMARY KEY (UserId, CourseId),
+                CONSTRAINT FK_CourseFavorites_User FOREIGN KEY (UserId) REFERENCES dbo.Users(Id) ON DELETE CASCADE,
+                CONSTRAINT CK_CourseFavorites_Course CHECK (CourseId > 0)
+            );
+        END;
+        IF NOT EXISTS (SELECT 1 FROM dbo.NextSkillLearningSchema WHERE Version=4)
+            INSERT INTO dbo.NextSkillLearningSchema (Version) VALUES (4);
         """;
 }

@@ -165,6 +165,12 @@
 .catalog-page .catalog-card-choice > span:first-child { overflow-wrap: anywhere; }
 .catalog-page .ns-catalog-status { margin: 0 0 20px; font-size: 14px; }
 
+.catalog-page > .learning-celestial {
+    position: absolute;
+    inset: calc(-1 * var(--nav-h)) 0 auto;
+    height: 100svh;
+}
+.catalog-page > .learning-celestial .journey-orbit-layer { position: absolute; }
 .catalog-page .learning-celestial :is(.hero-sun,.journey-moon) {
     left: 94%;
     top: calc(var(--nav-h) + 20px);

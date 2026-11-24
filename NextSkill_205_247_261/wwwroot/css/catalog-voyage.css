@@ -74,7 +74,7 @@ html[data-theme="dark"] .knowledge-sanctum .sanctum-art{filter:brightness(.85) s
 .catalog-boat-nimo>#nextskill-agent{position:absolute;top:0;left:0}
 .catalog-boat-nimo #buddy-agent-handle{pointer-events:none}
 .cv-arrival-running .catalog-boat-oar{animation:cv-paddle 1.2s var(--ns-ease-in-out) infinite}
-.cv-arrival-running .catalog-boat-nimo .buddy-avatar-rowing{animation:cv-nimo-row 1.2s var(--ns-ease-in-out) infinite}
+:is(.cv-arrival-running,.catalog-boat[data-voyage="rowing"]) .catalog-boat-nimo .buddy-avatar-rowing{animation:cv-nimo-row 1.2s var(--ns-ease-in-out) infinite}
 .catalog-boat-water{animation:cv-water-ring 4.8s var(--ns-ease-out) infinite;animation-play-state:paused}
 [data-catalog-ambient="active"] .catalog-boat-water{animation-play-state:running}
 @keyframes cv-boat-bob{0%,100%{transform:translate3d(0,1px,0) rotate(-.6deg)}50%{transform:translate3d(0,-3px,0) rotate(.6deg)}}

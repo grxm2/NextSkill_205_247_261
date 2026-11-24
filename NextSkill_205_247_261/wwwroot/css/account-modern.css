@@ -45,12 +45,12 @@ body.nimo-account-theme {
 }
 
 /* Keep both sky colors on the same canvas while the shared theme controller fades night in. */
-body.nimo-account-theme.ns-login-page {
+body.nimo-account-theme.ns-auth-page {
     background: var(--acc-day-sky) !important;
     background-attachment: fixed !important;
 }
 
-.ns-login-page .account-ambient-decor > .journey-night-sky {
+.ns-auth-page .account-ambient-decor > .journey-night-sky {
     background: var(--acc-night-sky);
 }
 
@@ -171,7 +171,7 @@ body.nimo-account-theme.ns-login-page {
     100% { transform: translateX(calc(100vw + 380px)); }
 }
 
-.ns-login-page .duo-cloud {
+.ns-auth-page .duo-cloud {
     --login-cloud-tint: linear-gradient(170deg, #ffffff50 18%, #b6d9e92b 65%, #9fc6de61);
     background: var(--login-cloud-tint),
         url('../images/hero/sky-clouds.webp') var(--login-cloud-crop) / 150% auto no-repeat;
@@ -184,12 +184,12 @@ body.nimo-account-theme.ns-login-page {
         radial-gradient(ellipse 45% 27% at 52% 71%, #000 25%, #000b 64%, transparent 100%);
 }
 
-.ns-login-page .duo-cloud::before,
-.ns-login-page .duo-cloud::after {
+.ns-auth-page .duo-cloud::before,
+.ns-auth-page .duo-cloud::after {
     content: none;
 }
 
-.ns-login-page .duo-cloud-1 {
+.ns-auth-page .duo-cloud-1 {
     --login-cloud-crop: 30% 42%;
     top: 15%;
     height: 114px;
@@ -197,7 +197,7 @@ body.nimo-account-theme.ns-login-page {
     animation-delay: -3.6s;
 }
 
-.ns-login-page .duo-cloud-2 {
+.ns-auth-page .duo-cloud-2 {
     --login-cloud-crop: 74% 58%;
     top: 48%;
     height: 130px;
@@ -205,7 +205,7 @@ body.nimo-account-theme.ns-login-page {
     animation-delay: -38s;
 }
 
-.ns-login-page .duo-cloud-3 {
+.ns-auth-page .duo-cloud-3 {
     --login-cloud-crop: 4% 72%;
     top: 76%;
     height: 80px;
@@ -213,21 +213,21 @@ body.nimo-account-theme.ns-login-page {
     animation-delay: -3.1s;
 }
 
-html[data-theme="dark"] .ns-login-page .duo-cloud {
+html[data-theme="dark"] .ns-auth-page .duo-cloud {
     --login-cloud-tint: linear-gradient(165deg, #79a2c280 12%, #315674c4 65%, #193d5bda);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .ns-login-page .duo-cloud-1 {
+    .ns-auth-page .duo-cloud-1 {
         left: 2%;
     }
 
-    .ns-login-page .duo-cloud-2 {
+    .ns-auth-page .duo-cloud-2 {
         left: auto;
         right: -4%;
     }
 
-    .ns-login-page .duo-cloud-3 {
+    .ns-auth-page .duo-cloud-3 {
         left: -4%;
     }
 }
@@ -367,11 +367,11 @@ html[data-theme="dark"] .ns-login-page .duo-cloud {
 .dot-top-left { top: 110px; left: 4%; }
 .dot-mid-right { top: 45%; right: 4%; }
 
-.ns-login-page .dot-mid-right {
+.ns-auth-page .dot-mid-right {
     display: none;
 }
 
-html[data-theme="dark"] .ns-login-page :is(.dot-top-left, .mascot-cloud-pedestal) {
+html[data-theme="dark"] .ns-auth-page :is(.dot-top-left, .mascot-cloud-pedestal) {
     display: none;
 }
 
@@ -529,12 +529,12 @@ html[data-theme="dark"] .account-main .legal-copy p { color: var(--acc-muted); }
     margin: 0 auto;
 }
 
-.ns-login-page .auth-grid {
+.ns-auth-page .auth-grid {
     position: relative;
     z-index: 1;
 }
 
-.ns-login-page .login-celestial {
+.ns-auth-page .login-celestial {
     --login-light-y: 33%;
     --login-light-size: clamp(26px, 38%, 48px);
     position: absolute;
@@ -543,32 +543,32 @@ html[data-theme="dark"] .account-main .legal-copy p { color: var(--acc-muted); }
     z-index: 0;
 }
 
-.ns-login-page .login-celestial :is(.hero-sun, .journey-moon) {
+.ns-auth-page .login-celestial :is(.hero-sun, .journey-moon) {
     top: var(--login-light-y);
     left: 60%;
     width: var(--login-light-size);
 }
 
-.ns-login-page .login-celestial .hero-sun {
+.ns-auth-page .login-celestial .hero-sun {
     background: radial-gradient(circle at 38% 34%, #fffef5 12%, #fdebaf 68%, #f4d478);
     box-shadow: 0 0 18px 7px #fff0bb91, 0 0 33px 10px #ffe1a04d;
 }
 
-.ns-login-page .login-celestial .journey-moon {
+.ns-auth-page .login-celestial .journey-moon {
     box-shadow: 0 0 18px 6px #e4f2ff48, 0 0 38px 12px #b5d9ff24;
 }
 
-.ns-login-page .login-celestial .journey-stars {
+.ns-auth-page .login-celestial .journey-stars {
     display: none;
 }
 
 @media (width < 1240px) {
-    .ns-login-page .account-main {
+    .ns-auth-page .account-main {
         --login-sky-strip: clamp(51px, 7vw, 68px);
         padding-block-start: var(--login-sky-strip);
     }
 
-    .ns-login-page .login-celestial {
+    .ns-auth-page .login-celestial {
         --login-light-y: 43%;
         --login-light-size: clamp(21px, 3vw, 29px);
         inset: 0 var(--ns-gutter-end) auto 50%;
@@ -982,7 +982,7 @@ html[data-theme="dark"] .acc-beach-bg-photo {
     filter: brightness(0.46) saturate(1.18) hue-rotate(-14deg) contrast(1.08);
 }
 
-.ns-login-page .account-ambient-decor > .journey-night-sky {
+.ns-auth-page .account-ambient-decor > .journey-night-sky {
     background: radial-gradient(circle at 75% 15%, rgba(56, 189, 248, 0.18) 0%, transparent 45%),
                 linear-gradient(180deg, rgba(7, 20, 38, 0.65) 0%, rgba(13, 34, 56, 0.45) 55%, rgba(13, 40, 64, 0.35) 100%);
 }
@@ -1103,7 +1103,7 @@ html[data-theme="dark"] .acc-beach-bg-photo {
 }
 
 /* Translucent Frosted Glass Story Card & Auth Card Matching Reference Mockup */
-.ns-login-page .story-card.nimo-story-card,
+.ns-auth-page .story-card.nimo-story-card,
 .story-card.nimo-story-card.nimo-island-tea-card {
     --login-story-ink: #0c2d48;
     --login-story-border: rgba(255, 255, 255, 0.82);
@@ -1120,7 +1120,7 @@ html[data-theme="dark"] .acc-beach-bg-photo {
     box-shadow: 0 24px 54px rgba(3, 105, 161, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.92) !important;
 }
 
-html[data-theme="dark"] .ns-login-page .story-card.nimo-story-card,
+html[data-theme="dark"] .ns-auth-page .story-card.nimo-story-card,
 html[data-theme="dark"] .story-card.nimo-story-card.nimo-island-tea-card {
     --login-story-ink: #f0f9ff;
     --login-story-border: rgba(125, 211, 252, 0.42);
@@ -1134,7 +1134,7 @@ html[data-theme="dark"] .story-card.nimo-story-card.nimo-island-tea-card {
     box-shadow: 0 24px 56px rgba(0, 8, 20, 0.55), inset 0 1px 0 rgba(186, 230, 253, 0.3) !important;
 }
 
-.ns-login-page .auth-form.nimo-auth-card {
+.ns-auth-page .auth-form.nimo-auth-card {
     background: rgba(255, 255, 255, 0.92) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
@@ -1142,7 +1142,7 @@ html[data-theme="dark"] .story-card.nimo-story-card.nimo-island-tea-card {
     box-shadow: 0 24px 54px rgba(3, 105, 161, 0.22) !important;
 }
 
-html[data-theme="dark"] .ns-login-page .auth-form.nimo-auth-card {
+html[data-theme="dark"] .ns-auth-page .auth-form.nimo-auth-card {
     background: rgba(13, 31, 49, 0.88) !important;
     border-color: rgba(56, 189, 248, 0.35) !important;
 }
@@ -1585,7 +1585,7 @@ html[data-theme="dark"] .login-nimo-beach-mode .mascot-speech-pill .speech-tail 
     }
 }
 
-.ns-login-page .story-card :is(h1, .story-intro) {
+.ns-auth-page .story-card :is(h1, .story-intro) {
     color: var(--login-story-ink) !important;
 }
 
@@ -1597,57 +1597,29 @@ html[data-theme="dark"] .login-nimo-beach-mode .mascot-speech-pill .speech-tail 
     display: none !important;
 }
 
-.ns-login-page .story-card .hero-rmooc-pill.island-tea-badge {
-    background: rgba(255, 255, 255, 0.78);
-    color: #0369a1;
-    border: 1px solid rgba(56, 189, 248, 0.45);
-    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.1);
-}
-
-html[data-theme="dark"] .ns-login-page .story-card .hero-rmooc-pill.island-tea-badge {
-    background: rgba(15, 39, 62, 0.78);
-    color: #7dd3fc;
-    border-color: rgba(56, 189, 248, 0.38);
-}
-
-.ns-login-page .story-card .feature-tag-pill {
-    background: rgba(255, 255, 255, 0.78) !important;
-    color: #0369a1 !important;
-    border: 1.5px solid rgba(56, 189, 248, 0.45) !important;
-    border-bottom: 3px solid rgba(14, 165, 233, 0.55) !important;
-    font-size: 11.5px !important;
-    padding: 6px 12px !important;
-}
-
-html[data-theme="dark"] .ns-login-page .story-card .feature-tag-pill {
-    background: rgba(15, 39, 62, 0.78) !important;
-    color: #bae6fd !important;
-    border-color: rgba(56, 189, 248, 0.38) !important;
-}
-
-.ns-login-page .story-card .mascot-character-art img.main-mascot-img {
+.ns-auth-page .story-card .mascot-character-art img.main-mascot-img {
     filter: drop-shadow(0 10px 16px rgba(14, 65, 96, 0.22));
 }
 
-.ns-login-page .story-card .mascot-speech-pill {
+.ns-auth-page .story-card .mascot-speech-pill {
     border: 1.5px solid #7dd3fc !important;
     border-bottom: 3.5px solid #38bdf8 !important;
     box-shadow: 0 10px 24px rgba(2, 132, 199, 0.16) !important;
     animation: speechBounce 3.2s ease-in-out infinite !important;
 }
 
-.ns-login-page .story-card .speech-tail {
+.ns-auth-page .story-card .speech-tail {
     bottom: -7px;
     border: 0;
     border-right: 1.5px solid #7dd3fc;
     border-bottom: 3.5px solid #38bdf8;
 }
 
-.ns-login-page .story-card .story-wave-decor {
+.ns-auth-page .story-card .story-wave-decor {
     height: 80px;
 }
 
-.ns-login-page .story-wave-decor path {
+.ns-auth-page .story-wave-decor path {
     fill: var(--login-story-wave);
     opacity: 0.24;
 }
@@ -1658,9 +1630,9 @@ html[data-theme="dark"] .ns-login-page .story-card .feature-tag-pill {
 
 .nimo-tea-island-diorama {
     position: relative;
-    min-height: 326px !important;
-    margin: 8px 0 14px !important;
-    padding-top: 56px !important;
+    min-height: var(--story-scene-min-height, 326px);
+    margin: var(--story-scene-margin, 8px 0 14px);
+    padding-top: var(--story-scene-padding, 56px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2056,12 +2028,12 @@ html[data-theme="dark"] .acc-wave-front { fill: rgba(56, 189, 248, 0.18); }
     94% { transform: translate(-180px, 95px) rotate(-28deg) scaleX(1.1); opacity: 0; }
 }
 
-.ns-login-page {
+.ns-auth-page {
     --login-link-color: var(--ns-primary-hover);
     --login-tab-divider: var(--ns-border);
 }
 
-html[data-theme="dark"] .ns-login-page {
+html[data-theme="dark"] .ns-auth-page {
     --login-link-color: #8fdcff;
     --login-tab-divider: var(--acc-border);
 }
@@ -2113,7 +2085,7 @@ html[data-theme="dark"] .ns-login-page {
     pointer-events: none;
 }
 
-.ns-login-page .auth-form.nimo-auth-card::after {
+.ns-auth-page .auth-form.nimo-auth-card::after {
     content: none;
 }
 
@@ -2606,7 +2578,7 @@ a.btn-skip-outline:active {
         animation: none;
         filter: blur(48px);
     }
-    .hero-mascot-scene {
+    .hero-mascot-scene:not(.nimo-tea-island-diorama) {
         padding-block-start: 84px;
         min-height: 0;
     }

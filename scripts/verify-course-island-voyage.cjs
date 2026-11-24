@@ -18,9 +18,12 @@ async function openDetails(page){
   const start=await openDetails(p),id=Number(await start.getAttribute('data-course-id'));
   const before=await p.evaluate(async()=>{const r=await fetch('/Learning/State');if(!r.ok)throw Error('Real learning state unavailable: '+r.status);return r.json()});
   assert.ok(Array.isArray(before.courses));
-  await p.getByRole('link',{name:'เริ่มเรียนเกาะแรก'}).waitFor();
+  await p.getByRole('link',{name:'ลงทะเบียนและเริ่มเรียน'}).waitFor();
   let posts=0;p.on('request',r=>{if(r.method()==='POST'&&new URL(r.url()).pathname==='/Learning/SelectCourse')posts++});
+  const catalogReturn=p.waitForURL('**/Home/Courses',{waitUntil:'domcontentloaded'});
   await start.evaluate(link=>{link.click();link.click();});
+  await catalogReturn;
+  await p.locator('.catalog-boat[data-voyage="rowing"] #nextskill-agent').waitFor({state:'attached'});
   await p.waitForURL('**/Learning/Island?courseId='+id);
   await p.waitForFunction(()=>document.querySelector('#lesson-map')?.classList.contains('has-boat-arrival'));
   const vessel=p.locator('.archipelago-boat .map-vessel-bob');
@@ -37,7 +40,10 @@ async function openDetails(page){
   assert.equal(await p.locator('#journey-cloud-transition').evaluate(e=>e.open),false);
   assert.equal(await p.evaluate(()=>sessionStorage.getItem('nextskill.journey-arrival')),null);
   await p.screenshot({path:path.join(out,'island-arrived.png')});
-  checks.push('First start posts once; one Nimo rows in from the left; XP and completions stay unchanged');
+  checks.push('First start posts once, returns to the catalog for Nimo’s departure, and preserves XP and completions');
+  await p.goBack({waitUntil:'networkidle'});
+  assert.match(new URL(p.url()).pathname,/^\/Home\/Courses\/?$/);
+  assert.equal(await p.locator('.catalog-boat[data-voyage="rowing"], #journey-cloud-transition[open]').count(),0);
   await p.goBack({waitUntil:'networkidle'});
   const resume=p.locator(`[data-course-start][data-course-id="${id}"]`);
   assert.match(await resume.innerText(),/เรียนต่อจากเกาะเดิม/);

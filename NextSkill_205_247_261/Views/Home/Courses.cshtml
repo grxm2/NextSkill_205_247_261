@@ -7,6 +7,12 @@
     ViewData["JourneyMode"] = "catalog";
     var eligible = User.Identity?.IsAuthenticated == true || (CourseEnvironment.EnvironmentName == "Development" && CourseConfiguration.GetValue("Learning:GuestPreview", true));
     var filtered = !string.IsNullOrWhiteSpace(Model.Query) || Model.Tag != "All" || Model.Sort != "Recommended";
+    var isLearner = User.IsInRole("User");
+    var showFavorite = Model.FavoriteCourseIds is not null || User.Identity?.IsAuthenticated != true;
+    var currentUrl = $"{Context.Request.PathBase}{Context.Request.Path}{Context.Request.QueryString}";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/favorites.css" asp-append-version="true" />
 }
 <section class="ns-course-page catalog-page" data-course-page data-catalog-ocean data-progress-eligible="@eligible.ToString().ToLowerInvariant()" id="course-content" aria-labelledby="catalog-title">
     <partial name="_LearningOceanWorld" />
@@ -15,7 +21,7 @@
         <header class="catalog-hero" data-catalog-hero data-catalog-ambient="paused">
             <div class="catalog-hero-copy">
                 <div class="catalog-heading">
-                    <h1 id="catalog-title">เลือกคอร์สที่ใช่<span>สำหรับคุณ</span></h1>
+                    <h1 id="catalog-title" tabindex="-1">เลือกคอร์สที่ใช่<span>สำหรับคุณ</span></h1>
                     <p class="catalog-intro">เลือกทักษะที่อยากฝึก แล้วออกเดินทางไปเกาะบทเรียนกับ Nimo</p>
                 </div>
         <div class="catalog-tools" data-catalog-tools>
@@ -42,10 +48,19 @@
             </div>
         </header>
         <div class="ns-catalog-status ns-status" data-catalog-status role="status" aria-live="polite" hidden></div>
+        @if (eligible)
+        {
+            <div hidden id="catalog-antiforgery">@Html.AntiForgeryToken()</div>
+        }
         <div class="ns-course-section-heading" id="catalog-results">
             <div><h2>@(filtered ? "คอร์สที่ตรงกับคุณ" : "คอร์สทั้งหมด")</h2><p>พบ @Model.TotalCount คอร์ส@(string.IsNullOrWhiteSpace(Model.Query) ? "" : $" สำหรับ “{Model.Query}”")</p></div>
             @if (filtered) { <a class="catalog-clear" asp-action="Courses" asp-route-pageSize="@Model.PageSize">ล้างตัวกรอง <span aria-hidden="true">×</span></a> }
         </div>
+        <partial name="_FavoriteStatus" />
+        @if (isLearner && Model.FavoriteCourseIds is null)
+        {
+            <p class="ns-status ns-status--error">โหลดรายการโปรดไม่ได้ กรุณาเปิดหน้านี้ใหม่เพื่อลองอีกครั้ง</p>
+        }
         @if (Model.Courses.Count == 0)
         {
             <section class="ns-course-empty ns-surface"><span class="catalog-empty-mark" aria-hidden="true">≈</span><h2>ยังไม่พบคอร์สที่ตรงกัน</h2><p>ลองค้นหาด้วยคำอื่น หรือเปิดดูเส้นทางทั้งหมดได้เลย</p><a class="ns-button ns-button--secondary" asp-action="Courses">ดูคอร์สทั้งหมด <span aria-hidden="true">→</span></a></section>
@@ -57,18 +72,26 @@
             {
                 var item = Model.Courses[index];
                 var cover = item.Cover;
-                <article class="ns-course-card" data-course-id="@item.Id" data-can-start="@item.CanStart.ToString().ToLowerInvariant()" data-catalog-reveal>
-                    <a class="ns-course-card-art@(cover.Topic is null ? "" : " ns-topic-cover")" asp-action="Details" asp-route-id="@item.Id" tabindex="-1" aria-hidden="true">
-                        <img src="@cover.Path" asp-append-version="true" alt="" width="960" height="540" loading="@(index < 3 ? "eager" : "lazy")" fetchpriority="@(index == 0 ? "high" : "auto")" />
+                var thumbnail = item.PreviewVideo?.YouTubeThumbnailUrl;
+                <article class="ns-course-card favorite-cover" id="favorite-course-@item.Id" data-course-id="@item.Id" data-can-start="@item.CanStart.ToString().ToLowerInvariant()" data-catalog-reveal>
+                    <a class="ns-course-card-art@(cover.Topic is not null && thumbnail is null ? " ns-topic-cover" : "")" asp-action="Details" asp-route-id="@item.Id" tabindex="-1" aria-hidden="true">
+                        <img src="@(thumbnail ?? cover.Path)" asp-append-version="true"
+                             data-cover-fallback="@(thumbnail is null ? null : Url.Content($"~{cover.Path}"))"
+                             referrerpolicy="@(thumbnail is null ? null : "no-referrer")" alt="" width="960" height="540"
+                             loading="@(index < 3 ? "eager" : "lazy")" fetchpriority="@(index == 0 ? "high" : "auto")" />
                         @if (cover.Topic is not null)
                         {
-                            <span class="ns-topic-cover-label" lang="en" dir="ltr">@cover.Topic</span>
+                            <span class="ns-topic-cover-label" lang="en" dir="ltr" hidden="@(thumbnail is not null)">@cover.Topic</span>
                         }
                         @if (!item.CanStart)
                         {
                             <span class="ns-badge ns-badge--upcoming"><span class="catalog-status-dot"></span>เร็ว ๆ นี้</span>
                         }
                     </a>
+                    @if (showFavorite)
+                    {
+                        <partial name="_FavoriteButton" model='new FavoriteButtonViewModel(item, Model.FavoriteCourseIds?.Contains(item.Id) == true, $"{currentUrl}#favorite-course-{item.Id}", Compact: true)' />
+                    }
                     <div class="ns-course-card-copy">
                         <div class="ns-course-meta"><span>@item.CategoryLabel</span>@if (item.CanStart) { <span class="catalog-lesson-count">@item.Curriculum.TotalLessons บทเรียน</span> }</div>
                         @if (!item.CanStart)
@@ -105,4 +128,5 @@
 @section Scripts {
     <script src="~/js/catalog.js" asp-append-version="true" defer></script>
     <script src="~/js/catalog-ocean.js" asp-append-version="true" defer></script>
+    <script src="~/js/favorites.js" asp-append-version="true" defer></script>
 }

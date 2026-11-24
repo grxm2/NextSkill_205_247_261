@@ -1,0 +1,27 @@
+@model FavoriteButtonViewModel
+@{
+    var buttonClass = $"ns-button ns-button--compact favorite-toggle__button{(Model.Compact ? " ns-button--icon" : "")}";
+    var loginUrl = Url.Action("Login", "Account", new { returnUrl = Model.ReturnUrl });
+    var label = $"รายการโปรด: {Model.Course.Title}";
+}
+<div class="favorite-toggle @(Model.Compact ? "favorite-toggle--cover" : null)">
+    @if (User.IsInRole("User"))
+    {
+        <form asp-controller="Favorites" asp-action="Set" method="post" data-favorite-toggle data-login-url="@loginUrl">
+            <input type="hidden" name="courseId" value="@Model.Course.Id" />
+            <input type="hidden" name="save" value="@((!Model.IsSaved).ToString().ToLowerInvariant())" />
+            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+            <button type="submit" class="@buttonClass" aria-label="@label" aria-pressed="@(Model.IsSaved.ToString().ToLowerInvariant())">
+                <partial name="_FavoriteHeart" />
+                @if (!Model.Compact) { <span>รายการโปรด</span> }
+            </button>
+        </form>
+    }
+    else
+    {
+        <a class="@buttonClass" href="@loginUrl" aria-label="เข้าสู่ระบบเพื่อเพิ่ม @Model.Course.Title ในรายการโปรด">
+            <partial name="_FavoriteHeart" />
+            @if (!Model.Compact) { <span>รายการโปรด</span> }
+        </a>
+    }
+</div>

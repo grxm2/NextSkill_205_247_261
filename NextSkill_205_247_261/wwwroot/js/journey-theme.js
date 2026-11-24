@@ -6,6 +6,7 @@
     const buttons = [...document.querySelectorAll('[data-theme-toggle]')];
     const sky = document.querySelector('[data-journey-celestial]');
     const scene = sky?.closest('.ow-scene, .sj-learn, .practice-page, [data-catalog-ocean], .cj-hero');
+    const orbitHost = scene?.hasAttribute('data-catalog-ocean') ? sky : null;
     const appearance = ['background', 'border-radius', 'box-shadow', 'filter'];
     const details = [...appearance, 'position', 'top', 'right', 'bottom', 'left', 'width', 'height', 'transform', 'opacity', 'mix-blend-mode'];
     let flight = null;
@@ -20,19 +21,24 @@
     function makeFlight() {
         const sources = [...sky.querySelectorAll(':scope > :is(.journey-sun,.journey-moon)')];
         if (sources.length !== 2) return null;
-        const viewportWidth = root.clientWidth;
-        const viewportHeight = innerHeight;
+        const bounds = orbitHost?.getBoundingClientRect();
+        const width = bounds?.width ?? root.clientWidth;
+        const height = bounds?.height ?? innerHeight;
         const landmarks = sources.map(source => {
             const rect = source.getBoundingClientRect();
             const transform = getComputedStyle(source).transform;
             const matrix = new DOMMatrixReadOnly(transform === 'none' ? undefined : transform);
-            return { source, width: rect.width, height: rect.height, x: rect.left - matrix.m41, y: rect.top - matrix.m42 };
+            return {
+                source, width: rect.width, height: rect.height,
+                x: rect.left - matrix.m41 - (bounds?.left ?? 0),
+                y: rect.top - matrix.m42 - (bounds?.top ?? 0)
+            };
         });
-        if (landmarks.some(orb => !orb.width || !orb.height || orb.y < 0 || orb.y > viewportHeight)) return null;
+        if (landmarks.some(orb => !orb.width || !orb.height || orb.y < 0 || orb.y > height)) return null;
 
-        // Past both viewport edges, including the largest glow and the sun's rays.
+        // Past both edges, including the largest glow and the sun's rays.
         const overshoot = Math.max(120, ...landmarks.map(orb => orb.width * 3.6));
-        const span = viewportWidth + overshoot * 2;
+        const span = width + overshoot * 2;
         const layer = document.createElement('div');
         layer.className = 'journey-orbit-layer';
         layer.setAttribute('aria-hidden', 'true');
@@ -47,7 +53,7 @@
             [...center.children].forEach((child, index) => copyStyles(orb.source.children[index], child, details));
             layer.append(center);
             const angle = Math.acos(1 - 2 * (orb.x + overshoot) / span);
-            const rise = Math.min(viewportHeight * .16, orb.y * .86, 128);
+            const rise = Math.min(height * .16, orb.y * .86, 128);
             return {
                 center, name: moon ? 'moon' : 'sun',
                 halfWidth: orb.width / 2, halfHeight: orb.height / 2,
@@ -55,7 +61,7 @@
                 horizon: orb.y + rise, radius: rise / Math.sin(angle)
             };
         });
-        document.body.append(layer);
+        (orbitHost ?? document.body).append(layer);
         sky.classList.add('journey-orbit-source');
         return { layer, tracks, span, overshoot, animations: [] };
     }

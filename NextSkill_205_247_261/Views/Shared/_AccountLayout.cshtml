@@ -1,12 +1,13 @@
 @{
     ViewData["JourneyMode"] = ViewData["JourneyMode"] ?? "account";
     var hasBackdrop = IsSectionDefined("Backdrop");
-    var isLogin = ViewData["CompactAccountStory"] is true;
+    var useSharedAuth = ViewData["AccountPageClass"] is "ns-auth-page";
 }
 <!DOCTYPE html>
 <html lang="th">
 <head>
     <script>try { document.documentElement.dataset.theme = localStorage.getItem('nextskill.theme.v1') === 'dark' ? 'dark' : 'light'; } catch { document.documentElement.dataset.theme = 'light'; }</script>
+    <partial name="_JourneyArrivalPrepaint" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>@ViewData["Title"] — NextSkill</title>
@@ -26,6 +27,11 @@
     <link rel="stylesheet" href="~/css/journey-theme.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/account-modern.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/footer-glass.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/journey-clouds.css" asp-append-version="true" />
+    @if (useSharedAuth)
+    {
+        <link rel="stylesheet" href="~/css/login-nimo.css" asp-append-version="true" />
+    }
     <script src="~/js/footer-bubbles.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Styles", required: false)
 </head>
@@ -473,7 +479,7 @@
                 <div class="fs-progress-meta">
                     <div class="fs-status-box">
                         <span class="fs-status-dot" aria-hidden="true"></span>
-                        <span class="fs-stage-label" role="status">กำลังเข้าสู่ระบบ NextSkill…</span>
+                        <span class="fs-stage-label" role="status">@(ViewData.Model is RegisterForm ? "กำลังสมัครบัญชี NextSkill…" : "กำลังเข้าสู่ระบบ NextSkill…")</span>
                     </div>
                 </div>
 
@@ -492,14 +498,21 @@
         </div>
     </div>
 
+    <partial name="_JourneyCloudTransition" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="~/js/navbar.js" asp-append-version="true" defer></script>
-    @if (hasBackdrop || isLogin)
+    @if (hasBackdrop || useSharedAuth)
     {
         <script src="~/js/motion-state.js" asp-append-version="true" defer></script>
     }
     <script src="~/js/journey-theme.js" asp-append-version="true" defer></script>
+    <script src="~/js/journey-clouds.js" asp-append-version="true" defer></script>
+    <script src="~/js/course-island-voyage.js" asp-append-version="true" defer></script>
     <script src="~/js/account.js" asp-append-version="true"></script>
+    @if (useSharedAuth)
+    {
+        <script src="~/js/login-nimo.js" asp-append-version="true" defer></script>
+    }
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

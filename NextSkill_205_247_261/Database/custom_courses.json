@@ -6,19 +6,24 @@
     "Level": "Beginner",
     "Units": 4,
     "Featured": true,
-    "Description": "เรียนรู้วิธีการทำวิจัยผู้ใช้ สัมภาษณ์ และทดสอบการใช้งานจริง",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E40\u0E23\u0E35\u0E22\u0E19\u0E23\u0E39\u0E49\u0E27\u0E34\u0E18\u0E35\u0E01\u0E32\u0E23\u0E17\u0E33\u0E27\u0E34\u0E08\u0E31\u0E22\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49 \u0E2A\u0E31\u0E21\u0E20\u0E32\u0E29\u0E13\u0E4C \u0E41\u0E25\u0E30\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E08\u0E23\u0E34\u0E07",
     "Instructor": "Nielsen Norman Group",
     "Skills": [
       "Research",
       "UX",
       "Interviewing"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "ตั้งคำถามวิจัย",
-        "Summary": "ตั้งเป้าหมายวิจัยให้ตอบการตัดสินใจของทีม แล้วเชื่อมคำถามวิจัยกับวิธีเก็บหลักฐานที่เหมาะสม",
+        "Title": "\u0E15\u0E31\u0E49\u0E07\u0E04\u0E33\u0E16\u0E32\u0E21\u0E27\u0E34\u0E08\u0E31\u0E22",
         "DurationMinutes": 5,
+        "Summary": "\u0E15\u0E31\u0E49\u0E07\u0E40\u0E1B\u0E49\u0E32\u0E2B\u0E21\u0E32\u0E22\u0E27\u0E34\u0E08\u0E31\u0E22\u0E43\u0E2B\u0E49\u0E15\u0E2D\u0E1A\u0E01\u0E32\u0E23\u0E15\u0E31\u0E14\u0E2A\u0E34\u0E19\u0E43\u0E08\u0E02\u0E2D\u0E07\u0E17\u0E35\u0E21 \u0E41\u0E25\u0E49\u0E27\u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E21\u0E04\u0E33\u0E16\u0E32\u0E21\u0E27\u0E34\u0E08\u0E31\u0E22\u0E01\u0E31\u0E1A\u0E27\u0E34\u0E18\u0E35\u0E40\u0E01\u0E47\u0E1A\u0E2B\u0E25\u0E31\u0E01\u0E10\u0E32\u0E19\u0E17\u0E35\u0E48\u0E40\u0E2B\u0E21\u0E32\u0E30\u0E2A\u0E21",
+        "Reading": [],
         "VideoId": "VKl8X16GoiY",
         "VideoDurationSeconds": 261,
         "VideoCreator": "Nielsen Norman Group",
@@ -26,9 +31,10 @@
       },
       {
         "Id": 2,
-        "Title": "สัมภาษณ์โดยไม่ชี้นำ",
-        "Summary": "ฟังตัวอย่างคำถามชี้นำและคำถามติดตามผล แล้วฝึกขอให้ผู้ใช้เล่าเหตุการณ์จริงด้วยภาษาของตัวเอง",
+        "Title": "\u0E2A\u0E31\u0E21\u0E20\u0E32\u0E29\u0E13\u0E4C\u0E42\u0E14\u0E22\u0E44\u0E21\u0E48\u0E0A\u0E35\u0E49\u0E19\u0E33",
         "DurationMinutes": 6,
+        "Summary": "\u0E1F\u0E31\u0E07\u0E15\u0E31\u0E27\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E04\u0E33\u0E16\u0E32\u0E21\u0E0A\u0E35\u0E49\u0E19\u0E33\u0E41\u0E25\u0E30\u0E04\u0E33\u0E16\u0E32\u0E21\u0E15\u0E34\u0E14\u0E15\u0E32\u0E21\u0E1C\u0E25 \u0E41\u0E25\u0E49\u0E27\u0E1D\u0E36\u0E01\u0E02\u0E2D\u0E43\u0E2B\u0E49\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E40\u0E25\u0E48\u0E32\u0E40\u0E2B\u0E15\u0E38\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E08\u0E23\u0E34\u0E07\u0E14\u0E49\u0E27\u0E22\u0E20\u0E32\u0E29\u0E32\u0E02\u0E2D\u0E07\u0E15\u0E31\u0E27\u0E40\u0E2D\u0E07",
+        "Reading": [],
         "VideoId": "yBYd5USasXg",
         "VideoDurationSeconds": 353,
         "VideoCreator": "Nielsen Norman Group",
@@ -36,9 +42,10 @@
       },
       {
         "Id": 3,
-        "Title": "จากข้อมูลสู่ข้อค้นพบ",
-        "Summary": "แยกบันทึกเป็นข้อสังเกตสั้น ๆ จัดกลุ่มหลักฐานที่เกี่ยวข้องกัน และตั้งชื่อกลุ่มเพื่อสื่อข้อค้นพบ",
+        "Title": "\u0E08\u0E32\u0E01\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E2A\u0E39\u0E48\u0E02\u0E49\u0E2D\u0E04\u0E49\u0E19\u0E1E\u0E1A",
         "DurationMinutes": 5,
+        "Summary": "\u0E41\u0E22\u0E01\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E40\u0E1B\u0E47\u0E19\u0E02\u0E49\u0E2D\u0E2A\u0E31\u0E07\u0E40\u0E01\u0E15\u0E2A\u0E31\u0E49\u0E19 \u0E46 \u0E08\u0E31\u0E14\u0E01\u0E25\u0E38\u0E48\u0E21\u0E2B\u0E25\u0E31\u0E01\u0E10\u0E32\u0E19\u0E17\u0E35\u0E48\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E02\u0E49\u0E2D\u0E07\u0E01\u0E31\u0E19 \u0E41\u0E25\u0E30\u0E15\u0E31\u0E49\u0E07\u0E0A\u0E37\u0E48\u0E2D\u0E01\u0E25\u0E38\u0E48\u0E21\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E2A\u0E37\u0E48\u0E2D\u0E02\u0E49\u0E2D\u0E04\u0E49\u0E19\u0E1E\u0E1A",
+        "Reading": [],
         "VideoId": "L49s5ZYbVa8",
         "VideoDurationSeconds": 264,
         "VideoCreator": "Nielsen Norman Group",
@@ -46,36 +53,42 @@
       },
       {
         "Id": 4,
-        "Title": "วางแผนทดสอบการใช้งาน",
-        "Summary": "ตั้งภารกิจที่ผู้ใช้มีโอกาสทำจริง สังเกตการใช้ต้นแบบโดยไม่บอกคำตอบ และใช้สิ่งที่พบวางแผนแก้ไข",
+        "Title": "\u0E27\u0E32\u0E07\u0E41\u0E1C\u0E19\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19",
         "DurationMinutes": 4,
+        "Summary": "\u0E15\u0E31\u0E49\u0E07\u0E20\u0E32\u0E23\u0E01\u0E34\u0E08\u0E17\u0E35\u0E48\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E21\u0E35\u0E42\u0E2D\u0E01\u0E32\u0E2A\u0E17\u0E33\u0E08\u0E23\u0E34\u0E07 \u0E2A\u0E31\u0E07\u0E40\u0E01\u0E15\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E15\u0E49\u0E19\u0E41\u0E1A\u0E1A\u0E42\u0E14\u0E22\u0E44\u0E21\u0E48\u0E1A\u0E2D\u0E01\u0E04\u0E33\u0E15\u0E2D\u0E1A \u0E41\u0E25\u0E30\u0E43\u0E0A\u0E49\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E1E\u0E1A\u0E27\u0E32\u0E07\u0E41\u0E1C\u0E19\u0E41\u0E01\u0E49\u0E44\u0E02",
+        "Reading": [],
         "VideoId": "v8JJrDvQDF4",
         "VideoDurationSeconds": 193,
         "VideoCreator": "Nielsen Norman Group",
-        "VideoTitle": "User Testing: Why & How (Jakob Nielsen)"
+        "VideoTitle": "User Testing: Why \u0026 How (Jakob Nielsen)"
       }
     ]
   },
   {
     "Id": 101,
-    "Title": "ทักทายและแนะนำตัวภาษาอังกฤษ",
+    "Title": "\u0E17\u0E31\u0E01\u0E17\u0E32\u0E22\u0E41\u0E25\u0E30\u0E41\u0E19\u0E30\u0E19\u0E33\u0E15\u0E31\u0E27\u0E20\u0E32\u0E29\u0E32\u0E2D\u0E31\u0E07\u0E01\u0E24\u0E29",
     "Category": "Languages",
     "Level": "Beginner",
     "Units": 3,
     "Featured": true,
-    "Description": "เลือกคำทักทายและประโยคแนะนำตัวให้เหมาะกับคู่สนทนาในชีวิตประจำวันและที่ทำงาน",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E04\u0E33\u0E17\u0E31\u0E01\u0E17\u0E32\u0E22\u0E41\u0E25\u0E30\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04\u0E41\u0E19\u0E30\u0E19\u0E33\u0E15\u0E31\u0E27\u0E43\u0E2B\u0E49\u0E40\u0E2B\u0E21\u0E32\u0E30\u0E01\u0E31\u0E1A\u0E04\u0E39\u0E48\u0E2A\u0E19\u0E17\u0E19\u0E32\u0E43\u0E19\u0E0A\u0E35\u0E27\u0E34\u0E15\u0E1B\u0E23\u0E30\u0E08\u0E33\u0E27\u0E31\u0E19\u0E41\u0E25\u0E30\u0E17\u0E35\u0E48\u0E17\u0E33\u0E07\u0E32\u0E19",
     "Instructor": "Oxford Online English",
     "Skills": [
-      "ทักทาย",
-      "แนะนำตัว",
-      "ระดับภาษา"
+      "\u0E17\u0E31\u0E01\u0E17\u0E32\u0E22",
+      "\u0E41\u0E19\u0E30\u0E19\u0E33\u0E15\u0E31\u0E27",
+      "\u0E23\u0E30\u0E14\u0E31\u0E1A\u0E20\u0E32\u0E29\u0E32"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "เลือกคำทักทายให้เหมาะกับสถานการณ์",
-        "Summary": "ฟังบทสนทนาแบบเป็นทางการ เป็นกลาง และเป็นกันเอง แล้วสังเกตว่าคำทักทายและรูปประโยคเปลี่ยนอย่างไร",
+        "Title": "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E04\u0E33\u0E17\u0E31\u0E01\u0E17\u0E32\u0E22\u0E43\u0E2B\u0E49\u0E40\u0E2B\u0E21\u0E32\u0E30\u0E01\u0E31\u0E1A\u0E2A\u0E16\u0E32\u0E19\u0E01\u0E32\u0E23\u0E13\u0E4C",
         "DurationMinutes": 12,
+        "Summary": "\u0E1F\u0E31\u0E07\u0E1A\u0E17\u0E2A\u0E19\u0E17\u0E19\u0E32\u0E41\u0E1A\u0E1A\u0E40\u0E1B\u0E47\u0E19\u0E17\u0E32\u0E07\u0E01\u0E32\u0E23 \u0E40\u0E1B\u0E47\u0E19\u0E01\u0E25\u0E32\u0E07 \u0E41\u0E25\u0E30\u0E40\u0E1B\u0E47\u0E19\u0E01\u0E31\u0E19\u0E40\u0E2D\u0E07 \u0E41\u0E25\u0E49\u0E27\u0E2A\u0E31\u0E07\u0E40\u0E01\u0E15\u0E27\u0E48\u0E32\u0E04\u0E33\u0E17\u0E31\u0E01\u0E17\u0E32\u0E22\u0E41\u0E25\u0E30\u0E23\u0E39\u0E1B\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E44\u0E23",
+        "Reading": [],
         "VideoId": "sp3xU5WvRjA",
         "VideoDurationSeconds": 684,
         "VideoCreator": "Oxford Online English",
@@ -83,105 +96,131 @@
       },
       {
         "Id": 2,
-        "Title": "แนะนำตัวให้เพื่อนร่วมงานรู้จักบทบาท",
-        "Summary": "บอกชื่อ ทีม และขอบเขตงานได้ในไม่กี่ประโยค",
+        "Title": "\u0E41\u0E19\u0E30\u0E19\u0E33\u0E15\u0E31\u0E27\u0E43\u0E2B\u0E49\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E19\u0E23\u0E48\u0E27\u0E21\u0E07\u0E32\u0E19\u0E23\u0E39\u0E49\u0E08\u0E31\u0E01\u0E1A\u0E17\u0E1A\u0E32\u0E17",
         "DurationMinutes": 4,
+        "Summary": "\u0E1A\u0E2D\u0E01\u0E0A\u0E37\u0E48\u0E2D \u0E17\u0E35\u0E21 \u0E41\u0E25\u0E30\u0E02\u0E2D\u0E1A\u0E40\u0E02\u0E15\u0E07\u0E32\u0E19\u0E44\u0E14\u0E49\u0E43\u0E19\u0E44\u0E21\u0E48\u0E01\u0E35\u0E48\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "เริ่มด้วยชื่อ ใช้ I’m on the … team เพื่อบอกทีม และ I work on … เพื่อบอกหน้าที่ เลือกรายละเอียดที่อีกฝ่ายจะใช้เริ่มคุยต่อได้ เช่น โครงการที่ทำร่วมกัน",
-            "Example": "Hi, I’m Pim. I’m on the design team. I work on the checkout flow, so I’ll join your feedback session today."
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E40\u0E23\u0E34\u0E48\u0E21\u0E14\u0E49\u0E27\u0E22\u0E0A\u0E37\u0E48\u0E2D \u0E43\u0E0A\u0E49 I\u2019m on the \u2026 team \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E1A\u0E2D\u0E01\u0E17\u0E35\u0E21 \u0E41\u0E25\u0E30 I work on \u2026 \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E1A\u0E2D\u0E01\u0E2B\u0E19\u0E49\u0E32\u0E17\u0E35\u0E48 \u0E40\u0E25\u0E37\u0E2D\u0E01\u0E23\u0E32\u0E22\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14\u0E17\u0E35\u0E48\u0E2D\u0E35\u0E01\u0E1D\u0E48\u0E32\u0E22\u0E08\u0E30\u0E43\u0E0A\u0E49\u0E40\u0E23\u0E34\u0E48\u0E21\u0E04\u0E38\u0E22\u0E15\u0E48\u0E2D\u0E44\u0E14\u0E49 \u0E40\u0E0A\u0E48\u0E19 \u0E42\u0E04\u0E23\u0E07\u0E01\u0E32\u0E23\u0E17\u0E35\u0E48\u0E17\u0E33\u0E23\u0E48\u0E27\u0E21\u0E01\u0E31\u0E19",
+            "Example": "Hi, I\u2019m Pim. I\u2019m on the design team. I work on the checkout flow, so I\u2019ll join your feedback session today."
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "แนะนำเพื่อนร่วมงานและปิดบทสนทนา",
-        "Summary": "เชื่อมคนสองคนด้วยเหตุผลที่เกี่ยวข้อง และกล่าวลาโดยบอกขั้นตอนถัดไป",
+        "Title": "\u0E41\u0E19\u0E30\u0E19\u0E33\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E19\u0E23\u0E48\u0E27\u0E21\u0E07\u0E32\u0E19\u0E41\u0E25\u0E30\u0E1B\u0E34\u0E14\u0E1A\u0E17\u0E2A\u0E19\u0E17\u0E19\u0E32",
         "DurationMinutes": 4,
+        "Summary": "\u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E21\u0E04\u0E19\u0E2A\u0E2D\u0E07\u0E04\u0E19\u0E14\u0E49\u0E27\u0E22\u0E40\u0E2B\u0E15\u0E38\u0E1C\u0E25\u0E17\u0E35\u0E48\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E02\u0E49\u0E2D\u0E07 \u0E41\u0E25\u0E30\u0E01\u0E25\u0E48\u0E32\u0E27\u0E25\u0E32\u0E42\u0E14\u0E22\u0E1A\u0E2D\u0E01\u0E02\u0E31\u0E49\u0E19\u0E15\u0E2D\u0E19\u0E16\u0E31\u0E14\u0E44\u0E1B",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ใช้ I’d like you to meet … แล้วบอกบทบาทหรือเรื่องที่ทั้งสองฝ่ายกำลังทำร่วมกัน ก่อนออกจากบทสนทนาให้ขอบคุณสั้น ๆ และยืนยันสิ่งที่ตกลงว่าจะทำต่อ เช่น ส่งไฟล์หรือนัดเวลาคุย",
-            "Example": "Maya, I’d like you to meet Pete. He’s testing the same feature. Thanks for chatting. I’ll send both of you the test plan this afternoon."
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E43\u0E0A\u0E49 I\u2019d like you to meet \u2026 \u0E41\u0E25\u0E49\u0E27\u0E1A\u0E2D\u0E01\u0E1A\u0E17\u0E1A\u0E32\u0E17\u0E2B\u0E23\u0E37\u0E2D\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E17\u0E35\u0E48\u0E17\u0E31\u0E49\u0E07\u0E2A\u0E2D\u0E07\u0E1D\u0E48\u0E32\u0E22\u0E01\u0E33\u0E25\u0E31\u0E07\u0E17\u0E33\u0E23\u0E48\u0E27\u0E21\u0E01\u0E31\u0E19 \u0E01\u0E48\u0E2D\u0E19\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E1A\u0E17\u0E2A\u0E19\u0E17\u0E19\u0E32\u0E43\u0E2B\u0E49\u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E2A\u0E31\u0E49\u0E19 \u0E46 \u0E41\u0E25\u0E30\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E15\u0E01\u0E25\u0E07\u0E27\u0E48\u0E32\u0E08\u0E30\u0E17\u0E33\u0E15\u0E48\u0E2D \u0E40\u0E0A\u0E48\u0E19 \u0E2A\u0E48\u0E07\u0E44\u0E1F\u0E25\u0E4C\u0E2B\u0E23\u0E37\u0E2D\u0E19\u0E31\u0E14\u0E40\u0E27\u0E25\u0E32\u0E04\u0E38\u0E22",
+            "Example": "Maya, I\u2019d like you to meet Pete. He\u2019s testing the same feature. Thanks for chatting. I\u2019ll send both of you the test plan this afternoon."
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 102,
-    "Title": "พื้นฐาน 12 Tenses ภาษาอังกฤษ",
+    "Title": "\u0E1E\u0E37\u0E49\u0E19\u0E10\u0E32\u0E19 12 Tenses \u0E20\u0E32\u0E29\u0E32\u0E2D\u0E31\u0E07\u0E01\u0E24\u0E29",
     "Category": "Languages",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "จับคู่เวลาและลักษณะของเหตุการณ์กับรูปกริยาในประโยคภาษาอังกฤษ",
-    "Instructor": "Learn English | Let's Talk - Free English Lessons",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E08\u0E31\u0E1A\u0E04\u0E39\u0E48\u0E40\u0E27\u0E25\u0E32\u0E41\u0E25\u0E30\u0E25\u0E31\u0E01\u0E29\u0E13\u0E30\u0E02\u0E2D\u0E07\u0E40\u0E2B\u0E15\u0E38\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E01\u0E31\u0E1A\u0E23\u0E39\u0E1B\u0E01\u0E23\u0E34\u0E22\u0E32\u0E43\u0E19\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04\u0E20\u0E32\u0E29\u0E32\u0E2D\u0E31\u0E07\u0E01\u0E24\u0E29",
+    "Instructor": "Learn English | Let\u0027s Talk - Free English Lessons",
     "Skills": [
       "Verb tenses",
-      "ไวยากรณ์",
-      "การเล่าเหตุการณ์"
+      "\u0E44\u0E27\u0E22\u0E32\u0E01\u0E23\u0E13\u0E4C",
+      "\u0E01\u0E32\u0E23\u0E40\u0E25\u0E48\u0E32\u0E40\u0E2B\u0E15\u0E38\u0E01\u0E32\u0E23\u0E13\u0E4C"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "แยกเวลาและลักษณะของเหตุการณ์",
-        "Summary": "ทบทวนรูปกริยา 12 แบบ และฝึกสังเกตว่าเหตุการณ์เกิดเมื่อใด เป็นกิจวัตร กำลังเกิด หรือเกี่ยวข้องกับอีกช่วงเวลาหนึ่ง",
+        "Title": "\u0E41\u0E22\u0E01\u0E40\u0E27\u0E25\u0E32\u0E41\u0E25\u0E30\u0E25\u0E31\u0E01\u0E29\u0E13\u0E30\u0E02\u0E2D\u0E07\u0E40\u0E2B\u0E15\u0E38\u0E01\u0E32\u0E23\u0E13\u0E4C",
         "DurationMinutes": 11,
+        "Summary": "\u0E17\u0E1A\u0E17\u0E27\u0E19\u0E23\u0E39\u0E1B\u0E01\u0E23\u0E34\u0E22\u0E32 12 \u0E41\u0E1A\u0E1A \u0E41\u0E25\u0E30\u0E1D\u0E36\u0E01\u0E2A\u0E31\u0E07\u0E40\u0E01\u0E15\u0E27\u0E48\u0E32\u0E40\u0E2B\u0E15\u0E38\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E40\u0E01\u0E34\u0E14\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E43\u0E14 \u0E40\u0E1B\u0E47\u0E19\u0E01\u0E34\u0E08\u0E27\u0E31\u0E15\u0E23 \u0E01\u0E33\u0E25\u0E31\u0E07\u0E40\u0E01\u0E34\u0E14 \u0E2B\u0E23\u0E37\u0E2D\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E02\u0E49\u0E2D\u0E07\u0E01\u0E31\u0E1A\u0E2D\u0E35\u0E01\u0E0A\u0E48\u0E27\u0E07\u0E40\u0E27\u0E25\u0E32\u0E2B\u0E19\u0E36\u0E48\u0E07",
+        "Reading": [],
         "VideoId": "Z7jiJpW_-C0",
         "VideoDurationSeconds": 658,
-        "VideoCreator": "Learn English | Let's Talk - Free English Lessons",
+        "VideoCreator": "Learn English | Let\u0027s Talk - Free English Lessons",
         "VideoTitle": "Master 12 English Tenses In  Just 10 Minutes | English Grammar Lesson To Learn All Verb Tenses"
       },
       {
         "Id": 2,
-        "Title": "เลือก Past Simple หรือ Present Perfect",
-        "Summary": "แยกเหตุการณ์ที่ระบุเวลาในอดีตออกจากผลที่เกี่ยวกับปัจจุบัน",
+        "Title": "\u0E40\u0E25\u0E37\u0E2D\u0E01 Past Simple \u0E2B\u0E23\u0E37\u0E2D Present Perfect",
         "DurationMinutes": 4,
+        "Summary": "\u0E41\u0E22\u0E01\u0E40\u0E2B\u0E15\u0E38\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E17\u0E35\u0E48\u0E23\u0E30\u0E1A\u0E38\u0E40\u0E27\u0E25\u0E32\u0E43\u0E19\u0E2D\u0E14\u0E35\u0E15\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E1C\u0E25\u0E17\u0E35\u0E48\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E01\u0E31\u0E1A\u0E1B\u0E31\u0E08\u0E08\u0E38\u0E1A\u0E31\u0E19",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "Past Simple มักใช้กับเหตุการณ์ในช่วงเวลาที่จบแล้ว เช่น yesterday หรือ last Monday ส่วน Present Perfect ใช้ have หรือ has กับกริยาช่องสามเมื่อสนใจประสบการณ์จนถึงตอนนี้ หรือผลปัจจุบันโดยไม่ได้ระบุเวลาอดีตที่จบแล้ว",
-            "Example": "I sent the file yesterday. I’ve sent the file, so you can review it now."
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "Past Simple \u0E21\u0E31\u0E01\u0E43\u0E0A\u0E49\u0E01\u0E31\u0E1A\u0E40\u0E2B\u0E15\u0E38\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E43\u0E19\u0E0A\u0E48\u0E27\u0E07\u0E40\u0E27\u0E25\u0E32\u0E17\u0E35\u0E48\u0E08\u0E1A\u0E41\u0E25\u0E49\u0E27 \u0E40\u0E0A\u0E48\u0E19 yesterday \u0E2B\u0E23\u0E37\u0E2D last Monday \u0E2A\u0E48\u0E27\u0E19 Present Perfect \u0E43\u0E0A\u0E49 have \u0E2B\u0E23\u0E37\u0E2D has \u0E01\u0E31\u0E1A\u0E01\u0E23\u0E34\u0E22\u0E32\u0E0A\u0E48\u0E2D\u0E07\u0E2A\u0E32\u0E21\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E2A\u0E19\u0E43\u0E08\u0E1B\u0E23\u0E30\u0E2A\u0E1A\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E08\u0E19\u0E16\u0E36\u0E07\u0E15\u0E2D\u0E19\u0E19\u0E35\u0E49 \u0E2B\u0E23\u0E37\u0E2D\u0E1C\u0E25\u0E1B\u0E31\u0E08\u0E08\u0E38\u0E1A\u0E31\u0E19\u0E42\u0E14\u0E22\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E23\u0E30\u0E1A\u0E38\u0E40\u0E27\u0E25\u0E32\u0E2D\u0E14\u0E35\u0E15\u0E17\u0E35\u0E48\u0E08\u0E1A\u0E41\u0E25\u0E49\u0E27",
+            "Example": "I sent the file yesterday. I\u2019ve sent the file, so you can review it now."
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "เล่าเหตุการณ์ที่กำลังเกิดและตั้งเส้นตาย",
-        "Summary": "เลือก Continuous สำหรับงานที่กำลังดำเนินอยู่ และใช้ by บอกกำหนดส่ง",
+        "Title": "\u0E40\u0E25\u0E48\u0E32\u0E40\u0E2B\u0E15\u0E38\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E17\u0E35\u0E48\u0E01\u0E33\u0E25\u0E31\u0E07\u0E40\u0E01\u0E34\u0E14\u0E41\u0E25\u0E30\u0E15\u0E31\u0E49\u0E07\u0E40\u0E2A\u0E49\u0E19\u0E15\u0E32\u0E22",
         "DurationMinutes": 4,
+        "Summary": "\u0E40\u0E25\u0E37\u0E2D\u0E01 Continuous \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E07\u0E32\u0E19\u0E17\u0E35\u0E48\u0E01\u0E33\u0E25\u0E31\u0E07\u0E14\u0E33\u0E40\u0E19\u0E34\u0E19\u0E2D\u0E22\u0E39\u0E48 \u0E41\u0E25\u0E30\u0E43\u0E0A\u0E49 by \u0E1A\u0E2D\u0E01\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E2A\u0E48\u0E07",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ใช้ am, is หรือ are กับกริยาเติม -ing เมื่องานกำลังดำเนินอยู่ เมื่อต้องบอกว่าผลงานจะพร้อมก่อนหรือไม่เกินกำหนด ใช้ by กับวันหรือเวลา รูป will have ตามด้วยกริยาช่องสามใช้เน้นว่างานจะเสร็จแล้วก่อนหรือ ณ จุดนั้น",
-            "Example": "We’re testing the form now. By Friday, we’ll have finished the test."
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E43\u0E0A\u0E49 am, is \u0E2B\u0E23\u0E37\u0E2D are \u0E01\u0E31\u0E1A\u0E01\u0E23\u0E34\u0E22\u0E32\u0E40\u0E15\u0E34\u0E21 -ing \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E07\u0E32\u0E19\u0E01\u0E33\u0E25\u0E31\u0E07\u0E14\u0E33\u0E40\u0E19\u0E34\u0E19\u0E2D\u0E22\u0E39\u0E48 \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E15\u0E49\u0E2D\u0E07\u0E1A\u0E2D\u0E01\u0E27\u0E48\u0E32\u0E1C\u0E25\u0E07\u0E32\u0E19\u0E08\u0E30\u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E01\u0E48\u0E2D\u0E19\u0E2B\u0E23\u0E37\u0E2D\u0E44\u0E21\u0E48\u0E40\u0E01\u0E34\u0E19\u0E01\u0E33\u0E2B\u0E19\u0E14 \u0E43\u0E0A\u0E49 by \u0E01\u0E31\u0E1A\u0E27\u0E31\u0E19\u0E2B\u0E23\u0E37\u0E2D\u0E40\u0E27\u0E25\u0E32 \u0E23\u0E39\u0E1B will have \u0E15\u0E32\u0E21\u0E14\u0E49\u0E27\u0E22\u0E01\u0E23\u0E34\u0E22\u0E32\u0E0A\u0E48\u0E2D\u0E07\u0E2A\u0E32\u0E21\u0E43\u0E0A\u0E49\u0E40\u0E19\u0E49\u0E19\u0E27\u0E48\u0E32\u0E07\u0E32\u0E19\u0E08\u0E30\u0E40\u0E2A\u0E23\u0E47\u0E08\u0E41\u0E25\u0E49\u0E27\u0E01\u0E48\u0E2D\u0E19\u0E2B\u0E23\u0E37\u0E2D \u0E13 \u0E08\u0E38\u0E14\u0E19\u0E31\u0E49\u0E19",
+            "Example": "We\u2019re testing the form now. By Friday, we\u2019ll have finished the test."
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 103,
-    "Title": "ชวนคุยและสร้างเครือข่ายในงาน",
+    "Title": "\u0E0A\u0E27\u0E19\u0E04\u0E38\u0E22\u0E41\u0E25\u0E30\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E40\u0E04\u0E23\u0E37\u0E2D\u0E02\u0E48\u0E32\u0E22\u0E43\u0E19\u0E07\u0E32\u0E19",
     "Category": "Languages",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "เริ่ม Small Talk ถามต่ออย่างเป็นธรรมชาติ และจบบทสนทนาอย่างสุภาพในงานอาชีพ",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E40\u0E23\u0E34\u0E48\u0E21 Small Talk \u0E16\u0E32\u0E21\u0E15\u0E48\u0E2D\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E40\u0E1B\u0E47\u0E19\u0E18\u0E23\u0E23\u0E21\u0E0A\u0E32\u0E15\u0E34 \u0E41\u0E25\u0E30\u0E08\u0E1A\u0E1A\u0E17\u0E2A\u0E19\u0E17\u0E19\u0E32\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E2A\u0E38\u0E20\u0E32\u0E1E\u0E43\u0E19\u0E07\u0E32\u0E19\u0E2D\u0E32\u0E0A\u0E35\u0E1E",
     "Instructor": "BBC Learning English",
     "Skills": [
       "Small talk",
       "Networking",
-      "ถามต่อ"
+      "\u0E16\u0E32\u0E21\u0E15\u0E48\u0E2D"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "ฝึกคุยสั้น ๆ ในงานอาชีพ",
-        "Summary": "เรียนรู้การชวนคุยในงานเลี้ยงหรือการประชุม เลือกจุดเริ่มต้นที่มีร่วมกันและฝึกพาบทสนทนาไปต่อ",
+        "Title": "\u0E1D\u0E36\u0E01\u0E04\u0E38\u0E22\u0E2A\u0E31\u0E49\u0E19 \u0E46 \u0E43\u0E19\u0E07\u0E32\u0E19\u0E2D\u0E32\u0E0A\u0E35\u0E1E",
         "DurationMinutes": 13,
+        "Summary": "\u0E40\u0E23\u0E35\u0E22\u0E19\u0E23\u0E39\u0E49\u0E01\u0E32\u0E23\u0E0A\u0E27\u0E19\u0E04\u0E38\u0E22\u0E43\u0E19\u0E07\u0E32\u0E19\u0E40\u0E25\u0E35\u0E49\u0E22\u0E07\u0E2B\u0E23\u0E37\u0E2D\u0E01\u0E32\u0E23\u0E1B\u0E23\u0E30\u0E0A\u0E38\u0E21 \u0E40\u0E25\u0E37\u0E2D\u0E01\u0E08\u0E38\u0E14\u0E40\u0E23\u0E34\u0E48\u0E21\u0E15\u0E49\u0E19\u0E17\u0E35\u0E48\u0E21\u0E35\u0E23\u0E48\u0E27\u0E21\u0E01\u0E31\u0E19\u0E41\u0E25\u0E30\u0E1D\u0E36\u0E01\u0E1E\u0E32\u0E1A\u0E17\u0E2A\u0E19\u0E17\u0E19\u0E32\u0E44\u0E1B\u0E15\u0E48\u0E2D",
+        "Reading": [],
         "VideoId": "AbnYjwQoIvU",
         "VideoDurationSeconds": 722,
         "VideoCreator": "BBC Learning English",
@@ -189,52 +228,65 @@
       },
       {
         "Id": 2,
-        "Title": "ถามต่อให้บทสนทนาไหลลื่น",
-        "Summary": "เริ่มจากสิ่งที่มีร่วมกัน แล้วชวนอีกฝ่ายขยายความ",
+        "Title": "\u0E16\u0E32\u0E21\u0E15\u0E48\u0E2D\u0E43\u0E2B\u0E49\u0E1A\u0E17\u0E2A\u0E19\u0E17\u0E19\u0E32\u0E44\u0E2B\u0E25\u0E25\u0E37\u0E48\u0E19",
         "DurationMinutes": 4,
+        "Summary": "\u0E40\u0E23\u0E34\u0E48\u0E21\u0E08\u0E32\u0E01\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E21\u0E35\u0E23\u0E48\u0E27\u0E21\u0E01\u0E31\u0E19 \u0E41\u0E25\u0E49\u0E27\u0E0A\u0E27\u0E19\u0E2D\u0E35\u0E01\u0E1D\u0E48\u0E32\u0E22\u0E02\u0E22\u0E32\u0E22\u0E04\u0E27\u0E32\u0E21",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ใช้บริบทที่ทั้งคู่รู้ เช่น หัวข้อสัมมนา จากนั้นถาม What หรือ How เพื่อให้ตอบได้เป็นประโยค เมื่อได้คำตอบให้หยิบคำสำคัญจากสิ่งที่อีกฝ่ายเพิ่งพูดมาตั้งคำถามต่อ เว้นจังหวะให้อีกฝ่ายตอบจนจบ",
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E43\u0E0A\u0E49\u0E1A\u0E23\u0E34\u0E1A\u0E17\u0E17\u0E35\u0E48\u0E17\u0E31\u0E49\u0E07\u0E04\u0E39\u0E48\u0E23\u0E39\u0E49 \u0E40\u0E0A\u0E48\u0E19 \u0E2B\u0E31\u0E27\u0E02\u0E49\u0E2D\u0E2A\u0E31\u0E21\u0E21\u0E19\u0E32 \u0E08\u0E32\u0E01\u0E19\u0E31\u0E49\u0E19\u0E16\u0E32\u0E21 What \u0E2B\u0E23\u0E37\u0E2D How \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E43\u0E2B\u0E49\u0E15\u0E2D\u0E1A\u0E44\u0E14\u0E49\u0E40\u0E1B\u0E47\u0E19\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04 \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E44\u0E14\u0E49\u0E04\u0E33\u0E15\u0E2D\u0E1A\u0E43\u0E2B\u0E49\u0E2B\u0E22\u0E34\u0E1A\u0E04\u0E33\u0E2A\u0E33\u0E04\u0E31\u0E0D\u0E08\u0E32\u0E01\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E2D\u0E35\u0E01\u0E1D\u0E48\u0E32\u0E22\u0E40\u0E1E\u0E34\u0E48\u0E07\u0E1E\u0E39\u0E14\u0E21\u0E32\u0E15\u0E31\u0E49\u0E07\u0E04\u0E33\u0E16\u0E32\u0E21\u0E15\u0E48\u0E2D \u0E40\u0E27\u0E49\u0E19\u0E08\u0E31\u0E07\u0E2B\u0E27\u0E30\u0E43\u0E2B\u0E49\u0E2D\u0E35\u0E01\u0E1D\u0E48\u0E32\u0E22\u0E15\u0E2D\u0E1A\u0E08\u0E19\u0E08\u0E1A",
             "Example": "A: What did you think of the workshop?\nB: The pricing case was useful.\nA: Which part of the case stood out to you?"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "สานต่อการรู้จักกันหลังงาน",
-        "Summary": "ปิดบทสนทนาอย่างสุภาพและเขียนข้อความติดตามที่มีบริบท",
+        "Title": "\u0E2A\u0E32\u0E19\u0E15\u0E48\u0E2D\u0E01\u0E32\u0E23\u0E23\u0E39\u0E49\u0E08\u0E31\u0E01\u0E01\u0E31\u0E19\u0E2B\u0E25\u0E31\u0E07\u0E07\u0E32\u0E19",
         "DurationMinutes": 4,
+        "Summary": "\u0E1B\u0E34\u0E14\u0E1A\u0E17\u0E2A\u0E19\u0E17\u0E19\u0E32\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E2A\u0E38\u0E20\u0E32\u0E1E\u0E41\u0E25\u0E30\u0E40\u0E02\u0E35\u0E22\u0E19\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E15\u0E34\u0E14\u0E15\u0E32\u0E21\u0E17\u0E35\u0E48\u0E21\u0E35\u0E1A\u0E23\u0E34\u0E1A\u0E17",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ก่อนแยกกันให้ขอบคุณและขออนุญาตก่อนแลกช่องทางติดต่อ เมื่อทักครั้งถัดไปให้ทวนเรื่องที่คุยหนึ่งประโยคและเสนอขั้นตอนเดียว เช่น ส่งลิงก์ตามที่ตกลงกันไว้",
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E01\u0E48\u0E2D\u0E19\u0E41\u0E22\u0E01\u0E01\u0E31\u0E19\u0E43\u0E2B\u0E49\u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13\u0E41\u0E25\u0E30\u0E02\u0E2D\u0E2D\u0E19\u0E38\u0E0D\u0E32\u0E15\u0E01\u0E48\u0E2D\u0E19\u0E41\u0E25\u0E01\u0E0A\u0E48\u0E2D\u0E07\u0E17\u0E32\u0E07\u0E15\u0E34\u0E14\u0E15\u0E48\u0E2D \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E17\u0E31\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07\u0E16\u0E31\u0E14\u0E44\u0E1B\u0E43\u0E2B\u0E49\u0E17\u0E27\u0E19\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E17\u0E35\u0E48\u0E04\u0E38\u0E22\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04\u0E41\u0E25\u0E30\u0E40\u0E2A\u0E19\u0E2D\u0E02\u0E31\u0E49\u0E19\u0E15\u0E2D\u0E19\u0E40\u0E14\u0E35\u0E22\u0E27 \u0E40\u0E0A\u0E48\u0E19 \u0E2A\u0E48\u0E07\u0E25\u0E34\u0E07\u0E01\u0E4C\u0E15\u0E32\u0E21\u0E17\u0E35\u0E48\u0E15\u0E01\u0E25\u0E07\u0E01\u0E31\u0E19\u0E44\u0E27\u0E49",
             "Example": "It was great talking about the design meetup. Would you be open to connecting on LinkedIn? I can send you the event link there."
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 104,
-    "Title": "เขียนอีเมลภาษาอังกฤษในที่ทำงาน",
+    "Title": "\u0E40\u0E02\u0E35\u0E22\u0E19\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E20\u0E32\u0E29\u0E32\u0E2D\u0E31\u0E07\u0E01\u0E24\u0E29\u0E43\u0E19\u0E17\u0E35\u0E48\u0E17\u0E33\u0E07\u0E32\u0E19",
     "Category": "Languages",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "วางเรื่องสำคัญไว้ต้นอีเมล เลือกระดับความเป็นทางการ และบอกสิ่งที่ต้องการจากผู้รับ",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E27\u0E32\u0E07\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E2A\u0E33\u0E04\u0E31\u0E0D\u0E44\u0E27\u0E49\u0E15\u0E49\u0E19\u0E2D\u0E35\u0E40\u0E21\u0E25 \u0E40\u0E25\u0E37\u0E2D\u0E01\u0E23\u0E30\u0E14\u0E31\u0E1A\u0E04\u0E27\u0E32\u0E21\u0E40\u0E1B\u0E47\u0E19\u0E17\u0E32\u0E07\u0E01\u0E32\u0E23 \u0E41\u0E25\u0E30\u0E1A\u0E2D\u0E01\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E08\u0E32\u0E01\u0E1C\u0E39\u0E49\u0E23\u0E31\u0E1A",
     "Instructor": "BBC Learning English",
     "Skills": [
-      "อีเมลธุรกิจ",
-      "คำขอสุภาพ",
-      "เลือกน้ำเสียง"
+      "\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E18\u0E38\u0E23\u0E01\u0E34\u0E08",
+      "\u0E04\u0E33\u0E02\u0E2D\u0E2A\u0E38\u0E20\u0E32\u0E1E",
+      "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E19\u0E49\u0E33\u0E40\u0E2A\u0E35\u0E22\u0E07"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "เขียนอีเมลสั้นให้ตรงจุด",
-        "Summary": "พิจารณาความสัมพันธ์กับผู้รับและจุดประสงค์ของอีเมล เพื่อเลือกคำขึ้นต้น น้ำเสียง และคำขอที่เหมาะสม",
+        "Title": "\u0E40\u0E02\u0E35\u0E22\u0E19\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E2A\u0E31\u0E49\u0E19\u0E43\u0E2B\u0E49\u0E15\u0E23\u0E07\u0E08\u0E38\u0E14",
         "DurationMinutes": 13,
+        "Summary": "\u0E1E\u0E34\u0E08\u0E32\u0E23\u0E13\u0E32\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E31\u0E21\u0E1E\u0E31\u0E19\u0E18\u0E4C\u0E01\u0E31\u0E1A\u0E1C\u0E39\u0E49\u0E23\u0E31\u0E1A\u0E41\u0E25\u0E30\u0E08\u0E38\u0E14\u0E1B\u0E23\u0E30\u0E2A\u0E07\u0E04\u0E4C\u0E02\u0E2D\u0E07\u0E2D\u0E35\u0E40\u0E21\u0E25 \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E04\u0E33\u0E02\u0E36\u0E49\u0E19\u0E15\u0E49\u0E19 \u0E19\u0E49\u0E33\u0E40\u0E2A\u0E35\u0E22\u0E07 \u0E41\u0E25\u0E30\u0E04\u0E33\u0E02\u0E2D\u0E17\u0E35\u0E48\u0E40\u0E2B\u0E21\u0E32\u0E30\u0E2A\u0E21",
+        "Reading": [],
         "VideoId": "k188_aGDklQ",
         "VideoDurationSeconds": 778,
         "VideoCreator": "BBC Learning English",
@@ -242,105 +294,131 @@
       },
       {
         "Id": 2,
-        "Title": "ตั้งหัวข้อและขอให้ลงมือทำ",
-        "Summary": "เขียน Subject ที่สแกนได้เร็ว และระบุงานที่ต้องการพร้อมกำหนดส่ง",
+        "Title": "\u0E15\u0E31\u0E49\u0E07\u0E2B\u0E31\u0E27\u0E02\u0E49\u0E2D\u0E41\u0E25\u0E30\u0E02\u0E2D\u0E43\u0E2B\u0E49\u0E25\u0E07\u0E21\u0E37\u0E2D\u0E17\u0E33",
         "DurationMinutes": 4,
+        "Summary": "\u0E40\u0E02\u0E35\u0E22\u0E19 Subject \u0E17\u0E35\u0E48\u0E2A\u0E41\u0E01\u0E19\u0E44\u0E14\u0E49\u0E40\u0E23\u0E47\u0E27 \u0E41\u0E25\u0E30\u0E23\u0E30\u0E1A\u0E38\u0E07\u0E32\u0E19\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E2A\u0E48\u0E07",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ตั้งหัวข้อด้วยสิ่งที่ต้องทำและชื่อเอกสาร ในเนื้อหาเกริ่นบริบทหนึ่งประโยค ตามด้วย Could you … by …? ระบุชื่อไฟล์หรือลิงก์ให้ผู้รับหาได้ทันที หากทำงานต่างเขตเวลาให้ใส่เขตเวลาด้วย",
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E15\u0E31\u0E49\u0E07\u0E2B\u0E31\u0E27\u0E02\u0E49\u0E2D\u0E14\u0E49\u0E27\u0E22\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E17\u0E33\u0E41\u0E25\u0E30\u0E0A\u0E37\u0E48\u0E2D\u0E40\u0E2D\u0E01\u0E2A\u0E32\u0E23 \u0E43\u0E19\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E32\u0E40\u0E01\u0E23\u0E34\u0E48\u0E19\u0E1A\u0E23\u0E34\u0E1A\u0E17\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04 \u0E15\u0E32\u0E21\u0E14\u0E49\u0E27\u0E22 Could you \u2026 by \u2026? \u0E23\u0E30\u0E1A\u0E38\u0E0A\u0E37\u0E48\u0E2D\u0E44\u0E1F\u0E25\u0E4C\u0E2B\u0E23\u0E37\u0E2D\u0E25\u0E34\u0E07\u0E01\u0E4C\u0E43\u0E2B\u0E49\u0E1C\u0E39\u0E49\u0E23\u0E31\u0E1A\u0E2B\u0E32\u0E44\u0E14\u0E49\u0E17\u0E31\u0E19\u0E17\u0E35 \u0E2B\u0E32\u0E01\u0E17\u0E33\u0E07\u0E32\u0E19\u0E15\u0E48\u0E32\u0E07\u0E40\u0E02\u0E15\u0E40\u0E27\u0E25\u0E32\u0E43\u0E2B\u0E49\u0E43\u0E2A\u0E48\u0E40\u0E02\u0E15\u0E40\u0E27\u0E25\u0E32\u0E14\u0E49\u0E27\u0E22",
             "Example": "Subject: Review checkout draft by Tue, 3 p.m. ICT\nCould you comment on the draft in this link by Tuesday at 3 p.m. ICT?"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ติดตามอีเมลอย่างสุภาพ",
-        "Summary": "ทวนคำขอและเปิดช่องให้ผู้รับแจ้งอุปสรรค",
+        "Title": "\u0E15\u0E34\u0E14\u0E15\u0E32\u0E21\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E2A\u0E38\u0E20\u0E32\u0E1E",
         "DurationMinutes": 4,
+        "Summary": "\u0E17\u0E27\u0E19\u0E04\u0E33\u0E02\u0E2D\u0E41\u0E25\u0E30\u0E40\u0E1B\u0E34\u0E14\u0E0A\u0E48\u0E2D\u0E07\u0E43\u0E2B\u0E49\u0E1C\u0E39\u0E49\u0E23\u0E31\u0E1A\u0E41\u0E08\u0E49\u0E07\u0E2D\u0E38\u0E1B\u0E2A\u0E23\u0E23\u0E04",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ตอบในเธรดเดิมเพื่อรักษาบริบท เขียนว่ากำลังติดตามเรื่องอะไร บอกเส้นตายที่ยังมีผล และเปิดช่องให้แจ้งหากติดงานอื่น ถ้าเส้นตายเปลี่ยนให้บอกเวลาใหม่ตรง ๆ และยืนยันว่าใช้ไฟล์ฉบับไหน",
-            "Example": "I’m following up on the checkout draft. Could you review version 2 by Thursday? If the timeline is tight, please let me know."
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E15\u0E2D\u0E1A\u0E43\u0E19\u0E40\u0E18\u0E23\u0E14\u0E40\u0E14\u0E34\u0E21\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E23\u0E31\u0E01\u0E29\u0E32\u0E1A\u0E23\u0E34\u0E1A\u0E17 \u0E40\u0E02\u0E35\u0E22\u0E19\u0E27\u0E48\u0E32\u0E01\u0E33\u0E25\u0E31\u0E07\u0E15\u0E34\u0E14\u0E15\u0E32\u0E21\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E2D\u0E30\u0E44\u0E23 \u0E1A\u0E2D\u0E01\u0E40\u0E2A\u0E49\u0E19\u0E15\u0E32\u0E22\u0E17\u0E35\u0E48\u0E22\u0E31\u0E07\u0E21\u0E35\u0E1C\u0E25 \u0E41\u0E25\u0E30\u0E40\u0E1B\u0E34\u0E14\u0E0A\u0E48\u0E2D\u0E07\u0E43\u0E2B\u0E49\u0E41\u0E08\u0E49\u0E07\u0E2B\u0E32\u0E01\u0E15\u0E34\u0E14\u0E07\u0E32\u0E19\u0E2D\u0E37\u0E48\u0E19 \u0E16\u0E49\u0E32\u0E40\u0E2A\u0E49\u0E19\u0E15\u0E32\u0E22\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E43\u0E2B\u0E49\u0E1A\u0E2D\u0E01\u0E40\u0E27\u0E25\u0E32\u0E43\u0E2B\u0E21\u0E48\u0E15\u0E23\u0E07 \u0E46 \u0E41\u0E25\u0E30\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E27\u0E48\u0E32\u0E43\u0E0A\u0E49\u0E44\u0E1F\u0E25\u0E4C\u0E09\u0E1A\u0E31\u0E1A\u0E44\u0E2B\u0E19",
+            "Example": "I\u2019m following up on the checkout draft. Could you review version 2 by Thursday? If the timeline is tight, please let me know."
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 105,
-    "Title": "สัมภาษณ์งานภาษาอังกฤษสำหรับมือใหม่",
+    "Title": "\u0E2A\u0E31\u0E21\u0E20\u0E32\u0E29\u0E13\u0E4C\u0E07\u0E32\u0E19\u0E20\u0E32\u0E29\u0E32\u0E2D\u0E31\u0E07\u0E01\u0E24\u0E29\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E21\u0E37\u0E2D\u0E43\u0E2B\u0E21\u0E48",
     "Category": "Languages",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "เตรียมตอบคำถามสัมภาษณ์งานด้วยข้อมูลที่เกี่ยวข้องกับตำแหน่งและตัวอย่างจากประสบการณ์ของตนเอง",
-    "Instructor": "Learn English | Let's Talk - Free English Lessons",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E40\u0E15\u0E23\u0E35\u0E22\u0E21\u0E15\u0E2D\u0E1A\u0E04\u0E33\u0E16\u0E32\u0E21\u0E2A\u0E31\u0E21\u0E20\u0E32\u0E29\u0E13\u0E4C\u0E07\u0E32\u0E19\u0E14\u0E49\u0E27\u0E22\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E17\u0E35\u0E48\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E02\u0E49\u0E2D\u0E07\u0E01\u0E31\u0E1A\u0E15\u0E33\u0E41\u0E2B\u0E19\u0E48\u0E07\u0E41\u0E25\u0E30\u0E15\u0E31\u0E27\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E08\u0E32\u0E01\u0E1B\u0E23\u0E30\u0E2A\u0E1A\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E02\u0E2D\u0E07\u0E15\u0E19\u0E40\u0E2D\u0E07",
+    "Instructor": "Learn English | Let\u0027s Talk - Free English Lessons",
     "Skills": [
-      "สัมภาษณ์งาน",
-      "แนะนำตัวมืออาชีพ",
-      "ตอบด้วยตัวอย่าง"
+      "\u0E2A\u0E31\u0E21\u0E20\u0E32\u0E29\u0E13\u0E4C\u0E07\u0E32\u0E19",
+      "\u0E41\u0E19\u0E30\u0E19\u0E33\u0E15\u0E31\u0E27\u0E21\u0E37\u0E2D\u0E2D\u0E32\u0E0A\u0E35\u0E1E",
+      "\u0E15\u0E2D\u0E1A\u0E14\u0E49\u0E27\u0E22\u0E15\u0E31\u0E27\u0E2D\u0E22\u0E48\u0E32\u0E07"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "เตรียมคำตอบสัมภาษณ์งาน",
-        "Summary": "ฟังตัวอย่างวิธีตอบคำถามยอดนิยมสำหรับผู้สมัครงานใหม่ แล้วฝึกปรับคำตอบให้ตรงกับตำแหน่งและประสบการณ์จริงของคุณ",
+        "Title": "\u0E40\u0E15\u0E23\u0E35\u0E22\u0E21\u0E04\u0E33\u0E15\u0E2D\u0E1A\u0E2A\u0E31\u0E21\u0E20\u0E32\u0E29\u0E13\u0E4C\u0E07\u0E32\u0E19",
         "DurationMinutes": 8,
+        "Summary": "\u0E1F\u0E31\u0E07\u0E15\u0E31\u0E27\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E27\u0E34\u0E18\u0E35\u0E15\u0E2D\u0E1A\u0E04\u0E33\u0E16\u0E32\u0E21\u0E22\u0E2D\u0E14\u0E19\u0E34\u0E22\u0E21\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E1C\u0E39\u0E49\u0E2A\u0E21\u0E31\u0E04\u0E23\u0E07\u0E32\u0E19\u0E43\u0E2B\u0E21\u0E48 \u0E41\u0E25\u0E49\u0E27\u0E1D\u0E36\u0E01\u0E1B\u0E23\u0E31\u0E1A\u0E04\u0E33\u0E15\u0E2D\u0E1A\u0E43\u0E2B\u0E49\u0E15\u0E23\u0E07\u0E01\u0E31\u0E1A\u0E15\u0E33\u0E41\u0E2B\u0E19\u0E48\u0E07\u0E41\u0E25\u0E30\u0E1B\u0E23\u0E30\u0E2A\u0E1A\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E08\u0E23\u0E34\u0E07\u0E02\u0E2D\u0E07\u0E04\u0E38\u0E13",
+        "Reading": [],
         "VideoId": "gnqzM6FWgTE",
         "VideoDurationSeconds": 444,
-        "VideoCreator": "Learn English | Let's Talk - Free English Lessons",
-        "VideoTitle": "Job Interview Question & Answers for freshers - Free Job Interview tips & English Lessons"
+        "VideoCreator": "Learn English | Let\u0027s Talk - Free English Lessons",
+        "VideoTitle": "Job Interview Question \u0026 Answers for freshers - Free Job Interview tips \u0026 English Lessons"
       },
       {
         "Id": 2,
-        "Title": "เล่าประสบการณ์ด้วย STAR",
-        "Summary": "เรียงคำตอบจากสถานการณ์ งานที่รับผิดชอบ การลงมือทำ และผลลัพธ์",
+        "Title": "\u0E40\u0E25\u0E48\u0E32\u0E1B\u0E23\u0E30\u0E2A\u0E1A\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E14\u0E49\u0E27\u0E22 STAR",
         "DurationMinutes": 4,
+        "Summary": "\u0E40\u0E23\u0E35\u0E22\u0E07\u0E04\u0E33\u0E15\u0E2D\u0E1A\u0E08\u0E32\u0E01\u0E2A\u0E16\u0E32\u0E19\u0E01\u0E32\u0E23\u0E13\u0E4C \u0E07\u0E32\u0E19\u0E17\u0E35\u0E48\u0E23\u0E31\u0E1A\u0E1C\u0E34\u0E14\u0E0A\u0E2D\u0E1A \u0E01\u0E32\u0E23\u0E25\u0E07\u0E21\u0E37\u0E2D\u0E17\u0E33 \u0E41\u0E25\u0E30\u0E1C\u0E25\u0E25\u0E31\u0E1E\u0E18\u0E4C",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "STAR ย่อจาก Situation, Task, Action และ Result เกริ่นเรื่องที่จำเป็น ระบุหน้าที่ของคุณ แล้วเล่าว่าลงมือทำอะไร ปิดด้วยผลที่ตรวจสอบได้ หากไม่มีตัวเลข ให้บอกผลเชิงพฤติกรรมหรือบทเรียนที่นำไปใช้ต่อโดยยึดประสบการณ์จริง",
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "STAR \u0E22\u0E48\u0E2D\u0E08\u0E32\u0E01 Situation, Task, Action \u0E41\u0E25\u0E30 Result \u0E40\u0E01\u0E23\u0E34\u0E48\u0E19\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E17\u0E35\u0E48\u0E08\u0E33\u0E40\u0E1B\u0E47\u0E19 \u0E23\u0E30\u0E1A\u0E38\u0E2B\u0E19\u0E49\u0E32\u0E17\u0E35\u0E48\u0E02\u0E2D\u0E07\u0E04\u0E38\u0E13 \u0E41\u0E25\u0E49\u0E27\u0E40\u0E25\u0E48\u0E32\u0E27\u0E48\u0E32\u0E25\u0E07\u0E21\u0E37\u0E2D\u0E17\u0E33\u0E2D\u0E30\u0E44\u0E23 \u0E1B\u0E34\u0E14\u0E14\u0E49\u0E27\u0E22\u0E1C\u0E25\u0E17\u0E35\u0E48\u0E15\u0E23\u0E27\u0E08\u0E2A\u0E2D\u0E1A\u0E44\u0E14\u0E49 \u0E2B\u0E32\u0E01\u0E44\u0E21\u0E48\u0E21\u0E35\u0E15\u0E31\u0E27\u0E40\u0E25\u0E02 \u0E43\u0E2B\u0E49\u0E1A\u0E2D\u0E01\u0E1C\u0E25\u0E40\u0E0A\u0E34\u0E07\u0E1E\u0E24\u0E15\u0E34\u0E01\u0E23\u0E23\u0E21\u0E2B\u0E23\u0E37\u0E2D\u0E1A\u0E17\u0E40\u0E23\u0E35\u0E22\u0E19\u0E17\u0E35\u0E48\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49\u0E15\u0E48\u0E2D\u0E42\u0E14\u0E22\u0E22\u0E36\u0E14\u0E1B\u0E23\u0E30\u0E2A\u0E1A\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E08\u0E23\u0E34\u0E07",
             "Example": "Our team was behind schedule. I was assigned to coordinate testing. I split the checklist by feature and tracked issues daily. We finished the key tests before the demo."
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ถามกลับและปิดการสัมภาษณ์",
-        "Summary": "ถามคำถามที่ช่วยประเมินบทบาทงาน และย้ำความสนใจในช่วงท้าย",
+        "Title": "\u0E16\u0E32\u0E21\u0E01\u0E25\u0E31\u0E1A\u0E41\u0E25\u0E30\u0E1B\u0E34\u0E14\u0E01\u0E32\u0E23\u0E2A\u0E31\u0E21\u0E20\u0E32\u0E29\u0E13\u0E4C",
         "DurationMinutes": 4,
+        "Summary": "\u0E16\u0E32\u0E21\u0E04\u0E33\u0E16\u0E32\u0E21\u0E17\u0E35\u0E48\u0E0A\u0E48\u0E27\u0E22\u0E1B\u0E23\u0E30\u0E40\u0E21\u0E34\u0E19\u0E1A\u0E17\u0E1A\u0E32\u0E17\u0E07\u0E32\u0E19 \u0E41\u0E25\u0E30\u0E22\u0E49\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E19\u0E43\u0E08\u0E43\u0E19\u0E0A\u0E48\u0E27\u0E07\u0E17\u0E49\u0E32\u0E22",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "เตรียมคำถามเกี่ยวกับงานจริง เช่น ความสำเร็จในสามเดือนแรกหรือวิธีให้ Feedback เมื่อปิดสัมภาษณ์ ให้ขอบคุณ อ้างถึงส่วนของงานที่สนใจ และถามขั้นตอนถัดไป ใช้ข้อมูลที่ได้ประเมินว่างานเหมาะกับคุณหรือไม่",
-            "Example": "What would success look like in the first three months?\nThank you for explaining the role. I’m interested in the testing process. What are the next steps?"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E40\u0E15\u0E23\u0E35\u0E22\u0E21\u0E04\u0E33\u0E16\u0E32\u0E21\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E01\u0E31\u0E1A\u0E07\u0E32\u0E19\u0E08\u0E23\u0E34\u0E07 \u0E40\u0E0A\u0E48\u0E19 \u0E04\u0E27\u0E32\u0E21\u0E2A\u0E33\u0E40\u0E23\u0E47\u0E08\u0E43\u0E19\u0E2A\u0E32\u0E21\u0E40\u0E14\u0E37\u0E2D\u0E19\u0E41\u0E23\u0E01\u0E2B\u0E23\u0E37\u0E2D\u0E27\u0E34\u0E18\u0E35\u0E43\u0E2B\u0E49 Feedback \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E1B\u0E34\u0E14\u0E2A\u0E31\u0E21\u0E20\u0E32\u0E29\u0E13\u0E4C \u0E43\u0E2B\u0E49\u0E02\u0E2D\u0E1A\u0E04\u0E38\u0E13 \u0E2D\u0E49\u0E32\u0E07\u0E16\u0E36\u0E07\u0E2A\u0E48\u0E27\u0E19\u0E02\u0E2D\u0E07\u0E07\u0E32\u0E19\u0E17\u0E35\u0E48\u0E2A\u0E19\u0E43\u0E08 \u0E41\u0E25\u0E30\u0E16\u0E32\u0E21\u0E02\u0E31\u0E49\u0E19\u0E15\u0E2D\u0E19\u0E16\u0E31\u0E14\u0E44\u0E1B \u0E43\u0E0A\u0E49\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E17\u0E35\u0E48\u0E44\u0E14\u0E49\u0E1B\u0E23\u0E30\u0E40\u0E21\u0E34\u0E19\u0E27\u0E48\u0E32\u0E07\u0E32\u0E19\u0E40\u0E2B\u0E21\u0E32\u0E30\u0E01\u0E31\u0E1A\u0E04\u0E38\u0E13\u0E2B\u0E23\u0E37\u0E2D\u0E44\u0E21\u0E48",
+            "Example": "What would success look like in the first three months?\nThank you for explaining the role. I\u2019m interested in the testing process. What are the next steps?"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 106,
-    "Title": "HTML สำหรับหน้าเว็บแรก",
+    "Title": "HTML \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E2B\u0E19\u0E49\u0E32\u0E40\u0E27\u0E47\u0E1A\u0E41\u0E23\u0E01",
     "Category": "Development",
     "Level": "Beginner",
     "Units": 3,
     "Featured": true,
-    "Description": "สร้างหน้าเว็บง่าย ๆ ด้วยหัวเรื่อง ย่อหน้า และลิงก์ พร้อมเข้าใจส่วนประกอบของไฟล์ HTML",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E2B\u0E19\u0E49\u0E32\u0E40\u0E27\u0E47\u0E1A\u0E07\u0E48\u0E32\u0E22 \u0E46 \u0E14\u0E49\u0E27\u0E22\u0E2B\u0E31\u0E27\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07 \u0E22\u0E48\u0E2D\u0E2B\u0E19\u0E49\u0E32 \u0E41\u0E25\u0E30\u0E25\u0E34\u0E07\u0E01\u0E4C \u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E40\u0E02\u0E49\u0E32\u0E43\u0E08\u0E2A\u0E48\u0E27\u0E19\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E02\u0E2D\u0E07\u0E44\u0E1F\u0E25\u0E4C HTML",
     "Instructor": "Jake Wright",
     "Skills": [
-      "โครงสร้างเอกสาร HTML",
-      "หัวเรื่องและย่อหน้า",
-      "ลิงก์"
+      "\u0E42\u0E04\u0E23\u0E07\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E40\u0E2D\u0E01\u0E2A\u0E32\u0E23 HTML",
+      "\u0E2B\u0E31\u0E27\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E41\u0E25\u0E30\u0E22\u0E48\u0E2D\u0E2B\u0E19\u0E49\u0E32",
+      "\u0E25\u0E34\u0E07\u0E01\u0E4C"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "ประกอบหน้าเว็บด้วยแท็กพื้นฐาน",
-        "Summary": "เปิดไฟล์ HTML ในเบราว์เซอร์ แล้วลองสร้างหน้ากิจกรรมที่มีหัวเรื่อง ย่อหน้า และลิงก์ไปยังหน้ากำหนดการ",
+        "Title": "\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E2B\u0E19\u0E49\u0E32\u0E40\u0E27\u0E47\u0E1A\u0E14\u0E49\u0E27\u0E22\u0E41\u0E17\u0E47\u0E01\u0E1E\u0E37\u0E49\u0E19\u0E10\u0E32\u0E19",
         "DurationMinutes": 13,
+        "Summary": "\u0E40\u0E1B\u0E34\u0E14\u0E44\u0E1F\u0E25\u0E4C HTML \u0E43\u0E19\u0E40\u0E1A\u0E23\u0E32\u0E27\u0E4C\u0E40\u0E0B\u0E2D\u0E23\u0E4C \u0E41\u0E25\u0E49\u0E27\u0E25\u0E2D\u0E07\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E2B\u0E19\u0E49\u0E32\u0E01\u0E34\u0E08\u0E01\u0E23\u0E23\u0E21\u0E17\u0E35\u0E48\u0E21\u0E35\u0E2B\u0E31\u0E27\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07 \u0E22\u0E48\u0E2D\u0E2B\u0E19\u0E49\u0E32 \u0E41\u0E25\u0E30\u0E25\u0E34\u0E07\u0E01\u0E4C\u0E44\u0E1B\u0E22\u0E31\u0E07\u0E2B\u0E19\u0E49\u0E32\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E01\u0E32\u0E23",
+        "Reading": [],
         "VideoId": "bWPMSSsVdPk",
         "VideoDurationSeconds": 736,
         "VideoCreator": "Jake Wright",
@@ -348,52 +426,65 @@
       },
       {
         "Id": 2,
-        "Title": "จัดโครงหน้าให้สื่อความหมาย",
-        "Summary": "ใช้ main, nav และหัวเรื่องตามบทบาทของเนื้อหา",
+        "Title": "\u0E08\u0E31\u0E14\u0E42\u0E04\u0E23\u0E07\u0E2B\u0E19\u0E49\u0E32\u0E43\u0E2B\u0E49\u0E2A\u0E37\u0E48\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E2B\u0E21\u0E32\u0E22",
         "DurationMinutes": 4,
+        "Summary": "\u0E43\u0E0A\u0E49 main, nav \u0E41\u0E25\u0E30\u0E2B\u0E31\u0E27\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E15\u0E32\u0E21\u0E1A\u0E17\u0E1A\u0E32\u0E17\u0E02\u0E2D\u0E07\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E32",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "HTML เชิงความหมายช่วยให้คนและเบราว์เซอร์เข้าใจโครงหน้า ใช้ main ครอบเนื้อหาหลัก ใช้ nav สำหรับชุดลิงก์นำทาง และจัดหัวเรื่องจาก h1 สำหรับชื่อหน้าไป h2 สำหรับหัวข้อหลัก ใช้ CSS ปรับขนาดตัวอักษรได้",
-            "Example": "<nav aria-label=\"เมนูหลัก\"><a href=\"index.html\">หน้าแรก</a></nav>\n<main><h1>งานเปิดบ้าน</h1><h2>กำหนดการ</h2></main>"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "HTML \u0E40\u0E0A\u0E34\u0E07\u0E04\u0E27\u0E32\u0E21\u0E2B\u0E21\u0E32\u0E22\u0E0A\u0E48\u0E27\u0E22\u0E43\u0E2B\u0E49\u0E04\u0E19\u0E41\u0E25\u0E30\u0E40\u0E1A\u0E23\u0E32\u0E27\u0E4C\u0E40\u0E0B\u0E2D\u0E23\u0E4C\u0E40\u0E02\u0E49\u0E32\u0E43\u0E08\u0E42\u0E04\u0E23\u0E07\u0E2B\u0E19\u0E49\u0E32 \u0E43\u0E0A\u0E49 main \u0E04\u0E23\u0E2D\u0E1A\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E32\u0E2B\u0E25\u0E31\u0E01 \u0E43\u0E0A\u0E49 nav \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E0A\u0E38\u0E14\u0E25\u0E34\u0E07\u0E01\u0E4C\u0E19\u0E33\u0E17\u0E32\u0E07 \u0E41\u0E25\u0E30\u0E08\u0E31\u0E14\u0E2B\u0E31\u0E27\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E08\u0E32\u0E01 h1 \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E0A\u0E37\u0E48\u0E2D\u0E2B\u0E19\u0E49\u0E32\u0E44\u0E1B h2 \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E2B\u0E31\u0E27\u0E02\u0E49\u0E2D\u0E2B\u0E25\u0E31\u0E01 \u0E43\u0E0A\u0E49 CSS \u0E1B\u0E23\u0E31\u0E1A\u0E02\u0E19\u0E32\u0E14\u0E15\u0E31\u0E27\u0E2D\u0E31\u0E01\u0E29\u0E23\u0E44\u0E14\u0E49",
+            "Example": "\u003Cnav aria-label=\u0022\u0E40\u0E21\u0E19\u0E39\u0E2B\u0E25\u0E31\u0E01\u0022\u003E\u003Ca href=\u0022index.html\u0022\u003E\u0E2B\u0E19\u0E49\u0E32\u0E41\u0E23\u0E01\u003C/a\u003E\u003C/nav\u003E\n\u003Cmain\u003E\u003Ch1\u003E\u0E07\u0E32\u0E19\u0E40\u0E1B\u0E34\u0E14\u0E1A\u0E49\u0E32\u0E19\u003C/h1\u003E\u003Ch2\u003E\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E01\u0E32\u0E23\u003C/h2\u003E\u003C/main\u003E"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ใส่ภาพและลิงก์ที่คนใช้ได้จริง",
-        "Summary": "เขียนเส้นทางไปไฟล์และข้อความกำกับที่สื่อจุดหมาย",
+        "Title": "\u0E43\u0E2A\u0E48\u0E20\u0E32\u0E1E\u0E41\u0E25\u0E30\u0E25\u0E34\u0E07\u0E01\u0E4C\u0E17\u0E35\u0E48\u0E04\u0E19\u0E43\u0E0A\u0E49\u0E44\u0E14\u0E49\u0E08\u0E23\u0E34\u0E07",
         "DurationMinutes": 4,
+        "Summary": "\u0E40\u0E02\u0E35\u0E22\u0E19\u0E40\u0E2A\u0E49\u0E19\u0E17\u0E32\u0E07\u0E44\u0E1B\u0E44\u0E1F\u0E25\u0E4C\u0E41\u0E25\u0E30\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E01\u0E33\u0E01\u0E31\u0E1A\u0E17\u0E35\u0E48\u0E2A\u0E37\u0E48\u0E2D\u0E08\u0E38\u0E14\u0E2B\u0E21\u0E32\u0E22",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "เส้นทางสัมพัทธ์เริ่มจากตำแหน่งไฟล์ HTML เช่น images/map.png เข้าโฟลเดอร์ images ในระดับเดียวกัน ใช้ alt ถ่ายทอดความหมายของภาพ หากภาพตกแต่งล้วนให้ใส่ alt ว่าง ตั้งข้อความลิงก์ให้รู้ว่าจะเปิดอะไรและลองเปิดจากหน้าจริง",
-            "Example": "<img src=\"images/map.png\" alt=\"แผนที่จากประตูหลักไปห้องประชุมชั้น 2\">\n<a href=\"schedule.html\">ดูตารางกิจกรรม</a>"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E40\u0E2A\u0E49\u0E19\u0E17\u0E32\u0E07\u0E2A\u0E31\u0E21\u0E1E\u0E31\u0E17\u0E18\u0E4C\u0E40\u0E23\u0E34\u0E48\u0E21\u0E08\u0E32\u0E01\u0E15\u0E33\u0E41\u0E2B\u0E19\u0E48\u0E07\u0E44\u0E1F\u0E25\u0E4C HTML \u0E40\u0E0A\u0E48\u0E19 images/map.png \u0E40\u0E02\u0E49\u0E32\u0E42\u0E1F\u0E25\u0E40\u0E14\u0E2D\u0E23\u0E4C images \u0E43\u0E19\u0E23\u0E30\u0E14\u0E31\u0E1A\u0E40\u0E14\u0E35\u0E22\u0E27\u0E01\u0E31\u0E19 \u0E43\u0E0A\u0E49 alt \u0E16\u0E48\u0E32\u0E22\u0E17\u0E2D\u0E14\u0E04\u0E27\u0E32\u0E21\u0E2B\u0E21\u0E32\u0E22\u0E02\u0E2D\u0E07\u0E20\u0E32\u0E1E \u0E2B\u0E32\u0E01\u0E20\u0E32\u0E1E\u0E15\u0E01\u0E41\u0E15\u0E48\u0E07\u0E25\u0E49\u0E27\u0E19\u0E43\u0E2B\u0E49\u0E43\u0E2A\u0E48 alt \u0E27\u0E48\u0E32\u0E07 \u0E15\u0E31\u0E49\u0E07\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E25\u0E34\u0E07\u0E01\u0E4C\u0E43\u0E2B\u0E49\u0E23\u0E39\u0E49\u0E27\u0E48\u0E32\u0E08\u0E30\u0E40\u0E1B\u0E34\u0E14\u0E2D\u0E30\u0E44\u0E23\u0E41\u0E25\u0E30\u0E25\u0E2D\u0E07\u0E40\u0E1B\u0E34\u0E14\u0E08\u0E32\u0E01\u0E2B\u0E19\u0E49\u0E32\u0E08\u0E23\u0E34\u0E07",
+            "Example": "\u003Cimg src=\u0022images/map.png\u0022 alt=\u0022\u0E41\u0E1C\u0E19\u0E17\u0E35\u0E48\u0E08\u0E32\u0E01\u0E1B\u0E23\u0E30\u0E15\u0E39\u0E2B\u0E25\u0E31\u0E01\u0E44\u0E1B\u0E2B\u0E49\u0E2D\u0E07\u0E1B\u0E23\u0E30\u0E0A\u0E38\u0E21\u0E0A\u0E31\u0E49\u0E19 2\u0022\u003E\n\u003Ca href=\u0022schedule.html\u0022\u003E\u0E14\u0E39\u0E15\u0E32\u0E23\u0E32\u0E07\u0E01\u0E34\u0E08\u0E01\u0E23\u0E23\u0E21\u003C/a\u003E"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 107,
-    "Title": "จัดสไตล์หน้าเว็บด้วย CSS",
+    "Title": "\u0E08\u0E31\u0E14\u0E2A\u0E44\u0E15\u0E25\u0E4C\u0E2B\u0E19\u0E49\u0E32\u0E40\u0E27\u0E47\u0E1A\u0E14\u0E49\u0E27\u0E22 CSS",
     "Category": "Development",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "เชื่อมไฟล์ CSS กับ HTML แล้วใช้ตัวเลือกและคุณสมบัติปรับหน้าตาเว็บโดยแก้กฎจากที่เดียว",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E21\u0E44\u0E1F\u0E25\u0E4C CSS \u0E01\u0E31\u0E1A HTML \u0E41\u0E25\u0E49\u0E27\u0E43\u0E0A\u0E49\u0E15\u0E31\u0E27\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E41\u0E25\u0E30\u0E04\u0E38\u0E13\u0E2A\u0E21\u0E1A\u0E31\u0E15\u0E34\u0E1B\u0E23\u0E31\u0E1A\u0E2B\u0E19\u0E49\u0E32\u0E15\u0E32\u0E40\u0E27\u0E47\u0E1A\u0E42\u0E14\u0E22\u0E41\u0E01\u0E49\u0E01\u0E0E\u0E08\u0E32\u0E01\u0E17\u0E35\u0E48\u0E40\u0E14\u0E35\u0E22\u0E27",
     "Instructor": "Jake Wright",
     "Skills": [
       "CSS Selectors",
       "External Stylesheet",
-      "สีและพื้นหลัง"
+      "\u0E2A\u0E35\u0E41\u0E25\u0E30\u0E1E\u0E37\u0E49\u0E19\u0E2B\u0E25\u0E31\u0E07"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "เลือกองค์ประกอบและเขียนกฎ CSS",
-        "Summary": "ลองกำหนดสีข้อความและพื้นหลังแยกกัน แล้วใช้ class เพื่อให้การ์ดหลายใบใช้สไตล์ร่วมกัน",
+        "Title": "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E2D\u0E07\u0E04\u0E4C\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E41\u0E25\u0E30\u0E40\u0E02\u0E35\u0E22\u0E19\u0E01\u0E0E CSS",
         "DurationMinutes": 13,
+        "Summary": "\u0E25\u0E2D\u0E07\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E2A\u0E35\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E41\u0E25\u0E30\u0E1E\u0E37\u0E49\u0E19\u0E2B\u0E25\u0E31\u0E07\u0E41\u0E22\u0E01\u0E01\u0E31\u0E19 \u0E41\u0E25\u0E49\u0E27\u0E43\u0E0A\u0E49 class \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E43\u0E2B\u0E49\u0E01\u0E32\u0E23\u0E4C\u0E14\u0E2B\u0E25\u0E32\u0E22\u0E43\u0E1A\u0E43\u0E0A\u0E49\u0E2A\u0E44\u0E15\u0E25\u0E4C\u0E23\u0E48\u0E27\u0E21\u0E01\u0E31\u0E19",
+        "Reading": [],
         "VideoId": "0afZj1G0BIE",
         "VideoDurationSeconds": 731,
         "VideoCreator": "Jake Wright",
@@ -401,52 +492,65 @@
       },
       {
         "Id": 2,
-        "Title": "เข้าใจขนาดกล่องก่อนจัดวาง",
-        "Summary": "แยก padding, border และ margin และคำนวณความกว้างของการ์ด",
+        "Title": "\u0E40\u0E02\u0E49\u0E32\u0E43\u0E08\u0E02\u0E19\u0E32\u0E14\u0E01\u0E25\u0E48\u0E2D\u0E07\u0E01\u0E48\u0E2D\u0E19\u0E08\u0E31\u0E14\u0E27\u0E32\u0E07",
         "DurationMinutes": 4,
+        "Summary": "\u0E41\u0E22\u0E01 padding, border \u0E41\u0E25\u0E30 margin \u0E41\u0E25\u0E30\u0E04\u0E33\u0E19\u0E27\u0E13\u0E04\u0E27\u0E32\u0E21\u0E01\u0E27\u0E49\u0E32\u0E07\u0E02\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E4C\u0E14",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "Padding เพิ่มพื้นที่ระหว่างเนื้อหากับขอบ ส่วน margin เพิ่มระยะภายนอก ค่าเริ่มต้น content-box จะบวก padding และ border เข้าไปนอก width ใช้ box-sizing: border-box เมื่อต้องการให้ width รวมทั้งสองอย่าง",
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "Padding \u0E40\u0E1E\u0E34\u0E48\u0E21\u0E1E\u0E37\u0E49\u0E19\u0E17\u0E35\u0E48\u0E23\u0E30\u0E2B\u0E27\u0E48\u0E32\u0E07\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E32\u0E01\u0E31\u0E1A\u0E02\u0E2D\u0E1A \u0E2A\u0E48\u0E27\u0E19 margin \u0E40\u0E1E\u0E34\u0E48\u0E21\u0E23\u0E30\u0E22\u0E30\u0E20\u0E32\u0E22\u0E19\u0E2D\u0E01 \u0E04\u0E48\u0E32\u0E40\u0E23\u0E34\u0E48\u0E21\u0E15\u0E49\u0E19 content-box \u0E08\u0E30\u0E1A\u0E27\u0E01 padding \u0E41\u0E25\u0E30 border \u0E40\u0E02\u0E49\u0E32\u0E44\u0E1B\u0E19\u0E2D\u0E01 width \u0E43\u0E0A\u0E49 box-sizing: border-box \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E43\u0E2B\u0E49 width \u0E23\u0E27\u0E21\u0E17\u0E31\u0E49\u0E07\u0E2A\u0E2D\u0E07\u0E2D\u0E22\u0E48\u0E32\u0E07",
             "Example": ".card { box-sizing: border-box; width: 240px; padding: 16px; border: 1px solid; margin: 12px; }"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ทำการ์ดให้เรียงตามขนาดจอ",
-        "Summary": "เปลี่ยนจำนวนคอลัมน์ด้วย CSS Grid ตามพื้นที่ที่เนื้อหาต้องใช้",
+        "Title": "\u0E17\u0E33\u0E01\u0E32\u0E23\u0E4C\u0E14\u0E43\u0E2B\u0E49\u0E40\u0E23\u0E35\u0E22\u0E07\u0E15\u0E32\u0E21\u0E02\u0E19\u0E32\u0E14\u0E08\u0E2D",
         "DurationMinutes": 4,
+        "Summary": "\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E08\u0E33\u0E19\u0E27\u0E19\u0E04\u0E2D\u0E25\u0E31\u0E21\u0E19\u0E4C\u0E14\u0E49\u0E27\u0E22 CSS Grid \u0E15\u0E32\u0E21\u0E1E\u0E37\u0E49\u0E19\u0E17\u0E35\u0E48\u0E17\u0E35\u0E48\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E32\u0E15\u0E49\u0E2D\u0E07\u0E43\u0E0A\u0E49",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "เริ่มจากหนึ่งคอลัมน์สำหรับมือถือ แล้วเพิ่มเมื่อพื้นที่พอ ใช้ minmax(0, 1fr) ให้คอลัมน์ย่อได้เมื่อข้อความยาว ระยะ gap อยู่ระหว่างคอลัมน์ เลือก breakpoint จากจุดที่การ์ดเริ่มแน่นและลองย่อจอพร้อมข้อความจริง",
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E40\u0E23\u0E34\u0E48\u0E21\u0E08\u0E32\u0E01\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E04\u0E2D\u0E25\u0E31\u0E21\u0E19\u0E4C\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E21\u0E37\u0E2D\u0E16\u0E37\u0E2D \u0E41\u0E25\u0E49\u0E27\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E1E\u0E37\u0E49\u0E19\u0E17\u0E35\u0E48\u0E1E\u0E2D \u0E43\u0E0A\u0E49 minmax(0, 1fr) \u0E43\u0E2B\u0E49\u0E04\u0E2D\u0E25\u0E31\u0E21\u0E19\u0E4C\u0E22\u0E48\u0E2D\u0E44\u0E14\u0E49\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E22\u0E32\u0E27 \u0E23\u0E30\u0E22\u0E30 gap \u0E2D\u0E22\u0E39\u0E48\u0E23\u0E30\u0E2B\u0E27\u0E48\u0E32\u0E07\u0E04\u0E2D\u0E25\u0E31\u0E21\u0E19\u0E4C \u0E40\u0E25\u0E37\u0E2D\u0E01 breakpoint \u0E08\u0E32\u0E01\u0E08\u0E38\u0E14\u0E17\u0E35\u0E48\u0E01\u0E32\u0E23\u0E4C\u0E14\u0E40\u0E23\u0E34\u0E48\u0E21\u0E41\u0E19\u0E48\u0E19\u0E41\u0E25\u0E30\u0E25\u0E2D\u0E07\u0E22\u0E48\u0E2D\u0E08\u0E2D\u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E08\u0E23\u0E34\u0E07",
             "Example": ".cards { display: grid; gap: 16px; }\n@media (min-width: 680px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 108,
-    "Title": "JavaScript จากตัวแปรถึงเงื่อนไข",
+    "Title": "JavaScript \u0E08\u0E32\u0E01\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23\u0E16\u0E36\u0E07\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02",
     "Category": "Development",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "ลองเก็บข้อมูลในตัวแปรและอาร์เรย์ แล้วใช้เงื่อนไขกับลูปเพื่อให้โปรแกรมตัดสินใจและทำงานซ้ำ",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E25\u0E2D\u0E07\u0E40\u0E01\u0E47\u0E1A\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E43\u0E19\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23\u0E41\u0E25\u0E30\u0E2D\u0E32\u0E23\u0E4C\u0E40\u0E23\u0E22\u0E4C \u0E41\u0E25\u0E49\u0E27\u0E43\u0E0A\u0E49\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02\u0E01\u0E31\u0E1A\u0E25\u0E39\u0E1B\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E43\u0E2B\u0E49\u0E42\u0E1B\u0E23\u0E41\u0E01\u0E23\u0E21\u0E15\u0E31\u0E14\u0E2A\u0E34\u0E19\u0E43\u0E08\u0E41\u0E25\u0E30\u0E17\u0E33\u0E07\u0E32\u0E19\u0E0B\u0E49\u0E33",
     "Instructor": "Jake Wright",
     "Skills": [
       "JavaScript Variables",
       "Arrays",
-      "เงื่อนไขและลูป"
+      "\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02\u0E41\u0E25\u0E30\u0E25\u0E39\u0E1B"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "อ่านค่าและควบคุมลำดับคำสั่ง",
-        "Summary": "ลองสร้างรายการคะแนน และเขียนโค้ดให้แสดงข้อความต่างกันเมื่อคะแนนถึงเกณฑ์",
+        "Title": "\u0E2D\u0E48\u0E32\u0E19\u0E04\u0E48\u0E32\u0E41\u0E25\u0E30\u0E04\u0E27\u0E1A\u0E04\u0E38\u0E21\u0E25\u0E33\u0E14\u0E31\u0E1A\u0E04\u0E33\u0E2A\u0E31\u0E48\u0E07",
         "DurationMinutes": 12,
+        "Summary": "\u0E25\u0E2D\u0E07\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E04\u0E30\u0E41\u0E19\u0E19 \u0E41\u0E25\u0E30\u0E40\u0E02\u0E35\u0E22\u0E19\u0E42\u0E04\u0E49\u0E14\u0E43\u0E2B\u0E49\u0E41\u0E2A\u0E14\u0E07\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E15\u0E48\u0E32\u0E07\u0E01\u0E31\u0E19\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E04\u0E30\u0E41\u0E19\u0E19\u0E16\u0E36\u0E07\u0E40\u0E01\u0E13\u0E11\u0E4C",
+        "Reading": [],
         "VideoId": "Ukg_U3CnJWI",
         "VideoDurationSeconds": 720,
         "VideoCreator": "Jake Wright",
@@ -454,52 +558,65 @@
       },
       {
         "Id": 2,
-        "Title": "เขียนเงื่อนไขที่ครอบคลุมค่าขอบ",
-        "Summary": "เช็กหลายเงื่อนไขด้วย && และทดสอบค่าที่พอดีเกณฑ์",
+        "Title": "\u0E40\u0E02\u0E35\u0E22\u0E19\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02\u0E17\u0E35\u0E48\u0E04\u0E23\u0E2D\u0E1A\u0E04\u0E25\u0E38\u0E21\u0E04\u0E48\u0E32\u0E02\u0E2D\u0E1A",
         "DurationMinutes": 4,
+        "Summary": "\u0E40\u0E0A\u0E47\u0E01\u0E2B\u0E25\u0E32\u0E22\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02\u0E14\u0E49\u0E27\u0E22 \u0026\u0026 \u0E41\u0E25\u0E30\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E04\u0E48\u0E32\u0E17\u0E35\u0E48\u0E1E\u0E2D\u0E14\u0E35\u0E40\u0E01\u0E13\u0E11\u0E4C",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "แปลงกฎเป็นเงื่อนไขย่อย เช่น คะแนนอย่างน้อย 60 ใช้ >= และต้องส่งงานใช้ submitted เชื่อมด้วย && เมื่อต้องให้ทั้งสองเงื่อนไขเป็นจริง ทดลองค่าต่ำกว่า เท่ากับ และสูงกว่าเกณฑ์ พร้อมสลับสถานะส่งงาน",
-            "Example": "const passed = score >= 60 && submitted;"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E41\u0E1B\u0E25\u0E07\u0E01\u0E0E\u0E40\u0E1B\u0E47\u0E19\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02\u0E22\u0E48\u0E2D\u0E22 \u0E40\u0E0A\u0E48\u0E19 \u0E04\u0E30\u0E41\u0E19\u0E19\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E19\u0E49\u0E2D\u0E22 60 \u0E43\u0E0A\u0E49 \u003E= \u0E41\u0E25\u0E30\u0E15\u0E49\u0E2D\u0E07\u0E2A\u0E48\u0E07\u0E07\u0E32\u0E19\u0E43\u0E0A\u0E49 submitted \u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E21\u0E14\u0E49\u0E27\u0E22 \u0026\u0026 \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E15\u0E49\u0E2D\u0E07\u0E43\u0E2B\u0E49\u0E17\u0E31\u0E49\u0E07\u0E2A\u0E2D\u0E07\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02\u0E40\u0E1B\u0E47\u0E19\u0E08\u0E23\u0E34\u0E07 \u0E17\u0E14\u0E25\u0E2D\u0E07\u0E04\u0E48\u0E32\u0E15\u0E48\u0E33\u0E01\u0E27\u0E48\u0E32 \u0E40\u0E17\u0E48\u0E32\u0E01\u0E31\u0E1A \u0E41\u0E25\u0E30\u0E2A\u0E39\u0E07\u0E01\u0E27\u0E48\u0E32\u0E40\u0E01\u0E13\u0E11\u0E4C \u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E2A\u0E25\u0E31\u0E1A\u0E2A\u0E16\u0E32\u0E19\u0E30\u0E2A\u0E48\u0E07\u0E07\u0E32\u0E19",
+            "Example": "const passed = score \u003E= 60 \u0026\u0026 submitted;"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ใช้เงื่อนไขกับรายการคะแนน",
-        "Summary": "วนดูสมาชิกใน Array และสะสมจำนวนที่ผ่านเกณฑ์",
+        "Title": "\u0E43\u0E0A\u0E49\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02\u0E01\u0E31\u0E1A\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E04\u0E30\u0E41\u0E19\u0E19",
         "DurationMinutes": 4,
+        "Summary": "\u0E27\u0E19\u0E14\u0E39\u0E2A\u0E21\u0E32\u0E0A\u0E34\u0E01\u0E43\u0E19 Array \u0E41\u0E25\u0E30\u0E2A\u0E30\u0E2A\u0E21\u0E08\u0E33\u0E19\u0E27\u0E19\u0E17\u0E35\u0E48\u0E1C\u0E48\u0E32\u0E19\u0E40\u0E01\u0E13\u0E11\u0E4C",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "for…of อ่านค่าทีละตัว กำหนดตัวนับด้วย let เพราะต้องเปลี่ยนค่า เพิ่มตัวนับเมื่อผ่านเงื่อนไข เมื่อรายการว่าง ลูปไม่ทำงานและตัวนับคงค่าเริ่มต้น หาค่าที่คาดไว้ด้วยมือก่อนรันทดสอบ",
-            "Example": "const scores = [48, 60, 82];\nlet count = 0;\nfor (const score of scores) {\n  if (score >= 60) count += 1;\n}"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "for\u2026of \u0E2D\u0E48\u0E32\u0E19\u0E04\u0E48\u0E32\u0E17\u0E35\u0E25\u0E30\u0E15\u0E31\u0E27 \u0E01\u0E33\u0E2B\u0E19\u0E14\u0E15\u0E31\u0E27\u0E19\u0E31\u0E1A\u0E14\u0E49\u0E27\u0E22 let \u0E40\u0E1E\u0E23\u0E32\u0E30\u0E15\u0E49\u0E2D\u0E07\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E04\u0E48\u0E32 \u0E40\u0E1E\u0E34\u0E48\u0E21\u0E15\u0E31\u0E27\u0E19\u0E31\u0E1A\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E1C\u0E48\u0E32\u0E19\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02 \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E27\u0E48\u0E32\u0E07 \u0E25\u0E39\u0E1B\u0E44\u0E21\u0E48\u0E17\u0E33\u0E07\u0E32\u0E19\u0E41\u0E25\u0E30\u0E15\u0E31\u0E27\u0E19\u0E31\u0E1A\u0E04\u0E07\u0E04\u0E48\u0E32\u0E40\u0E23\u0E34\u0E48\u0E21\u0E15\u0E49\u0E19 \u0E2B\u0E32\u0E04\u0E48\u0E32\u0E17\u0E35\u0E48\u0E04\u0E32\u0E14\u0E44\u0E27\u0E49\u0E14\u0E49\u0E27\u0E22\u0E21\u0E37\u0E2D\u0E01\u0E48\u0E2D\u0E19\u0E23\u0E31\u0E19\u0E17\u0E14\u0E2A\u0E2D\u0E1A",
+            "Example": "const scores = [48, 60, 82];\nlet count = 0;\nfor (const score of scores) {\n  if (score \u003E= 60) count \u002B= 1;\n}"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 109,
-    "Title": "ตัวแปร Python สำหรับมือใหม่",
+    "Title": "\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23 Python \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E21\u0E37\u0E2D\u0E43\u0E2B\u0E21\u0E48",
     "Category": "Development",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "ฝึกตั้งตัวแปรและนำค่าที่เก็บไว้ไปคำนวณหรือเรียกใช้ต่อใน Python",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E1D\u0E36\u0E01\u0E15\u0E31\u0E49\u0E07\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23\u0E41\u0E25\u0E30\u0E19\u0E33\u0E04\u0E48\u0E32\u0E17\u0E35\u0E48\u0E40\u0E01\u0E47\u0E1A\u0E44\u0E27\u0E49\u0E44\u0E1B\u0E04\u0E33\u0E19\u0E27\u0E13\u0E2B\u0E23\u0E37\u0E2D\u0E40\u0E23\u0E35\u0E22\u0E01\u0E43\u0E0A\u0E49\u0E15\u0E48\u0E2D\u0E43\u0E19 Python",
     "Instructor": "Telusko",
     "Skills": [
       "Python Variables",
       "Assignment",
-      "ตัวเลขและข้อความ"
+      "\u0E15\u0E31\u0E27\u0E40\u0E25\u0E02\u0E41\u0E25\u0E30\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "เก็บค่า คำนวณ และใช้ตัวแปรซ้ำ",
-        "Summary": "ลองเก็บจำนวนชิ้นกับราคาต่อชิ้นในตัวแปร แล้วคำนวณยอดรวมหลังปรับค่า",
+        "Title": "\u0E40\u0E01\u0E47\u0E1A\u0E04\u0E48\u0E32 \u0E04\u0E33\u0E19\u0E27\u0E13 \u0E41\u0E25\u0E30\u0E43\u0E0A\u0E49\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23\u0E0B\u0E49\u0E33",
         "DurationMinutes": 11,
+        "Summary": "\u0E25\u0E2D\u0E07\u0E40\u0E01\u0E47\u0E1A\u0E08\u0E33\u0E19\u0E27\u0E19\u0E0A\u0E34\u0E49\u0E19\u0E01\u0E31\u0E1A\u0E23\u0E32\u0E04\u0E32\u0E15\u0E48\u0E2D\u0E0A\u0E34\u0E49\u0E19\u0E43\u0E19\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23 \u0E41\u0E25\u0E49\u0E27\u0E04\u0E33\u0E19\u0E27\u0E13\u0E22\u0E2D\u0E14\u0E23\u0E27\u0E21\u0E2B\u0E25\u0E31\u0E07\u0E1B\u0E23\u0E31\u0E1A\u0E04\u0E48\u0E32",
+        "Reading": [],
         "VideoId": "TqPzwenhMj0",
         "VideoDurationSeconds": 622,
         "VideoCreator": "Telusko",
@@ -507,105 +624,131 @@
       },
       {
         "Id": 2,
-        "Title": "แปลงข้อความให้พร้อมคำนวณ",
-        "Summary": "ใช้ int และ float ให้ตรงกับชนิดข้อมูลที่รับจาก input",
+        "Title": "\u0E41\u0E1B\u0E25\u0E07\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E43\u0E2B\u0E49\u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E04\u0E33\u0E19\u0E27\u0E13",
         "DurationMinutes": 4,
+        "Summary": "\u0E43\u0E0A\u0E49 int \u0E41\u0E25\u0E30 float \u0E43\u0E2B\u0E49\u0E15\u0E23\u0E07\u0E01\u0E31\u0E1A\u0E0A\u0E19\u0E34\u0E14\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E17\u0E35\u0E48\u0E23\u0E31\u0E1A\u0E08\u0E32\u0E01 input",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "input คืนข้อความเสมอ แม้ผู้ใช้จะพิมพ์ตัวเลข ใช้ int สำหรับจำนวนเต็มและ float สำหรับจำนวนที่อาจมีทศนิยม ก่อนใช้กับข้อมูลจริงให้จัดการ ValueError เพื่อขอให้กรอกใหม่เมื่อแปลงไม่ได้",
-            "Example": "quantity = int(input(\"จำนวนชิ้น: \"))\nprice = float(input(\"ราคาต่อชิ้น: \"))\nprint(quantity * price)"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "input \u0E04\u0E37\u0E19\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E40\u0E2A\u0E21\u0E2D \u0E41\u0E21\u0E49\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E08\u0E30\u0E1E\u0E34\u0E21\u0E1E\u0E4C\u0E15\u0E31\u0E27\u0E40\u0E25\u0E02 \u0E43\u0E0A\u0E49 int \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E08\u0E33\u0E19\u0E27\u0E19\u0E40\u0E15\u0E47\u0E21\u0E41\u0E25\u0E30 float \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E08\u0E33\u0E19\u0E27\u0E19\u0E17\u0E35\u0E48\u0E2D\u0E32\u0E08\u0E21\u0E35\u0E17\u0E28\u0E19\u0E34\u0E22\u0E21 \u0E01\u0E48\u0E2D\u0E19\u0E43\u0E0A\u0E49\u0E01\u0E31\u0E1A\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E08\u0E23\u0E34\u0E07\u0E43\u0E2B\u0E49\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23 ValueError \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E02\u0E2D\u0E43\u0E2B\u0E49\u0E01\u0E23\u0E2D\u0E01\u0E43\u0E2B\u0E21\u0E48\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E41\u0E1B\u0E25\u0E07\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49",
+            "Example": "quantity = int(input(\u0022\u0E08\u0E33\u0E19\u0E27\u0E19\u0E0A\u0E34\u0E49\u0E19: \u0022))\nprice = float(input(\u0022\u0E23\u0E32\u0E04\u0E32\u0E15\u0E48\u0E2D\u0E0A\u0E34\u0E49\u0E19: \u0022))\nprint(quantity * price)"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "คำนวณยอดและจัดรูปแบบให้คนอ่าน",
-        "Summary": "ใช้ตัวแปรกลางเก็บยอดก่อนส่วนลดและแสดงผลด้วย f-string",
+        "Title": "\u0E04\u0E33\u0E19\u0E27\u0E13\u0E22\u0E2D\u0E14\u0E41\u0E25\u0E30\u0E08\u0E31\u0E14\u0E23\u0E39\u0E1B\u0E41\u0E1A\u0E1A\u0E43\u0E2B\u0E49\u0E04\u0E19\u0E2D\u0E48\u0E32\u0E19",
         "DurationMinutes": 4,
+        "Summary": "\u0E43\u0E0A\u0E49\u0E15\u0E31\u0E27\u0E41\u0E1B\u0E23\u0E01\u0E25\u0E32\u0E07\u0E40\u0E01\u0E47\u0E1A\u0E22\u0E2D\u0E14\u0E01\u0E48\u0E2D\u0E19\u0E2A\u0E48\u0E27\u0E19\u0E25\u0E14\u0E41\u0E25\u0E30\u0E41\u0E2A\u0E14\u0E07\u0E1C\u0E25\u0E14\u0E49\u0E27\u0E22 f-string",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ตั้งชื่อ total และ discounted_total ให้สื่อความหมาย แยกการคำนวณจากการแสดงผล ถ้าส่วนลด 10% คูณยอดด้วย 0.90 ใช้ :.2f เมื่อต้องแสดงทศนิยมสองตำแหน่ง สำหรับระบบบัญชีจริงใช้ Decimal หรือจำนวนเต็มในหน่วยย่อยเพื่อจัดการความแม่นยำ",
-            "Example": "total = 3 * 25.50\ndiscounted_total = total * 0.90\nprint(f\"ยอดสุทธิ {discounted_total:.2f} บาท\")"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E15\u0E31\u0E49\u0E07\u0E0A\u0E37\u0E48\u0E2D total \u0E41\u0E25\u0E30 discounted_total \u0E43\u0E2B\u0E49\u0E2A\u0E37\u0E48\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E2B\u0E21\u0E32\u0E22 \u0E41\u0E22\u0E01\u0E01\u0E32\u0E23\u0E04\u0E33\u0E19\u0E27\u0E13\u0E08\u0E32\u0E01\u0E01\u0E32\u0E23\u0E41\u0E2A\u0E14\u0E07\u0E1C\u0E25 \u0E16\u0E49\u0E32\u0E2A\u0E48\u0E27\u0E19\u0E25\u0E14 10% \u0E04\u0E39\u0E13\u0E22\u0E2D\u0E14\u0E14\u0E49\u0E27\u0E22 0.90 \u0E43\u0E0A\u0E49 :.2f \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E15\u0E49\u0E2D\u0E07\u0E41\u0E2A\u0E14\u0E07\u0E17\u0E28\u0E19\u0E34\u0E22\u0E21\u0E2A\u0E2D\u0E07\u0E15\u0E33\u0E41\u0E2B\u0E19\u0E48\u0E07 \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E23\u0E30\u0E1A\u0E1A\u0E1A\u0E31\u0E0D\u0E0A\u0E35\u0E08\u0E23\u0E34\u0E07\u0E43\u0E0A\u0E49 Decimal \u0E2B\u0E23\u0E37\u0E2D\u0E08\u0E33\u0E19\u0E27\u0E19\u0E40\u0E15\u0E47\u0E21\u0E43\u0E19\u0E2B\u0E19\u0E48\u0E27\u0E22\u0E22\u0E48\u0E2D\u0E22\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23\u0E04\u0E27\u0E32\u0E21\u0E41\u0E21\u0E48\u0E19\u0E22\u0E33",
+            "Example": "total = 3 * 25.50\ndiscounted_total = total * 0.90\nprint(f\u0022\u0E22\u0E2D\u0E14\u0E2A\u0E38\u0E17\u0E18\u0E34 {discounted_total:.2f} \u0E1A\u0E32\u0E17\u0022)"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 110,
-    "Title": "Git และ GitHub ตั้งแต่ Commit แรก",
+    "Title": "Git \u0E41\u0E25\u0E30 GitHub \u0E15\u0E31\u0E49\u0E07\u0E41\u0E15\u0E48 Commit \u0E41\u0E23\u0E01",
     "Category": "Development",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "เริ่มเก็บประวัติการแก้ไขในเครื่องด้วย Git และส่งโปรเจกต์แรกขึ้น GitHub",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E40\u0E23\u0E34\u0E48\u0E21\u0E40\u0E01\u0E47\u0E1A\u0E1B\u0E23\u0E30\u0E27\u0E31\u0E15\u0E34\u0E01\u0E32\u0E23\u0E41\u0E01\u0E49\u0E44\u0E02\u0E43\u0E19\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E14\u0E49\u0E27\u0E22 Git \u0E41\u0E25\u0E30\u0E2A\u0E48\u0E07\u0E42\u0E1B\u0E23\u0E40\u0E08\u0E01\u0E15\u0E4C\u0E41\u0E23\u0E01\u0E02\u0E36\u0E49\u0E19 GitHub",
     "Instructor": "LearnLabX",
     "Skills": [
       "git init",
-      "Staging และ Commit",
+      "Staging \u0E41\u0E25\u0E30 Commit",
       "git push"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "จากโฟลเดอร์งานสู่ GitHub",
-        "Summary": "เดินตามตัวอย่างเริ่ม repository เลือกไฟล์ที่จะบันทึก สร้าง commit และส่งประวัติไปยัง repository บน GitHub",
+        "Title": "\u0E08\u0E32\u0E01\u0E42\u0E1F\u0E25\u0E40\u0E14\u0E2D\u0E23\u0E4C\u0E07\u0E32\u0E19\u0E2A\u0E39\u0E48 GitHub",
         "DurationMinutes": 9,
+        "Summary": "\u0E40\u0E14\u0E34\u0E19\u0E15\u0E32\u0E21\u0E15\u0E31\u0E27\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E40\u0E23\u0E34\u0E48\u0E21 repository \u0E40\u0E25\u0E37\u0E2D\u0E01\u0E44\u0E1F\u0E25\u0E4C\u0E17\u0E35\u0E48\u0E08\u0E30\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01 \u0E2A\u0E23\u0E49\u0E32\u0E07 commit \u0E41\u0E25\u0E30\u0E2A\u0E48\u0E07\u0E1B\u0E23\u0E30\u0E27\u0E31\u0E15\u0E34\u0E44\u0E1B\u0E22\u0E31\u0E07 repository \u0E1A\u0E19 GitHub",
+        "Reading": [],
         "VideoId": "71qaJdThAUE",
         "VideoDurationSeconds": 531,
         "VideoCreator": "LearnLabX",
-        "VideoTitle": "Git & GitHub in 10 Minutes 🚀 | Complete Beginner Guide (2026)"
+        "VideoTitle": "Git \u0026 GitHub in 10 Minutes \uD83D\uDE80 | Complete Beginner Guide (2026)"
       },
       {
         "Id": 2,
-        "Title": "ทำงานบน Branch และเปิด Pull Request",
-        "Summary": "แยกงานไว้ใน Branch แล้วส่งให้ทีมตรวจผ่าน Pull Request",
+        "Title": "\u0E17\u0E33\u0E07\u0E32\u0E19\u0E1A\u0E19 Branch \u0E41\u0E25\u0E30\u0E40\u0E1B\u0E34\u0E14 Pull Request",
         "DurationMinutes": 4,
+        "Summary": "\u0E41\u0E22\u0E01\u0E07\u0E32\u0E19\u0E44\u0E27\u0E49\u0E43\u0E19 Branch \u0E41\u0E25\u0E49\u0E27\u0E2A\u0E48\u0E07\u0E43\u0E2B\u0E49\u0E17\u0E35\u0E21\u0E15\u0E23\u0E27\u0E08\u0E1C\u0E48\u0E32\u0E19 Pull Request",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "อัปเดต Branch หลักก่อนแยก Branch แล้ว commit การเปลี่ยนแปลงเป็นชุดที่อธิบายได้ เมื่อ push ขึ้น GitHub ให้ตั้ง base เป็น Branch ที่รับงาน และ compare เป็น Branch ที่ทำงาน ตรวจ diff ก่อนส่งให้ทีมอ่าน",
-            "Example": "git switch -c feature/course-layout\ngit add Views/Home/Courses.cshtml\ngit commit -m \"Improve course layout\"\ngit push -u origin feature/course-layout"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E2D\u0E31\u0E1B\u0E40\u0E14\u0E15 Branch \u0E2B\u0E25\u0E31\u0E01\u0E01\u0E48\u0E2D\u0E19\u0E41\u0E22\u0E01 Branch \u0E41\u0E25\u0E49\u0E27 commit \u0E01\u0E32\u0E23\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E41\u0E1B\u0E25\u0E07\u0E40\u0E1B\u0E47\u0E19\u0E0A\u0E38\u0E14\u0E17\u0E35\u0E48\u0E2D\u0E18\u0E34\u0E1A\u0E32\u0E22\u0E44\u0E14\u0E49 \u0E40\u0E21\u0E37\u0E48\u0E2D push \u0E02\u0E36\u0E49\u0E19 GitHub \u0E43\u0E2B\u0E49\u0E15\u0E31\u0E49\u0E07 base \u0E40\u0E1B\u0E47\u0E19 Branch \u0E17\u0E35\u0E48\u0E23\u0E31\u0E1A\u0E07\u0E32\u0E19 \u0E41\u0E25\u0E30 compare \u0E40\u0E1B\u0E47\u0E19 Branch \u0E17\u0E35\u0E48\u0E17\u0E33\u0E07\u0E32\u0E19 \u0E15\u0E23\u0E27\u0E08 diff \u0E01\u0E48\u0E2D\u0E19\u0E2A\u0E48\u0E07\u0E43\u0E2B\u0E49\u0E17\u0E35\u0E21\u0E2D\u0E48\u0E32\u0E19",
+            "Example": "git switch -c feature/course-layout\ngit add Views/Home/Courses.cshtml\ngit commit -m \u0022Improve course layout\u0022\ngit push -u origin feature/course-layout"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ตรวจไฟล์ก่อน Commit และแก้ด้วยประวัติ",
-        "Summary": "ตรวจความต่างก่อนบันทึก และใช้ Revert เพื่อย้อนผลของ Commit ที่แชร์แล้ว",
+        "Title": "\u0E15\u0E23\u0E27\u0E08\u0E44\u0E1F\u0E25\u0E4C\u0E01\u0E48\u0E2D\u0E19 Commit \u0E41\u0E25\u0E30\u0E41\u0E01\u0E49\u0E14\u0E49\u0E27\u0E22\u0E1B\u0E23\u0E30\u0E27\u0E31\u0E15\u0E34",
         "DurationMinutes": 4,
+        "Summary": "\u0E15\u0E23\u0E27\u0E08\u0E04\u0E27\u0E32\u0E21\u0E15\u0E48\u0E32\u0E07\u0E01\u0E48\u0E2D\u0E19\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01 \u0E41\u0E25\u0E30\u0E43\u0E0A\u0E49 Revert \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E22\u0E49\u0E2D\u0E19\u0E1C\u0E25\u0E02\u0E2D\u0E07 Commit \u0E17\u0E35\u0E48\u0E41\u0E0A\u0E23\u0E4C\u0E41\u0E25\u0E49\u0E27",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "git status บอกสถานะไฟล์ git diff ดูสิ่งที่ยังไม่ได้ stage และ git diff --staged ดูสิ่งที่จะเข้า commit เมื่อพบ commit ผิดใน Branch ที่แชร์ไปแล้ว ให้พิจารณา git revert เพื่อสร้าง commit ใหม่ที่ย้อนผลโดยเก็บประวัติ ตรวจ diff หลังย้อนก่อน push",
-            "Example": "git status\ngit diff\ngit diff --staged\ngit revert <commit-id>"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "git status \u0E1A\u0E2D\u0E01\u0E2A\u0E16\u0E32\u0E19\u0E30\u0E44\u0E1F\u0E25\u0E4C git diff \u0E14\u0E39\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E22\u0E31\u0E07\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49 stage \u0E41\u0E25\u0E30 git diff --staged \u0E14\u0E39\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E08\u0E30\u0E40\u0E02\u0E49\u0E32 commit \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E1E\u0E1A commit \u0E1C\u0E34\u0E14\u0E43\u0E19 Branch \u0E17\u0E35\u0E48\u0E41\u0E0A\u0E23\u0E4C\u0E44\u0E1B\u0E41\u0E25\u0E49\u0E27 \u0E43\u0E2B\u0E49\u0E1E\u0E34\u0E08\u0E32\u0E23\u0E13\u0E32 git revert \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E2A\u0E23\u0E49\u0E32\u0E07 commit \u0E43\u0E2B\u0E21\u0E48\u0E17\u0E35\u0E48\u0E22\u0E49\u0E2D\u0E19\u0E1C\u0E25\u0E42\u0E14\u0E22\u0E40\u0E01\u0E47\u0E1A\u0E1B\u0E23\u0E30\u0E27\u0E31\u0E15\u0E34 \u0E15\u0E23\u0E27\u0E08 diff \u0E2B\u0E25\u0E31\u0E07\u0E22\u0E49\u0E2D\u0E19\u0E01\u0E48\u0E2D\u0E19 push",
+            "Example": "git status\ngit diff\ngit diff --staged\ngit revert \u003Ccommit-id\u003E"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 111,
-    "Title": "เริ่มใช้ Figma และจัดระเบียบไฟล์",
+    "Title": "\u0E40\u0E23\u0E34\u0E48\u0E21\u0E43\u0E0A\u0E49 Figma \u0E41\u0E25\u0E30\u0E08\u0E31\u0E14\u0E23\u0E30\u0E40\u0E1A\u0E35\u0E22\u0E1A\u0E44\u0E1F\u0E25\u0E4C",
     "Category": "Design",
     "Level": "Beginner",
     "Units": 3,
     "Featured": true,
-    "Description": "ทำความรู้จัก Canvas, Layers, Pages และแผงคุณสมบัติสำหรับเริ่มทำงานใน Figma",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E23\u0E39\u0E49\u0E08\u0E31\u0E01 Canvas, Layers, Pages \u0E41\u0E25\u0E30\u0E41\u0E1C\u0E07\u0E04\u0E38\u0E13\u0E2A\u0E21\u0E1A\u0E31\u0E15\u0E34\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E40\u0E23\u0E34\u0E48\u0E21\u0E17\u0E33\u0E07\u0E32\u0E19\u0E43\u0E19 Figma",
     "Instructor": "Figma",
     "Skills": [
       "Figma",
       "Layers",
       "Pages"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "นำทางในไฟล์ Figma Design",
-        "Summary": "เดินสำรวจแผงด้านซ้าย ขวา และ Canvas พร้อมดูวิธีใช้ Pages แยกขอบเขตงาน",
+        "Title": "\u0E19\u0E33\u0E17\u0E32\u0E07\u0E43\u0E19\u0E44\u0E1F\u0E25\u0E4C Figma Design",
         "DurationMinutes": 9,
+        "Summary": "\u0E40\u0E14\u0E34\u0E19\u0E2A\u0E33\u0E23\u0E27\u0E08\u0E41\u0E1C\u0E07\u0E14\u0E49\u0E32\u0E19\u0E0B\u0E49\u0E32\u0E22 \u0E02\u0E27\u0E32 \u0E41\u0E25\u0E30 Canvas \u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E14\u0E39\u0E27\u0E34\u0E18\u0E35\u0E43\u0E0A\u0E49 Pages \u0E41\u0E22\u0E01\u0E02\u0E2D\u0E1A\u0E40\u0E02\u0E15\u0E07\u0E32\u0E19",
+        "Reading": [],
         "VideoId": "zt-Zr57Vfzs",
         "VideoDurationSeconds": 527,
         "VideoCreator": "Figma",
@@ -613,52 +756,65 @@
       },
       {
         "Id": 2,
-        "Title": "ใช้ Page และ Frame ให้ตรงกับงาน",
-        "Summary": "วางโครงไฟล์ที่แยกหน้าจอจริงออกจากงานสำรวจ",
+        "Title": "\u0E43\u0E0A\u0E49 Page \u0E41\u0E25\u0E30 Frame \u0E43\u0E2B\u0E49\u0E15\u0E23\u0E07\u0E01\u0E31\u0E1A\u0E07\u0E32\u0E19",
         "DurationMinutes": 4,
+        "Summary": "\u0E27\u0E32\u0E07\u0E42\u0E04\u0E23\u0E07\u0E44\u0E1F\u0E25\u0E4C\u0E17\u0E35\u0E48\u0E41\u0E22\u0E01\u0E2B\u0E19\u0E49\u0E32\u0E08\u0E2D\u0E08\u0E23\u0E34\u0E07\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E07\u0E32\u0E19\u0E2A\u0E33\u0E23\u0E27\u0E08",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "Page ใช้แยกพื้นที่ใหญ่ เช่น Screens และ Explorations ภายใน Page ให้ใช้ Frame ครอบแต่ละหน้าจอ เพราะ Frame กำหนดขนาด ใส่ Auto Layout และใช้เป็นปลายทางของ Prototype ได้ ส่วน Group ใช้รวมเลเยอร์ที่ต้องขยับพร้อมกันในงานย่อย",
-            "Example": "Project file\n  Screens → Frame: Sign in / Mobile\n  Explorations → Frame: Sign in / Draft B"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "Page \u0E43\u0E0A\u0E49\u0E41\u0E22\u0E01\u0E1E\u0E37\u0E49\u0E19\u0E17\u0E35\u0E48\u0E43\u0E2B\u0E0D\u0E48 \u0E40\u0E0A\u0E48\u0E19 Screens \u0E41\u0E25\u0E30 Explorations \u0E20\u0E32\u0E22\u0E43\u0E19 Page \u0E43\u0E2B\u0E49\u0E43\u0E0A\u0E49 Frame \u0E04\u0E23\u0E2D\u0E1A\u0E41\u0E15\u0E48\u0E25\u0E30\u0E2B\u0E19\u0E49\u0E32\u0E08\u0E2D \u0E40\u0E1E\u0E23\u0E32\u0E30 Frame \u0E01\u0E33\u0E2B\u0E19\u0E14\u0E02\u0E19\u0E32\u0E14 \u0E43\u0E2A\u0E48 Auto Layout \u0E41\u0E25\u0E30\u0E43\u0E0A\u0E49\u0E40\u0E1B\u0E47\u0E19\u0E1B\u0E25\u0E32\u0E22\u0E17\u0E32\u0E07\u0E02\u0E2D\u0E07 Prototype \u0E44\u0E14\u0E49 \u0E2A\u0E48\u0E27\u0E19 Group \u0E43\u0E0A\u0E49\u0E23\u0E27\u0E21\u0E40\u0E25\u0E40\u0E22\u0E2D\u0E23\u0E4C\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E02\u0E22\u0E31\u0E1A\u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E01\u0E31\u0E19\u0E43\u0E19\u0E07\u0E32\u0E19\u0E22\u0E48\u0E2D\u0E22",
+            "Example": "Project file\n  Screens \u2192 Frame: Sign in / Mobile\n  Explorations \u2192 Frame: Sign in / Draft B"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "จัดชื่อเลเยอร์ให้หาและแก้ได้ง่าย",
-        "Summary": "ตั้งชื่อชั้นงานตามหน้าที่และตรวจว่าองค์ประกอบอยู่ใน Frame ที่ถูกต้อง",
+        "Title": "\u0E08\u0E31\u0E14\u0E0A\u0E37\u0E48\u0E2D\u0E40\u0E25\u0E40\u0E22\u0E2D\u0E23\u0E4C\u0E43\u0E2B\u0E49\u0E2B\u0E32\u0E41\u0E25\u0E30\u0E41\u0E01\u0E49\u0E44\u0E14\u0E49\u0E07\u0E48\u0E32\u0E22",
         "DurationMinutes": 4,
+        "Summary": "\u0E15\u0E31\u0E49\u0E07\u0E0A\u0E37\u0E48\u0E2D\u0E0A\u0E31\u0E49\u0E19\u0E07\u0E32\u0E19\u0E15\u0E32\u0E21\u0E2B\u0E19\u0E49\u0E32\u0E17\u0E35\u0E48\u0E41\u0E25\u0E30\u0E15\u0E23\u0E27\u0E08\u0E27\u0E48\u0E32\u0E2D\u0E07\u0E04\u0E4C\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E2D\u0E22\u0E39\u0E48\u0E43\u0E19 Frame \u0E17\u0E35\u0E48\u0E16\u0E39\u0E01\u0E15\u0E49\u0E2D\u0E07",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ตั้งชื่อ Frame จากหน้าจอและอุปกรณ์ ตั้งชื่อเลเยอร์จากหน้าที่ เช่น Primary action แทน Rectangle 1 ใช้แผง Layers พับส่วนที่ไม่ทำงานและตรวจลำดับซ้อน หากเลเยอร์ไปอยู่ผิด Frame ให้ย้ายในแผง Layers แล้วทดสอบว่าเลื่อนทั้งกลุ่มไปด้วยกัน",
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E15\u0E31\u0E49\u0E07\u0E0A\u0E37\u0E48\u0E2D Frame \u0E08\u0E32\u0E01\u0E2B\u0E19\u0E49\u0E32\u0E08\u0E2D\u0E41\u0E25\u0E30\u0E2D\u0E38\u0E1B\u0E01\u0E23\u0E13\u0E4C \u0E15\u0E31\u0E49\u0E07\u0E0A\u0E37\u0E48\u0E2D\u0E40\u0E25\u0E40\u0E22\u0E2D\u0E23\u0E4C\u0E08\u0E32\u0E01\u0E2B\u0E19\u0E49\u0E32\u0E17\u0E35\u0E48 \u0E40\u0E0A\u0E48\u0E19 Primary action \u0E41\u0E17\u0E19 Rectangle 1 \u0E43\u0E0A\u0E49\u0E41\u0E1C\u0E07 Layers \u0E1E\u0E31\u0E1A\u0E2A\u0E48\u0E27\u0E19\u0E17\u0E35\u0E48\u0E44\u0E21\u0E48\u0E17\u0E33\u0E07\u0E32\u0E19\u0E41\u0E25\u0E30\u0E15\u0E23\u0E27\u0E08\u0E25\u0E33\u0E14\u0E31\u0E1A\u0E0B\u0E49\u0E2D\u0E19 \u0E2B\u0E32\u0E01\u0E40\u0E25\u0E40\u0E22\u0E2D\u0E23\u0E4C\u0E44\u0E1B\u0E2D\u0E22\u0E39\u0E48\u0E1C\u0E34\u0E14 Frame \u0E43\u0E2B\u0E49\u0E22\u0E49\u0E32\u0E22\u0E43\u0E19\u0E41\u0E1C\u0E07 Layers \u0E41\u0E25\u0E49\u0E27\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E27\u0E48\u0E32\u0E40\u0E25\u0E37\u0E48\u0E2D\u0E19\u0E17\u0E31\u0E49\u0E07\u0E01\u0E25\u0E38\u0E48\u0E21\u0E44\u0E1B\u0E14\u0E49\u0E27\u0E22\u0E01\u0E31\u0E19",
             "Example": "Sign in / Mobile\n  Header\n  Email field\n  Primary action\n  Help link"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 112,
-    "Title": "ออกแบบปุ่มที่ยืดตามข้อความ",
+    "Title": "\u0E2D\u0E2D\u0E01\u0E41\u0E1A\u0E1A\u0E1B\u0E38\u0E48\u0E21\u0E17\u0E35\u0E48\u0E22\u0E37\u0E14\u0E15\u0E32\u0E21\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21",
     "Category": "Design",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "สร้างปุ่ม UI ใน Figma แล้วปรับพื้นที่รอบข้อความให้ปุ่มรองรับคำสั้นและคำยาว",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E1B\u0E38\u0E48\u0E21 UI \u0E43\u0E19 Figma \u0E41\u0E25\u0E49\u0E27\u0E1B\u0E23\u0E31\u0E1A\u0E1E\u0E37\u0E49\u0E19\u0E17\u0E35\u0E48\u0E23\u0E2D\u0E1A\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E43\u0E2B\u0E49\u0E1B\u0E38\u0E48\u0E21\u0E23\u0E2D\u0E07\u0E23\u0E31\u0E1A\u0E04\u0E33\u0E2A\u0E31\u0E49\u0E19\u0E41\u0E25\u0E30\u0E04\u0E33\u0E22\u0E32\u0E27",
     "Instructor": "Figma",
     "Skills": [
-      "ปุ่ม UI",
+      "\u0E1B\u0E38\u0E48\u0E21 UI",
       "Auto Layout",
       "Padding"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "สร้างปุ่มด้วยข้อความและ Auto Layout",
-        "Summary": "ใช้ข้อความเป็นจุดเริ่มต้นของปุ่ม เพิ่ม Auto Layout แล้วกำหนดสีและ Padding เพื่อให้ปุ่มจัดขนาดได้ตามป้ายข้อความ",
+        "Title": "\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E1B\u0E38\u0E48\u0E21\u0E14\u0E49\u0E27\u0E22\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E41\u0E25\u0E30 Auto Layout",
         "DurationMinutes": 11,
+        "Summary": "\u0E43\u0E0A\u0E49\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E40\u0E1B\u0E47\u0E19\u0E08\u0E38\u0E14\u0E40\u0E23\u0E34\u0E48\u0E21\u0E15\u0E49\u0E19\u0E02\u0E2D\u0E07\u0E1B\u0E38\u0E48\u0E21 \u0E40\u0E1E\u0E34\u0E48\u0E21 Auto Layout \u0E41\u0E25\u0E49\u0E27\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E2A\u0E35\u0E41\u0E25\u0E30 Padding \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E43\u0E2B\u0E49\u0E1B\u0E38\u0E48\u0E21\u0E08\u0E31\u0E14\u0E02\u0E19\u0E32\u0E14\u0E44\u0E14\u0E49\u0E15\u0E32\u0E21\u0E1B\u0E49\u0E32\u0E22\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21",
+        "Reading": [],
         "VideoId": "PZaBmmI0s4M",
         "VideoDurationSeconds": 623,
         "VideoCreator": "Figma",
@@ -666,105 +822,131 @@
       },
       {
         "Id": 2,
-        "Title": "ทำปุ่มหลายสถานะด้วย Variants",
-        "Summary": "จัดสถานะ Default และ Disabled ไว้ใน Component Set เดียว",
+        "Title": "\u0E17\u0E33\u0E1B\u0E38\u0E48\u0E21\u0E2B\u0E25\u0E32\u0E22\u0E2A\u0E16\u0E32\u0E19\u0E30\u0E14\u0E49\u0E27\u0E22 Variants",
         "DurationMinutes": 4,
+        "Summary": "\u0E08\u0E31\u0E14\u0E2A\u0E16\u0E32\u0E19\u0E30 Default \u0E41\u0E25\u0E30 Disabled \u0E44\u0E27\u0E49\u0E43\u0E19 Component Set \u0E40\u0E14\u0E35\u0E22\u0E27",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "สร้าง Component สำหรับปุ่ม แล้วสร้าง Variants ภายใต้คุณสมบัติ State เช่น Default และ Disabled ใช้โครง Auto Layout เดียวกันให้ขนาดสม่ำเสมอ ปุ่ม Disabled ควรแยกได้ด้วยลักษณะและบริบท เช่น อธิบายเงื่อนไขที่ต้องทำก่อนเปิดใช้",
-            "Example": "Button / State=Default → ส่งคำตอบ\nButton / State=Disabled → ส่งคำตอบ (รอให้เลือกครบ)"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E2A\u0E23\u0E49\u0E32\u0E07 Component \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E1B\u0E38\u0E48\u0E21 \u0E41\u0E25\u0E49\u0E27\u0E2A\u0E23\u0E49\u0E32\u0E07 Variants \u0E20\u0E32\u0E22\u0E43\u0E15\u0E49\u0E04\u0E38\u0E13\u0E2A\u0E21\u0E1A\u0E31\u0E15\u0E34 State \u0E40\u0E0A\u0E48\u0E19 Default \u0E41\u0E25\u0E30 Disabled \u0E43\u0E0A\u0E49\u0E42\u0E04\u0E23\u0E07 Auto Layout \u0E40\u0E14\u0E35\u0E22\u0E27\u0E01\u0E31\u0E19\u0E43\u0E2B\u0E49\u0E02\u0E19\u0E32\u0E14\u0E2A\u0E21\u0E48\u0E33\u0E40\u0E2A\u0E21\u0E2D \u0E1B\u0E38\u0E48\u0E21 Disabled \u0E04\u0E27\u0E23\u0E41\u0E22\u0E01\u0E44\u0E14\u0E49\u0E14\u0E49\u0E27\u0E22\u0E25\u0E31\u0E01\u0E29\u0E13\u0E30\u0E41\u0E25\u0E30\u0E1A\u0E23\u0E34\u0E1A\u0E17 \u0E40\u0E0A\u0E48\u0E19 \u0E2D\u0E18\u0E34\u0E1A\u0E32\u0E22\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E17\u0E33\u0E01\u0E48\u0E2D\u0E19\u0E40\u0E1B\u0E34\u0E14\u0E43\u0E0A\u0E49",
+            "Example": "Button / State=Default \u2192 \u0E2A\u0E48\u0E07\u0E04\u0E33\u0E15\u0E2D\u0E1A\nButton / State=Disabled \u2192 \u0E2A\u0E48\u0E07\u0E04\u0E33\u0E15\u0E2D\u0E1A (\u0E23\u0E2D\u0E43\u0E2B\u0E49\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E04\u0E23\u0E1A)"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ทดสอบปุ่มด้วยป้ายสั้นและยาว",
-        "Summary": "ให้ปุ่มแบบ Hug contents รองรับภาษาไทยและยังมีพื้นที่กดพอ",
+        "Title": "\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E1B\u0E38\u0E48\u0E21\u0E14\u0E49\u0E27\u0E22\u0E1B\u0E49\u0E32\u0E22\u0E2A\u0E31\u0E49\u0E19\u0E41\u0E25\u0E30\u0E22\u0E32\u0E27",
         "DurationMinutes": 4,
+        "Summary": "\u0E43\u0E2B\u0E49\u0E1B\u0E38\u0E48\u0E21\u0E41\u0E1A\u0E1A Hug contents \u0E23\u0E2D\u0E07\u0E23\u0E31\u0E1A\u0E20\u0E32\u0E29\u0E32\u0E44\u0E17\u0E22\u0E41\u0E25\u0E30\u0E22\u0E31\u0E07\u0E21\u0E35\u0E1E\u0E37\u0E49\u0E19\u0E17\u0E35\u0E48\u0E01\u0E14\u0E1E\u0E2D",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ใช้ Hug contents กับความกว้างปุ่มเมื่ออยากให้ขนาดตามข้อความ ตั้ง Padding ให้มีช่องว่างรอบข้อความ และกำหนดความสูงขั้นต่ำให้กดสะดวก ทดสอบคำสั้นอย่าง ส่ง และคำยาวอย่าง บันทึกและไปบทถัดไป ภายใน Container ที่แคบที่สุด",
-            "Example": "Width: Hug contents\nMinimum height: 44 px\nHorizontal padding: 16 px\nTest labels: ส่ง / บันทึกและไปบทถัดไป"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E43\u0E0A\u0E49 Hug contents \u0E01\u0E31\u0E1A\u0E04\u0E27\u0E32\u0E21\u0E01\u0E27\u0E49\u0E32\u0E07\u0E1B\u0E38\u0E48\u0E21\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E2D\u0E22\u0E32\u0E01\u0E43\u0E2B\u0E49\u0E02\u0E19\u0E32\u0E14\u0E15\u0E32\u0E21\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21 \u0E15\u0E31\u0E49\u0E07 Padding \u0E43\u0E2B\u0E49\u0E21\u0E35\u0E0A\u0E48\u0E2D\u0E07\u0E27\u0E48\u0E32\u0E07\u0E23\u0E2D\u0E1A\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21 \u0E41\u0E25\u0E30\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E39\u0E07\u0E02\u0E31\u0E49\u0E19\u0E15\u0E48\u0E33\u0E43\u0E2B\u0E49\u0E01\u0E14\u0E2A\u0E30\u0E14\u0E27\u0E01 \u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E04\u0E33\u0E2A\u0E31\u0E49\u0E19\u0E2D\u0E22\u0E48\u0E32\u0E07 \u0E2A\u0E48\u0E07 \u0E41\u0E25\u0E30\u0E04\u0E33\u0E22\u0E32\u0E27\u0E2D\u0E22\u0E48\u0E32\u0E07 \u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E41\u0E25\u0E30\u0E44\u0E1B\u0E1A\u0E17\u0E16\u0E31\u0E14\u0E44\u0E1B \u0E20\u0E32\u0E22\u0E43\u0E19 Container \u0E17\u0E35\u0E48\u0E41\u0E04\u0E1A\u0E17\u0E35\u0E48\u0E2A\u0E38\u0E14",
+            "Example": "Width: Hug contents\nMinimum height: 44 px\nHorizontal padding: 16 px\nTest labels: \u0E2A\u0E48\u0E07 / \u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E41\u0E25\u0E30\u0E44\u0E1B\u0E1A\u0E17\u0E16\u0E31\u0E14\u0E44\u0E1B"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 113,
-    "Title": "จัดเลย์เอาต์ด้วย Figma Auto Layout",
+    "Title": "\u0E08\u0E31\u0E14\u0E40\u0E25\u0E22\u0E4C\u0E40\u0E2D\u0E32\u0E15\u0E4C\u0E14\u0E49\u0E27\u0E22 Figma Auto Layout",
     "Category": "Design",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "ใช้ทิศทาง ระยะห่าง และขนาดที่สัมพันธ์กับกรอบ เพื่อให้หน้าจอปรับตามเนื้อหาได้",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E43\u0E0A\u0E49\u0E17\u0E34\u0E28\u0E17\u0E32\u0E07 \u0E23\u0E30\u0E22\u0E30\u0E2B\u0E48\u0E32\u0E07 \u0E41\u0E25\u0E30\u0E02\u0E19\u0E32\u0E14\u0E17\u0E35\u0E48\u0E2A\u0E31\u0E21\u0E1E\u0E31\u0E19\u0E18\u0E4C\u0E01\u0E31\u0E1A\u0E01\u0E23\u0E2D\u0E1A \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E43\u0E2B\u0E49\u0E2B\u0E19\u0E49\u0E32\u0E08\u0E2D\u0E1B\u0E23\u0E31\u0E1A\u0E15\u0E32\u0E21\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E32\u0E44\u0E14\u0E49",
     "Instructor": "Figma",
     "Skills": [
       "Auto Layout",
       "Gap",
       "Resizing"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "ให้เลย์เอาต์ปรับเมื่อเนื้อหาเปลี่ยน",
-        "Summary": "แยกการวางแนว ระยะห่างระหว่างรายการกับพื้นที่ด้านใน และเลือกว่าจะให้ชิ้นงานยืดตามกรอบหรือเนื้อหา",
+        "Title": "\u0E43\u0E2B\u0E49\u0E40\u0E25\u0E22\u0E4C\u0E40\u0E2D\u0E32\u0E15\u0E4C\u0E1B\u0E23\u0E31\u0E1A\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E32\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19",
         "DurationMinutes": 9,
+        "Summary": "\u0E41\u0E22\u0E01\u0E01\u0E32\u0E23\u0E27\u0E32\u0E07\u0E41\u0E19\u0E27 \u0E23\u0E30\u0E22\u0E30\u0E2B\u0E48\u0E32\u0E07\u0E23\u0E30\u0E2B\u0E27\u0E48\u0E32\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E01\u0E31\u0E1A\u0E1E\u0E37\u0E49\u0E19\u0E17\u0E35\u0E48\u0E14\u0E49\u0E32\u0E19\u0E43\u0E19 \u0E41\u0E25\u0E30\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E27\u0E48\u0E32\u0E08\u0E30\u0E43\u0E2B\u0E49\u0E0A\u0E34\u0E49\u0E19\u0E07\u0E32\u0E19\u0E22\u0E37\u0E14\u0E15\u0E32\u0E21\u0E01\u0E23\u0E2D\u0E1A\u0E2B\u0E23\u0E37\u0E2D\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E32",
+        "Reading": [],
         "VideoId": "aaZsP7AYi2w",
         "VideoDurationSeconds": 510,
         "VideoCreator": "Figma",
-        "VideoTitle": "Figma Design for beginners: Advocate sidebar — Auto layout"
+        "VideoTitle": "Figma Design for beginners: Advocate sidebar \u2014 Auto layout"
       },
       {
         "Id": 2,
-        "Title": "เลือก Hug, Fill และ Fixed",
-        "Summary": "วางลำดับขนาดจาก Container ไปถึงข้อความโดยไม่ล็อกทุกชั้น",
+        "Title": "\u0E40\u0E25\u0E37\u0E2D\u0E01 Hug, Fill \u0E41\u0E25\u0E30 Fixed",
         "DurationMinutes": 4,
+        "Summary": "\u0E27\u0E32\u0E07\u0E25\u0E33\u0E14\u0E31\u0E1A\u0E02\u0E19\u0E32\u0E14\u0E08\u0E32\u0E01 Container \u0E44\u0E1B\u0E16\u0E36\u0E07\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E42\u0E14\u0E22\u0E44\u0E21\u0E48\u0E25\u0E47\u0E2D\u0E01\u0E17\u0E38\u0E01\u0E0A\u0E31\u0E49\u0E19",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "Hug contents หาขนาดจากลูก Fill container ใช้พื้นที่ที่เหลือใน Auto Layout ของแม่ และ Fixed คงค่าที่กำหนด ตัวอย่างการ์ดรายการใช้ไอคอน Fixed ป้ายชื่อ Hug และกล่องข้อความ Fill เพื่อให้รายการขยายเมื่อ Container กว้างขึ้น",
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "Hug contents \u0E2B\u0E32\u0E02\u0E19\u0E32\u0E14\u0E08\u0E32\u0E01\u0E25\u0E39\u0E01 Fill container \u0E43\u0E0A\u0E49\u0E1E\u0E37\u0E49\u0E19\u0E17\u0E35\u0E48\u0E17\u0E35\u0E48\u0E40\u0E2B\u0E25\u0E37\u0E2D\u0E43\u0E19 Auto Layout \u0E02\u0E2D\u0E07\u0E41\u0E21\u0E48 \u0E41\u0E25\u0E30 Fixed \u0E04\u0E07\u0E04\u0E48\u0E32\u0E17\u0E35\u0E48\u0E01\u0E33\u0E2B\u0E19\u0E14 \u0E15\u0E31\u0E27\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E01\u0E32\u0E23\u0E4C\u0E14\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E44\u0E2D\u0E04\u0E2D\u0E19 Fixed \u0E1B\u0E49\u0E32\u0E22\u0E0A\u0E37\u0E48\u0E2D Hug \u0E41\u0E25\u0E30\u0E01\u0E25\u0E48\u0E2D\u0E07\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21 Fill \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E43\u0E2B\u0E49\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E02\u0E22\u0E32\u0E22\u0E40\u0E21\u0E37\u0E48\u0E2D Container \u0E01\u0E27\u0E49\u0E32\u0E07\u0E02\u0E36\u0E49\u0E19",
             "Example": "Card (vertical)\n  Icon: Fixed 32 px\n  Text box: Fill container\n  Tag: Hug contents"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ซ้อน Auto Layout และลองย่อจอ",
-        "Summary": "แยกทิศทางของรายการภายในจากทิศทางของการ์ดทั้งหมด",
+        "Title": "\u0E0B\u0E49\u0E2D\u0E19 Auto Layout \u0E41\u0E25\u0E30\u0E25\u0E2D\u0E07\u0E22\u0E48\u0E2D\u0E08\u0E2D",
         "DurationMinutes": 4,
+        "Summary": "\u0E41\u0E22\u0E01\u0E17\u0E34\u0E28\u0E17\u0E32\u0E07\u0E02\u0E2D\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E20\u0E32\u0E22\u0E43\u0E19\u0E08\u0E32\u0E01\u0E17\u0E34\u0E28\u0E17\u0E32\u0E07\u0E02\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E4C\u0E14\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ใช้ Frame ชั้นนอกเรียงแนวตั้งสำหรับชื่อ เนื้อหา และส่วนท้าย ภายในส่วนท้ายใช้ Frame แนวนอนสำหรับปุ่มและป้าย ใช้ gap สำหรับระหว่างลูก และ padding สำหรับขอบใน แล้วทดสอบโดยเปลี่ยนความกว้าง Container และใส่ชื่อหลายบรรทัด",
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E43\u0E0A\u0E49 Frame \u0E0A\u0E31\u0E49\u0E19\u0E19\u0E2D\u0E01\u0E40\u0E23\u0E35\u0E22\u0E07\u0E41\u0E19\u0E27\u0E15\u0E31\u0E49\u0E07\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E0A\u0E37\u0E48\u0E2D \u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E32 \u0E41\u0E25\u0E30\u0E2A\u0E48\u0E27\u0E19\u0E17\u0E49\u0E32\u0E22 \u0E20\u0E32\u0E22\u0E43\u0E19\u0E2A\u0E48\u0E27\u0E19\u0E17\u0E49\u0E32\u0E22\u0E43\u0E0A\u0E49 Frame \u0E41\u0E19\u0E27\u0E19\u0E2D\u0E19\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E1B\u0E38\u0E48\u0E21\u0E41\u0E25\u0E30\u0E1B\u0E49\u0E32\u0E22 \u0E43\u0E0A\u0E49 gap \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E23\u0E30\u0E2B\u0E27\u0E48\u0E32\u0E07\u0E25\u0E39\u0E01 \u0E41\u0E25\u0E30 padding \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E02\u0E2D\u0E1A\u0E43\u0E19 \u0E41\u0E25\u0E49\u0E27\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E42\u0E14\u0E22\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E04\u0E27\u0E32\u0E21\u0E01\u0E27\u0E49\u0E32\u0E07 Container \u0E41\u0E25\u0E30\u0E43\u0E2A\u0E48\u0E0A\u0E37\u0E48\u0E2D\u0E2B\u0E25\u0E32\u0E22\u0E1A\u0E23\u0E23\u0E17\u0E31\u0E14",
             "Example": "Card (vertical, padding 16)\n  Heading\n  Description\n  Footer (horizontal, gap 8)\n    Primary action\n    Status"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 114,
-    "Title": "ออกแบบแถบนำทางและส่วนท้ายใน Figma",
+    "Title": "\u0E2D\u0E2D\u0E01\u0E41\u0E1A\u0E1A\u0E41\u0E16\u0E1A\u0E19\u0E33\u0E17\u0E32\u0E07\u0E41\u0E25\u0E30\u0E2A\u0E48\u0E27\u0E19\u0E17\u0E49\u0E32\u0E22\u0E43\u0E19 Figma",
     "Category": "Design",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "ประกอบเมนูนำทางและ Footer จากชิ้นส่วนที่นำไปใช้ซ้ำได้ พร้อมจัดระยะด้วย Auto Layout",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E40\u0E21\u0E19\u0E39\u0E19\u0E33\u0E17\u0E32\u0E07\u0E41\u0E25\u0E30 Footer \u0E08\u0E32\u0E01\u0E0A\u0E34\u0E49\u0E19\u0E2A\u0E48\u0E27\u0E19\u0E17\u0E35\u0E48\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49\u0E0B\u0E49\u0E33\u0E44\u0E14\u0E49 \u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E08\u0E31\u0E14\u0E23\u0E30\u0E22\u0E30\u0E14\u0E49\u0E27\u0E22 Auto Layout",
     "Instructor": "Figma",
     "Skills": [
       "Navigation",
       "Footer",
       "Components"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "ประกอบเมนูและสร้าง Component ที่ใช้ซ้ำ",
-        "Summary": "สร้างชื่อแบรนด์และรายการเมนู จัดแถบด้วย Auto Layout และแปลงส่วนที่ใช้ร่วมกันเป็น Components",
+        "Title": "\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E40\u0E21\u0E19\u0E39\u0E41\u0E25\u0E30\u0E2A\u0E23\u0E49\u0E32\u0E07 Component \u0E17\u0E35\u0E48\u0E43\u0E0A\u0E49\u0E0B\u0E49\u0E33",
         "DurationMinutes": 14,
+        "Summary": "\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E0A\u0E37\u0E48\u0E2D\u0E41\u0E1A\u0E23\u0E19\u0E14\u0E4C\u0E41\u0E25\u0E30\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E40\u0E21\u0E19\u0E39 \u0E08\u0E31\u0E14\u0E41\u0E16\u0E1A\u0E14\u0E49\u0E27\u0E22 Auto Layout \u0E41\u0E25\u0E30\u0E41\u0E1B\u0E25\u0E07\u0E2A\u0E48\u0E27\u0E19\u0E17\u0E35\u0E48\u0E43\u0E0A\u0E49\u0E23\u0E48\u0E27\u0E21\u0E01\u0E31\u0E19\u0E40\u0E1B\u0E47\u0E19 Components",
+        "Reading": [],
         "VideoId": "zo7FVhjOq68",
         "VideoDurationSeconds": 823,
         "VideoCreator": "Figma",
@@ -772,52 +954,65 @@
       },
       {
         "Id": 2,
-        "Title": "ทำเมนูเป็น Component ที่ใช้ซ้ำ",
-        "Summary": "ใช้ Instance และสถานะ Active เพื่อบอกว่าผู้ใช้อยู่หน้าไหน",
+        "Title": "\u0E17\u0E33\u0E40\u0E21\u0E19\u0E39\u0E40\u0E1B\u0E47\u0E19 Component \u0E17\u0E35\u0E48\u0E43\u0E0A\u0E49\u0E0B\u0E49\u0E33",
         "DurationMinutes": 4,
+        "Summary": "\u0E43\u0E0A\u0E49 Instance \u0E41\u0E25\u0E30\u0E2A\u0E16\u0E32\u0E19\u0E30 Active \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E1A\u0E2D\u0E01\u0E27\u0E48\u0E32\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E2D\u0E22\u0E39\u0E48\u0E2B\u0E19\u0E49\u0E32\u0E44\u0E2B\u0E19",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "สร้าง Nav item เป็น Component และกำหนดสถานะ Default กับ Active เปลี่ยนข้อความหรือลิงก์ของแต่ละ Instance ตามหน้า ให้มีหนึ่งรายการ Active ในกลุ่มเดียวและมีเครื่องหมายที่เห็นได้ เช่น เส้นใต้ร่วมกับตัวอักษรเด่น แก้รูปแบบร่วมกันที่ Component หลัก",
-            "Example": "Navbar / Courses\n  หน้าแรก: Default\n  คอร์สเรียน: Active\n  เกาะของฉัน: Default"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E2A\u0E23\u0E49\u0E32\u0E07 Nav item \u0E40\u0E1B\u0E47\u0E19 Component \u0E41\u0E25\u0E30\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E2A\u0E16\u0E32\u0E19\u0E30 Default \u0E01\u0E31\u0E1A Active \u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E2B\u0E23\u0E37\u0E2D\u0E25\u0E34\u0E07\u0E01\u0E4C\u0E02\u0E2D\u0E07\u0E41\u0E15\u0E48\u0E25\u0E30 Instance \u0E15\u0E32\u0E21\u0E2B\u0E19\u0E49\u0E32 \u0E43\u0E2B\u0E49\u0E21\u0E35\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23 Active \u0E43\u0E19\u0E01\u0E25\u0E38\u0E48\u0E21\u0E40\u0E14\u0E35\u0E22\u0E27\u0E41\u0E25\u0E30\u0E21\u0E35\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E2B\u0E21\u0E32\u0E22\u0E17\u0E35\u0E48\u0E40\u0E2B\u0E47\u0E19\u0E44\u0E14\u0E49 \u0E40\u0E0A\u0E48\u0E19 \u0E40\u0E2A\u0E49\u0E19\u0E43\u0E15\u0E49\u0E23\u0E48\u0E27\u0E21\u0E01\u0E31\u0E1A\u0E15\u0E31\u0E27\u0E2D\u0E31\u0E01\u0E29\u0E23\u0E40\u0E14\u0E48\u0E19 \u0E41\u0E01\u0E49\u0E23\u0E39\u0E1B\u0E41\u0E1A\u0E1A\u0E23\u0E48\u0E27\u0E21\u0E01\u0E31\u0E19\u0E17\u0E35\u0E48 Component \u0E2B\u0E25\u0E31\u0E01",
+            "Example": "Navbar / Courses\n  \u0E2B\u0E19\u0E49\u0E32\u0E41\u0E23\u0E01: Default\n  \u0E04\u0E2D\u0E23\u0E4C\u0E2A\u0E40\u0E23\u0E35\u0E22\u0E19: Active\n  \u0E40\u0E01\u0E32\u0E30\u0E02\u0E2D\u0E07\u0E09\u0E31\u0E19: Default"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ปรับ Navbar และ Footer สำหรับมือถือ",
-        "Summary": "จัดกลุ่มลิงก์ใหม่เมื่อพื้นที่น้อยและเก็บทางไปหน้าหลักไว้",
+        "Title": "\u0E1B\u0E23\u0E31\u0E1A Navbar \u0E41\u0E25\u0E30 Footer \u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E21\u0E37\u0E2D\u0E16\u0E37\u0E2D",
         "DurationMinutes": 4,
+        "Summary": "\u0E08\u0E31\u0E14\u0E01\u0E25\u0E38\u0E48\u0E21\u0E25\u0E34\u0E07\u0E01\u0E4C\u0E43\u0E2B\u0E21\u0E48\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E1E\u0E37\u0E49\u0E19\u0E17\u0E35\u0E48\u0E19\u0E49\u0E2D\u0E22\u0E41\u0E25\u0E30\u0E40\u0E01\u0E47\u0E1A\u0E17\u0E32\u0E07\u0E44\u0E1B\u0E2B\u0E19\u0E49\u0E32\u0E2B\u0E25\u0E31\u0E01\u0E44\u0E27\u0E49",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "เมื่อหน้าจอแคบ ให้คงชื่อแบรนด์และปุ่มเมนูที่อ่านออก จัดลิงก์ในแผงที่เปิดได้ Footer ใช้กลุ่มแนวตั้งเพื่อไม่ให้ข้อความยาวล้น ทดสอบว่าคนยังไปหน้าเรียน ติดต่อ หรือข้อกำหนดได้จากทั้งสองขนาด",
-            "Example": "Desktop: Brand / Links / Account\nMobile: Brand / Menu button → Links\nFooter: เรียนต่อ / ช่วยเหลือ / ข้อกำหนด"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E2B\u0E19\u0E49\u0E32\u0E08\u0E2D\u0E41\u0E04\u0E1A \u0E43\u0E2B\u0E49\u0E04\u0E07\u0E0A\u0E37\u0E48\u0E2D\u0E41\u0E1A\u0E23\u0E19\u0E14\u0E4C\u0E41\u0E25\u0E30\u0E1B\u0E38\u0E48\u0E21\u0E40\u0E21\u0E19\u0E39\u0E17\u0E35\u0E48\u0E2D\u0E48\u0E32\u0E19\u0E2D\u0E2D\u0E01 \u0E08\u0E31\u0E14\u0E25\u0E34\u0E07\u0E01\u0E4C\u0E43\u0E19\u0E41\u0E1C\u0E07\u0E17\u0E35\u0E48\u0E40\u0E1B\u0E34\u0E14\u0E44\u0E14\u0E49 Footer \u0E43\u0E0A\u0E49\u0E01\u0E25\u0E38\u0E48\u0E21\u0E41\u0E19\u0E27\u0E15\u0E31\u0E49\u0E07\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E44\u0E21\u0E48\u0E43\u0E2B\u0E49\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E22\u0E32\u0E27\u0E25\u0E49\u0E19 \u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E27\u0E48\u0E32\u0E04\u0E19\u0E22\u0E31\u0E07\u0E44\u0E1B\u0E2B\u0E19\u0E49\u0E32\u0E40\u0E23\u0E35\u0E22\u0E19 \u0E15\u0E34\u0E14\u0E15\u0E48\u0E2D \u0E2B\u0E23\u0E37\u0E2D\u0E02\u0E49\u0E2D\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E44\u0E14\u0E49\u0E08\u0E32\u0E01\u0E17\u0E31\u0E49\u0E07\u0E2A\u0E2D\u0E07\u0E02\u0E19\u0E32\u0E14",
+            "Example": "Desktop: Brand / Links / Account\nMobile: Brand / Menu button \u2192 Links\nFooter: \u0E40\u0E23\u0E35\u0E22\u0E19\u0E15\u0E48\u0E2D / \u0E0A\u0E48\u0E27\u0E22\u0E40\u0E2B\u0E25\u0E37\u0E2D / \u0E02\u0E49\u0E2D\u0E01\u0E33\u0E2B\u0E19\u0E14"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 115,
-    "Title": "ทำต้นแบบที่กดได้ใน Figma",
+    "Title": "\u0E17\u0E33\u0E15\u0E49\u0E19\u0E41\u0E1A\u0E1A\u0E17\u0E35\u0E48\u0E01\u0E14\u0E44\u0E14\u0E49\u0E43\u0E19 Figma",
     "Category": "Design",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "เชื่อมหน้าจอให้กดทดลองได้ และเตรียมต้นแบบสำหรับรับข้อเสนอแนะก่อนเริ่มพัฒนา",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E21\u0E2B\u0E19\u0E49\u0E32\u0E08\u0E2D\u0E43\u0E2B\u0E49\u0E01\u0E14\u0E17\u0E14\u0E25\u0E2D\u0E07\u0E44\u0E14\u0E49 \u0E41\u0E25\u0E30\u0E40\u0E15\u0E23\u0E35\u0E22\u0E21\u0E15\u0E49\u0E19\u0E41\u0E1A\u0E1A\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E23\u0E31\u0E1A\u0E02\u0E49\u0E2D\u0E40\u0E2A\u0E19\u0E2D\u0E41\u0E19\u0E30\u0E01\u0E48\u0E2D\u0E19\u0E40\u0E23\u0E34\u0E48\u0E21\u0E1E\u0E31\u0E12\u0E19\u0E32",
     "Instructor": "Figma",
     "Skills": [
       "Prototype",
       "Interactions",
       "Flow"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "เชื่อมหน้าจอและทดลองเส้นทาง",
-        "Summary": "เพิ่มการตอบสนองเมื่อคลิก เชื่อมไปยัง Frame ปลายทาง และเปิดตัวเล่นเพื่อทดสอบว่าผู้ใช้ไปถึงเป้าหมายได้หรือไม่",
+        "Title": "\u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E21\u0E2B\u0E19\u0E49\u0E32\u0E08\u0E2D\u0E41\u0E25\u0E30\u0E17\u0E14\u0E25\u0E2D\u0E07\u0E40\u0E2A\u0E49\u0E19\u0E17\u0E32\u0E07",
         "DurationMinutes": 8,
+        "Summary": "\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E01\u0E32\u0E23\u0E15\u0E2D\u0E1A\u0E2A\u0E19\u0E2D\u0E07\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E04\u0E25\u0E34\u0E01 \u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E21\u0E44\u0E1B\u0E22\u0E31\u0E07 Frame \u0E1B\u0E25\u0E32\u0E22\u0E17\u0E32\u0E07 \u0E41\u0E25\u0E30\u0E40\u0E1B\u0E34\u0E14\u0E15\u0E31\u0E27\u0E40\u0E25\u0E48\u0E19\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E27\u0E48\u0E32\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E44\u0E1B\u0E16\u0E36\u0E07\u0E40\u0E1B\u0E49\u0E32\u0E2B\u0E21\u0E32\u0E22\u0E44\u0E14\u0E49\u0E2B\u0E23\u0E37\u0E2D\u0E44\u0E21\u0E48",
+        "Reading": [],
         "VideoId": "lTIeZ2ahEkQ",
         "VideoDurationSeconds": 466,
         "VideoCreator": "Figma",
@@ -825,294 +1020,436 @@
       },
       {
         "Id": 2,
-        "Title": "เลือก Navigate หรือ Overlay",
-        "Summary": "เลือกชนิด Interaction ตามว่าผู้ใช้ไปหน้าใหม่หรือทำงานสั้นบนหน้าเดิม",
+        "Title": "\u0E40\u0E25\u0E37\u0E2D\u0E01 Navigate \u0E2B\u0E23\u0E37\u0E2D Overlay",
         "DurationMinutes": 4,
+        "Summary": "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E0A\u0E19\u0E34\u0E14 Interaction \u0E15\u0E32\u0E21\u0E27\u0E48\u0E32\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E44\u0E1B\u0E2B\u0E19\u0E49\u0E32\u0E43\u0E2B\u0E21\u0E48\u0E2B\u0E23\u0E37\u0E2D\u0E17\u0E33\u0E07\u0E32\u0E19\u0E2A\u0E31\u0E49\u0E19\u0E1A\u0E19\u0E2B\u0E19\u0E49\u0E32\u0E40\u0E14\u0E34\u0E21",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "Navigate to เหมาะเมื่อเข้าสู่หน้าจอใหม่ เช่น หน้ารายละเอียด ใช้ Open overlay เมื่อต้องการให้หน้าปัจจุบันยังเป็นบริบท เช่น กล่องยืนยัน พร้อมตั้งวิธีปิดหรือกลับไปต่อ ตรวจ Interaction ทั้งทางเข้าและทางออก",
-            "Example": "Card click → Navigate to Course Details\nDelete click → Open overlay Confirm Delete\nCancel click → Close overlay"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "Navigate to \u0E40\u0E2B\u0E21\u0E32\u0E30\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E40\u0E02\u0E49\u0E32\u0E2A\u0E39\u0E48\u0E2B\u0E19\u0E49\u0E32\u0E08\u0E2D\u0E43\u0E2B\u0E21\u0E48 \u0E40\u0E0A\u0E48\u0E19 \u0E2B\u0E19\u0E49\u0E32\u0E23\u0E32\u0E22\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14 \u0E43\u0E0A\u0E49 Open overlay \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E43\u0E2B\u0E49\u0E2B\u0E19\u0E49\u0E32\u0E1B\u0E31\u0E08\u0E08\u0E38\u0E1A\u0E31\u0E19\u0E22\u0E31\u0E07\u0E40\u0E1B\u0E47\u0E19\u0E1A\u0E23\u0E34\u0E1A\u0E17 \u0E40\u0E0A\u0E48\u0E19 \u0E01\u0E25\u0E48\u0E2D\u0E07\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19 \u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E15\u0E31\u0E49\u0E07\u0E27\u0E34\u0E18\u0E35\u0E1B\u0E34\u0E14\u0E2B\u0E23\u0E37\u0E2D\u0E01\u0E25\u0E31\u0E1A\u0E44\u0E1B\u0E15\u0E48\u0E2D \u0E15\u0E23\u0E27\u0E08 Interaction \u0E17\u0E31\u0E49\u0E07\u0E17\u0E32\u0E07\u0E40\u0E02\u0E49\u0E32\u0E41\u0E25\u0E30\u0E17\u0E32\u0E07\u0E2D\u0E2D\u0E01",
+            "Example": "Card click \u2192 Navigate to Course Details\nDelete click \u2192 Open overlay Confirm Delete\nCancel click \u2192 Close overlay"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ทดสอบ Prototype จากงานที่ผู้ใช้ต้องทำ",
-        "Summary": "เขียนภารกิจหนึ่งข้อ เดินเส้นทางหลัก และลองทางย้อนกลับ",
+        "Title": "\u0E17\u0E14\u0E2A\u0E2D\u0E1A Prototype \u0E08\u0E32\u0E01\u0E07\u0E32\u0E19\u0E17\u0E35\u0E48\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E15\u0E49\u0E2D\u0E07\u0E17\u0E33",
         "DurationMinutes": 4,
+        "Summary": "\u0E40\u0E02\u0E35\u0E22\u0E19\u0E20\u0E32\u0E23\u0E01\u0E34\u0E08\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E02\u0E49\u0E2D \u0E40\u0E14\u0E34\u0E19\u0E40\u0E2A\u0E49\u0E19\u0E17\u0E32\u0E07\u0E2B\u0E25\u0E31\u0E01 \u0E41\u0E25\u0E30\u0E25\u0E2D\u0E07\u0E17\u0E32\u0E07\u0E22\u0E49\u0E2D\u0E19\u0E01\u0E25\u0E31\u0E1A",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ระบุภารกิจในภาษาของผู้ใช้ เช่น หาเวลาเรียนแล้วกลับหน้าคอร์ส กำหนด Starting point ในหน้าที่สมจริง ลองทำโดยไม่ใช้ตัวช่วย คอยสังเกตลิงก์ตันและทางกลับ แล้วแก้จุดติดขัดหนึ่งจุดก่อนทดสอบซ้ำ",
-            "Example": "Start: รายการคอร์ส\nTask: เปิดรายละเอียดคอร์ส หาเวลาเรียน แล้วกลับรายการ\nCheck: การ์ดเปิดได้ / พบเวลา / ปุ่มกลับทำงาน"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E23\u0E30\u0E1A\u0E38\u0E20\u0E32\u0E23\u0E01\u0E34\u0E08\u0E43\u0E19\u0E20\u0E32\u0E29\u0E32\u0E02\u0E2D\u0E07\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49 \u0E40\u0E0A\u0E48\u0E19 \u0E2B\u0E32\u0E40\u0E27\u0E25\u0E32\u0E40\u0E23\u0E35\u0E22\u0E19\u0E41\u0E25\u0E49\u0E27\u0E01\u0E25\u0E31\u0E1A\u0E2B\u0E19\u0E49\u0E32\u0E04\u0E2D\u0E23\u0E4C\u0E2A \u0E01\u0E33\u0E2B\u0E19\u0E14 Starting point \u0E43\u0E19\u0E2B\u0E19\u0E49\u0E32\u0E17\u0E35\u0E48\u0E2A\u0E21\u0E08\u0E23\u0E34\u0E07 \u0E25\u0E2D\u0E07\u0E17\u0E33\u0E42\u0E14\u0E22\u0E44\u0E21\u0E48\u0E43\u0E0A\u0E49\u0E15\u0E31\u0E27\u0E0A\u0E48\u0E27\u0E22 \u0E04\u0E2D\u0E22\u0E2A\u0E31\u0E07\u0E40\u0E01\u0E15\u0E25\u0E34\u0E07\u0E01\u0E4C\u0E15\u0E31\u0E19\u0E41\u0E25\u0E30\u0E17\u0E32\u0E07\u0E01\u0E25\u0E31\u0E1A \u0E41\u0E25\u0E49\u0E27\u0E41\u0E01\u0E49\u0E08\u0E38\u0E14\u0E15\u0E34\u0E14\u0E02\u0E31\u0E14\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E08\u0E38\u0E14\u0E01\u0E48\u0E2D\u0E19\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E0B\u0E49\u0E33",
+            "Example": "Start: \u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E04\u0E2D\u0E23\u0E4C\u0E2A\nTask: \u0E40\u0E1B\u0E34\u0E14\u0E23\u0E32\u0E22\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14\u0E04\u0E2D\u0E23\u0E4C\u0E2A \u0E2B\u0E32\u0E40\u0E27\u0E25\u0E32\u0E40\u0E23\u0E35\u0E22\u0E19 \u0E41\u0E25\u0E49\u0E27\u0E01\u0E25\u0E31\u0E1A\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\nCheck: \u0E01\u0E32\u0E23\u0E4C\u0E14\u0E40\u0E1B\u0E34\u0E14\u0E44\u0E14\u0E49 / \u0E1E\u0E1A\u0E40\u0E27\u0E25\u0E32 / \u0E1B\u0E38\u0E48\u0E21\u0E01\u0E25\u0E31\u0E1A\u0E17\u0E33\u0E07\u0E32\u0E19"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 116,
-    "Title": "รู้ข้อจำกัดของ Generative AI",
+    "Title": "\u0E23\u0E39\u0E49\u0E02\u0E49\u0E2D\u0E08\u0E33\u0E01\u0E31\u0E14\u0E02\u0E2D\u0E07 Generative AI",
     "Category": "AI",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "แยกงานที่ AI ช่วยร่างหรือสรุปได้ออกจากข้อเท็จจริงที่ต้องตรวจสอบ และลดความเสี่ยงเมื่อทำงานกับเอกสารยาว",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E41\u0E22\u0E01\u0E07\u0E32\u0E19\u0E17\u0E35\u0E48 AI \u0E0A\u0E48\u0E27\u0E22\u0E23\u0E48\u0E32\u0E07\u0E2B\u0E23\u0E37\u0E2D\u0E2A\u0E23\u0E38\u0E1B\u0E44\u0E14\u0E49\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E02\u0E49\u0E2D\u0E40\u0E17\u0E47\u0E08\u0E08\u0E23\u0E34\u0E07\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E15\u0E23\u0E27\u0E08\u0E2A\u0E2D\u0E1A \u0E41\u0E25\u0E30\u0E25\u0E14\u0E04\u0E27\u0E32\u0E21\u0E40\u0E2A\u0E35\u0E48\u0E22\u0E07\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E17\u0E33\u0E07\u0E32\u0E19\u0E01\u0E31\u0E1A\u0E40\u0E2D\u0E01\u0E2A\u0E32\u0E23\u0E22\u0E32\u0E27",
     "Instructor": "Anthropic",
     "Skills": [
       "Generative AI",
-      "การตรวจแหล่งข้อมูล",
+      "\u0E01\u0E32\u0E23\u0E15\u0E23\u0E27\u0E08\u0E41\u0E2B\u0E25\u0E48\u0E07\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25",
       "Context Window"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "เลือกใช้ความสามารถของ AI ให้เหมาะกับงาน",
-        "Summary": "พิจารณาว่าเมื่อไรควรขอให้ AI ร่างคำตอบ เมื่อไรควรเปิดแหล่งอ้างอิง และจะจัดข้อมูลยาวให้ตรวจสอบได้อย่างไร",
+        "Title": "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E43\u0E0A\u0E49\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E02\u0E2D\u0E07 AI \u0E43\u0E2B\u0E49\u0E40\u0E2B\u0E21\u0E32\u0E30\u0E01\u0E31\u0E1A\u0E07\u0E32\u0E19",
         "DurationMinutes": 8,
+        "Summary": "\u0E1E\u0E34\u0E08\u0E32\u0E23\u0E13\u0E32\u0E27\u0E48\u0E32\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E44\u0E23\u0E04\u0E27\u0E23\u0E02\u0E2D\u0E43\u0E2B\u0E49 AI \u0E23\u0E48\u0E32\u0E07\u0E04\u0E33\u0E15\u0E2D\u0E1A \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E44\u0E23\u0E04\u0E27\u0E23\u0E40\u0E1B\u0E34\u0E14\u0E41\u0E2B\u0E25\u0E48\u0E07\u0E2D\u0E49\u0E32\u0E07\u0E2D\u0E34\u0E07 \u0E41\u0E25\u0E30\u0E08\u0E30\u0E08\u0E31\u0E14\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E22\u0E32\u0E27\u0E43\u0E2B\u0E49\u0E15\u0E23\u0E27\u0E08\u0E2A\u0E2D\u0E1A\u0E44\u0E14\u0E49\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E44\u0E23",
+        "Reading": [],
         "VideoId": "W5cga7xipRI",
         "VideoDurationSeconds": 440,
         "VideoCreator": "Anthropic",
-        "VideoTitle": "Lesson 3B: Capabilities & limitations | AI Fluency: Framework & Foundations Course"
+        "VideoTitle": "Lesson 3B: Capabilities \u0026 limitations | AI Fluency: Framework \u0026 Foundations Course"
       },
       {
         "Id": 2,
-        "Title": "แยกคำตอบที่ลื่นไหลออกจากหลักฐาน",
-        "Summary": "ตรวจคำกล่าวเฉพาะเจาะจงแม้คำตอบจาก AI จะฟังดูน่าเชื่อถือ",
+        "Title": "\u0E41\u0E22\u0E01\u0E04\u0E33\u0E15\u0E2D\u0E1A\u0E17\u0E35\u0E48\u0E25\u0E37\u0E48\u0E19\u0E44\u0E2B\u0E25\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E2B\u0E25\u0E31\u0E01\u0E10\u0E32\u0E19",
         "DurationMinutes": 4,
+        "Summary": "\u0E15\u0E23\u0E27\u0E08\u0E04\u0E33\u0E01\u0E25\u0E48\u0E32\u0E27\u0E40\u0E09\u0E1E\u0E32\u0E30\u0E40\u0E08\u0E32\u0E30\u0E08\u0E07\u0E41\u0E21\u0E49\u0E04\u0E33\u0E15\u0E2D\u0E1A\u0E08\u0E32\u0E01 AI \u0E08\u0E30\u0E1F\u0E31\u0E07\u0E14\u0E39\u0E19\u0E48\u0E32\u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E16\u0E37\u0E2D",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "Generative AI สร้างข้อความที่ดูสมเหตุสมผลได้แม้ชื่อ วันที่ หรือตัวเลขจะผิด ระบุข้ออ้างที่มีผลต่อการตัดสินใจ เช่น กำหนดส่ง แล้วเปิดประกาศต้นทางเพื่อตรวจข้อความจริง หากยังยืนยันไม่ได้ให้ทำเครื่องหมายว่าต้องตรวจเพิ่ม",
-            "Example": "คำตอบ AI: ปิดรับสมัคร 15 พ.ค.\nแหล่งหลัก: ประกาศรับสมัครฉบับล่าสุด\nผลตรวจ: ยืนยันวันที่และเงื่อนไขก่อนส่งต่อ"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "Generative AI \u0E2A\u0E23\u0E49\u0E32\u0E07\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E17\u0E35\u0E48\u0E14\u0E39\u0E2A\u0E21\u0E40\u0E2B\u0E15\u0E38\u0E2A\u0E21\u0E1C\u0E25\u0E44\u0E14\u0E49\u0E41\u0E21\u0E49\u0E0A\u0E37\u0E48\u0E2D \u0E27\u0E31\u0E19\u0E17\u0E35\u0E48 \u0E2B\u0E23\u0E37\u0E2D\u0E15\u0E31\u0E27\u0E40\u0E25\u0E02\u0E08\u0E30\u0E1C\u0E34\u0E14 \u0E23\u0E30\u0E1A\u0E38\u0E02\u0E49\u0E2D\u0E2D\u0E49\u0E32\u0E07\u0E17\u0E35\u0E48\u0E21\u0E35\u0E1C\u0E25\u0E15\u0E48\u0E2D\u0E01\u0E32\u0E23\u0E15\u0E31\u0E14\u0E2A\u0E34\u0E19\u0E43\u0E08 \u0E40\u0E0A\u0E48\u0E19 \u0E01\u0E33\u0E2B\u0E19\u0E14\u0E2A\u0E48\u0E07 \u0E41\u0E25\u0E49\u0E27\u0E40\u0E1B\u0E34\u0E14\u0E1B\u0E23\u0E30\u0E01\u0E32\u0E28\u0E15\u0E49\u0E19\u0E17\u0E32\u0E07\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E15\u0E23\u0E27\u0E08\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E08\u0E23\u0E34\u0E07 \u0E2B\u0E32\u0E01\u0E22\u0E31\u0E07\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E43\u0E2B\u0E49\u0E17\u0E33\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E2B\u0E21\u0E32\u0E22\u0E27\u0E48\u0E32\u0E15\u0E49\u0E2D\u0E07\u0E15\u0E23\u0E27\u0E08\u0E40\u0E1E\u0E34\u0E48\u0E21",
+            "Example": "\u0E04\u0E33\u0E15\u0E2D\u0E1A AI: \u0E1B\u0E34\u0E14\u0E23\u0E31\u0E1A\u0E2A\u0E21\u0E31\u0E04\u0E23 15 \u0E1E.\u0E04.\n\u0E41\u0E2B\u0E25\u0E48\u0E07\u0E2B\u0E25\u0E31\u0E01: \u0E1B\u0E23\u0E30\u0E01\u0E32\u0E28\u0E23\u0E31\u0E1A\u0E2A\u0E21\u0E31\u0E04\u0E23\u0E09\u0E1A\u0E31\u0E1A\u0E25\u0E48\u0E32\u0E2A\u0E38\u0E14\n\u0E1C\u0E25\u0E15\u0E23\u0E27\u0E08: \u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48\u0E41\u0E25\u0E30\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02\u0E01\u0E48\u0E2D\u0E19\u0E2A\u0E48\u0E07\u0E15\u0E48\u0E2D"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ทำงานกับข้อมูลที่ตรวจย้อนกลับได้",
-        "Summary": "ให้ AI จัดข้อความจากข้อมูลที่อนุมัติ แล้วเช็กผลกับต้นฉบับ",
+        "Title": "\u0E17\u0E33\u0E07\u0E32\u0E19\u0E01\u0E31\u0E1A\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E17\u0E35\u0E48\u0E15\u0E23\u0E27\u0E08\u0E22\u0E49\u0E2D\u0E19\u0E01\u0E25\u0E31\u0E1A\u0E44\u0E14\u0E49",
         "DurationMinutes": 4,
+        "Summary": "\u0E43\u0E2B\u0E49 AI \u0E08\u0E31\u0E14\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E08\u0E32\u0E01\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E17\u0E35\u0E48\u0E2D\u0E19\u0E38\u0E21\u0E31\u0E15\u0E34 \u0E41\u0E25\u0E49\u0E27\u0E40\u0E0A\u0E47\u0E01\u0E1C\u0E25\u0E01\u0E31\u0E1A\u0E15\u0E49\u0E19\u0E09\u0E1A\u0E31\u0E1A",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ถ้าใช้ AI สรุปข้อมูล ให้ป้อนเฉพาะส่วนที่จำเป็นและอนุญาต ระบุให้สรุปจากข้อความที่ให้ พร้อมระบุประโยคต้นทางของแต่ละประเด็น ขอให้ใช้คำว่า ไม่พบในข้อมูล เมื่อต้นฉบับไม่ได้ระบุ แล้วตรวจประเด็นสำคัญกับต้นฉบับด้วยตนเอง",
-            "Example": "จากบันทึกที่แนบ สรุปงานที่ตกลงแล้ว 3 รายการ ระบุประโยคต้นทาง หากไม่พบผู้รับผิดชอบให้เขียนว่า ยังไม่ระบุ"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E16\u0E49\u0E32\u0E43\u0E0A\u0E49 AI \u0E2A\u0E23\u0E38\u0E1B\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25 \u0E43\u0E2B\u0E49\u0E1B\u0E49\u0E2D\u0E19\u0E40\u0E09\u0E1E\u0E32\u0E30\u0E2A\u0E48\u0E27\u0E19\u0E17\u0E35\u0E48\u0E08\u0E33\u0E40\u0E1B\u0E47\u0E19\u0E41\u0E25\u0E30\u0E2D\u0E19\u0E38\u0E0D\u0E32\u0E15 \u0E23\u0E30\u0E1A\u0E38\u0E43\u0E2B\u0E49\u0E2A\u0E23\u0E38\u0E1B\u0E08\u0E32\u0E01\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E17\u0E35\u0E48\u0E43\u0E2B\u0E49 \u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E23\u0E30\u0E1A\u0E38\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04\u0E15\u0E49\u0E19\u0E17\u0E32\u0E07\u0E02\u0E2D\u0E07\u0E41\u0E15\u0E48\u0E25\u0E30\u0E1B\u0E23\u0E30\u0E40\u0E14\u0E47\u0E19 \u0E02\u0E2D\u0E43\u0E2B\u0E49\u0E43\u0E0A\u0E49\u0E04\u0E33\u0E27\u0E48\u0E32 \u0E44\u0E21\u0E48\u0E1E\u0E1A\u0E43\u0E19\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25 \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E15\u0E49\u0E19\u0E09\u0E1A\u0E31\u0E1A\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E23\u0E30\u0E1A\u0E38 \u0E41\u0E25\u0E49\u0E27\u0E15\u0E23\u0E27\u0E08\u0E1B\u0E23\u0E30\u0E40\u0E14\u0E47\u0E19\u0E2A\u0E33\u0E04\u0E31\u0E0D\u0E01\u0E31\u0E1A\u0E15\u0E49\u0E19\u0E09\u0E1A\u0E31\u0E1A\u0E14\u0E49\u0E27\u0E22\u0E15\u0E19\u0E40\u0E2D\u0E07",
+            "Example": "\u0E08\u0E32\u0E01\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E17\u0E35\u0E48\u0E41\u0E19\u0E1A \u0E2A\u0E23\u0E38\u0E1B\u0E07\u0E32\u0E19\u0E17\u0E35\u0E48\u0E15\u0E01\u0E25\u0E07\u0E41\u0E25\u0E49\u0E27 3 \u0E23\u0E32\u0E22\u0E01\u0E32\u0E23 \u0E23\u0E30\u0E1A\u0E38\u0E1B\u0E23\u0E30\u0E42\u0E22\u0E04\u0E15\u0E49\u0E19\u0E17\u0E32\u0E07 \u0E2B\u0E32\u0E01\u0E44\u0E21\u0E48\u0E1E\u0E1A\u0E1C\u0E39\u0E49\u0E23\u0E31\u0E1A\u0E1C\u0E34\u0E14\u0E0A\u0E2D\u0E1A\u0E43\u0E2B\u0E49\u0E40\u0E02\u0E35\u0E22\u0E19\u0E27\u0E48\u0E32 \u0E22\u0E31\u0E07\u0E44\u0E21\u0E48\u0E23\u0E30\u0E1A\u0E38"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 117,
-    "Title": "แบ่งงานให้ AI อย่างมีเป้าหมาย",
+    "Title": "\u0E41\u0E1A\u0E48\u0E07\u0E07\u0E32\u0E19\u0E43\u0E2B\u0E49 AI \u0E2D\u0E22\u0E48\u0E32\u0E07\u0E21\u0E35\u0E40\u0E1B\u0E49\u0E32\u0E2B\u0E21\u0E32\u0E22",
     "Category": "AI",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "ตั้งเป้าหมายก่อนเลือกเครื่องมือ และตัดสินใจว่างานส่วนใดให้ AI ช่วยได้หรือควรเก็บไว้ให้คนตัดสินใจ",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E15\u0E31\u0E49\u0E07\u0E40\u0E1B\u0E49\u0E32\u0E2B\u0E21\u0E32\u0E22\u0E01\u0E48\u0E2D\u0E19\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E21\u0E37\u0E2D \u0E41\u0E25\u0E30\u0E15\u0E31\u0E14\u0E2A\u0E34\u0E19\u0E43\u0E08\u0E27\u0E48\u0E32\u0E07\u0E32\u0E19\u0E2A\u0E48\u0E27\u0E19\u0E43\u0E14\u0E43\u0E2B\u0E49 AI \u0E0A\u0E48\u0E27\u0E22\u0E44\u0E14\u0E49\u0E2B\u0E23\u0E37\u0E2D\u0E04\u0E27\u0E23\u0E40\u0E01\u0E47\u0E1A\u0E44\u0E27\u0E49\u0E43\u0E2B\u0E49\u0E04\u0E19\u0E15\u0E31\u0E14\u0E2A\u0E34\u0E19\u0E43\u0E08",
     "Instructor": "Anthropic",
     "Skills": [
-      "ตั้งเป้าหมายงาน",
-      "เลือกเครื่องมือ AI",
-      "แบ่งงานระหว่างคนและ AI"
+      "\u0E15\u0E31\u0E49\u0E07\u0E40\u0E1B\u0E49\u0E32\u0E2B\u0E21\u0E32\u0E22\u0E07\u0E32\u0E19",
+      "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E21\u0E37\u0E2D AI",
+      "\u0E41\u0E1A\u0E48\u0E07\u0E07\u0E32\u0E19\u0E23\u0E30\u0E2B\u0E27\u0E48\u0E32\u0E07\u0E04\u0E19\u0E41\u0E25\u0E30 AI"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "มอบหมายงานโดยพิจารณาความเสี่ยงและบทบาท",
-        "Summary": "ใช้สถานการณ์ทำงานจริงเพื่อแยกส่วนที่ให้ AI ร่างได้จากส่วนที่ต้องใช้ความรู้และความรับผิดชอบของคน",
+        "Title": "\u0E21\u0E2D\u0E1A\u0E2B\u0E21\u0E32\u0E22\u0E07\u0E32\u0E19\u0E42\u0E14\u0E22\u0E1E\u0E34\u0E08\u0E32\u0E23\u0E13\u0E32\u0E04\u0E27\u0E32\u0E21\u0E40\u0E2A\u0E35\u0E48\u0E22\u0E07\u0E41\u0E25\u0E30\u0E1A\u0E17\u0E1A\u0E32\u0E17",
         "DurationMinutes": 6,
+        "Summary": "\u0E43\u0E0A\u0E49\u0E2A\u0E16\u0E32\u0E19\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E17\u0E33\u0E07\u0E32\u0E19\u0E08\u0E23\u0E34\u0E07\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E41\u0E22\u0E01\u0E2A\u0E48\u0E27\u0E19\u0E17\u0E35\u0E48\u0E43\u0E2B\u0E49 AI \u0E23\u0E48\u0E32\u0E07\u0E44\u0E14\u0E49\u0E08\u0E32\u0E01\u0E2A\u0E48\u0E27\u0E19\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E43\u0E0A\u0E49\u0E04\u0E27\u0E32\u0E21\u0E23\u0E39\u0E49\u0E41\u0E25\u0E30\u0E04\u0E27\u0E32\u0E21\u0E23\u0E31\u0E1A\u0E1C\u0E34\u0E14\u0E0A\u0E2D\u0E1A\u0E02\u0E2D\u0E07\u0E04\u0E19",
+        "Reading": [],
         "VideoId": "EljzyfdYkrc",
         "VideoDurationSeconds": 349,
         "VideoCreator": "Anthropic",
-        "VideoTitle": "Lesson 4: A closer look at Delegation | AI Fluency: Framework & Foundations Course"
+        "VideoTitle": "Lesson 4: A closer look at Delegation | AI Fluency: Framework \u0026 Foundations Course"
       },
       {
         "Id": 2,
-        "Title": "แบ่งงานเป็นขั้นและกำหนดคนตรวจ",
-        "Summary": "เลือกขั้นที่ให้ AI ช่วยร่างได้ และระบุจุดที่คนต้องอนุมัติ",
+        "Title": "\u0E41\u0E1A\u0E48\u0E07\u0E07\u0E32\u0E19\u0E40\u0E1B\u0E47\u0E19\u0E02\u0E31\u0E49\u0E19\u0E41\u0E25\u0E30\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E04\u0E19\u0E15\u0E23\u0E27\u0E08",
         "DurationMinutes": 4,
+        "Summary": "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E02\u0E31\u0E49\u0E19\u0E17\u0E35\u0E48\u0E43\u0E2B\u0E49 AI \u0E0A\u0E48\u0E27\u0E22\u0E23\u0E48\u0E32\u0E07\u0E44\u0E14\u0E49 \u0E41\u0E25\u0E30\u0E23\u0E30\u0E1A\u0E38\u0E08\u0E38\u0E14\u0E17\u0E35\u0E48\u0E04\u0E19\u0E15\u0E49\u0E2D\u0E07\u0E2D\u0E19\u0E38\u0E21\u0E31\u0E15\u0E34",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "แยกงานเป็นการรวบรวมข้อมูล ร่าง ตรวจ และเผยแพร่ ให้ AI ช่วยขั้นที่ทำซ้ำและตรวจได้ เช่น จัดหัวข้อจากบันทึก ให้คนรับผิดชอบตรวจข้อเท็จจริง ข้อมูลที่เผยแพร่ได้ และตัดสินใจขั้นสุดท้าย กำหนดผลลัพธ์ของแต่ละขั้นล่วงหน้า",
-            "Example": "งาน: ส่งสรุปประชุม\nAI: จัดหัวข้อและร่างรายการงาน\nคน: ตรวจชื่อ กำหนดส่ง และอนุมัติก่อนส่ง"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E41\u0E22\u0E01\u0E07\u0E32\u0E19\u0E40\u0E1B\u0E47\u0E19\u0E01\u0E32\u0E23\u0E23\u0E27\u0E1A\u0E23\u0E27\u0E21\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25 \u0E23\u0E48\u0E32\u0E07 \u0E15\u0E23\u0E27\u0E08 \u0E41\u0E25\u0E30\u0E40\u0E1C\u0E22\u0E41\u0E1E\u0E23\u0E48 \u0E43\u0E2B\u0E49 AI \u0E0A\u0E48\u0E27\u0E22\u0E02\u0E31\u0E49\u0E19\u0E17\u0E35\u0E48\u0E17\u0E33\u0E0B\u0E49\u0E33\u0E41\u0E25\u0E30\u0E15\u0E23\u0E27\u0E08\u0E44\u0E14\u0E49 \u0E40\u0E0A\u0E48\u0E19 \u0E08\u0E31\u0E14\u0E2B\u0E31\u0E27\u0E02\u0E49\u0E2D\u0E08\u0E32\u0E01\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01 \u0E43\u0E2B\u0E49\u0E04\u0E19\u0E23\u0E31\u0E1A\u0E1C\u0E34\u0E14\u0E0A\u0E2D\u0E1A\u0E15\u0E23\u0E27\u0E08\u0E02\u0E49\u0E2D\u0E40\u0E17\u0E47\u0E08\u0E08\u0E23\u0E34\u0E07 \u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E17\u0E35\u0E48\u0E40\u0E1C\u0E22\u0E41\u0E1E\u0E23\u0E48\u0E44\u0E14\u0E49 \u0E41\u0E25\u0E30\u0E15\u0E31\u0E14\u0E2A\u0E34\u0E19\u0E43\u0E08\u0E02\u0E31\u0E49\u0E19\u0E2A\u0E38\u0E14\u0E17\u0E49\u0E32\u0E22 \u0E01\u0E33\u0E2B\u0E19\u0E14\u0E1C\u0E25\u0E25\u0E31\u0E1E\u0E18\u0E4C\u0E02\u0E2D\u0E07\u0E41\u0E15\u0E48\u0E25\u0E30\u0E02\u0E31\u0E49\u0E19\u0E25\u0E48\u0E27\u0E07\u0E2B\u0E19\u0E49\u0E32",
+            "Example": "\u0E07\u0E32\u0E19: \u0E2A\u0E48\u0E07\u0E2A\u0E23\u0E38\u0E1B\u0E1B\u0E23\u0E30\u0E0A\u0E38\u0E21\nAI: \u0E08\u0E31\u0E14\u0E2B\u0E31\u0E27\u0E02\u0E49\u0E2D\u0E41\u0E25\u0E30\u0E23\u0E48\u0E32\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E07\u0E32\u0E19\n\u0E04\u0E19: \u0E15\u0E23\u0E27\u0E08\u0E0A\u0E37\u0E48\u0E2D \u0E01\u0E33\u0E2B\u0E19\u0E14\u0E2A\u0E48\u0E07 \u0E41\u0E25\u0E30\u0E2D\u0E19\u0E38\u0E21\u0E31\u0E15\u0E34\u0E01\u0E48\u0E2D\u0E19\u0E2A\u0E48\u0E07"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ตั้งเกณฑ์รับงานก่อนใช้ผลลัพธ์",
-        "Summary": "สร้างรายการตรวจสั้น ๆ เพื่อบอกว่าร่างใช้ต่อได้หรือควรส่งกลับแก้",
+        "Title": "\u0E15\u0E31\u0E49\u0E07\u0E40\u0E01\u0E13\u0E11\u0E4C\u0E23\u0E31\u0E1A\u0E07\u0E32\u0E19\u0E01\u0E48\u0E2D\u0E19\u0E43\u0E0A\u0E49\u0E1C\u0E25\u0E25\u0E31\u0E1E\u0E18\u0E4C",
         "DurationMinutes": 4,
+        "Summary": "\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E15\u0E23\u0E27\u0E08\u0E2A\u0E31\u0E49\u0E19 \u0E46 \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E1A\u0E2D\u0E01\u0E27\u0E48\u0E32\u0E23\u0E48\u0E32\u0E07\u0E43\u0E0A\u0E49\u0E15\u0E48\u0E2D\u0E44\u0E14\u0E49\u0E2B\u0E23\u0E37\u0E2D\u0E04\u0E27\u0E23\u0E2A\u0E48\u0E07\u0E01\u0E25\u0E31\u0E1A\u0E41\u0E01\u0E49",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ตั้งเกณฑ์ทดสอบได้ก่อนสั่ง เช่น ห้ามเกินห้าข้อ ทุกข้อมีเจ้าของและกำหนด หรือระบุว่ายังไม่ทราบ เมื่อได้รับร่าง ให้ตรวจทุกข้อกับเกณฑ์และข้อมูลต้นทาง แยกสิ่งที่แก้ง่ายจากส่วนที่ต้องถามเจ้าของงาน",
-            "Example": "เกณฑ์ร่างรายการงาน: ไม่เกิน 5 ข้อ / งานหนึ่งเรื่องต่อบรรทัด / เจ้าของและเวลาอิงบันทึก / ขาดข้อมูลให้ใส่ ยังไม่ระบุ"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E15\u0E31\u0E49\u0E07\u0E40\u0E01\u0E13\u0E11\u0E4C\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E44\u0E14\u0E49\u0E01\u0E48\u0E2D\u0E19\u0E2A\u0E31\u0E48\u0E07 \u0E40\u0E0A\u0E48\u0E19 \u0E2B\u0E49\u0E32\u0E21\u0E40\u0E01\u0E34\u0E19\u0E2B\u0E49\u0E32\u0E02\u0E49\u0E2D \u0E17\u0E38\u0E01\u0E02\u0E49\u0E2D\u0E21\u0E35\u0E40\u0E08\u0E49\u0E32\u0E02\u0E2D\u0E07\u0E41\u0E25\u0E30\u0E01\u0E33\u0E2B\u0E19\u0E14 \u0E2B\u0E23\u0E37\u0E2D\u0E23\u0E30\u0E1A\u0E38\u0E27\u0E48\u0E32\u0E22\u0E31\u0E07\u0E44\u0E21\u0E48\u0E17\u0E23\u0E32\u0E1A \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E44\u0E14\u0E49\u0E23\u0E31\u0E1A\u0E23\u0E48\u0E32\u0E07 \u0E43\u0E2B\u0E49\u0E15\u0E23\u0E27\u0E08\u0E17\u0E38\u0E01\u0E02\u0E49\u0E2D\u0E01\u0E31\u0E1A\u0E40\u0E01\u0E13\u0E11\u0E4C\u0E41\u0E25\u0E30\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E15\u0E49\u0E19\u0E17\u0E32\u0E07 \u0E41\u0E22\u0E01\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E41\u0E01\u0E49\u0E07\u0E48\u0E32\u0E22\u0E08\u0E32\u0E01\u0E2A\u0E48\u0E27\u0E19\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E16\u0E32\u0E21\u0E40\u0E08\u0E49\u0E32\u0E02\u0E2D\u0E07\u0E07\u0E32\u0E19",
+            "Example": "\u0E40\u0E01\u0E13\u0E11\u0E4C\u0E23\u0E48\u0E32\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E07\u0E32\u0E19: \u0E44\u0E21\u0E48\u0E40\u0E01\u0E34\u0E19 5 \u0E02\u0E49\u0E2D / \u0E07\u0E32\u0E19\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E15\u0E48\u0E2D\u0E1A\u0E23\u0E23\u0E17\u0E31\u0E14 / \u0E40\u0E08\u0E49\u0E32\u0E02\u0E2D\u0E07\u0E41\u0E25\u0E30\u0E40\u0E27\u0E25\u0E32\u0E2D\u0E34\u0E07\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01 / \u0E02\u0E32\u0E14\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E43\u0E2B\u0E49\u0E43\u0E2A\u0E48 \u0E22\u0E31\u0E07\u0E44\u0E21\u0E48\u0E23\u0E30\u0E1A\u0E38"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 118,
-    "Title": "เขียน Prompt ให้ได้คำตอบตรงงาน",
+    "Title": "\u0E40\u0E02\u0E35\u0E22\u0E19 Prompt \u0E43\u0E2B\u0E49\u0E44\u0E14\u0E49\u0E04\u0E33\u0E15\u0E2D\u0E1A\u0E15\u0E23\u0E07\u0E07\u0E32\u0E19",
     "Category": "AI",
     "Level": "Beginner",
     "Units": 3,
     "Featured": true,
-    "Description": "ระบุบริบท รูปแบบ และข้อจำกัดใน Prompt พร้อมเลือกตัวอย่างและแบ่งงานยากเป็นขั้นตอน",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E23\u0E30\u0E1A\u0E38\u0E1A\u0E23\u0E34\u0E1A\u0E17 \u0E23\u0E39\u0E1B\u0E41\u0E1A\u0E1A \u0E41\u0E25\u0E30\u0E02\u0E49\u0E2D\u0E08\u0E33\u0E01\u0E31\u0E14\u0E43\u0E19 Prompt \u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E15\u0E31\u0E27\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E41\u0E25\u0E30\u0E41\u0E1A\u0E48\u0E07\u0E07\u0E32\u0E19\u0E22\u0E32\u0E01\u0E40\u0E1B\u0E47\u0E19\u0E02\u0E31\u0E49\u0E19\u0E15\u0E2D\u0E19",
     "Instructor": "Anthropic",
     "Skills": [
-      "ออกแบบ Prompt",
-      "ระบุรูปแบบคำตอบ",
-      "ปรับคำสั่งซ้ำ"
+      "\u0E2D\u0E2D\u0E01\u0E41\u0E1A\u0E1A Prompt",
+      "\u0E23\u0E30\u0E1A\u0E38\u0E23\u0E39\u0E1B\u0E41\u0E1A\u0E1A\u0E04\u0E33\u0E15\u0E2D\u0E1A",
+      "\u0E1B\u0E23\u0E31\u0E1A\u0E04\u0E33\u0E2A\u0E31\u0E48\u0E07\u0E0B\u0E49\u0E33"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "เปลี่ยนคำสั่งกว้างให้เป็นโจทย์ที่ลงมือทำได้",
-        "Summary": "ฝึกเปลี่ยนคำสั่งคลุมเครือเป็นคำขอที่บอกผู้รับ เป้าหมาย รูปแบบ และเงื่อนไขของงานชัดเจน",
+        "Title": "\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E04\u0E33\u0E2A\u0E31\u0E48\u0E07\u0E01\u0E27\u0E49\u0E32\u0E07\u0E43\u0E2B\u0E49\u0E40\u0E1B\u0E47\u0E19\u0E42\u0E08\u0E17\u0E22\u0E4C\u0E17\u0E35\u0E48\u0E25\u0E07\u0E21\u0E37\u0E2D\u0E17\u0E33\u0E44\u0E14\u0E49",
         "DurationMinutes": 12,
+        "Summary": "\u0E1D\u0E36\u0E01\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E04\u0E33\u0E2A\u0E31\u0E48\u0E07\u0E04\u0E25\u0E38\u0E21\u0E40\u0E04\u0E23\u0E37\u0E2D\u0E40\u0E1B\u0E47\u0E19\u0E04\u0E33\u0E02\u0E2D\u0E17\u0E35\u0E48\u0E1A\u0E2D\u0E01\u0E1C\u0E39\u0E49\u0E23\u0E31\u0E1A \u0E40\u0E1B\u0E49\u0E32\u0E2B\u0E21\u0E32\u0E22 \u0E23\u0E39\u0E1B\u0E41\u0E1A\u0E1A \u0E41\u0E25\u0E30\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02\u0E02\u0E2D\u0E07\u0E07\u0E32\u0E19\u0E0A\u0E31\u0E14\u0E40\u0E08\u0E19",
+        "Reading": [],
         "VideoId": "2YCaBqP8muw",
         "VideoDurationSeconds": 714,
         "VideoCreator": "Anthropic",
-        "VideoTitle": "Lesson 7: Effective prompting techniques (Deep Dive) | AI Fluency: Framework & Foundations Course"
+        "VideoTitle": "Lesson 7: Effective prompting techniques (Deep Dive) | AI Fluency: Framework \u0026 Foundations Course"
       },
       {
         "Id": 2,
-        "Title": "กำหนดรูปแบบและขอบเขตคำตอบ",
-        "Summary": "เพิ่มผู้รับ ข้อจำกัด และรูปแบบใน Prompt เพื่อให้ร่างพร้อมตรวจ",
+        "Title": "\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E23\u0E39\u0E1B\u0E41\u0E1A\u0E1A\u0E41\u0E25\u0E30\u0E02\u0E2D\u0E1A\u0E40\u0E02\u0E15\u0E04\u0E33\u0E15\u0E2D\u0E1A",
         "DurationMinutes": 4,
+        "Summary": "\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E1C\u0E39\u0E49\u0E23\u0E31\u0E1A \u0E02\u0E49\u0E2D\u0E08\u0E33\u0E01\u0E31\u0E14 \u0E41\u0E25\u0E30\u0E23\u0E39\u0E1B\u0E41\u0E1A\u0E1A\u0E43\u0E19 Prompt \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E43\u0E2B\u0E49\u0E23\u0E48\u0E32\u0E07\u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E15\u0E23\u0E27\u0E08",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "บอกว่างานใช้กับใครและผลลัพธ์จะนำไปทำอะไร ระบุรูปแบบ เช่น ตารางสามคอลัมน์ หรือข้อความไม่เกินห้าบรรทัด ตั้งข้อจำกัดที่ตรวจได้และบอกว่าให้ทำอย่างไรเมื่อข้อมูลขาด ทดลองใช้คำสั่งกับข้อมูลตัวอย่างหนึ่งชุด",
-            "Example": "สรุปข้อความนี้ให้ทีมบริการเป็นตาราง 3 คอลัมน์: ปัญหา, ผลกระทบ, ขั้นตอนถัดไป จำกัด 4 แถว ข้อมูลไม่พอให้ใส่ ยังไม่ทราบ"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E1A\u0E2D\u0E01\u0E27\u0E48\u0E32\u0E07\u0E32\u0E19\u0E43\u0E0A\u0E49\u0E01\u0E31\u0E1A\u0E43\u0E04\u0E23\u0E41\u0E25\u0E30\u0E1C\u0E25\u0E25\u0E31\u0E1E\u0E18\u0E4C\u0E08\u0E30\u0E19\u0E33\u0E44\u0E1B\u0E17\u0E33\u0E2D\u0E30\u0E44\u0E23 \u0E23\u0E30\u0E1A\u0E38\u0E23\u0E39\u0E1B\u0E41\u0E1A\u0E1A \u0E40\u0E0A\u0E48\u0E19 \u0E15\u0E32\u0E23\u0E32\u0E07\u0E2A\u0E32\u0E21\u0E04\u0E2D\u0E25\u0E31\u0E21\u0E19\u0E4C \u0E2B\u0E23\u0E37\u0E2D\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E44\u0E21\u0E48\u0E40\u0E01\u0E34\u0E19\u0E2B\u0E49\u0E32\u0E1A\u0E23\u0E23\u0E17\u0E31\u0E14 \u0E15\u0E31\u0E49\u0E07\u0E02\u0E49\u0E2D\u0E08\u0E33\u0E01\u0E31\u0E14\u0E17\u0E35\u0E48\u0E15\u0E23\u0E27\u0E08\u0E44\u0E14\u0E49\u0E41\u0E25\u0E30\u0E1A\u0E2D\u0E01\u0E27\u0E48\u0E32\u0E43\u0E2B\u0E49\u0E17\u0E33\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E44\u0E23\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E02\u0E32\u0E14 \u0E17\u0E14\u0E25\u0E2D\u0E07\u0E43\u0E0A\u0E49\u0E04\u0E33\u0E2A\u0E31\u0E48\u0E07\u0E01\u0E31\u0E1A\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E15\u0E31\u0E27\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E0A\u0E38\u0E14",
+            "Example": "\u0E2A\u0E23\u0E38\u0E1B\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E19\u0E35\u0E49\u0E43\u0E2B\u0E49\u0E17\u0E35\u0E21\u0E1A\u0E23\u0E34\u0E01\u0E32\u0E23\u0E40\u0E1B\u0E47\u0E19\u0E15\u0E32\u0E23\u0E32\u0E07 3 \u0E04\u0E2D\u0E25\u0E31\u0E21\u0E19\u0E4C: \u0E1B\u0E31\u0E0D\u0E2B\u0E32, \u0E1C\u0E25\u0E01\u0E23\u0E30\u0E17\u0E1A, \u0E02\u0E31\u0E49\u0E19\u0E15\u0E2D\u0E19\u0E16\u0E31\u0E14\u0E44\u0E1B \u0E08\u0E33\u0E01\u0E31\u0E14 4 \u0E41\u0E16\u0E27 \u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E44\u0E21\u0E48\u0E1E\u0E2D\u0E43\u0E2B\u0E49\u0E43\u0E2A\u0E48 \u0E22\u0E31\u0E07\u0E44\u0E21\u0E48\u0E17\u0E23\u0E32\u0E1A"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ปรับ Prompt ทีละข้อแล้วเปรียบเทียบ",
-        "Summary": "ใช้ข้อมูลชุดเดิมและเกณฑ์เดียวกันเพื่อเลือกคำสั่งที่ดีกว่า",
+        "Title": "\u0E1B\u0E23\u0E31\u0E1A Prompt \u0E17\u0E35\u0E25\u0E30\u0E02\u0E49\u0E2D\u0E41\u0E25\u0E49\u0E27\u0E40\u0E1B\u0E23\u0E35\u0E22\u0E1A\u0E40\u0E17\u0E35\u0E22\u0E1A",
         "DurationMinutes": 4,
+        "Summary": "\u0E43\u0E0A\u0E49\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E0A\u0E38\u0E14\u0E40\u0E14\u0E34\u0E21\u0E41\u0E25\u0E30\u0E40\u0E01\u0E13\u0E11\u0E4C\u0E40\u0E14\u0E35\u0E22\u0E27\u0E01\u0E31\u0E19\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E04\u0E33\u0E2A\u0E31\u0E48\u0E07\u0E17\u0E35\u0E48\u0E14\u0E35\u0E01\u0E27\u0E48\u0E32",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "บันทึก Prompt รุ่นแรกและผลลัพธ์ แล้วเปลี่ยนเพียงข้อเดียว เช่น เพิ่มรูปแบบหรือห้ามเติมข้อมูล เปรียบเทียบผลกับเกณฑ์เดิมโดยใช้ข้อมูลทดสอบเดียวกัน จากนั้นลองข้อมูลอีกชุดเพื่อดูว่าคำสั่งยังทำงานเมื่อโจทย์เปลี่ยน",
-            "Example": "รุ่น A: สรุปบันทึกประชุม\nรุ่น B: สรุปบันทึกประชุมเป็นรายการงาน โดยเขียน ยังไม่ระบุ หากไม่มีชื่อเจ้าของ\nเกณฑ์: อ่านง่าย และไม่เพิ่มเจ้าของเอง"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01 Prompt \u0E23\u0E38\u0E48\u0E19\u0E41\u0E23\u0E01\u0E41\u0E25\u0E30\u0E1C\u0E25\u0E25\u0E31\u0E1E\u0E18\u0E4C \u0E41\u0E25\u0E49\u0E27\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E40\u0E1E\u0E35\u0E22\u0E07\u0E02\u0E49\u0E2D\u0E40\u0E14\u0E35\u0E22\u0E27 \u0E40\u0E0A\u0E48\u0E19 \u0E40\u0E1E\u0E34\u0E48\u0E21\u0E23\u0E39\u0E1B\u0E41\u0E1A\u0E1A\u0E2B\u0E23\u0E37\u0E2D\u0E2B\u0E49\u0E32\u0E21\u0E40\u0E15\u0E34\u0E21\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25 \u0E40\u0E1B\u0E23\u0E35\u0E22\u0E1A\u0E40\u0E17\u0E35\u0E22\u0E1A\u0E1C\u0E25\u0E01\u0E31\u0E1A\u0E40\u0E01\u0E13\u0E11\u0E4C\u0E40\u0E14\u0E34\u0E21\u0E42\u0E14\u0E22\u0E43\u0E0A\u0E49\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E40\u0E14\u0E35\u0E22\u0E27\u0E01\u0E31\u0E19 \u0E08\u0E32\u0E01\u0E19\u0E31\u0E49\u0E19\u0E25\u0E2D\u0E07\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E2D\u0E35\u0E01\u0E0A\u0E38\u0E14\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E14\u0E39\u0E27\u0E48\u0E32\u0E04\u0E33\u0E2A\u0E31\u0E48\u0E07\u0E22\u0E31\u0E07\u0E17\u0E33\u0E07\u0E32\u0E19\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E42\u0E08\u0E17\u0E22\u0E4C\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19",
+            "Example": "\u0E23\u0E38\u0E48\u0E19 A: \u0E2A\u0E23\u0E38\u0E1B\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E1B\u0E23\u0E30\u0E0A\u0E38\u0E21\n\u0E23\u0E38\u0E48\u0E19 B: \u0E2A\u0E23\u0E38\u0E1B\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E1B\u0E23\u0E30\u0E0A\u0E38\u0E21\u0E40\u0E1B\u0E47\u0E19\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E07\u0E32\u0E19 \u0E42\u0E14\u0E22\u0E40\u0E02\u0E35\u0E22\u0E19 \u0E22\u0E31\u0E07\u0E44\u0E21\u0E48\u0E23\u0E30\u0E1A\u0E38 \u0E2B\u0E32\u0E01\u0E44\u0E21\u0E48\u0E21\u0E35\u0E0A\u0E37\u0E48\u0E2D\u0E40\u0E08\u0E49\u0E32\u0E02\u0E2D\u0E07\n\u0E40\u0E01\u0E13\u0E11\u0E4C: \u0E2D\u0E48\u0E32\u0E19\u0E07\u0E48\u0E32\u0E22 \u0E41\u0E25\u0E30\u0E44\u0E21\u0E48\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E40\u0E08\u0E49\u0E32\u0E02\u0E2D\u0E07\u0E40\u0E2D\u0E07"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 119,
-    "Title": "ตรวจคำตอบ AI ก่อนนำไปใช้",
+    "Title": "\u0E15\u0E23\u0E27\u0E08\u0E04\u0E33\u0E15\u0E2D\u0E1A AI \u0E01\u0E48\u0E2D\u0E19\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
     "Category": "AI",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "ใช้เกณฑ์ด้านความถูกต้อง ตรวจขั้นตอนทำงาน และดูว่าการโต้ตอบกับ AI ช่วยให้งานดีขึ้นอย่างไร",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E43\u0E0A\u0E49\u0E40\u0E01\u0E13\u0E11\u0E4C\u0E14\u0E49\u0E32\u0E19\u0E04\u0E27\u0E32\u0E21\u0E16\u0E39\u0E01\u0E15\u0E49\u0E2D\u0E07 \u0E15\u0E23\u0E27\u0E08\u0E02\u0E31\u0E49\u0E19\u0E15\u0E2D\u0E19\u0E17\u0E33\u0E07\u0E32\u0E19 \u0E41\u0E25\u0E30\u0E14\u0E39\u0E27\u0E48\u0E32\u0E01\u0E32\u0E23\u0E42\u0E15\u0E49\u0E15\u0E2D\u0E1A\u0E01\u0E31\u0E1A AI \u0E0A\u0E48\u0E27\u0E22\u0E43\u0E2B\u0E49\u0E07\u0E32\u0E19\u0E14\u0E35\u0E02\u0E36\u0E49\u0E19\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E44\u0E23",
     "Instructor": "Anthropic",
     "Skills": [
-      "ตรวจผลงาน",
-      "ตรวจวิธีดำเนินงาน",
-      "ให้ข้อเสนอแนะ AI"
+      "\u0E15\u0E23\u0E27\u0E08\u0E1C\u0E25\u0E07\u0E32\u0E19",
+      "\u0E15\u0E23\u0E27\u0E08\u0E27\u0E34\u0E18\u0E35\u0E14\u0E33\u0E40\u0E19\u0E34\u0E19\u0E07\u0E32\u0E19",
+      "\u0E43\u0E2B\u0E49\u0E02\u0E49\u0E2D\u0E40\u0E2A\u0E19\u0E2D\u0E41\u0E19\u0E30 AI"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "ประเมินผลงาน วิธีทำงาน และการตอบสนอง",
-        "Summary": "พิจารณาทั้งตัวคำตอบ วิธีที่ AI ใช้หาคำตอบ และพฤติกรรมระหว่างทำงาน แล้วตัดสินใจว่าจะปรับคำสั่งหรือตรวจเพิ่ม",
+        "Title": "\u0E1B\u0E23\u0E30\u0E40\u0E21\u0E34\u0E19\u0E1C\u0E25\u0E07\u0E32\u0E19 \u0E27\u0E34\u0E18\u0E35\u0E17\u0E33\u0E07\u0E32\u0E19 \u0E41\u0E25\u0E30\u0E01\u0E32\u0E23\u0E15\u0E2D\u0E1A\u0E2A\u0E19\u0E2D\u0E07",
         "DurationMinutes": 6,
+        "Summary": "\u0E1E\u0E34\u0E08\u0E32\u0E23\u0E13\u0E32\u0E17\u0E31\u0E49\u0E07\u0E15\u0E31\u0E27\u0E04\u0E33\u0E15\u0E2D\u0E1A \u0E27\u0E34\u0E18\u0E35\u0E17\u0E35\u0E48 AI \u0E43\u0E0A\u0E49\u0E2B\u0E32\u0E04\u0E33\u0E15\u0E2D\u0E1A \u0E41\u0E25\u0E30\u0E1E\u0E24\u0E15\u0E34\u0E01\u0E23\u0E23\u0E21\u0E23\u0E30\u0E2B\u0E27\u0E48\u0E32\u0E07\u0E17\u0E33\u0E07\u0E32\u0E19 \u0E41\u0E25\u0E49\u0E27\u0E15\u0E31\u0E14\u0E2A\u0E34\u0E19\u0E43\u0E08\u0E27\u0E48\u0E32\u0E08\u0E30\u0E1B\u0E23\u0E31\u0E1A\u0E04\u0E33\u0E2A\u0E31\u0E48\u0E07\u0E2B\u0E23\u0E37\u0E2D\u0E15\u0E23\u0E27\u0E08\u0E40\u0E1E\u0E34\u0E48\u0E21",
+        "Reading": [],
         "VideoId": "Y0KidGr9Z2Y",
         "VideoDurationSeconds": 323,
         "VideoCreator": "Anthropic",
-        "VideoTitle": "Lesson 8: A closer look at Discernment | AI Fluency: Framework & Foundations Course"
+        "VideoTitle": "Lesson 8: A closer look at Discernment | AI Fluency: Framework \u0026 Foundations Course"
       },
       {
         "Id": 2,
-        "Title": "อ่านแหล่งอ้างอิงให้ถึงข้อความต้นทาง",
-        "Summary": "ตรวจว่าแหล่งที่ AI อ้างมีจริงและรองรับข้อสรุปตรงประเด็น",
+        "Title": "\u0E2D\u0E48\u0E32\u0E19\u0E41\u0E2B\u0E25\u0E48\u0E07\u0E2D\u0E49\u0E32\u0E07\u0E2D\u0E34\u0E07\u0E43\u0E2B\u0E49\u0E16\u0E36\u0E07\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E15\u0E49\u0E19\u0E17\u0E32\u0E07",
         "DurationMinutes": 4,
+        "Summary": "\u0E15\u0E23\u0E27\u0E08\u0E27\u0E48\u0E32\u0E41\u0E2B\u0E25\u0E48\u0E07\u0E17\u0E35\u0E48 AI \u0E2D\u0E49\u0E32\u0E07\u0E21\u0E35\u0E08\u0E23\u0E34\u0E07\u0E41\u0E25\u0E30\u0E23\u0E2D\u0E07\u0E23\u0E31\u0E1A\u0E02\u0E49\u0E2D\u0E2A\u0E23\u0E38\u0E1B\u0E15\u0E23\u0E07\u0E1B\u0E23\u0E30\u0E40\u0E14\u0E47\u0E19",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "เปิดแหล่งอ้างอิงจริง และหาเนื้อหาที่สนับสนุนข้ออ้าง จดเวอร์ชัน วันที่ หน่วย และบริบท ถ้าแหล่งพูดเรื่องคนละกลุ่มหรือคนละเงื่อนไข ให้แก้ข้อสรุปหรือหาหลักฐานเพิ่ม อย่าพิจารณาจากชื่อแหล่งอย่างเดียว",
-            "Example": "ข้ออ้าง: ยอดเพิ่ม 20% ในเดือนนี้\nตรวจ: รายงานฉบับใด / ตัวเลขเทียบเดือนหรือปี / กลุ่มข้อมูลเดียวกันหรือไม่"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E40\u0E1B\u0E34\u0E14\u0E41\u0E2B\u0E25\u0E48\u0E07\u0E2D\u0E49\u0E32\u0E07\u0E2D\u0E34\u0E07\u0E08\u0E23\u0E34\u0E07 \u0E41\u0E25\u0E30\u0E2B\u0E32\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E32\u0E17\u0E35\u0E48\u0E2A\u0E19\u0E31\u0E1A\u0E2A\u0E19\u0E38\u0E19\u0E02\u0E49\u0E2D\u0E2D\u0E49\u0E32\u0E07 \u0E08\u0E14\u0E40\u0E27\u0E2D\u0E23\u0E4C\u0E0A\u0E31\u0E19 \u0E27\u0E31\u0E19\u0E17\u0E35\u0E48 \u0E2B\u0E19\u0E48\u0E27\u0E22 \u0E41\u0E25\u0E30\u0E1A\u0E23\u0E34\u0E1A\u0E17 \u0E16\u0E49\u0E32\u0E41\u0E2B\u0E25\u0E48\u0E07\u0E1E\u0E39\u0E14\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E04\u0E19\u0E25\u0E30\u0E01\u0E25\u0E38\u0E48\u0E21\u0E2B\u0E23\u0E37\u0E2D\u0E04\u0E19\u0E25\u0E30\u0E40\u0E07\u0E37\u0E48\u0E2D\u0E19\u0E44\u0E02 \u0E43\u0E2B\u0E49\u0E41\u0E01\u0E49\u0E02\u0E49\u0E2D\u0E2A\u0E23\u0E38\u0E1B\u0E2B\u0E23\u0E37\u0E2D\u0E2B\u0E32\u0E2B\u0E25\u0E31\u0E01\u0E10\u0E32\u0E19\u0E40\u0E1E\u0E34\u0E48\u0E21 \u0E2D\u0E22\u0E48\u0E32\u0E1E\u0E34\u0E08\u0E32\u0E23\u0E13\u0E32\u0E08\u0E32\u0E01\u0E0A\u0E37\u0E48\u0E2D\u0E41\u0E2B\u0E25\u0E48\u0E07\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E40\u0E14\u0E35\u0E22\u0E27",
+            "Example": "\u0E02\u0E49\u0E2D\u0E2D\u0E49\u0E32\u0E07: \u0E22\u0E2D\u0E14\u0E40\u0E1E\u0E34\u0E48\u0E21 20% \u0E43\u0E19\u0E40\u0E14\u0E37\u0E2D\u0E19\u0E19\u0E35\u0E49\n\u0E15\u0E23\u0E27\u0E08: \u0E23\u0E32\u0E22\u0E07\u0E32\u0E19\u0E09\u0E1A\u0E31\u0E1A\u0E43\u0E14 / \u0E15\u0E31\u0E27\u0E40\u0E25\u0E02\u0E40\u0E17\u0E35\u0E22\u0E1A\u0E40\u0E14\u0E37\u0E2D\u0E19\u0E2B\u0E23\u0E37\u0E2D\u0E1B\u0E35 / \u0E01\u0E25\u0E38\u0E48\u0E21\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E40\u0E14\u0E35\u0E22\u0E27\u0E01\u0E31\u0E19\u0E2B\u0E23\u0E37\u0E2D\u0E44\u0E21\u0E48"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "ทดสอบคำตอบด้วยกรณีขอบและหาข้อผิดพลาด",
-        "Summary": "ตรวจผลกับตัวอย่างที่รู้คำตอบก่อนใช้งานจริง",
+        "Title": "\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E04\u0E33\u0E15\u0E2D\u0E1A\u0E14\u0E49\u0E27\u0E22\u0E01\u0E23\u0E13\u0E35\u0E02\u0E2D\u0E1A\u0E41\u0E25\u0E30\u0E2B\u0E32\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14",
         "DurationMinutes": 4,
+        "Summary": "\u0E15\u0E23\u0E27\u0E08\u0E1C\u0E25\u0E01\u0E31\u0E1A\u0E15\u0E31\u0E27\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E17\u0E35\u0E48\u0E23\u0E39\u0E49\u0E04\u0E33\u0E15\u0E2D\u0E1A\u0E01\u0E48\u0E2D\u0E19\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E08\u0E23\u0E34\u0E07",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "สำหรับสูตร โค้ด หรือกระบวนการ ให้ทดสอบกรณีธรรมดา กรณีตรงขอบ และข้อมูลขาด ระบุผลที่คาดก่อนลองเปรียบเทียบ ผลต่างหนึ่งกรณีอาจแสดงว่าคำตอบต้องแก้ หยุดใช้เมื่อพฤติกรรมที่ผิดมีผลสำคัญและขอคนที่รู้เรื่องช่วยตรวจ",
-            "Example": "กฎ: คะแนนอย่างน้อย 60 จึงผ่าน\nทดสอบ: 59 → ไม่ผ่าน / 60 → ผ่าน / 61 → ผ่าน / ไม่มีคะแนน → แจ้งข้อมูลขาด"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E2A\u0E39\u0E15\u0E23 \u0E42\u0E04\u0E49\u0E14 \u0E2B\u0E23\u0E37\u0E2D\u0E01\u0E23\u0E30\u0E1A\u0E27\u0E19\u0E01\u0E32\u0E23 \u0E43\u0E2B\u0E49\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E01\u0E23\u0E13\u0E35\u0E18\u0E23\u0E23\u0E21\u0E14\u0E32 \u0E01\u0E23\u0E13\u0E35\u0E15\u0E23\u0E07\u0E02\u0E2D\u0E1A \u0E41\u0E25\u0E30\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E02\u0E32\u0E14 \u0E23\u0E30\u0E1A\u0E38\u0E1C\u0E25\u0E17\u0E35\u0E48\u0E04\u0E32\u0E14\u0E01\u0E48\u0E2D\u0E19\u0E25\u0E2D\u0E07\u0E40\u0E1B\u0E23\u0E35\u0E22\u0E1A\u0E40\u0E17\u0E35\u0E22\u0E1A \u0E1C\u0E25\u0E15\u0E48\u0E32\u0E07\u0E2B\u0E19\u0E36\u0E48\u0E07\u0E01\u0E23\u0E13\u0E35\u0E2D\u0E32\u0E08\u0E41\u0E2A\u0E14\u0E07\u0E27\u0E48\u0E32\u0E04\u0E33\u0E15\u0E2D\u0E1A\u0E15\u0E49\u0E2D\u0E07\u0E41\u0E01\u0E49 \u0E2B\u0E22\u0E38\u0E14\u0E43\u0E0A\u0E49\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E1E\u0E24\u0E15\u0E34\u0E01\u0E23\u0E23\u0E21\u0E17\u0E35\u0E48\u0E1C\u0E34\u0E14\u0E21\u0E35\u0E1C\u0E25\u0E2A\u0E33\u0E04\u0E31\u0E0D\u0E41\u0E25\u0E30\u0E02\u0E2D\u0E04\u0E19\u0E17\u0E35\u0E48\u0E23\u0E39\u0E49\u0E40\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E0A\u0E48\u0E27\u0E22\u0E15\u0E23\u0E27\u0E08",
+            "Example": "\u0E01\u0E0E: \u0E04\u0E30\u0E41\u0E19\u0E19\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E19\u0E49\u0E2D\u0E22 60 \u0E08\u0E36\u0E07\u0E1C\u0E48\u0E32\u0E19\n\u0E17\u0E14\u0E2A\u0E2D\u0E1A: 59 \u2192 \u0E44\u0E21\u0E48\u0E1C\u0E48\u0E32\u0E19 / 60 \u2192 \u0E1C\u0E48\u0E32\u0E19 / 61 \u2192 \u0E1C\u0E48\u0E32\u0E19 / \u0E44\u0E21\u0E48\u0E21\u0E35\u0E04\u0E30\u0E41\u0E19\u0E19 \u2192 \u0E41\u0E08\u0E49\u0E07\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E02\u0E32\u0E14"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   },
   {
     "Id": 120,
-    "Title": "ใช้ AI อย่างรับผิดชอบ",
+    "Title": "\u0E43\u0E0A\u0E49 AI \u0E2D\u0E22\u0E48\u0E32\u0E07\u0E23\u0E31\u0E1A\u0E1C\u0E34\u0E14\u0E0A\u0E2D\u0E1A",
     "Category": "AI",
     "Level": "Beginner",
     "Units": 3,
     "Featured": false,
-    "Description": "ตัดสินใจอย่างรอบคอบว่าจะให้ข้อมูลอะไรกับ AI แจ้งบทบาทของเครื่องมือ และตรวจผลก่อนเผยแพร่",
+    "IsArchived": false,
+    "IsPublished": null,
+    "CreatedAt": null,
+    "Description": "\u0E15\u0E31\u0E14\u0E2A\u0E34\u0E19\u0E43\u0E08\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E23\u0E2D\u0E1A\u0E04\u0E2D\u0E1A\u0E27\u0E48\u0E32\u0E08\u0E30\u0E43\u0E2B\u0E49\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E2D\u0E30\u0E44\u0E23\u0E01\u0E31\u0E1A AI \u0E41\u0E08\u0E49\u0E07\u0E1A\u0E17\u0E1A\u0E32\u0E17\u0E02\u0E2D\u0E07\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E21\u0E37\u0E2D \u0E41\u0E25\u0E30\u0E15\u0E23\u0E27\u0E08\u0E1C\u0E25\u0E01\u0E48\u0E2D\u0E19\u0E40\u0E1C\u0E22\u0E41\u0E1E\u0E23\u0E48",
     "Instructor": "Anthropic",
     "Skills": [
-      "ความเป็นส่วนตัว",
-      "ความโปร่งใส",
-      "ตรวจสอบก่อนเผยแพร่"
+      "\u0E04\u0E27\u0E32\u0E21\u0E40\u0E1B\u0E47\u0E19\u0E2A\u0E48\u0E27\u0E19\u0E15\u0E31\u0E27",
+      "\u0E04\u0E27\u0E32\u0E21\u0E42\u0E1B\u0E23\u0E48\u0E07\u0E43\u0E2A",
+      "\u0E15\u0E23\u0E27\u0E08\u0E2A\u0E2D\u0E1A\u0E01\u0E48\u0E2D\u0E19\u0E40\u0E1C\u0E22\u0E41\u0E1E\u0E23\u0E48"
     ],
+    "VideoUrl": null,
     "Lessons": [
       {
         "Id": 1,
-        "Title": "ดูแลข้อมูล ผู้รับ และงานที่เผยแพร่",
-        "Summary": "วางขั้นตอนรับผิดชอบตั้งแต่เลือกเครื่องมือและข้อมูล ไปจนถึงการบอกบทบาทของ AI และตรวจข้อเท็จจริงก่อนส่งงาน",
+        "Title": "\u0E14\u0E39\u0E41\u0E25\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25 \u0E1C\u0E39\u0E49\u0E23\u0E31\u0E1A \u0E41\u0E25\u0E30\u0E07\u0E32\u0E19\u0E17\u0E35\u0E48\u0E40\u0E1C\u0E22\u0E41\u0E1E\u0E23\u0E48",
         "DurationMinutes": 7,
+        "Summary": "\u0E27\u0E32\u0E07\u0E02\u0E31\u0E49\u0E19\u0E15\u0E2D\u0E19\u0E23\u0E31\u0E1A\u0E1C\u0E34\u0E14\u0E0A\u0E2D\u0E1A\u0E15\u0E31\u0E49\u0E07\u0E41\u0E15\u0E48\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E21\u0E37\u0E2D\u0E41\u0E25\u0E30\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25 \u0E44\u0E1B\u0E08\u0E19\u0E16\u0E36\u0E07\u0E01\u0E32\u0E23\u0E1A\u0E2D\u0E01\u0E1A\u0E17\u0E1A\u0E32\u0E17\u0E02\u0E2D\u0E07 AI \u0E41\u0E25\u0E30\u0E15\u0E23\u0E27\u0E08\u0E02\u0E49\u0E2D\u0E40\u0E17\u0E47\u0E08\u0E08\u0E23\u0E34\u0E07\u0E01\u0E48\u0E2D\u0E19\u0E2A\u0E48\u0E07\u0E07\u0E32\u0E19",
+        "Reading": [],
         "VideoId": "QbLf2zb3oPc",
         "VideoDurationSeconds": 411,
         "VideoCreator": "Anthropic",
-        "VideoTitle": "Lesson 10: A closer look at Diligence | AI Fluency: Framework & Foundations Course"
+        "VideoTitle": "Lesson 10: A closer look at Diligence | AI Fluency: Framework \u0026 Foundations Course"
       },
       {
         "Id": 2,
-        "Title": "ลดข้อมูลส่วนตัวก่อนใช้ AI",
-        "Summary": "เลือกใช้ข้อมูลเท่าที่จำเป็นและตรวจนโยบายเครื่องมือของทีม",
+        "Title": "\u0E25\u0E14\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E2A\u0E48\u0E27\u0E19\u0E15\u0E31\u0E27\u0E01\u0E48\u0E2D\u0E19\u0E43\u0E0A\u0E49 AI",
         "DurationMinutes": 4,
+        "Summary": "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E43\u0E0A\u0E49\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E40\u0E17\u0E48\u0E32\u0E17\u0E35\u0E48\u0E08\u0E33\u0E40\u0E1B\u0E47\u0E19\u0E41\u0E25\u0E30\u0E15\u0E23\u0E27\u0E08\u0E19\u0E42\u0E22\u0E1A\u0E32\u0E22\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E21\u0E37\u0E2D\u0E02\u0E2D\u0E07\u0E17\u0E35\u0E21",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "พิจารณาว่างานจำเป็นต้องใช้ชื่อ เบอร์ อีเมล หรือเลขอ้างอิงหรือไม่ ตัดข้อมูลที่ไม่เกี่ยวข้องออกหรือใช้ข้อมูลตัวอย่าง ถ้ายังระบุตัวบุคคลจากหลายช่องร่วมกันได้ ให้ลดรายละเอียดเพิ่มและใช้เครื่องมือที่องค์กรอนุญาต",
-            "Example": "ต้องการฝึกร่างตอบข้อร้องเรียน\nใช้: สินค้าส่งช้า 2 วัน และข้อความตัวอย่าง\nตัด: ชื่อ ที่อยู่ เลขออเดอร์ และเบอร์โทร"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E1E\u0E34\u0E08\u0E32\u0E23\u0E13\u0E32\u0E27\u0E48\u0E32\u0E07\u0E32\u0E19\u0E08\u0E33\u0E40\u0E1B\u0E47\u0E19\u0E15\u0E49\u0E2D\u0E07\u0E43\u0E0A\u0E49\u0E0A\u0E37\u0E48\u0E2D \u0E40\u0E1A\u0E2D\u0E23\u0E4C \u0E2D\u0E35\u0E40\u0E21\u0E25 \u0E2B\u0E23\u0E37\u0E2D\u0E40\u0E25\u0E02\u0E2D\u0E49\u0E32\u0E07\u0E2D\u0E34\u0E07\u0E2B\u0E23\u0E37\u0E2D\u0E44\u0E21\u0E48 \u0E15\u0E31\u0E14\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E17\u0E35\u0E48\u0E44\u0E21\u0E48\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E02\u0E49\u0E2D\u0E07\u0E2D\u0E2D\u0E01\u0E2B\u0E23\u0E37\u0E2D\u0E43\u0E0A\u0E49\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E15\u0E31\u0E27\u0E2D\u0E22\u0E48\u0E32\u0E07 \u0E16\u0E49\u0E32\u0E22\u0E31\u0E07\u0E23\u0E30\u0E1A\u0E38\u0E15\u0E31\u0E27\u0E1A\u0E38\u0E04\u0E04\u0E25\u0E08\u0E32\u0E01\u0E2B\u0E25\u0E32\u0E22\u0E0A\u0E48\u0E2D\u0E07\u0E23\u0E48\u0E27\u0E21\u0E01\u0E31\u0E19\u0E44\u0E14\u0E49 \u0E43\u0E2B\u0E49\u0E25\u0E14\u0E23\u0E32\u0E22\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E41\u0E25\u0E30\u0E43\u0E0A\u0E49\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E21\u0E37\u0E2D\u0E17\u0E35\u0E48\u0E2D\u0E07\u0E04\u0E4C\u0E01\u0E23\u0E2D\u0E19\u0E38\u0E0D\u0E32\u0E15",
+            "Example": "\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E1D\u0E36\u0E01\u0E23\u0E48\u0E32\u0E07\u0E15\u0E2D\u0E1A\u0E02\u0E49\u0E2D\u0E23\u0E49\u0E2D\u0E07\u0E40\u0E23\u0E35\u0E22\u0E19\n\u0E43\u0E0A\u0E49: \u0E2A\u0E34\u0E19\u0E04\u0E49\u0E32\u0E2A\u0E48\u0E07\u0E0A\u0E49\u0E32 2 \u0E27\u0E31\u0E19 \u0E41\u0E25\u0E30\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E15\u0E31\u0E27\u0E2D\u0E22\u0E48\u0E32\u0E07\n\u0E15\u0E31\u0E14: \u0E0A\u0E37\u0E48\u0E2D \u0E17\u0E35\u0E48\u0E2D\u0E22\u0E39\u0E48 \u0E40\u0E25\u0E02\u0E2D\u0E2D\u0E40\u0E14\u0E2D\u0E23\u0E4C \u0E41\u0E25\u0E30\u0E40\u0E1A\u0E2D\u0E23\u0E4C\u0E42\u0E17\u0E23"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       },
       {
         "Id": 3,
-        "Title": "บอกบทบาทของ AI และรับผิดชอบงานที่ส่ง",
-        "Summary": "ระบุว่าส่วนไหนใช้ AI ช่วย และตรวจสิทธิ์ ความถูกต้อง และผลกระทบก่อนเผยแพร่",
+        "Title": "\u0E1A\u0E2D\u0E01\u0E1A\u0E17\u0E1A\u0E32\u0E17\u0E02\u0E2D\u0E07 AI \u0E41\u0E25\u0E30\u0E23\u0E31\u0E1A\u0E1C\u0E34\u0E14\u0E0A\u0E2D\u0E1A\u0E07\u0E32\u0E19\u0E17\u0E35\u0E48\u0E2A\u0E48\u0E07",
         "DurationMinutes": 4,
+        "Summary": "\u0E23\u0E30\u0E1A\u0E38\u0E27\u0E48\u0E32\u0E2A\u0E48\u0E27\u0E19\u0E44\u0E2B\u0E19\u0E43\u0E0A\u0E49 AI \u0E0A\u0E48\u0E27\u0E22 \u0E41\u0E25\u0E30\u0E15\u0E23\u0E27\u0E08\u0E2A\u0E34\u0E17\u0E18\u0E34\u0E4C \u0E04\u0E27\u0E32\u0E21\u0E16\u0E39\u0E01\u0E15\u0E49\u0E2D\u0E07 \u0E41\u0E25\u0E30\u0E1C\u0E25\u0E01\u0E23\u0E30\u0E17\u0E1A\u0E01\u0E48\u0E2D\u0E19\u0E40\u0E1C\u0E22\u0E41\u0E1E\u0E23\u0E48",
         "Reading": [
           {
-            "Heading": "ลองนำไปใช้",
-            "Text": "ทำตามกติกาของรายวิชาหรือองค์กรว่าต้องแจ้งการใช้ AI อย่างไร ระบุขั้นตอนที่ใช้ เช่น จัดโครงหรือปรับภาษา เก็บที่มาของข้อมูลและตรวจข้ออ้างก่อนเผยแพร่ เจ้าของผลงานต้องรับผิดชอบสิ่งที่ส่งและแก้ได้เมื่อพบข้อผิดพลาด",
-            "Example": "ใช้ AI ช่วยจัดโครงและตรวจภาษา ผู้จัดทำตรวจตัวเลขจากเอกสารต้นทางและรับผิดชอบฉบับที่ส่ง"
+            "Heading": "\u0E25\u0E2D\u0E07\u0E19\u0E33\u0E44\u0E1B\u0E43\u0E0A\u0E49",
+            "Text": "\u0E17\u0E33\u0E15\u0E32\u0E21\u0E01\u0E15\u0E34\u0E01\u0E32\u0E02\u0E2D\u0E07\u0E23\u0E32\u0E22\u0E27\u0E34\u0E0A\u0E32\u0E2B\u0E23\u0E37\u0E2D\u0E2D\u0E07\u0E04\u0E4C\u0E01\u0E23\u0E27\u0E48\u0E32\u0E15\u0E49\u0E2D\u0E07\u0E41\u0E08\u0E49\u0E07\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49 AI \u0E2D\u0E22\u0E48\u0E32\u0E07\u0E44\u0E23 \u0E23\u0E30\u0E1A\u0E38\u0E02\u0E31\u0E49\u0E19\u0E15\u0E2D\u0E19\u0E17\u0E35\u0E48\u0E43\u0E0A\u0E49 \u0E40\u0E0A\u0E48\u0E19 \u0E08\u0E31\u0E14\u0E42\u0E04\u0E23\u0E07\u0E2B\u0E23\u0E37\u0E2D\u0E1B\u0E23\u0E31\u0E1A\u0E20\u0E32\u0E29\u0E32 \u0E40\u0E01\u0E47\u0E1A\u0E17\u0E35\u0E48\u0E21\u0E32\u0E02\u0E2D\u0E07\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E41\u0E25\u0E30\u0E15\u0E23\u0E27\u0E08\u0E02\u0E49\u0E2D\u0E2D\u0E49\u0E32\u0E07\u0E01\u0E48\u0E2D\u0E19\u0E40\u0E1C\u0E22\u0E41\u0E1E\u0E23\u0E48 \u0E40\u0E08\u0E49\u0E32\u0E02\u0E2D\u0E07\u0E1C\u0E25\u0E07\u0E32\u0E19\u0E15\u0E49\u0E2D\u0E07\u0E23\u0E31\u0E1A\u0E1C\u0E34\u0E14\u0E0A\u0E2D\u0E1A\u0E2A\u0E34\u0E48\u0E07\u0E17\u0E35\u0E48\u0E2A\u0E48\u0E07\u0E41\u0E25\u0E30\u0E41\u0E01\u0E49\u0E44\u0E14\u0E49\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E1E\u0E1A\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14",
+            "Example": "\u0E43\u0E0A\u0E49 AI \u0E0A\u0E48\u0E27\u0E22\u0E08\u0E31\u0E14\u0E42\u0E04\u0E23\u0E07\u0E41\u0E25\u0E30\u0E15\u0E23\u0E27\u0E08\u0E20\u0E32\u0E29\u0E32 \u0E1C\u0E39\u0E49\u0E08\u0E31\u0E14\u0E17\u0E33\u0E15\u0E23\u0E27\u0E08\u0E15\u0E31\u0E27\u0E40\u0E25\u0E02\u0E08\u0E32\u0E01\u0E40\u0E2D\u0E01\u0E2A\u0E32\u0E23\u0E15\u0E49\u0E19\u0E17\u0E32\u0E07\u0E41\u0E25\u0E30\u0E23\u0E31\u0E1A\u0E1C\u0E34\u0E14\u0E0A\u0E2D\u0E1A\u0E09\u0E1A\u0E31\u0E1A\u0E17\u0E35\u0E48\u0E2A\u0E48\u0E07"
           }
-        ]
+        ],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
+      }
+    ]
+  },
+  {
+    "Id": 121,
+    "Title": "TEST01",
+    "Category": "Technology",
+    "Level": "Beginner",
+    "Units": 1,
+    "Featured": false,
+    "IsArchived": false,
+    "IsPublished": false,
+    "CreatedAt": "2026-11-24T16:50:57.6266923Z",
+    "Description": "\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E46\u0E46",
+    "Instructor": "gram",
+    "Skills": [
+      "\u0E44\u0E21\u0E48\u0E21\u0E35"
+    ],
+    "VideoUrl": null,
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "\u0E1A\u0E17\u0E40\u0E23\u0E35\u0E22\u0E19\u0E17\u0E35\u0E48 1",
+        "DurationMinutes": 10,
+        "Summary": null,
+        "Reading": [],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
+      }
+    ]
+  },
+  {
+    "Id": 122,
+    "Title": "TEST02",
+    "Category": "Technology",
+    "Level": "Beginner",
+    "Units": 2,
+    "Featured": false,
+    "IsArchived": false,
+    "IsPublished": false,
+    "CreatedAt": "2026-11-24T17:05:16.359675Z",
+    "Description": "",
+    "Instructor": "gram",
+    "Skills": [],
+    "VideoUrl": null,
+    "Lessons": [
+      {
+        "Id": 1,
+        "Title": "\u0E23\u0E32\u0E2A\u0E35\u0E35\u0E2A\u0E21\u0E30",
+        "DurationMinutes": 10,
+        "Summary": "\u0E35\u0E32\u0E48\u0E30\u0E30\u0E32\u0E21\u0E35\u0E32\u0E35\u0E30\u0E32\u0E35\u0E32\u0E40\u0E14",
+        "Reading": [],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": "\u0E31\u0E32\u0E1E\u0E38\u0E31\u0E1E\u0E38\u0E31\u0E1E\u0E16\u0E49\u0E48"
+      },
+      {
+        "Id": 2,
+        "Title": "\u0E49\u0E35\u0E16\u0E30\u0E1E\u0E49\u0E31\u0E35\u0E16\u0E33\u0E35\u0E33\u0E30\u0E16\u0E35\u0E33\u0E35\u0E16\u0E35\u0E16\u0E33",
+        "DurationMinutes": 10,
+        "Summary": null,
+        "Reading": [],
+        "VideoId": null,
+        "VideoDurationSeconds": 0,
+        "VideoCreator": null,
+        "VideoTitle": null
       }
     ]
   }

@@ -10,6 +10,31 @@
     let entered = false;
     let chipFrame = 0;
 
+    page.querySelectorAll('img[data-cover-fallback]').forEach(image => {
+        const fallback = image.dataset.coverFallback;
+        if (!fallback) return;
+
+        function useLocalCover() {
+            image.removeEventListener('error', useLocalCover);
+            image.removeEventListener('load', checkThumbnail);
+            const cover = image.parentElement;
+            const label = cover.querySelector('.ns-topic-cover-label');
+            if (label) {
+                cover.classList.add('ns-topic-cover');
+                label.hidden = false;
+            }
+            image.src = fallback;
+        }
+        function checkThumbnail() {
+            // A missing YouTube thumbnail can return a small placeholder image.
+            if (image.naturalWidth < 320) useLocalCover();
+        }
+
+        image.addEventListener('error', useLocalCover);
+        image.addEventListener('load', checkThumbnail, { once: true });
+        if (image.complete) checkThumbnail();
+    });
+
     function showChipEdges() {
         chipFrame = 0;
         chips.toggleAttribute('data-more-start', chips.scrollLeft > 1);

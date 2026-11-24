@@ -12,6 +12,7 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 builder.Services.AddScoped<AccountStore>();
 builder.Services.AddScoped<LearningStore>();
+builder.Services.AddScoped<CourseFavoriteStore>();
 builder.Services.AddAntiforgery(options => options.HeaderName = "X-CSRF-TOKEN");
 builder.Services.AddScoped<IPasswordHasher<Account>, PasswordHasher<Account>>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

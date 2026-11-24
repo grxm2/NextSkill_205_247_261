@@ -1,14 +1,16 @@
 using NextSkill_205_247_261.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using NextSkill_205_247_261.Models;
 using System.Diagnostics;
+using System.Security.Claims;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NextSkill_205_247_261.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(CourseFavoriteStore favorites, ILogger<HomeController> logger) : Controller
     {
         public IActionResult Index()
         {
@@ -22,11 +24,11 @@ namespace NextSkill_205_247_261.Controllers
         }
 
         // Courses list with search, filter, sort and pagination
-        public IActionResult Courses(string? q, string? tag, string sort = "Recommended", int page = 1, int pageSize = 9)
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+        public async Task<IActionResult> Courses(string? q, string? tag, string sort = "Recommended", int page = 1, int pageSize = 9,
+            CancellationToken token = default)
         {
-            var curricula = LearningCatalog.PublicCatalog().ToDictionary(course => course.Id);
-            var all = GetCourses().Where(course => curricula.ContainsKey(course.Id))
-                .Select(course => new CourseBrowseItem(course, curricula[course.Id])).ToList();
+            var all = CourseCatalog.GetBrowseItems();
             var categories = all.Select(course => course.Category).Distinct().Order().ToArray();
             pageSize = Math.Clamp(pageSize, 3, 24);
             q = q?.Trim() ?? "";
@@ -62,18 +64,21 @@ namespace NextSkill_205_247_261.Controllers
 
             return View(new CourseCatalogPageViewModel
             {
-                Courses = items, Categories = categories, Query = q, Tag = tag, Sort = sort,
+                Courses = items, FavoriteCourseIds = await GetFavoriteCourseIdsAsync(token),
+                Categories = categories, Query = q, Tag = tag, Sort = sort,
                 Page = page, PageSize = pageSize, TotalCount = total, TotalPages = totalPages
             });
         }
 
-        public IActionResult Details(int id)
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+        public async Task<IActionResult> Details(int id, CancellationToken token)
         {
-            var course = GetCourses().FirstOrDefault(c => c.Id == id);
+            var course = CourseCatalog.GetCourses().FirstOrDefault(c => c.Id == id);
             if (course == null) return NotFound();
             var curriculum = LearningCatalog.PublicCatalog().FirstOrDefault(item => item.Id == id);
             if (curriculum is null) return NotFound();
-            return View(new CourseDetailsPageViewModel(new CourseBrowseItem(course, curriculum)));
+            var favoriteIds = await GetFavoriteCourseIdsAsync(token);
+            return View(new CourseDetailsPageViewModel(new CourseBrowseItem(course, curriculum), favoriteIds?.Contains(id)));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -82,6 +87,20 @@ namespace NextSkill_205_247_261.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        private static List<Course> GetCourses() => CourseCatalog.GetCourses();
+        private async Task<IReadOnlySet<int>?> GetFavoriteCourseIdsAsync(CancellationToken token)
+        {
+            if (!User.IsInRole("User") || !Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId))
+                return null;
+
+            try
+            {
+                return await favorites.GetCourseIdsAsync(userId, token);
+            }
+            catch (Exception ex) when (ex is SqlException or InvalidOperationException)
+            {
+                logger.LogError(ex, "Could not load favorite course status");
+                return null;
+            }
+        }
     }
 }

@@ -1,3 +1,21 @@
+.ns-auth-page .story-card.nimo-story-card {
+    --story-scene-min-height: 0;
+    --story-scene-margin: 0 0 6px;
+    --story-scene-padding: 38px;
+    align-self: start;
+    justify-content: flex-start;
+}
+
+.ns-auth-page .check-row a {
+    color: var(--login-link-color);
+}
+
+.nimo-tea-island-diorama .mascot-character-art.login-nimo {
+    width: min(256px, 92%);
+    height: auto;
+    aspect-ratio: 1;
+}
+
 .login-nimo-motion,
 .login-nimo-dance-stage,
 .login-nimo-front,

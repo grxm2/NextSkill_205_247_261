@@ -1,0 +1,36 @@
+@model FavoriteEditPageViewModel
+@{
+    ViewData["Title"] = "แก้ไขรายการโปรด";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/learner-coast.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/favorites.css" asp-append-version="true" />
+}
+@section Backdrop {
+    <partial name="_LearnerCoast" />
+}
+<section class="favorites-page favorites-edit" aria-labelledby="favorites-title">
+    <header class="ns-surface favorites-heading">
+        <div>
+            <h1 id="favorites-title">แก้ไขรายการโปรด</h1>
+            <p>@Model.CourseTitle</p>
+        </div>
+    </header>
+    <form class="ns-surface favorites-edit__form" asp-action="Edit" asp-route-id="@Model.CourseId" method="post">
+        <div asp-validation-summary="ModelOnly" class="ns-status ns-status--error"></div>
+        <div class="ns-field">
+            <label asp-for="Form.Note">โน้ตส่วนตัว</label>
+            <textarea asp-for="Form.Note" rows="4" maxlength="300" aria-describedby="favorite-note-hint favorite-note-error"></textarea>
+            <span id="favorite-note-hint">ใส่ได้ไม่เกิน 300 ตัวอักษร</span>
+            <span asp-validation-for="Form.Note" id="favorite-note-error" class="text-danger"></span>
+        </div>
+        <label class="favorites-edit__pin" asp-for="Form.IsPinned">
+            <input asp-for="Form.IsPinned" />
+            ปักหมุดไว้ด้านบนของเพลย์ลิสต์
+        </label>
+        <div class="ns-button-row">
+            <button class="ns-button ns-button--primary" type="submit">บันทึกการแก้ไข</button>
+            <a class="ns-button" asp-action="Index">ยกเลิก</a>
+        </div>
+    </form>
+</section>

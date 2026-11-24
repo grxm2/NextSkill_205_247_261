@@ -32,8 +32,23 @@
         const ls = portalPoint(art, left, spring, track), rs = portalPoint(art, right, spring, track);
         const peak = portalPoint(art, (left + right) / 2, top, track);
         const span = Math.max(innerWidth, innerHeight) * 2;
-        if (!portalClips.has(track)) portalClips.set(track, track.style.clipPath);
+        const previousClip = track.style.clipPath;
         track.style.clipPath = `path('M ${-span} ${l.y} L ${l.x} ${l.y} L ${ls.x} ${ls.y} C ${ls.x} ${peak.y} ${rs.x} ${peak.y} ${rs.x} ${rs.y} L ${r.x} ${r.y} L ${span} ${r.y} L ${span} ${span} L ${-span} ${span} Z')`;
+        return () => { track.style.clipPath = previousClip; };
+    }
+
+    function catalogCanal(boat, art) {
+        const berth = boat.getBoundingClientRect(), gate = art.getBoundingClientRect();
+        const pose = (x, y, scale) => ({
+            transform: `translate3d(${gate.left + gate.width * x - (berth.left + berth.width * .5)}px,${y}px,0) scale(${scale})`
+        });
+        const waterline = berth.top + berth.height * .85;
+        const center = Number(art.dataset.portalX);
+        return {
+            approach: pose(center, 0, .9),
+            mouth: pose(center, gate.top + gate.height * Number(art.dataset.portalEntryY) - waterline, .7),
+            depth: pose(Number(art.dataset.portalDepthX), gate.top + gate.height * Number(art.dataset.portalDepthY) - waterline, .2)
+        };
     }
 
     const gentle = () => fastForward || reduced.matches || document.hidden || window.NextSkillMotion?.snapshot().paused;
@@ -68,7 +83,7 @@
         generation++; busy = false;
         clearTimeout(deadline); transport?.abort(); transport = null;
         finishMotion(); animations.forEach(animation => animation.cancel()); animations.clear();
-        portalClips.forEach((clip, track) => { track.style.clipPath = clip; }); portalClips.clear();
+        portalClips.forEach(restore => restore?.()); portalClips.clear();
         scene?.querySelector('.cv-depth-scene')?.style.removeProperty('transform-origin');
         overlay.hidden = true; overlay.classList.remove('cv-is-covered', 'cv-is-opaque');
         delete overlay.dataset.phase; recovery.hidden = true; skip.hidden = false;
@@ -128,7 +143,8 @@
         const pose = (x, y, scale) => ({
             transform: `translate3d(${gate.left + gate.width * x - (boat.left + boat.width * .5)}px,${gate.top + gate.height * y - (boat.top + boat.height * .85)}px,0) scale(${scale})`, opacity: 1
         });
-        clipToPortal(scene.querySelector('.ow-vessel'), art);
+        const track = scene.querySelector('.ow-vessel');
+        portalClips.set(track, clipToPortal(track, art));
         const camera = scene.querySelector('.cv-depth-scene');
         if (camera) {
             const frame = camera.getBoundingClientRect();
@@ -216,13 +232,13 @@
         if (run !== generation) return;
         root.classList.add('cv-arrival-running');
         const boat = catalog.querySelector('.catalog-boat');
-        const b = boat.getBoundingClientRect(), g = art.getBoundingClientRect();
-        const arrivalPose = (x, y, scale) => ({transform:`translate3d(${g.left+g.width*x-(b.left+b.width*.5)}px,${g.top+g.height*y-(b.top+b.height*.85)}px,0) scale(${scale})`});
-        clipToPortal(catalog.querySelector('.catalog-boat-track'), art);
+        const { mouth, depth } = catalogCanal(boat, art);
+        const track = catalog.querySelector('.catalog-boat-track');
+        portalClips.set(track, clipToPortal(track, art));
         const arrival = animate(boat, [
-            { ...arrivalPose(Number(art.dataset.portalDepthX || .59),Number(art.dataset.portalDepthY || .70),.20), opacity: 0 },
+            { ...depth, opacity: 0 },
             { opacity: 1, offset: .15 },
-            { ...arrivalPose(Number(art.dataset.portalX || .56),Number(art.dataset.portalEntryY || .75),.70), opacity: 1, offset: .58 },
+            { ...mouth, opacity: 1, offset: .58 },
             { transform: 'translate3d(0,0,0) scale(1)', opacity: 1 }
         ], 1400);
         overlay.dataset.phase = 'revealing';
@@ -282,6 +298,21 @@
     window.addEventListener('pageshow', event => { if (event.persisted) cleanup(); });
     if (catalog) arrive();
     if (catalog) {
+        window.NextSkillCatalogVoyage = {
+            returnThroughPortal(boat) {
+                const art = catalog.querySelector('.catalog-harbor .harbor-model');
+                const { approach, mouth, depth } = catalogCanal(boat, art);
+                return {
+                    frames: [
+                        { transform: 'translate3d(0,0,0) scale(1)' },
+                        { ...approach, offset: .46 },
+                        { ...mouth, offset: .74 },
+                        depth
+                    ],
+                    restore: clipToPortal(boat.parentElement, art)
+                };
+            }
+        };
         document.getElementById('buddy-agent-handle')?.setAttribute('tabindex', '-1');
         window.NextSkillMotion?.subscribe(state => { if (busy && (state.paused || state.reduced || state.hidden)) finishMotion(); });
     }

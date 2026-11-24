@@ -15,15 +15,12 @@
 }
 
 @section Styles {
+    <link rel="stylesheet" href="~/css/learner-coast.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/learner-profile.css" asp-append-version="true" />
 }
 
 @section Backdrop {
-    <div class="learning-celestial lp-scenery" data-journey-celestial aria-hidden="true">
-        <div class="lp-shore"></div>
-        <div class="lp-night-wash"></div>
-        <partial name="_JourneyCelestial" />
-    </div>
+    <partial name="_LearnerCoast" />
 }
 
 <div class="lp">

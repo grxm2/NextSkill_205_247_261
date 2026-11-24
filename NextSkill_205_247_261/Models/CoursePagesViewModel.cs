@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace NextSkill_205_247_261.Models;
 
-// Public metadata is rendered without SQL. Account progress is optionally hydrated
+// Public metadata is sourced from the course catalog. Account progress is optionally hydrated
 // through LearningController so its existing identity and access rules stay central.
 public sealed record CourseBrowseItem(Course Metadata, LearningCatalogCourse Curriculum)
 {
@@ -19,30 +19,38 @@ public string Category => !string.IsNullOrWhiteSpace(Metadata.Category)
 
 public bool CanStart => Curriculum.CanStart;
 
-public string? VideoUrl => HasDirectVideo || VideoEmbedUrl is not null ? Metadata.VideoUrl : null;
-
-public string? VideoEmbedUrl => ToEmbedUrl(Metadata.VideoUrl);
-
-public bool HasDirectVideo => IsDirectVideo(Metadata.VideoUrl);
-
-public static string? ToEmbedUrl(string? url)
+public CoursePreviewVideo? PreviewVideo
 {
-    if (ParseWebUri(url) is not { } uri) return null;
+    get
+    {
+        if (Metadata.VideoUrl is { } sourceUrl && ParseWebUri(sourceUrl) is { } uri)
+        {
+            var youtubeId = GetYouTubeVideoId(uri);
+            var embedUrl = ToEmbedUrl(uri, youtubeId);
+            if (embedUrl is not null || IsDirectVideo(uri))
+                return new CoursePreviewVideo(sourceUrl.Trim(), embedUrl, youtubeId);
+        }
+
+        foreach (var lesson in Metadata.Lessons.OrderBy(lesson => lesson.Id))
+        {
+            if (lesson.VideoId is { } videoId && IsYouTubeVideoId(videoId))
+                return new CoursePreviewVideo($"https://www.youtube.com/watch?v={videoId}", YouTubeEmbedUrl(videoId), videoId);
+        }
+
+        return null;
+    }
+}
+
+public static string? ToEmbedUrl(string? url) =>
+    ParseWebUri(url) is { } uri ? ToEmbedUrl(uri, GetYouTubeVideoId(uri)) : null;
+
+private static string? ToEmbedUrl(Uri uri, string? youtubeId)
+{
+    if (youtubeId is not null)
+        return YouTubeEmbedUrl(youtubeId);
 
     var path = uri.AbsolutePath.Trim('/');
-    var host = uri.Host.ToLowerInvariant();
-    var youtubeId = host switch
-    {
-        "youtu.be" => path,
-        "youtube.com" or "www.youtube.com" or "m.youtube.com" when path == "watch" =>
-            QueryHelpers.ParseQuery(uri.Query).GetValueOrDefault("v").ToString(),
-        "youtube.com" or "www.youtube.com" or "www.youtube-nocookie.com" when path.StartsWith("embed/", StringComparison.Ordinal) => path[6..],
-        _ => null
-    };
-    if (youtubeId is { Length: 11 } && youtubeId.All(value => char.IsAsciiLetterOrDigit(value) || value is '-' or '_'))
-        return $"https://www.youtube-nocookie.com/embed/{youtubeId}?rel=0";
-
-    var vimeoId = host switch
+    var vimeoId = uri.Host.ToLowerInvariant() switch
     {
         "vimeo.com" or "www.vimeo.com" => path,
         "player.vimeo.com" when path.StartsWith("video/", StringComparison.Ordinal) => path[6..],
@@ -52,11 +60,29 @@ public static string? ToEmbedUrl(string? url)
         ? $"https://player.vimeo.com/video/{vimeoId}" : null;
 }
 
-public static bool IsDirectVideo(string? url)
+private static string? GetYouTubeVideoId(Uri uri)
 {
-    var extension = Path.GetExtension(ParseWebUri(url)?.AbsolutePath);
-    return extension?.ToLowerInvariant() is ".mp4" or ".webm" or ".ogg";
+    var path = uri.AbsolutePath.Trim('/');
+    var videoId = uri.Host.ToLowerInvariant() switch
+    {
+        "youtu.be" => path,
+        "youtube.com" or "www.youtube.com" or "m.youtube.com" when path == "watch" =>
+            QueryHelpers.ParseQuery(uri.Query).GetValueOrDefault("v").ToString(),
+        "youtube.com" or "www.youtube.com" or "www.youtube-nocookie.com" when path.StartsWith("embed/", StringComparison.Ordinal) => path[6..],
+        _ => null
+    };
+    return IsYouTubeVideoId(videoId) ? videoId : null;
 }
+
+private static bool IsYouTubeVideoId(string? videoId) =>
+    videoId is { Length: 11 } && videoId.All(value => char.IsAsciiLetterOrDigit(value) || value is '-' or '_');
+
+private static string YouTubeEmbedUrl(string videoId) => $"https://www.youtube-nocookie.com/embed/{videoId}?rel=0";
+
+public static bool IsDirectVideo(string? url) => ParseWebUri(url) is { } uri && IsDirectVideo(uri);
+
+private static bool IsDirectVideo(Uri uri) =>
+    Path.GetExtension(uri.AbsolutePath).ToLowerInvariant() is ".mp4" or ".webm" or ".ogg";
 
 private static Uri? ParseWebUri(string? url) => Uri.TryCreate(url?.Trim(), UriKind.Absolute, out var uri)
     && uri.Scheme is "http" or "https" && uri.UserInfo.Length == 0 ? uri : null;
@@ -87,6 +113,11 @@ public string CategoryLabel => Category switch
 };
 
   
+}
+
+public sealed record CoursePreviewVideo(string SourceUrl, string? EmbedUrl, string? YouTubeId)
+{
+    public string? YouTubeThumbnailUrl => YouTubeId is null ? null : $"https://i.ytimg.com/vi/{YouTubeId}/hqdefault.jpg";
 }
 
 public sealed record CourseCover(string Path, string? Topic)
@@ -148,6 +179,7 @@ public sealed record CourseCover(string Path, string? Topic)
 public sealed class CourseCatalogPageViewModel
 {
     public IReadOnlyList<CourseBrowseItem> Courses { get; init; } = [];
+    public IReadOnlySet<int>? FavoriteCourseIds { get; init; }
     public IReadOnlyList<string> Categories { get; init; } = [];
     public string Query { get; init; } = "";
     public string Tag { get; init; } = "All";
@@ -164,4 +196,4 @@ public sealed class CourseCatalogPageViewModel
     };
 }
 
-public sealed record CourseDetailsPageViewModel(CourseBrowseItem Course);
+public sealed record CourseDetailsPageViewModel(CourseBrowseItem Course, bool? IsFavorite = null);
