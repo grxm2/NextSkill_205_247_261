@@ -5,7 +5,7 @@ NextSkill stores learning progress in the configured `ConnectionStrings:NextSkil
 ## Data and deployment
 
 - Existing users, admins, invitation codes, password hashing and authentication remain in place.
-- The first account-linked learning read creates the profile, course progress, lesson completion, video confirmation, video start and achievement tables as needed.
+- The app checks the learning schema version on first use. Reads do not create learner profiles. Enrollment creates a profile and a course-progress row as needed.
 - `scripts/LearningJourney.sql` provides the same additive setup for deployment accounts that cannot create tables at runtime. Run against the existing configured database after the original authentication setup. No existing table or row is dropped, reset or renamed.
 - Each table keys progress by `(AccountId, AccountRole)`. Course and completion rows additionally include course/lesson IDs. Account roles have separate namespaces, matching the existing separate user/admin tables.
 - `activeCourseId` and onboarding are profile fields. Last unfinished lesson is stored per course. Current island, unlocked islands, progress and completion are derived from persisted completions; level is `1 + floor(XP / 200)`. Derived values do not drift from their source records.
@@ -23,11 +23,11 @@ NextSkill stores learning progress in the configured `ConnectionStrings:NextSkil
 
 ## Authored curricula and awards
 
-The catalog keeps UX Research (ID 1, four lessons) and adds 20 single-lesson courses across Languages, Development, Design and AI (IDs 101–120). The active course and quiz files are `Database/custom_courses.json` and `Database/custom_questions.json` under the app. Retired IDs do not appear in learning routes. Historical SQL records are retained.
+The landing catalog contains multi-lesson courses across Languages, Development, Design and AI. The course and quiz files are `Database/custom_courses.json` and `Database/custom_questions.json` in the app. A newly created or imported course is a draft. Staff add video or reading content for each lesson, a quiz for each lesson and a separate course final, then publish it. Archived courses and drafts stay out of public routes. Existing SQL progress and certificate records are retained.
 
-Every available lesson has a configured YouTube video and server-graded quiz. After pressing play, the learner can watch or seek to the last 10% of the timeline. The learner can also skip directly, even if the player fails to open. Both actions open the quiz immediately. The server checks for a playback start tied to the current learner, course, lesson and video, then persists the quiz unlock.
+Each lesson has a video or reading and a server-graded quiz. After opening a video, the learner can reach its closing section or use the explicit skip option. The server matches the recorded start to the learner, course, lesson and video before persisting quiz access.
 
-The current quizzes require three of four correct answers. Failure lets the learner take the quiz again using the existing video confirmation or restart the video and earn a new confirmation. A first lesson completion grants 50 XP and the account's first-lesson badge when applicable. Completion of every lesson in a course grants another 100 XP, a `course-{id}` achievement and a printable certificate under the learner's account. These rewards are idempotent.
+Both kinds of quiz require a strict majority of answers to be correct. Passing a lesson awards its XP once and unlocks the next lesson. After passing every lesson, learners can take the separate course final. A failed final can be retried. Passing awards the course bonus once, records course completion, issues the signed-in learner's certificate and unlocks the next published course in the same category, ordered by course ID. Existing enrollments and completions remain usable after the update.
 
 Each included question has a short Nimo hint and a separate concept explanation. The unlocked lesson returns both as `hint` and `coaching` on the question. Correct choices stay on the server, and grading feedback appears after submission. Administrators can edit both texts in the question form.
 
@@ -48,12 +48,14 @@ JSON uses camelCase. All account state responses use `Cache-Control: no-store`. 
 | POST `/Learning/CompleteVideo` | Authenticated | Adds `positionSeconds` and `skipVideo` to the playback request. Returns the unlocked lesson after a recorded start and a qualifying position or explicit skip. Accepts `watchedSeconds` as a position alias for older clients. |
 | POST `/Learning/RestartVideo` | Authenticated | Clears confirmation and resets playback time for the selected lesson |
 | POST `/Learning/Checkpoint` | Authenticated | `{ courseId, lessonId }` → LearningState; stores an unlocked unfinished lesson without completing it |
-| POST `/Learning/CompleteLesson` | Authenticated | `{ courseId, lessonId, answers: [0,1,2] }` → completion result; answers are zero-based choice indices |
+| POST `/Learning/CompleteLesson` | Authenticated | `{ courseId, lessonId, quizVersion, answers: [0,1,2] }` → completion result. The signed quiz version comes from the lesson response. |
+| GET/POST `/Learning/FinalQuiz?courseId=N` | Authenticated | Final quiz form and result for an enrolled learner who passed every lesson |
+| POST `/Account/AdminPublishCourse` | Admin | Publishes a complete draft after checking lesson content and both quiz types |
 | GET `/Account/Certificate?courseId=N` | Signed-in learner | A printable certificate owned by the learner who earned the course achievement |
 
 State: `activeCourseId`, `currentIslandId`, `lastLessonId`, `hasCompletedOnboarding`, `xp`, `level`, `achievements`, `courses`.
 
-Course progress: `courseId`, `title`, `category`, `description`, `islandKind`, `totalLessons`, `completedLessons` (IDs), `unlockedIslands` (IDs), `currentIslandId`, `lastLessonId`, `progress` (0–100), `hasStarted`, `isComplete`, `lessons`.
+Course progress includes `completedLessons`, `unlockedIslands`, `progress`, `hasStarted`, `isLocked`, `finalQuizReady`, `isComplete`, and `lessons`. The final counts as one additional step in the course progress percentage.
 
 Lesson summary: `id`, `title`, `islandName`, `xp`, `minutes`, `status` (`current`, `completed`, `locked`). Teaching lesson adds `courseId`, `summary`, `reading` (`heading`, `text`, optional `example`), `questions` (`id`, `prompt`, `choices`). Keys and expected answers remain in server definitions.
 

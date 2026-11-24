@@ -1,0 +1,16 @@
+@model LearningIslandViewModel
+@{
+    var learnerAccount = User.IsInRole("User");
+}
+<dialog id="course-award-dialog" class="course-award-dialog" data-course-id="@Model.Course.CourseId"
+        aria-labelledby="course-award-title" aria-describedby="course-award-message"
+        data-learner-account="@learnerAccount.ToString().ToLowerInvariant()">
+    <header>
+        <span class="certificate-seal" aria-hidden="true"></span>
+        <h2 id="course-award-title"></h2>
+        <p id="course-award-message"></p>
+    </header>
+    <form class="course-award-actions" method="dialog">
+        <button type="submit" class="ns-button ns-button--secondary" autofocus>ดูผลแบบทดสอบ</button>
+    </form>
+</dialog>

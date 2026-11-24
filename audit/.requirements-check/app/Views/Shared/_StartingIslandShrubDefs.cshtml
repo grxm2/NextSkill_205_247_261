@@ -1,0 +1,32 @@
+@* Coastal broadleaf foliage: curved blades, a soft fold and restrained veins. *@
+<linearGradient id="start-shrub-leaf-light" x1=".2" y1="0" x2=".75" y2="1">
+  <stop stop-color="#B9CC75"/><stop offset=".38" stop-color="#7FA64E"/><stop offset="1" stop-color="#3F713A"/>
+</linearGradient>
+<linearGradient id="start-shrub-leaf-deep" x1=".15" y1="0" x2=".7" y2="1">
+  <stop stop-color="#7CA457"/><stop offset=".46" stop-color="#56853E"/><stop offset="1" stop-color="#2F6039"/>
+</linearGradient>
+<linearGradient id="start-shrub-leaf-fresh" x1=".1" y1="0" x2=".85" y2="1">
+  <stop stop-color="#CDD98C"/><stop offset=".42" stop-color="#A4BD66"/><stop offset="1" stop-color="#608E42"/>
+</linearGradient>
+<linearGradient id="start-shrub-stem" x1="34" y1="-27" x2="34" y2="3" gradientUnits="userSpaceOnUse">
+  <stop stop-color="#759454"/><stop offset="1" stop-color="#79713F"/>
+</linearGradient>
+<radialGradient id="start-shrub-ground">
+  <stop stop-color="#53633D" stop-opacity=".36"/><stop offset=".5" stop-color="#6B7542" stop-opacity=".2"/><stop offset="1" stop-color="#9E995E" stop-opacity="0"/>
+</radialGradient>
+<path id="start-shrub-blade" d="M0 0C-4.8-2.1-10.7-7.5-11.1-13.2c-.5-5.9 3.7-11.5 8.7-12.6 5.4-1.3 10.8 2.6 11.9 7.6C11-12.1 6.5-4.9 0 0Z"/>
+<g id="start-shrub-leaf">
+  <use href="#start-shrub-blade" fill="url(#start-shrub-leaf-light)"/>
+  <path d="M0-1.1C-.7-9.5-1.2-17.5-1.3-24.6 3.7-23.5 6.6-20.4 6.5-16.1 6.1-9.8 2.6-4.5 0-1.1Z" fill="#D7E49D" opacity=".16"/>
+  <path d="M-.2-1.5C-.6-9.5-1.1-17.5-1.4-24m.8 9.7-5-3.3m5.4 9.3 4.4-6.1" stroke="#BDD08B" stroke-width=".64" stroke-linecap="round" opacity=".42"/>
+  <path d="M-8-14.3c-.2-3.9 2.1-7.2 5.2-8.8" stroke="#D8E5AC" stroke-width=".9" stroke-linecap="round" opacity=".32"/>
+</g>
+<g id="start-shrub-leaf-shaded">
+  <use href="#start-shrub-blade" fill="url(#start-shrub-leaf-deep)"/>
+  <path d="M0-1.4c-.7-8-1.1-15.3-1.4-22.8m.8 10.1-4.9-3m5.3 9 4.3-6.1" stroke="#B3CF87" stroke-width=".64" stroke-linecap="round" opacity=".36"/>
+</g>
+<g id="start-shrub-leaf-new">
+  <use href="#start-shrub-blade" fill="url(#start-shrub-leaf-fresh)"/>
+  <path d="M0-1c-.3-7.8-.8-15.9-1.3-23.4 3.4 2 5.7 6 5.4 10.3C3.8-8.9 2.3-4.8 0-1Z" fill="#E5EDB7" opacity=".22"/>
+  <path d="M0-1.2c-.7-8-1.1-15.9-1.4-23" stroke="#E4EDBB" stroke-width=".7" stroke-linecap="round" opacity=".5"/>
+</g>

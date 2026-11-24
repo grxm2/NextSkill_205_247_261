@@ -78,8 +78,9 @@ public sealed class LearningController(LearningStore store, ILogger<LearningCont
             var state = await store.StateAsync(AccountId, Role, token, includeActivity: !practice);
             courseId ??= state.ActiveCourseId;
             if (courseId is null) return RedirectToAction("Index", "Home", new { chooseCourse = true });
-            LearningStore.RequireCourse(courseId.Value);
-            var course = state.Courses.First(c => c.CourseId == courseId.Value);
+            var course = state.Courses.FirstOrDefault(c => c.CourseId == courseId.Value)
+                ?? throw new LearningRuleException("course_unavailable", "คอร์สนี้ยังไม่เปิดให้เรียน", 404);
+            LearningStore.RequireUnlockedCourse(course);
             if (practice) lessonId ??= course.LastLessonId ?? course.CurrentIslandId;
             if (lessonId.HasValue)
             {
@@ -134,6 +135,46 @@ public sealed class LearningController(LearningStore store, ILogger<LearningCont
     [HttpPost]
     public Task<IActionResult> CompleteLesson([FromBody] CompleteLearningLessonRequest? request, CancellationToken token)
         => Body(request, () => store.CompleteAsync(AccountId, Role, request!, token));
+
+    [HttpGet]
+    public Task<IActionResult> FinalQuiz(int courseId, CancellationToken token)
+        => RenderFinalQuiz(courseId, null, token);
+
+    [HttpPost]
+    public Task<IActionResult> FinalQuiz([FromForm] CourseFinalQuizSubmission submission, CancellationToken token)
+        => RenderFinalQuiz(submission.CourseId, submission, token);
+
+    private async Task<IActionResult> RenderFinalQuiz(int courseId, CourseFinalQuizSubmission? submission, CancellationToken token)
+    {
+        try
+        {
+            if (submission is null)
+                return View("FinalQuiz", await store.FinalQuizAsync(AccountId, Role, courseId, token));
+
+            if (!ModelState.IsValid)
+                return await ShowFinalQuizError(courseId, 400, "กรุณาตอบคำถามทุกข้อให้ครบ", token);
+
+            var page = await store.CompleteFinalQuizAsync(AccountId, Role, submission, token);
+            if (page.Error is not null) Response.StatusCode = page.ErrorStatus;
+            return View("FinalQuiz", page);
+        }
+        catch (LearningRuleException ex)
+        {
+            return StatusCode(ex.StatusCode, ex.Message);
+        }
+        catch (SqlException ex)
+        {
+            logger.LogError(ex, "Course final quiz could not read or write learning progress");
+            return StatusCode(503, "ยังบันทึกผลสอบไม่ได้ กรุณากลับมาเปิดแบบทดสอบอีกครั้ง");
+        }
+    }
+
+    private async Task<IActionResult> ShowFinalQuizError(int courseId, int status, string message, CancellationToken token)
+    {
+        var page = await store.FinalQuizAsync(AccountId, Role, courseId, token);
+        Response.StatusCode = status;
+        return View("FinalQuiz", page with { Error = message });
+    }
 
     private Task<IActionResult> Body<TRequest, TResult>(TRequest? request, Func<Task<TResult>> action) where TRequest : class
     {

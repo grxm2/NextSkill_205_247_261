@@ -1,0 +1,987 @@
+{
+  "endpoints": [
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/",
+      "status": 302,
+      "location": "/Home"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Home",
+      "status": 200,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Home/Index",
+      "status": 200,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Home/Courses",
+      "status": 200,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Home/Details/101",
+      "status": 200,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Home/Details/999999",
+      "status": 404,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Home/Privacy",
+      "status": 200,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Home/Error",
+      "status": 200,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Courses",
+      "status": 302,
+      "location": "/Home/Courses"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Courses/Enrollment",
+      "status": 302,
+      "location": "/Home/Courses"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Learning/Entry",
+      "status": 302,
+      "location": "/Home"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Learning/Catalog",
+      "status": 200,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Account/Login",
+      "status": 200,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Account/AdminLogin",
+      "status": 200,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Account/Register",
+      "status": 200,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Account/AdminRegister",
+      "status": 200,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Account/AccessDenied",
+      "status": 403,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Account/Terms",
+      "status": 200,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Learning/Island?courseId=101",
+      "status": 302,
+      "location": "http://127.0.0.1:52792/Account/Login?ReturnUrl=%2FLearning%2FIsland%3FcourseId%3D101"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Learning/Practice?courseId=101&lessonId=1",
+      "status": 302,
+      "location": "http://127.0.0.1:52792/Account/Login?ReturnUrl=%2FLearning%2FPractice%3FcourseId%3D101%26lessonId%3D1"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Learning/State",
+      "status": 401,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Learning/Lesson?courseId=101&lessonId=1",
+      "status": 401,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "POST",
+      "route": "/Learning/SelectCourse",
+      "status": 400,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "POST",
+      "route": "/Learning/Checkpoint",
+      "status": 400,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "POST",
+      "route": "/Learning/StartVideo",
+      "status": 400,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "POST",
+      "route": "/Learning/RestartVideo",
+      "status": 400,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "POST",
+      "route": "/Learning/CompleteVideo",
+      "status": 400,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "POST",
+      "route": "/Learning/CompleteLesson",
+      "status": 400,
+      "location": ""
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Account/AdminDashboard",
+      "status": 302,
+      "location": "http://127.0.0.1:52792/Account/Login?ReturnUrl=%2FAccount%2FAdminDashboard"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Account/AdminGetQuestions",
+      "status": 302,
+      "location": "http://127.0.0.1:52792/Account/Login?ReturnUrl=%2FAccount%2FAdminGetQuestions"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "POST",
+      "route": "/Account/AdminSaveCourse",
+      "status": 302,
+      "location": "http://127.0.0.1:52792/Account/Login?ReturnUrl=%2FAccount%2FAdminSaveCourse"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "POST",
+      "route": "/Account/AdminDeleteCourse",
+      "status": 302,
+      "location": "http://127.0.0.1:52792/Account/Login?ReturnUrl=%2FAccount%2FAdminDeleteCourse"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "POST",
+      "route": "/Account/AdminUploadCourses",
+      "status": 302,
+      "location": "http://127.0.0.1:52792/Account/Login?ReturnUrl=%2FAccount%2FAdminUploadCourses"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "POST",
+      "route": "/Account/AdminSaveQuestion",
+      "status": 302,
+      "location": "http://127.0.0.1:52792/Account/Login?ReturnUrl=%2FAccount%2FAdminSaveQuestion"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "POST",
+      "route": "/Account/AdminDeleteQuestion",
+      "status": 302,
+      "location": "http://127.0.0.1:52792/Account/Login?ReturnUrl=%2FAccount%2FAdminDeleteQuestion"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Account/Dashboard",
+      "status": 302,
+      "location": "http://127.0.0.1:52792/Account/Login?ReturnUrl=%2FAccount%2FDashboard"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "GET",
+      "route": "/Account/Certificate?courseId=101",
+      "status": 302,
+      "location": "http://127.0.0.1:52792/Account/Login?ReturnUrl=%2FAccount%2FCertificate%3FcourseId%3D101"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "POST",
+      "route": "/Account/UpdateProfile",
+      "status": 302,
+      "location": "http://127.0.0.1:52792/Account/Login?ReturnUrl=%2FAccount%2FUpdateProfile"
+    },
+    {
+      "role": "Guest",
+      "mode": "Production",
+      "method": "POST",
+      "route": "/Account/Logout",
+      "status": 302,
+      "location": "http://127.0.0.1:52792/Account/Login?ReturnUrl=%2FAccount%2FLogout"
+    },
+    {
+      "role": "Learner",
+      "mode": "Development",
+      "method": "GET",
+      "route": "/Account/AdminDashboard",
+      "status": 302,
+      "location": "http://127.0.0.1:52791/Account/AccessDenied?ReturnUrl=%2FAccount%2FAdminDashboard"
+    },
+    {
+      "role": "Learner",
+      "mode": "Development",
+      "method": "GET",
+      "route": "/Account/AdminGetQuestions",
+      "status": 302,
+      "location": "http://127.0.0.1:52791/Account/AccessDenied?ReturnUrl=%2FAccount%2FAdminGetQuestions"
+    },
+    {
+      "role": "Learner",
+      "mode": "Development",
+      "method": "POST",
+      "route": "/Account/AdminSaveCourse",
+      "status": 302,
+      "location": "http://127.0.0.1:52791/Account/AccessDenied?ReturnUrl=%2FAccount%2FAdminSaveCourse"
+    },
+    {
+      "role": "Learner",
+      "mode": "Development",
+      "method": "POST",
+      "route": "/Account/AdminDeleteCourse",
+      "status": 302,
+      "location": "http://127.0.0.1:52791/Account/AccessDenied?ReturnUrl=%2FAccount%2FAdminDeleteCourse"
+    },
+    {
+      "role": "Learner",
+      "mode": "Development",
+      "method": "POST",
+      "route": "/Account/AdminUploadCourses",
+      "status": 302,
+      "location": "http://127.0.0.1:52791/Account/AccessDenied?ReturnUrl=%2FAccount%2FAdminUploadCourses"
+    },
+    {
+      "role": "Learner",
+      "mode": "Development",
+      "method": "POST",
+      "route": "/Account/AdminSaveQuestion",
+      "status": 302,
+      "location": "http://127.0.0.1:52791/Account/AccessDenied?ReturnUrl=%2FAccount%2FAdminSaveQuestion"
+    },
+    {
+      "role": "Learner",
+      "mode": "Development",
+      "method": "POST",
+      "route": "/Account/AdminDeleteQuestion",
+      "status": 302,
+      "location": "http://127.0.0.1:52791/Account/AccessDenied?ReturnUrl=%2FAccount%2FAdminDeleteQuestion"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Production guest: admin route role filter",
+      "result": "pass",
+      "detail": "7 routes returned a login redirect"
+    },
+    {
+      "name": "Production guest: start course, no sign-in bypass",
+      "result": "pass",
+      "detail": "CTA → Login; skip → Home; auth cookie absent"
+    },
+    {
+      "name": "Guest Thai search, sort, filter, empty and invalid detail",
+      "result": "pass",
+      "detail": {
+        "matches": 5,
+        "invalidDetail": 404
+      }
+    },
+    {
+      "name": "Dark mode click and reload",
+      "result": "pass",
+      "detail": {
+        "before": "false",
+        "after": "true"
+      }
+    },
+    {
+      "name": "Development guest uses preview state",
+      "result": "pass",
+      "detail": {
+        "xp": 0,
+        "previewCookie": true,
+        "authCookie": false
+      }
+    },
+    {
+      "name": "Register rejects invalid form",
+      "result": "pass"
+    },
+    {
+      "name": "Register learner and reject duplicate email",
+      "result": "pass",
+      "detail": "302 success, 200 with validation feedback for duplicate"
+    },
+    {
+      "name": "Learner login and persistent session cookie",
+      "result": "pass",
+      "detail": {
+        "hours": 8,
+        "httpOnly": true,
+        "secure": false,
+        "sameSite": "Lax",
+        "location": "/"
+      }
+    },
+    {
+      "name": "Learner receives access-denied on admin routes",
+      "result": "pass",
+      "detail": "7 routes redirect to the 403 page"
+    },
+    {
+      "name": "Learner dashboard empty state and profile validation",
+      "result": "pass",
+      "detail": {
+        "coursesPanel": true,
+        "emailChangeRequiredPassword": true,
+        "nameRoundTrip": true
+      }
+    },
+    {
+      "name": "Course start creates enrollment and shows locked lesson",
+      "result": "pass",
+      "detail": {
+        "activeCourseId": 101,
+        "unlocked": [
+          1
+        ],
+        "levelBar": "0/200 XP"
+      }
+    },
+    {
+      "name": "Lesson quiz fail → pass → next lesson → completion/certificate",
+      "result": "pass",
+      "detail": {
+        "courseId": 101,
+        "awardedXp": [
+          50,
+          50,
+          150
+        ],
+        "regradeXp": 0,
+        "certificate": 200,
+        "videoPath": "visible Skip action contract, external playback disabled"
+      }
+    },
+    {
+      "name": "Admin invites and logs in through standard workflow",
+      "result": "pass",
+      "detail": "one-use invitation, login 302, AdminDashboard 200"
+    },
+    {
+      "name": "Admin dashboard tabs and controls",
+      "result": "pass",
+      "detail": {
+        "navigated": 4,
+        "searchFocused": true,
+        "periods": {
+          "3": 3,
+          "6": 6,
+          "12": 12
+        },
+        "bell": {
+          "type": "alert",
+          "assertsHealthy": true
+        }
+      }
+    },
+    {
+      "name": "Admin course create, update, visibility and delete on isolated files",
+      "result": "pass",
+      "detail": {
+        "newId": 121,
+        "canStart": false,
+        "detailAfterDelete": 404
+      }
+    },
+    {
+      "name": "Admin question create, edit, read and delete on isolated files",
+      "result": "pass",
+      "detail": "add/read/update/delete persisted across HTTP calls"
+    },
+    {
+      "name": "Admin JSON import file correct/invalid",
+      "result": "pass",
+      "detail": {
+        "imported": 1,
+        "invalid": 400
+      }
+    },
+    {
+      "name": "Render home-360",
+      "result": "pass"
+    },
+    {
+      "name": "Render home-768",
+      "result": "pass"
+    },
+    {
+      "name": "Render home-1280",
+      "result": "pass"
+    },
+    {
+      "name": "Render home-1920",
+      "result": "pass"
+    },
+    {
+      "name": "Render home-dark",
+      "result": "pass"
+    },
+    {
+      "name": "Render island-360",
+      "result": "pass"
+    },
+    {
+      "name": "Render island-768",
+      "result": "pass"
+    },
+    {
+      "name": "Render island-1280",
+      "result": "pass"
+    },
+    {
+      "name": "Render island-1920",
+      "result": "pass"
+    },
+    {
+      "name": "Render courses-dark",
+      "result": "pass"
+    },
+    {
+      "name": "Render details-dark",
+      "result": "pass"
+    },
+    {
+      "name": "Render login-dark",
+      "result": "pass"
+    },
+    {
+      "name": "Render learner-dashboard",
+      "result": "pass"
+    },
+    {
+      "name": "Render practice",
+      "result": "pass"
+    },
+    {
+      "name": "Render admin-overview",
+      "result": "pass"
+    },
+    {
+      "name": "Island underwater section and reload",
+      "result": "pass",
+      "detail": {
+        "scrollY": 717
+      }
+    },
+    {
+      "name": "Admin panels screenshots",
+      "result": "pass"
+    },
+    {
+      "name": "Logout clears session and protects learner dashboard",
+      "result": "pass",
+      "detail": "Dashboard → Login"
+    }
+  ],
+  "pages": [
+    {
+      "name": "home-360",
+      "route": "/Home/Index",
+      "mode": "Production",
+      "layout": {
+        "title": "แดชบอร์ดการเรียน — NextSkill",
+        "width": 360,
+        "bodyWidth": 360,
+        "height": 3114,
+        "lang": "th",
+        "headings": [
+          "ทักษะใหม่ของคุณ\nเริ่มที่เกาะนี้"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.6356,
+        "ScriptDuration": 0.0521,
+        "RecalcStyleDuration": 0.1321,
+        "LayoutDuration": 0.0484,
+        "LayoutCount": 173,
+        "Nodes": 4233
+      },
+      "screen": "home-360.png"
+    },
+    {
+      "name": "home-768",
+      "route": "/Home/Index",
+      "mode": "Production",
+      "layout": {
+        "title": "แดชบอร์ดการเรียน — NextSkill",
+        "width": 768,
+        "bodyWidth": 768,
+        "height": 3014,
+        "lang": "th",
+        "headings": [
+          "ทักษะใหม่ของคุณ\nเริ่มที่เกาะนี้"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.8177,
+        "ScriptDuration": 0.0677,
+        "RecalcStyleDuration": 0.2089,
+        "LayoutDuration": 0.0523,
+        "LayoutCount": 174,
+        "Nodes": 4222
+      },
+      "screen": "home-768.png"
+    },
+    {
+      "name": "home-1280",
+      "route": "/Home/Index",
+      "mode": "Production",
+      "layout": {
+        "title": "แดชบอร์ดการเรียน — NextSkill",
+        "width": 1280,
+        "bodyWidth": 1280,
+        "height": 3327,
+        "lang": "th",
+        "headings": [
+          "ทักษะใหม่ของคุณ\nเริ่มที่เกาะนี้"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.889,
+        "ScriptDuration": 0.0612,
+        "RecalcStyleDuration": 0.2136,
+        "LayoutDuration": 0.0536,
+        "LayoutCount": 170,
+        "Nodes": 4233
+      },
+      "screen": "home-1280.png"
+    },
+    {
+      "name": "home-1920",
+      "route": "/Home/Index",
+      "mode": "Production",
+      "layout": {
+        "title": "แดชบอร์ดการเรียน — NextSkill",
+        "width": 1920,
+        "bodyWidth": 1920,
+        "height": 3327,
+        "lang": "th",
+        "headings": [
+          "ทักษะใหม่ของคุณ\nเริ่มที่เกาะนี้"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.7777,
+        "ScriptDuration": 0.0559,
+        "RecalcStyleDuration": 0.1763,
+        "LayoutDuration": 0.0471,
+        "LayoutCount": 172,
+        "Nodes": 4226
+      },
+      "screen": "home-1920.png"
+    },
+    {
+      "name": "home-dark",
+      "route": "/Home/Index",
+      "mode": "Production",
+      "layout": {
+        "title": "แดชบอร์ดการเรียน — NextSkill",
+        "width": 1280,
+        "bodyWidth": 1280,
+        "height": 3327,
+        "lang": "th",
+        "headings": [
+          "ทักษะใหม่ของคุณ\nเริ่มที่เกาะนี้"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.7392,
+        "ScriptDuration": 0.0569,
+        "RecalcStyleDuration": 0.1536,
+        "LayoutDuration": 0.041,
+        "LayoutCount": 96,
+        "Nodes": 4210
+      },
+      "screen": "home-dark.png"
+    },
+    {
+      "name": "island-360",
+      "route": "/Learning/Island?courseId=101",
+      "mode": "Development",
+      "layout": {
+        "title": "ทักทายและแนะนำตัวภาษาอังกฤษ — NextSkill",
+        "width": 360,
+        "bodyWidth": 360,
+        "height": 1475,
+        "lang": "th",
+        "headings": [
+          "ทักทายและแนะนำตัวภาษาอังกฤษ"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.006,
+        "ScriptDuration": 0,
+        "RecalcStyleDuration": 0.0002,
+        "LayoutDuration": 0,
+        "LayoutCount": 0,
+        "Nodes": 2158
+      },
+      "screen": "island-360.png"
+    },
+    {
+      "name": "island-768",
+      "route": "/Learning/Island?courseId=101",
+      "mode": "Development",
+      "layout": {
+        "title": "ทักทายและแนะนำตัวภาษาอังกฤษ — NextSkill",
+        "width": 768,
+        "bodyWidth": 768,
+        "height": 1527,
+        "lang": "th",
+        "headings": [
+          "ทักทายและแนะนำตัวภาษาอังกฤษ"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.0101,
+        "ScriptDuration": 0,
+        "RecalcStyleDuration": 0.0007,
+        "LayoutDuration": 0,
+        "LayoutCount": 0,
+        "Nodes": 2555
+      },
+      "screen": "island-768.png"
+    },
+    {
+      "name": "island-1280",
+      "route": "/Learning/Island?courseId=101",
+      "mode": "Development",
+      "layout": {
+        "title": "ทักทายและแนะนำตัวภาษาอังกฤษ — NextSkill",
+        "width": 1280,
+        "bodyWidth": 1280,
+        "height": 1617,
+        "lang": "th",
+        "headings": [
+          "ทักทายและแนะนำตัวภาษาอังกฤษ"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.0114,
+        "ScriptDuration": 0,
+        "RecalcStyleDuration": 0.0003,
+        "LayoutDuration": 0,
+        "LayoutCount": 0,
+        "Nodes": 2555
+      },
+      "screen": "island-1280.png"
+    },
+    {
+      "name": "island-1920",
+      "route": "/Learning/Island?courseId=101",
+      "mode": "Development",
+      "layout": {
+        "title": "ทักทายและแนะนำตัวภาษาอังกฤษ — NextSkill",
+        "width": 1920,
+        "bodyWidth": 1920,
+        "height": 1620,
+        "lang": "th",
+        "headings": [
+          "ทักทายและแนะนำตัวภาษาอังกฤษ"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.0117,
+        "ScriptDuration": 0,
+        "RecalcStyleDuration": 0.0006,
+        "LayoutDuration": 0,
+        "LayoutCount": 0,
+        "Nodes": 2555
+      },
+      "screen": "island-1920.png"
+    },
+    {
+      "name": "courses-dark",
+      "route": "/Home/Courses",
+      "mode": "Production",
+      "layout": {
+        "title": "คลังคอร์สเรียน - NextSkill_205_247_261",
+        "width": 1280,
+        "bodyWidth": 1280,
+        "height": 2401,
+        "lang": "th",
+        "headings": [
+          "เลือกคอร์สที่ใช่สำหรับคุณ"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.086,
+        "ScriptDuration": 0.0013,
+        "RecalcStyleDuration": 0.0182,
+        "LayoutDuration": 0.0052,
+        "LayoutCount": 24,
+        "Nodes": 1738
+      },
+      "screen": "courses-dark.png"
+    },
+    {
+      "name": "details-dark",
+      "route": "/Home/Details/101",
+      "mode": "Production",
+      "layout": {
+        "title": "ทักทายและแนะนำตัวภาษาอังกฤษ - NextSkill_205_247_261",
+        "width": 1280,
+        "bodyWidth": 1280,
+        "height": 1187,
+        "lang": "th",
+        "headings": [
+          "ทักทายและแนะนำตัวภาษาอังกฤษ"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.0158,
+        "ScriptDuration": 0,
+        "RecalcStyleDuration": 0.0004,
+        "LayoutDuration": 0,
+        "LayoutCount": 0,
+        "Nodes": 2738
+      },
+      "screen": "details-dark.png"
+    },
+    {
+      "name": "login-dark",
+      "route": "/Account/Login",
+      "mode": "Production",
+      "layout": {
+        "title": "ยินดีต้อนรับกลับมา — NextSkill",
+        "width": 360,
+        "bodyWidth": 360,
+        "height": 1856,
+        "lang": "th",
+        "headings": [
+          "เรียนสนุกไปด้วยกันนะ!"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.7446,
+        "ScriptDuration": 0,
+        "RecalcStyleDuration": 0.2765,
+        "LayoutDuration": 0.0634,
+        "LayoutCount": 91,
+        "Nodes": 4861
+      },
+      "screen": "login-dark.png"
+    },
+    {
+      "name": "learner-dashboard",
+      "route": "/Account/Dashboard",
+      "mode": "Development",
+      "layout": {
+        "title": "โปรไฟล์ของฉัน — NextSkill",
+        "width": 1280,
+        "bodyWidth": 1280,
+        "height": 1453,
+        "lang": "th",
+        "headings": [
+          "ทดสอบ ฿ & ชื่อใหม่"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.8842,
+        "ScriptDuration": 0,
+        "RecalcStyleDuration": 0.3424,
+        "LayoutDuration": 0.083,
+        "LayoutCount": 175,
+        "Nodes": 3370
+      },
+      "screen": "learner-dashboard.png"
+    },
+    {
+      "name": "practice",
+      "route": "/Learning/Practice?courseId=101&lessonId=1",
+      "mode": "Development",
+      "layout": {
+        "title": "บทเรียนและแบบทดสอบ — NextSkill",
+        "width": 1280,
+        "bodyWidth": 1280,
+        "height": 1319,
+        "lang": "th",
+        "headings": [
+          "วิดีโอบทเรียน"
+        ],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 0
+      },
+      "metrics": {
+        "TaskDuration": 0.0904,
+        "ScriptDuration": 0.0034,
+        "RecalcStyleDuration": 0.0281,
+        "LayoutDuration": 0.0114,
+        "LayoutCount": 35,
+        "Nodes": 2675
+      },
+      "screen": "practice.png"
+    },
+    {
+      "name": "admin-overview",
+      "route": "/Account/AdminDashboard",
+      "mode": "Development",
+      "layout": {
+        "title": "ศูนย์ควบคุมผู้ดูแล NextSkill | NextSkill Admin",
+        "width": 1280,
+        "bodyWidth": 1280,
+        "height": 2116,
+        "lang": "th",
+        "headings": [],
+        "imagesWithoutAlt": 0,
+        "inputsWithoutLabel": 1
+      },
+      "metrics": {
+        "TaskDuration": 0.1823,
+        "ScriptDuration": 0.0123,
+        "RecalcStyleDuration": 0.0611,
+        "LayoutDuration": 0.0167,
+        "LayoutCount": 33,
+        "Nodes": 18555
+      },
+      "screen": "admin-overview.png"
+    }
+  ],
+  "console": [],
+  "assets": [],
+  "blocked": [
+    {
+      "host": "fonts.googleapis.com",
+      "proposedRequests": 3
+    }
+  ]
+}

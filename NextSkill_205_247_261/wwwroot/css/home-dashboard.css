@@ -126,9 +126,11 @@ html[data-theme="dark"] .learning-dashboard {
 .hd-icon--fire { --hd-icon: url('../icons/fire.svg'); background: var(--hd-fire); }
 .hd-icon--trophy { --hd-icon: url('../icons/trophy.svg'); }
 .hd-icon--star { --hd-icon: url('../icons/star.svg'); background: var(--hd-star); }
-.hd-icon--lightning { --hd-icon: url('../icons/lightning.svg'); }
+
+.hd-course-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px 8px; }
 
 .hd-current h2 {
+    min-width: 0;
     margin: 0;
     color: inherit;
     font-size: clamp(17px, 1.35vw, 22px);
@@ -145,8 +147,7 @@ html[data-theme="dark"] .learning-dashboard {
 
 .learning-dashboard .hd-course-link:hover { text-decoration-color: currentColor; }
 
-.hd-card-top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; color: var(--hd-muted); font-size: 13px; }
-.hd-trial { border: 1px solid var(--hd-line); border-radius: 10px; padding: 1px 7px; }
+.hd-trial { border: 1px solid var(--hd-line); border-radius: 10px; padding: 1px 7px; color: var(--hd-muted); font-size: 13px; }
 
 .hd-progress { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 11px; align-items: center; }
 .hd-ring {
@@ -175,34 +176,11 @@ html[data-theme="dark"] .learning-dashboard {
 .hd-progress-copy p { margin: 0; }
 .hd-progress-copy .hd-next-lesson { color: var(--hd-muted); font-size: 13px; }
 .hd-next-lesson strong {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
     color: var(--hd-ink);
     font-weight: 500;
     overflow-wrap: anywhere;
 }
 
-.hd-mission .hd-card-top { margin: 0; color: var(--hd-muted); font-size: 13px; font-weight: 400; }
-.hd-mission-target { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; }
-.hd-mission-task { margin: 0; font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
-.hd-rewards { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 4px 6px; }
-.hd-reward {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    max-width: 100%;
-    padding: 3px 7px;
-    border: 1px solid var(--hd-line);
-    border-radius: 8px;
-    background: var(--ns-liquid-panel-bg);
-    font-size: 12px;
-    overflow-wrap: anywhere;
-}
-.hd-reward strong { font-weight: 600; }
-.hd-reward .hd-icon { width: 14px; height: 14px; }
-.hd-reward--badge .hd-icon { background: var(--hd-star); }
 .hd-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .learning-dashboard .hd-missions-trigger { display: none; }
 .hd-actions .ns-button { padding-inline: clamp(12px, 2vw, 22px); }
@@ -312,19 +290,21 @@ html[data-theme="dark"] .learning-dashboard {
 .hd-stats .hd-icon { width: 15px; height: 15px; }
 .hd-stats dd strong { font-size: 16px; font-weight: 600; line-height: 1.2; font-variant-numeric: tabular-nums; }
 
-.hd-daily-goals { min-width: 0; padding-top: 8px; border-top: 1px solid var(--hd-line); }
-.hd-daily-goals:focus-visible { outline: 2px solid var(--hd-blue); outline-offset: 4px; border-radius: 4px; }
-.hd-daily-goals h3 {
+.hd-mission:focus-visible { outline: 2px solid var(--hd-blue); outline-offset: 4px; }
+.hd-mission-heading {
     display: flex;
+    align-items: baseline;
     justify-content: space-between;
     gap: 8px;
-    margin: 0 0 2px;
+}
+.hd-mission-heading h2 { margin: 0; font-weight: 600; }
+.hd-mission-summary {
     color: var(--hd-muted);
     font-size: 13px;
     font-weight: 500;
-    line-height: 1.4;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
 }
-.hd-daily-goals h3 span { font-variant-numeric: tabular-nums; }
 .hd-missions {
     display: grid;
     gap: 0;
@@ -344,6 +324,8 @@ html[data-theme="dark"] .learning-dashboard {
     line-height: 1.45;
     overflow-wrap: anywhere;
 }
+
+.hd-missions li + li { border-top: 1px solid var(--hd-line); }
 
 .hd-goal-state {
     display: inline-flex;
@@ -436,8 +418,6 @@ html[data-theme="dark"] .learning-dashboard {
     .learning-dashboard[data-mode="returning"] .hd-greeting { grid-area: 1 / 1; }
     .hd-overview { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
     .hd-overview .hd-glass { gap: 4px; padding: 8px; }
-    .hd-daily-goals { padding-top: 4px; }
-    .hd-daily-goals h3 { margin-bottom: 2px; }
     .hd-missions li { min-height: 24px; padding-block: 2px; font-size: 12px; }
     .hd-stats { grid-area: 1 / 2; align-self: center; }
     .hd-stats dd { padding-inline: 6px; font-size: 12px; }
@@ -445,7 +425,6 @@ html[data-theme="dark"] .learning-dashboard {
     .hd-actions { align-self: start; gap: 6px; }
     .hd-actions .ns-button { min-width: 0; min-height: 44px; padding: 8px 12px; font-size: 13px; white-space: nowrap; }
     #ocean-journey .learning-dashboard .hd-greeting { font-size: clamp(22px, 3.1vw, 30px); }
-    .hd-next-lesson strong { display: inline; }
     #ocean-journey .learning-dashboard .hd-hero h1 { font-size: clamp(1.8rem, 4.4vw, 2.55rem); }
     .learning-dashboard .hd-hero p { margin-top: 12px; }
     .learning-dashboard .hd-start { min-height: 48px; }
@@ -489,7 +468,8 @@ html[data-theme="dark"] .learning-dashboard {
     }
     .hd-mission-dialog::backdrop { background: rgb(7 28 48 / 38%); }
     .hd-mission-dialog .hd-mission { padding: 20px; background: transparent; border: 0; box-shadow: none; backdrop-filter: none; }
-    .hd-mission-dialog .hd-card-top { min-height: 38px; padding-right: 48px; font-size: 18px; font-weight: 600; color: var(--hd-ink); }
+    .hd-mission-dialog .hd-mission-heading { min-height: 34px; padding-right: 44px; }
+    .hd-mission-dialog .hd-mission-heading h2 { font-size: 18px; }
     .hd-mission-dialog .hd-missions li { min-height: 36px; }
     .hd-mission-close {
         position: absolute;

@@ -1,0 +1,302 @@
+[
+  {
+    "route": "/Home/Index",
+    "width": 360,
+    "reducedMotion": "no-preference",
+    "windowMilliseconds": 1800,
+    "resting": {
+      "TaskDuration": 0.89,
+      "ScriptDuration": 0.0859,
+      "LayoutDuration": 0.0595,
+      "RecalcStyleDuration": 0.1887,
+      "LayoutCount": 260
+    },
+    "scrolling": {
+      "TaskDuration": 0.9548,
+      "ScriptDuration": 0.1337,
+      "LayoutDuration": 0.0654,
+      "RecalcStyleDuration": 0.2068,
+      "LayoutCount": 263
+    },
+    "layout": {
+      "viewport": 360,
+      "root": 360,
+      "body": 360,
+      "height": 3114,
+      "styleSheets": 29,
+      "blurElements": 2
+    }
+  },
+  {
+    "route": "/Home/Index",
+    "width": 768,
+    "reducedMotion": "no-preference",
+    "windowMilliseconds": 1800,
+    "resting": {
+      "TaskDuration": 1.178,
+      "ScriptDuration": 0.1056,
+      "LayoutDuration": 0.0703,
+      "RecalcStyleDuration": 0.3053,
+      "LayoutCount": 261
+    },
+    "scrolling": {
+      "TaskDuration": 1.1767,
+      "ScriptDuration": 0.1262,
+      "LayoutDuration": 0.0688,
+      "RecalcStyleDuration": 0.2905,
+      "LayoutCount": 258
+    },
+    "layout": {
+      "viewport": 768,
+      "root": 768,
+      "body": 768,
+      "height": 3014,
+      "styleSheets": 29,
+      "blurElements": 2
+    }
+  },
+  {
+    "route": "/Home/Index",
+    "width": 1280,
+    "reducedMotion": "no-preference",
+    "windowMilliseconds": 1800,
+    "resting": {
+      "TaskDuration": 1.1996,
+      "ScriptDuration": 0.1034,
+      "LayoutDuration": 0.0705,
+      "RecalcStyleDuration": 0.3071,
+      "LayoutCount": 253
+    },
+    "scrolling": {
+      "TaskDuration": 1.4397,
+      "ScriptDuration": 0.1616,
+      "LayoutDuration": 0.0992,
+      "RecalcStyleDuration": 0.3255,
+      "LayoutCount": 237
+    },
+    "layout": {
+      "viewport": 1280,
+      "root": 1280,
+      "body": 1280,
+      "height": 3327,
+      "styleSheets": 29,
+      "blurElements": 3
+    },
+    "theme": {
+      "stored": "dark",
+      "afterReload": "dark"
+    }
+  },
+  {
+    "route": "/Home/Index",
+    "width": 1920,
+    "reducedMotion": "no-preference",
+    "windowMilliseconds": 1800,
+    "resting": {
+      "TaskDuration": 1.3702,
+      "ScriptDuration": 0.1179,
+      "LayoutDuration": 0.0823,
+      "RecalcStyleDuration": 0.3183,
+      "LayoutCount": 237
+    },
+    "scrolling": {
+      "TaskDuration": 1.1797,
+      "ScriptDuration": 0.1289,
+      "LayoutDuration": 0.0802,
+      "RecalcStyleDuration": 0.276,
+      "LayoutCount": 262
+    },
+    "layout": {
+      "viewport": 1920,
+      "root": 1920,
+      "body": 1920,
+      "height": 3327,
+      "styleSheets": 29,
+      "blurElements": 3
+    },
+    "theme": {
+      "stored": "dark",
+      "afterReload": "dark"
+    }
+  },
+  {
+    "route": "/Home/Courses",
+    "width": 360,
+    "reducedMotion": "no-preference",
+    "windowMilliseconds": 1800,
+    "resting": {
+      "TaskDuration": 0.0332,
+      "ScriptDuration": 0.0006,
+      "LayoutDuration": 0.0009,
+      "RecalcStyleDuration": 0.0044,
+      "LayoutCount": 12
+    },
+    "scrolling": {
+      "TaskDuration": 0.5501,
+      "ScriptDuration": 0.029,
+      "LayoutDuration": 0.015,
+      "RecalcStyleDuration": 0.0763,
+      "LayoutCount": 263
+    },
+    "layout": {
+      "viewport": 360,
+      "root": 360,
+      "body": 360,
+      "height": 2589,
+      "styleSheets": 26,
+      "blurElements": 1
+    }
+  },
+  {
+    "route": "/Home/Details/101",
+    "width": 360,
+    "reducedMotion": "no-preference",
+    "windowMilliseconds": 1800,
+    "resting": {
+      "TaskDuration": 0.0045,
+      "ScriptDuration": 0,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 0.0005,
+      "LayoutCount": 0
+    },
+    "scrolling": {
+      "TaskDuration": 0.0758,
+      "ScriptDuration": 0.0216,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 0,
+      "LayoutCount": 0
+    },
+    "layout": {
+      "viewport": 360,
+      "root": 360,
+      "body": 360,
+      "height": 1622,
+      "styleSheets": 20,
+      "blurElements": 3
+    }
+  },
+  {
+    "route": "/Account/Login",
+    "width": 360,
+    "reducedMotion": "no-preference",
+    "windowMilliseconds": 1800,
+    "resting": {
+      "TaskDuration": 0.9605,
+      "ScriptDuration": 0,
+      "LayoutDuration": 0.0627,
+      "RecalcStyleDuration": 0.3742,
+      "LayoutCount": 259
+    },
+    "scrolling": {
+      "TaskDuration": 1.259,
+      "ScriptDuration": 0.0753,
+      "LayoutDuration": 0.1061,
+      "RecalcStyleDuration": 0.4344,
+      "LayoutCount": 232
+    },
+    "layout": {
+      "viewport": 360,
+      "root": 360,
+      "body": 360,
+      "height": 1856,
+      "styleSheets": 10,
+      "blurElements": 11
+    }
+  },
+  {
+    "route": "/Learning/Island?courseId=101",
+    "width": 1280,
+    "reducedMotion": "no-preference",
+    "windowMilliseconds": 1800,
+    "resting": {
+      "TaskDuration": 0.0266,
+      "ScriptDuration": 0.0006,
+      "LayoutDuration": 0.0002,
+      "RecalcStyleDuration": 0.0057,
+      "LayoutCount": 1
+    },
+    "scrolling": {
+      "TaskDuration": 0.3102,
+      "ScriptDuration": 0.0185,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 0.0793,
+      "LayoutCount": 0
+    },
+    "layout": {
+      "viewport": 1280,
+      "root": 1280,
+      "body": 1280,
+      "height": 1547,
+      "styleSheets": 22,
+      "blurElements": 3
+    },
+    "theme": {
+      "stored": "dark",
+      "afterReload": "dark"
+    }
+  },
+  {
+    "route": "/Home/Index",
+    "width": 1280,
+    "reducedMotion": "reduce",
+    "windowMilliseconds": 1800,
+    "resting": {
+      "TaskDuration": 0.0637,
+      "ScriptDuration": 0.0068,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 0,
+      "LayoutCount": 0
+    },
+    "scrolling": {
+      "TaskDuration": 0.2565,
+      "ScriptDuration": 0.0951,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 0.0553,
+      "LayoutCount": 1
+    },
+    "layout": {
+      "viewport": 1280,
+      "root": 1280,
+      "body": 1280,
+      "height": 1745,
+      "styleSheets": 29,
+      "blurElements": 3
+    },
+    "theme": {
+      "stored": "dark",
+      "afterReload": "dark"
+    }
+  },
+  {
+    "route": "/Learning/Island?courseId=101",
+    "width": 1280,
+    "reducedMotion": "reduce",
+    "windowMilliseconds": 1800,
+    "resting": {
+      "TaskDuration": 0.0009,
+      "ScriptDuration": 0,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 0,
+      "LayoutCount": 0
+    },
+    "scrolling": {
+      "TaskDuration": 0.5159,
+      "ScriptDuration": 0.1148,
+      "LayoutDuration": 0.0001,
+      "RecalcStyleDuration": 0.1873,
+      "LayoutCount": 1
+    },
+    "layout": {
+      "viewport": 1280,
+      "root": 1280,
+      "body": 1280,
+      "height": 1547,
+      "styleSheets": 22,
+      "blurElements": 3
+    },
+    "theme": {
+      "stored": "dark",
+      "afterReload": "dark"
+    }
+  }
+]

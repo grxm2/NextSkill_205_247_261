@@ -1,0 +1,60 @@
+    <div id="lesson-loading" class="sj-lesson-loading" role="status">กำลังเตรียมบทเรียนและบันทึกจุดที่เรียนค้างไว้…</div>
+    <div id="lesson-content" hidden>
+        <div class="lesson-step-status"><span id="lesson-step-caption"></span><progress id="lesson-step-progress" value="0" max="1" aria-label="จำนวนข้อที่ตอบแล้ว"></progress><div id="practice-question-steps" class="practice-question-steps" aria-hidden="true" hidden></div></div>
+        @if (ViewData["JourneyMode"] as string == "practice")
+        {
+            <section id="lesson-video" class="lesson-video" aria-labelledby="lesson-video-title" hidden>
+                <div class="lesson-video-heading">
+                    <h3 id="lesson-video-title">วิดีโอบทเรียน</h3>
+                    <a id="lesson-video-source" target="_blank" rel="noopener noreferrer" title="เปิดคลิปต้นฉบับบน YouTube"></a>
+                </div>
+                <div class="lesson-video-frame">
+                    <div id="lesson-video-player"></div>
+                    <div id="lesson-video-placeholder">
+                        @if (ViewData["LessonCoverArt"] is string coverArt)
+                        {
+                            <img src="@coverArt" asp-append-version="true" alt="" width="960" height="540" />
+                        }
+                        <button id="lesson-video-play" class="ns-button ns-button--primary" type="button">เล่นวิดีโอจาก YouTube</button>
+                    </div>
+                </div>
+                <progress id="lesson-video-progress" max="1" value="0" aria-label="ตำแหน่งวิดีโอบทเรียน"></progress>
+                <p id="lesson-video-status" role="status"></p>
+                <div class="lesson-video-actions">
+                    <button id="lesson-video-skip" class="ns-button ns-button--primary" type="button" hidden>ข้ามวิดีโอและเริ่มแบบทดสอบ →</button>
+                    <button id="lesson-video-retry" class="ns-button ns-button--secondary" type="button" hidden>ลองเปิดแบบทดสอบอีกครั้ง</button>
+                </div>
+            </section>
+        }
+        <div id="lesson-reading" class="sj-lesson-reading"></div>
+        <form id="lesson-quiz" novalidate>
+            <div id="lesson-questions" hidden></div>
+            <div class="lesson-step-actions">
+                <button type="button" id="lesson-reading-again" class="sj-text-link" hidden>ดูวิดีโออีกครั้ง</button>
+                <button type="button" id="lesson-step-next" class="ns-button ns-button--primary" disabled>เริ่มแบบทดสอบ →</button>
+                <button type="submit" class="ns-button ns-button--primary" id="submit-lesson" hidden>ตรวจคำตอบ →</button>
+            </div>
+        </form>
+    </div>
+    <section id="lesson-result" class="sj-lesson-result" aria-live="polite" hidden>
+        <span class="sj-result-symbol" aria-hidden="true">✓</span><p class="sj-eyebrow" id="lesson-result-eyebrow"></p>
+        <h3 id="lesson-result-title" tabindex="-1"></h3><p id="lesson-result-message"></p>
+        <div id="lesson-result-feedback" class="lesson-result-feedback"></div>
+        <div id="lesson-reward" class="sj-lesson-reward"></div>
+        <div class="sj-result-actions">
+            <button type="button" class="ns-button ns-button--primary" id="edit-lesson-answers" hidden>สอบใหม่ →</button>
+            <button type="button" class="ns-button ns-button--secondary" id="review-lesson" hidden>เรียนใหม่</button>
+            <button type="button" class="ns-button ns-button--primary" id="next-island" hidden>ไปเกาะถัดไป →</button>
+            <a class="ns-button ns-button--primary" id="lesson-final-quiz" hidden>ทำแบบทดสอบท้ายคอร์ส →</a>
+            <button type="button" class="ns-button ns-button--secondary" id="finish-learning">พักไว้ แล้วกลับมาเรียนต่อ</button>
+            <button type="button" class="sj-text-link" id="choose-next-course" hidden>เลือกเส้นทางใหม่ →</button>
+        </div>
+    </section>
+    <p class="sj-error" id="lesson-error" role="alert" hidden></p>
+    <div id="submission-recovery" class="submission-recovery" hidden>
+        <p>คำตอบยังอยู่ในหน้านี้ การเชื่อมต่อขาดไม่ได้แปลว่าระบบยังไม่บันทึกผล</p>
+        <button type="button" class="ns-button ns-button--secondary" id="check-save-status">ตรวจสถานะการบันทึก</button>
+        <button type="button" class="sj-text-link" id="retry-submission">ส่งคำตอบเดิมอีกครั้ง</button>
+        <button type="button" class="sj-text-link" id="leave-unconfirmed">ออกจากหน้านี้</button>
+    </div>
+    <button type="button" id="retry-lesson" class="ns-button ns-button--secondary" hidden>ลองเปิดบทเรียนอีกครั้ง</button>

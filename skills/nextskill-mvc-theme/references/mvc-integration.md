@@ -20,7 +20,7 @@
 
 `Views/_ViewStart.cshtml` ตั้ง default `_Layout`; แต่ View สามารถเลือกต่างออกไปได้ ตรวจหน้าเป้าหมายทุกครั้ง
 
-`_HomeLayout`, `_SeaLearnHome`, `_SeaArchipelagoHome`, `sea-glass.css` และ `README-SEALEARN.md` เป็นร่องรอยรุ่นก่อนของ Home ไม่ใช่แหล่งหลักสำหรับสร้างหน้าแรกปัจจุบัน `Views/Courses/Enrollment.cshtml` เก่ามีอยู่ แต่ action ปัจจุบัน redirect ไป `Home.Details` คอร์ส id 13 จึงไม่ใช่ flow แยกให้รื้อฟื้นโดยอัตโนมัติ
+หน้าแรกปัจจุบันใช้ `Views/Home/Index.cshtml` กับ `_SmartJourneyLayout` และคู่มือติดตั้งอยู่ใน `README.md` ที่รากรีโป เส้นทางเดิม `/Courses/Enrollment` ส่งต่อไป `Home.Courses` การลงทะเบียนเกิดจากหน้ารายละเอียดคอร์ส
 
 Route `/` ปัจจุบันไป `Learning.Entry`: guest ไป Home; Admin ไป AdminDashboard; learner ไปเกาะที่เรียนค้างหรือ Home ไม่ใช่ login เสมอไป
 

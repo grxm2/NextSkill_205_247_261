@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" fill="none" role="img" aria-labelledby="rocky-title rocky-desc">
+  <title id="rocky-title">เกาะผาหิน</title>
+  <desc id="rocky-desc">เกาะหินรูปซุ้มโค้งมีธงบนยอดผา หาดทรายและท่าเรือทางซ้าย พื้นที่กลางเกาะว่างสำหรับ Niko</desc>
+  <defs>
+    <linearGradient id="rocky-sand" x1="324" y1="228" x2="324" y2="365" gradientUnits="userSpaceOnUse"><stop stop-color="#FFEBB4"/><stop offset="1" stop-color="#EAC07A"/></linearGradient>
+    <linearGradient id="rocky-grass" x1="322" y1="227" x2="322" y2="321" gradientUnits="userSpaceOnUse"><stop stop-color="#A3C45D"/><stop offset="1" stop-color="#70AA4F"/></linearGradient>
+    <linearGradient id="rocky-face" x1="428" y1="118" x2="465" y2="307" gradientUnits="userSpaceOnUse"><stop stop-color="#A9B1A2"/><stop offset="1" stop-color="#7F927E"/></linearGradient>
+  </defs>
+  <ellipse cx="328" cy="360" rx="235" ry="43" fill="#1D91AE" opacity=".13"/>
+  <path d="M89 327c6-36 92-68 192-73 111-6 223 14 265 51 34 30 3 64-69 82-85 22-192 25-284 4-65-15-109-35-104-64Z" fill="#75DEE0" opacity=".7"/>
+  <path d="M107 318c14-38 113-64 218-62 106 2 200 29 207 64 8 39-95 70-213 68-123-2-226-30-212-70Z" fill="#3EC0C3"/>
+  <path d="M120 333c28 29 108 46 200 47 83 1 158-14 188-37" stroke="#AAF3DC" stroke-width="3" stroke-linecap="round"/>
+  <path d="M132 300c7-38 88-66 189-67 103-2 184 25 186 65 1 36-81 66-181 66-104 1-201-27-194-64Z" fill="url(#rocky-sand)"/>
+  <path d="M157 282c17-34 84-57 167-57 84 0 151 20 155 53 4 32-65 58-151 59-90 0-186-22-171-55Z" fill="url(#rocky-grass)"/>
+  <path d="M161 285c-1 25 68 48 155 48 68 1 124-13 150-34" stroke="#5B9741" stroke-width="4" stroke-linecap="round"/>
+  <path d="m391 294-15-44 10-70 24-57 36-17 27 17 14 50 33 34 4 66-11 39-48 7-20-26 7-44-4-28-17-11-16 14-3 30 7 44-14 18Z" fill="url(#rocky-face)"/>
+  <path d="m410 123-5 55 14 35 12-11 17 11 11 42-14 38 20 26 12-55-5-40-18-27-16-46-6-39Z" fill="#BFC2AB"/>
+  <path d="m473 123-19 74 18 27 7 40-14 55 48-7 11-39-4-66-33-34Z" fill="#6F8377"/>
+  <path d="m486 176-12 59 20 19 19 58 11-39-4-66Z" fill="#90A18D"/>
+  <path d="m391 180 14-2 14 35-16 30-2 33 14 38-24-20-15-44Z" fill="#8C9E89"/>
+  <path d="m411 123 23-14 18 7-8 15-23 4Zm-23 64 15-5 4 12-22 8Zm92 32 17-8 10 12-13 8Z" fill="#A2B76C"/>
+  <path d="m434 150 10 29m-54 61 8-12m92 23 13 13m-15 18 14 6" stroke="#6E8274" stroke-width="3" stroke-linecap="round"/>
+  <path d="m405 291-9-17-16 5-4 22 18 8Zm101 16 12-15 19 7 4 19-24 7Z" fill="#789079"/>
+  <path d="m382 280 14-6 9 17-13-4Zm133 16 3-4 19 7 4 19-11-10Z" fill="#A4B19A"/>
+  <g id="rocky-flag">
+    <path d="M435 115V63" stroke="#9A7449" stroke-width="5" stroke-linecap="round"/>
+    <path d="M438 69c18-8 31 8 51 3l-8 14 6 14c-20 4-31-11-49-6Z" fill="#E5A047"/>
+    <path d="M441 73c15-4 26 6 41 5" stroke="#F8CA75" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="435" cy="62" r="4" fill="#F8D79B"/>
+  </g>
+  <path d="M214 322c15-7 27-15 39-26 14-13 31-14 51-9" stroke="#D3CB99" stroke-width="19" stroke-linecap="round"/>
+  <path d="m237 303 17 5m-1-19 18 6m5-13 17 4" stroke="#F2E3B3" stroke-width="9" stroke-linecap="round"/>
+  <g fill="#E8DCB6"><path d="m325 288 11-8 13 6-5 10-16 1Z"/><path d="m356 286 10-8 13 5-2 10-17 2Z"/></g>
+  <g id="rocky-dock">
+    <path d="m195 311 46 13-82 65-43-15Z" fill="#A5703D"/>
+    <path d="m195 305 47 13-84 65-43-14Z" fill="#E4AC68" stroke="#9E6737" stroke-width="3" stroke-linejoin="round"/>
+    <path d="m181 318 44 13m-59-2 44 13m-58-1 44 14m-58-3 44 14" stroke="#AC743E" stroke-width="3"/>
+    <path d="m125 367 1 25m31-12v24m71-89v20" stroke="#925D33" stroke-width="9" stroke-linecap="round"/>
+    <ellipse cx="124" cy="365" rx="6" ry="4" fill="#F3C787"/><ellipse cx="157" cy="378" rx="6" ry="4" fill="#F3C787"/>
+    <path d="m124 370 5 4m23 8 5 4" stroke="#E5CA91" stroke-width="3"/>
+  </g>
+  <path d="M175 278c-4-15-2-29 4-38 3 12 3 23 1 33 7-12 14-18 24-19-5 11-13 21-25 26Z" fill="#559247"/>
+  <path d="M479 326c4-9 8-8 11 1 2-14 8-17 12-2 5-6 10-5 13 3" fill="#5D994A"/>
+  <g fill="#F8E6B8"><ellipse cx="345" cy="340" rx="5" ry="3"/><ellipse cx="404" cy="333" rx="4" ry="3"/><ellipse cx="286" cy="347" rx="3" ry="2"/></g>
+  <path d="M87 371H65m464-10 30-3m-98 36 26-4m-283 12 23 2" stroke="#B9F0ED" stroke-width="4" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,196 @@
+/* NextSkill warm learning palette. Colours have jobs: teal = action, green = growth,
+   gold = rewards, orange = streaks. Layout and character motion stay independent. */
+:root {
+    --game-canvas: #f7f8f4;
+    --game-paper: #fff;
+    --game-ink: #2d3837;
+    --game-muted: #61706d;
+    --game-line: #e1e7df;
+    --game-accent: #237a73;
+    --game-accent-deep: #1d625d;
+    --game-accent-tint: #edf4ef;
+    --game-green: #79c850;
+    --game-green-deep: #5a9842;
+    --game-gold: #eac36c;
+    --game-gold-ink: #77603b;
+    --game-orange: #965b24;
+}
+.game-theme {
+    --canvas: var(--game-canvas); --ink: var(--game-ink); --muted: var(--game-muted);
+    --forest: var(--game-accent); --forest-deep: var(--game-accent-deep); --line: var(--game-line);
+    color: var(--game-ink); background: var(--game-canvas); background-image: none;
+}
+.game-theme :is(button,a):focus-visible { outline-color: var(--game-accent); }
+.game-theme .site-header { border-color: #e1e7df; }
+.game-theme .brand { color: #17452f; }.game-theme .brand-mark { background: #79c850; box-shadow: 0 4px 0 #5a9842; }
+.game-theme .brand-period { color: #d8a23f; }
+.game-theme .nav-link { color: #61706d; }.game-theme .nav-link.active { color: #1d625d; background: #edf4ef; box-shadow: 0 3px 0 #d9e7dc; }
+.game-theme .nav-link:disabled { color: #78849a; }
+.game-theme .xp-stat,.game-theme .xp-stat strong { color: #77603b; }.game-theme .xp-stat .icon { color: #d8a23f; }
+.game-theme .header-streak { color: #965b24; }.game-theme .heart-stat,.game-theme .heart-stat .icon { color: #db3652; }
+.game-theme .avatar { color: #365d50; background: #ddebdc; outline-color: #ddebdc; }
+.game-theme.path-first .welcome h1 { color: var(--game-ink); }
+.game-theme.path-first .welcome :is(.eyebrow,h1+p) { color: var(--game-muted); }
+.game-theme .preview-label { color: #61706d; border-color: #e1e7df; background: #fff; }.game-theme .preview-label>span { background: #2f973c; }
+.buddy-arrival { background: #edf4e9; border-color: #d5e3d1; border-bottom-color: #c0d1b8; }
+.buddy-arrival .arrival-kicker { color: #237a73; }
+.buddy-arrival .arrival-copy h2 { color: #2d3837; }
+.buddy-arrival .arrival-copy p,.buddy-arrival .arrival-actions>span { color: #546b60; }
+.game-theme .button-primary { color: #fff; background: var(--game-accent); border-color: #1d625d; box-shadow: 0 2px 0 #1d625d; }
+.game-theme .button-primary:hover { color: #fff; background: #237a73; box-shadow: 0 3px 0 #1d625d; }
+.game-theme .button-primary:active { background: #237a73; box-shadow: 0 1px 0 #1d625d; }
+.game-theme.path-first .chapter-brief { background: #fff; border-color: #e1e7df; border-bottom-color: #d4dfd1; }
+.game-theme .chapter-icon { color: #315b2d; background: #b8dca6; border-color: #719e61; border-bottom-color: #729a63; }
+.game-theme .chapter-copy h2 { color: var(--game-ink); }
+.game-theme .chapter-copy :is(.eyebrow,p:last-child),.game-theme .chapter-progress label { color: var(--game-muted); }
+.game-theme .chapter-progress strong { color: #246d33; }
+.game-theme .chapter-progress progress::-webkit-progress-bar { background: #e1ecdf; }
+.game-theme .chapter-progress progress::-webkit-progress-value { background: #5a8b45; box-shadow: inset 0 2px #9abf81; }
+.game-theme .chapter-progress progress::-moz-progress-bar { background: #5a8b45; }
+.game-theme.path-first .surface { border-color: var(--game-line); border-bottom-color: #d4dfd1; }
+.game-theme.path-first .journey-card { border-color: #e1e7df; border-bottom-color: #d4dfd1; }
+.game-theme.path-first .journey-card .section-heading h2,.game-theme.path-first .sidebar .section-heading h2 { color: var(--game-ink); }
+.game-theme.path-first :is(.map-subtitle,.section-description),.game-theme .section-heading .eyebrow { color: var(--game-muted); }
+.game-theme .unit-badge { color: #1d625d; border-color: #d9e7dc; border-bottom-color: #d9e7dc; background: #edf4ef; }
+.game-theme.path-first .mission-strip { background: #edf4ef; border-color: #d9e7dc; border-left: 4px solid var(--game-accent); }
+.game-theme .mission-strip>span:nth-child(2),.game-theme .mission-strip>strong,.game-theme .mission-time { color: #546b60; }
+.game-theme .mission-strip>strong { font-weight: 800; }
+.game-theme .mission-dot { background: var(--game-accent); box-shadow: 0 0 0 3px #d9e7dc; }
+.game-theme .mission-xp { color: #77603b; }
+.game-theme .map-track { stroke: #e3e9e1; }.game-theme .map-track-complete { stroke: #a6c99a; }
+.game-theme.path-first .level-node { color: #7c897e; border-color: #d5ddd3; background: #eef1ed; box-shadow: 0 7px 0 #c4cec0; }
+.game-theme.path-first .completed .level-node { background: #b8dca6; color: #315b2d; border-color: #719e61; box-shadow: 0 5px 0 #729a63, inset 0 3px #d9eccf; }
+.game-theme.path-first .current .level-node { color: #fff; background: var(--game-accent); border-color: #1d625d; box-shadow: 0 5px 0 #1d625d, 0 0 0 9px #d9e7dc, inset 0 3px #74b7a9; }
+.game-theme.path-first .level-node:not(:disabled):active { box-shadow: 0 2px 0 #729a63; }
+.game-theme.path-first .current .level-node:active { box-shadow: 0 2px 0 #2d3837, 0 0 0 9px #d9e7dc; }
+.game-theme.path-first .level-label { color: #25482c; font-size: 11px; }
+.game-theme.path-first .current .level-label { color: #1d625d; font-size: 12px; }
+.game-theme.path-first .locked .level-label { color: #5c6d85; }
+.game-theme.path-first .level-caption { color: #61706d; font-size: 9px; }
+.game-theme.path-first .current .level-caption { color: #1d625d; }
+.game-theme .start-bubble { color: #fff; background: var(--game-accent); border-color: #1d625d; box-shadow: 0 3px 0 #1d625d; }
+.game-theme .start-bubble::after { background: var(--game-accent); border-color: #1d625d; }
+.game-theme .guide-message { background: #e9f0e5; border-color: #ccddbf; border-bottom-color: #ccddbf; }
+.game-theme .guide-message strong { color: #23612c; }.game-theme .guide-message>span { color: #3b6540; }
+.game-theme .guide-message::after { background: #e9f0e5; border-color: #ccddbf; }
+.game-theme :is(.buddy-motion-control,.buddy-tap-hint) { color: #32623d; }
+.game-theme.path-first .checkpoint { background: #faf2d9; border: 1px solid #e2d2a0; border-bottom: 1px solid #e2d2a0; }
+.game-theme.path-first .checkpoint-icon { background: #eac36c; color: #8b6b32; border-color: #d8a23f; border-bottom-color: #e7c77e; }
+.game-theme.path-first .checkpoint h3 { color: #655433; font-size: 14px; }
+.game-theme.path-first .checkpoint :is(p,.reward-kicker,.text-button) { color: #77603b; }
+.game-theme.path-first .checkpoint .text-button { font-size: 11px; }
+.reward-chest { display: block; position: relative; width: 29px; height: 23px; margin-top: 3px; border: 2px solid #8b6b32; border-radius: 4px; background: #d8a23f; box-shadow: inset 4px 0 #ffd05b,inset -4px 0 #ffd05b; }
+.reward-chest::before { content: ''; position: absolute; left: -3px; right: -3px; top: -9px; height: 13px; border: 2px solid #8b6b32; border-radius: 7px 7px 3px 3px; background: #eac36c; box-shadow: inset 0 3px #ffe889; }
+.reward-chest::after { content: ''; position: absolute; width: 8px; height: 11px; left: 9px; top: 1px; background: #fff0a3; border: 2px solid #8b6b32; border-radius: 2px; }
+.game-theme.path-first .companion-invite { background: #edf4ef; border-color: #e1e7df; border-bottom-color: #d4dfd1; }
+.game-theme .companion-invite :is(.eyebrow,h2,p:last-of-type) { color: #546b60; }
+.game-theme .companion-open-button { color: #1d625d; background: #fff; border-color: #d7e1d5; border-bottom-color: #d7e1d5; }
+.game-theme .invite-book { color: #fff; background: #237a73; border-color: #1d625d; border-bottom-color: #1d625d; }
+.game-theme .small-label { background: #e9f0e5; color: #286a2d; border-color: #ccddbf; }
+.game-theme .quest-icon { color: #315b2d; background: #b8dca6; border-color: #719e61; border-bottom-color: #729a63; }
+.game-theme .quest:nth-of-type(3) .quest-icon { color: #8b6b32; background: #eac36c; border-color: #d8a23f; border-bottom-color: #e7c77e; }
+.game-theme .quest:nth-of-type(4) .quest-icon { color: #365d50; background: #ddebdc; border-color: #d7e1d5; border-bottom-color: #d7e1d5; }
+.game-theme .quest h3 { color: #283f5d; font-size: 12px; }
+.game-theme .quest-top>span { color: #77603b; }.game-theme .quest-bottom>span { color: #61706d; }
+.game-theme .quest progress::-webkit-progress-bar { background: #e3e9e1; }
+.game-theme .quest progress::-webkit-progress-value { background: #5a8b45; box-shadow: inset 0 2px #9abf81; }
+.game-theme .quest progress::-moz-progress-bar { background: #5a8b45; }
+.game-theme.path-first .streak-card { background: #fbf5e9; border-color: #e7ddca; border-bottom-color: #e0d3bc; }
+.game-theme .fire-disc { color: #8a6436; background: #f3d49b; border-color: #d8bc89; border-bottom-color: #cba778; }
+.game-theme .streak-card h2,.game-theme .streak-card h2>span { color: #965b24; }
+.game-theme .streak-card>p,.game-theme .week-day,.game-theme .streak-tag,.game-theme.path-first .streak-footer { color: #8a6436; }
+.game-theme .day { background: #fff9f1; border-color: #e6c6a1; border-bottom-color: #d7ae79; }
+.game-theme .day.done { color: #8a6436; background: #e8bd69; border-color: #d1aa65; border-bottom-color: #bd924b; }
+.game-theme .day-dot { background: #bd9669; }
+.game-theme .league-title .icon { color: #bb7900; }.game-theme .league-tier { color: #284e84; background: #e9f1ff; border-color: #d7e1d5; }
+.game-theme .leaderboard .your-rank { background: #e9f0e5; border-color: #ccddbf; }
+.game-theme .leaderboard :is(.rank,strong) { color: #365d50; }.game-theme .leaderboard strong>span,.game-theme .member-name small { color: #61706d; }
+.game-theme .avatar-1 { color: #77603b; background: #eac36c; }.game-theme .avatar-2 { color: #315b2d; background: #d9eccf; }.game-theme .avatar-3 { color: #365d50; background: #ddebdc; }
+.game-theme .league-button { color: #1d625d; border-color: var(--game-line); }
+.game-theme.path-first .freeze-card { background: #edf4ef; border-color: #e1e7df; }
+.game-theme .freeze-icon { color: #365d50; background: #ddebdc; }
+.game-theme .freeze-card :is(h2,p) { color: #546b60; }
+.game-theme .freeze-button { color: #1d625d; background: #fff; border-color: #d7e1d5; border-bottom-color: #d7e1d5; }
+.game-theme .freeze-button[aria-pressed=true] { color: #fff; background: #237a73; border-color: #1d625d; }
+.game-theme .home-footer { color: #61706d; border-color: var(--game-line); }.game-theme .footer-brand { color: #295f3b; }
+.game-theme .mobile-nav { border-color: #e1e7df; border-bottom-color: #d4dfd1; }
+.game-theme .mobile-nav [aria-current=page] { color: #1d625d; background: #edf4ef; }
+.game-theme .home-dialog { border-color: #e1e7df; border-bottom-color: #d4dfd1; box-shadow: 0 18px 60px #304c3c26; }
+.game-theme .home-dialog::backdrop { background: #112c506b; }
+.game-theme .home-dialog h2 { color: var(--game-ink); }.game-theme .home-dialog>p { color: var(--game-muted); }
+.game-theme .dialog-symbol { background: #dbf7c9; color: #276b2e; border-color: #a7ce90; }
+.game-theme .lesson-example { background: #edf4ef; border-color: #d9e7dc; }.game-theme .lesson-example blockquote { color: #365d50; }
+.game-theme .reward-detail { color: #77603b; background: #faf2d9; border-color: #e2d2a0; }
+.game-theme .home-dialog .dialog-note { color: #61706d; }
+/* The same palette follows the one shared character, including other site layouts. */
+.skill-buddy { --buddy-main:#79c850; --buddy-edge:#5a9842; --buddy-dark:#5eaa40; --buddy-highlight:#a4dd82; --buddy-limb:#90d265; --buddy-limb-edge:#4c913c; --buddy-face:#f5faed; --buddy-face-edge:#4d8746; --buddy-ink:#174b2c; }
+.skill-buddy[data-colour=sky] { --buddy-main:#79bbcf; --buddy-edge:#41899e; --buddy-dark:#41899e; --buddy-highlight:#b6e0e6; --buddy-limb:#9bd0dc; --buddy-limb-edge:#41899e; --buddy-face:#f0f8f7; --buddy-face-edge:#4e8993; --buddy-ink:#294e54; }
+.skill-buddy[data-colour=sunshine] { --buddy-main:#e4ba5f; --buddy-edge:#c29642; --buddy-dark:#c29642; --buddy-highlight:#f2daa0; --buddy-limb:#e9cb83; --buddy-limb-edge:#c29642; --buddy-face:#fff9e2; --buddy-face-edge:#9b7c38; --buddy-ink:#64400c; }
+.skill-buddy[data-colour=berry] { --buddy-main:#b493d3; --buddy-edge:#8a6aa8; --buddy-dark:#8a6aa8; --buddy-highlight:#d9c4e9; --buddy-limb:#c7aadf; --buddy-limb-edge:#8a6aa8; --buddy-face:#faf2ff; --buddy-face-edge:#9776ae; --buddy-ink:#4c2d69; }
+.game-theme .companion-header :is(.eyebrow,p:last-child),.game-theme .companion-kicker { color: #61706d; }
+.game-theme .companion-stage { background: #e9f0e5; border-color: #ccddbf; border-bottom-color: #ccddbf; }
+.game-theme .portrait-orbit { background: #d9eccf; }
+.game-theme .companion-level { color: #315b2d; background: #d9eccf; }
+.game-theme .companion-stage h3 { color: #2d3837; }
+.game-theme .companion-emotion,.game-theme .companion-rest,.game-theme .companion-stage .companion-activity { color: #3b6544; }
+.game-theme .companion-speech { color: #2e563e; border-color: #ccddbf; border-bottom-color: #ccddbf; }
+.game-theme .companion-tabs { border-color: #e1e7df; }.game-theme .companion-tabs button { color: #61706d; }
+.game-theme .companion-tabs button[aria-selected=true] { color: #1d625d; }.game-theme .companion-tabs button[aria-selected=true]::after { background: var(--game-accent); }
+.game-theme .companion-panel>h3 { color: var(--game-ink); }
+.game-theme .companion-panel>p:not(.companion-kicker):not(.companion-field-hint) { color: var(--game-muted); }
+.game-theme .buddy-study-card { background: #edf4ef; border-color: #d9e7dc; }
+.game-theme .buddy-study-card :is(h4,blockquote) { color: #365d50; }
+.game-theme .buddy-study-card :is(p,.buddy-study-note),.game-theme .buddy-encourage { color: #546b60; }
+.game-theme .buddy-read-button { color: #fff; background: #237a73; border-color: #1d625d; border-bottom-color: #1d625d; }
+.game-theme #companion-high-five { color: #23562c; background: #e9f0e5; border-color: #75aa56; box-shadow: 0 4px 0 #5d9341; }
+.game-theme #companion-high-five:hover { color: #23562c; background: #e9f0e5; box-shadow: 0 5px 0 #5d9341; }
+.game-theme #companion-high-five:active { box-shadow: 0 1px 0 #5d9341; }
+.game-theme .bond-card { background: #fff; border-color: #cfdfc4; }
+.game-theme .bond-heading,.game-theme .bond-heading strong,.game-theme .bond-card>p { color: #3c663d; }
+.game-theme .bond-card progress::-webkit-progress-bar { background: #e3e9e1; }.game-theme .bond-card progress::-webkit-progress-value { background: #5a8b45; }.game-theme .bond-card progress::-moz-progress-bar { background: #5a8b45; }
+.game-theme .companion-next-unlock>.icon { color: #b77700; }.game-theme .companion-next-unlock :is(strong,span),.game-theme .companion-field-hint,.game-theme .companion-storage-note { color: #61706d; }
+.game-theme .companion-field-label,.game-theme .companion-name-form input { color: #263d5b; }.game-theme .companion-name-form input { border-color: #d4dfd1; }
+.game-theme .companion-small-button { color: #fff; background: #237a73; border-color: #1d625d; }
+.game-theme .companion-swatch,.game-theme .companion-accessories button { color: #546b60; border-color: #d7e1d5; }
+.game-theme .companion-swatch[aria-pressed=true],.game-theme .companion-accessories button[aria-pressed=true] { outline-color: #237a73; border-color: #d7e1d5; background: #edf4ef; }
+.game-theme .swatch-sprout>span { background: #79c850; }.game-theme .swatch-sky>span { background: #79bbcf; }.game-theme .swatch-sunshine>span { background: #e4ba5f; }.game-theme .swatch-berry>span { background: #b493d3; }
+.game-theme .companion-accessories small { color: #61706d; }
+.game-theme .signal-game { background: #edf4ef; border-color: #d9e7dc; }.game-theme .signal-game-heading,.game-theme .signal-result { color: #546b60; }
+.game-theme .signal-reward { color: #77603b; background: #faf2d9; }.game-theme .signal-card { color: #154fa4; border-color: #d9e7dc; background: #fff; }
+.game-theme .signal-inputs button { color: #365d50; border-color: #d9e7dc; }.game-theme .signal-inputs button:not(:disabled):hover { background: #dfedff; }
+.game-theme .companion-pose-buttons button { color: #546b60; border-color: #abc695; }.game-theme .buddy-break { color: #3b6544; }
+.coach-bubble { border-color: #237a73; border-bottom-color: #1d625d; color: var(--game-ink); }.coach-bubble::before { border-color: #237a73; }
+.coach-bubble h2 { color: #365d50; }.coach-meta { color: #365d50; }.coach-bubble>p { color: #546b60; }
+.coach-voice-row button,.coach-actions>button:first-child { color: #365d50; }.coach-bubble .coach-audio-status { color: #61706d; }
+.agent-menu { color: #2d3837; border-color: #d9e7dc; border-bottom-color: #d4dfd1; box-shadow: 0 10px 35px #304c3c24; }
+.agent-menu-hint,#agent-feeling { color: #61706d; }.agent-menu button { color: #365d50; background: #edf4ef; }.agent-menu button[aria-pressed=true] { color: #255d2d; background: #d9f6c4; }
+.agent-expression-picker { border-color: #e1e7df; }.agent-summon { color: #1d552a; border-color: #2c8e3c; border-bottom-color: #226b30; background: #e9f0e5; }
+@media(max-width:600px) {
+    .game-theme.path-first .level-label { font-size: 10px; }.game-theme.path-first .current .level-label { font-size: 11px; }
+    .game-theme.path-first .checkpoint h3 { font-size: 12px; }
+    .game-theme .quest h3 { font-size: 11px; }
+}
+@media(hover:none) { .game-theme .button-primary:hover { transform: none; box-shadow: 0 2px 0 #1d625d; } }
+
+/* Quieter surfaces keep the character and learning path in focus. */
+.game-theme .site-header { border-bottom-width: 1px; }
+.game-theme .nav-link.active { box-shadow: none; }
+.game-theme .button-primary { border: 1px solid #1d625d; }
+.game-theme .button-primary:hover { transform: translateY(-1px); }
+.game-theme .button-primary:active { transform: translateY(1px); }
+.buddy-arrival { border-width: 1px; border-bottom-width: 1px; }
+.game-theme.path-first :is(.chapter-brief,.surface,.journey-card,.quests-card,.league-card,.streak-card,.freeze-card,.companion-invite) { border-width: 1px; box-shadow: 0 2px 8px #354e3510; }
+.game-theme.path-first .companion-invite { background: #f3f7f0; }
+.game-theme .chapter-icon,.game-theme .quest-icon,.game-theme .fire-disc,.game-theme .day,.game-theme .day.done,.game-theme .companion-open-button,.game-theme .unit-badge,.game-theme .freeze-button { border-width: 1px; }
+.game-theme .invite-book { color: #34655c; background: #e0ece1; border: 1px solid #c3d6c4; }
+.game-theme .guide-message,.game-theme .start-bubble { border-width: 1px; }
+.game-theme .start-bubble { box-shadow: 0 2px 0 #1d625d; }
+.game-theme .home-dialog { border-width: 1px; }
+.game-theme .companion-stage,.game-theme .companion-speech,.game-theme .buddy-study-card { border-width: 1px; }
+.game-theme #companion-high-five,.game-theme #companion-high-five:hover { box-shadow: 0 2px 0 #5d9341; }
+.game-theme .buddy-read-button { border-width: 1px; box-shadow: 0 2px 0 #1d625d; }
+.coach-bubble { border-width: 1px; }
+.agent-menu { border-width: 1px; }.agent-summon { border-width: 1px; box-shadow: 0 2px 8px #354e3514; }
+.game-theme .mobile-nav { border-width: 1px; }
+
+@media(hover:none) { .game-theme .button-primary:hover { transform: none; } }

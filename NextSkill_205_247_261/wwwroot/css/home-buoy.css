@@ -36,21 +36,14 @@
 html[data-theme="dark"] .ow-home-buoy { filter: brightness(.74) saturate(.86); }
 html[data-theme="dark"] .ow-home-buoy-lamp { opacity: .7; filter: drop-shadow(0 0 3px #ffca75); }
 
-@media (width < 768px), (height < 480px) and (orientation: landscape) {
+@media (width < 768px) {
     .ow-home-buoy {
         --buoy-width: min(clamp(50px, 15cqw, 72px), 18svh);
         left: calc(100cqw - var(--ow-right) - 12px - var(--buoy-width));
     }
 }
 
-@media (height < 480px) and (orientation: landscape) {
-    .ow-home-buoy {
-        --buoy-width: min(clamp(50px, 7.5cqw, 72px), 14svh);
-        --buoy-depth: 12svh;
-    }
-}
-
-@media (width < 768px) and (orientation: portrait), (width < 1024px) and (orientation: landscape) and (height < 480px) {
+@media (width < 768px) and (orientation: portrait), (orientation: landscape) and (height < 480px) {
     .ow-home-buoy {
         --buoy-width: clamp(42px, min(13cqw, 13svh), 62px);
         --buoy-depth: 28px;
@@ -58,7 +51,7 @@ html[data-theme="dark"] .ow-home-buoy-lamp { opacity: .7; filter: drop-shadow(0 
     }
 }
 
-@media (width >= 768px) and (height >= 480px), (width >= 1024px) {
+@media (width >= 768px) and (height >= 480px) {
     .ow-home-buoy {
         /* Leave a strip of open water between the tower and the horizon. */
         --buoy-depth: clamp(calc(var(--buoy-width) * .92 + 36px),
@@ -66,8 +59,12 @@ html[data-theme="dark"] .ow-home-buoy-lamp { opacity: .7; filter: drop-shadow(0 
     }
 }
 
-@media (width >= 1024px) and (height < 480px) {
-    .ow-home-buoy { left: max(14cqw, 195px); }
+@media (width >= 768px) and (480px <= height < 768px) {
+    .ow-home-buoy {
+        /* Leave a sailing lane in front of the buoy on shallower scenes. */
+        --buoy-width: clamp(42px, calc(var(--ow-water-depth) * .34), 88px);
+        --buoy-depth: calc(var(--buoy-width) * .92 + 24px);
+    }
 }
 
 @media (prefers-reduced-motion: no-preference) {

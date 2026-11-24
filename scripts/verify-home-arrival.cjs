@@ -11,31 +11,40 @@ async function verifyArrivalClearance(page) {
     const result = await page.evaluate(async () => {
         const motion = document.querySelector('.ow-arrival-motion');
         const buoy = document.querySelector('.ow-home-buoy').getBoundingClientRect();
+        const buoyAndSeal = { left: buoy.left - buoy.width * .52, right: buoy.right, top: buoy.top, bottom: buoy.bottom };
         const water = document.querySelector('.ow-sea').getBoundingClientRect();
         const seat = motion.querySelector('.ow-boat-anchor');
+        const passenger = seat.querySelector('.buddy-avatar-rowing');
         const agent = document.querySelector('#nextskill-agent');
+        const boxes = selector => [...document.querySelectorAll(selector)]
+            .map(element => element.getBoundingClientRect()).filter(box => box.width && box.right > 0 && box.left < innerWidth);
+        const intro = boxes('.hd-hero h1, .hd-hero p, .hd-start');
+        const distantShips = boxes('.ocean-backdrop-boat-track');
+        const overlaps = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
         const animation = motion.getAnimations()[0];
         const time = animation.currentTime;
         const { duration } = animation.effect.getTiming();
         animation.pause();
         await animation.ready;
-        let collision = false, visibleAboveWater = false;
+        let collision = false, visibleAboveWater = false, overlapsIntro = false, overlapsDistantShips = false;
         for (let i = 0; i < 100; i++) {
             animation.currentTime = duration * i / 100;
             const box = motion.getBoundingClientRect();
             // The canvas has transparent padding around the painted hull.
             const left = box.left + box.width * .18, right = box.left + box.width * .78;
             const keel = box.top + box.height * .85;
-            if (left < buoy.right && right > buoy.left - buoy.width * .52) {
-                collision ||= keel > buoy.top && box.top + box.height * .30 < buoy.bottom;
-            }
+            const hull = { left, right, top: box.top + box.height * .30, bottom: keel };
+            const rider = passenger.getBoundingClientRect();
+            overlapsIntro ||= intro.some(rect => overlaps(hull, rect) || overlaps(rider, rect));
+            overlapsDistantShips ||= distantShips.some(rect => overlaps(hull, rect) || overlaps(rider, rect));
+            collision ||= overlaps(hull, buoyAndSeal) || overlaps(rider, buoyAndSeal);
             visibleAboveWater ||= right > 0 && keel < water.top + 14;
         }
         animation.currentTime = time;
         animation.play();
-        return { collision, visibleAboveWater, seated: agent.parentElement === seat };
+        return { collision, visibleAboveWater, overlapsIntro, overlapsDistantShips, seated: agent.parentElement === seat };
     });
-    assert.deepEqual(result, { collision: false, visibleAboveWater: false, seated: true });
+    assert.deepEqual(result, { collision: false, visibleAboveWater: false, overlapsIntro: false, overlapsDistantShips: false, seated: true });
 }
 async function chooseCourse(page) {
     await page.locator('.ow-intro [data-catalog-voyage]:visible').click();

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 140" preserveAspectRatio="none" fill="none">
+  <defs>
+    <linearGradient id="coast-haze" x1="0" y1="0" x2="0" y2="140" gradientUnits="userSpaceOnUse">
+      <stop offset=".48" stop-color="white"/>
+      <stop offset=".8" stop-color="white" stop-opacity=".78"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="coast-distance"><path fill="url(#coast-haze)" d="M0 0h1200v140H0z"/></mask>
+  </defs>
+  <g mask="url(#coast-distance)">
+    <path d="M105 140c19-5 27-10 43-12 16-3 23-12 33-13 9-1 14 4 24 3 12-2 18-13 28-12 12 0 17 12 34 14 17 2 19 11 41 13l40 7Z" fill="#89b6bf" opacity=".46"/>
+    <path d="M615 140c32-9 42-20 69-24 29-4 43-26 65-28 22-1 29 12 49 10 27-3 37-23 59-23 18 0 22 11 44 8 29-4 44-27 73-29 24-2 36 10 59 7 26-3 40-21 66-18 18 2 34 14 53 12 18-1 29-12 48-14v99Z" fill="#91bac2" opacity=".5"/>
+    <path d="M493 140c24-3 40-12 59-14 25-2 32-11 51-9 23 3 30 10 54 7 29-3 39-17 66-17 22 0 34 10 57 8 29-3 36-18 62-21 26-3 39 8 63 4 26-4 42-23 67-22 25 0 34 13 56 9 27-4 43-21 70-20 28 2 42 16 65 14 14-1 26-7 37-10v71Z" fill="#6f9fa9" opacity=".42"/>
+  </g>
+</svg>

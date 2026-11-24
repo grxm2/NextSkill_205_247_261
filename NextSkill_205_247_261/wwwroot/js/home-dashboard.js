@@ -14,8 +14,7 @@
     const next = find('[data-dashboard-next]');
     const format = new Intl.NumberFormat('th-TH');
     const goals = [...dashboard.querySelectorAll('[data-dashboard-goal]')];
-    const dailyGoals = find('#hd-daily-goals');
-    const mission = find('.hd-mission');
+    const mission = find('#hd-daily-goals');
     const missionDialog = find('#hd-mission-dialog');
     const missionTrigger = find('.hd-missions-trigger');
     const compact = matchMedia('(width < 768px), (orientation: landscape) and (height < 480px)');
@@ -24,7 +23,7 @@
 
     function openMissions(event) {
         if (!compact.matches) {
-            dailyGoals.focus({ preventScroll: true });
+            mission.focus({ preventScroll: true });
             return;
         }
         if (missionDialog.open) return;
@@ -46,51 +45,29 @@
     });
 
     function renderGoals(activity) {
-        const status = {};
+        const status = new Map(activity.goals.map(goal => [goal.key, goal]));
         goals.forEach(goal => {
-            const key = goal.dataset.dashboardGoal;
-            const target = Number(goal.dataset.target);
-            const count = Math.min(target, activity[key]);
-            const complete = count === target;
-            status[key] = { count, target, complete };
+            const { progress, target, complete, unit } = status.get(goal.dataset.dashboardGoal);
             goal.toggleAttribute('data-complete', complete);
             goal.querySelector('.hd-goal-check').hidden = !complete;
             goal.querySelector('[data-dashboard-goal-count]').textContent = complete ? 'สำเร็จ'
-                : `${format.format(count)}/${format.format(target)}${key === 'xpToday' ? ' XP' : ''}`;
+                : `${format.format(progress)}/${format.format(target)} ${unit}`;
         });
 
-        const lessons = status.lessonsToday;
-        const xp = status.xpToday;
-        const complete = Object.values(status).filter(goal => goal.complete).length;
+        const lessons = status.get('lessonsToday');
+        const xp = status.get('xpToday');
+        const complete = activity.goals.filter(goal => goal.complete).length;
         const summary = find('[data-dashboard-goal-summary]');
         summary.textContent = `${format.format(complete)}/${format.format(goals.length)}`;
         if (complete === goals.length) {
             dashboard.dataset.missionText = 'ภารกิจวันนี้ครบแล้ว เก่งมากเลย!';
         } else if (lessons.complete && xp.complete) {
-            dashboard.dataset.missionText = 'ครบทั้งบทเรียนและ XP แล้ว เหลืออีกหนึ่งภารกิจนะ';
-        } else if (lessons.count || xp.count) {
-            dashboard.dataset.missionText = `วันนี้เรียนแล้ว ${lessons.count}/${lessons.target} บท · ${xp.count}/${xp.target} XP`;
+            dashboard.dataset.missionText = `ครบทั้งบทเรียนและ XP แล้ว เหลืออีก ${format.format(goals.length - complete)} ภารกิจ`;
+        } else if (lessons.progress || xp.progress) {
+            dashboard.dataset.missionText = `วันนี้เรียนแล้ว ${lessons.progress}/${lessons.target} บท · ${xp.progress}/${xp.target} XP`;
         } else {
             dashboard.dataset.missionText = `วันนี้ลองเรียน ${lessons.target} บท แล้วสะสม ${xp.target} XP กันนะ`;
         }
-    }
-
-    function renderMission(course, upcoming, achievements) {
-        const firstAward = upcoming && !achievements.includes('first-lesson');
-        const isFinalLesson = upcoming && course.totalLessons - course.completedLessons.length === 1;
-        const courseAward = isFinalLesson && !achievements.includes(`course-${course.courseId}`);
-        const task = !upcoming ? 'เริ่มคอร์สใหม่เพื่อสะสม XP' : isFinalLesson ? 'ผ่านบทสุดท้าย'
-            : course.completedLessons.length ? 'ผ่านบทถัดไป' : 'ผ่านบทแรก';
-        find('[data-dashboard-mission-task]').textContent = task;
-        find('[data-dashboard-rewards]').hidden = !upcoming;
-        if (!upcoming) return;
-
-        const xp = upcoming.xp + (courseAward ? Number(dashboard.dataset.courseBonus) : 0);
-        find('[data-dashboard-mission-xp]').textContent = `+${format.format(xp)} XP`;
-        const medals = [firstAward && 'เหรียญบทเรียนแรก', courseAward && 'เหรียญจบคอร์ส'].filter(Boolean);
-        const badge = find('[data-dashboard-mission-badge]');
-        badge.hidden = medals.length === 0;
-        badge.querySelector('strong').textContent = medals.join(' · ');
     }
 
     if (preview) dashboard.dataset.status = 'loading';
@@ -109,6 +86,8 @@
         find('[data-dashboard-overview]').hidden = !returning;
         find('[data-dashboard-stats]').hidden = !returning;
         find('[data-dashboard-actions]').hidden = !returning;
+        mission.hidden = missionTrigger.hidden = !returning || !state.activity;
+        if (mission.hidden && missionDialog.open) missionDialog.close();
         startLink.hidden = returning;
 
         if (!returning) {
@@ -117,14 +96,14 @@
         }
 
         const completed = course.completedLessons.length;
-        const upcoming = !course.isComplete && (course.lessons.find(lesson => lesson.id === course.lastLessonId)
+        const upcoming = !course.hasFinishedLessons && (course.lessons.find(lesson => lesson.id === course.lastLessonId)
             ?? course.lessons.find(lesson => lesson.id === course.currentIslandId));
-        find('[data-dashboard-course-label]').textContent = course.isComplete ? 'คอร์สที่เรียนจบแล้ว'
-            : completed ? 'คอร์สที่กำลังเรียน' : 'คอร์สที่เลือกไว้';
         find('[data-dashboard-preview]').hidden = !preview;
         courseLink.href = '/Learning/Island?' + new URLSearchParams({ courseId: course.courseId });
-        resumeLink.href = '/Learning/Island?' + new URLSearchParams({ courseId: course.courseId, resume: 'true' });
-        find('[data-dashboard-resume-label]').textContent = course.isComplete ? 'ทบทวนบทเรียน' : 'เรียนต่อ';
+        resumeLink.href = course.finalQuizReady ? '/Learning/FinalQuiz?' + new URLSearchParams({ courseId: course.courseId })
+            : '/Learning/Island?' + new URLSearchParams({ courseId: course.courseId, resume: 'true' });
+        find('[data-dashboard-resume-label]').textContent = course.isComplete ? 'ทบทวนบทเรียน'
+            : course.finalQuizReady ? 'ทำแบบทดสอบท้ายคอร์ส' : 'เรียนต่อ';
         courseLink.textContent = course.title;
         find('[data-dashboard-ring]').style.setProperty('--hd-progress', course.progress + '%');
         find('[data-dashboard-percent]').textContent = format.format(course.progress) + '%';
@@ -133,11 +112,9 @@
         next.hidden = !upcoming;
         find('[data-dashboard-next-label]').textContent = completed ? 'บทถัดไป' : 'บทแรก';
         find('[data-dashboard-next-title]').textContent = upcoming?.title ?? '';
-        find('[data-dashboard-stat="complete"]').textContent = format.format(started.filter(item => item.isComplete).length);
+        find('[data-dashboard-stat="complete"]').textContent = format.format(state.completedCourseCount);
         find('[data-dashboard-stat="xp"]').textContent = format.format(state.xp);
         find('[data-dashboard-streak]').hidden = !state.activity;
-        renderMission(course, upcoming, state.achievements);
-        dailyGoals.hidden = !state.activity;
         if (state.activity) {
             find('[data-dashboard-stat="streak"]').textContent = format.format(state.activity.streakDays);
             renderGoals(state.activity);

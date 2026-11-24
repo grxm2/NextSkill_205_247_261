@@ -13,9 +13,10 @@ body .ns-navbar.sj-header:before{content:none}
 body .ns-navbar.sj-header:after{content:none}
 .ns-navbar *{box-sizing:border-box}
 .ns-navbar__inner{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:minmax(calc(var(--nav-bar-size) - 2px), auto);align-items:center;column-gap:12px;width:100%;margin:0;padding-inline:12px}
-.ns-navbar__brand{position:relative;display:flex;align-items:center;justify-self:start;gap:6px;min-width:0;min-height:44px;color:#063e60;text-decoration:none}
-/* An optical vector wordmark carries the brand independently of UI text. */
-.ns-navbar__brand>img{display:block;width:44px;height:44px;object-fit:cover;object-position:left center;flex:none;filter:none}
+.ns-navbar__brand{position:relative;display:flex;align-items:center;justify-self:start;width:min(100%,144px);min-height:44px;color:#063e60;text-decoration:none;border-radius:12px}
+.ns-navbar__logo{position:relative;display:block;width:100%;aspect-ratio:3.45;overflow:hidden}
+/* Trim the transparent margin while keeping the complete artwork. */
+.ns-navbar__logo>img{position:absolute;display:block;top:50%;left:50%;width:128%;max-width:none;height:auto;transform:translate(-50%,-45.2%);filter:url(#ns-navbar-logo-outline) saturate(.66) contrast(.92);opacity:.93}
 .ns-navbar__wordmark{--wordmark-next:#194d6c;--wordmark-skill:#147b9b;display:block;flex:none;width:clamp(92px, 26vw, 126px);text-shadow:none;filter:none}
 .ns-wordmark-art{display:block;width:100%;height:auto;overflow:visible}
 .ns-wordmark-next{fill:var(--wordmark-next)}
@@ -56,7 +57,6 @@ html[data-theme="dark"] .ns-navbar__wordmark{--wordmark-next:#d3e7f0;--wordmark-
 .ns-navbar__wave path{fill:none;stroke:url(#ns-ocean-edge);stroke-width:1.6;stroke-opacity:.8;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 2.5px rgba(139,219,235,.35))}
 
 /* Keep the controls readable over the glass on both layouts. */
-.ns-navbar__brand>img{background:transparent;border:0;border-radius:0;padding:0}
 .ns-navbar__brand>small{color:#164e69;border-color:rgba(7,84,127,.28);opacity:1}
 .ns-navbar .ns-navbar__link{color:#083e5b}
 .ns-navbar .ns-navbar__link:hover{color:#063551;background:rgba(255,255,255,.36)}
@@ -107,7 +107,7 @@ html[data-theme="dark"] .ns-navbar__wordmark{--wordmark-next:#d3e7f0;--wordmark-
  :root{--nav-bar-size:84px;--nav-top:calc(16px + env(safe-area-inset-top));--nav-sticky-inset:var(--nav-h)}
  body .ns-navbar.sj-header{position:sticky;top:var(--nav-top);border-radius:32px}
  .ns-navbar__inner{grid-template-columns:auto minmax(0,1fr);column-gap:24px;padding-inline:clamp(20px,2.25vw,32px)}
- .ns-navbar__brand>img{width:54px;height:54px}
+ .ns-navbar__brand{width:clamp(156px,12.5vw,176px)}
  .ns-navbar__wordmark{width:126px}
  .ns-navbar__toggle:not([hidden]){display:none}
  .ns-navbar__panel{grid-column:2;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:24px;border:0;padding:0}

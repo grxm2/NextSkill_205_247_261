@@ -1,0 +1,50 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace NextSkill_205_247_261.Models;
+
+public class LoginForm
+{
+    [StringLength(2048)]
+    public string? ReturnUrl { get; set; }
+    [Required, EmailAddress, StringLength(254)]
+    public string Email { get; set; } = "";
+    [Required, StringLength(128), DataType(DataType.Password)]
+    public string Password { get; set; } = "";
+    public bool RememberMe { get; set; }
+}
+
+public class RegisterForm
+{
+    [StringLength(2048)]
+    public string? ReturnUrl { get; set; }
+    [Required, StringLength(100, MinimumLength = 2)]
+    [RegularExpression(@".*\S.*", ErrorMessage = "Please enter your full name.")]
+    [Display(Name = "Full name")]
+    public string FullName { get; set; } = "";
+    [Required, EmailAddress, StringLength(254)]
+    public string Email { get; set; } = "";
+    [Required, StringLength(128, MinimumLength = 8), DataType(DataType.Password)]
+    public string Password { get; set; } = "";
+    [Required, Compare(nameof(Password), ErrorMessage = "Passwords do not match.")]
+    [DataType(DataType.Password), Display(Name = "Confirm password")]
+    public string ConfirmPassword { get; set; } = "";
+    [Range(typeof(bool), "true", "true", ErrorMessage = "Please accept the Terms of Use and Privacy Policy.")]
+    public bool AcceptTerms { get; set; }
+    [StringLength(128)]
+    public string? InvitationCode { get; set; }
+}
+
+public sealed class ProfileEditForm
+{
+    [Required(ErrorMessage = "กรุณากรอกชื่อที่แสดง")]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "ชื่อที่แสดงต้องมี 2–100 ตัวอักษร")]
+    public string FullName { get; set; } = "";
+
+    [Required(ErrorMessage = "กรุณากรอกอีเมล")]
+    [EmailAddress(ErrorMessage = "กรุณากรอกอีเมลให้ถูกต้อง")]
+    [StringLength(254, ErrorMessage = "อีเมลต้องยาวไม่เกิน 254 ตัวอักษร")]
+    public string Email { get; set; } = "";
+
+    [StringLength(128, ErrorMessage = "รหัสผ่านต้องยาวไม่เกิน 128 ตัวอักษร")]
+    public string? CurrentPassword { get; set; }
+}

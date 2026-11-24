@@ -1,0 +1,45 @@
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment OceanLifeEnvironment
+<template id="ocean-fish-reef">
+    <svg class="ocean-life-fish" viewBox="0 0 28 16" focusable="false">
+        <g data-fish-tail><path d="M9 7 2 2l2 6-2 6 7-5Z" fill="#b98235"/><path d="M3 4 5 8l-2 4" stroke="#f6d18a" stroke-width=".7" fill="none"/></g>
+        <path d="M9 5 13 1l5 4M11 11l4 4 4-4" fill="#d99d47"/>
+        <path d="M6 8C9 1 20 0 25 4c2 1 3 3 3 4-2 5-8 7-13 6-4 0-7-2-9-6Z" fill="#e8b65e"/>
+        <path d="M9 9c5 3 12 3 17-1-3 5-12 7-17 1Z" fill="#fff0c7" opacity=".8"/>
+        <path d="M14 3q-2 5 0 10M20 3q-2 5 0 9" stroke="#ba8844" stroke-width="1.1" opacity=".65" fill="none"/>
+        <path data-fish-fin d="m17 8-4 3 5 1Z" fill="#bf873c"/>
+        <circle cx="23.5" cy="6.5" r="1" fill="#244e60"/><circle cx="23.8" cy="6.2" r=".28" fill="#fff"/>
+    </svg>
+</template>
+<template id="ocean-fish-silver">
+    <svg class="ocean-life-fish" viewBox="0 0 28 16" focusable="false">
+        <g data-fish-tail><path d="M8 7 0 2l3 6-3 6 8-5Z" fill="#397e99"/><path d="M2 4 5 8 2 12" stroke="#b7e8eb" stroke-width=".7" fill="none"/></g>
+        <path d="M10 7 8 1l9 5M11 9l-2 6 9-5" fill="#78bbca"/>
+        <path d="M5 8c5-5 16-6 23 0-6 5-18 6-23 0Z" fill="#90cbd4"/>
+        <path d="M7 9c6 2 14 2 19-1-4 4-13 5-19 1Z" fill="#e5f8f1" opacity=".9"/>
+        <path d="M9 7c5-2 11-2 16 0" stroke="#4b95aa" stroke-width=".7" fill="none"/>
+        <path data-fish-fin d="m16 8-5 3 6 1Z" fill="#559aaf"/>
+        <circle cx="23.5" cy="6.8" r=".9" fill="#214d61"/><circle cx="23.7" cy="6.5" r=".25" fill="#fff"/>
+    </svg>
+</template>
+<div class="ocean-life" data-ocean-life data-development="@((OceanLifeEnvironment.EnvironmentName == "Development").ToString().ToLowerInvariant())" aria-hidden="true">
+    <div class="ocean-life-airspace" data-ocean-airspace>
+        <svg class="ocean-life-fish" data-ocean-fish viewBox="0 0 28 16" width="34" height="20" focusable="false">
+            <defs><linearGradient id="ocean-fish-skin" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#1683a4" /><stop offset=".5" stop-color="#5ac3cf" /><stop offset="1" stop-color="#dbf5e9" /></linearGradient></defs>
+            <g data-fish-tail><path d="M9 7 1 2l2 6-2 6 8-5" fill="#258ba5" /><path d="m3 4 2 4-2 4" fill="none" stroke="#76d9d7" stroke-width=".6" /></g>
+            <path d="m11 5 4-4 5 5m-7 5 4 4 4-4" fill="#48aabb" />
+            <path d="M6 8C11 0 23 1 28 8c-5 7-17 8-22 0Z" fill="url(#ocean-fish-skin)" />
+            <path d="M9 9c5 3 12 3 17-1-4 5-13 6-17 1Z" fill="#dcf6e9" opacity=".7" />
+            <path data-fish-fin d="m17 8-4 3 5 1Z" fill="#1f8fa8" />
+            <path d="M20 5q-3 3 0 6" stroke="#238da5" fill="none" stroke-width=".65" />
+            <circle cx="23.5" cy="6.7" r="1" fill="#174b61" /><circle cx="23.8" cy="6.4" r=".28" fill="#eafff5" />
+        </svg>
+    </div>
+    <div class="ocean-life-effects">
+        <img class="ocean-life-splash" data-ocean-splash src="~/images/journey/ocean-splash.svg" width="34" height="22" alt="" draggable="false" />
+        <img class="ocean-life-splash" data-ocean-entry-splash src="~/images/journey/ocean-splash.svg" width="34" height="22" alt="" draggable="false" />
+    </div>
+    <div class="ocean-life-effects">
+        <img class="ocean-life-ripple" data-ocean-ripple src="~/images/journey/ocean-ripple.svg" width="62" height="22" alt="" draggable="false" />
+        <img class="ocean-life-ripple" data-ocean-entry-ripple src="~/images/journey/ocean-ripple.svg" width="62" height="22" alt="" draggable="false" />
+    </div>
+</div>

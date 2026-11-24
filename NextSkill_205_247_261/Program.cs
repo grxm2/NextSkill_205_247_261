@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using NextSkill_205_247_261.Services;
+using System.Globalization;
 using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,10 +38,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
             var isApi = request.Path.StartsWithSegments("/Learning")
                 && !request.Path.StartsWithSegments("/Learning/Island")
                 && !request.Path.StartsWithSegments("/Learning/Practice")
+                && !request.Path.StartsWithSegments("/Learning/FinalQuiz")
                 && !request.Path.StartsWithSegments("/Learning/Entry");
             if (!isApi)
             {
-                context.Response.Redirect(context.RedirectUri);
+                var adminOnly = context.HttpContext.GetEndpoint()?.Metadata.GetOrderedMetadata<IAuthorizeData>()
+                    .Any(data => data.Roles == "Admin") == true;
+                var url = adminOnly
+                    ? QueryHelpers.AddQueryString($"{request.PathBase}/Account/AdminLogin", "returnUrl",
+                        $"{request.PathBase}{request.Path}{request.QueryString}")
+                    : context.RedirectUri;
+                context.Response.Redirect(url);
                 return Task.CompletedTask;
             }
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -50,6 +60,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         };
     });
 builder.Services.AddAuthorization();
+var authenticationWindow = TimeSpan.FromMinutes(1);
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -57,15 +68,36 @@ builder.Services.AddRateLimiter(options =>
         context.Connection.RemoteIpAddress?.ToString() ?? "local",
         _ => new FixedWindowRateLimiterOptions
         {
-            PermitLimit = 20, Window = TimeSpan.FromMinutes(1), QueueLimit = 08
+            PermitLimit = 20, Window = authenticationWindow, QueueLimit = 8
         }));
     options.OnRejected = async (context, token) =>
     {
-        context.HttpContext.Response.Headers.RetryAfter = "60";
-        await context.HttpContext.Response.WriteAsync("Too many attempts. Please try again in one minute.", token);
+        var wait = context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter)
+            ? retryAfter : authenticationWindow;
+        var response = context.HttpContext.Response;
+        response.Headers.RetryAfter = Math.Ceiling(wait.TotalSeconds).ToString(CultureInfo.InvariantCulture);
+        response.ContentType = "text/plain; charset=utf-8";
+        await response.WriteAsync("มีการส่งคำขอตรวจสอบบัญชีมากเกินไป กรุณารอสักครู่แล้วลองใหม่", token);
     };
 });
 var app = builder.Build();
+AdminContentStore.Configure(app.Environment.ContentRootPath);
+app.Use((context, next) =>
+{
+    context.Response.OnStarting(() =>
+    {
+        var headers = context.Response.Headers;
+        headers.ContentSecurityPolicy =
+            "base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; " +
+            "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com";
+        headers.XContentTypeOptions = "nosniff";
+        headers.XFrameOptions = "DENY";
+        headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
+        return Task.CompletedTask;
+    });
+    return next(context);
+});
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

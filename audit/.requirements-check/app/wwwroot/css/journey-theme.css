@@ -1,0 +1,137 @@
+/* Day/night is scoped to the shared Home and learning layout. */
+html[data-theme="light"]{color-scheme:light}
+html[data-theme="dark"]{color-scheme:dark}
+.journey-theme-toggle{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;padding:10px;border:1px solid #07547f60;border-radius:50%;background:#ffffff40;color:#124d6b;cursor:pointer}
+.journey-theme-toggle[hidden]{display:none}
+.journey-theme-toggle svg{grid-area:1/1;width:21px;height:21px}
+.theme-icon-sun{display:none}
+html[data-theme="dark"] .theme-icon-sun{display:block}
+html[data-theme="dark"] .theme-icon-moon{display:none}
+@media(hover:hover) and (pointer:fine){.journey-theme-toggle:hover{background:#ffffff70}}
+
+/* The setting and rising lights retarget from their current position on a repeated click. */
+.journey-moon{position:absolute;left:82%;top:25%;width:clamp(44px,4.5vw,70px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 33% 30%,#fffef7,#e8f2fc 58%,#b9cde3);box-shadow:0 0 32px 12px #e4f2ff50,0 0 115px 50px #b5d9ff20;transform:translate3d(-50%,75vh,0);opacity:0;pointer-events:none}
+.journey-moon span{position:absolute;border-radius:50%;background:#a9bdd3;opacity:.3;box-shadow:inset 2px 2px 3px #809bb855}
+.journey-moon span:nth-child(1){left:23%;top:23%;width:23%;height:23%}
+.journey-moon span:nth-child(2){right:18%;bottom:22%;width:29%;height:29%}
+.journey-moon span:nth-child(3){left:22%;bottom:23%;width:12%;height:12%}
+.journey-sun{opacity:1}
+html[data-theme="dark"] .journey-sun{transform:translate3d(-50%,75vh,0);opacity:0}
+html[data-theme="dark"] .journey-moon{transform:translate3d(-50%,-50%,0);opacity:1}
+.journey-orbit-source > :is(.journey-sun,.journey-moon){visibility:hidden}
+.journey-orbit-layer{position:fixed;inset:0;z-index:2;overflow:clip;pointer-events:none}
+.ns-login-page .journey-orbit-layer{z-index:0}
+.journey-orbit-body{position:absolute;top:0;left:0;opacity:0;pointer-events:none}
+.journey-night-sky{position:absolute;inset:0;background:radial-gradient(ellipse 42% 50% at var(--journey-moon-x,82%) var(--journey-moon-y,25%),#b6d4f724,transparent 75%),linear-gradient(#071426,#142f4b 52%,#234b63 70%,#173e58);opacity:0;pointer-events:none}
+.journey-stars{position:absolute;inset:0;opacity:0;pointer-events:none;background:radial-gradient(circle at 9% 13%,#eaf5ff 0 1px,transparent 1.8px),radial-gradient(circle at 22% 8%,#eaf5ff 0 1px,transparent 1.8px),radial-gradient(circle at 42% 18%,#d0e5f9 0 1.3px,transparent 2px),radial-gradient(circle at 57% 10%,#eaf5ff 0 1px,transparent 1.8px),radial-gradient(circle at 70% 32%,#eaf5ff 0 1px,transparent 1.8px),radial-gradient(circle at 93% 17%,#d0e5f9 0 1.4px,transparent 2px),radial-gradient(circle at 34% 34%,#eaf5ff 0 1px,transparent 1.8px)}
+html[data-theme="dark"] :is(.journey-night-sky,.journey-stars){opacity:1}
+.ocean-home .ow-sea:after{content:'';position:absolute;inset:0;background:linear-gradient(#0c2c4cc9,#09283edb);opacity:0;pointer-events:none}
+html[data-theme="dark"] .ocean-home .ow-sea:after{opacity:1}
+.theme-transitioning :is(.journey-night-sky,.journey-stars),.theme-transitioning .ow-sea:after{transition:opacity 1300ms ease}
+/* Extend the same night fade into the sky strip behind the floating navbar. */
+.ocean-home .ow-stage:after{content:'';position:absolute;top:calc(-1 * var(--nav-h));left:0;right:0;height:var(--nav-h);background:#071426;opacity:0;pointer-events:none}
+html[data-theme="dark"] .ocean-home .ow-stage:after{opacity:1}
+.theme-transitioning .ocean-home .ow-stage:after{transition:opacity 1300ms ease}
+.theme-transitioning .ns-navbar.sj-header:before,.theme-transitioning .ns-navbar.sj-header:after{transition:background-color 1300ms ease,opacity 1300ms ease}
+html[data-theme] .ocean-home .hero-water-glints{left:var(--journey-light-x,82%)}
+html[data-theme] .ocean-home .ow-sea:before{background:radial-gradient(ellipse 29% 95% at var(--journey-light-x,82%) 0,#fff3c99c,#ffe7bc42 45%,transparent 78%)}
+html[data-theme="dark"] .ocean-home .ow-sea:before{background:radial-gradient(ellipse 35% 95% at var(--journey-light-x,82%) 0,#dcefff99,#b1d6f333 45%,transparent 78%)}
+@media(max-width:700px){html[data-theme] .ocean-home .hero-water-glints{left:var(--journey-light-x,86%)}}
+
+/* Fixed learning scenery is independent of the scroll-driven underwater art. */
+.learning-celestial{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.learning-celestial .hero-sun{position:absolute;left:88%;top:20%;width:54px;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:#fff9dc;box-shadow:0 0 32px 14px #fff0b2b0,0 0 90px 40px #ffe3a350}
+.learning-celestial .journey-moon{left:88%;top:20%;width:54px}
+body[data-journey-mode="learn"] .sj-learn{position:relative;z-index:1}
+html[data-theme="dark"] .learning-celestial .journey-sun{transform:translate3d(-50%,75vh,0)}
+@media(max-width:700px){
+ .journey-moon{left:86%;top:37%;width:46px}
+ .learning-celestial :is(.hero-sun,.journey-moon){left:90%;top:17%;width:34px}
+}
+
+html[data-theme="dark"] body.smart-journey{
+ --ns-ink:#e7f3fb;--ns-muted:#b4cadb;--ns-canvas:#0b2035;--ns-surface:#152f46;--ns-border:#3c5b73;
+ --ns-primary:#126b92;--ns-primary-hover:#a8e2ff;--ns-shadow:0 12px 32px #020d1b45;
+ --ns-success:#a0e5cd;--ns-success-surface:#153f3b;--ns-warning:#f4d298;--ns-warning-surface:#493b22;--ns-danger:#ffb5bd;--ns-danger-surface:#472b3b;
+ --ink:var(--ns-ink);--muted:var(--ns-muted);--canvas:var(--ns-canvas);--paper:var(--ns-surface);--line:var(--ns-border);--journey-ink:var(--ns-muted);
+ background:#0b2035;color:var(--ns-ink);
+}
+html[data-theme="dark"] body[data-journey-mode="learn"]{background:linear-gradient(#0c2037,#143e54);background-attachment:fixed}
+html[data-theme="dark"] .ocean-home{background:#0b2035}
+html[data-theme="dark"] .smart-journey .ocean-home .ow-intro h1{color:#f0f7ff}
+html[data-theme="dark"] .smart-journey .ocean-home .ow-intro h1 em{color:#a8e2ff}
+html[data-theme="dark"] .smart-journey .ocean-home .ow-intro>p{color:#c8dcea}
+html[data-theme="dark"] :is(.ow-swell,.ow-clouds,.ow-distance,.ocean-backdrop){filter:brightness(.64) saturate(.7)}
+html[data-theme="dark"] .ow-start-land .ow-island-art{filter:brightness(.75) saturate(.65) drop-shadow(0 0 16px #d4ebff18)}
+html[data-theme="dark"] .hero-water-glints span{background:#e5f3ff;box-shadow:0 0 9px 2px #c9e7ff75}
+html[data-theme="dark"] .ocean-home .ow-sea:before{background:radial-gradient(ellipse 35% 95% at var(--journey-light-x,82%) 0,#dcefff99,#b1d6f333 45%,transparent 78%)}
+html[data-theme="dark"] .ow-sun-path{background:linear-gradient(#e6f4ff88,transparent)}
+
+/* Moonlight in the glass, under readable navigation content. */
+html[data-theme="dark"] .ns-navbar :is(.ns-navbar__link,.ns-navbar__login.glass,.ns-navbar__toggle,.ns-navbar__avatar,.ns-navbar__brand>small,.journey-theme-toggle){color:#e2f1ff;border-color:#c4e0f55c}
+html[data-theme="dark"] .ns-navbar .ns-navbar__brand{color:#e2f1ff!important}
+html[data-theme="dark"] .ns-navbar .ns-navbar__link[aria-current="page"]{background:#dcefff;color:#123d59}
+html[data-theme="dark"] .ns-navbar .ns-navbar__dropdown{background-color:#16344d}
+html[data-theme="dark"] .ns-navbar{--ns-liquid-open-bg:#16344d}
+html[data-theme="dark"] .ns-navbar .ns-navbar__dropdown :is(a,button){color:#e2f1ff}
+html[data-theme="dark"] .ns-navbar .ns-navbar__dropdown :is(a,button):hover{background:#254a64}
+html[data-theme="dark"] .journey-theme-toggle{background:#d1e9ff12}
+
+/* Map, dialogs and learning surfaces retain their hierarchy at night. */
+html[data-theme="dark"] .smart-journey :is(.ow-harbor-board,.smart-dialog,.island-detail,.island-detail-dialog,.sj-course-card,.sj-reading-section,.sj-quiz-choice,.lesson-feedback-item,.agent-menu){background:#152f46;border-color:#3c5b73;color:#e7f3fb}
+html[data-theme="dark"] .smart-journey .learning-sidebar :is(.sj-current-island.glass,.sj-learning-summary){background:#152f46f2;border-color:#59768d80;color:#e7f3fb}
+html[data-theme="dark"] .smart-journey .learning-sidebar .glass:before{background:radial-gradient(ellipse at 0 0,#d8edff14,transparent 58%)}
+html[data-theme="dark"] .smart-journey :is(.learning-heading h1,.sj-learning-map-heading h2,.sj-current-copy h2,.island-detail h2,.sj-course-card h3,.sj-quiz-question legend,.sj-reading-section h3,.sj-learning-summary strong){color:#e7f3fb}
+html[data-theme="dark"] .smart-journey :is(.sj-eyebrow,.learning-heading .sj-eyebrow,.sj-current-copy>.sj-eyebrow,.sj-current-description,.sj-current-meta,.sj-course-label,.sj-course-description,.sj-course-small-meta,.sj-learning-summary>p,.sj-learning-summary>div>span:last-child,.sj-learn-top,.sj-saved,.island-detail p,.smart-dialog p,.sj-reading-section p,.sj-field-title,.sj-picker-footer,.ow-harbor-board>p){color:#b4cadb}
+html[data-theme="dark"] .smart-journey .sj-text-link{color:#a8e2ff!important;text-shadow:none}
+html[data-theme="dark"] .smart-journey .learning-workspace #lesson-map h2{color:#e7f3fb}
+html[data-theme="dark"] .smart-journey :is(.sj-learn-top a,.sj-picker-footer button,#course-progress-caption,#course-progress-value){color:#b8d8ec}
+html[data-theme="dark"] .smart-journey :is(.sj-course-filters input,.sj-course-filters select,.ns-field input,.ns-field select){background:#0e253a;color:#e7f3fb;border-color:#59768d}
+html[data-theme="dark"] .smart-journey :is(.sj-course-action,.sj-reading-example,.lesson-nimo-message,.sj-question-feedback,.sj-dialog-close,.ns-button--secondary,.sj-secondary,.sj-course-label>span:last-child){background:#23465f;color:#dbf0ff;border-color:#55778f}
+html[data-theme="dark"] .smart-journey :is(.ns-status,.ns-badge){background:#23465f;color:#e7f3fb;border-color:#55778f}
+html[data-theme="dark"] .smart-journey :is(.sj-course-action:disabled,.ns-button:disabled){background:#283e50;color:#b8c8d3;border-color:#526c80}
+html[data-theme="dark"] .smart-journey .sj-quiz-choice:has(input:checked){background:#28536c;color:#f2f9ff;border-color:#9edfff}
+html[data-theme="dark"] .smart-journey :is(.sj-picker-current,.sj-lesson-result,.ns-status--success,.sj-course-tag){background:#153f3b;color:#a0e5cd;border-color:#4e8d7b}
+html[data-theme="dark"] .smart-journey :is(.sj-lesson-result h3,.sj-lesson-result p,.sj-lesson-reward){color:#a0e5cd}
+html[data-theme="dark"] .smart-journey :is(.sj-error,.ns-status--error){background:#472b3b;color:#ffbdc4;border-color:#a36c7d}
+html[data-theme="dark"] .smart-journey :is(.submission-recovery,.lesson-feedback-item[data-correct=false],.sj-lesson-result[data-passed=false],.ns-learning-status,.ns-badge--upcoming){background:#493b22;color:#f4d298;border-color:#8d7655}
+html[data-theme="dark"] .smart-journey .sj-lesson-result[data-passed=false] :is(h3,p){color:#f4d298}
+html[data-theme="dark"] .smart-journey .sj-quiz-question[data-correct=true] :is(.sj-question-feedback,.sj-quiz-choice:has(input:checked)){background:#153f3b;color:#a0e5cd}
+html[data-theme="dark"] .smart-journey .sj-quiz-question[data-correct=false] :is(.sj-question-feedback,.sj-quiz-choice:has(input:checked)){background:#493b22;color:#f4d298}
+html[data-theme="dark"] .smart-journey .sj-footer{background:#0b2035;color:#c5dcea;border-color:#3c5b73}
+html[data-theme="dark"] .smart-journey .sj-footer :is(a,button){color:#c5dcea}
+html[data-theme="dark"] .smart-journey .sj-footer-brand span{color:#b4cadb}
+html[data-theme="dark"] .smart-journey :is(button,a,input,select,summary):focus-visible{outline-color:#b5e7ff}
+@media(hover:hover) and (pointer:fine){
+ html[data-theme="dark"] .smart-journey .ns-button--primary:hover{background:#0c587d;color:#fff;border-color:#7ab8d4}
+ html[data-theme="dark"] .smart-journey :is(.ns-button--secondary,.sj-course-action):hover{background:#315b73;color:#f2f9ff}
+}
+
+/* White moonlight washes the surface art, while underwater scenery stays deep. */
+html[data-theme="dark"] .island-water-motion{background:#09283e}
+.island-water-motion:after{content:'';position:absolute;inset:0;z-index:4;pointer-events:none;background:radial-gradient(ellipse 35% 45% at var(--journey-moon-x,88%) var(--journey-moon-y,20%),#c5e3ff12,transparent 75%),linear-gradient(#071a2ed9,#071e31c9);opacity:0}
+html[data-theme="dark"] .island-water-motion:after{opacity:1}
+.theme-transitioning .island-water-motion:after{transition:opacity 1300ms ease}
+html[data-theme="dark"] .smart-journey .learning-workspace #lesson-route .sj-lesson-island h3,
+html[data-theme="dark"] .smart-journey .learning-workspace #lesson-route .sj-lesson-island:not(.is-current) .sj-island-status{background:#15354bed;color:#e7f3fb}
+html[data-theme="dark"] .smart-journey .learning-workspace #lesson-route .sj-island-index{background:#193e58;color:#e7f3fb;border-color:#6f93aa}
+html[data-theme="dark"] .smart-journey .learning-workspace #lesson-route .is-current .sj-island-index{background:#126b92;color:#fff}
+html[data-theme="dark"] #nextskill-home.smart-journey #buddy-agent-menu button{background:#23465f;color:#dbf0ff}
+html[data-theme="dark"] .smart-journey .agent-menu-hint{color:#b4cadb}
+html[data-theme="dark"] #nextskill-home.smart-journey .home-dialog.companion-dialog{background:#152f46;color:#e7f3fb;border-color:#3c5b73}
+html[data-theme="dark"] #nextskill-home.smart-journey .companion-stage{background:#0e253a}
+
+@media(prefers-reduced-motion:reduce){
+ .theme-transitioning :is(.journey-sun,.journey-moon,.journey-night-sky,.journey-stars),.theme-transitioning .ow-sea:after,.theme-transitioning .ocean-home .ow-stage:after{transition:none}
+}
+@media(prefers-reduced-transparency:reduce){
+ html[data-theme="dark"] .smart-journey .learning-sidebar .sj-current-island.glass{background:#152f46}
+}
+
+/* Each body carries its own reflection as it crosses the horizon. */
+html[data-theme="light"] .ow-scene{--journey-sun-alpha:1;--journey-moon-alpha:0}
+html[data-theme="dark"] .ow-scene{--journey-sun-alpha:0;--journey-moon-alpha:1}
+html[data-theme] .ocean-home .ow-sea:before{
+ background:radial-gradient(ellipse 23% 95% at var(--journey-sun-x,82%) 0,rgb(255 239 185 / calc(var(--journey-sun-alpha) * .65)),transparent 78%),radial-gradient(ellipse 23% 95% at var(--journey-moon-x,82%) 0,rgb(220 239 255 / calc(var(--journey-moon-alpha) * .6)),transparent 78%);
+}
+.theme-transitioning .hero-water-glints{opacity:0}

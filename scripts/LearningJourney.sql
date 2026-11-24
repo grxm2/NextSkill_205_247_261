@@ -1,7 +1,6 @@
 -- Additive learning schema. Run against the existing NextSkill account database.
 SET XACT_ABORT ON;
 BEGIN TRANSACTION;
-SET XACT_ABORT ON;
 DECLARE @schemaLock int;
 EXEC @schemaLock = sys.sp_getapplock @Resource=N'NextSkill.LearningSchema.v1',
     @LockMode=N'Exclusive', @LockOwner=N'Transaction', @LockTimeout=10000;
@@ -89,4 +88,47 @@ BEGIN
             REFERENCES dbo.LearningProfiles(AccountId,AccountRole)
     );
 END;
+IF OBJECT_ID(N'dbo.LearningCertificates', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.LearningCertificates (
+        AccountId uniqueidentifier NOT NULL,
+        CourseId int NOT NULL,
+        ReferenceCode uniqueidentifier NOT NULL,
+        LearnerName nvarchar(100) NOT NULL,
+        CourseTitle nvarchar(max) NOT NULL,
+        EarnedAt datetime2 NOT NULL,
+        IssuedAt datetime2 NOT NULL CONSTRAINT DF_LearningCertificate_Issued DEFAULT SYSUTCDATETIME(),
+        IsLegacySnapshot bit NOT NULL,
+        CONSTRAINT PK_LearningCertificates PRIMARY KEY (AccountId, CourseId),
+        CONSTRAINT UQ_LearningCertificates_Reference UNIQUE (ReferenceCode),
+        CONSTRAINT CK_LearningCertificates_Course CHECK (CourseId > 0)
+    );
+END;
+IF OBJECT_ID(N'dbo.NextSkillLearningSchema', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.NextSkillLearningSchema (
+        Version int NOT NULL CONSTRAINT PK_NextSkillLearningSchema PRIMARY KEY,
+        AppliedAt datetime2 NOT NULL CONSTRAINT DF_NextSkillLearningSchema_Applied DEFAULT SYSUTCDATETIME()
+    );
+END;
+IF OBJECT_ID(N'dbo.LearningCourseFinalResults', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.LearningCourseFinalResults (
+        AccountId uniqueidentifier NOT NULL,
+        AccountRole varchar(10) NOT NULL,
+        CourseId int NOT NULL,
+        Attempts int NOT NULL,
+        Score int NOT NULL,
+        QuestionCount int NOT NULL,
+        LastAttemptAt datetime2 NOT NULL CONSTRAINT DF_LearningCourseFinal_Attempt DEFAULT SYSUTCDATETIME(),
+        PassedAt datetime2 NULL,
+        AwardedXp int NOT NULL,
+        CONSTRAINT PK_LearningCourseFinal PRIMARY KEY (AccountId, AccountRole, CourseId),
+        CONSTRAINT FK_LearningCourseFinal_Course FOREIGN KEY (AccountId, AccountRole, CourseId)
+            REFERENCES dbo.LearningCourseProgress(AccountId, AccountRole, CourseId),
+        CONSTRAINT CK_LearningCourseFinal_Result CHECK (Attempts > 0 AND Score >= 0 AND Score <= QuestionCount AND AwardedXp >= 0)
+    );
+END;
+IF NOT EXISTS (SELECT 1 FROM dbo.NextSkillLearningSchema WHERE Version=3)
+    INSERT INTO dbo.NextSkillLearningSchema (Version) VALUES (3);
 COMMIT TRANSACTION;
