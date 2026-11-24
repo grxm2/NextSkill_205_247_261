@@ -1,0 +1,171 @@
+/* One shared liquid-glass treatment for every site footer, regardless of layout. */
+:is(.ns-site-footer, .sj-footer, #nextskill-home footer) {
+    position: relative;
+    isolation: isolate;
+    background:
+        linear-gradient(115deg, rgba(255, 255, 255, .46), rgba(255, 255, 255, .16) 52%, rgba(255, 255, 255, .34)),
+        rgba(112, 205, 222, .34);
+    border-top: 1px solid rgba(255, 255, 255, .78);
+    box-shadow: 0 -12px 32px rgba(12, 86, 112, .10), inset 0 1px 0 rgba(255, 255, 255, .68);
+    -webkit-backdrop-filter: blur(22px) saturate(1.55);
+    backdrop-filter: blur(22px) saturate(1.55);
+}
+
+/* Subtle reflective bubbles sit above the footer background and behind its content. */
+:is(.ns-site-footer, .sj-footer, #nextskill-home footer) {
+    position: relative;
+    isolation: isolate;
+}
+
+:is(.ns-site-footer, .sj-footer, #nextskill-home footer) > :not(.ns-footer-bubbles) {
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+}
+
+:is(.ns-site-footer, .sj-footer, #nextskill-home footer) :is(a, button, input, select, textarea, [role="button"], [tabindex]) {
+    pointer-events: auto;
+}
+
+.ns-footer-bubbles {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.ns-footer-bubble {
+    position: absolute;
+    left: var(--bubble-left);
+    bottom: -24px;
+    width: var(--bubble-size);
+    height: var(--bubble-size);
+    border: 1px solid rgba(255, 255, 255, .72);
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: auto;
+    background:
+        radial-gradient(ellipse at 29% 23%, rgba(255, 255, 255, .95) 0 7%, rgba(255, 255, 255, .45) 16%, transparent 39%),
+        radial-gradient(ellipse at 72% 82%, rgba(5, 65, 92, .23), transparent 49%),
+        linear-gradient(145deg, rgba(255, 255, 255, .30), rgba(160, 226, 242, .10));
+    box-shadow:
+        inset 1px 1px 2px rgba(255, 255, 255, .95),
+        inset -2px -2px 3px rgba(7, 74, 97, .30),
+        0 2px 5px rgba(12, 75, 95, .18);
+    animation: ns-footer-bubble-rise var(--bubble-duration) linear var(--bubble-delay) infinite;
+    will-change: transform, opacity;
+}
+
+.ns-footer-bubble::before {
+    content: "";
+    position: absolute;
+    top: 14%;
+    left: 20%;
+    width: 38%;
+    height: 22%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .95);
+    filter: blur(.5px);
+    transform: rotate(-35deg);
+}
+
+.ns-footer-bubble::after {
+    content: "";
+    position: absolute;
+    right: 16%;
+    bottom: 17%;
+    width: 22%;
+    height: 42%;
+    border-right: 1px solid rgba(255, 255, 255, .78);
+    border-radius: 50%;
+    transform: rotate(28deg);
+}
+
+.ns-footer-bubble.is-popping {
+    animation: ns-footer-bubble-pop 260ms ease-out forwards;
+}
+
+.ns-footer-bubble-fragment {
+    position: absolute;
+    z-index: 1;
+    width: 5px;
+    height: 5px;
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle at 30% 25%, #fff 0 15%, rgba(196, 242, 255, .8) 35%, rgba(94, 185, 218, .28) 70%);
+    box-shadow: 0 0 5px rgba(255, 255, 255, .8), inset 0 0 2px rgba(255, 255, 255, .95);
+    animation: ns-footer-bubble-fragment-burst var(--fragment-duration) ease-out forwards;
+}
+
+@keyframes ns-footer-bubble-rise {
+    0% { transform: translate3d(0, 0, 0) scale(.72); opacity: 0; }
+    24% { opacity: 0; }
+    34% { opacity: var(--bubble-alpha); }
+    78% { opacity: var(--bubble-alpha); }
+    100% { transform: translate3d(var(--bubble-drift), -105px, 0) scale(1.08); opacity: 0; }
+}
+
+@keyframes ns-footer-bubble-pop {
+    0% { transform: scale(1); opacity: var(--bubble-alpha); }
+    45% { transform: scale(1.55); opacity: .8; filter: brightness(1.35); }
+    100% { transform: scale(.08); opacity: 0; filter: brightness(1.7); }
+}
+
+@keyframes ns-footer-bubble-fragment-burst {
+    0% { transform: translate(-50%, -50%) scale(.75); opacity: .95; }
+    100% { transform: translate(calc(-50% + var(--fragment-x)), calc(-50% + var(--fragment-y))) scale(.12); opacity: 0; }
+}
+
+html[data-theme="dark"] .ns-footer-bubble {
+    border-color: rgba(220, 244, 255, .68);
+    background:
+        radial-gradient(ellipse at 29% 23%, rgba(255, 255, 255, .86) 0 7%, rgba(220, 244, 255, .32) 16%, transparent 39%),
+        radial-gradient(ellipse at 72% 82%, rgba(1, 21, 37, .42), transparent 49%),
+        linear-gradient(145deg, rgba(209, 239, 255, .24), rgba(86, 159, 189, .12));
+    box-shadow:
+        inset 1px 1px 2px rgba(255, 255, 255, .84),
+        inset -2px -2px 3px rgba(0, 20, 36, .42),
+        0 2px 6px rgba(0, 12, 25, .34);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ns-footer-bubble {
+        animation: none;
+        opacity: .20;
+        bottom: 8px;
+        transform: none;
+        will-change: auto;
+    }
+
+    .ns-footer-bubble-fragment {
+        animation: none;
+        opacity: 0;
+    }
+}
+
+:is(.ns-site-footer, .sj-footer, #nextskill-home footer)::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 18% 0, rgba(255, 255, 255, .34), transparent 58%);
+}
+
+:is(.ns-site-footer, .sj-footer, #nextskill-home footer) > :not(.ns-footer-bubbles) {
+    position: relative;
+    z-index: 1;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    :is(.ns-site-footer, .sj-footer, #nextskill-home footer) {
+        background: rgba(226, 247, 251, .96);
+    }
+
+    html[data-theme="dark"] :is(.ns-site-footer, .sj-footer, #nextskill-home footer) {
+        background: rgba(17, 47, 68, .97);
+    }
+}
