@@ -5,8 +5,6 @@
     --hd-blue: #0077a7;
     --hd-groove: #225c7952;
     --hd-line: #2e66834d;
-    --hd-fire: #a74624;
-    --hd-star: #8b5500;
     --hd-goal-done: var(--ns-success);
     --hd-button-sheen: linear-gradient(165deg, rgb(255 255 255 / 32%), transparent 58%);
     --hd-hero-halo: 0 2px 12px rgb(255 255 255 / 60%);
@@ -24,8 +22,6 @@ html[data-theme="dark"] .learning-dashboard {
     --hd-blue: #8bdcff;
     --hd-groove: #b6e3ff53;
     --hd-line: #b7d6ed59;
-    --hd-fire: #ffb287;
-    --hd-star: #ffda87;
     --hd-goal-done: #9ee0c8;
     --hd-button-sheen: linear-gradient(165deg, rgb(203 235 255 / 18%), transparent 58%);
     --hd-hero-halo: 0 2px 12px rgb(8 27 45 / 80%);
@@ -114,18 +110,6 @@ html[data-theme="dark"] .learning-dashboard {
     font-weight: 500;
     line-height: 1.4;
 }
-
-.hd-icon {
-    width: 19px;
-    height: 19px;
-    flex: none;
-    background: var(--hd-blue);
-    mask: var(--hd-icon) center / contain no-repeat;
-}
-
-.hd-icon--fire { --hd-icon: url('../icons/fire.svg'); background: var(--hd-fire); }
-.hd-icon--trophy { --hd-icon: url('../icons/trophy.svg'); }
-.hd-icon--star { --hd-icon: url('../icons/star.svg'); background: var(--hd-star); }
 
 .hd-course-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px 8px; }
 
@@ -267,28 +251,9 @@ html[data-theme="dark"] .learning-dashboard {
 }
 
 .hd-stats {
-    display: flex;
-    flex-wrap: wrap;
     justify-content: flex-end;
     justify-self: end;
-    gap: 6px;
-    margin: 0;
 }
-
-.hd-stats dd {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    margin: 0;
-    padding: 4px 9px;
-    border: 1px solid var(--ns-liquid-panel-edge);
-    border-radius: 999px;
-    background: var(--ns-liquid-panel-bg);
-    font-size: 13px;
-}
-
-.hd-stats .hd-icon { width: 15px; height: 15px; }
-.hd-stats dd strong { font-size: 16px; font-weight: 600; line-height: 1.2; font-variant-numeric: tabular-nums; }
 
 .hd-mission:focus-visible { outline: 2px solid var(--hd-blue); outline-offset: 4px; }
 .hd-mission-heading {

@@ -34,12 +34,12 @@
                         aria-haspopup="dialog" aria-controls="course-harbor-dialog">ดูคลังคอร์สทั้งหมด</button>
             </div>
         </div>
-        <dl class="island-progress-strip" aria-label="สถิติการเรียน">
+        <dl class="ns-stat-pills island-progress-strip" aria-label="สถิติการเรียน">
             <div class="island-progress-xp">
                 <dt class="sr-only">XP ในเลเวลปัจจุบัน</dt>
                 <dd>
-                    <span class="icon icon-lightning" aria-hidden="true"></span><span id="island-level-label">เลเวล @Model.State.Level</span>
-                    <span id="island-level-xp">@($"{levelXp}/{LearningState.XpPerLevel} XP")</span>
+                    <span class="ns-stat-icon ns-stat-icon--lightning" aria-hidden="true"></span><span id="island-level-label">เลเวล @Model.State.Level</span>
+                    <strong id="island-level-xp">@($"{levelXp}/{LearningState.XpPerLevel} XP")</strong>
                     <progress class="island-meter" id="island-level-meter" max="@LearningState.XpPerLevel" value="@levelXp"
                               aria-label="XP ถึงเลเวล @(Model.State.Level + 1)" title="ถึงเลเวล @(Model.State.Level + 1)"></progress>
                 </dd>
@@ -48,18 +48,18 @@
             {
                 var completedGoals = activity.Goals.Count(goal => goal.Complete);
                 <div>
-                    <dt class="sr-only">เรียนต่อเนื่อง (วัน)</dt>
-                    <dd title="@($"streak {activity.StreakDays} วัน")">
-                        <span class="icon island-streak-icon" aria-hidden="true"></span><span id="island-streak-days">@activity.StreakDays</span>
+                    <dt class="sr-only">เรียนต่อเนื่อง</dt>
+                    <dd title="@($"เรียนต่อเนื่อง {activity.StreakDays} วัน")">
+                        <span class="ns-stat-icon ns-stat-icon--fire" aria-hidden="true"></span><strong id="island-streak-days">@activity.StreakDays</strong> วัน
                     </dd>
                 </div>
                 <div>
                     <dt class="sr-only">ภารกิจวันนี้</dt>
                     <dd title="@($"ภารกิจวันนี้ {completedGoals}/{LearningDailyGoals.All.Count}")">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <svg class="ns-stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/>
                         </svg>
-                        <span id="island-goals-total">@($"{completedGoals}/{LearningDailyGoals.All.Count}")</span>
+                        <strong id="island-goals-total">@($"{completedGoals}/{LearningDailyGoals.All.Count}")</strong> ภารกิจ
                     </dd>
                 </div>
             }
@@ -68,11 +68,8 @@
     <div class="learning-workspace">
         <section class="sj-learning-map" aria-label="แผนที่บทเรียน" id="lesson-map">
             <div class="sj-learning-map-heading">
-                <button type="button" class="ns-button ns-button--compact" id="locate-current">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <circle cx="12" cy="12" r="7"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/>
-                    </svg>
-                    กลับไปด่านปัจจุบัน
+                <button type="button" class="island-text-button" id="locate-current" aria-controls="lesson-route">
+                    ไปยังบทปัจจุบัน
                 </button>
             </div>
             <div id="lesson-route" class="sj-lesson-route">

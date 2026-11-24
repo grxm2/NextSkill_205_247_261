@@ -22,25 +22,7 @@
         <div class="island-current-info">
             <p class="island-chapter" id="current-island-number">@(course.HasFinishedLessons ? $"ผ่านครบ {course.TotalLessons} ด่าน" : $"บทที่ {current.Id}")</p>
             <h2 id="current-island-title">@(course.IsComplete ? "เรียนจบคอร์สแล้ว" : course.FinalQuizReady ? "พร้อมสอบท้ายคอร์ส" : current.DisplayTitle)</h2>
-            <ol class="island-stages" id="island-stages" aria-label="ความคืบหน้าในคอร์ส">
-                @foreach (var lesson in course.Lessons)
-                {
-                    var status = lesson.Status == "completed" ? "ผ่านแล้ว" : lesson.Status == "current" ? "ด่านปัจจุบัน" : "ล็อกอยู่";
-                    <li class="island-stage is-@lesson.Status" aria-current="@(lesson.Status == "current" ? "step" : null)">
-                        <span class="sr-only">ด่าน @lesson.Id @status</span>
-                    </li>
-                }
-            </ol>
-            <div class="island-current-meta">
-                <span id="current-lesson-time" hidden="@course.FinalQuizReady">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v4.6l3.2 2.2-1.1 1.7-4.1-2.8V7h2Z"/></svg>
-                    <span id="current-lesson-minutes">@current.Minutes นาที</span>
-                </span>
-                <span class="island-lesson-reward" hidden="@course.HasFinishedLessons">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.7 1 4 13h7l-.7 10L20 10h-7l.7-9Z"/></svg>
-                    <span id="current-lesson-xp">@($"+{current.Xp} XP")</span>
-                </span>
-            </div>
+            <p id="current-lesson-time" class="island-lesson-duration" hidden="@course.HasFinishedLessons">@current.Minutes นาที</p>
         </div>
         <div class="island-current-actions">
             <button class="ns-button ns-button--primary" id="resume-learning" type="button" hidden="@course.FinalQuizReady">

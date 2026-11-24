@@ -141,21 +141,12 @@
         const hasProgress = course.completedLessons.length > 0;
         $('#current-island-number').textContent = course.hasFinishedLessons ? `ผ่านครบ ${course.totalLessons} ด่าน` : `บทที่ ${current.id}`;
         $('#current-island-title').textContent = course.isComplete ? 'เรียนจบคอร์สแล้ว' : course.finalQuizReady ? 'พร้อมสอบท้ายคอร์ส' : current.displayTitle || current.title;
-        $('#current-lesson-minutes').textContent = `${current.minutes} นาที`;
-        $('#current-lesson-time').hidden = course.finalQuizReady;
-        const reward = $('#current-lesson-xp');
-        reward.textContent = `+${current.xp} XP`;
-        reward.parentElement.hidden = course.hasFinishedLessons;
+        const duration = $('#current-lesson-time');
+        duration.textContent = `${current.minutes} นาที`;
+        duration.hidden = course.hasFinishedLessons;
         $('#resume-learning').hidden = course.finalQuizReady;
         $('#island-final-quiz').hidden = !course.finalQuizReady;
         $('#resume-learning-label').textContent = course.isComplete ? 'ทบทวนบทเรียน' : hasProgress ? 'เรียนต่อ' : 'เริ่มเรียน';
-        $('#island-stages').replaceChildren(...course.lessons.map(item => {
-            const marker = node('li', `island-stage is-${item.status}`);
-            const status = item.status === 'completed' ? 'ผ่านแล้ว' : item.status === 'current' ? 'ด่านปัจจุบัน' : 'ล็อกอยู่';
-            if (item.status === 'current') marker.setAttribute('aria-current', 'step');
-            marker.append(node('span', 'sr-only', `ด่าน ${item.id} ${status}`));
-            return marker;
-        }));
         renderIslandStats();
 
         const routeLine = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -215,7 +206,7 @@
 
         const streak = $('#island-streak-days');
         streak.textContent = number(state.activity.streakDays);
-        streak.parentElement.title = `streak ${streak.textContent} วัน`;
+        streak.parentElement.title = `เรียนต่อเนื่อง ${streak.textContent} วัน`;
         const goals = state.activity.goals;
         const completed = goals.filter(goal => goal.complete).length;
         const goalTotal = $('#island-goals-total');

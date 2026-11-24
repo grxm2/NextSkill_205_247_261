@@ -24,6 +24,44 @@
 .ns-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid var(--ns-border);border-radius:9px;background:#f2faff;color:var(--ns-primary-hover);font:500 12px/1.6 var(--ns-font)}
 .ns-badge--upcoming{background:var(--ns-warning-surface);color:var(--ns-warning);border-color:#eadca7}
 .ns-button-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
+.ns-stat-pills {
+    --ns-stat-accent: #0077a7;
+    --ns-stat-fire: #a74624;
+    --ns-stat-gold: #8b5500;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    color: #103d57;
+    font: 400 13px/1.45 var(--ns-font);
+}
+html[data-theme="dark"] .ns-stat-pills {
+    --ns-stat-accent: #8bdcff;
+    --ns-stat-fire: #ffb287;
+    --ns-stat-gold: #ffda87;
+    color: #f0f8ff;
+}
+.ns-stat-pills dd {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
+    padding: 4px 9px;
+    border: 1px solid var(--ns-liquid-panel-edge);
+    border-radius: 999px;
+    background: var(--ns-liquid-panel-bg);
+    white-space: nowrap;
+}
+.ns-stat-pills strong { font-size: 16px; font-weight: 600; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.ns-stat-icon { width: 15px; height: 15px; flex: none; color: var(--ns-stat-accent); }
+span.ns-stat-icon { background: currentColor; mask: var(--ns-stat-icon) center / contain no-repeat; }
+.ns-stat-icon--fire { --ns-stat-icon: url('../icons/fire.svg'); color: var(--ns-stat-fire); }
+.ns-stat-icon--trophy { --ns-stat-icon: url('../icons/trophy.svg'); }
+.ns-stat-icon--star { --ns-stat-icon: url('../icons/star.svg'); color: var(--ns-stat-gold); }
+.ns-stat-icon--lightning { --ns-stat-icon: url('../icons/lightning.svg'); color: var(--ns-stat-gold); }
+
 @media(prefers-reduced-motion:reduce){.ns-button{transition:background-color 160ms ease,border-color 160ms ease}.ns-button:active:not(:disabled):not([aria-disabled=true]){transform:none}}
 /* Narrow, temporary shell aliases: account/admin variables consume foundation.
    Legacy selectors remain isolated until their next page-specific migration. */

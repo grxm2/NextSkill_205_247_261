@@ -10,9 +10,6 @@ body[data-journey-mode="learn"] {
     --island-link: #083b55;
     --island-control: #e1f1fc;
     --island-control-hover: #cce9fa;
-    --island-gold: #5e2c04;
-    --island-gold-fill: #e69b35;
-    --island-track: #c9dce7;
     --island-meter-track: #205674;
     --island-meter-fill: #ffd457;
 }
@@ -30,9 +27,6 @@ body[data-journey-mode="learn"].is-underwater {
     --island-link: #b7e4ff;
     --island-control: #204763;
     --island-control-hover: #2b5875;
-    --island-gold: #ffd084;
-    --island-gold-fill: #ffbf5e;
-    --island-track: #406179;
     --island-meter-track: #6089a2;
     --island-meter-fill: #ffe993;
 }
@@ -136,23 +130,7 @@ html[data-theme="dark"] body[data-journey-mode="learn"].is-underwater .ns-navbar
 #island-video-open { display: flex; align-items: center; gap: 6px; color: var(--island-link); font-weight: 500; }
 #island-video-open svg { flex: none; width: 18px; height: 18px; }
 
-.island-progress-strip {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px 10px;
-    margin: 0;
-    color: var(--island-ink);
-    font: 500 .875rem/1.5 var(--ns-font);
-    font-variant-numeric: tabular-nums;
-}
-.island-progress-strip dd { display: flex; align-items: center; gap: 5px; margin: 0; white-space: nowrap; }
 .island-progress-strip dd[title] { cursor: help; }
-.island-progress-strip > div + div { display: flex; align-items: center; gap: 10px; }
-.island-progress-strip > div + div::before { content: "·"; color: var(--island-muted); }
-.island-progress-strip :is(.icon, svg) { flex: none; width: 16px; height: 16px; }
-.island-progress-strip .icon-lightning { color: var(--island-gold); }
-.island-streak-icon { color: var(--island-gold); mask-image: url('../icons/fire.svg'); }
 
 .learning-workspace {
     display: grid;
@@ -172,16 +150,7 @@ html[data-theme="dark"] body[data-journey-mode="learn"].is-underwater .ns-navbar
     justify-content: flex-start;
     margin: 0 0 16px;
 }
-.smart-journey .learning-workspace #lesson-map #locate-current {
-    margin: 0;
-    padding-inline: 14px;
-    min-height: 44px;
-    border-radius: 999px;
-    background: var(--island-control);
-    color: var(--island-link);
-    border-color: var(--island-rule);
-}
-.smart-journey .learning-workspace #lesson-map #locate-current:hover { background: var(--island-control-hover); }
+#locate-current { font-size: .875rem; font-weight: 500; text-decoration: underline; }
 
 .island-dashboard {
     position: relative;
@@ -277,44 +246,6 @@ html[data-theme] body.smart-journey[data-journey-mode="learn"] #island-detail :i
     outline-offset: 3px;
 }
 
-.island-stages {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 7px;
-    margin: 20px 0 0;
-    padding: 0;
-    list-style: none;
-}
-.island-stage {
-    display: grid;
-    place-items: center;
-    position: relative;
-    width: 13px;
-    height: 15px;
-    color: var(--island-gold);
-}
-.island-stage::before {
-    content: "";
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--island-track);
-}
-.island-stage.is-current::before {
-    width: 10px;
-    height: 10px;
-    background: var(--island-gold-fill);
-    box-shadow: 0 0 0 2px #ffbf5e5e, 0 0 9px 2px #f8a7428c;
-}
-.island-stage.is-completed::before {
-    width: 13px;
-    height: 13px;
-    border-radius: 0;
-    background: currentColor;
-    clip-path: polygon(50% 2%, 65% 34%, 100% 38%, 74% 62%, 81% 98%, 50% 80%, 19% 98%, 26% 62%, 0 38%, 35% 34%);
-}
-
 .island-chapter { margin: 0 0 4px; color: var(--island-muted); font-size: .875rem; font-weight: 500; }
 .island-current-card h2 {
     margin: 0;
@@ -324,20 +255,8 @@ html[data-theme] body.smart-journey[data-journey-mode="learn"] #island-detail :i
     text-wrap: balance;
     overflow-wrap: anywhere;
 }
-.island-current-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; color: var(--island-muted); font-size: .875rem; }
-.island-current-meta > span {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 5px 10px;
-    border-radius: 999px;
-    background: var(--island-control);
-    white-space: nowrap;
-}
-.island-current-meta > span[hidden] { display: none; }
-.island-current-meta svg { flex: none; width: 16px; height: 16px; }
-.island-lesson-reward { color: var(--island-gold); }
-.island-current-actions { display: flex; align-items: stretch; gap: 9px; margin-top: 24px; }
+.island-current-info .island-lesson-duration { margin: 8px 0 0; color: var(--island-muted); font-size: .875rem; }
+.island-current-actions { display: flex; align-items: stretch; gap: 9px; margin-top: 16px; }
 #resume-learning { flex: 1; min-width: 0; font-size: 1rem; }
 body[data-journey-mode="learn"].is-underwater :is(#resume-learning, #detail-start) {
     border-color: #8ee3fa;
@@ -663,6 +582,9 @@ html[data-theme="dark"] .island-water-motion .deep-ocean-light {
     }
 }
 @media (width < 480px) {
+    .island-progress-strip dd { gap: 4px; padding-inline: 7px; font-size: 12px; }
+    .island-progress-strip strong { font-size: 14px; }
+    .island-progress-strip .island-meter { width: 24px; margin-inline-start: 0; }
     .island-course-video-footer .ns-button { width: 100%; }
 }
 @media (768px <= width < 1024px) {
