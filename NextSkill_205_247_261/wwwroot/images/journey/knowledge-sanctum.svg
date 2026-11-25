@@ -10,7 +10,7 @@
      including the few near-opaque pixels in the generated PNG. -->
 <g data-dimension-portal>
  <path d="M345 555V399c0-67 45-110 104-110s104 43 104 110v156Z" fill="#35CBE0" mask="url(#portal-backing-edge)"/>
- <image href="/images/journey/learning-portal-island-v5.png" x="0" y="0" width="800" height="700" preserveAspectRatio="none"/>
+ <image href="/images/journey/learning-portal-island-v5.webp" x="0" y="0" width="800" height="700" preserveAspectRatio="none"/>
 </g>
 <g class="sanctum-cave-tide" data-sanctum-motion stroke="#C6E5E9" stroke-width="1.1" stroke-linecap="round"><path d="M384 468q15 3 29 0m31 1q20-3 40-1M400 488q17 3 32 0m28 1q20-3 40-1"/></g>
 <!-- The entire falling curtain is rendered here, with continuous layered flow. -->

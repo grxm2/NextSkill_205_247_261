@@ -12,4 +12,46 @@
     <Content Update="Database\custom_courses.json;Database\custom_questions.json"
              CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
+
+  <ItemGroup>
+    <!-- Keep the catalog cascade in the same order as the shared layout. -->
+    <CatalogStyle Include="wwwroot/css/buddy-character.css;wwwroot/css/companion.css;wwwroot/css/buddy-motion.css;wwwroot/css/buddy-agent.css;wwwroot/css/buddy-expressions.css" />
+    <CatalogStyle Include="wwwroot/css/adventure-theme.css;wwwroot/css/ocean-theme.css;wwwroot/css/dashboard-polish.css;wwwroot/css/course-pages.css;wwwroot/css/site-shell.css" />
+    <CatalogStyle Include="wwwroot/css/nextskill-components.css;wwwroot/css/glass.css;wwwroot/css/navbar.css;wwwroot/css/footer-glass.css;wwwroot/css/journey-clouds.css" />
+    <CatalogStyle Include="wwwroot/css/course-harbor.css;wwwroot/css/catalog-ocean.css;wwwroot/css/catalog-voyage.css;wwwroot/css/catalog-layout.css;wwwroot/css/shared-ocean.css" />
+    <CatalogStyle Include="wwwroot/css/journey-theme.css;wwwroot/css/nimo-speech.css;wwwroot/css/favorites.css" />
+  </ItemGroup>
+
+  <UsingTask TaskName="CombineCatalogStyles" TaskFactory="RoslynCodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <Sources ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <Destination ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Text" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        var stylesheet = new StringBuilder();
+        foreach (var source in Sources)
+            stylesheet.AppendLine(File.ReadAllText(source.GetMetadata("FullPath")));
+
+        Directory.CreateDirectory(Path.GetDirectoryName(Destination));
+        var contents = stylesheet.ToString();
+        if (!File.Exists(Destination) || File.ReadAllText(Destination) != contents)
+            File.WriteAllText(Destination, contents);
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="IncludeCatalogStyles" BeforeTargets="ResolveProjectStaticWebAssets">
+    <PropertyGroup>
+      <CatalogStylesheet>$(IntermediateOutputPath)catalog/catalog.bundle.css</CatalogStylesheet>
+    </PropertyGroup>
+    <CombineCatalogStyles Sources="@(CatalogStyle)" Destination="$(CatalogStylesheet)" />
+    <ItemGroup>
+      <Content Include="$(CatalogStylesheet)" Link="wwwroot/css/catalog.bundle.css" />
+      <FileWrites Include="$(CatalogStylesheet)" />
+    </ItemGroup>
+  </Target>
 </Project>

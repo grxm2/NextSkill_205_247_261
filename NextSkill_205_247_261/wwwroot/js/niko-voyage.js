@@ -12,8 +12,8 @@
    const image=document.createElement('img');
    image.className=`buddy-avatar-img buddy-pose-image buddy-pose-${name}`;
    image.alt=''; image.setAttribute('aria-hidden','true');
-   image.decoding='async';
-   image.src=`/images/nimo-pose-${name}.png`;
+   image.decoding='async'; image.fetchPriority='low';
+   image.src=`/images/nimo-pose-${name}.webp`;
    wrapper.append(image); poseImages[name]=image;
    // Loading alone doesn't guarantee that the browser decoded the PNG. Do
    // that while idle, never on the frame that starts the jump.

@@ -92,7 +92,7 @@ html[data-theme="dark"] {
 @font-face {
     font-family: 'Prompt';
     src: local('Prompt'), local('Prompt-Regular'),
-         url('../fonts/Prompt-Regular.ttf') format('truetype');
+         url('../fonts/Prompt-Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -101,7 +101,7 @@ html[data-theme="dark"] {
 @font-face {
     font-family: 'Prompt';
     src: local('Prompt Medium'), local('Prompt-Medium'),
-         url('../fonts/Prompt-Medium.ttf') format('truetype');
+         url('../fonts/Prompt-Medium.woff2') format('woff2');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -110,7 +110,7 @@ html[data-theme="dark"] {
 @font-face {
     font-family: 'Prompt';
     src: local('Prompt SemiBold'), local('Prompt-SemiBold'),
-         url('../fonts/Prompt-SemiBold.ttf') format('truetype');
+         url('../fonts/Prompt-SemiBold.woff2') format('woff2');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -119,7 +119,7 @@ html[data-theme="dark"] {
 @font-face {
     font-family: 'Prompt';
     src: local('Prompt Bold'), local('Prompt-Bold'),
-         url('../fonts/Prompt-Bold.ttf') format('truetype');
+         url('../fonts/Prompt-Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -128,7 +128,7 @@ html[data-theme="dark"] {
 @font-face {
     font-family: 'Prompt';
     src: local('Prompt ExtraBold'), local('Prompt-Bold'),
-         url('../fonts/Prompt-Bold.ttf') format('truetype');
+         url('../fonts/Prompt-Bold.woff2') format('woff2');
     font-weight: 800;
     font-style: normal;
     font-display: swap;
@@ -137,7 +137,7 @@ html[data-theme="dark"] {
 @font-face {
     font-family: 'Prompt';
     src: local('Prompt Black'), local('Prompt-Bold'),
-         url('../fonts/Prompt-Bold.ttf') format('truetype');
+         url('../fonts/Prompt-Bold.woff2') format('woff2');
     font-weight: 900;
     font-style: normal;
     font-display: swap;

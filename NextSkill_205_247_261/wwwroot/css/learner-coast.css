@@ -23,7 +23,7 @@ html[data-theme="dark"] .ns-site-shell--scenic {
 .learner-coast__shore {
     /* The waterline lies 15.2% of the painted image's width down from its top. */
     top: calc(var(--coast-horizon) - var(--coast-art-width) * .152);
-    background: url("../images/journey/underwater-journey-background-v1.png") center top / var(--coast-art-width) auto no-repeat;
+    background: url("../images/journey/underwater-journey-background-v1.webp") center top / var(--coast-art-width) auto no-repeat;
     mask-image: linear-gradient(transparent, #000 35%, #000 73%, transparent);
     opacity: .52;
 }

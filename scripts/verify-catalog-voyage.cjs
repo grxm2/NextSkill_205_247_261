@@ -57,7 +57,7 @@ const nav = () => page.locator('.ns-navbar__link[href="/Home/Courses"]');
             const model = document.querySelector('.ow-dock [data-harbor-kind="knowledge-sanctum"]');
             const gate = model.getBoundingClientRect(), boat = document.querySelector('.ow-vessel').getBoundingClientRect();
             const image = model.querySelector('.sanctum-art');
-            return { center: gate.left + gate.width * Number(model.dataset.portalX), boat: boat.left + boat.width * .5, ready: image?.tagName.toLowerCase() === 'svg' && image.querySelector('image')?.getAttribute('href').includes('learning-portal-island-v5.png') };
+            return { center: gate.left + gate.width * Number(model.dataset.portalX), boat: boat.left + boat.width * .5, ready: image?.tagName.toLowerCase() === 'svg' && image.querySelector('image')?.getAttribute('href').includes('learning-portal-island-v5.webp') };
         });
         assert.equal(canal.ready, true, 'The library artwork loaded');
         assert.ok(canal.center > 1440 * .4 && canal.center < 1440 * .65, 'The island entrance remains in the central viewing area');

@@ -14,7 +14,7 @@
     <meta name="description" content="NextSkill — เลือกทักษะที่อยากเรียน ออกเดินทางกับ Nimo และกลับมาเรียนต่อจากเกาะเดิมได้ทันที" />
     <title>@ViewData["Title"] — NextSkill</title>
     <link rel="icon" href="~/home-favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href="~/fonts/Prompt-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="~/fonts/Prompt-Regular.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="~/css/nextskill-tokens.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/buddy-character.css" asp-append-version="true" />
@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="~/css/buddy-expressions.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/smart-journey.css" asp-append-version="true" />
 @if (ViewData["JourneyMode"]?.ToString() == "home") { <link rel="stylesheet" href="~/css/ocean-world.css" asp-append-version="true" /> }
-<link rel="preload" href="~/images/journey/clouds-reference-v1.png" as="image" />
+<link rel="preload" href="~/images/journey/clouds-reference-v1.webp" as="image" />
 <link rel="stylesheet" href="~/css/journey-clouds.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/archipelago.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/learning-workspace.css" asp-append-version="true" />
@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="~/css/course-harbor.css" asp-append-version="true" />
 @if (ViewData["JourneyMode"]?.ToString() == "learn") {
     <link rel="stylesheet" href="~/css/shared-ocean.css" asp-append-version="true" />
-    <link rel="preload" href="~/images/journey/underwater-journey-background-v1.png" as="image" />
+    <link rel="preload" href="~/images/journey/underwater-journey-background-v1.webp" as="image" />
 }
 @if (ViewData["JourneyMode"]?.ToString() == "home") {
     <link rel="stylesheet" href="~/css/catalog-voyage.css" asp-append-version="true" />
@@ -96,7 +96,10 @@
 }
 @if (ViewData["JourneyMode"]?.ToString() == "home") { <script src="~/js/catalog-voyage.js" asp-append-version="true" defer></script> }
     <script src="~/js/course-island-voyage.js" asp-append-version="true" defer></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    }
     <script src="~/js/navbar.js" asp-append-version="true" defer></script>
     <script src="~/js/nimo-speech.js" asp-append-version="true" defer></script>
 </body>

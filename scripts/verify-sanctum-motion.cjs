@@ -19,7 +19,7 @@ const base = process.env.NEXTSKILL_TEST_URL || 'http://127.0.0.1:5205';
     }));
     try {
         await page.goto(base+'/Home/Courses',{waitUntil:'networkidle'});
-        assert.equal(await page.locator(model+' image[href$="learning-portal-island-v5.png"]').count(),1);
+        assert.equal(await page.locator(model+' image[href$="learning-portal-island-v5.webp"]').count(),1);
         assert.equal(await page.locator(model+' [data-live-waterfall]').count(),1);
         await page.waitForFunction(selector => document.querySelector(selector).dataset.harborMotion === 'active',model);
         const first = await snapshot(); await page.waitForTimeout(300); const later = await snapshot();

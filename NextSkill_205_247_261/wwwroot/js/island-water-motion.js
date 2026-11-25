@@ -37,7 +37,7 @@
     function queue() { if (!frame) frame = requestAnimationFrame(update); }
     function measure() {
         displayedHeight = Math.max(surface.offsetHeight, sea.clientWidth * 941 / 1672);
-        waves.style.top = `${displayedHeight * .265}px`;
+        waves.style.setProperty('--ocean-wave-offset', `${displayedHeight * .265}px`);
         if (catalogBoat) {
             // The berth is measured in layout coordinates even while the boat sails.
             shore = catalogTrack.getBoundingClientRect().top + scrollY + catalogBoat.offsetTop - 2;

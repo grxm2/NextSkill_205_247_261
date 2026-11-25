@@ -2,7 +2,7 @@
 body[data-journey-mode="practice"]{background:#8fd9ef;color:var(--ns-ink)}
 body[data-journey-mode="practice"] .skip-link:focus{top:max(12px,env(safe-area-inset-top));z-index:1100;background:var(--ns-surface);color:var(--ns-ink)}
 .practice-page{--practice-gutter:clamp(16px,2.25vw,32px);position:relative;isolation:isolate;width:min(1320px,calc(100% - max(var(--practice-gutter),env(safe-area-inset-left)) - max(var(--practice-gutter),env(safe-area-inset-right))));margin:0 auto;padding:clamp(20px,2vw,28px) 0 clamp(40px,6vw,64px);min-height:calc(100svh - var(--nav-h))}
-.practice-backdrop{position:fixed;inset:0;z-index:-2;pointer-events:none;background:#77d1eb url('/images/journey/underwater-journey-background-v1.png') center top/cover no-repeat}
+.practice-backdrop{position:fixed;inset:0;z-index:-2;pointer-events:none;background:#77d1eb url('/images/journey/underwater-journey-background-v1.webp') center top/cover no-repeat}
 .practice-backdrop:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 15%,#eaf9ff30 42%,#e5f9f4a0 78%,#b0e9ed20);pointer-events:none}
 .practice-page .learning-celestial :is(.hero-sun,.journey-moon){left:95%;top:calc(var(--nav-h) + 18px);width:24px}
 .practice-page .learning-celestial .hero-sun{box-shadow:0 0 16px 5px #fff0b26b,0 0 30px 10px #ffe3a32b}

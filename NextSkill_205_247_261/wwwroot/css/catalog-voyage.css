@@ -54,8 +54,8 @@ html[data-theme="dark"] .knowledge-sanctum .sanctum-art{filter:brightness(.85) s
 .cv-transition{position:fixed;inset:0;z-index:200001;overflow:hidden;pointer-events:none;isolation:isolate;font-family:var(--ns-font)}
 .cv-transition[hidden],.cv-transition [hidden]{display:none}
 .cv-transition[data-phase="covered"],.cv-transition[data-phase="error"]{pointer-events:auto}
-.cv-veil{position:absolute;inset:0;z-index:2;background:linear-gradient(#ffffff70,#ffffff70),#f4fbff url('/images/journey/clouds-reference-v1.png') center/cover no-repeat;opacity:0;transition:opacity 240ms var(--ns-ease-out)}
-.cv-cloud{position:absolute;top:-10%;width:74%;height:120%;background:linear-gradient(#ffffff90,#ffffff70),#f4fbff url('/images/journey/clouds-reference-v1.png') center/cover no-repeat;-webkit-mask:url('/images/journey/voyage-cloud-bank.svg') center/100% 100% no-repeat;mask:url('/images/journey/voyage-cloud-bank.svg') center/100% 100% no-repeat;will-change:transform;transition:transform 700ms var(--ns-ease-in-out)}
+.cv-veil{position:absolute;inset:0;z-index:2;background:linear-gradient(#ffffff70,#ffffff70),#f4fbff url('/images/journey/clouds-reference-v1.webp') center/cover no-repeat;opacity:0;transition:opacity 240ms var(--ns-ease-out)}
+.cv-cloud{position:absolute;top:-10%;width:74%;height:120%;background:linear-gradient(#ffffff90,#ffffff70),#f4fbff url('/images/journey/clouds-reference-v1.webp') center/cover no-repeat;-webkit-mask:url('/images/journey/voyage-cloud-bank.svg') center/100% 100% no-repeat;mask:url('/images/journey/voyage-cloud-bank.svg') center/100% 100% no-repeat;will-change:transform;transition:transform 700ms var(--ns-ease-in-out)}
 .cv-cloud--left{left:0;transform:translate3d(-106%,0,0)}
 .cv-cloud--right{right:0;transform:translate3d(106%,0,0) scaleX(-1)}
 .cv-is-covered .cv-cloud--left{transform:translate3d(0,0,0)}

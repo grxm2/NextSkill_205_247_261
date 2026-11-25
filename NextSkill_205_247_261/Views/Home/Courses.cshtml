@@ -11,9 +11,6 @@
     var showFavorite = Model.FavoriteCourseIds is not null || User.Identity?.IsAuthenticated != true;
     var currentUrl = $"{Context.Request.PathBase}{Context.Request.Path}{Context.Request.QueryString}";
 }
-@section Styles {
-    <link rel="stylesheet" href="~/css/favorites.css" asp-append-version="true" />
-}
 <section class="ns-course-page catalog-page" data-course-page data-catalog-ocean data-progress-eligible="@eligible.ToString().ToLowerInvariant()" id="course-content" aria-labelledby="catalog-title">
     <partial name="_LearningOceanWorld" />
     <div class="learning-celestial" data-journey-celestial aria-hidden="true"><partial name="_JourneyCelestial" /></div>
@@ -39,7 +36,10 @@
         </div>
             </div>
             <div class="catalog-harbor-scene" aria-hidden="true">
-                <div class="catalog-harbor" data-nimo-speech-obstacle><partial name="_KnowledgeSanctumArt" model="false" /></div>
+                <div class="catalog-harbor" data-nimo-speech-obstacle>
+                    <img class="catalog-submerged-rocks" src="~/images/journey/sanctum-submerged-rocks.svg" width="800" height="700" alt="" fetchpriority="high" />
+                    <partial name="_KnowledgeSanctumArt" model="false" />
+                </div>
                 <div class="catalog-boat-track"><div class="catalog-boat"><div class="catalog-boat-idle">
                     <span class="catalog-boat-nimo buddy-slot" data-buddy-anchor="catalog" data-buddy-home="active"></span>
                     <img class="catalog-boat-hull" src="~/images/journey/rowing-hull.svg" asp-append-version="true" width="480" height="280" alt="" />
@@ -78,7 +78,7 @@
                         <img src="@(thumbnail ?? cover.Path)" asp-append-version="true"
                              data-cover-fallback="@(thumbnail is null ? null : Url.Content($"~{cover.Path}"))"
                              referrerpolicy="@(thumbnail is null ? null : "no-referrer")" alt="" width="960" height="540"
-                             loading="@(index < 3 ? "eager" : "lazy")" fetchpriority="@(index == 0 ? "high" : "auto")" />
+                             loading="@(index < 3 ? "eager" : "lazy")" decoding="async" fetchpriority="low" />
                         @if (cover.Topic is not null)
                         {
                             <span class="ns-topic-cover-label" lang="en" dir="ltr" hidden="@(thumbnail is not null)">@cover.Topic</span>

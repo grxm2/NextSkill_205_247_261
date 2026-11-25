@@ -12,8 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>@ViewData["Title"] — NextSkill</title>
     <link rel="icon" href="~/home-favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href="~/fonts/Prompt-Regular.ttf" as="font" type="font/ttf" crossorigin />
-    <link rel="preload" href="~/fonts/Prompt-SemiBold.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="~/fonts/Prompt-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="~/fonts/Prompt-SemiBold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="~/images/hero/sky-clouds.webp" as="image" type="image/webp" asp-append-version="true" />
     <link rel="preload" href="~/images/journey/home-ocean-painted-v2.webp" as="image" type="image/webp" />
     <link rel="preload" href="~/images/journey/home-island-terrain-v2.webp" as="image" type="image/webp" />
@@ -414,7 +414,7 @@
 
                     <div class="fs-nimo-hero">
                         <span class="fs-nimo-sand-shadow" aria-hidden="true"></span>
-                        <img src="~/images/nimo-learning.png" asp-append-version="true" alt="มาสคอตนิโมกำลังอ่านหนังสือเตรียมความพร้อมบนเกาะ" class="fs-nimo-img" id="loadingNimoImg" width="250" height="250" />
+                        <img src="~/images/nimo-learning.webp" asp-append-version="true" alt="มาสคอตนิโมกำลังอ่านหนังสือเตรียมความพร้อมบนเกาะ" class="fs-nimo-img" id="loadingNimoImg" width="250" height="250" />
                     </div>
                 </div>
 
@@ -451,7 +451,10 @@
     </div>
 
     <partial name="_JourneyCloudTransition" />
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    }
     <script src="~/js/navbar.js" asp-append-version="true" defer></script>
     @if (hasBackdrop || useSharedAuth)
     {

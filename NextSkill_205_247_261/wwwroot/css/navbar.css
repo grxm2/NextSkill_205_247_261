@@ -67,6 +67,9 @@ html[data-theme="dark"] .ns-navbar .ns-navbar__favorites[aria-current="page"]{ba
 .ns-navbar .ns-navbar__login:hover,.ns-navbar .ns-navbar__login.glass:hover{color:#063551;background:rgba(255,255,255,.46)}
 .ns-navbar__toggle{color:#083e5b;border-color:rgba(7,84,127,.4);background:rgba(255,255,255,.18)}
 .ns-navbar__avatar{color:#083e5b}
+@media (scripting: enabled) and (width < 1024px){
+ .ns-navbar__toggle[aria-expanded="false"] + .ns-navbar__panel{display:none}
+}
 @media (width < 1024px){
  body .ns-navbar.sj-header:has(.ns-navbar__toggle[aria-expanded="true"]){background:var(--ns-liquid-open-bg,#eef9ff)}
 

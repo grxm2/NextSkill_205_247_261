@@ -1,10 +1,10 @@
 /* An opaque veil dissolves first; two softly masked banks drift apart. */
-.journey-arrival-prepaint::before{content:'';position:fixed;inset:0;z-index:2147483647;background:#ccefff url('../images/journey/clouds-reference-v1.png') center/cover no-repeat}
+.journey-arrival-prepaint::before{content:'';position:fixed;inset:0;z-index:2147483647;background:#ccefff url('../images/journey/clouds-reference-v1.webp') center/cover no-repeat}
 #journey-cloud-transition{position:fixed;inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;overflow:hidden;background:transparent;isolation:isolate}
 #journey-cloud-transition::backdrop{background:transparent}
-.jc-core{position:absolute;inset:0;background:#ccefff url('../images/journey/clouds-reference-v1.png') center/cover no-repeat;z-index:0;opacity:1;transition:opacity var(--jc-reveal-duration,200ms) cubic-bezier(.77,0,.175,1)}
+.jc-core{position:absolute;inset:0;background:#ccefff url('../images/journey/clouds-reference-v1.webp') center/cover no-repeat;z-index:0;opacity:1;transition:opacity var(--jc-reveal-duration,200ms) cubic-bezier(.77,0,.175,1)}
 .jc-near{display:none}
-.jc-bank{position:absolute;inset:0;z-index:1;pointer-events:none;background:url('../images/journey/clouds-reference-v1.png') center/cover no-repeat;opacity:1;transform:translate3d(0,0,0) scale(1);transition:transform var(--jc-reveal-duration,200ms) cubic-bezier(.77,0,.175,1),opacity var(--jc-reveal-duration,200ms) cubic-bezier(.77,0,.175,1)}
+.jc-bank{position:absolute;inset:0;z-index:1;pointer-events:none;background:url('../images/journey/clouds-reference-v1.webp') center/cover no-repeat;opacity:1;transform:translate3d(0,0,0) scale(1);transition:transform var(--jc-reveal-duration,200ms) cubic-bezier(.77,0,.175,1),opacity var(--jc-reveal-duration,200ms) cubic-bezier(.77,0,.175,1)}
 .jc-bank-top{mask-image:radial-gradient(ellipse at 12% 25%,#000 8%,#000e 28%,#0008 45%,transparent 69%);-webkit-mask-image:radial-gradient(ellipse at 12% 25%,#000 8%,#000e 28%,#0008 45%,transparent 69%);transform-origin:15% 25%}
 .jc-bank-bottom{mask-image:radial-gradient(ellipse at 91% 78%,#000 8%,#000e 28%,#0008 45%,transparent 69%);-webkit-mask-image:radial-gradient(ellipse at 91% 78%,#000 8%,#000e 28%,#0008 45%,transparent 69%);transform-origin:85% 75%}
 .is-revealing .jc-bank-top{opacity:0;transform:translate3d(-13%,-7%,0) scale(1.06);will-change:transform,opacity}

@@ -121,8 +121,8 @@
 .island-water-layer{z-index:1}
 
 /* Reference-inspired environment, separated from interactive islands. */
-.underwater-surface{background:#83d8ed url('/images/journey/underwater-journey-background-v1.png') center center / cover no-repeat}
-.underwater-depth{background:#29b7d2 url('/images/journey/underwater-journey-background-v1.png') center bottom / 100% 170% no-repeat}
+.underwater-surface{background:#83d8ed url('/images/journey/underwater-journey-background-v1.webp') center center / cover no-repeat}
+.underwater-depth{background:#29b7d2 url('/images/journey/underwater-journey-background-v1.webp') center bottom / 100% 170% no-repeat}
 .underwater-depth:after{display:none}
 .island-water-layer--far{opacity:.12}.island-water-layer--near{opacity:.06}
 
