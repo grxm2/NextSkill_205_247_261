@@ -50,7 +50,8 @@ public class AdminDashboardModel
     public int FeaturedCoursesCount => Courses.Count(c => c.Featured);
     public int TotalActivityEvents => MonthlyActivityCounts.Values.Sum();
     public double AverageLessonsPerCourse => Courses.Count == 0 ? 0 : Math.Round((double)TotalLessons / Courses.Count, 1);
-    public double AverageQuestionsPerLesson => TotalLessons == 0 ? 0 : Math.Round((double)TotalQuestions / TotalLessons, 1);
+    public double AverageQuestionsPerLesson => TotalLessons == 0 ? 0
+        : Math.Round((double)Questions.Count(question => question.LessonId > 0) / TotalLessons, 1);
     public int FeaturedShare => Courses.Count == 0 ? 0 : (int)Math.Round(FeaturedCoursesCount * 100.0 / Courses.Count);
     public double CompletionRatePercent => EnrolledLessonSlots == 0 ? 0
         : Math.Round(TotalLessonCompletions * 100.0 / EnrolledLessonSlots, 1);

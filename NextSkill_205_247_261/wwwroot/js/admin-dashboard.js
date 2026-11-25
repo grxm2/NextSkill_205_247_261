@@ -1,5 +1,4 @@
 (() => {
-    // State & Initial Data
     let courses = [];
     let questions = [];
 
@@ -77,7 +76,6 @@
         console.error('Error parsing admin seed data', e);
     }
 
-    // Navigation & Tab Switching
     const panels = [...document.querySelectorAll('.admin-panel')];
     const links = [...document.querySelectorAll('.admin-nav a')];
     const title = document.getElementById('page-title');
@@ -147,7 +145,6 @@
         focusPanel();
     });
 
-    // Quick Hero Buttons
     document.getElementById('hero-btn-new-course')?.addEventListener('click', () => {
         openCourseModal();
     });
@@ -159,7 +156,6 @@
         openQuestionModal();
     });
 
-    // Modal Close Buttons
     document.querySelectorAll('[data-close-modal]').forEach(btn => {
         btn.addEventListener('click', () => {
             const modalId = btn.getAttribute('data-close-modal');
@@ -168,7 +164,6 @@
         });
     });
 
-    // Course Management
     const courseModal = document.getElementById('course-modal');
     const courseForm = document.getElementById('course-form');
     const courseTableBody = document.getElementById('courses-table-body');
@@ -398,7 +393,6 @@
     courseCategoryFilter?.addEventListener('change', renderCoursesTable);
     attachCourseActions();
 
-    // Upload Course Form
     const uploadForm = document.getElementById('course-upload-form');
     uploadForm?.addEventListener('submit', async event => {
         event.preventDefault();
@@ -433,7 +427,6 @@
         }
     });
 
-    // Question & Quiz Studio
     const questionModal = document.getElementById('question-modal');
     const questionForm = document.getElementById('question-form');
     const questionsContainer = document.getElementById('questions-container');
@@ -588,7 +581,6 @@
     questionCourseFilter?.addEventListener('change', renderQuestionsGrid);
     renderQuestionsGrid();
 
-    // Interactive Quiz Tester
     const testerModal = document.getElementById('quiz-tester-modal');
     function openQuizTester(q) {
         document.getElementById('tester-prompt').textContent = q.prompt;
@@ -646,7 +638,6 @@
         testerModal.showModal();
     }
 
-    // Member Search & Local Time Formatting
     const memberSearch = document.getElementById('member-search');
     const memberRole = document.getElementById('member-role');
 
@@ -672,7 +663,6 @@
     memberSearch?.addEventListener('input', filterMembers);
     memberRole?.addEventListener('change', filterMembers);
 
-    // Utility Helpers
     function escapeHtml(str) {
         if (!str) return '';
         return String(str)
@@ -738,7 +728,6 @@
         [...periodButtons].find(button => button.dataset.period === state.period && !button.classList.contains('active'))?.click();
     }
 
-    // Interactive Bar Chart Period Switcher
     const periodButtons = document.querySelectorAll('.chart-period-btn');
     const barsContainer = document.getElementById('chart-bars-container');
     const chartSubText = document.getElementById('chart-sub-text');
@@ -807,11 +796,9 @@
     }
     attachBarInteractions();
 
-    // Interactive Donut Chart Segment Hover
     bindDonutHover();
     restoreDashboardFilters();
 
-    // Global Search Shortcut (Ctrl+K)
     const globalSearch = document.getElementById('global-admin-search');
     const globalSearchSummary = document.getElementById('admin-search-summary');
     window.addEventListener('keydown', e => {
@@ -847,7 +834,6 @@
         }
     });
 
-    // Dark / Light Mode Theme System
     const THEME_STORAGE_KEY = 'nextskill.theme.v1';
     const docRoot = document.documentElement;
 
@@ -870,14 +856,12 @@
         document.dispatchEvent(new CustomEvent('nextskill:theme-change', { detail: { theme: docRoot.dataset.theme } }));
     }
 
-    // Initialize theme from storage (defaults to 'light')
     let savedTheme = 'light';
     try {
         savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'light';
     } catch {}
     applyAdminTheme(savedTheme);
 
-    // Bind theme toggle buttons
     document.querySelectorAll('[data-theme-toggle]').forEach(btn => {
         btn.addEventListener('click', () => {
             const current = docRoot.dataset.theme === 'dark' ? 'dark' : 'light';

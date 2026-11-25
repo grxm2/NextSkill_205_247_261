@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NextSkill — เอกสารนำเสนอโครงงาน CMM 349</title>
+<style>
+  @font-face { font-family: 'Prompt'; src: url('assets/fonts/Prompt-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Prompt'; src: url('assets/fonts/Prompt-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; }
+  @font-face { font-family: 'Prompt'; src: url('assets/fonts/Prompt-SemiBold.woff2') format('woff2'); font-weight: 600; font-style: normal; }
+  @font-face { font-family: 'Prompt'; src: url('assets/fonts/Prompt-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+  @font-face { font-family: 'Prompt'; src: url('assets/fonts/Prompt-ExtraBold.woff2') format('woff2'); font-weight: 800; font-style: normal; }
+  @font-face { font-family: 'Manrope'; src: url('assets/fonts/manrope-400.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Manrope'; src: url('assets/fonts/manrope-600.woff2') format('woff2'); font-weight: 600; font-style: normal; }
+  @font-face { font-family: 'Manrope'; src: url('assets/fonts/manrope-800.woff2') format('woff2'); font-weight: 800; font-style: normal; }
+
+  :root {
+    --bg-deep: #0b1929;
+    --bg-mid: #10253b;
+    --card-bg: rgba(16, 40, 64, 0.78);
+    --card-solid: #122b44;
+    --card-border: rgba(56, 189, 248, 0.25);
+    --gold-border: rgba(245, 184, 65, 0.38);
+    --sky: #38bdf8;
+    --teal: #087faa;
+    --teal-bright: #0ea5e9;
+    --sand: #f5b841;
+    --emerald: #34d399;
+    --rose: #fb7185;
+    --ink: #f1f7fc;
+    --muted: #a6c1d6;
+    --dim: #7393ad;
+    --slide-w: 1280px;
+    --slide-h: 720px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    font-family: 'Prompt', 'Manrope', sans-serif;
+    background: #060f19;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  code {
+    font-family: 'Manrope', Consolas, monospace;
+    font-size: 0.9em;
+    font-weight: 600;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.24);
+    color: #bae6fd;
+    padding: 0 5px;
+    border-radius: 4px;
+  }
+
+  @media screen {
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding-bottom: 52px;
+    }
+    .deck {
+      position: relative;
+      width: var(--slide-w);
+      height: var(--slide-h);
+      transform-origin: center center;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.65);
+      border-radius: 8px;
+    }
+    .slide.active { display: flex; }
+    .presenter-bar {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(11, 25, 41, 0.92);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      padding: 6px 14px;
+      border-radius: 999px;
+      backdrop-filter: blur(12px);
+      z-index: 999;
+      font-size: 13px;
+      color: var(--ink);
+    }
+    .presenter-bar button {
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: var(--ink);
+      padding: 4px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+    .presenter-bar button:hover { background: rgba(56, 189, 248, 0.28); }
+    .presenter-bar .counter { font-family: 'Manrope', sans-serif; font-weight: 700; min-width: 58px; text-align: center; color: var(--sky); }
+  }
+
+  @page {
+    size: 1280px 720px;
+    margin: 0;
+  }
+  @media print {
+    html, body {
+      width: 1280px;
+      height: auto;
+      display: block !important;
+      background: #0b1929;
+      margin: 0;
+      padding: 0 !important;
+      overflow: visible !important;
+    }
+    .presenter-bar { display: none !important; }
+    .deck { width: 1280px !important; height: auto !important; transform: none !important; }
+    .slide {
+      display: flex !important;
+      position: relative !important;
+      width: 1280px;
+      height: 720px;
+      page-break-after: always;
+      break-after: page;
+      overflow: hidden;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .slide:last-child {
+      page-break-after: auto;
+      break-after: auto;
+    }
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: radial-gradient(ellipse at 85% 15%, rgba(14, 165, 233, 0.16), transparent 55%),
+                radial-gradient(ellipse at 12% 88%, rgba(8, 127, 170, 0.14), transparent 50%),
+                linear-gradient(155deg, var(--bg-deep) 0%, #0d2238 55%, #091828 100%);
+    padding: 38px 54px 36px;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .slide > * { position: relative; z-index: 1; }
+
+  .slide--accent {
+    background: radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.16), transparent 50%),
+                linear-gradient(140deg, #07597d 0%, #087faa 55%, #0b96c4 100%);
+    color: #ffffff;
+  }
+  .slide--accent::before { opacity: 0.18; }
+  .slide--accent .kicker { color: #fef08a; }
+  .slide--accent .slide-footer { border-top-color: rgba(255, 255, 255, 0.28); color: rgba(255, 255, 255, 0.85); }
+
+  .slide-head { margin-bottom: 14px; flex-shrink: 0; }
+  .kicker {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--sand);
+    margin-bottom: 3px;
+  }
+  .slide-title {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+  }
+  .slide-sub {
+    font-size: 14.5px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .slide-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+  }
+  .slide-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 1px solid rgba(56, 189, 248, 0.16);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--dim);
+    font-family: 'Manrope', 'Prompt', sans-serif;
+    flex-shrink: 0;
+  }
+  .slide-footer .page-num {
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+  .grid-2-wide { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 22px; align-items: stretch; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: stretch; }
+  .grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .card--gold {
+    border-color: var(--gold-border);
+    background: linear-gradient(180deg, rgba(245, 184, 65, 0.08), rgba(16, 40, 64, 0.84));
+  }
+  .card--teal {
+    border-color: rgba(56, 189, 248, 0.45);
+    background: linear-gradient(180deg, rgba(14, 165, 233, 0.14), rgba(16, 40, 64, 0.86));
+  }
+  .card-num {
+    font-family: 'Manrope', sans-serif;
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--sand);
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card p, .card li {
+    font-size: 14px;
+    line-height: 1.52;
+    color: var(--muted);
+  }
+  .card ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .card ul li::before {
+    content: '•';
+    color: var(--sky);
+    font-weight: 700;
+    margin-right: 7px;
+  }
+  .card--gold ul li::before { color: var(--sand); }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    font-family: 'Manrope', 'Prompt', sans-serif;
+  }
+  .badge--sky { background: rgba(56, 189, 248, 0.16); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.35); }
+  .badge--sand { background: rgba(245, 184, 65, 0.16); color: #fcd34d; border: 1px solid rgba(245, 184, 65, 0.4); }
+  .badge--emerald { background: rgba(52, 211, 153, 0.16); color: #6ee7b7; border: 1px solid rgba(52, 211, 153, 0.35); }
+
+  .code-pill {
+    display: inline-block;
+    font-family: 'Manrope', Consolas, monospace;
+    font-size: 11.5px;
+    font-weight: 600;
+    background: rgba(8, 25, 42, 0.92);
+    border: 1px solid rgba(56, 189, 248, 0.32);
+    color: #93c5fd;
+    padding: 1px 7px;
+    border-radius: 5px;
+  }
+
+  /* Cover Slide */
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 16px;
+  }
+  .cover-brand { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+  .cover-brand img.logo { height: 52px; width: auto; }
+  .cover-tag { font-size: 15px; font-weight: 600; color: var(--sand); letter-spacing: 0.04em; margin-bottom: 8px; }
+  .cover-title { font-size: 58px; font-weight: 800; line-height: 1.08; color: #ffffff; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .cover-subtitle { font-size: 27px; font-weight: 600; color: var(--sky); margin-bottom: 16px; }
+  .cover-stack { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .cover-mascot {
+    width: 240px;
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, transparent 70%);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .cover-mascot img { width: 205px; height: auto; filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.45)); }
+  .cover-meta {
+    border-top: 1px solid rgba(245, 184, 65, 0.45);
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: 1.3fr 0.85fr 0.95fr;
+    gap: 28px;
+  }
+  .cover-meta h4 { font-size: 13px; font-weight: 600; color: var(--sand); margin-bottom: 8px; }
+  .cover-meta p { font-size: 16px; line-height: 1.68; color: #f8fafc; font-weight: 500; }
+  .cover-meta .placeholder { color: #fde68a; }
+
+  /* Objectives */
+  .obj-list { display: flex; flex-direction: column; gap: 16px; justify-content: center; }
+  .obj-item { display: flex; align-items: flex-start; gap: 16px; }
+  .obj-num { font-family: 'Manrope', sans-serif; font-size: 30px; font-weight: 800; color: var(--sand); line-height: 1; min-width: 28px; padding-top: 2px; }
+  .obj-text { font-size: 16px; line-height: 1.45; color: #f1f5f9; font-weight: 600; }
+  .obj-sub { font-size: 13.5px; color: var(--muted); margin-top: 2px; line-height: 1.45; }
+
+  /* Accent Stat Grid */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 24px 34px;
+    height: 100%;
+    align-items: center;
+  }
+  .stat-box { border-top: 2px solid rgba(255, 255, 255, 0.45); padding-top: 14px; }
+  .stat-val { font-family: 'Manrope', 'Prompt', sans-serif; font-size: 44px; font-weight: 800; color: #ffffff; line-height: 1.1; margin-bottom: 6px; }
+  .stat-label { font-size: 16.5px; font-weight: 600; color: #fef9c3; margin-bottom: 4px; }
+  .stat-desc { font-size: 13.5px; color: rgba(255, 255, 255, 0.88); line-height: 1.45; }
+
+  /* MVC Diagram */
+  .mvc-flow {
+    display: grid;
+    grid-template-columns: 1fr 26px 1fr 26px 1fr 26px 1fr;
+    align-items: stretch;
+    margin-bottom: 14px;
+  }
+  .mvc-arrow { display: flex; align-items: center; justify-content: center; color: var(--sand); font-size: 20px; font-weight: 800; }
+  .mvc-box {
+    background: var(--card-solid);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .mvc-box--view { border-color: rgba(56, 189, 248, 0.55); }
+  .mvc-box--ctrl { border-color: rgba(245, 184, 65, 0.6); }
+  .mvc-box--model { border-color: rgba(52, 211, 153, 0.5); }
+  .mvc-box--db { border-color: rgba(167, 139, 250, 0.5); }
+  .mvc-box h4 { font-size: 13.5px; font-weight: 700; color: #ffffff; display: flex; justify-content: space-between; align-items: center; }
+  .mvc-box ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .mvc-box li { font-size: 12.2px; line-height: 1.42; color: var(--muted); }
+  .mvc-box li strong { color: #e2e8f0; }
+
+  /* CRUD Cards */
+  .crud-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .crud-card {
+    background: rgba(13, 34, 56, 0.9);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 14px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .crud-op { font-family: 'Manrope', 'Prompt', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+  .crud-c { border-top: 3px solid #34d399; } .crud-c .crud-op { color: #34d399; }
+  .crud-r { border-top: 3px solid #38bdf8; } .crud-r .crud-op { color: #38bdf8; }
+  .crud-u { border-top: 3px solid #f5b841; } .crud-u .crud-op { color: #f5b841; }
+  .crud-d { border-top: 3px solid #fb7185; } .crud-d .crud-op { color: #fb7185; }
+  .crud-card h4 { font-size: 14.5px; font-weight: 700; color: #ffffff; }
+  .crud-card p { font-size: 12.3px; line-height: 1.48; color: var(--muted); }
+
+  /* Screenshot Cards - Zero Horizontal Cropping */
+  .shot-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .shot-frame {
+    background: #081523;
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  }
+  .shot-bar {
+    background: #0d2238;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+    flex-shrink: 0;
+  }
+  .shot-dots { display: flex; gap: 4px; }
+  .shot-dots span { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, 0.26); }
+  .shot-url {
+    font-family: 'Manrope', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    background: rgba(0, 0, 0, 0.28);
+    padding: 2px 8px;
+    border-radius: 5px;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .shot-img-box {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: #07131f;
+    overflow: hidden;
+  }
+  .shot-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .shot-note {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 12px 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .shot-note h4 { font-size: 15px; font-weight: 700; color: var(--sky); }
+  .shot-note p { font-size: 13px; line-height: 1.5; color: var(--muted); }
+
+  /* Mobile mockup */
+  .phone-col { display: flex; flex-direction: column; gap: 8px; height: 465px; min-height: 0; overflow: hidden; }
+  .phone-frame {
+    background: #0a1828;
+    border: 2px solid rgba(56, 189, 248, 0.45);
+    border-radius: 22px;
+    padding: 8px;
+    height: 432px;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+  }
+  .phone-screen {
+    flex: 1;
+    height: 100%;
+    min-height: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #07131f;
+  }
+  .phone-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+  .phone-label { text-align: center; font-size: 13px; font-weight: 600; color: var(--sky); }
+
+  .er-wrap { display: grid; grid-template-columns: 1.52fr 0.88fr; gap: 18px; align-items: stretch; }
+  .er-svg-box {
+    background: rgba(10, 26, 44, 0.88);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .er-svg-box svg { width: 100%; height: auto; max-height: 495px; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- SLIDE 1 -->
+<section class="slide active" data-slide="1">
+  <div class="cover-top">
+    <div style="flex:1;">
+      <div class="cover-brand">
+        <img class="logo" src="assets/nextskill-logo-light.svg" alt="NextSkill" />
+        <span style="font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: #ffffff;">Next<span style="color: #38bdf8;">Skill</span></span>
+        <span class="badge badge--sky">CMM 349 · PROJECT #1</span>
+      </div>
+      <div class="cover-tag">โครงงานเว็บแอปพลิเคชัน · Upskill &amp; Reskill Learning System</div>
+      <h1 class="cover-title">NEXTSKILL</h1>
+      <div class="cover-subtitle">ระบบการเรียนรู้ออนไลน์เพื่อพัฒนาและปรับทักษะ</div>
+      <div class="cover-stack">
+        <span class="badge badge--sand">ASP.NET Core 10 MVC</span>
+        <span class="badge badge--sky">Razor Views + Ocean UI</span>
+        <span class="badge badge--emerald">SQL Server (14 Tables) + JSON Store</span>
+        <span class="badge badge--sky">Microsoft Azure</span>
+      </div>
+    </div>
+    <div class="cover-mascot">
+      <img src="assets/nimo-mascot.png" alt="Nimo Mascot" />
+    </div>
+  </div>
+
+  <div class="cover-meta">
+    <div>
+      <h4>ผู้จัดทำโครงงาน (กลุ่มรหัส 205 · 247 · 261)</h4>
+      <p>
+        <span class="placeholder">[ชื่อ-นามสกุล สมาชิกคนที่ 1]</span> · 67080500205<br />
+        <span class="placeholder">[ชื่อ-นามสกุล สมาชิกคนที่ 2]</span> · 67080500247<br />
+        <span class="placeholder">[ชื่อ-นามสกุล สมาชิกคนที่ 3]</span> · 67080500261
+      </p>
+    </div>
+    <div>
+      <h4>อาจารย์ที่ปรึกษา</h4>
+      <p>ณัฐพงษ์ ประเสริฐสังข์</p>
+    </div>
+    <div>
+      <h4>รายวิชา · วันที่นำเสนอ</h4>
+      <p>CMM 349 WEB APP DEVELOPMENT<br />· 26/11/2569</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2 -->
+<section class="slide" data-slide="2">
+  <div class="slide-head">
+    <div class="kicker">01 · บทนำ</div>
+    <h2 class="slide-title">ที่มา ปัญหา และโจทย์โครงงาน</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2-wide">
+      <div class="card card--gold" style="justify-content: space-between; padding: 26px;">
+        <div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--sand); margin-bottom: 12px;">โจทย์โครงงาน CMM 349 ข้อ 1 : Upskill &amp; Reskill Learning System</div>
+          <p style="font-size: 18.5px; line-height: 1.65; color: #ffffff; font-weight: 500;">
+            ระบบสำหรับผู้เรียนที่ต้องการเลือกเรียนหลักสูตร ลงทะเบียนเรียน และติดตามความก้าวหน้าในการเรียนได้ พร้อมทำแบบทดสอบเพื่อปลดล็อกเนื้อหาถัดไป
+          </p>
+        </div>
+        <div style="border-top: 1px solid rgba(245, 184, 65, 0.3); padding-top: 16px;">
+          <div style="font-size: 13.5px; font-weight: 700; color: var(--sky); margin-bottom: 8px;">ผู้ใช้งานหลัก 2 บทบาท</div>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <span class="badge badge--sky" style="font-size: 13px; padding: 6px 14px;">Learner (ผู้เรียน)</span>
+            <span class="badge badge--sand" style="font-size: 13px; padding: 6px 14px;">Admin / Instructor (ผู้ดูแลและผู้สอน)</span>
+          </div>
+        </div>
+      </div>
+      <div class="grid-2x2">
+        <div class="card">
+          <div class="card-num">01</div>
+          <div class="card-title">เรียนข้ามลำดับ ขาดการวัดผล</div>
+          <p>ผู้เรียนกดข้ามไปบทท้าย ๆ ได้ทันทีโดยยังไม่เข้าใจพื้นฐาน ทำให้ไม่มีเกณฑ์ผ่านที่ชัดเจน</p>
+        </div>
+        <div class="card">
+          <div class="card-num">02</div>
+          <div class="card-title">ติดตามความก้าวหน้าได้ยาก</div>
+          <p>ไม่เห็นภาพรวมว่าเรียนค้างที่บทใด เหลืออีกกี่ด่าน และยังไม่มีแรงจูงใจให้เรียนต่อเนื่อง</p>
+        </div>
+        <div class="card">
+          <div class="card-num">03</div>
+          <div class="card-title">จัดการหลักสูตรและข้อสอบซับซ้อน</div>
+          <p>ผู้ดูแลแก้ไขคอร์สที่เปิดสอนแล้วอาจกระทบประวัติผู้เรียนเดิม หากไม่มี Draft/Archive</p>
+        </div>
+        <div class="card">
+          <div class="card-num">04</div>
+          <div class="card-title">ใบยืนยันการเรียนขาดการตรวจสอบ</div>
+          <p>เมื่อเรียนจบคอร์ส ยังไม่มีเลขอ้างอิงและช่องทางให้บุคคลภายนอกตรวจสอบความถูกต้อง</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · UPSKILL &amp; RESKILL LEARNING SYSTEM</span><span class="page-num">2</span></div>
+</section>
+
+<!-- SLIDE 3 -->
+<section class="slide" data-slide="3">
+  <div class="slide-head">
+    <div class="kicker">01 · บทนำ</div>
+    <h2 class="slide-title">วัตถุประสงค์และขอบเขตระบบ</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2">
+      <div class="obj-list">
+        <div class="obj-item">
+          <div class="obj-num">1</div>
+          <div>
+            <div class="obj-text">พัฒนาเว็บแอปด้วย ASP.NET Core 10 MVC แยกโครงสร้างชัดเจน</div>
+            <div class="obj-sub">แบ่ง 5 Controllers, 9 Services, 14 Models/ViewModels และ Razor Views พร้อมธีมกลางวัน/กลางคืน</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-num">2</div>
+          <div>
+            <div class="obj-text">บังคับลำดับการเรียนและปลดล็อกด้วยแบบทดสอบฝั่ง Server</div>
+            <div class="obj-sub">ผ่านเกณฑ์รายบท (&gt; 50%) เพื่อปลดล็อกด่านถัดไป และสอบ Final Quiz ท้ายคอร์สเพื่อปลดล็อกคอร์สถัดไป</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-num">3</div>
+          <div>
+            <div class="obj-text">รองรับ CRUD ครบวงจรทั้งฝั่งผู้เรียนและผู้ดูแลระบบ</div>
+            <div class="obj-sub">จัดการโปรไฟล์ รายการโปรด คลังคอร์ส (Draft/Publish/Archive) นำเข้า JSON และ Quiz Studio</div>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-num">4</div>
+          <div>
+            <div class="obj-text">เชื่อมต่อฐานข้อมูล SQL Server และ Deploy Public บน Azure</div>
+            <div class="obj-sub">ใช้ 14 ตารางเชิงสัมพันธ์ร่วมกับ GitHub Actions CI/CD ขึ้นใช้งานจริงที่ Azure App Service</div>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px; justify-content: center;">
+        <div class="card card--teal">
+          <div class="card-title"><span class="badge badge--sky">Learner</span> ผู้เรียน</div>
+          <ul>
+            <li>สมัครสมาชิก เข้าสู่ระบบ และแก้ไขข้อมูลโปรไฟล์</li>
+            <li>ค้นหา กรองหมวดหมู่ ดูรายละเอียด และบันทึกรายการโปรด (ปักหมุด/โน้ต)</li>
+            <li>ลงทะเบียนเรียน ติดตาม XP เลเวล Streak และแผนที่เกาะบทเรียน</li>
+            <li>ดูวิดีโอ/บทอ่าน ทำแบบทดสอบรายบท &amp; Final Quiz เพื่อรับใบประกาศและตรวจเลขอ้างอิง</li>
+          </ul>
+        </div>
+        <div class="card card--gold">
+          <div class="card-title"><span class="badge badge--sand">Admin / Instructor</span> ผู้ดูแลระบบ</div>
+          <ul>
+            <li>สมัครด้วยรหัสเชิญแบบใช้ครั้งเดียว (SHA-256) และดูภาพรวม KPI / กราฟรายเดือน</li>
+            <li>เพิ่ม แก้ไข เผยแพร่ นำเข้า JSON และเก็บถาวร (Archive) คอร์สเรียน</li>
+            <li>เพิ่ม แก้ไข ลบ และทดลองทำข้อสอบใน Quiz Studio (รายบท &amp; Final Quiz)</li>
+            <li>ตรวจสอบรายชื่อบัญชีผู้ใช้และประวัติการเข้าสู่ระบบล่าสุด</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · UPSKILL &amp; RESKILL LEARNING SYSTEM</span><span class="page-num">3</span></div>
+</section>
+
+<!-- SLIDE 4 -->
+<section class="slide slide--accent" data-slide="4">
+  <div class="slide-head">
+    <div class="kicker">01 · ภาพรวมสถาปัตยกรรมและข้อมูลจริง</div>
+    <h2 class="slide-title">องค์ประกอบหลักของระบบ NextSkill</h2>
+  </div>
+  <div class="slide-body">
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-val">23 คอร์ส</div>
+        <div class="stat-label">67 บทเรียนในคลังข้อมูล</div>
+        <div class="stat-desc">เปิดสอน 21 คอร์สใน 4 หมวดหมู่ (ภาษาอังกฤษ โค้ด UX/UI การใช้ AI) และคอร์สฉบับร่าง 2 รายการ</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">241 ข้อสอบ</div>
+        <div class="stat-label">178 ข้อรายบท + 63 ข้อ Final Quiz</div>
+        <div class="stat-desc">ตรวจคำตอบและเก็บเฉลยฝั่ง Server 100% พร้อมคำอธิบายและคำใบ้จาก Nimo</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">14 ตาราง</div>
+        <div class="stat-label">SQL Server (Schema v4)</div>
+        <div class="stat-desc">แยกตารางผู้ใช้ ความคืบหน้า ผลสอบ ใบประกาศ และรายการโปรด พร้อม Lock &amp; Transaction</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">5 Controllers</div>
+        <div class="stat-label">9 Services · 14 Models · 28+ Views</div>
+        <div class="stat-desc">โครงสร้าง ASP.NET Core 10 MVC แยกความรับผิดชอบชัดเจนระหว่าง Route, Logic และ UI</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">Full CRUD</div>
+        <div class="stat-label">SQL Server + Atomic JSON Store</div>
+        <div class="stat-desc">ครบทุกการสร้าง อ่าน แก้ไข และลบ/จัดเก็บถาวร ทั้งฝั่งผู้เรียนและผู้ดูแลระบบ</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">Azure Public</div>
+        <div class="stat-label">CI/CD ผ่าน GitHub Actions</div>
+        <div class="stat-desc">เผยแพร่ขึ้น Azure App Service (East Asia) อัตโนมัติเมื่อ Push โค้ดขึ้น branch master</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · SYSTEM METRICS &amp; ARCHITECTURE</span><span class="page-num">4</span></div>
+</section>
+
+<!-- SLIDE 5 -->
+<section class="slide" data-slide="5">
+  <div class="slide-head">
+    <div class="kicker">02 · เทคโนโลยีและสถาปัตยกรรม MVC</div>
+    <h2 class="slide-title">เทคโนโลยีที่ใช้พัฒนา (Tech Stack)</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-4" style="height: 395px;">
+      <div class="card card--teal">
+        <div class="card-num" style="font-size: 13.5px; color: var(--sky);">FRONTEND</div>
+        <div class="card-title">Razor Views &amp; UI</div>
+        <p style="margin-bottom: 10px; color: #cbd5e1; font-size: 13.5px;">เรนเดอร์ฝั่งเซิร์ฟเวอร์ร่วมกับ JS โต้ตอบ</p>
+        <ul>
+          <li>ASP.NET Core Razor (<code>.cshtml</code>)</li>
+          <li>Bootstrap 5 + Custom Ocean Tokens</li>
+          <li>Vanilla JavaScript (ES Modules)</li>
+          <li>GSAP + ScrollTrigger (Motion)</li>
+          <li>ฟอนต์ Prompt &amp; Manrope + Day/Night</li>
+        </ul>
+      </div>
+      <div class="card card--gold">
+        <div class="card-num" style="font-size: 13.5px; color: var(--sand);">BACKEND</div>
+        <div class="card-title">ASP.NET Core 10 MVC</div>
+        <p style="margin-bottom: 10px; color: #cbd5e1; font-size: 13.5px;">ควบคุม Routing สิทธิ์ และกฎการเรียน</p>
+        <ul>
+          <li>.NET 10 / C# (Nullable + ImplicitUsings)</li>
+          <li>Cookie Auth (<code>NextSkill.Session</code>)</li>
+          <li>Identity <code>PasswordHasher&lt;Account&gt;</code></li>
+          <li>Data Protection (<code>QuizVersion</code>)</li>
+          <li>Rate Limiter &amp; Global Anti-Forgery</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-num" style="font-size: 13.5px; color: var(--emerald);">DATABASE &amp; STORE</div>
+        <div class="card-title">SQL Server + JSON</div>
+        <p style="margin-bottom: 10px; color: #cbd5e1; font-size: 13.5px;">จัดเก็บข้อมูลธุรกรรมและคลังเนื้อหา</p>
+        <ul>
+          <li>SQL Server / LocalDB (<code>NextSkillAuth</code>)</li>
+          <li><code>Microsoft.Data.SqlClient</code> (v6.1.6)</li>
+          <li>Parameterized SQL + <code>Serializable</code> Tx</li>
+          <li><code>LearningSchema</code> Migrate (<code>sp_getapplock</code>)</li>
+          <li>Atomic JSON Files + <code>.content.lock</code></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-num" style="font-size: 13.5px; color: #a78bfa;">CLOUD &amp; CI/CD</div>
+        <div class="card-title">Microsoft Azure</div>
+        <p style="margin-bottom: 10px; color: #cbd5e1; font-size: 13.5px;">Deploy Public พร้อมใช้งานจริง</p>
+        <ul>
+          <li>Azure App Service (<code>NextSkill</code> · East Asia)</li>
+          <li>GitHub Actions (<code>master_nextskill.yml</code>)</li>
+          <li>MSDeploy Web Deploy Profile</li>
+          <li>HTTPS Redirection + HSTS + CSP</li>
+          <li>Env Secrets (<code>ConnectionStrings</code>)</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; background: rgba(13, 34, 56, 0.72); border: 1px solid var(--card-border); border-radius: 10px; padding: 11px 18px;">
+      <span style="font-size: 13.5px; color: var(--muted);">รวม CSS Bundle สำหรับ Catalog ด้วย Roslyn MSBuild Task (<code>CombineCatalogStyles</code>) ใน <code>.csproj</code> และรองรับมือถือตั้งแต่ 360px ขึ้นไป</span>
+      <span class="badge badge--emerald">0 Build Warnings · 0 Errors</span>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · TECHNOLOGY STACK</span><span class="page-num">5</span></div>
+</section>
+
+<!-- SLIDE 6 -->
+<section class="slide" data-slide="6">
+  <div class="slide-head">
+    <div class="kicker">02 · สถาปัตยกรรมระบบ ASP.NET Core MVC</div>
+    <h2 class="slide-title">โครงสร้าง ASP.NET Core MVC และ Request Lifecycle</h2>
+  </div>
+  <div class="slide-body">
+    <div style="background: rgba(10, 26, 44, 0.85); border: 1px solid var(--card-border); border-radius: 14px; padding: 14px 18px; margin-bottom: 16px;">
+      <div style="font-size: 12.5px; font-weight: 700; color: var(--sand); margin-bottom: 8px;">HTTP REQUEST PIPELINE (<code>Program.cs</code>) &amp; MVC FLOW</div>
+      <svg viewBox="0 0 1120 132" style="width: 100%; height: auto;">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#f5b841"/>
+          </marker>
+        </defs>
+        <rect x="6" y="16" width="145" height="96" rx="10" fill="#122b44" stroke="#38bdf8" stroke-width="1.8"/>
+        <text x="78" y="46" fill="#38bdf8" font-size="13" font-weight="700" text-anchor="middle">Browser / Client</text>
+        <text x="78" y="66" fill="#cbd5e1" font-size="11.5" text-anchor="middle">HTTP / Fetch +</text>
+        <text x="78" y="82" fill="#cbd5e1" font-size="11.5" text-anchor="middle">X-CSRF-TOKEN</text>
+        <line x1="151" y1="64" x2="180" y2="64" stroke="#f5b841" stroke-width="2" marker-end="url(#arr)"/>
+
+        <rect x="184" y="8" width="215" height="112" rx="10" fill="#122b44" stroke="#a78bfa" stroke-width="1.6"/>
+        <text x="291" y="32" fill="#c4b5fd" font-size="12.5" font-weight="700" text-anchor="middle">Middleware Pipeline</text>
+        <text x="291" y="52" fill="#cbd5e1" font-size="11" text-anchor="middle">1. Security Headers (CSP, DENY)</text>
+        <text x="291" y="69" fill="#cbd5e1" font-size="11" text-anchor="middle">2. Cookie Auth + OnValidatePrincipal</text>
+        <text x="291" y="86" fill="#cbd5e1" font-size="11" text-anchor="middle">3. Authorization + RateLimiter</text>
+        <text x="291" y="103" fill="#cbd5e1" font-size="11" text-anchor="middle">4. AutoValidateAntiforgeryToken</text>
+        <line x1="399" y1="64" x2="428" y2="64" stroke="#f5b841" stroke-width="2" marker-end="url(#arr)"/>
+
+        <rect x="432" y="16" width="188" height="96" rx="10" fill="#16324f" stroke="#f5b841" stroke-width="2"/>
+        <text x="526" y="42" fill="#f5b841" font-size="13.5" font-weight="700" text-anchor="middle">Controller (C)</text>
+        <text x="526" y="62" fill="#e2e8f0" font-size="11.5" text-anchor="middle">Home · Account · Learning</text>
+        <text x="526" y="79" fill="#e2e8f0" font-size="11.5" text-anchor="middle">Favorites · Courses</text>
+        <text x="526" y="97" fill="#94a3b8" font-size="10.5" text-anchor="middle">ตรวจ ModelState &amp; สิทธิ์บทบาท</text>
+        <line x1="620" y1="64" x2="649" y2="64" stroke="#f5b841" stroke-width="2" marker-end="url(#arr)"/>
+
+        <rect x="653" y="16" width="218" height="96" rx="10" fill="#122b44" stroke="#34d399" stroke-width="1.8"/>
+        <text x="762" y="42" fill="#34d399" font-size="13.5" font-weight="700" text-anchor="middle">Services &amp; Model (M)</text>
+        <text x="762" y="62" fill="#e2e8f0" font-size="11.5" text-anchor="middle">AccountStore · LearningStore</text>
+        <text x="762" y="79" fill="#e2e8f0" font-size="11.5" text-anchor="middle">AdminContentStore · FavoriteStore</text>
+        <text x="762" y="97" fill="#94a3b8" font-size="10.5" text-anchor="middle">SQL Server (14 Tables) + JSON</text>
+        <line x1="871" y1="64" x2="900" y2="64" stroke="#f5b841" stroke-width="2" marker-end="url(#arr)"/>
+
+        <rect x="904" y="16" width="208" height="96" rx="10" fill="#122b44" stroke="#38bdf8" stroke-width="1.8"/>
+        <text x="1008" y="42" fill="#38bdf8" font-size="13.5" font-weight="700" text-anchor="middle">Razor View (V) / JSON</text>
+        <text x="1008" y="62" fill="#e2e8f0" font-size="11.5" text-anchor="middle">.cshtml + ViewModels</text>
+        <text x="1008" y="79" fill="#e2e8f0" font-size="11.5" text-anchor="middle">Auto HTML Encoding</text>
+        <text x="1008" y="97" fill="#94a3b8" font-size="10.5" text-anchor="middle">หรือ JSON Response สำหรับ AJAX</text>
+      </svg>
+    </div>
+
+    <div class="grid-4">
+      <div class="card" style="padding: 14px 16px;">
+        <div class="card-title" style="font-size: 15px; color: var(--sand);">Controllers/ (5 ไฟล์)</div>
+        <ul>
+          <li><span class="code-pill">HomeController</span> หน้าแรก คลังคอร์ส รายละเอียด</li>
+          <li><span class="code-pill">AccountController</span> สมัคร ล็อกอิน โปรไฟล์ ใบประกาศ และ Admin CRUD</li>
+          <li><span class="code-pill">LearningController</span> แผนที่ เรียนบท วิดีโอ Quiz</li>
+          <li><span class="code-pill">FavoritesController</span> เพลย์ลิสต์โปรด CRUD</li>
+        </ul>
+      </div>
+      <div class="card" style="padding: 14px 16px;">
+        <div class="card-title" style="font-size: 15px; color: var(--emerald);">Models/ (14 ไฟล์)</div>
+        <ul>
+          <li><span class="code-pill">AccountForms</span> ฟอร์มสมัคร/ล็อกอิน/แก้โปรไฟล์</li>
+          <li><span class="code-pill">Course</span> &amp; <span class="code-pill">Lesson</span> โครงสร้างหลักสูตร</li>
+          <li><span class="code-pill">LearningModels</span> State, Quiz, Request</li>
+          <li><span class="code-pill">CourseFavoritesViewModel</span> โน้ต/ปักหมุด</li>
+          <li><span class="code-pill">AdminDashboardModel</span> KPI &amp; กราฟ</li>
+        </ul>
+      </div>
+      <div class="card" style="padding: 14px 16px;">
+        <div class="card-title" style="font-size: 15px; color: #a78bfa;">Services/ (9 ไฟล์)</div>
+        <ul>
+          <li><span class="code-pill">AccountStore</span> Auth, Lockout, KPI SQL</li>
+          <li><span class="code-pill">LearningStore</span> (+ FinalQuiz, Certificates)</li>
+          <li><span class="code-pill">CourseFavoriteStore</span> CRUD รายการโปรด</li>
+          <li><span class="code-pill">AdminContentStore</span> JSON CRUD + Lock</li>
+          <li><span class="code-pill">LearningCatalog</span> ตรวจสิทธิ์ &amp; เกณฑ์ผ่าน</li>
+        </ul>
+      </div>
+      <div class="card" style="padding: 14px 16px;">
+        <div class="card-title" style="font-size: 15px; color: var(--sky);">Views/ &amp; Database/</div>
+        <ul>
+          <li><span class="code-pill">Views/Home</span> หน้าแรก คลังคอร์ส Privacy</li>
+          <li><span class="code-pill">Views/Learning</span> Island Practice FinalQuiz</li>
+          <li><span class="code-pill">Views/Account</span> Login Dashboard Admin Cert</li>
+          <li><span class="code-pill">Views/Favorites</span> Index &amp; Edit</li>
+          <li><span class="code-pill">Database/</span> Setup.sql + JSON + Invite PS1</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · ASP.NET CORE MVC ARCHITECTURE</span><span class="page-num">6</span></div>
+</section>
+
+<!-- SLIDE 7 -->
+<section class="slide" data-slide="7">
+  <div class="slide-head">
+    <div class="kicker">02 · ระบบฐานข้อมูลและการจัดเก็บข้อมูล</div>
+    <h2 class="slide-title">สถาปัตยกรรมฐานข้อมูลแบบ Hybrid (SQL Server + JSON Store)</h2>
+    <p class="slide-sub">แยกจัดเก็บข้อมูลธุรกรรมผู้เรียนไว้ในฐานข้อมูลเชิงสัมพันธ์ และจัดเก็บคลังบทเรียน/ข้อสอบในไฟล์ JSON เพื่อความยืดหยุ่นและปลอดภัย</p>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2">
+      <div class="card card--teal">
+        <div class="card-title" style="justify-content: space-between;">
+          <span>SQL Server (<code>NextSkillAuth</code>)</span>
+          <span class="badge badge--sky">14 ตาราง · Schema v4</span>
+        </div>
+        <p style="margin-bottom: 12px; color: #e2e8f0;">จัดเก็บข้อมูลบัญชี ความคืบหน้า ผลสอบ ใบประกาศ และรายการโปรดที่ต้องรองรับการทำงานพร้อมกันและ Transaction</p>
+        <ul>
+          <li><strong>Parameterized Queries 100%</strong> ผ่าน <code>Microsoft.Data.SqlClient</code> ป้องกัน SQL Injection</li>
+          <li><strong>Serializable + Profile Row Lock</strong> ใน <code>LearningStore.WithProfileAsync</code> (<code>UPDLOCK, HOLDLOCK</code>) ป้องกัน Race Condition ตอนส่งคำตอบหรือให้ XP</li>
+          <li><strong>Schema Self-Healing &amp; App Lock</strong> ใช้ <code>sys.sp_getapplock</code> ใน <code>LearningSchema.cs</code> เพื่อสร้าง/อัปเดตตารางอย่างปลอดภัยเมื่อเปิดแอปครั้งแรก</li>
+          <li><strong>Composite PK &amp; Foreign Key Cascade</strong> ป้องกันการลงทะเบียน/จบด่านซ้ำ และผูก <code>CourseFavorites</code> กับ <code>Users</code></li>
+        </ul>
+      </div>
+      <div class="card card--gold">
+        <div class="card-title" style="justify-content: space-between;">
+          <span>JSON Content Store (<code>Database/</code>)</span>
+          <span class="badge badge--sand">23 คอร์ส · 241 ข้อสอบ</span>
+        </div>
+        <p style="margin-bottom: 12px; color: #e2e8f0;">จัดเก็บข้อมูลหลักสูตร (<code>custom_courses.json</code>) และคลังข้อสอบ (<code>custom_questions.json</code>) พร้อมระบบล็อกไฟล์และนำเข้าได้ทันที</p>
+        <ul>
+          <li><strong>Cross-Process File Lock (<code>.content.lock</code>)</strong> ล็อกการเขียนไฟล์ทุกครั้งใน <code>AdminContentStore.AcquireWriteLock()</code> ป้องกันข้อมูลทับกัน</li>
+          <li><strong>Atomic File Write</strong> เขียนลงไฟล์ชั่วคราว <code>.content-{guid}.tmp</code> แล้ว <code>Flush(flushToDisk: true)</code> ก่อน <code>File.Move(..., overwrite: true)</code></li>
+          <li><strong>Lifecycle &amp; Soft Archive</strong> คอร์สใหม่เริ่มเป็น Draft (<code>IsPublished=false</code>), ลบคอร์สใช้ <code>IsArchived=true</code> และเช็ก <code>HighestRecordedCourseIdAsync</code> จาก SQL เพื่อไม่นำ ID เก่ามาใช้ซ้ำ</li>
+          <li><strong>Strict JSON Import</strong> จำกัดขนาดไม่เกิน 1 MB, 1–100 คอร์ส/ไฟล์ และตั้ง <code>UnmappedMemberHandling.Disallow</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · HYBRID DATABASE ARCHITECTURE</span><span class="page-num">7</span></div>
+</section>
+
+<!-- SLIDE 8 -->
+<section class="slide" data-slide="8">
+  <div class="slide-head">
+    <div class="kicker">02 · ระบบฐานข้อมูลเชิงสัมพันธ์</div>
+    <h2 class="slide-title">โครงสร้างฐานข้อมูล SQL Server (ER Diagram — 14 ตาราง)</h2>
+  </div>
+  <div class="slide-body">
+    <div class="er-wrap">
+      <div class="er-svg-box">
+        <svg viewBox="0 0 740 480">
+          <defs>
+            <marker id="er-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+            </marker>
+            <marker id="er-gold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#f5b841"/>
+            </marker>
+          </defs>
+
+          <rect x="10" y="14" width="168" height="72" rx="8" fill="#132d48" stroke="#f5b841" stroke-width="1.8"/>
+          <text x="94" y="38" fill="#f5b841" font-size="13" font-weight="700" text-anchor="middle">Users</text>
+          <text x="94" y="56" fill="#cbd5e1" font-size="10.5" text-anchor="middle">PK: Id (GUID), Email (UQ)</text>
+          <text x="94" y="72" fill="#94a3b8" font-size="10" text-anchor="middle">PasswordHash, LockoutEnd</text>
+
+          <rect x="10" y="106" width="168" height="66" rx="8" fill="#132d48" stroke="#f5b841" stroke-width="1.6"/>
+          <text x="94" y="129" fill="#f5b841" font-size="13" font-weight="700" text-anchor="middle">Admins</text>
+          <text x="94" y="147" fill="#cbd5e1" font-size="10.5" text-anchor="middle">PK: Id (GUID), Email (UQ)</text>
+          <text x="94" y="162" fill="#94a3b8" font-size="10" text-anchor="middle">FailedAttempts, LastLoginAt</text>
+
+          <rect x="10" y="192" width="168" height="66" rx="8" fill="#132d48" stroke="#a78bfa" stroke-width="1.6"/>
+          <text x="94" y="215" fill="#c4b5fd" font-size="13" font-weight="700" text-anchor="middle">AdminInvitations</text>
+          <text x="94" y="233" fill="#cbd5e1" font-size="10.5" text-anchor="middle">PK: CodeHash (SHA-256)</text>
+          <text x="94" y="248" fill="#94a3b8" font-size="10" text-anchor="middle">ExpiresAt, RedeemedAt</text>
+
+          <rect x="10" y="286" width="168" height="82" rx="8" fill="#132d48" stroke="#fb7185" stroke-width="1.8"/>
+          <text x="94" y="310" fill="#fda4af" font-size="13" font-weight="700" text-anchor="middle">CourseFavorites</text>
+          <text x="94" y="328" fill="#cbd5e1" font-size="10.5" text-anchor="middle">PK: (UserId, CourseId)</text>
+          <text x="94" y="344" fill="#cbd5e1" font-size="10.5" text-anchor="middle">Note(300), IsPinned, AddedAt</text>
+          <text x="94" y="359" fill="#94a3b8" font-size="9.5" text-anchor="middle">FK UserId → Users(Id) CASCADE</text>
+          <path d="M 10 50 L 2 50 L 2 325 L 8 325" fill="none" stroke="#f5b841" stroke-width="1.6" marker-end="url(#er-gold)"/>
+
+          <rect x="10" y="388" width="176" height="78" rx="8" fill="#132d48" stroke="#34d399" stroke-width="1.8"/>
+          <text x="98" y="411" fill="#6ee7b7" font-size="13" font-weight="700" text-anchor="middle">LearningCertificates</text>
+          <text x="98" y="429" fill="#cbd5e1" font-size="10.5" text-anchor="middle">PK: (AccountId, CourseId)</text>
+          <text x="98" y="445" fill="#cbd5e1" font-size="10.5" text-anchor="middle">UQ: ReferenceCode (GUID)</text>
+          <text x="98" y="459" fill="#94a3b8" font-size="9" text-anchor="middle">LearnerName, CourseTitle, EarnedAt</text>
+
+          <rect x="230" y="135" width="210" height="96" rx="10" fill="#163a5c" stroke="#38bdf8" stroke-width="2.2"/>
+          <text x="335" y="160" fill="#38bdf8" font-size="14" font-weight="800" text-anchor="middle">LearningProfiles</text>
+          <text x="335" y="180" fill="#ffffff" font-size="11" text-anchor="middle">PK: (AccountId, AccountRole)</text>
+          <text x="335" y="198" fill="#cbd5e1" font-size="10.5" text-anchor="middle">ActiveCourseId, Xp (CHECK &gt;= 0)</text>
+          <text x="335" y="214" fill="#94a3b8" font-size="10" text-anchor="middle">HasCompletedOnboarding, UpdatedAt</text>
+
+          <line x1="178" y1="50" x2="226" y2="165" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#er-arr)"/>
+          <line x1="178" y1="138" x2="226" y2="180" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#er-arr)"/>
+
+          <rect x="230" y="18" width="210" height="74" rx="8" fill="#132d48" stroke="#34d399" stroke-width="1.6"/>
+          <text x="335" y="42" fill="#6ee7b7" font-size="13" font-weight="700" text-anchor="middle">LearningAchievements</text>
+          <text x="335" y="60" fill="#cbd5e1" font-size="10.5" text-anchor="middle">PK: (AccountId, Role, Key)</text>
+          <text x="335" y="76" fill="#94a3b8" font-size="10" text-anchor="middle">'first-lesson', 'course-{id}', EarnedAt</text>
+          <line x1="335" y1="135" x2="335" y2="94" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#er-arr)"/>
+
+          <rect x="230" y="280" width="210" height="84" rx="10" fill="#163a5c" stroke="#38bdf8" stroke-width="2"/>
+          <text x="335" y="305" fill="#38bdf8" font-size="13.5" font-weight="800" text-anchor="middle">LearningCourseProgress</text>
+          <text x="335" y="324" fill="#ffffff" font-size="10.5" text-anchor="middle">PK: (AccountId, Role, CourseId)</text>
+          <text x="335" y="341" fill="#cbd5e1" font-size="10.5" text-anchor="middle">LastLessonId, StartedAt, UpdatedAt</text>
+          <text x="335" y="356" fill="#94a3b8" font-size="9.5" text-anchor="middle">FK → LearningProfiles</text>
+          <line x1="335" y1="231" x2="335" y2="277" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#er-arr)"/>
+
+          <rect x="230" y="394" width="210" height="70" rx="8" fill="#11273e" stroke="#64748b" stroke-width="1.4"/>
+          <text x="335" y="418" fill="#cbd5e1" font-size="12.5" font-weight="700" text-anchor="middle">NextSkillLearningSchema</text>
+          <text x="335" y="436" fill="#94a3b8" font-size="10.5" text-anchor="middle">PK: Version (Current = 4)</text>
+          <text x="335" y="452" fill="#64748b" font-size="9.5" text-anchor="middle">+ LearningDailyLessons (legacy table)</text>
+
+          <rect x="500" y="30" width="228" height="82" rx="8" fill="#132d48" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="614" y="54" fill="#7dd3fc" font-size="13" font-weight="700" text-anchor="middle">LearningLessonCompletions</text>
+          <text x="614" y="72" fill="#cbd5e1" font-size="10.5" text-anchor="middle">PK: (AccountId, Role, CourseId, LessonId)</text>
+          <text x="614" y="89" fill="#94a3b8" font-size="10" text-anchor="middle">AwardedXp, CompletedAt (Daily Goals)</text>
+
+          <rect x="500" y="136" width="228" height="78" rx="8" fill="#132d48" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="614" y="160" fill="#7dd3fc" font-size="13" font-weight="700" text-anchor="middle">LearningVideoWatchStarts</text>
+          <text x="614" y="178" fill="#cbd5e1" font-size="10.5" text-anchor="middle">PK: (AccountId, Role, CourseId, LessonId)</text>
+          <text x="614" y="195" fill="#94a3b8" font-size="10" text-anchor="middle">VideoId (BIN2), StartedAt</text>
+
+          <rect x="500" y="238" width="228" height="78" rx="8" fill="#132d48" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="614" y="262" fill="#7dd3fc" font-size="13" font-weight="700" text-anchor="middle">LearningLessonVideos</text>
+          <text x="614" y="280" fill="#cbd5e1" font-size="10.5" text-anchor="middle">PK: (AccountId, Role, CourseId, LessonId)</text>
+          <text x="614" y="297" fill="#94a3b8" font-size="10" text-anchor="middle">VideoId (BIN2), ReachedEndAt</text>
+
+          <rect x="500" y="340" width="228" height="100" rx="8" fill="#132d48" stroke="#f5b841" stroke-width="1.8"/>
+          <text x="614" y="365" fill="#f5b841" font-size="13" font-weight="700" text-anchor="middle">LearningCourseFinalResults</text>
+          <text x="614" y="384" fill="#cbd5e1" font-size="10.5" text-anchor="middle">PK: (AccountId, Role, CourseId)</text>
+          <text x="614" y="402" fill="#cbd5e1" font-size="10.5" text-anchor="middle">Attempts, Score, QuestionCount</text>
+          <text x="614" y="420" fill="#94a3b8" font-size="10" text-anchor="middle">PassedAt, AwardedXp (+100)</text>
+
+          <path d="M 440 315 L 472 315 L 472 71 L 496 71" fill="none" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#er-arr)"/>
+          <path d="M 472 175 L 496 175" fill="none" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#er-arr)"/>
+          <path d="M 472 277 L 496 277" fill="none" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#er-arr)"/>
+          <path d="M 440 335 L 472 335 L 472 390 L 496 390" fill="none" stroke="#f5b841" stroke-width="1.6" marker-end="url(#er-gold)"/>
+        </svg>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div class="card card--gold" style="padding: 16px 18px;">
+          <div class="card-title" style="font-size: 16px;">จุดเด่นด้านความถูกต้องของข้อมูล</div>
+          <ul>
+            <li><strong>Composite PK</strong> <code>(AccountId, Role, CourseId, LessonId)</code> บังคับระดับ DB ว่าผู้เรียนรับ XP ซ้ำต่อบทเดิมหรือจบคอร์สซ้ำไม่ได้</li>
+            <li><strong>CHECK Constraints</strong> คุม <code>Xp &gt;= 0</code>, <code>Score &lt;= QuestionCount</code>, <code>Attempts &gt; 0</code></li>
+            <li><strong>UNIQUE ReferenceCode</strong> ออกรหัส GUID ต่อใบประกาศ 1 ใบ และเก็บ Snapshot ชื่อผู้เรียน/คอร์ส ณ วันที่จบ</li>
+          </ul>
+        </div>
+        <div class="card" style="padding: 16px 18px; flex: 1;">
+          <div class="card-title" style="font-size: 16px; color: var(--sky);">สรุปกลุ่มตารางทั้งหมด (14 ตาราง)</div>
+          <ul>
+            <li><strong>3 ตารางบัญชี</strong>: <code>Users</code>, <code>Admins</code>, <code>AdminInvitations</code></li>
+            <li><strong>7 ตารางการเรียน &amp; รางวัล</strong>: <code>LearningProfiles</code>, <code>LearningCourseProgress</code>, <code>LearningLessonCompletions</code>, <code>LearningVideoWatchStarts</code>, <code>LearningLessonVideos</code>, <code>LearningCourseFinalResults</code>, <code>LearningAchievements</code></li>
+            <li><strong>2 ตารางใบประกาศ &amp; โปรด</strong>: <code>LearningCertificates</code>, <code>CourseFavorites</code></li>
+            <li><strong>2 ตารางระบบ</strong>: <code>NextSkillLearningSchema</code>, <code>LearningDailyLessons</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · RELATIONAL DATABASE SCHEMA</span><span class="page-num">8</span></div>
+</section>
+
+<!-- SLIDE 9 -->
+<section class="slide" data-slide="9">
+  <div class="slide-head">
+    <div class="kicker">03 · โครงสร้าง MVC ของแต่ละฟังก์ชัน (1 / 6)</div>
+    <h2 class="slide-title">ฟังก์ชันสมัครสมาชิก เข้าสู่ระบบ และจัดการโปรไฟล์</h2>
+  </div>
+  <div class="slide-body">
+    <div class="mvc-flow">
+      <div class="mvc-box mvc-box--view">
+        <h4>View (Razor) <span class="badge badge--sky">V</span></h4>
+        <ul>
+          <li><span class="code-pill">Register.cshtml</span> ฟอร์มสมัคร Learner &amp; Admin + ช่องรหัสเชิญ</li>
+          <li><span class="code-pill">Login.cshtml</span> สลับแท็บผู้เรียน / ผู้ดูแล + RememberMe</li>
+          <li><span class="code-pill">Dashboard.cshtml</span> โปรไฟล์ ความคืบหน้า + ฟอร์มแก้ชื่อ/อีเมล</li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--ctrl">
+        <h4>Controller <span class="badge badge--sand">C</span></h4>
+        <ul>
+          <li><span class="code-pill">AccountController</span></li>
+          <li><strong>Register / AdminRegister</strong> (RateLimit 20/min)</li>
+          <li><strong>Login / AdminLogin</strong> ออก Cookie + <code>AdminSessionVersion</code></li>
+          <li><strong>UpdateProfile</strong> ตรวจ ModelState + รีเฟรช Claims</li>
+          <li><strong>Logout</strong> SignOut + ล้าง Cookie</li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--model">
+        <h4>Model &amp; Service <span class="badge badge--emerald">M</span></h4>
+        <ul>
+          <li><span class="code-pill">RegisterForm</span> · <span class="code-pill">LoginForm</span> · <span class="code-pill">ProfileEditForm</span></li>
+          <li><span class="code-pill">LearnerProfileViewModel</span></li>
+          <li><span class="code-pill">AccountStore</span> จัดการ Hash, Lockout, Redeem Invite, Profile Update</li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--db">
+        <h4>Database <span class="badge badge--sky">DB</span></h4>
+        <ul>
+          <li><strong>dbo.Users</strong> (Learner)</li>
+          <li><strong>dbo.Admins</strong> (Admin)</li>
+          <li><strong>dbo.AdminInvitations</strong> (<code>CodeHash</code> SHA-256, <code>ExpiresAt</code>, <code>RedeemedAt</code>)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="crud-grid">
+      <div class="crud-card crud-c">
+        <div class="crud-op">Create · สมัครสมาชิก</div>
+        <h4>Learner &amp; Admin Register</h4>
+        <p>ตรวจความยาวรหัส ≥ 8 ตัว, แฮชรหัสผ่านด้วย <code>PasswordHasher</code>; หากเป็น Admin ต้อง Redeem รหัสเชิญจาก <code>AdminInvitations</code> (ใช้ครั้งเดียว หมดอายุ 24 ชม.) ภายใน Transaction</p>
+      </div>
+      <div class="crud-card crud-r">
+        <div class="crud-op">Read · ยืนยันตัวตน &amp; โปรไฟล์</div>
+        <h4>Login &amp; Session Guard</h4>
+        <p>ตรวจบัญชีจาก <code>NormalizedEmail</code>, ผิดครบ 5 ครั้งล็อก 15 นาที; ทุก Request ตรวจ <code>OnValidatePrincipal</code> กับ SQL และ <code>AdminSessionVersionClaim</code> ป้องกัน Cookie หมดสิทธิ์</p>
+      </div>
+      <div class="crud-card crud-u">
+        <div class="crud-op">Update · แก้ไขโปรไฟล์</div>
+        <h4>UpdateLearnerProfileAsync</h4>
+        <p>แก้ชื่อแสดงได้ทันที แต่ถ้าเปลี่ยนอีเมลต้องยืนยัน <code>CurrentPassword</code> และตรวจอีเมลซ้ำใน <code>dbo.Users</code> (<code>WITH UPDLOCK</code>) พร้อมออก Cookie Claims ใหม่ให้ตรงกัน</p>
+      </div>
+      <div class="crud-card crud-d">
+        <div class="crud-op">Security · ออกจากระบบ</div>
+        <h4>CSRF + Logout</h4>
+        <p><code>[HttpPost] Logout</code> ป้องกันด้วย Anti-Forgery Token อัตโนมัติ, <code>SafeReturnUrl</code> ป้องกัน Open Redirect และตั้ง <code>ResponseCache(NoStore = true)</code> ทั้ง Controller</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · MVC PER-FUNCTION · AUTH &amp; PROFILE</span><span class="page-num">9</span></div>
+</section>
+
+<!-- SLIDE 10 -->
+<section class="slide" data-slide="10">
+  <div class="slide-head">
+    <div class="kicker">03 · โครงสร้าง MVC ของแต่ละฟังก์ชัน (2 / 6)</div>
+    <h2 class="slide-title">ฟังก์ชันดูรายชื่อหลักสูตร ค้นหา และรายละเอียดคอร์ส</h2>
+  </div>
+  <div class="slide-body">
+    <div class="mvc-flow">
+      <div class="mvc-box mvc-box--view">
+        <h4>View (Razor) <span class="badge badge--sky">V</span></h4>
+        <ul>
+          <li><span class="code-pill">Home/Index.cshtml</span> หน้าแรก Ocean World + คอร์สปัจจุบัน</li>
+          <li><span class="code-pill">Home/Courses.cshtml</span> ช่องค้นหา, แท็กหมวดหมู่, ตัวเรียง, Pagination + ปุ่มหัวใจ</li>
+          <li><span class="code-pill">Home/Details.cshtml</span> รายละเอียดคอร์ส บทเรียน รางวัล XP และปุ่มเริ่มเรียน</li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--ctrl">
+        <h4>Controller <span class="badge badge--sand">C</span></h4>
+        <ul>
+          <li><span class="code-pill">HomeController</span></li>
+          <li><strong>Index()</strong> แสดงชื่อผู้เรียน/ผู้เยี่ยมชม</li>
+          <li><strong>Courses(q, tag, sort, page, pageSize)</strong> กรอง ค้นหา เรียง และแบ่งหน้า</li>
+          <li><strong>Details(id)</strong> ตรวจมีคอร์สจริง (404 ถ้าไม่พบ) + โหลดสถานะโปรด</li>
+          <li><span class="code-pill">CoursesController</span> Redirect URL เก่า</li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--model">
+        <h4>Model &amp; Service <span class="badge badge--emerald">M</span></h4>
+        <ul>
+          <li><span class="code-pill">Course</span> · <span class="code-pill">Lesson</span> · <span class="code-pill">CourseBrowseItem</span></li>
+          <li><span class="code-pill">CourseCatalogPageViewModel</span></li>
+          <li><span class="code-pill">CourseDetailsPageViewModel</span></li>
+          <li><span class="code-pill">CourseCatalog</span> + <span class="code-pill">LearningCatalog</span> + <span class="code-pill">CourseFavoriteStore</span></li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--db">
+        <h4>Data Source <span class="badge badge--sky">JSON + DB</span></h4>
+        <ul>
+          <li><strong>custom_courses.json</strong> กรองเฉพาะ <code>IsPublished != false</code> และ <code>!IsArchived</code></li>
+          <li><strong>custom_questions.json</strong> นับความพร้อม <code>CanStart</code> ของแต่ละคอร์ส</li>
+          <li><strong>dbo.CourseFavorites</strong> ดึง <code>HashSet&lt;int&gt;</code> เฉพาะ Role User</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card card--teal">
+        <div class="card-title">การค้นหาและตัวกรอง (Search &amp; Filter)</div>
+        <ul>
+          <li>ค้นหาแบบ Case-insensitive ครอบคลุมชื่อคอร์ส หมวดหมู่ (TH/EN) แหล่งสื่อ และรายการทักษะ (<code>Skills</code>)</li>
+          <li>ตัวกรองหมวดหมู่สร้างแบบไดนามิกจากข้อมูลจริง + แท็กพิเศษ <code>Short</code> (คอร์สที่เรียนจบภายใน ≤ 45 นาที)</li>
+        </ul>
+      </div>
+      <div class="card card--gold">
+        <div class="card-title">การจัดเรียงและแบ่งหน้า (Sort &amp; Paging)</div>
+        <ul>
+          <li>เรียงได้ 3 แบบ: <code>Recommended</code> (คอร์สเปิดสอน &amp; แนะนำก่อน), <code>A-Z</code>, และ <code>Recently</code> (เรียงตาม <code>CreatedAt DESC</code>)</li>
+          <li>กำหนด <code>pageSize = Math.Clamp(pageSize, 3, 24)</code> และกันค่าหน้าเกินขอบเขต</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color: var(--emerald);">การเชื่อมกับสิทธิ์เรียน (Entry Gate)</div>
+        <ul>
+          <li>ใน <code>Details.cshtml</code> ถ้าเป็นผู้เรียนที่เข้าสู่ระบบ ปุ่ม <strong>ลงทะเบียนและเริ่มเรียน</strong> จะพาไป <code>/Learning/Island</code></li>
+          <li>หากเป็น Guest ใน Production ปุ่มจะพาไป <code>/Account/Login?returnUrl=...</code> เพื่อยืนยันตัวตนก่อนบันทึกความคืบหน้า</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · MVC PER-FUNCTION · CATALOG &amp; DETAILS</span><span class="page-num">10</span></div>
+</section>
+
+<!-- SLIDE 11 -->
+<section class="slide" data-slide="11">
+  <div class="slide-head">
+    <div class="kicker">03 · โครงสร้าง MVC ของแต่ละฟังก์ชัน (3 / 6)</div>
+    <h2 class="slide-title">ฟังก์ชันลงทะเบียนเรียน แผนที่บทเรียน และ Gate ปลดล็อก</h2>
+  </div>
+  <div class="slide-body">
+    <div class="mvc-flow">
+      <div class="mvc-box mvc-box--view">
+        <h4>View (Razor) <span class="badge badge--sky">V</span></h4>
+        <ul>
+          <li><span class="code-pill">Learning/Island.cshtml</span> แผนที่เกาะบทเรียนของคอร์ส + XP/เลเวล/Streak/ภารกิจ</li>
+          <li><span class="code-pill">_IslandDashboard.cshtml</span> การ์ดสถานะแต่ละเกาะ (<code>completed</code> / <code>current</code> / <code>locked</code>)</li>
+          <li><span class="code-pill">_HomeLearningDashboard.cshtml</span> การ์ดคอร์สปัจจุบันและภารกิจบนหน้าแรก</li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--ctrl">
+        <h4>Controller <span class="badge badge--sand">C</span></h4>
+        <ul>
+          <li><span class="code-pill">LearningController</span></li>
+          <li><strong>Entry()</strong> Dispatch จาก <code>/</code> ไปคอร์สล่าสุด</li>
+          <li><strong>POST SelectCourse</strong> ลงทะเบียน/สลับคอร์ส</li>
+          <li><strong>GET Island(courseId, lessonId)</strong> ตรวจ Gate ฝั่ง Server</li>
+          <li><strong>POST Checkpoint</strong> บันทึกด่านล่าสุด</li>
+          <li><strong>GET State</strong> คืน JSON State ล่าสุด</li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--model">
+        <h4>Model &amp; Service <span class="badge badge--emerald">M</span></h4>
+        <ul>
+          <li><span class="code-pill">LearningState</span> · <span class="code-pill">LearningCourseProgress</span></li>
+          <li><span class="code-pill">LearningIslandViewModel</span></li>
+          <li><span class="code-pill">LearningStore</span>: <code>SelectCourseAsync</code>, <code>StateAsync</code>, <code>CheckpointAsync</code>, <code>RequireUnlockedCourse</code>, <code>RequireAccess</code></li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--db">
+        <h4>Database <span class="badge badge--sky">SQL Server</span></h4>
+        <ul>
+          <li><strong>dbo.LearningProfiles</strong> (<code>ActiveCourseId</code>, <code>Xp</code>, <code>HasCompletedOnboarding</code>)</li>
+          <li><strong>dbo.LearningCourseProgress</strong> (<code>CourseId</code>, <code>LastLessonId</code>, <code>StartedAt</code>)</li>
+          <li><strong>dbo.LearningLessonCompletions</strong> (คำนวณด่านที่ปลดล็อก)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card card--teal">
+        <div class="card-title">กลไก Enrollment &amp; Sequential Gate (ฝั่ง Server)</div>
+        <ul>
+          <li><strong>ลงทะเบียน (<code>SelectCourseAsync</code>)</strong>: สร้างแถวใน <code>LearningCourseProgress</code> และตั้ง <code>ActiveCourseId</code> ภายใต้ Transaction <code>Serializable</code></li>
+          <li><strong>ปลดล็อกระดับบทเรียน</strong>: <code>ReadStateAsync</code> ใช้ <code>TakeWhile</code> นับบทที่ผ่านต่อเนื่อง ทำให้บทที่ 2 จะเปิดก็ต่อเมื่อมีแถวสอบผ่านบทที่ 1 ใน SQL แล้วเท่านั้น (หากผู้ใช้พิมพ์ URL ข้ามไปที่ <code>/Learning/Practice?lessonId=3</code> เซิร์ฟเวอร์จะคืน <strong>403 Forbidden</strong>)</li>
+          <li><strong>ปลดล็อกระดับคอร์ส</strong>: ในหมวดเดียวกัน คอร์สลำดับถัดไป (<code>PrerequisiteCourseId</code>) จะถูกล็อกจนกว่าจะผ่าน Final Quiz ของคอร์สก่อนหน้า</li>
+        </ul>
+      </div>
+      <div class="card card--gold">
+        <div class="card-title">การติดตามความคืบหน้าและภารกิจรายวัน (Gamification)</div>
+        <ul>
+          <li><strong>% ความคืบหน้า</strong>: คำนวณจาก <code>CompletedLessons.Count * 100 / (Lessons.Length + 1)</code> และเปลี่ยนเป็น <code>100%</code> เมื่อสอบ Final Quiz ผ่าน</li>
+          <li><strong>XP &amp; Level</strong>: ผ่านบทเรียนได้ <code>+50 XP</code>, ผ่าน Final Quiz ได้ <code>+100 XP</code>, ขึ้น 1 เลเวลทุก ๆ <code>200 XP</code></li>
+          <li><strong>Streak &amp; ภารกิจรายวัน</strong>: แปลงเวลาจาก UTC เป็นเวลาไทย (<code>ThailandTime</code> UTC+7) คำนวณจำนวนวันที่เรียนต่อเนื่องและประวัติย้อนหลัง 7 วัน</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · MVC PER-FUNCTION · ENROLLMENT &amp; GATE</span><span class="page-num">11</span></div>
+</section>
+
+<!-- SLIDE 12 -->
+<section class="slide" data-slide="12">
+  <div class="slide-head">
+    <div class="kicker">03 · โครงสร้าง MVC ของแต่ละฟังก์ชัน (4 / 6)</div>
+    <h2 class="slide-title">ฟังก์ชันบทเรียน แบบทดสอบรายบท Final Quiz และใบประกาศ</h2>
+  </div>
+  <div class="slide-body">
+    <div class="mvc-flow">
+      <div class="mvc-box mvc-box--view">
+        <h4>View (Razor) <span class="badge badge--sky">V</span></h4>
+        <ul>
+          <li><span class="code-pill">Learning/Practice.cshtml</span> วิดีโอ YouTube + บทอ่าน + Quiz + Nimo Hint</li>
+          <li><span class="code-pill">Learning/FinalQuiz.cshtml</span> ข้อสอบปิดคอร์ส + แสดงผลคะแนน</li>
+          <li><span class="code-pill">Account/Certificate.cshtml</span> &amp; <span class="code-pill">VerifyCertificate.cshtml</span></li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--ctrl">
+        <h4>Controller <span class="badge badge--sand">C</span></h4>
+        <ul>
+          <li><span class="code-pill">LearningController</span>: <code>Lesson</code>, <code>StartVideo</code>, <code>CompleteVideo</code>, <code>RestartVideo</code>, <code>CompleteLesson</code>, <code>FinalQuiz</code> (GET/POST)</li>
+          <li><span class="code-pill">AccountController</span>: <code>Certificate(courseId)</code>, <code>IssueCertificate</code>, <code>VerifyCertificate(code)</code></li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--model">
+        <h4>Model &amp; Service <span class="badge badge--emerald">M</span></h4>
+        <ul>
+          <li><span class="code-pill">LearningLessonContent</span> · <span class="code-pill">LearningCompletion</span></li>
+          <li><span class="code-pill">CourseFinalQuizPage</span> · <span class="code-pill">LearningCertificate</span></li>
+          <li><span class="code-pill">LearningStore</span> (<code>.cs</code>, <code>.FinalQuiz.cs</code>, <code>.Certificates.cs</code>)</li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--db">
+        <h4>Database <span class="badge badge--sky">SQL Server</span></h4>
+        <ul>
+          <li><code>LearningVideoWatchStarts</code> &amp; <code>LearningLessonVideos</code></li>
+          <li><code>LearningLessonCompletions</code></li>
+          <li><code>LearningCourseFinalResults</code></li>
+          <li><code>LearningAchievements</code> &amp; <code>LearningCertificates</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title" style="color: var(--sky);">1. กติกาวิดีโอ &amp; แบบทดสอบรายบท</div>
+        <ul>
+          <li>ต้องเรียก <code>StartVideo</code> ก่อน จึงจะผ่าน <code>CompleteVideo</code> (ดูถึง ≥ 90% หรือกด <code>SkipVideo</code> ตาม UI) เพื่อปลดล็อกโจทย์</li>
+          <li><span class="code-pill">PublicQuestion</span> ตัดเฉลย (<code>CorrectChoice</code>) ออกก่อนส่งให้ Browser และตรวจ <code>QuizVersion</code> (SHA-256 + DataProtection) กันแก้โจทย์กลางทาง</li>
+          <li>ต้องตอบถูกอย่างน้อย <code>count / 2 + 1</code> จึงบันทึก <code>LearningLessonCompletions</code> และเปิดบทถัดไป</li>
+        </ul>
+      </div>
+      <div class="card card--gold">
+        <div class="card-title">2. Final Quiz ท้ายคอร์ส</div>
+        <ul>
+          <li><code>RequireFinalAccess</code> ตรวจว่าเรียนผ่านครบทุกบทแล้ว (<code>FinalQuizReady</code>)</li>
+          <li>ใช้ชุดคำถามท้ายคอร์ส (<code>LessonId == 0</code>) บันทึกจำนวนครั้ง (<code>Attempts</code>), คะแนน (<code>Score</code>), วันที่ผ่าน (<code>PassedAt</code>) ลง <code>LearningCourseFinalResults</code></li>
+          <li>เมื่อสอบผ่าน รับโบนัส <code>+100 XP</code>, ปลดล็อกคอร์สถัดไป และออกรางวัลอัตโนมัติ</li>
+        </ul>
+      </div>
+      <div class="card card--teal">
+        <div class="card-title">3. ใบประกาศและหน้าตรวจสอบสาธารณะ</div>
+        <ul>
+          <li><code>AwardCourseAsync</code> บันทึก Snapshot ลง <code>LearningCertificates</code> พร้อม <code>ReferenceCode</code> (GUID แบบ Unique)</li>
+          <li>หน้า <code>/Account/VerifyCertificate?code=...</code> เปิดให้บุคคลภายนอกตรวจชื่อคอร์สและวันที่ออกได้โดยไม่เปิดเผยชื่อ/อีเมลผู้เรียน พร้อม Header <code>noindex</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · MVC PER-FUNCTION · ASSESSMENT &amp; CERTIFICATES</span><span class="page-num">12</span></div>
+</section>
+
+<!-- SLIDE 13 -->
+<section class="slide" data-slide="13">
+  <div class="slide-head">
+    <div class="kicker">03 · โครงสร้าง MVC ของแต่ละฟังก์ชัน (5 / 6) · เน้น CRUD</div>
+    <h2 class="slide-title">ฟังก์ชันรายการโปรด (Favorites — Full CRUD บน SQL Server)</h2>
+  </div>
+  <div class="slide-body">
+    <div class="mvc-flow">
+      <div class="mvc-box mvc-box--view">
+        <h4>View (Razor) <span class="badge badge--sky">V</span></h4>
+        <ul>
+          <li><span class="code-pill">_FavoriteButton.cshtml</span> ปุ่มหัวใจในหน้าคลังและรายละเอียดคอร์ส</li>
+          <li><span class="code-pill">Favorites/Index.cshtml</span> แสดงรายการโปรด + ป้ายปักหมุด + โน้ต + ปุ่มนำออก</li>
+          <li><span class="code-pill">Favorites/Edit.cshtml</span> ฟอร์มแก้โน้ต &amp; ปักหมุด</li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--ctrl">
+        <h4>Controller <span class="badge badge--sand">C</span></h4>
+        <ul>
+          <li><span class="code-pill">FavoritesController</span> <code>[Authorize(Roles = "User")]</code></li>
+          <li><strong>GET Index()</strong></li>
+          <li><strong>POST Set(courseId, save)</strong> รองรับทั้ง Form &amp; JSON AJAX</li>
+          <li><strong>GET Edit(id)</strong> &amp; <strong>POST Edit(id, Form)</strong></li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--model">
+        <h4>Model &amp; Service <span class="badge badge--emerald">M</span></h4>
+        <ul>
+          <li><span class="code-pill">CourseFavorite</span> · <span class="code-pill">FavoriteCourseItem</span></li>
+          <li><span class="code-pill">CourseFavoritesPageViewModel</span></li>
+          <li><span class="code-pill">FavoriteEditForm</span> (<code>Note</code> ≤ 300 chars, <code>IsPinned</code>)</li>
+          <li><span class="code-pill">CourseFavoriteStore</span></li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--db">
+        <h4>Database <span class="badge badge--sky">SQL Server</span></h4>
+        <ul>
+          <li><strong>dbo.CourseFavorites</strong></li>
+          <li><code>PK (UserId, CourseId)</code></li>
+          <li><code>FK UserId → dbo.Users(Id) ON DELETE CASCADE</code></li>
+          <li><code>Note nvarchar(300)</code>, <code>IsPinned bit</code>, <code>AddedAt</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="crud-grid">
+      <div class="crud-card crud-c">
+        <div class="crud-op">Create · เพิ่มรายการโปรด</div>
+        <h4>POST /Favorites/Set (save=true)</h4>
+        <p>ตรวจสอบว่าคอร์สเปิดสอนจริง จากนั้นรันคำสั่ง SQL <code>INSERT ... SELECT WHERE NOT EXISTS (...) WITH (UPDLOCK, HOLDLOCK)</code> ป้องกันการกดซ้ำพร้อมกันและรักษาโน้ตเดิมไว้</p>
+      </div>
+      <div class="crud-card crud-r">
+        <div class="crud-op">Read · ดูเพลย์ลิสต์ส่วนตัว</div>
+        <h4>GET /Favorites/Index</h4>
+        <p>ดึงรายการด้วย <code>ORDER BY IsPinned DESC, AddedAt DESC, CourseId</code> แล้ว Join กับ <code>CourseCatalog.GetBrowseItems()</code> ในหน่วยความจำ พร้อมรองรับ fallback หาก DB ไม่พร้อม (503)</p>
+      </div>
+      <div class="crud-card crud-u">
+        <div class="crud-op">Update · แก้ไขโน้ตและปักหมุด</div>
+        <h4>POST /Favorites/Edit/{id}</h4>
+        <p>ตรวจสอบ <code>FavoriteEditForm</code> (<code>StringLength(300)</code>) แล้วรัน <code>UPDATE dbo.CourseFavorites SET Note=@note, IsPinned=@isPinned WHERE UserId=@userId AND CourseId=@courseId</code></p>
+      </div>
+      <div class="crud-card crud-d">
+        <div class="crud-op">Delete · นำออกจากรายการ</div>
+        <h4>POST /Favorites/Set (save=false)</h4>
+        <p>รัน <code>DELETE FROM dbo.CourseFavorites WHERE UserId=@userId AND CourseId=@courseId</code> ส่งผลทันทีทั้งแบบคลิกปุ่มหัวใจบนคลังคอร์ส (JSON) และปุ่มนำออกในหน้ารายการโปรด</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · MVC PER-FUNCTION · FAVORITES CRUD</span><span class="page-num">13</span></div>
+</section>
+
+<!-- SLIDE 14 -->
+<section class="slide" data-slide="14">
+  <div class="slide-head">
+    <div class="kicker">03 · โครงสร้าง MVC ของแต่ละฟังก์ชัน (6 / 6) · เน้น CRUD</div>
+    <h2 class="slide-title">ฟังก์ชัน Admin Dashboard (Full CRUD คอร์ส, นำเข้า JSON และ Quiz Studio)</h2>
+  </div>
+  <div class="slide-body">
+    <div class="mvc-flow">
+      <div class="mvc-box mvc-box--view">
+        <h4>View &amp; Client JS <span class="badge badge--sky">V</span></h4>
+        <ul>
+          <li><span class="code-pill">AdminDashboard.cshtml</span> + <span class="code-pill">_CourseLessonsEditor.cshtml</span></li>
+          <li><span class="code-pill">admin-dashboard.js</span> Modal สร้าง/แก้คอร์ส, นำเข้า JSON, Quiz Studio, ทดลองตอบ + แนบ <code>X-CSRF-TOKEN</code></li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--ctrl">
+        <h4>Controller <span class="badge badge--sand">C</span></h4>
+        <ul>
+          <li><span class="code-pill">AccountController</span> <code>[Authorize(Roles = "Admin")]</code></li>
+          <li><strong>GET</strong> <code>AdminDashboard</code>, <code>AdminGetQuestions</code></li>
+          <li><strong>POST</strong> <code>AdminSaveCourse</code>, <code>AdminPublishCourse</code>, <code>AdminDeleteCourse</code>, <code>AdminUploadCourses</code>, <code>AdminSaveQuestion</code>, <code>AdminDeleteQuestion</code></li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--model">
+        <h4>Model &amp; Service <span class="badge badge--emerald">M</span></h4>
+        <ul>
+          <li><span class="code-pill">AdminDashboardModel</span> · <span class="code-pill">Course</span> · <span class="code-pill">AdminQuizQuestion</span></li>
+          <li><span class="code-pill">AdminContentStore</span> ตรวจกฎธุรกิจ (<code>EnsurePublishable</code>), เขียนไฟล์ Atomic, Lock</li>
+          <li><span class="code-pill">AccountStore.AdminOverviewAsync</span> สรุป KPI SQL</li>
+        </ul>
+      </div>
+      <div class="mvc-arrow">→</div>
+      <div class="mvc-box mvc-box--db">
+        <h4>Storage <span class="badge badge--sky">JSON + SQL</span></h4>
+        <ul>
+          <li><strong>custom_courses.json</strong> (Draft / Published / Archived)</li>
+          <li><strong>custom_questions.json</strong> (รายบท + Final Quiz <code>LessonId=0</code>)</li>
+          <li><strong>SQL Server</strong> อ่าน KPI และ <code>HighestRecordedCourseIdAsync</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="crud-grid">
+      <div class="crud-card crud-c">
+        <div class="crud-op">Create · สร้างและนำเข้า</div>
+        <h4>Course + JSON Import + Quiz</h4>
+        <p>สร้างคอร์สใหม่เป็นฉบับร่าง (<code>IsPublished=false</code>) และสร้าง ID ต่อจากเลขสูงสุดใน JSON + SQL; นำเข้าไฟล์/ข้อความ JSON ได้ครั้งละ 1–100 คอร์ส (≤ 1 MB) และเพิ่มคำถามใหม่ (GUID ID)</p>
+      </div>
+      <div class="crud-card crud-r">
+        <div class="crud-op">Read · ภาพรวมและคลังข้อมูล</div>
+        <h4>Overview KPI &amp; Directory</h4>
+        <p>ดึง KPI เฉพาะผู้เรียนใน <code>dbo.Users</code> (ไม่รวม Guest Preview), กราฟกิจกรรม 3/6/12 เดือน, สัดส่วนหมวดหมู่, คอร์ส 23 รายการ, คำถาม 241 ข้อ และรายชื่อบัญชีล่าสุด 100 รายการ</p>
+      </div>
+      <div class="crud-card crud-u">
+        <div class="crud-op">Update · แก้ไขและเผยแพร่</div>
+        <h4>Edit + Publish Gate + Quiz Edit</h4>
+        <p>แก้คอร์ส/บทเรียน (อ่าน/วิดีโอ), แก้คำถาม 2–4 ตัวเลือก; เมื่อกดเผยแพร่ (<code>AdminPublishCourse</code>) ระบบบังคับว่าทุกบทต้องมีเนื้อหา+คำถาม และมี Final Quiz (<code>LessonId=0</code>) ≥ 2 ข้อ</p>
+      </div>
+      <div class="crud-card crud-d">
+        <div class="crud-op">Delete · เก็บถาวรและลบข้อสอบ</div>
+        <h4>Soft Archive &amp; Safe Delete</h4>
+        <p><code>AdminDeleteCourse</code> ตั้ง <code>IsArchived=true</code> เพื่อซ่อนจากคลังแต่คง ID และชื่อคอร์สไว้ให้ใบประกาศเก่า; <code>AdminDeleteQuestion</code> ห้ามลบจนคอร์สที่เผยแพร่แล้วผิดเกณฑ์</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · MVC PER-FUNCTION · ADMIN CRUD</span><span class="page-num">14</span></div>
+</section>
+
+<!-- SLIDE 15 -->
+<section class="slide" data-slide="15">
+  <div class="slide-head">
+    <div class="kicker">04 · ผลการพัฒนา (ภาพจากระบบจริง)</div>
+    <h2 class="slide-title">หน้าแรก คลังคอร์ส และรายละเอียดคอร์ส</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-3">
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Home/Index</div></div>
+          <div class="shot-img-box"><img src="assets/shots/home-desktop.png" alt="หน้าแรก NextSkill" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>หน้าแรก (Ocean World)</h4>
+          <p>เล่าเรื่องราวการเดินทางไปกับ Nimo พร้อมปุ่มเริ่มเรียนและการ์ดคอร์สปัจจุบันสำหรับผู้ที่ล็อกอินแล้ว</p>
+        </div>
+      </div>
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Home/Courses</div></div>
+          <div class="shot-img-box"><img src="assets/shots/courses-desktop.png" alt="คลังคอร์สเรียน" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>คลังคอร์ส (21 คอร์สเปิดสอน)</h4>
+          <p>ค้นหาชื่อคอร์ส/ทักษะ กรองตามหมวดหมู่ เรียงลำดับ และกดปุ่มหัวใจเพิ่มคอร์สโปรดได้ทันที</p>
+        </div>
+      </div>
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Home/Details/101</div></div>
+          <div class="shot-img-box"><img src="assets/shots/details-desktop.png" alt="รายละเอียดคอร์ส" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>รายละเอียดคอร์ส</h4>
+          <p>แสดงจำนวนเกาะ เวลาเรียน XP บทเรียน โบนัส +100 XP รายชื่อด่าน และปุ่มลงทะเบียนเรียน</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · UI SHOWCASE · DISCOVERY &amp; CATALOG</span><span class="page-num">15</span></div>
+</section>
+
+<!-- SLIDE 16 -->
+<section class="slide" data-slide="16">
+  <div class="slide-head">
+    <div class="kicker">04 · ผลการพัฒนา (ภาพจากระบบจริง)</div>
+    <h2 class="slide-title">แผนที่บทเรียน (Island) และหน้าเรียน/ทำแบบทดสอบ (Practice)</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2">
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Learning/Island?courseId=101</div></div>
+          <div class="shot-img-box"><img src="assets/shots/island-desktop.png" alt="แผนที่บทเรียน" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>แผนที่เกาะบทเรียน (Sequential Gate)</h4>
+          <p>ด่านที่ผ่านแล้วแสดงสถานะ <strong>✓ สำเร็จแล้ว · ทบทวน</strong> และปลดล็อกด่านถัดไป พร้อมแถบเลเวล XP, Streak และภารกิจประจำวัน</p>
+        </div>
+      </div>
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Learning/Practice?courseId=101&amp;lessonId=2</div></div>
+          <div class="shot-img-box"><img src="assets/shots/practice-desktop.png" alt="หน้าบทเรียนและแบบทดสอบ" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>หน้าบทเรียนและแบบทดสอบ (Practice)</h4>
+          <p>แสดงเนื้อหาบทอ่านหรือวิดีโอ YouTube ฝั่งซ้าย และความคืบหน้าข้อสอบ เกณฑ์ผ่าน พร้อมคำใบ้จาก Nimo ฝั่งขวา</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · UI SHOWCASE · LEARNING &amp; QUIZ</span><span class="page-num">16</span></div>
+</section>
+
+<!-- SLIDE 17 -->
+<section class="slide" data-slide="17">
+  <div class="slide-head">
+    <div class="kicker">04 · ผลการพัฒนา (ภาพจากระบบจริง)</div>
+    <h2 class="slide-title">แบบทดสอบท้ายคอร์ส ใบประกาศ และหน้าตรวจสอบเลขอ้างอิง</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-3">
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Learning/FinalQuiz?courseId=101</div></div>
+          <div class="shot-img-box"><img src="assets/shots/final-quiz.png" alt="แบบทดสอบท้ายคอร์ส" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>ผล Final Quiz ท้ายคอร์ส</h4>
+          <p>แสดงผลคะแนน (ตอบถูก 3 จาก 3 ข้อ), โบนัส +100 XP และปลดล็อกปุ่มไปคอร์สถัดไปหรือเปิดใบประกาศ</p>
+        </div>
+      </div>
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Account/Certificate?courseId=101</div></div>
+          <div class="shot-img-box"><img src="assets/shots/certificate.png" alt="ใบประกาศ" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>ใบประกาศการเรียนจบ</h4>
+          <p>บันทึก Snapshot ชื่อผู้เรียน ชื่อคอร์ส วันที่เรียนจบ วันที่ออก และ <code>ReferenceCode</code> (GUID) พร้อมปุ่มพิมพ์</p>
+        </div>
+      </div>
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Account/VerifyCertificate?code=...</div></div>
+          <div class="shot-img-box"><img src="assets/shots/verify-certificate.png" alt="ตรวจสอบใบประกาศ" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>ตรวจสอบใบประกาศสาธารณะ</h4>
+          <p>บุคคลภายนอกนำเลขอ้างอิงมาตรวจชื่อคอร์สและวันที่ออกจริงได้โดยไม่เปิดเผยชื่อและอีเมลผู้เรียน</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · UI SHOWCASE · FINAL QUIZ &amp; CERTIFICATE</span><span class="page-num">17</span></div>
+</section>
+
+<!-- SLIDE 18 -->
+<section class="slide" data-slide="18">
+  <div class="slide-head">
+    <div class="kicker">04 · ผลการพัฒนา (ภาพจากระบบจริง · Learner CRUD)</div>
+    <h2 class="slide-title">แดชบอร์ดโปรไฟล์ผู้เรียน และระบบรายการโปรด (ปักหมุด/โน้ต)</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-3">
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Account/Dashboard</div></div>
+          <div class="shot-img-box"><img src="assets/shots/learner-dashboard.png" alt="โปรไฟล์ผู้เรียน" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>แดชบอร์ดผู้เรียน (Read/Update)</h4>
+          <p>แสดงเลเวล XP สะสม วันเรียนต่อเนื่อง คอร์สที่เรียน ใบประกาศ เหรียญความสำเร็จ และฟอร์มแก้ไขชื่อ/อีเมล</p>
+        </div>
+      </div>
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Favorites</div></div>
+          <div class="shot-img-box"><img src="assets/shots/favorites-index.png" alt="รายการโปรด" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>รายการโปรด (Read/Delete)</h4>
+          <p>เรียงคอร์สที่ปักหมุดขึ้นก่อน แสดงโน้ตช่วยจำส่วนตัว พร้อมปุ่มแก้ไขและนำออกจากรายการโปรด</p>
+        </div>
+      </div>
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Favorites/Edit/101</div></div>
+          <div class="shot-img-box"><img src="assets/shots/favorites-edit.png" alt="แก้ไขรายการโปรด" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>แก้ไขรายการโปรด (Update)</h4>
+          <p>เพิ่ม/แก้ไขโน้ตช่วยจำได้สูงสุด 300 ตัวอักษร และสลับสถานะปักหมุดบันทึกลง <code>dbo.CourseFavorites</code></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · UI SHOWCASE · DASHBOARD &amp; FAVORITES CRUD</span><span class="page-num">18</span></div>
+</section>
+
+<!-- SLIDE 19 -->
+<section class="slide" data-slide="19">
+  <div class="slide-head">
+    <div class="kicker">04 · ผลการพัฒนา (ภาพจากระบบจริง · Admin CRUD)</div>
+    <h2 class="slide-title">ระบบหลังบ้านผู้ดูแล: Overview KPI, จัดการคอร์ส และ Quiz Studio</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-3">
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Account/AdminDashboard#dashboard</div></div>
+          <div class="shot-img-box"><img src="assets/shots/admin-overview.png" alt="Admin Overview" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>ภาพรวมผู้ดูแล (KPI &amp; Trends)</h4>
+          <p>สรุปยอดผู้เรียนจริงจาก SQL (แยกจาก Preview), กราฟรายเดือน 3/6/12 เดือน และสัดส่วนคอร์สตามหมวดหมู่</p>
+        </div>
+      </div>
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Account/AdminDashboard#courses</div></div>
+          <div class="shot-img-box"><img src="assets/shots/admin-courses.png" alt="จัดการคอร์สเรียน" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>จัดการคอร์สเรียน (Full CRUD)</h4>
+          <p>สร้างคอร์สฉบับร่าง นำเข้า JSON (1–100 คอร์ส) แก้ไขบทเรียน เผยแพร่ และเก็บถาวร (Soft Archive)</p>
+        </div>
+      </div>
+      <div class="shot-col">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Account/AdminDashboard#questions</div></div>
+          <div class="shot-img-box"><img src="assets/shots/admin-questions.png" alt="Quiz Studio" /></div>
+        </div>
+        <div class="shot-note">
+          <h4>Quiz Studio (241 ข้อสอบ)</h4>
+          <p>กรองตามคอร์ส/คำค้น เพิ่ม แก้ไข ลบข้อสอบรายบทและ Final Quiz พร้อมปุ่มทดลองตอบแบบโต้ตอบได้ทันที</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · UI SHOWCASE · ADMIN CRUD</span><span class="page-num">19</span></div>
+</section>
+
+<!-- SLIDE 20 -->
+<section class="slide" data-slide="20">
+  <div class="slide-head">
+    <div class="kicker">04 · ผลการพัฒนา (Responsive &amp; Theme)</div>
+    <h2 class="slide-title">รองรับการใช้งานทุกหน้าจอ และธีมกลางวัน / กลางคืน</h2>
+  </div>
+  <div class="slide-body">
+    <div style="display: grid; grid-template-columns: 1.25fr 0.62fr 0.62fr; gap: 20px; height: 465px; align-items: stretch;">
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div class="shot-frame">
+          <div class="shot-bar"><div class="shot-dots"><span></span><span></span><span></span></div><div class="shot-url">/Home/Index · Dark Mode (nextskill.theme.v1)</div></div>
+          <div class="shot-img-box"><img src="assets/shots/home-dark.png" alt="โหมดกลางคืน" /></div>
+        </div>
+        <div class="card" style="padding: 13px 16px; flex: 1;">
+          <div class="card-title" style="font-size: 15px; margin-bottom: 4px;">จุดเด่น UX/UI &amp; Accessibility</div>
+          <p style="font-size: 13px;">สลับธีมกลางวัน/กลางคืนได้ข้ามหน้าด้วย <code>localStorage</code> พร้อมฉากท้องฟ้า ดวงจันทร์ และดาวตก รองรับหน้าจอตั้งแต่ <code>360px</code> โดยไม่เกิด Horizontal Overflow และเคารพ <code>prefers-reduced-motion</code></p>
+        </div>
+      </div>
+      <div class="phone-col">
+        <div class="phone-frame">
+          <div class="phone-screen"><img src="assets/shots/home-mobile.png" alt="หน้าแรกมือถือ" /></div>
+        </div>
+        <div class="phone-label">หน้าแรก (390px)</div>
+      </div>
+      <div class="phone-col">
+        <div class="phone-frame">
+          <div class="phone-screen"><img src="assets/shots/courses-mobile.png" alt="คลังคอร์สมือถือ" /></div>
+        </div>
+        <div class="phone-label">คลังคอร์ส (390px)</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · RESPONSIVE &amp; OCEAN THEME</span><span class="page-num">20</span></div>
+</section>
+
+<!-- SLIDE 21 -->
+<section class="slide" data-slide="21">
+  <div class="slide-head">
+    <div class="kicker">05 · คุณภาพและการนำขึ้นใช้งานจริง (Deploy Public)</div>
+    <h2 class="slide-title">การ Deploy Public บน Microsoft Azure, CI/CD และความปลอดภัย</h2>
+  </div>
+  <div class="slide-body">
+    <div style="background: rgba(10, 26, 44, 0.85); border: 1px solid var(--card-border); border-radius: 14px; padding: 14px 18px; margin-bottom: 16px;">
+      <div style="font-size: 12.5px; font-weight: 700; color: var(--sand); margin-bottom: 8px;">DEPLOYMENT &amp; CI/CD PIPELINE (<code>.github/workflows/master_nextskill.yml</code> + Web Deploy)</div>
+      <svg viewBox="0 0 1120 128" style="width: 100%; height: auto;">
+        <defs>
+          <marker id="dep-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+          </marker>
+        </defs>
+        <rect x="8" y="14" width="190" height="96" rx="10" fill="#122b44" stroke="#f5b841" stroke-width="1.8"/>
+        <text x="103" y="42" fill="#f5b841" font-size="13.5" font-weight="700" text-anchor="middle">GitHub Repository</text>
+        <text x="103" y="63" fill="#e2e8f0" font-size="11.5" text-anchor="middle">Push ไปที่ branch: master</text>
+        <text x="103" y="82" fill="#94a3b8" font-size="10.5" text-anchor="middle">หรือ Trigger workflow_dispatch</text>
+        <line x1="198" y1="62" x2="232" y2="62" stroke="#38bdf8" stroke-width="2" marker-end="url(#dep-arr)"/>
+
+        <rect x="236" y="14" width="235" height="96" rx="10" fill="#122b44" stroke="#38bdf8" stroke-width="1.8"/>
+        <text x="353" y="42" fill="#38bdf8" font-size="13.5" font-weight="700" text-anchor="middle">GitHub Actions (Build Job)</text>
+        <text x="353" y="63" fill="#e2e8f0" font-size="11.5" text-anchor="middle">Setup .NET 10.x → Release Build</text>
+        <text x="353" y="82" fill="#94a3b8" font-size="10.5" text-anchor="middle">dotnet publish → Upload Artifact</text>
+        <line x1="471" y1="62" x2="505" y2="62" stroke="#38bdf8" stroke-width="2" marker-end="url(#dep-arr)"/>
+
+        <rect x="509" y="14" width="265" height="96" rx="10" fill="#163a5c" stroke="#34d399" stroke-width="2"/>
+        <text x="641" y="40" fill="#34d399" font-size="13.5" font-weight="800" text-anchor="middle">Azure App Service (Production)</text>
+        <text x="641" y="61" fill="#ffffff" font-size="11.5" text-anchor="middle">App: NextSkill · Region: East Asia</text>
+        <text x="641" y="79" fill="#cbd5e1" font-size="11" text-anchor="middle">Resource Group: NextSkill205-247-261</text>
+        <text x="641" y="96" fill="#94a3b8" font-size="10" text-anchor="middle">Deploy via Azure Login OIDC / MSDeploy</text>
+        <line x1="774" y1="62" x2="808" y2="62" stroke="#38bdf8" stroke-width="2" marker-end="url(#dep-arr)"/>
+
+        <rect x="812" y="14" width="298" height="96" rx="10" fill="#122b44" stroke="#a78bfa" stroke-width="1.8"/>
+        <text x="961" y="42" fill="#c4b5fd" font-size="13.5" font-weight="700" text-anchor="middle">Public Endpoint &amp; Azure SQL</text>
+        <text x="961" y="63" fill="#e2e8f0" font-size="10.5" text-anchor="middle">nextskill-gtg7b0hyhvhxeegz.eastasia-01</text>
+        <text x="961" y="79" fill="#e2e8f0" font-size="10.5" text-anchor="middle">.azurewebsites.net (HTTPS + HSTS)</text>
+        <text x="961" y="96" fill="#94a3b8" font-size="10" text-anchor="middle">Env: ConnectionStrings__NextSkill + AllowedHosts</text>
+      </svg>
+    </div>
+
+    <div class="grid-2">
+      <div class="card card--teal">
+        <div class="card-title">การตั้งค่า Production และความปลอดภัย (Hardening)</div>
+        <ul>
+          <li><strong>AllowedHosts Whitelist</strong> จำกัดเฉพาะโดเมน Localhost และ Azure (<code>nextskill.azurewebsites.net</code>, <code>nextskill-gtg7b0hyhvhxeegz.eastasia-01.azurewebsites.net</code>)</li>
+          <li><strong>Secret Management</strong> เก็บ <code>ConnectionStrings__NextSkill</code> และ <code>Privacy__ContactEmail</code> ใน Azure App Settings ไม่ฝังรหัสผ่านในโค้ด</li>
+          <li><strong>Production Behavior</strong> ปิด Guest Preview อัตโนมัติเมื่อ <code>!IsDevelopment()</code>, บังคับ <code>CookieSecurePolicy.Always</code>, <code>UseHsts()</code> และ <code>UseHttpsRedirection()</code></li>
+        </ul>
+      </div>
+      <div class="card card--gold">
+        <div class="card-title">มาตรการป้องกันช่องโหว่ระดับแอปพลิเคชัน</div>
+        <ul>
+          <li><strong>Anti-CSRF &amp; Anti-XSS</strong> ตรวจ <code>AutoValidateAntiforgeryToken</code> ทุก POST และสร้าง DOM ฝั่ง JS ด้วย <code>textContent</code> / <code>escapeHtml</code></li>
+          <li><strong>Security Headers</strong> ส่ง <code>CSP</code> (อนุญาตเฉพาะ frame YouTube/Vimeo), <code>X-Frame-Options: DENY</code>, <code>X-Content-Type-Options: nosniff</code>, <code>Referrer-Policy</code></li>
+          <li><strong>Auth &amp; Brute-force</strong> ล็อก 15 นาทีเมื่อล็อกอินผิด 5 ครั้ง, Rate Limiter 20 req/min และ Admin Invite แบบ Hash ใช้ครั้งเดียว</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · PUBLIC DEPLOYMENT &amp; SECURITY</span><span class="page-num">21</span></div>
+</section>
+
+<!-- SLIDE 22 -->
+<section class="slide" data-slide="22">
+  <div class="slide-head">
+    <div class="kicker">05 · สรุปผลและสาธิตระบบ</div>
+    <h2 class="slide-title">สรุปผลการพัฒนา ปัญหาที่แก้ไข และสาธิตระบบ (Q&amp;A)</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2-wide" style="align-items: stretch;">
+      <div style="display: flex; flex-direction: column; gap: 13px;">
+        <div class="card card--teal" style="padding: 15px 18px;">
+          <div class="card-title" style="font-size: 16px;">ผลลัพธ์ที่ได้ตามเป้าหมาย</div>
+          <ul>
+            <li>ระบบเรียน Upskill &amp; Reskill ครบตามโจทย์ CMM349 ทั้ง Guest, Learner และ Admin</li>
+            <li>แยกชั้น <strong>ASP.NET Core 10 MVC</strong> ชัดเจน (5 Controllers, 9 Services, 14 Models) และมี <strong>CRUD ครบ</strong> ทั้งฝั่ง SQL Server (Favorites, Profile) และ JSON Store (Courses, Quiz Studio)</li>
+            <li>Deploy Public ใช้งานจริงบน <strong>Microsoft Azure</strong> พร้อม GitHub Actions CI/CD</li>
+          </ul>
+        </div>
+        <div class="card card--gold" style="padding: 15px 18px;">
+          <div class="card-title" style="font-size: 16px;">ปัญหาที่พบระหว่างตรวจสอบ &amp; การแก้ไขจริง</div>
+          <ul>
+            <li><strong>ความปลอดภัย</strong>: ย้ายรหัสเชิญ Admin ไปเก็บเป็น SHA-256 ใช้ครั้งเดียวใน DB, คืน Global CSRF, แก้ DOM XSS และเขียนไฟล์ JSON แบบ Atomic</li>
+            <li><strong>การวัดผล &amp; ใบประกาศ</strong>: เพิ่ม Final Quiz ท้ายคอร์ส (<code>LearningCourseFinalResults</code>), ระบบออก/ตรวจใบประกาศสาธารณะ (<code>VerifyCertificate</code>) และปรับสมดุลความยาวตัวเลือกข้อสอบ</li>
+          </ul>
+        </div>
+        <div class="card" style="padding: 13px 18px;">
+          <div class="card-title" style="font-size: 15.5px; color: #a78bfa;">แนวทางพัฒนาต่อในอนาคต</div>
+          <p style="font-size: 13.5px;">เพิ่มชุด Automated Integration Tests (<code>xUnit</code> + <code>WebApplicationFactory</code>) ใน Solution และเพิ่มระบบ Analytics รายบทเรียนสำหรับผู้สอน</p>
+        </div>
+      </div>
+
+      <div class="card" style="align-items: center; justify-content: center; text-align: center; background: linear-gradient(160deg, rgba(14, 165, 233, 0.16), rgba(11, 25, 41, 0.94)); border-color: rgba(56, 189, 248, 0.5); padding: 24px;">
+        <div style="background: #ffffff; padding: 14px; border-radius: 18px; box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45); margin-bottom: 16px;">
+          <img src="assets/qr-azure.png" alt="QR Code NextSkill Azure" style="width: 210px; height: 210px; display: block;" />
+        </div>
+        <div style="font-size: 15px; font-weight: 700; color: var(--sand); margin-bottom: 6px;">สแกนเพื่อเปิดใช้งานเว็บไซต์จริงบน Azure</div>
+        <div style="font-family: 'Manrope', monospace; font-size: 11.5px; color: var(--sky); word-break: break-all; margin-bottom: 16px; background: rgba(0,0,0,0.28); padding: 6px 12px; border-radius: 8px;">
+          https://nextskill-gtg7b0hyhvhxeegz.eastasia-01.azurewebsites.net
+        </div>
+        <div style="font-size: 32px; font-weight: 800; color: #ffffff;">ขอบคุณครับ · ถาม–ตอบ</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>NEXTSKILL · LIVE DEMO &amp; Q&amp;A</span><span class="page-num">22</span></div>
+</section>
+
+</div>
+
+<div class="presenter-bar" aria-label="ตัวควบคุมสไลด์">
+  <button type="button" id="prevBtn">← ก่อนหน้า</button>
+  <span class="counter" id="slideCounter">1 / 22</span>
+  <button type="button" id="nextBtn">ถัดไป →</button>
+  <button type="button" id="fsBtn">เต็มจอ (F)</button>
+  <button type="button" onclick="window.print()">พิมพ์ / PDF</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const deck = document.getElementById('deck');
+  const counter = document.getElementById('slideCounter');
+  let index = 0;
+
+  function show(i) {
+    index = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === index));
+    counter.textContent = `${index + 1} / ${slides.length}`;
+    history.replaceState(null, '', `#${index + 1}`);
+  }
+
+  function fitDeck() {
+    if (window.matchMedia('print').matches) return;
+    const vw = window.innerWidth - 32;
+    const vh = window.innerHeight - 76;
+    const scale = Math.min(vw / 1280, vh / 720, 1.35);
+    deck.style.transform = `scale(${scale})`;
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', () => show(index - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => show(index + 1));
+  document.getElementById('fsBtn').addEventListener('click', () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(index + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(index - 1); }
+    else if (e.key === 'f' || e.key === 'F') { document.getElementById('fsBtn').click(); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(slides.length - 1); }
+  });
+  window.addEventListener('resize', fitDeck);
+
+  const hashMatch = location.hash.match(/^#(\d+)$/);
+  show(hashMatch ? parseInt(hashMatch[1], 10) - 1 : 0);
+  fitDeck();
+</script>
+</body>
+</html>

@@ -108,7 +108,6 @@ p, span, a, label, strong, small, time, table, th, td, kbd {
     text-rendering: optimizeLegibility !important;
 }
 
-/* Full Page Base & Living Ocean Background */
 
 body.ns-admin {
     background: var(--adm-bg-gradient) !important;
@@ -121,7 +120,6 @@ body.ns-admin {
     transition: background 0.4s ease, color 0.4s ease;
 }
 
-/* Ambient Floating Bubbles / Light Orbs Layer */
 .ocean-ambient-bubbles {
     position: fixed;
     inset: 0;
@@ -564,7 +562,6 @@ html[data-theme="dark"] .topbar-search-shortcut {
     transition: transform 0.3s ease, opacity 0.2s ease;
 }
 
-/* Light mode icon display: Moon is visible (inviting switch to night), Sun is hidden */
 .admin-theme-toggle .theme-icon-sun {
     display: none !important;
 }
@@ -573,7 +570,6 @@ html[data-theme="dark"] .topbar-search-shortcut {
     color: #0369a1;
 }
 
-/* Dark mode icon display: Sun is visible, Moon is hidden */
 html[data-theme="dark"] .admin-theme-toggle .theme-icon-sun {
     display: block !important;
     color: #facc15;
@@ -1041,7 +1037,6 @@ html[data-theme="light"] .attention-badge {
     color: var(--adm-text-main);
 }
 
-/* 8 Metric Cards Grid (4x2 Frosted Layout) */
 
 .metric-grid-eight {
     display: grid !important;
@@ -1132,7 +1127,6 @@ html[data-theme="light"] .attention-badge {
     gap: 6px;
 }
 
-/* Pulsing Online Dot */
 .live-pulse-dot {
     width: 7px;
     height: 7px;

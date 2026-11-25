@@ -179,18 +179,16 @@ public sealed partial class LearningStore(
             var hasStarted = started.ContainsKey(course.Id);
             var isComplete = earnedKeys.Contains(CourseAwardKey(course.Id));
             var prerequisite = prerequisites.GetValueOrDefault(course.Id);
-            var isLocked = !hasStarted && !isComplete && prerequisite is not null &&
-                !earnedKeys.Contains(CourseAwardKey(prerequisite.Id));
             var unlocked = course.Lessons.TakeWhile(l => complete.Contains((course.Id, l.Id))).Select(l => l.Id).ToList();
-            if (!isLocked && next is not null) unlocked.Add(next.Id);
+            if (next is not null) unlocked.Add(next.Id);
             var last = started.GetValueOrDefault(course.Id);
             if (!last.HasValue || done.Contains(last.Value) || !unlocked.Contains(last.Value)) last = next?.Id;
             return new LearningCourseProgress(course.Id, course.Title, course.Category, course.Description,
                 course.IslandKind, course.Lessons.Length, done, unlocked, current, last,
                 isComplete ? 100 : done.Length * 100 / (course.Lessons.Length + 1), hasStarted, isComplete,
                 course.Lessons.Select(l => LearningCatalog.Summary(l,
-                    done.Contains(l.Id) ? "completed" : !isLocked && l.Id == current ? "current" : "locked")).ToArray())
-            { IsLocked = isLocked, PrerequisiteCourseId = prerequisite?.Id, PrerequisiteCourseTitle = prerequisite?.Title };
+                    done.Contains(l.Id) ? "completed" : l.Id == current ? "current" : "locked")).ToArray())
+            { PrerequisiteCourseId = prerequisite?.Id, PrerequisiteCourseTitle = prerequisite?.Title };
         }).ToArray();
         var activeProgress = courses.FirstOrDefault(c => c.CourseId == active && c.HasStarted);
         LearningActivity? activity = null;

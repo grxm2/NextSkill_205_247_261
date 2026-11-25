@@ -101,7 +101,7 @@
                             <a class="lp-row lp-course" asp-controller="Learning" asp-action="@(course.FinalQuizReady ? "FinalQuiz" : "Island")" asp-route-courseId="@course.CourseId">
                                 <span class="lp-row-copy">
                                     <strong dir="auto">@course.Title</strong>
-                                    <span class="lp-muted">@(course.IsComplete ? "เรียนจบแล้ว" : course.FinalQuizReady ? "พร้อมสอบท้ายคอร์ส" : $"{course.CompletedLessons.Count} / {course.TotalLessons} บทเรียน")</span>
+                                    <span class="lp-muted">@(course.IsComplete ? "เรียนจบแล้ว" : course.FinalQuizReady ? "พร้อมสอบท้ายคอร์ส" : $"เรียนค้างอยู่ · {course.CompletedLessons.Count} / {course.TotalLessons} บทเรียน")</span>
                                 </span>
                                 <span class="lp-course-meter @(course.Progress is > 0 and < 100 ? "lp-course-meter--active" : null)">
                                     @if (course.Progress is > 0 and < 100)

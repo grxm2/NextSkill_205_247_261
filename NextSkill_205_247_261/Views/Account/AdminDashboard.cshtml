@@ -342,7 +342,7 @@
                             </div>
                             <strong class="metric-number-bold" data-count="@Model.TotalLessonCompletions">@Model.TotalLessonCompletions.ToString("N0")</strong>
                             <h4 class="metric-label-title">ด่านที่ผู้เรียนผ่าน (ครั้ง)</h4>
-                            <p class="metric-desc-sub">การลงทะเบียน @Model.StartedCoursesCount รายการ · @Model.TotalXpEarned.ToString("N0") XP จากด่านในคอร์สที่เปิดเรียน</p>
+                            <p class="metric-desc-sub">ลงทะเบียน @Model.StartedCoursesCount รายการ · @Model.TotalXpEarned.ToString("N0") XP จากด่านและข้อสอบท้ายคอร์ส</p>
                         </article>
 
                         <article class="metric-card-modern">
@@ -375,7 +375,7 @@
                                 </span>
                             </div>
                             <strong class="metric-number-bold" id="metric-questions-count" data-count="@Model.TotalQuestions">@Model.TotalQuestions</strong>
-                            <h4 class="metric-label-title">แบบฝึกหัดในคลัง</h4>
+                            <h4 class="metric-label-title">คำถามและข้อสอบในคลัง</h4>
                             <p class="metric-desc-sub" id="metric-questions-sub">เฉลี่ย @Model.AverageQuestionsPerLesson ข้อต่อด่าน</p>
                         </article>
 
