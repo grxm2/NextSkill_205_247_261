@@ -1,6 +1,6 @@
 # NextSkill Design
 
-คู่มือส่งต่อธีมสำหรับ branch `gram-test` อ้างอิง source ใน repository วันที่ 5 พฤศจิกายน 2026 ใช้คู่กับ [SKILL.md](SKILL.md) และตรวจ CSS/layout ที่หน้าโหลดจริงก่อนเสมอ เพราะบางหน้ามีรูปแบบเฉพาะและ legacy overrides
+คู่มืออ้างอิงธีมและคอมโพเนนต์ของ NextSkill
 
 ## แนวคิดและบุคลิก
 
@@ -76,4 +76,4 @@ NextSkill คือพื้นที่เรียนรู้ภาษาไ�
 
 ## ภาพอ้างอิงและแหล่งความจริง
 
-ภาพตัวอย่างที่บันทึกไว้: `skills/nextskill-mvc-theme/assets/references/home-desktop.png`, `home-mobile.png`, `courses-desktop.png`, `login-desktop.png`; เป็นภาพ snapshot ไม่ใช่ผลทดสอบล่าสุด รายละเอียดเพิ่มอยู่ใน `skills/nextskill-mvc-theme/references/` เมื่อ source กับเอกสารไม่ตรงกัน ให้ตรวจ layout, CSS cascade และหน้าใช้งานจริงก่อนตัดสินใจ
+ดูภาพตัวอย่างหน้าเว็บใน [สไลด์นำเสนอ](docs/presentation/NextSkill_Presentation.pdf)

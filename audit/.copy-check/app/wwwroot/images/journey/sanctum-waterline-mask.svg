@@ -1,4 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700">
-  <!-- Solid rock above this contour; the real ocean occludes the submerged feet. -->
-  <path fill="white" d="M0 0H800V587L782 587Q768 615 730 620Q709 638 676 634Q648 651 617 638Q589 643 567 616L552 562H337L328 583Q309 614 277 620Q248 635 218 634Q185 651 157 633Q132 639 109 621Q78 613 63 590Q35 588 22 559H0Z"/>
-</svg>

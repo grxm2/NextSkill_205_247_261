@@ -1,4 +1,0 @@
-interface:
-  display_name: "NextSkill MVC Theme"
-  short_description: "ธีมทะเล NextSkill สำหรับ ASP.NET Core MVC"
-  default_prompt: "ใช้ $nextskill-mvc-theme สร้างหรือปรับหน้า ASP.NET Core MVC ให้ตรงธีม NextSkill โดยใช้ Razor และคอมโพเนนต์กลาง"

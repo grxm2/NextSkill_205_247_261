@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 280" fill="none">  <g id="boat-oar" transform="rotate(-8 365 176)">
-    <path d="m320 79 13-7 79 154-10 5Z" fill="#B97537" stroke="#865026" stroke-width="3" stroke-linejoin="round"/>
-    <path d="m326 79 80 147" stroke="#E3AC63" stroke-width="3" stroke-linecap="round"/>
-    <path d="M397 219c5-7 10-9 16-6l17 21c3 5 2 11-4 14l-7 3c-6 1-11-1-13-6Z" fill="#DB9846" stroke="#925728" stroke-width="3"/>
-    <path d="m409 222 13 20" stroke="#F4BC70" stroke-width="4" stroke-linecap="round"/>
-  </g></svg>
