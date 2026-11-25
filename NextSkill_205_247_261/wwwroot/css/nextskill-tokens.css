@@ -3,19 +3,19 @@
 @font-face{font-family:Prompt;src:url('../fonts/Prompt-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
 @font-face{font-family:Prompt;src:url('../fonts/Prompt-SemiBold.woff2') format('woff2');font-weight:600;font-display:swap}
 @font-face{font-family:Prompt;src:url('../fonts/Prompt-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
-@font-face{font-family:Prompt;src:url('../fonts/Prompt-Bold.woff2') format('woff2');font-weight:800;font-display:swap}
-@font-face{font-family:Prompt;src:url('../fonts/Prompt-Bold.woff2') format('woff2');font-weight:900;font-display:swap}
-@font-face{font-family:Manrope;src:url('../fonts/manrope-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:Prompt;src:url('../fonts/Prompt-ExtraBold.woff2') format('woff2');font-weight:800;font-display:swap}
 :root{
  --ns-ink:#173e56;--ns-muted:#577b91;--ns-canvas:#e2f6ff;--ns-surface:#fff;--ns-border:#c9e3ef;
  --ns-primary:#087faa;--ns-primary-hover:#086189;--ns-success:#176a52;--ns-success-surface:#eaf8f0;
  --ns-danger:#aa3041;--ns-danger-surface:#fff0f2;--ns-warning:#795914;--ns-warning-surface:#fff6d8;
  --ns-radius-control:14px;--ns-radius-surface:20px;--ns-space-1:4px;--ns-space-2:8px;--ns-space-3:12px;--ns-space-4:16px;--ns-space-6:24px;--ns-space-8:32px;--ns-space-12:48px;
  --ns-page-gutter:16px;--ns-gutter-start:max(var(--ns-page-gutter), env(safe-area-inset-left));--ns-gutter-end:max(var(--ns-page-gutter), env(safe-area-inset-right));
- --ns-font:Prompt,'Leelawadee UI',system-ui,sans-serif;--ns-font-number:Manrope,Prompt,sans-serif;
+ --ns-font:Prompt,'Leelawadee UI',system-ui,sans-serif;--ns-font-number:var(--ns-font);
  --ns-ease-out:cubic-bezier(.23,1,.32,1);--ns-ease-in-out:cubic-bezier(.77,0,.175,1);--ns-ease-drawer:cubic-bezier(.32,.72,0,1);
  --ns-shadow:0 12px 32px #173e560d;
 }
+
+code,kbd,pre,samp{font-family:var(--ns-font)}
 
 /* Responsive widths: 480, 768, 1024, 1280 and 1536 CSS pixels. */
 @media (min-width: 1024px) {

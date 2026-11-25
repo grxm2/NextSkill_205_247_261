@@ -3,7 +3,7 @@
     position: fixed; inset: auto; top: 0; left: 0; margin: 0; padding: 0;
     width: 280px; max-width: calc(100dvw - 32px); overflow: visible;
     border: 0; background: transparent; color: #173f51; z-index: 1003;
-    font-family: var(--ns-font-body, 'Prompt', sans-serif); pointer-events: none;
+    font-family: var(--ns-font); pointer-events: none;
 }
 #nimo-speech[hidden] { display: none !important; }
 #nimo-speech::backdrop { background: transparent; pointer-events: none; }
@@ -45,7 +45,7 @@
 #nimo-speech-close {
     position: absolute; right: 0; top: 0; width: 44px; height: 44px; padding: 0;
     display: grid; place-items: center; border: 0; border-radius: 50%;
-    background: transparent; color: #416878; font: 22px/1 sans-serif; cursor: pointer; pointer-events: auto;
+    background: transparent; color: #416878; font: 22px/1 var(--ns-font); cursor: pointer; pointer-events: auto;
     transition: background-color 160ms, color 160ms;
 }
 #nimo-speech-close:hover { background: #ffffff80; color: #07536f; }

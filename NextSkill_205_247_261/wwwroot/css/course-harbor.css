@@ -3,6 +3,7 @@
 .smart-journey .ocean-home .ow-dock{width:100%;max-width:calc((100svh - var(--nav-h) - 200px) * 1.142857);margin:0;min-width:0;align-self:center;justify-self:center;isolation:isolate}
 .smart-journey .ocean-home .ow-dock:before{content:none}
 .course-harbor-art{display:block;width:100%;height:auto;user-select:none;pointer-events:none}
+.course-harbor-art text{font-family:var(--ns-font)}
 .harbor-model{position:relative;isolation:isolate}
 .harbor-model>.course-harbor-art{overflow:hidden}
 .harbor-door{transform-box:view-box;transition:transform 280ms var(--ns-ease-in-out);transform:scaleX(1) skewY(0deg)}

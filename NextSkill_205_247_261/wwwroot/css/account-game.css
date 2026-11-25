@@ -2,31 +2,6 @@
    NextSkill — Ocean Island & Nimo (นิโม) Account Theme
    ======================================================== */
 
-@font-face {
-    font-family: 'Prompt';
-    src: url('../fonts/Prompt-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Prompt';
-    src: url('../fonts/Prompt-Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Prompt';
-    src: url('../fonts/Prompt-SemiBold.woff2') format('woff2');
-    font-weight: 600;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Prompt';
-    src: url('../fonts/Prompt-Bold.woff2') format('woff2');
-    font-weight: 700 900;
-    font-display: swap;
-}
-
 :root {
     --nimo-sky: #e0f2fe;
     --nimo-blue-light: #60a5fa;
@@ -43,7 +18,7 @@
 
 /* Base Body Styling */
 body.nimo-account-theme {
-    font-family: 'Prompt', 'Leelawadee UI', system-ui, -apple-system, sans-serif;
+    font-family: var(--ns-font);
     background-color: #f0f9ff;
     background-image: 
         radial-gradient(ellipse at 50% -10%, #bae6fd 0%, #e0f2fe 35%, #f0f9ff 70%, #f8fafc 100%),
@@ -600,7 +575,7 @@ body.nimo-account-theme {
     content: '✓';
     color: #ffffff;
     font-size: 12px;
-    font-weight: 900;
+    font-weight: 800;
 }
 .check-row input:focus-visible {
     outline: 2px solid #0284c7;

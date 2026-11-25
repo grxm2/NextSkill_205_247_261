@@ -1,8 +1,4 @@
-@font-face { font-family: Prompt; src: url('../fonts/Prompt-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
-@font-face { font-family: Prompt; src: url('../fonts/Prompt-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
-@font-face { font-family: Prompt; src: url('../fonts/Prompt-SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
-@font-face { font-family: Prompt; src: url('../fonts/Prompt-Bold.woff2') format('woff2'); font-weight: 700 900; font-display: swap; }
-.ocean-theme { font-family: Prompt,"Segoe UI",Tahoma,sans-serif; --bs-body-font-family: Prompt,"Segoe UI",Tahoma,sans-serif; }
+.ocean-theme { font-family: var(--ns-font); --bs-body-font-family: var(--ns-font); }
 .game-theme.course-home.dashboard-refined { background: #f2fbfe; font-size: 15px; line-height: 1.7; }
 .dashboard-refined :is(button,input) { font-family: inherit; }
 .ocean-theme.dashboard-refined :is(.eyebrow,.chapter-copy .eyebrow,.chapter-progress label,.resume-label,.resume-description,.quest-top>span,.quest-bottom>span,.section-description,.level-caption,.small-label,.companion-field-hint,.companion-kicker,.companion-storage-note,.buddy-study-note,.agent-menu-hint,.companion-emotion,.companion-activity) { font-size: 13px; color: #526879; letter-spacing: 0; line-height: 1.8; }

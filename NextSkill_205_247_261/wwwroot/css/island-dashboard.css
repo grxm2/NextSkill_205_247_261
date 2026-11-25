@@ -340,7 +340,7 @@ html[data-theme] body.smart-journey[data-journey-mode="learn"] #island-detail :i
     background: #efffffe6;
     border: 1px solid #fff;
     border-radius: 50%;
-    font: 600 .875rem/1 Manrope, sans-serif;
+    font: 600 .875rem/1 var(--ns-font);
     color: #367487;
     box-shadow: 0 4px 12px #1262780d;
 }

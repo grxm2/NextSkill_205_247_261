@@ -1,25 +1,3 @@
-@font-face {
-    font-family: Manrope;
-    src: url('../fonts/manrope-400.woff2') format('woff2');
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-}
-@font-face {
-    font-family: Manrope;
-    src: url('../fonts/manrope-600.woff2') format('woff2');
-    font-style: normal;
-    font-weight: 500 700;
-    font-display: swap;
-}
-@font-face {
-    font-family: Manrope;
-    src: url('../fonts/manrope-800.woff2') format('woff2');
-    font-style: normal;
-    font-weight: 800 900;
-    font-display: swap;
-}
-
 :root {
     --canvas: #f6f7f2;
     --paper: #fff;
@@ -33,7 +11,7 @@
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 24px; }
-body { margin: 0; color: var(--ink); background: var(--canvas); font: 14px/1.6 Manrope, "Segoe UI", Tahoma, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0; color: var(--ink); background: var(--canvas); font: 14px/1.6 var(--ns-font); -webkit-font-smoothing: antialiased; }
 button, a { -webkit-tap-highlight-color: transparent; }
 button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
 button:disabled { cursor: not-allowed; }
@@ -82,7 +60,7 @@ button:active:not(:disabled) { transform: translateY(1px); }
 .welcome h1 { display: flex; align-items: center; gap: 12px; font-size: 32px; letter-spacing: -1.5px; line-height: 1.3; font-weight: 800; margin: 7px 0; }
 .welcome-spark { color: #9eb96e; font-size: 36px; font-weight: 400; }
 .welcome h1+p { font-size: 12px; color: #65715d; }
-.preview-label { display: flex; align-items: center; gap: 7px; font: 10px "Segoe UI", Tahoma, sans-serif; color: #7d8877; }
+.preview-label { display: flex; align-items: center; gap: 7px; font: 10px var(--ns-font); color: #7d8877; }
 .preview-label>span { width: 5px; height: 5px; border-radius: 50%; background: #9cb97d; }
 .dashboard-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; align-items: start; gap: 26px; }
 .main-column { min-width: 0; display: flex; flex-direction: column; gap: 24px; }

@@ -20,9 +20,6 @@
     <script>try { document.documentElement.dataset.theme = localStorage.getItem('nextskill.theme.v1') === 'dark' ? 'dark' : 'light'; } catch { document.documentElement.dataset.theme = 'light'; }</script>
     <title>ภาพรวมผู้ดูแลระบบ | NextSkill</title>
     <link rel="icon" href="~/home-favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet" />
     <link rel="preload" href="~/fonts/Prompt-Regular.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="~/fonts/Prompt-Medium.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="~/fonts/Prompt-SemiBold.woff2" as="font" type="font/woff2" crossorigin />
@@ -817,7 +814,7 @@
     "description": "พื้นฐานปัญญาประดิษฐ์และการเรียนรู้ของเครื่อง",
     "skills": ["AI", "Python"]
   }
-]' style="font-family: monospace; font-size: 12px;"></textarea>
+]' style="font-family: var(--ns-font); font-size: 12px;"></textarea>
                 </div>
                 <div id="upload-feedback" style="display: none; padding: 10px; border-radius: 8px; font-size: 13px;"></div>
             </div>

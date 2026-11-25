@@ -60,7 +60,7 @@
 .buddy-idle-motion { animation:buddySoftFloat 5.2s ease-in-out infinite; animation-play-state:paused; }
 .skill-buddy[data-living="true"]:not([data-posing]) .buddy-idle-motion { animation-play-state:running; }
 .skill-buddy[data-posing] .buddy-idle-motion { animation-play-state:paused; }
-.buddy-reaction-mark { position:absolute; right:6%; top:2%; z-index:6; display:grid; place-items:center; min-width:29px; height:29px; border:2px solid #fff; border-radius:50%; background:#e8faff; color:#17658a; font:600 18px/1 sans-serif; opacity:0; transition:opacity 160ms ease-out; box-shadow:0 3px 8px #174b6118; }
+.buddy-reaction-mark { position:absolute; right:6%; top:2%; z-index:6; display:grid; place-items:center; min-width:29px; height:29px; border:2px solid #fff; border-radius:50%; background:#e8faff; color:#17658a; font:600 18px/1 var(--ns-font); opacity:0; transition:opacity 160ms ease-out; box-shadow:0 3px 8px #174b6118; }
 .skill-buddy[data-posing] .buddy-reaction-mark { opacity:1; }
 .skill-buddy[data-emotion="thinking"] .buddy-reaction-mark:before,.skill-buddy[data-emotion="curious"] .buddy-reaction-mark:before { content:'?'; }
 /* Positive gestures use the character's motion without a checkmark badge. */
@@ -263,7 +263,7 @@
     border-radius: 50%;
     font-size: 20px;
     line-height: 1;
-    font-weight: 900;
+    font-weight: 800;
     box-shadow: 0 0 12px rgba(253, 224, 71, 0.85), inset 1px 2px #fff;
     filter: drop-shadow(0 2px 4px rgba(217, 119, 6, 0.3));
 }
